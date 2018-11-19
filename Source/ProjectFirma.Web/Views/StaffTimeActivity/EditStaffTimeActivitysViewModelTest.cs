@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.StaffTimeActivity
             var viewModel = new EditStaffTimeActivitiesViewModel(null, StaffTimeActivityBulk.MakeFromList(staffTimeActivitys, calendarYearRangeForExpenditures), new List<ProjectExemptReportingYearSimple>());
 
             // Assert
-            Assert.That(viewModel.StaffTimeActivities.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));
+            Assert.That(viewModel.StaffTimeActivitys.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));
         }
     }
 }
