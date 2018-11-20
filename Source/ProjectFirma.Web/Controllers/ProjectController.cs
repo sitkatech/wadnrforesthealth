@@ -897,7 +897,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         private ViewResult ViewEditStaffTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
         {
             var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditStaffTimeActivitiesViewData(new ProjectSimple(project), allFundingSources, CurrentPerson);
+            var viewData = new EditStaffTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
             return RazorView<EditStaffTimeActivities, EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>(viewData, viewModel);
         }
     }

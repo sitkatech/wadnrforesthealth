@@ -18,22 +18,18 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
-using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.ProjectUpdate;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Project
 {
     public class EditStaffTimeActivitiesViewModel : FormViewModel, IValidatableObject
     {
-        [Required]
-        public int ProjectID { get; set; }
         public List<StaffTimeActivitySimple> StaffTimeActivities { get; set; }
 
         /// <summary>
@@ -47,13 +43,12 @@ namespace ProjectFirma.Web.Views.Project
             List<StaffTimeActivitySimple> staffTimeActivities)
         {
             StaffTimeActivities = staffTimeActivities;
-            ProjectID = project.ProjectID;
         }
 
-        public void UpdateModel(List<Models.StaffTimeActivity> currentStaffTimeActivitys,
-            IList<Models.StaffTimeActivity> allStaffTimeActivitys, Models.Project project)
+        public void UpdateModel(List<StaffTimeActivity> currentStaffTimeActivitys,
+            IList<StaffTimeActivity> allStaffTimeActivitys, Models.Project project)
         {
-            var staffTimeActivitysUpdated = new List<Models.StaffTimeActivity>();
+            var staffTimeActivitysUpdated = new List<StaffTimeActivity>();
             if (StaffTimeActivities != null)
             {
                 staffTimeActivitysUpdated = StaffTimeActivities.Select(x => x.ToStaffTimeActivity()).ToList();

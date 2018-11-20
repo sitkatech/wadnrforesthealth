@@ -36,24 +36,24 @@ namespace ProjectFirma.Web.Models
     {
         public int? StaffTimeActivityID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Funding Source is required.")]
         public int? FundingSourceID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Project is required.")]
         public int ProjectID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Start Date is required.")]
         public DateTime? StaffTimeActivityStartDate { get; set; }
 
         public DateTime? StaffTimeActivityEndDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Number of Hours is required.")]
         public decimal? StaffTimeActivityHours { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Rate is required.")]
         public decimal? StaffTimeActivityRate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Total Amount is required.")]
         public decimal? StaffTimeActivityTotalAmount { get; set; }
 
         public string StaffTimeActivityNotes { get; set; }
