@@ -18,11 +18,13 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProjectFirma.Web.Models;
 using ProjectFirma.Web.UnitTestCommon;
 using NUnit.Framework;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.StaffTimeActivity
 {
@@ -39,17 +41,16 @@ namespace ProjectFirma.Web.Views.StaffTimeActivity
             var fundingSource4 = TestFramework.TestFundingSource.Create();
 
             var project = TestFramework.TestProject.Create();
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource1);
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource2);
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource3);
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource4);
+            TestFramework.TestStaffTimeActivity.Create(project, fundingSource1, 1, 2, 3, DateTime.Now);
+            TestFramework.TestStaffTimeActivity.Create(project, fundingSource2, 1, 2, 3, DateTime.Now);
+            TestFramework.TestStaffTimeActivity.Create(project, fundingSource3, 1, 2, 3, DateTime.Now);
+            TestFramework.TestStaffTimeActivity.Create(project, fundingSource4, 1, 2, 3, DateTime.Now);
 
             var allFundingSources = new List<Models.FundingSource> {fundingSource1, fundingSource2, fundingSource3, fundingSource4};
 
             // Act
-            var staffTimeActivitys = project.StaffTimeActivitys.ToList();
-            var calendarYearRangeForExpenditures = staffTimeActivitys.CalculateCalendarYearRangeForExpenditures(project);
-            var viewModel = new EditStaffTimeActivitiesViewModel(null, StaffTimeActivityBulk.MakeFromList(staffTimeActivitys, calendarYearRangeForExpenditures), new List<ProjectExemptReportingYearSimple>());
+            var staffTimeActivities = project.StaffTimeActivities.ToList();
+            var viewModel = new EditStaffTimeActivitiesViewModel(project, staffTimeActivities.Select(x=>new StaffTimeActivitySimple(x)).ToList());
 
             // Assert
             Assert.That(viewModel.StaffTimeActivities.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));

@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectFundingSourceExpenditureUpdates = new HashSet<ProjectFundingSourceExpenditureUpdate>();
             this.ProjectFundingSourceRequests = new HashSet<ProjectFundingSourceRequest>();
             this.ProjectFundingSourceRequestUpdates = new HashSet<ProjectFundingSourceRequestUpdate>();
+            this.StaffTimeActivities = new HashSet<StaffTimeActivity>();
             this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
@@ -86,13 +87,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectBudgets.Any() || ProjectBudgetUpdates.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceExpenditureUpdates.Any() || ProjectFundingSourceRequests.Any() || ProjectFundingSourceRequestUpdates.Any();
+            return ProjectBudgets.Any() || ProjectBudgetUpdates.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceExpenditureUpdates.Any() || ProjectFundingSourceRequests.Any() || ProjectFundingSourceRequestUpdates.Any() || StaffTimeActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundingSource).Name, typeof(ProjectBudget).Name, typeof(ProjectBudgetUpdate).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceExpenditureUpdate).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectFundingSourceRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundingSource).Name, typeof(ProjectBudget).Name, typeof(ProjectBudgetUpdate).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceExpenditureUpdate).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectFundingSourceRequestUpdate).Name, typeof(StaffTimeActivity).Name};
 
 
         /// <summary>
@@ -138,6 +139,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in StaffTimeActivities.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
             dbContext.AllFundingSources.Remove(this);
         }
 
@@ -158,6 +164,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
         public virtual ICollection<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
         public virtual ICollection<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
+        public virtual ICollection<StaffTimeActivity> StaffTimeActivities { get; set; }
         public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Organization Organization { get; set; }
 

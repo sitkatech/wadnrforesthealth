@@ -240,6 +240,10 @@
       <End Role="FundingSource" EntitySet="FundingSource" />
       <End Role="ProjectFundingSourceRequestUpdates" EntitySet="ProjectFundingSourceRequestUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_StaffTimeActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_StaffTimeActivity_FundingSource_FundingSourceID">
+      <End Role="FundingSource" EntitySet="FundingSource" />
+      <End Role="StaffTimeActivities" EntitySet="StaffTimeActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID">
       <End Role="CreatePerson" EntitySet="Person" />
       <End Role="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" EntitySet="ImportExternalProjectStaging" />
@@ -970,6 +974,7 @@
     <NavigationProperty Name="ProjectFundingSourceExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceExpenditureUpdates" />
     <NavigationProperty Name="ProjectFundingSourceRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequests" />
     <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
+    <NavigationProperty Name="StaffTimeActivities" Relationship="ProjectFirma.Web.Models.FK_StaffTimeActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="StaffTimeActivities" />
   </EntityType>
   <EntityType Name="FundingTypeData">
     <Key>
@@ -2073,12 +2078,14 @@
     <Property Name="StaffTimeActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="StaffTimeActivityHours" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <Property Name="StaffTimeActivityHours" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="StaffTimeActivityRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="StaffTimeActivityTotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="StaffTimeActivityStartDate" Type="DateTime" Nullable="false" />
     <Property Name="StaffTimeActivityEndDate" Type="DateTime" />
-    <Property Name="StaffTimeActivityNotes" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="StaffTimeActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_StaffTimeActivity_FundingSource_FundingSourceID" FromRole="StaffTimeActivities" ToRole="FundingSource" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_StaffTimeActivity_Project_ProjectID" FromRole="StaffTimeActivities" ToRole="Project" />
   </EntityType>
   <EntityType Name="StateProvince">
@@ -2244,7 +2251,7 @@
     <Property Name="TreatmentActivityAcresTreated" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TreatmentActivityStartDate" Type="DateTime" Nullable="false" />
     <Property Name="TreatmentActivityEndDate" Type="DateTime" />
-    <Property Name="TreatmentActivityNotes" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
   </EntityType>
   <EntityType Name="Watershed">
@@ -2680,6 +2687,18 @@
         <PropertyRef Name="FundingSourceID" />
       </Principal>
       <Dependent Role="ProjectFundingSourceRequestUpdates">
+        <PropertyRef Name="FundingSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffTimeActivity_FundingSource_FundingSourceID">
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
+    <End Role="StaffTimeActivities" Type="ProjectFirma.Web.Models.StaffTimeActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundingSource">
+        <PropertyRef Name="FundingSourceID" />
+      </Principal>
+      <Dependent Role="StaffTimeActivities">
         <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>

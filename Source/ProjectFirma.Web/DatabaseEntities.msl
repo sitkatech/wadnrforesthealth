@@ -1142,6 +1142,7 @@
           <ScalarProperty Name="StaffTimeActivityID" ColumnName="StaffTimeActivityID" />
           <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="StaffTimeActivityHours" ColumnName="StaffTimeActivityHours" />
           <ScalarProperty Name="StaffTimeActivityRate" ColumnName="StaffTimeActivityRate" />
           <ScalarProperty Name="StaffTimeActivityTotalAmount" ColumnName="StaffTimeActivityTotalAmount" />

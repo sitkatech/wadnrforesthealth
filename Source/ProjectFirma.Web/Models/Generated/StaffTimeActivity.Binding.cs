@@ -30,10 +30,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public StaffTimeActivity(int staffTimeActivityID, int projectID, int staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate, DateTime? staffTimeActivityEndDate, string staffTimeActivityNotes) : this()
+        public StaffTimeActivity(int staffTimeActivityID, int projectID, int fundingSourceID, decimal staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate, DateTime? staffTimeActivityEndDate, string staffTimeActivityNotes) : this()
         {
             this.StaffTimeActivityID = staffTimeActivityID;
             this.ProjectID = projectID;
+            this.FundingSourceID = fundingSourceID;
             this.StaffTimeActivityHours = staffTimeActivityHours;
             this.StaffTimeActivityRate = staffTimeActivityRate;
             this.StaffTimeActivityTotalAmount = staffTimeActivityTotalAmount;
@@ -45,42 +46,44 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public StaffTimeActivity(int projectID, int staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate, string staffTimeActivityNotes) : this()
+        public StaffTimeActivity(int projectID, int fundingSourceID, decimal staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.StaffTimeActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
+            this.FundingSourceID = fundingSourceID;
             this.StaffTimeActivityHours = staffTimeActivityHours;
             this.StaffTimeActivityRate = staffTimeActivityRate;
             this.StaffTimeActivityTotalAmount = staffTimeActivityTotalAmount;
             this.StaffTimeActivityStartDate = staffTimeActivityStartDate;
-            this.StaffTimeActivityNotes = staffTimeActivityNotes;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public StaffTimeActivity(Project project, int staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate, string staffTimeActivityNotes) : this()
+        public StaffTimeActivity(Project project, FundingSource fundingSource, decimal staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.StaffTimeActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectID = project.ProjectID;
             this.Project = project;
             project.StaffTimeActivities.Add(this);
+            this.FundingSourceID = fundingSource.FundingSourceID;
+            this.FundingSource = fundingSource;
+            fundingSource.StaffTimeActivities.Add(this);
             this.StaffTimeActivityHours = staffTimeActivityHours;
             this.StaffTimeActivityRate = staffTimeActivityRate;
             this.StaffTimeActivityTotalAmount = staffTimeActivityTotalAmount;
             this.StaffTimeActivityStartDate = staffTimeActivityStartDate;
-            this.StaffTimeActivityNotes = staffTimeActivityNotes;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static StaffTimeActivity CreateNewBlank(Project project)
+        public static StaffTimeActivity CreateNewBlank(Project project, FundingSource fundingSource)
         {
-            return new StaffTimeActivity(project, default(int), default(decimal), default(decimal), default(DateTime), default(string));
+            return new StaffTimeActivity(project, fundingSource, default(decimal), default(decimal), default(decimal), default(DateTime));
         }
 
         /// <summary>
@@ -118,7 +121,8 @@ namespace ProjectFirma.Web.Models
         public int StaffTimeActivityID { get; set; }
         public int TenantID { get; private set; }
         public int ProjectID { get; set; }
-        public int StaffTimeActivityHours { get; set; }
+        public int FundingSourceID { get; set; }
+        public decimal StaffTimeActivityHours { get; set; }
         public decimal StaffTimeActivityRate { get; set; }
         public decimal StaffTimeActivityTotalAmount { get; set; }
         public DateTime StaffTimeActivityStartDate { get; set; }
@@ -129,6 +133,7 @@ namespace ProjectFirma.Web.Models
 
         public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
+        public virtual FundingSource FundingSource { get; set; }
 
         public static class FieldLengths
         {

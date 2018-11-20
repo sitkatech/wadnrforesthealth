@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
@@ -32,5 +34,49 @@ namespace ProjectFirma.Web.Models
 {
     public class StaffTimeActivitySimple
     {
+        public int? StaffTimeActivityID { get; set; }
+        [Required]
+        public decimal? StaffTimeActivityTotalAmount { get; set; }
+        [Required]
+        public DateTime? StaffTimeActivityStartDate { get; set; }
+        [Required]
+        public decimal? StaffTimeActivityRate { get; set; }
+        public string StaffTimeActivityNotes { get; set; }
+        [Required]
+        public decimal? StaffTimeActivityHours { get; set; }
+        public DateTime? StaffTimeActivityEndDate { get; set; }
+        [Required]
+        public int? FundingSourceID { get; set; }
+        [Required]
+        public int ProjectID { get; set; }
+
+        // Needed by ModelBinder
+        public StaffTimeActivitySimple()
+        {
+
+        }
+
+        public StaffTimeActivitySimple(StaffTimeActivity y)
+        {
+            StaffTimeActivityID = y.StaffTimeActivityID;
+            StaffTimeActivityEndDate = y.StaffTimeActivityEndDate;
+            StaffTimeActivityHours = y.StaffTimeActivityHours;
+            StaffTimeActivityNotes = y.StaffTimeActivityNotes;
+            StaffTimeActivityRate = y.StaffTimeActivityRate;
+            StaffTimeActivityStartDate = y.StaffTimeActivityStartDate;
+            StaffTimeActivityTotalAmount = y.StaffTimeActivityTotalAmount;
+            FundingSourceID = y.FundingSourceID;
+            ProjectID = y.ProjectID;
+        }
+
+
+        public StaffTimeActivity ToStaffTimeActivity()
+        {
+            // None of the nullables will ever default, thanks to RequiredAttribute
+            return new StaffTimeActivity(StaffTimeActivityID ?? ModelObjectHelpers.NotYetAssignedID, ProjectID, FundingSourceID.GetValueOrDefault(),
+                StaffTimeActivityHours.GetValueOrDefault(), StaffTimeActivityRate.GetValueOrDefault(),
+                StaffTimeActivityTotalAmount.GetValueOrDefault(), StaffTimeActivityStartDate.GetValueOrDefault(),
+                StaffTimeActivityEndDate, StaffTimeActivityNotes);
+        }
     }
 }

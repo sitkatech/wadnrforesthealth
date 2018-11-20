@@ -695,6 +695,10 @@ FROM [dbo].[vGeoServerWatershed] AS [vGeoServerWatershed]</DefiningQuery>
       <End Role="Snapshot" EntitySet="Snapshot" />
       <End Role="SnapshotProjects" EntitySet="SnapshotProject" />
     </AssociationSet>
+    <AssociationSet Name="FK_StaffTimeActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_StaffTimeActivity_FundingSource_FundingSourceID">
+      <End Role="FundingSource" EntitySet="FundingSource" />
+      <End Role="StaffTimeActivities" EntitySet="StaffTimeActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_StaffTimeActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_StaffTimeActivity_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="StaffTimeActivities" EntitySet="StaffTimeActivity" />
@@ -972,6 +976,7 @@ warning 6035: The relationship 'FK_ProjectFundingSourceExpenditure_FundingSource
 warning 6035: The relationship 'FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+warning 6035: The relationship 'FK_StaffTimeActivity_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="FundingSource">
     <Key>
@@ -2003,12 +2008,13 @@ warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_S
     <Property Name="StaffTimeActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="StaffTimeActivityHours" Type="int" Nullable="false" />
+    <Property Name="FundingSourceID" Type="int" Nullable="false" />
+    <Property Name="StaffTimeActivityHours" Type="decimal" Nullable="false" />
     <Property Name="StaffTimeActivityRate" Type="money" Nullable="false" />
     <Property Name="StaffTimeActivityTotalAmount" Type="money" Nullable="false" />
     <Property Name="StaffTimeActivityStartDate" Type="datetime" Nullable="false" />
     <Property Name="StaffTimeActivityEndDate" Type="datetime" />
-    <Property Name="StaffTimeActivityNotes" Type="varchar(max)" Nullable="false" />
+    <Property Name="StaffTimeActivityNotes" Type="varchar(max)" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_County_StateProvince_StateProvinceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -2174,7 +2180,7 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="TreatmentActivityAcresTreated" Type="decimal" Nullable="false" />
     <Property Name="TreatmentActivityStartDate" Type="datetime" Nullable="false" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
-    <Property Name="TreatmentActivityNotes" Type="varchar(max)" Nullable="false" />
+    <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PersonStewardWatershed_WatershedID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -3947,6 +3953,18 @@ warning 6002: The table/view 'ProjectFirma.dbo.vGeoServerWatershed' does not hav
       </Principal>
       <Dependent Role="SnapshotProjects">
         <PropertyRef Name="SnapshotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffTimeActivity_FundingSource_FundingSourceID">
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
+    <End Role="StaffTimeActivities" Type="ProjectFirma.Web.Models.Store.StaffTimeActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundingSource">
+        <PropertyRef Name="FundingSourceID" />
+      </Principal>
+      <Dependent Role="StaffTimeActivities">
+        <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

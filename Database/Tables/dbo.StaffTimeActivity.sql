@@ -6,12 +6,13 @@ CREATE TABLE [dbo].[StaffTimeActivity](
 	[StaffTimeActivityID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[StaffTimeActivityHours] [int] NOT NULL,
+	[FundingSourceID] [int] NOT NULL,
+	[StaffTimeActivityHours] [decimal](18, 0) NOT NULL,
 	[StaffTimeActivityRate] [money] NOT NULL,
 	[StaffTimeActivityTotalAmount] [money] NOT NULL,
 	[StaffTimeActivityStartDate] [datetime] NOT NULL,
 	[StaffTimeActivityEndDate] [datetime] NULL,
-	[StaffTimeActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[StaffTimeActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_StaffTimeActivity_StaffTimeActivityID] PRIMARY KEY CLUSTERED 
 (
 	[StaffTimeActivityID] ASC
@@ -23,6 +24,16 @@ CREATE TABLE [dbo].[StaffTimeActivity](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[StaffTimeActivity]  WITH CHECK ADD  CONSTRAINT [FK_StaffTimeActivity_FundingSource_FundingSourceID] FOREIGN KEY([FundingSourceID])
+REFERENCES [dbo].[FundingSource] ([FundingSourceID])
+GO
+ALTER TABLE [dbo].[StaffTimeActivity] CHECK CONSTRAINT [FK_StaffTimeActivity_FundingSource_FundingSourceID]
+GO
+ALTER TABLE [dbo].[StaffTimeActivity]  WITH CHECK ADD  CONSTRAINT [FK_StaffTimeActivity_FundingSource_FundingSourceID_TenantID] FOREIGN KEY([FundingSourceID], [TenantID])
+REFERENCES [dbo].[FundingSource] ([FundingSourceID], [TenantID])
+GO
+ALTER TABLE [dbo].[StaffTimeActivity] CHECK CONSTRAINT [FK_StaffTimeActivity_FundingSource_FundingSourceID_TenantID]
 GO
 ALTER TABLE [dbo].[StaffTimeActivity]  WITH CHECK ADD  CONSTRAINT [FK_StaffTimeActivity_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])

@@ -32,12 +32,9 @@ namespace ProjectFirma.Web.Views.StaffTimeActivity
 {
     public class EditStaffTimeActivitiesViewModel : FormViewModel, IValidatableObject
     {
+        [Required]
         public int ProjectID { get; set; }
-
         public List<StaffTimeActivitySimple> StaffTimeActivities { get; set; }
-        public string Explanation { get; set; }
-
-        public List<ProjectExemptReportingYearSimple> ProjectExemptReportingYears { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -47,12 +44,9 @@ namespace ProjectFirma.Web.Views.StaffTimeActivity
         }
 
         public EditStaffTimeActivitiesViewModel(Models.Project project,
-            List<StaffTimeActivitySimple> staffTimeActivityBulks,
-            List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
+            List<StaffTimeActivitySimple> staffTimeActivities)
         {
-            StaffTimeActivities = staffTimeActivityBulks;
-            ProjectExemptReportingYears = projectExemptReportingYears;
-            Explanation = project.NoExpendituresToReportExplanation;
+            StaffTimeActivities = staffTimeActivities;
             ProjectID = project.ProjectID;
         }
 
@@ -62,40 +56,26 @@ namespace ProjectFirma.Web.Views.StaffTimeActivity
             var staffTimeActivitysUpdated = new List<Models.StaffTimeActivity>();
             if (StaffTimeActivities != null)
             {
-                staffTimeActivitysUpdated = StaffTimeActivities.SelectMany(x => x.ToStaffTimeActivitys()).ToList();
+                staffTimeActivitysUpdated = StaffTimeActivities.Select(x => x.ToStaffTimeActivity()).ToList();
             }
-
-            var currentProjectExemptYears = project.GetExpendituresExemptReportingYears();
-            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Load();
-            var allProjectExemptYears = HttpRequestStorage.DatabaseEntities.AllProjectExemptReportingYears.Local;
-            var projectExemptReportingYears = new List<ProjectExemptReportingYear>();
-            if (ProjectExemptReportingYears != null)
-            {
-                // Completely rebuild the list
-                projectExemptReportingYears =
-                    ProjectExemptReportingYears.Where(x => x.IsExempt)
-                        .Select(x => new ProjectExemptReportingYear(x.ProjectExemptReportingYearID, x.ProjectID, x.CalendarYear, ProjectExemptReportingType.Expenditures.ProjectExemptReportingTypeID))
-                        .ToList();
-            }
-            currentProjectExemptYears.Merge(projectExemptReportingYears,
-                allProjectExemptYears,
-                (x, y) => x.ProjectID == y.ProjectID && x.CalendarYear == y.CalendarYear && x.ProjectExemptReportingTypeID == y.ProjectExemptReportingTypeID);
-
-            project.NoExpendituresToReportExplanation = Explanation;
-
+            
             currentStaffTimeActivitys.Merge(staffTimeActivitysUpdated,
                 allStaffTimeActivitys,
-                (x, y) => x.ProjectID == y.ProjectID && x.FundingSourceID == y.FundingSourceID && x.CalendarYear == y.CalendarYear,
-                (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);
+                (x, y) => x.StaffTimeActivityID == y.StaffTimeActivityID,
+                (x, y) =>
+                {
+                    x.StaffTimeActivityEndDate = y.StaffTimeActivityEndDate;
+                    x.StaffTimeActivityHours = y.StaffTimeActivityHours;
+                    x.StaffTimeActivityNotes = y.StaffTimeActivityNotes;
+                    x.StaffTimeActivityRate = y.StaffTimeActivityRate;
+                    x.StaffTimeActivityStartDate = y.StaffTimeActivityStartDate;
+                    x.StaffTimeActivityTotalAmount = y.StaffTimeActivityTotalAmount;
+                });
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var errors = new List<ValidationResult>();
-            var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == ProjectID);
-            var validationErrors = ExpendituresValidationResult.Validate(StaffTimeActivities, ProjectExemptReportingYears, Explanation, project.GetProjectUpdatePlanningDesignStartToCompletionYearRange());
-            errors.AddRange(validationErrors.Select(x => new ValidationResult(x)));
-            return errors;
+            yield break;
         }
     }
 }

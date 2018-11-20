@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[TreatmentActivityAcresTreated] [decimal](18, 0) NOT NULL,
 	[TreatmentActivityStartDate] [datetime] NOT NULL,
 	[TreatmentActivityEndDate] [datetime] NULL,
-	[TreatmentActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[TreatmentActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_TreatmentActivity_TreatmentActivityID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentActivityID] ASC

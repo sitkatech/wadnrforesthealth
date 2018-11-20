@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int projectID, int treatmentActivityTypeID, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate, string treatmentActivityNotes) : this()
+        public TreatmentActivity(int projectID, int treatmentActivityTypeID, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -53,13 +53,12 @@ namespace ProjectFirma.Web.Models
             this.TreatmentActivityTypeID = treatmentActivityTypeID;
             this.TreatmentActivityAcresTreated = treatmentActivityAcresTreated;
             this.TreatmentActivityStartDate = treatmentActivityStartDate;
-            this.TreatmentActivityNotes = treatmentActivityNotes;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public TreatmentActivity(Project project, TreatmentType treatmentActivityType, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate, string treatmentActivityNotes) : this()
+        public TreatmentActivity(Project project, TreatmentType treatmentActivityType, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -69,7 +68,6 @@ namespace ProjectFirma.Web.Models
             this.TreatmentActivityTypeID = treatmentActivityType.TreatmentTypeID;
             this.TreatmentActivityAcresTreated = treatmentActivityAcresTreated;
             this.TreatmentActivityStartDate = treatmentActivityStartDate;
-            this.TreatmentActivityNotes = treatmentActivityNotes;
         }
 
         /// <summary>
@@ -77,7 +75,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static TreatmentActivity CreateNewBlank(Project project, TreatmentType treatmentActivityType)
         {
-            return new TreatmentActivity(project, treatmentActivityType, default(decimal), default(DateTime), default(string));
+            return new TreatmentActivity(project, treatmentActivityType, default(decimal), default(DateTime));
         }
 
         /// <summary>
