@@ -53,22 +53,17 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.findStaffTimeActivityRow = function(projectId, fundingSourceId) { return _.find($scope.AngularModel.StaffTimeActivities, function(pfse) { return pfse.ProjectID == projectId && pfse.FundingSourceID == fundingSourceId; }); }
     
     $scope.addRow = function () {
-        // todo:
-        if (($scope.FundingSourceIDToAdd == null) || ($scope.ProjectIDToAdd == null)) {
-            return;
-        }
-        var newStaffTimeActivity = $scope.createNewRow($scope.ProjectIDToAdd, $scope.FundingSourceIDToAdd, $scope.getCalendarYearRange());
+        var newStaffTimeActivity = $scope.createNewRow($scope.ProjectIDToAdd, $scope.FundingSourceIDToAdd);
         $scope.AngularModel.StaffTimeActivities.push(newStaffTimeActivity);
         $scope.resetFundingSourceIDToAdd();
         $scope.resetProjectIDToAdd();
     };
 
-    $scope.createNewRow = function (projectId, fundingSourceId)
+    $scope.createNewRow = function (projectID, fundingSourceID)
     {
-        var project = $scope.getProject(projectId);
-        var fundingSource = $scope.getFundingSource(fundingSourceId);
+        var fundingSource = $scope.getFundingSource(fundingSourceID);
         var newStaffTimeActivity = {
-            ProjectID: project.ProjectID,
+            ProjectID: projectID,
             FundingSourceID: fundingSource.FundingSourceID,
         };
         return newStaffTimeActivity;
