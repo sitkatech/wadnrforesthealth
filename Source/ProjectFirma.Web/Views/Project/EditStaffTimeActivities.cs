@@ -18,7 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.StaffTimeActivity
+namespace ProjectFirma.Web.Views.Project
 {
     public abstract class EditStaffTimeActivities : LtInfo.Common.Mvc.TypedWebViewPage<EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>
     {

@@ -45,7 +45,6 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
-using ProjectFirma.Web.Views.StaffTimeActivity;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
@@ -286,7 +285,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            Check.Assert(project.ProjectStage != ProjectStage.Terminated, $"There is no Fact Sheet available for this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
+            Check.Assert(project.ProjectStage != ProjectStage.Terminated, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
         private ViewResult ViewBackwardLookingFactSheet(Project project)
@@ -517,7 +516,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteProject(Project project, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} '{project.DisplayName}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.Project.GetFieldDefinitionLabel()} '{project.DisplayName}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -533,7 +532,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteProject(project, viewModel);
             }
 
-            var message = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
+            var message = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
             project.DeleteFull();
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();

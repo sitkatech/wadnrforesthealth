@@ -28,7 +28,7 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.ProjectUpdate;
 
-namespace ProjectFirma.Web.Views.StaffTimeActivity
+namespace ProjectFirma.Web.Views.Project
 {
     public class EditStaffTimeActivitiesViewModel : FormViewModel, IValidatableObject
     {

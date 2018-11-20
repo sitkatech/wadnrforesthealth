@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.StaffTimeActivity
+namespace ProjectFirma.Web.Views.Project
 {
     public class EditStaffTimeActivitiesViewData : FirmaUserControlViewData
     {

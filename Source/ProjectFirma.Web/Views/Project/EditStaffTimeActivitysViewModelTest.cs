@@ -26,7 +26,7 @@ using ProjectFirma.Web.UnitTestCommon;
 using NUnit.Framework;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.StaffTimeActivity
+namespace ProjectFirma.Web.Views.Project
 {
     [TestFixture]
     public class EditStaffTimeActivitysViewModelTest
