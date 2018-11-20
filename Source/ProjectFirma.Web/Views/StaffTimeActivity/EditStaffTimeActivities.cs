@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Views.StaffTimeActivity
 {
-    public abstract class EditStaffTimeActivities : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>
+    public abstract class EditStaffTimeActivities : LtInfo.Common.Mvc.TypedWebViewPage<EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>
     {
     }
 }

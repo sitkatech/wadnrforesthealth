@@ -45,6 +45,7 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
+using ProjectFirma.Web.Views.StaffTimeActivity;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
@@ -857,6 +858,48 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
                 var content = System.IO.File.ReadAllBytes(outputFile.FileInfo.FullName);
                 return File(content, "application/pdf", fileName);
             }
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public ViewResult EditStaffTimeActivitiesForProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var staffTimeActivities = project.StaffTimeActivities.ToList();
+            var staffTimeActivitySimples = staffTimeActivities.Select(x => new StaffTimeActivitySimple(x));
+            var viewModel = new EditStaffTimeActivitiesViewModel(project, staffTimeActivitySimples.ToList());
+            return ViewEditStaffTimeActivities(project, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditStaffTimeActivitiesForProject(ProjectPrimaryKey projectPrimaryKey, EditStaffTimeActivitiesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var currentStaffTimeActivities = project.StaffTimeActivities.ToList();
+            if (!ModelState.IsValid)
+            {
+                return ViewEditStaffTimeActivities(project, viewModel);
+            }
+            return UpdateStaffTimeActivities(viewModel, currentStaffTimeActivities, project);
+        }
+
+        private static ActionResult UpdateStaffTimeActivities(
+            EditStaffTimeActivitiesViewModel viewModel,
+            List<StaffTimeActivity> currentStaffTimeActivities, Project project)
+        {
+            HttpRequestStorage.DatabaseEntities.StaffTimeActivities.Load();
+            var allStaffTimeActivities = HttpRequestStorage.DatabaseEntities.AllStaffTimeActivities.Local;
+            viewModel.UpdateModel(currentStaffTimeActivities, allStaffTimeActivities, project);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private ViewResult ViewEditStaffTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
+        {
+            var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var viewData = new EditStaffTimeActivitiesViewData(new ProjectSimple(project), allFundingSources);
+            return RazorView<EditStaffTimeActivities, EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>(viewData, viewModel);
         }
     }
 }
