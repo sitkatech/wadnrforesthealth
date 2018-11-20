@@ -35,20 +35,28 @@ namespace ProjectFirma.Web.Models
     public class StaffTimeActivitySimple
     {
         public int? StaffTimeActivityID { get; set; }
-        [Required]
-        public decimal? StaffTimeActivityTotalAmount { get; set; }
-        [Required]
-        public DateTime? StaffTimeActivityStartDate { get; set; }
-        [Required]
-        public decimal? StaffTimeActivityRate { get; set; }
-        public string StaffTimeActivityNotes { get; set; }
-        [Required]
-        public decimal? StaffTimeActivityHours { get; set; }
-        public DateTime? StaffTimeActivityEndDate { get; set; }
+
         [Required]
         public int? FundingSourceID { get; set; }
+
         [Required]
         public int ProjectID { get; set; }
+
+        [Required]
+        public DateTime? StaffTimeActivityStartDate { get; set; }
+
+        public DateTime? StaffTimeActivityEndDate { get; set; }
+
+        [Required]
+        public decimal? StaffTimeActivityHours { get; set; }
+
+        [Required]
+        public decimal? StaffTimeActivityRate { get; set; }
+
+        [Required]
+        public decimal? StaffTimeActivityTotalAmount { get; set; }
+
+        public string StaffTimeActivityNotes { get; set; }
 
         // Needed by ModelBinder
         public StaffTimeActivitySimple()
@@ -68,7 +76,6 @@ namespace ProjectFirma.Web.Models
             FundingSourceID = y.FundingSourceID;
             ProjectID = y.ProjectID;
         }
-
 
         public StaffTimeActivity ToStaffTimeActivity()
         {

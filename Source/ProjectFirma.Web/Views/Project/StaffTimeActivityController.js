@@ -22,6 +22,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
 {
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
+        jQuery(".sitkaDatePicker").datepicker();
     });
 
     $scope.resetFundingSourceIDToAdd = function() {
