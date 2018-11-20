@@ -24,23 +24,35 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Project
 {
-    public class EditStaffTimeActivitiesViewData : FirmaUserControlViewData
+    public class EditStaffTimeActivitiesViewData : FirmaViewData
     {
         public List<FundingSourceSimple> AllFundingSources { get; }
         public int? ProjectID { get; }
-        public int? FundingSourceID { get; }
+        public ViewDataForAngularClass ViewDataForAngular { get; set; }
 
-        private EditStaffTimeActivitiesViewData(List<FundingSourceSimple> allFundingSources, int? projectID, int? fundingSourceID)
+        private EditStaffTimeActivitiesViewData(List<FundingSourceSimple> allFundingSources, int? projectID, Person currentPerson) : base(currentPerson)
         {
             AllFundingSources = allFundingSources;
             ProjectID = projectID;
-            FundingSourceID = fundingSourceID;
+            ViewDataForAngular = new ViewDataForAngularClass(AllFundingSources, ProjectID);
         }
 
         public EditStaffTimeActivitiesViewData(ProjectSimple project,
-            List<FundingSourceSimple> allFundingSources)
-            : this(allFundingSources, project.ProjectID, null)
+            List<FundingSourceSimple> allFundingSources, Person currentPerson)
+            : this(allFundingSources, project.ProjectID, currentPerson)
         {
+        }
+
+        public class ViewDataForAngularClass
+        {
+            public List<FundingSourceSimple> AllFundingSources { get; }
+            public int? ProjectID { get; }
+
+            public ViewDataForAngularClass(List<FundingSourceSimple> allFundingSources, int? projectID)
+            {
+                AllFundingSources = allFundingSources;
+                ProjectID = projectID;
+            }
         }
     }
 }

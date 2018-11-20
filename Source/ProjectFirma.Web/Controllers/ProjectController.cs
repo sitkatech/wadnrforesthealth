@@ -861,7 +861,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
 
         [HttpGet]
         [ProjectEditAsAdminFeature]
-        public ViewResult EditStaffTimeActivitiesForProject(ProjectPrimaryKey projectPrimaryKey)
+        public ViewResult EditStaffTimeActivities(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
             var staffTimeActivities = project.StaffTimeActivities.ToList();
@@ -873,7 +873,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditStaffTimeActivitiesForProject(ProjectPrimaryKey projectPrimaryKey, EditStaffTimeActivitiesViewModel viewModel)
+        public ActionResult EditStaffTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditStaffTimeActivitiesViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             var currentStaffTimeActivities = project.StaffTimeActivities.ToList();
@@ -897,7 +897,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         private ViewResult ViewEditStaffTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
         {
             var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditStaffTimeActivitiesViewData(new ProjectSimple(project), allFundingSources);
+            var viewData = new EditStaffTimeActivitiesViewData(new ProjectSimple(project), allFundingSources, CurrentPerson);
             return RazorView<EditStaffTimeActivities, EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>(viewData, viewModel);
         }
     }
