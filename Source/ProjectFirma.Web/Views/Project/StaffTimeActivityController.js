@@ -54,7 +54,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.findStaffTimeActivityRow = function(projectId, fundingSourceId) { return _.find($scope.AngularModel.StaffTimeActivities, function(pfse) { return pfse.ProjectID == projectId && pfse.FundingSourceID == fundingSourceId; }); }
     
     $scope.addRow = function () {
-        var newStaffTimeActivity = $scope.createNewRow($scope.ProjectIDToAdd, $scope.FundingSourceIDToAdd);
+        var newStaffTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
         $scope.AngularModel.StaffTimeActivities.push(newStaffTimeActivity);
         $scope.resetFundingSourceIDToAdd();
         $scope.resetProjectIDToAdd();

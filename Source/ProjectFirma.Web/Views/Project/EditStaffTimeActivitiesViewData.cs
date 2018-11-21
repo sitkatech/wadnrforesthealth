@@ -19,6 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -59,6 +63,31 @@ namespace ProjectFirma.Web.Views.Project
                 AllFundingSources = allFundingSources;
                 ProjectID = projectID;
             }
+        }
+    }
+}
+
+public static class JsonExtensions
+{
+    public static string ToString(this JToken token, Formatting formatting = Formatting.Indented, JsonSerializerSettings settings = null)
+    {
+        using (var sw = new StringWriter(CultureInfo.InvariantCulture))
+        {
+            using (var jsonWriter = new JsonTextWriter(sw))
+            {
+                jsonWriter.Formatting = formatting;
+                jsonWriter.Culture = CultureInfo.InvariantCulture;
+                if (settings != null)
+                {
+                    jsonWriter.DateFormatHandling = settings.DateFormatHandling;
+                    jsonWriter.DateFormatString = settings.DateFormatString;
+                    jsonWriter.DateTimeZoneHandling = settings.DateTimeZoneHandling;
+                    jsonWriter.FloatFormatHandling = settings.FloatFormatHandling;
+                    jsonWriter.StringEscapeHandling = settings.StringEscapeHandling;
+                }
+                token.WriteTo(jsonWriter);
+            }
+            return sw.ToString();
         }
     }
 }
