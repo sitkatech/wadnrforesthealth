@@ -23,6 +23,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
         jQuery(".sitkaDatePicker").datepicker();
+        $scope.pruneBlankRowsIfAppropriate();
         $scope.addBlankRowsIfAppropriate();
     });
 
@@ -71,6 +72,14 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
             });
         return filtered;
     };
+
+    $scope.blankActivities = function () {
+        var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
+            function (f) {
+                return $scope.rowIsEmpty(f);
+            });
+        return filtered;
+    };
     
     $scope.addFundingSource = function () {
         var newStaffTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
@@ -116,6 +125,13 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
             if (!$scope.rowIsEmpty(staffTimeActivitiesWeCareAbout[staffTimeActivitiesWeCareAbout.length - 1])) {
                 $scope.AngularModel.StaffTimeActivities.push($scope.createNewRow($scope.AngularViewData.ProjectID, fundingSourcesWeCareAbout[i].FundingSourceID));
             }
+        }
+    };
+
+    $scope.pruneBlankRowsIfAppropriate = function() {
+        var blankActivities = $scope.blankActivities();
+        for (var i = 0; i < blankActivities.length; i++) {
+            $scope.deleteActivity(blankActivities[i]);
         }
     };
 
