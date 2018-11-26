@@ -30,7 +30,6 @@ Create Table dbo.StaffTimeActivity(
 	FundingSourceID int not null constraint FK_StaffTimeActivity_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID),
 	StaffTimeActivityHours decimal not null,
 	StaffTimeActivityRate money not null,
-	StaffTimeActivityTotalAmount money not null,
 	StaffTimeActivityStartDate datetime not null,
 	StaffTimeActivityEndDate datetime null,
 	StaffTimeActivityNotes varchar(max) null,

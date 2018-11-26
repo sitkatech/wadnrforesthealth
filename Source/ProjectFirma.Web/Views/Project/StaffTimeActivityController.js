@@ -23,6 +23,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
         jQuery(".sitkaDatePicker").datepicker();
+        $scope.addBlankRowsIfAppropriate();
     });
 
     $scope.resetFundingSourceIDToAdd = function() {
@@ -51,13 +52,30 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
         return _.find($scope.AngularViewData.AllFundingSources, function (f) { return fundingSourceId == f.FundingSourceID; });
     };
 
-    $scope.findStaffTimeActivityRow = function(projectId, fundingSourceId) { return _.find($scope.AngularModel.StaffTimeActivities, function(pfse) { return pfse.ProjectID == projectId && pfse.FundingSourceID == fundingSourceId; }); }
+    $scope.staffTimeActivitiesForFundingSource = function(fundingSource) {
+        return _.filter($scope.AngularModel.StaffTimeActivities,
+            function(a) { return a.FundingSourceID == fundingSource.FundingSourceID; });
+    };
+
+    $scope.fundingSourcesWithActivities = function() {
+        return _.filter($scope.AngularViewData.AllFundingSources,
+            function(f) {
+                return $scope.staffTimeActivitiesForFundingSource(f).length > 0;
+            });
+    };
+
+    $scope.nonBlankActivities = function() {
+        var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
+            function(f) {
+                return !$scope.rowIsEmpty(f);
+            });
+        return filtered;
+    };
     
-    $scope.addRow = function () {
+    $scope.addFundingSource = function () {
         var newStaffTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
         $scope.AngularModel.StaffTimeActivities.push(newStaffTimeActivity);
         $scope.resetFundingSourceIDToAdd();
-        $scope.resetProjectIDToAdd();
     };
 
     $scope.createNewRow = function (projectID, fundingSourceID)
@@ -70,9 +88,40 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
         return newStaffTimeActivity;
     };
 
-    $scope.deleteRow = function (rowToDelete) {
-        Sitka.Methods.removeFromJsonArray($scope.AngularModel.StaffTimeActivities, rowToDelete);
+    $scope.deleteFundingSource = function (fundingSourceToDelete) {
+        var staffTimeActivitiesWeCareAbout = $scope.staffTimeActivitiesForFundingSource(fundingSourceToDelete);
+        for (var i = 0; i < staffTimeActivitiesWeCareAbout.length; i++) {
+            $scope.deleteActivity(staffTimeActivitiesWeCareAbout[i]);
+        }
     };
+
+    $scope.deleteActivity = function(activityToDelete) {
+        Sitka.Methods.removeFromJsonArray($scope.AngularModel.StaffTimeActivities, activityToDelete);
+    }
+
+    $scope.rowIsEmpty = function(staffTimeActivity) {
+        return !(staffTimeActivity.StaffTimeActivityHours ||
+            staffTimeActivity.StaffTimeActivityRate ||
+            staffTimeActivity.StaffTimeActivityTotalAmount ||
+            staffTimeActivity.StaffTimeActivityStartDate ||
+            staffTimeActivity.StaffTimeActivityEndDate ||
+            (staffTimeActivity.StaffTimeActivityNotes && staffTimeActivity.StaffTimeActivityNotes.replace(/\s+/, "")));
+    };
+
+    $scope.addBlankRowsIfAppropriate = function() {
+        var fundingSourcesWeCareAbout = $scope.fundingSourcesWithActivities();
+        for (var i = 0; i < fundingSourcesWeCareAbout.length; i++) {
+            var staffTimeActivitiesWeCareAbout =
+                $scope.staffTimeActivitiesForFundingSource(fundingSourcesWeCareAbout[i]);
+            if (!$scope.rowIsEmpty(staffTimeActivitiesWeCareAbout[staffTimeActivitiesWeCareAbout.length - 1])) {
+                $scope.AngularModel.StaffTimeActivities.push($scope.createNewRow($scope.AngularViewData.ProjectID, fundingSourcesWeCareAbout[i].FundingSourceID));
+            }
+        }
+    };
+
+    $scope.totalAmount = function(staffTimeActivity) {
+        return staffTimeActivity.StaffTimeActivityHours * staffTimeActivity.StaffTimeActivityRate;
+    }
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     if ($scope.AngularModel.StaffTimeActivities == null) {

@@ -30,14 +30,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public StaffTimeActivity(int staffTimeActivityID, int projectID, int fundingSourceID, decimal staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate, DateTime? staffTimeActivityEndDate, string staffTimeActivityNotes) : this()
+        public StaffTimeActivity(int staffTimeActivityID, int projectID, int fundingSourceID, decimal staffTimeActivityHours, decimal staffTimeActivityRate, DateTime staffTimeActivityStartDate, DateTime? staffTimeActivityEndDate, string staffTimeActivityNotes) : this()
         {
             this.StaffTimeActivityID = staffTimeActivityID;
             this.ProjectID = projectID;
             this.FundingSourceID = fundingSourceID;
             this.StaffTimeActivityHours = staffTimeActivityHours;
             this.StaffTimeActivityRate = staffTimeActivityRate;
-            this.StaffTimeActivityTotalAmount = staffTimeActivityTotalAmount;
             this.StaffTimeActivityStartDate = staffTimeActivityStartDate;
             this.StaffTimeActivityEndDate = staffTimeActivityEndDate;
             this.StaffTimeActivityNotes = staffTimeActivityNotes;
@@ -46,7 +45,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public StaffTimeActivity(int projectID, int fundingSourceID, decimal staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate) : this()
+        public StaffTimeActivity(int projectID, int fundingSourceID, decimal staffTimeActivityHours, decimal staffTimeActivityRate, DateTime staffTimeActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.StaffTimeActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -55,14 +54,13 @@ namespace ProjectFirma.Web.Models
             this.FundingSourceID = fundingSourceID;
             this.StaffTimeActivityHours = staffTimeActivityHours;
             this.StaffTimeActivityRate = staffTimeActivityRate;
-            this.StaffTimeActivityTotalAmount = staffTimeActivityTotalAmount;
             this.StaffTimeActivityStartDate = staffTimeActivityStartDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public StaffTimeActivity(Project project, FundingSource fundingSource, decimal staffTimeActivityHours, decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount, DateTime staffTimeActivityStartDate) : this()
+        public StaffTimeActivity(Project project, FundingSource fundingSource, decimal staffTimeActivityHours, decimal staffTimeActivityRate, DateTime staffTimeActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.StaffTimeActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -74,7 +72,6 @@ namespace ProjectFirma.Web.Models
             fundingSource.StaffTimeActivities.Add(this);
             this.StaffTimeActivityHours = staffTimeActivityHours;
             this.StaffTimeActivityRate = staffTimeActivityRate;
-            this.StaffTimeActivityTotalAmount = staffTimeActivityTotalAmount;
             this.StaffTimeActivityStartDate = staffTimeActivityStartDate;
         }
 
@@ -83,7 +80,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static StaffTimeActivity CreateNewBlank(Project project, FundingSource fundingSource)
         {
-            return new StaffTimeActivity(project, fundingSource, default(decimal), default(decimal), default(decimal), default(DateTime));
+            return new StaffTimeActivity(project, fundingSource, default(decimal), default(decimal), default(DateTime));
         }
 
         /// <summary>
@@ -124,7 +121,6 @@ namespace ProjectFirma.Web.Models
         public int FundingSourceID { get; set; }
         public decimal StaffTimeActivityHours { get; set; }
         public decimal StaffTimeActivityRate { get; set; }
-        public decimal StaffTimeActivityTotalAmount { get; set; }
         public DateTime StaffTimeActivityStartDate { get; set; }
         public DateTime? StaffTimeActivityEndDate { get; set; }
         public string StaffTimeActivityNotes { get; set; }

@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 DateTime staffTimeActivityStartDate)
             {
                 return new StaffTimeActivity(project, fundingSource, staffTimeActivityHours, staffTimeActivityRate,
-                    staffTimeActivityTotalAmount, staffTimeActivityStartDate);
+                     staffTimeActivityStartDate);
             }
         }
     }

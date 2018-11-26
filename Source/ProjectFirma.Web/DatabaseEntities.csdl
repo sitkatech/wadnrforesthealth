@@ -2081,7 +2081,6 @@
     <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <Property Name="StaffTimeActivityHours" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="StaffTimeActivityRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="StaffTimeActivityTotalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="StaffTimeActivityStartDate" Type="DateTime" Nullable="false" />
     <Property Name="StaffTimeActivityEndDate" Type="DateTime" />
     <Property Name="StaffTimeActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />

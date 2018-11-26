@@ -64,13 +64,16 @@ namespace ProjectFirma.Web.Views.Project
                     x.StaffTimeActivityNotes = y.StaffTimeActivityNotes;
                     x.StaffTimeActivityRate = y.StaffTimeActivityRate;
                     x.StaffTimeActivityStartDate = y.StaffTimeActivityStartDate;
-                    x.StaffTimeActivityTotalAmount = y.StaffTimeActivityTotalAmount;
                 });
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            yield break;
+            if (StaffTimeActivities.Any(x =>
+                x.StaffTimeActivityEndDate.GetValueOrDefault() < x.StaffTimeActivityStartDate))
+            {
+                yield return new ValidationResult("End Date cannot be before Start Date");
+            }
         }
     }
 }

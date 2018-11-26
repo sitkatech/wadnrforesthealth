@@ -9,7 +9,6 @@ CREATE TABLE [dbo].[StaffTimeActivity](
 	[FundingSourceID] [int] NOT NULL,
 	[StaffTimeActivityHours] [decimal](18, 0) NOT NULL,
 	[StaffTimeActivityRate] [money] NOT NULL,
-	[StaffTimeActivityTotalAmount] [money] NOT NULL,
 	[StaffTimeActivityStartDate] [datetime] NOT NULL,
 	[StaffTimeActivityEndDate] [datetime] NULL,
 	[StaffTimeActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,

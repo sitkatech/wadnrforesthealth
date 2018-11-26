@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
@@ -43,8 +44,10 @@ namespace ProjectFirma.Web.Models
         public int ProjectID { get; set; }
 
         [Required(ErrorMessage = "Start Date is required.")]
+        [DisplayName("Start Date")]
         public DateTime? StaffTimeActivityStartDate { get; set; }
 
+        [DisplayName("End Date")]
         public DateTime? StaffTimeActivityEndDate { get; set; }
 
         [Required(ErrorMessage = "Number of Hours is required.")]
@@ -52,9 +55,6 @@ namespace ProjectFirma.Web.Models
 
         [Required(ErrorMessage = "Rate is required.")]
         public decimal? StaffTimeActivityRate { get; set; }
-
-        [Required(ErrorMessage = "Total Amount is required.")]
-        public decimal? StaffTimeActivityTotalAmount { get; set; }
 
         public string StaffTimeActivityNotes { get; set; }
 
@@ -72,7 +72,6 @@ namespace ProjectFirma.Web.Models
             StaffTimeActivityNotes = y.StaffTimeActivityNotes;
             StaffTimeActivityRate = y.StaffTimeActivityRate;
             StaffTimeActivityStartDate = y.StaffTimeActivityStartDate;
-            StaffTimeActivityTotalAmount = y.StaffTimeActivityTotalAmount;
             FundingSourceID = y.FundingSourceID;
             ProjectID = y.ProjectID;
         }
@@ -81,8 +80,7 @@ namespace ProjectFirma.Web.Models
         {
             // None of the nullables will ever default, thanks to RequiredAttribute
             return new StaffTimeActivity(StaffTimeActivityID ?? ModelObjectHelpers.NotYetAssignedID, ProjectID, FundingSourceID.GetValueOrDefault(),
-                StaffTimeActivityHours.GetValueOrDefault(), StaffTimeActivityRate.GetValueOrDefault(),
-                StaffTimeActivityTotalAmount.GetValueOrDefault(), StaffTimeActivityStartDate.GetValueOrDefault(),
+                StaffTimeActivityHours.GetValueOrDefault(), StaffTimeActivityRate.GetValueOrDefault(), StaffTimeActivityStartDate.GetValueOrDefault(),
                 StaffTimeActivityEndDate, StaffTimeActivityNotes);
         }
     }

@@ -891,7 +891,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             HttpRequestStorage.DatabaseEntities.StaffTimeActivities.Load();
             var allStaffTimeActivities = HttpRequestStorage.DatabaseEntities.AllStaffTimeActivities.Local;
             viewModel.UpdateModel(currentStaffTimeActivities, allStaffTimeActivities, project);
-            return new ModalDialogFormJsonResult();
+            return RedirectToActionStatic(new SitkaRoute<ProjectController>(x=>x.Detail(project)));
         }
 
         private ViewResult ViewEditStaffTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)

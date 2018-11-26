@@ -2011,7 +2011,6 @@ warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_S
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="StaffTimeActivityHours" Type="decimal" Nullable="false" />
     <Property Name="StaffTimeActivityRate" Type="money" Nullable="false" />
-    <Property Name="StaffTimeActivityTotalAmount" Type="money" Nullable="false" />
     <Property Name="StaffTimeActivityStartDate" Type="datetime" Nullable="false" />
     <Property Name="StaffTimeActivityEndDate" Type="datetime" />
     <Property Name="StaffTimeActivityNotes" Type="varchar(max)" />

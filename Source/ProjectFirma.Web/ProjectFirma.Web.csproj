@@ -429,6 +429,7 @@
     <Compile Include="Models\ProjectInternalNote.cs" />
     <Compile Include="Models\ProjectStewardshipAreaType.cs" />
     <Compile Include="Models\ProjectUpdateBatchModelExtensions.cs" />
+    <Compile Include="Models\StaffTimeActivity.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="UnitTestCommon\TestStaffTimeActivity.cs" />
     <Compile Include="Views\Home\TrainingVideo.cs" />

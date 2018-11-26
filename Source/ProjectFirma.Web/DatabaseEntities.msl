@@ -1145,7 +1145,6 @@
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="StaffTimeActivityHours" ColumnName="StaffTimeActivityHours" />
           <ScalarProperty Name="StaffTimeActivityRate" ColumnName="StaffTimeActivityRate" />
-          <ScalarProperty Name="StaffTimeActivityTotalAmount" ColumnName="StaffTimeActivityTotalAmount" />
           <ScalarProperty Name="StaffTimeActivityStartDate" ColumnName="StaffTimeActivityStartDate" />
           <ScalarProperty Name="StaffTimeActivityEndDate" ColumnName="StaffTimeActivityEndDate" />
           <ScalarProperty Name="StaffTimeActivityNotes" ColumnName="StaffTimeActivityNotes" />
