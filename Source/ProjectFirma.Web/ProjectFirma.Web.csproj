@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -442,8 +442,11 @@
     <Compile Include="Models\ProjectStewardshipAreaType.cs" />
     <Compile Include="Models\ProjectUpdateBatchModelExtensions.cs" />
     <Compile Include="Models\ProjectWorkflowSectionGrouping.cs" />
+    <Compile Include="Models\StaffTimeActivity.cs" />
+    <Compile Include="Models\StaffTimeActivitySimple.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="UnitTestCommon\TestGeospatialAreaType.cs" />
+    <Compile Include="UnitTestCommon\TestStaffTimeActivity.cs" />
     <Compile Include="Views\Home\TrainingVideo.cs" />
     <Compile Include="Views\Home\TrainingVideoViewData.cs" />
     <Compile Include="Views\PerformanceMeasure\TechnicalAssistanceParameters.cs" />
@@ -486,6 +489,10 @@
     <Compile Include="Views\ProjectUpdate\EditProjectUpdateConfigurationViewModel.cs" />
     <Compile Include="Common\FirmaHelpersTest.cs" />
     <Compile Include="Views\ProjectUpdate\ProjectUpdateViewData.cs" />
+    <Compile Include="Views\Project\EditStaffTimeActivities.cs" />
+    <Compile Include="Views\Project\EditStaffTimeActivitiesViewData.cs" />
+    <Compile Include="Views\Project\EditStaffTimeActivitiesViewModel.cs" />
+    <Compile Include="Views\Project\EditStaffTimeActivitysViewModelTest.cs" />
     <Compile Include="Views\Results\ConfigureAccomplishmentsDashboard.cs" />
     <Compile Include="Views\ProjectCreate\ValidateImportExternalProjectDataViewModel.cs" />
     <Compile Include="Models\ImportExternalProjectStaging.cs" />
@@ -1717,6 +1724,7 @@
     <Content Include="Views\Shared\UserStewardshipAreas\EditUserStewardshipAreas.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialArea.cs" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewData.cs" />
+    <Content Include="Views\Project\EditStaffTimeActivities.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
