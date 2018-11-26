@@ -23,7 +23,6 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
         jQuery(".sitkaDatePicker").datepicker();
-        $scope.pruneBlankRowsIfAppropriate();
         $scope.addBlankRowsIfAppropriate();
     });
 
@@ -53,9 +52,21 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
         return _.find($scope.AngularViewData.AllFundingSources, function (f) { return fundingSourceId == f.FundingSourceID; });
     };
 
-    $scope.staffTimeActivitiesForFundingSource = function(fundingSource) {
-        return _.filter($scope.AngularModel.StaffTimeActivities,
-            function(a) { return a.FundingSourceID == fundingSource.FundingSourceID; });
+    $scope.staffTimeActivitiesForFundingSource = function(fundingSource, ignoreBlanks) {
+        var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
+            function (a) { return a.FundingSourceID == fundingSource.FundingSourceID; });
+        if (!ignoreBlanks) {
+            var a = [];
+            for (var i = 0; i < filtered.length - 1; i++) {
+                if ($scope.rowIsEmpty(filtered[i])) {
+                    a.push(i);
+                }
+            }
+            for (var i = 0; i < a.length; i++) {
+                Sitka.Methods.removeFromJsonArray(filtered, filtered[a[i]]);
+            }
+        }
+        return filtered;
     };
 
     $scope.fundingSourcesWithActivities = function() {
@@ -98,7 +109,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     };
 
     $scope.deleteFundingSource = function (fundingSourceToDelete) {
-        var staffTimeActivitiesWeCareAbout = $scope.staffTimeActivitiesForFundingSource(fundingSourceToDelete);
+        var staffTimeActivitiesWeCareAbout = $scope.staffTimeActivitiesForFundingSource(fundingSourceToDelete, true);
         for (var i = 0; i < staffTimeActivitiesWeCareAbout.length; i++) {
             $scope.deleteActivity(staffTimeActivitiesWeCareAbout[i]);
         }
@@ -128,13 +139,6 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
         }
     };
 
-    $scope.pruneBlankRowsIfAppropriate = function() {
-        var blankActivities = $scope.blankActivities();
-        for (var i = 0; i < blankActivities.length; i++) {
-            $scope.deleteActivity(blankActivities[i]);
-        }
-    };
-
     $scope.getTotalAmountForActivity = function(staffTimeActivity) {
         return staffTimeActivity.StaffTimeActivityHours * staffTimeActivity.StaffTimeActivityRate;
     };
@@ -158,4 +162,3 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     $scope.resetFundingSourceIDToAdd();
 });
-
