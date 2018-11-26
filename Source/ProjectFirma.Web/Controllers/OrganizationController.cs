@@ -169,7 +169,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectsAsSimpleLocations = allActiveProjectsAndProposals.Where(x => x.ProjectLocationSimpleType != ProjectLocationSimpleType.None).ToList();
             var projectSimpleLocationsFeatureCollection = new FeatureCollection();
-            projectSimpleLocationsFeatureCollection.Features.AddRange(((IEnumerable<IMappableProject>) projectsAsSimpleLocations).Select(x =>
+            projectSimpleLocationsFeatureCollection.Features.AddRange(projectsAsSimpleLocations.Select(x =>
             {
                 var feature = x.MakePointFeatureWithRelevantProperties(x.ProjectLocationPoint, true, true);
                 feature.Properties["FeatureColor"] = "#99b3ff";
@@ -190,7 +190,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
-            layers.AddRange(MapInitJson.GetAllWatershedMapLayers(LayerInitialVisibility.Show));
+            layers.AddRange(MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show));
 
             return new MapInitJson($"organization_{organization.OrganizationID}_Map", 10, layers, boundingBox);
         }

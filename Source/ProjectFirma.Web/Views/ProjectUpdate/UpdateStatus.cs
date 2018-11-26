@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public readonly bool IsPhotosUpdated;
         public readonly bool IsLocationSimpleUpdated;
         public readonly bool IsLocationDetailUpdated;
-        public readonly bool IsWatershedUpdated;
         public readonly bool IsExternalLinksUpdated;
         public readonly bool IsNotesUpdated;
         public readonly bool IsOrganizationsUpdated;
@@ -42,7 +41,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             bool isPhotosUpdated,
             bool isLocationSimpleUpdated,
             bool isLocationDetailUpdated,
-            bool isWatershedUpdated,
             bool isExternalLinksUpdated,
             bool isNotesUpdated,
             bool isExpectedFundingUpdated,
@@ -55,13 +53,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             IsPhotosUpdated = isPhotosUpdated;
             IsLocationSimpleUpdated = isLocationSimpleUpdated;
             IsLocationDetailUpdated = isLocationDetailUpdated;
-            IsWatershedUpdated = isWatershedUpdated;
             IsExternalLinksUpdated = isExternalLinksUpdated;
             IsNotesUpdated = isNotesUpdated;
             IsExpectedFundingUpdated = isExpectedFundingUpdated;
             IsOrganizationsUpdated = isOrganizationsUpdated;
         }
-
-        
     }
 }

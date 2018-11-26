@@ -18,71 +18,78 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Views.Shared.ProjectWatershedControls;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
-    //public enum ProposalSectionEnum
-    //{
-    //    Instructions,
-    //    Basics,
-    //    PerformanceMeasures,
-    //    LocationSimple,
-    //    LocationDetailed,
-    //    Watershed,
-    //    Classifications,
-    //    Assessment,
-    //    Notes,
-    //    History,
-    //    Photos,
-    //    ExpectedFunding
-    //}
-
     public class ProposalSectionsStatus
     {
         public bool IsBasicsSectionComplete { get; set; }
         public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
-        public bool IsWatershedSectionComplete { get; set; }
+        public bool IsGeospatialAreaSectionComplete { get; set; }
         public bool IsClassificationsComplete { get; set; }
         public bool IsAssessmentComplete { get; set; }
         public bool IsNotesSectionComplete { get; set; }
-        public bool AreAllSectionsValid => IsBasicsSectionComplete && IsPerformanceMeasureSectionComplete && IsClassificationsComplete && IsAssessmentComplete && IsProjectLocationSimpleSectionComplete && IsProjectLocationDetailedSectionComplete && IsWatershedSectionComplete && IsNotesSectionComplete && IsExpectedFundingSectionComplete;
+        public bool AreAllSectionsValid => IsBasicsSectionComplete && IsPerformanceMeasureSectionComplete && IsClassificationsComplete && IsAssessmentComplete && IsProjectLocationSimpleSectionComplete && IsProjectLocationDetailedSectionComplete && IsGeospatialAreaSectionComplete && IsNotesSectionComplete && IsExpectedFundingSectionComplete;
         public static bool AreAllSectionsValidForProject(Models.Project project)
         {
-            return Models.Project.GetApplicableProposalWizardSections(project).All(x => x.IsComplete(project));
+            return Models.Project.GetApplicableProposalWizardSections(project).All(x => x.IsComplete);
         }
         public bool IsExpectedFundingSectionComplete { get; set; }
         public bool IsProjectOrganizationsSectionComplete { get; set; }
 
-        public ProposalSectionsStatus(Models.Project proposal)
+        public ProposalSectionsStatus(Models.Project project, List<GeospatialAreaType> geospatialAreaTypes)
         {
-            var basicsResults = new BasicsViewModel(proposal).GetValidationResults();
+            var basicsResults = new BasicsViewModel(project).GetValidationResults();
             IsBasicsSectionComplete = !basicsResults.Any();
 
-            var locationSimpleValidationResults = new LocationSimpleViewModel(proposal).GetValidationResults();
+            var locationSimpleValidationResults = new LocationSimpleViewModel(project).GetValidationResults();
             IsProjectLocationSimpleSectionComplete = !locationSimpleValidationResults.Any();
 
             IsProjectLocationDetailedSectionComplete = IsBasicsSectionComplete;
 
-            var editWatershedValidationResults = new EditProjectWatershedsViewModel(proposal.ProjectWatersheds.Select(x => x.WatershedID).ToList(), proposal.ProjectWatershedNotes).GetValidationResults();
-            IsWatershedSectionComplete = !editWatershedValidationResults.Any();
+            if (geospatialAreaTypes.Any())
+            {
+                var isGeospatialAreaSectionComplete = true;
+                foreach (var geospatialAreaType in geospatialAreaTypes)
+                {
+                    var geospatialAreaIDs = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).Select(x => x.GeospatialAreaID).ToList();
+                    var editGeospatialAreaValidationResults = new EditProjectGeospatialAreasViewModel(geospatialAreaIDs, project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)?.Notes).GetValidationResults();
+                    if (editGeospatialAreaValidationResults.Any())
+                    {
+                        isGeospatialAreaSectionComplete = false;
+                        break;
+                    }
+                }
 
-            var pmValidationResults = new ExpectedPerformanceMeasureValuesViewModel(proposal).GetValidationResults();
-            IsPerformanceMeasureSectionComplete = !pmValidationResults.Any();
+                IsGeospatialAreaSectionComplete = isGeospatialAreaSectionComplete;
+            }
+            else
+            {
+                IsGeospatialAreaSectionComplete = true;
+            }
 
-            var efValidationResults = new ExpectedFundingViewModel(proposal.ProjectFundingSourceRequests.ToList())
+            var performanceMeasureValidationResults = new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
+            IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
+
+            var efValidationResults = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList())
                 .GetValidationResults();
             IsExpectedFundingSectionComplete = !efValidationResults.Any();
 
-            var proposalClassificationSimples = ProjectCreateController.GetProjectClassificationSimples(proposal);
+            var proposalClassificationSimples = ProjectCreateController.GetProjectClassificationSimples(project);
             var classificationValidationResults = new EditProposalClassificationsViewModel(proposalClassificationSimples).GetValidationResults();
             IsClassificationsComplete = !classificationValidationResults.Any();
 
-            IsAssessmentComplete = ProjectCreateController.GetProjectAssessmentQuestionSimples(proposal).All(simple => simple.Answer.HasValue);
+            IsAssessmentComplete = ProjectCreateController.GetProjectAssessmentQuestionSimples(project).All(simple => simple.Answer.HasValue);
 
             IsNotesSectionComplete = IsBasicsSectionComplete; //there is no validation required on Notes
         }
@@ -95,7 +102,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsAssessmentComplete = false;
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
-            IsWatershedSectionComplete = false;
+            IsGeospatialAreaSectionComplete = false;
             IsNotesSectionComplete = false;
         }
     }

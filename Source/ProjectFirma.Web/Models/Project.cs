@@ -34,10 +34,11 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using ProjectFirma.Web.Views.ProjectUpdate;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class Project : IAuditableEntity, IMappableProject
+    public partial class Project : IAuditableEntity, IProject
     {
         public const int MaxLengthForProjectDescription = 700;
 
@@ -71,19 +72,17 @@ namespace ProjectFirma.Web.Models
 
         public Organization GetCanStewardProjectsOrganization()
         {
-            var organization = ProjectOrganizations.SingleOrDefault(x => x.RelationshipType.CanStewardProjects)?.Organization;
-            return organization;
+            return ProjectOrganizations.SingleOrDefault(x => x.RelationshipType.CanStewardProjects)?.Organization;
         }
 
         public TaxonomyBranch GetCanStewardProjectsTaxonomyBranch()
         {
-            var taxonomyBranch = TaxonomyLeaf.TaxonomyBranch;
-            return taxonomyBranch;
+            return TaxonomyLeaf.TaxonomyBranch;
         }
 
-        public List<Watershed> GetCanStewardProjectsWatersheds()
+        public List<GeospatialArea> GetCanStewardProjectsGeospatialAreas()
         {
-            return ProjectWatersheds.Select(x => x.Watershed).ToList();
+            return ProjectGeospatialAreas.Select(x => x.GeospatialArea).ToList();
         }
 
         public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
@@ -254,7 +253,6 @@ namespace ProjectFirma.Web.Models
 
         public void SetProjectLocationStateProvince(IEnumerable<StateProvince> stateProvinces)
         {
-
             if (HasProjectLocationPoint)
             {
                 var stateProvince = stateProvinces.FirstOrDefault(x => x.StateProvinceFeatureForAnalysis.Intersects(ProjectLocationPoint));
@@ -266,18 +264,24 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public HtmlString GetProjectWatershedNamesAsHyperlinks()
+        public GeospatialAreaValidationResult ValidateProjectGeospatialArea(GeospatialAreaType geospatialAreaType)
         {
-            return new HtmlString(ProjectWatersheds.Any()
-                ? string.Join(", ", ProjectWatersheds.OrderBy(x => x.Watershed.WatershedName).Select(x => x.Watershed.GetDisplayNameAsUrl()))
-                : ViewUtilities.NaString);
+            var projectGeospatialAreaTypeNoteUpdate = ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
+            var incomplete = ProjectGeospatialAreas.All(x => x.GeospatialArea.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID) && projectGeospatialAreaTypeNoteUpdate == null;
+            return new GeospatialAreaValidationResult(incomplete, geospatialAreaType);
         }
 
-        public string GetProjectWatershedNamesAsString()
+        public bool IsProjectGeospatialAreaValid(GeospatialAreaType geospatialAreaType)
         {
-            return ProjectWatersheds.Any()
-                ? string.Join(", ", ProjectWatersheds.OrderBy(x => x.Watershed.WatershedName).Select(x => x.Watershed.WatershedName))
-                : ViewUtilities.NaString;
+            return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
+        }
+
+        public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
+        {
+            var projectGeospatialAreas = ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
+            return new HtmlString(projectGeospatialAreas.Any()
+                ? string.Join(", ", projectGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName).Select(x => x.GeospatialArea.GetDisplayNameAsUrl()))
+                : ViewUtilities.NaString);
         }
 
         public bool IsMyProject(Person person)
@@ -351,9 +355,9 @@ namespace ProjectFirma.Web.Models
             return DefaultBoundingBox;
         }
 
-        public IEnumerable<Watershed> GetProjectWatersheds()
+        public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
         {
-            return ProjectWatersheds.Select(x => x.Watershed);
+            return ProjectGeospatialAreas.Select(x => x.GeospatialArea);
         }
 
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
@@ -361,7 +365,7 @@ namespace ProjectFirma.Web.Models
             return ProjectLocations.ToGeoJsonFeatureCollection();
         }
 
-        public static FeatureCollection MappedPointsToGeoJsonFeatureCollection(List<IMappableProject> projects, bool addProjectProperties, bool useDetailedCustomPopup)
+        public static FeatureCollection MappedPointsToGeoJsonFeatureCollection(List<Project> projects, bool addProjectProperties, bool useDetailedCustomPopup)
         {
             var featureCollection = new FeatureCollection();
             var filteredProjectList = projects.Where(x1 => x1.HasProjectLocationPoint).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
@@ -507,7 +511,6 @@ namespace ProjectFirma.Web.Models
         public ICollection<IEntityClassification> ProjectClassificationsForMap =>
             new List<IEntityClassification>(ProjectClassifications);
 
-        public bool HasProjectWatersheds => ProjectWatersheds.Any();
         public int FancyTreeNodeKey => ProjectID;
 
         IEnumerable<IProjectCustomAttribute> IProject.ProjectCustomAttributes
@@ -607,11 +610,6 @@ namespace ProjectFirma.Web.Models
             return ProjectStage == ProjectStage.Proposal;
         }
 
-        public bool IsNotApprovedProposal()
-        {
-            return IsProposal() && ProjectApprovalStatus != ProjectApprovalStatus.Approved;
-        }
-
         public bool IsActiveProposal()
         {
             return IsProposal() && ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
@@ -643,46 +641,19 @@ namespace ProjectFirma.Web.Models
             return true;
         }
 
-        private bool AreReportedPerformanceMeasuresRelevant()
+        public bool AreReportedPerformanceMeasuresRelevant()
         {
             return ProjectStage != ProjectStage.Proposal && ProjectStage != ProjectStage.PlanningDesign;
         }
 
-        private bool AreReportedExpendituresRelevant()
+        public bool AreReportedExpendituresRelevant()
         {
             return ProjectStage != ProjectStage.Proposal;
         }
 
-        public static List<ProjectCreateSection> GetApplicableProposalWizardSections(Project project)
+        public static List<ProjectSectionSimple> GetApplicableProposalWizardSections(Project project)
         {
-            var projectCreateSections = ProjectCreateSection.All.Except(ProjectCreateSection.ConditionalSections).ToList();
-
-            // These checks require the Basics section to have been completed and the pending project to have been saved
-            if (project != null)
-            {
-                if (project.IsExpectedFundingRelevant())
-                {
-                    projectCreateSections.Add(ProjectCreateSection.ExpectedFunding);
-                }
-
-                if (project.AreReportedExpendituresRelevant())
-                {
-                    projectCreateSections.Add(ProjectCreateSection.ReportedExpenditures);
-                }
-
-                if (project.AreReportedPerformanceMeasuresRelevant())
-                {
-                    projectCreateSections.Add(ProjectCreateSection.ReportedPerformanceMeasures);
-                }
-            }
-
-            // These checks can be performed regardless of whether the project has been saved or not
-            if (HttpRequestStorage.DatabaseEntities.AssessmentQuestions.Any())
-            {
-                projectCreateSections.Add(ProjectCreateSection.Assessment);
-            }
-
-            return projectCreateSections.OrderBy(x => x.SortOrder).ToList();
+            return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, true)).OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
         }
 
         public string GetPlanningDesignStartYear()

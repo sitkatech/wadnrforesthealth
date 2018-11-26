@@ -56,32 +56,32 @@ Source code is available upon request via <support@sitkatech.com>.
             <div id="projectLocationInformationContainer" style="padding-left: 20px"></div>
         </div>
     }
-    @if (ViewDataTyped.HasWatersheds)
+    @foreach(var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
     {
         <div style="margin-bottom: 5px">
             <label>
-                @FieldDefinition.Watershed.GetFieldDefinitionLabel() Information
+                @geospatialAreaType.GeospatialAreaTypeNamePluralized Information
             </label>
             <ul class="noListStyle">
-                @foreach (var projectWatershed in ViewDataTyped.Watersheds.OrderBy(x => x.DisplayName))
+                @foreach (var geospatialArea in ViewDataTyped.GeospatialAreas.Where(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).OrderBy(x => x.DisplayName))
                 {
                     <li>
-                        <a href="@projectWatershed.GetDetailUrl()">@projectWatershed.DisplayName</a>
+                        <a href="@geospatialArea.GetDetailUrl()">@geospatialArea.DisplayName</a>
                     </li>
                 }
             </ul>
         </div>
-    }
-    @if (ViewDataTyped.HasWatershedNotes)
-    {
-        <div style="margin-bottom: 5px">
-            <label>
-                @FieldDefinition.Watershed.GetFieldDefinitionLabel() Notes
-            </label>
-            <div style="padding-left: 20px">
-                @ViewDataTyped.ProjectWatershedNotes
+        if (ViewDataTyped.DictionaryGeoNotes.ContainsKey(geospatialAreaType.GeospatialAreaTypeID))
+        {
+            <div style="margin-bottom: 5px">
+                <label>
+                    @geospatialAreaType.GeospatialAreaTypeNamePluralized Notes
+                </label>
+                <div style="padding-left: 20px">
+                    @ViewDataTyped.DictionaryGeoNotes[geospatialAreaType.GeospatialAreaTypeID]
+                </div>
             </div>
-        </div>
+        }
     }
 </div>
 

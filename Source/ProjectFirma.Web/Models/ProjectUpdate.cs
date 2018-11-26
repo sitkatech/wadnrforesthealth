@@ -46,8 +46,7 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
-            LoadSimpleLocationFromProject(project);
-            LoadWatershedNotesFromProject(project);
+            LoadSimpleLocationFromProject(project);            
         }
 
         public void LoadUpdateFromProject(Project project)
@@ -66,11 +65,6 @@ namespace ProjectFirma.Web.Models
             ProjectLocationPoint = project.ProjectLocationPoint;
             ProjectLocationNotes = project.ProjectLocationNotes;
             ProjectLocationSimpleTypeID = project.ProjectLocationSimpleTypeID;
-        }
-
-        public void LoadWatershedNotesFromProject(Project project)
-        {
-            ProjectWatershedNotes = project.ProjectWatershedNotes;            
         }
 
         public void CommitChangesToProject(Project project)
@@ -92,18 +86,9 @@ namespace ProjectFirma.Web.Models
             project.ProjectLocationSimpleTypeID = ProjectLocationSimpleTypeID;
         }
 
-        public void CommitWatershedNotesToProject(Project project)
-        {
-            project.ProjectWatershedNotes = ProjectWatershedNotes;            
-        }
-
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
 
         public bool HasProjectLocationDetail => DetailedLocationToGeoJsonFeatureCollection().Features.Any();
-
-        public double? ProjectLocationPointLatitude => HasProjectLocationPoint ? ProjectLocationPoint.YCoordinate : null;
-
-        public double? ProjectLocationPointLongitude => HasProjectLocationPoint ? ProjectLocationPoint.XCoordinate : null;
 
         public FundingType FundingType => ProjectUpdateBatch.Project.FundingType;
 
@@ -128,9 +113,9 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.Project.GetDefaultBoundingBox();
         }
 
-        public IEnumerable<Watershed> GetProjectWatersheds()
+        public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
         {
-            return ProjectUpdateBatch.ProjectWatershedUpdates.Select(x => x.Watershed);
+            return ProjectUpdateBatch.ProjectGeospatialAreaUpdates.Select(x => x.GeospatialArea);
         }
 
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
