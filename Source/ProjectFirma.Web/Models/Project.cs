@@ -519,6 +519,16 @@ namespace ProjectFirma.Web.Models
             set => ProjectCustomAttributes = (ICollection<ProjectCustomAttribute>) value;
         }
 
+        public decimal GetTotalStaffTimeHours()
+        {
+            return StaffTimeActivities.Sum(x => x.StaffTimeActivityHours);
+        } 
+
+        public decimal GetTotalStaffTimeAmount()
+        {
+            return StaffTimeActivities.Sum(x => x.TotalAmount);
+        } 
+
         public List<GooglePieChartSlice> GetExpenditureGooglePieChartSlices()
         {
             var sortOrder = 0;

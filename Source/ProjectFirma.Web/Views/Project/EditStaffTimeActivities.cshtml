@@ -98,8 +98,8 @@
                 <span class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.FundingSource.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.FundingSource.GetFieldDefinitionLabel()" ng-click="deleteFundingSource(fundingSource)" style="cursor: pointer"></span>
                 <label ng-bind="fundingSource.DisplayName"></label>
 
-                <table class="table table-responsive table-condensed dialogFormLayout"
-                       style="margin-bottom: 25px; display: block; overflow: auto; background-color: #f1f1f1">
+                <table class="table table-responsive"
+                       style="padding-left: 18px; margin-bottom: 25px; display: block; overflow: auto; background-color: #f1f1f1">
                     <thead>
                         <tr>
                             <th></th>
@@ -108,7 +108,7 @@
                             <th>Hours <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Rate <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Notes</th>
-                            <th>Total Amount</th>
+                            <th class="text-right">Total Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,15 +123,15 @@
                                 <input ng-model="staffTimeActivity.StaffTimeActivityEndDate" type="text" class="sitkaDatePicker form-control" />
                             </td>
                             <td>
-                                <input ng-model="staffTimeActivity.StaffTimeActivityHours" type="number" class="form-control" />
+                                <input ng-model="staffTimeActivity.StaffTimeActivityHours" type="number" class="form-control text-right" style="padding-right:2px" />
                             </td>
                             <td>
-                                <input ng-model="staffTimeActivity.StaffTimeActivityRate" type="text" class="sitkaCurrency form-control" ng-currency />
+                                <input ng-model="staffTimeActivity.StaffTimeActivityRate" type="text" class="sitkaCurrency form-control text-right" ng-currency />
                             </td>
                             <td>
                                 <input ng-model="staffTimeActivity.StaffTimeActivityNotes" class="form-control" />
                             </td>
-                            <td>
+                            <td class="text-right">
                                 <span ng-bind="getTotalAmountForActivity(staffTimeActivity) | currency:'$'"></span>
                             </td>
                         </tr>
