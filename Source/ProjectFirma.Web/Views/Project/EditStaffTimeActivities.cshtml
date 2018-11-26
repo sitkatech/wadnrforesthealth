@@ -18,6 +18,8 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.HtmlHelperExtensions
 @using Newtonsoft.Json
 @using ProjectFirma.Web.Models
 @using Newtonsoft.Json.Linq
@@ -49,6 +51,25 @@
 <div class="row">
     <div class="col-sm-12">
         <div ng-app="ProjectFirmaApp" id="EditFundingSourceExpendituresApp" ng-controller="StaffTimeActivityController">
+            <div class="row">
+                <div class="col-sm-2"><strong>Staff Time Hours:</strong></div>
+                <div class="col-sm-2 text-right">
+                    <span>
+                        {{ getOverallTotalHours() }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2"><strong>Total Cost:</strong></div>
+                <div class="col-sm-2 text-right">
+                    <span>
+                        {{ getOverallTotalAmount() | currency:"$" }}
+                    </span>
+                </div>
+            </div>
+            
+            <hr/>
+
             <div class="form-group">
                 <label class="control-label">@FieldDefinition.FundingSource.GetFieldDefinitionLabel() to Add:</label>
                 <div class="input-group">
@@ -80,40 +101,40 @@
                 <table class="table table-responsive table-condensed dialogFormLayout"
                        style="margin-bottom: 25px; display: block; overflow: auto; background-color: #f1f1f1">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Hours</th>
-                        <th>Rate</th>
-                        <th>Notes</th>
-                        <th>Total Amount</th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>Start Date <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>End Date</th>
+                            <th>Hours <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Rate <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Notes</th>
+                            <th>Total Amount</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="staffTimeActivity in staffTimeActivitiesForFundingSource(fundingSource)">
-                        <td>
-                            <span class="glyphicon glyphicon-trash" title="Remove row" alt="Remove row" ng-if="!rowIsEmpty(staffTimeActivity)" ng-click="deleteActivity(staffTimeActivity)" style="cursor: pointer"></span>
-                        </td>
-                        <td>
-                            <input ng-model="staffTimeActivity.StaffTimeActivityStartDate" type="text" class="sitkaDatePicker form-control" datetime="shortDate" datetime-model="shortDate"/>
-                        </td>
-                        <td>
-                            <input ng-model="staffTimeActivity.StaffTimeActivityEndDate" type="text" class="sitkaDatePicker form-control"/>
-                        </td>
-                        <td>
-                            <input ng-model="staffTimeActivity.StaffTimeActivityHours" type="number" class="form-control"/>
-                        </td>
-                        <td>
-                            <input ng-model="staffTimeActivity.StaffTimeActivityRate" type="text" class="sitkaCurrency form-control" ng-currency/>
-                        </td>
-                        <td>
-                            <input ng-model="staffTimeActivity.StaffTimeActivityNotes" class="form-control"/>
-                        </td>
-                        <td>
-                            <span ng-bind="totalAmount(staffTimeActivity) | currency:'$'"></span>
-                        </td>
-                    </tr>
+                        <tr ng-repeat="staffTimeActivity in staffTimeActivitiesForFundingSource(fundingSource)">
+                            <td>
+                                <span class="glyphicon glyphicon-trash" title="Remove row" alt="Remove row" ng-if="!rowIsEmpty(staffTimeActivity)" ng-click="deleteActivity(staffTimeActivity)" style="cursor: pointer"></span>
+                            </td>
+                            <td>
+                                <input ng-model="staffTimeActivity.StaffTimeActivityStartDate" type="text" class="sitkaDatePicker form-control" datetime="shortDate" datetime-model="shortDate" />
+                            </td>
+                            <td>
+                                <input ng-model="staffTimeActivity.StaffTimeActivityEndDate" type="text" class="sitkaDatePicker form-control" />
+                            </td>
+                            <td>
+                                <input ng-model="staffTimeActivity.StaffTimeActivityHours" type="number" class="form-control" />
+                            </td>
+                            <td>
+                                <input ng-model="staffTimeActivity.StaffTimeActivityRate" type="text" class="sitkaCurrency form-control" ng-currency />
+                            </td>
+                            <td>
+                                <input ng-model="staffTimeActivity.StaffTimeActivityNotes" class="form-control" />
+                            </td>
+                            <td>
+                                <span ng-bind="getTotalAmountForActivity(staffTimeActivity) | currency:'$'"></span>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -121,17 +142,20 @@
             @using (Html.BeginForm())
             {
                 <div ng-repeat="staffTimeActivity in nonBlankActivities() | orderBy:[getFundingSourceName]">
-                    <input type="hidden" name="@Html.NameFor(x=>x.StaffTimeActivities[0].StaffTimeActivityID).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityID}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].StaffTimeActivityID).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityID}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.ProjectID}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].FundingSourceID).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.FundingSourceID}}" />
-                    <input type="hidden" name="@Html.NameFor(x=>x.StaffTimeActivities[0].StaffTimeActivityStartDate).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityStartDate}}" />
-                    <input type="hidden" name="@Html.NameFor(x=>x.StaffTimeActivities[0].StaffTimeActivityEndDate).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityEndDate}}" />
-                    <input type="hidden" name="@Html.NameFor(x=>x.StaffTimeActivities[0].StaffTimeActivityHours).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityHours}}" />
-                    <input type="hidden" name="@Html.NameFor(x=>x.StaffTimeActivities[0].StaffTimeActivityRate).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityRate}}" />
-                    <input type="hidden" name="@Html.NameFor(x=>x.StaffTimeActivities[0].StaffTimeActivityNotes).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityNotes}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].StaffTimeActivityStartDate).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityStartDate}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].StaffTimeActivityEndDate).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityEndDate}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].StaffTimeActivityHours).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityHours}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].StaffTimeActivityRate).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityRate}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.StaffTimeActivities[0].StaffTimeActivityNotes).ToString().Replace("0", "{{$index}}")" value="{{staffTimeActivity.StaffTimeActivityNotes}}" />
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 text-right">
+                    <div class="col-sm-6">
+                        <span><sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup> Required Field</span>
+                    </div>
+                    <div class="col-sm-6 text-right">
                         <button class="btn btn-firma" type="submit">Save</button>
                         <a class="btn btn-firma" href="@ViewDataTyped.ProjectUrl">Cancel</a>
                     </div>

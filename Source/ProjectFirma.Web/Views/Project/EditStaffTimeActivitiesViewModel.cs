@@ -58,12 +58,11 @@ namespace ProjectFirma.Web.Views.Project
 
             project.StaffTimeActivities.AddAll(staffTimeActivitysUpdated.Where(x =>
                 x.StaffTimeActivityID == ModelObjectHelpers.NotYetAssignedID));
-
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             currentStaffTimeActivitys.Merge(staffTimeActivitysUpdated,
                 allStaffTimeActivitys,
-                (x, y) => x.StaffTimeActivityID == y.StaffTimeActivityID && x.StaffTimeActivityID != ModelObjectHelpers.NotYetAssignedID && y.StaffTimeActivityID != ModelObjectHelpers.NotYetAssignedID,
+                (x, y) => x.StaffTimeActivityID == y.StaffTimeActivityID,
                 (x, y) =>
                 {
                     x.StaffTimeActivityEndDate = y.StaffTimeActivityEndDate;

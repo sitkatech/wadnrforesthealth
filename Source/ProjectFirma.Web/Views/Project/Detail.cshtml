@@ -340,7 +340,51 @@
                         </h2>
                     </div>
                     <div class="panel-body">
-                        @ViewDataTyped.Project.StaffTimeActivities.Count
+                        @if (ViewDataTyped.Project.StaffTimeActivities.Any())
+                        {
+                            var staffTimeActivities = ViewDataTyped.Project.StaffTimeActivities.GroupBy(x => x.FundingSource).ToList();
+
+                            <table class="table table-striped table-condensed table-hover">
+                                @foreach (var fundingSource in staffTimeActivities)
+                                {
+                                    <tr>
+                                        <th colspan="6">@fundingSource.Key.DisplayNameAsUrl</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th class="text-right">Hours</th>
+                                        <th class="text-right">Rate</th>
+                                        <th class="text-right">Total Amount</th>
+                                        <th class="text-right">Notes</th>
+                                    </tr>
+                                    foreach (var staffTimeActivity in fundingSource)
+                                    {
+                                    <tr>
+                                        <td>@staffTimeActivity.StaffTimeActivityStartDate.ToShortDateString()</td>
+                                        <td>
+                                            @if (staffTimeActivity.StaffTimeActivityEndDate != null)
+                                            {
+                                                <text>@staffTimeActivity.StaffTimeActivityEndDate.Value.ToShortDateString()</text>
+                                            }
+                                            else
+                                            {
+                                                <p class="systemText">N/A</p>
+                                            }
+                                        </td>
+                                        <td class="text-right">@staffTimeActivity.StaffTimeActivityHours</td>
+                                        <td class="text-right">@staffTimeActivity.StaffTimeActivityRate.ToStringCurrency()</td>
+                                        <td class="text-right">@staffTimeActivity.TotalAmount.ToStringCurrency()</td>
+                                        <td class="text-right">@staffTimeActivity.StaffTimeActivityNotes</td>
+                                    </tr>
+                                    }
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <p class="systemText">No Staff Time Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                        }
                     </div>
                 </div>
 

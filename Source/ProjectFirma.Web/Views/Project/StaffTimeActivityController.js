@@ -119,9 +119,21 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
         }
     };
 
-    $scope.totalAmount = function(staffTimeActivity) {
+    $scope.getTotalAmountForActivity = function(staffTimeActivity) {
         return staffTimeActivity.StaffTimeActivityHours * staffTimeActivity.StaffTimeActivityRate;
-    }
+    };
+    
+    $scope.getOverallTotalHours = function () {
+        return Number(_.reduce($scope.nonBlankActivities(),
+            function (m, x) { return Number(m) + Number(x.StaffTimeActivityHours); },
+            0));
+    };
+
+    $scope.getOverallTotalAmount = function () {
+        return Number(_.reduce($scope.nonBlankActivities(),
+            function (m, x) { return Number(m) + Number($scope.getTotalAmountForActivity(x)); },
+            0));
+    };
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     if ($scope.AngularModel.StaffTimeActivities == null) {
