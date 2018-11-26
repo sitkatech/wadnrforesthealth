@@ -100,6 +100,8 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
+        public string EditStaffTimeActivitiesUrl { get; }
+
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData, ProjectLocationSummaryViewData projectLocationSummaryViewData,
@@ -314,11 +316,13 @@ namespace ProjectFirma.Web.Views.Project
 
             ClassificationSystems = classificationSystems;
 
-            //ProjectDocumentsDetailViewData = new ProjectDocumentsDetailViewData(project, currentPerson, !project.IsProposal());
             ProjectDocumentsDetailViewData = new ProjectDocumentsDetailViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
                 new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
+
+            EditStaffTimeActivitiesUrl =
+                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditStaffTimeActivities(project));
         }
     }
 }

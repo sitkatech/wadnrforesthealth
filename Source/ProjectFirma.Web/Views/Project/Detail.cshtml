@@ -154,13 +154,13 @@
                                         @foreach (var projectCustomAttributeType in ViewDataTyped.ProjectCustomAttributeTypes)
                                         {
                                             var projectCustomAttribute = ViewDataTyped.Project.ProjectCustomAttributes.SingleOrDefault(x => x.ProjectCustomAttributeTypeID == projectCustomAttributeType.ProjectCustomAttributeTypeID);
-                                        <dt style="white-space: normal;">
-                                            @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
-                                            {
-                                                @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
-                                            }
-                                            @projectCustomAttributeType.ProjectCustomAttributeTypeName
-                                        </dt>
+                                            <dt style="white-space: normal;">
+                                                @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
+                                                {
+                                                    @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
+                                                }
+                                                @projectCustomAttributeType.ProjectCustomAttributeTypeName
+                                            </dt>
                                             <dd>
                                                 @if (projectCustomAttribute != null)
                                                 {
@@ -190,7 +190,7 @@
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
                                 @if (ViewDataTyped.UserHasEditProjectPermissions)
-                                                {
+                                {
                                     <a id="editLocationDropdownButton" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
                                         <h3>
                                             @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit")
@@ -201,26 +201,26 @@
                                     <ul class="dropdown-menu" aria-labelledby="editLocationDropdownButton" style="top: 36px; left: auto;">
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Simple", ViewDataTyped.EditSimpleProjectLocationUrl, string.Format("Edit {0} - Simple", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Detailed", ViewDataTyped.EditDetailedProjectLocationUrl, string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
-                                        
+
                                         @foreach (var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
                                         {
                                             <li>@ModalDialogFormHelper.ModalDialogFormLink(geospatialAreaType.GeospatialAreaTypeNamePluralized, geospatialAreaType.GetEditGeospatialAreasUrl(ViewDataTyped.Project), string.Format("Edit {0}", geospatialAreaType.GeospatialAreaTypeNamePluralized), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectGeospatialAreaFormID)</li>
                                         }
-                                        
+
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Map Extent", ViewDataTyped.EditProjectBoundingBoxUrl, string.Format("Edit {0} - Map Extent", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectBoundingBoxFormID)</li>
                                     </ul>
                                 }
                                 else
                                 {
                                     <h3>Location</h3>
-                                        }
+                                }
                             </div>
                             <div class="panel-body">
                                 @{ ProjectLocationSummary.RenderPartialView(Html, ViewDataTyped.ProjectLocationSummaryViewData); }
                             </div>
                         </div>
                         @if (ViewDataTyped.UserHasProjectAdminPermissions)
-                                        {
+                        {
                             <div class="panel panelFirma">
                                 <div class="panel-heading panelTitle">
                                     <h3>Tags</h3>
@@ -300,7 +300,7 @@
                             <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.UnfundedNeed)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.UnfundedNeed().ToStringCurrency()</div>
                             @if (ViewDataTyped.Project.GetUnsecuredFunding() > 0)
-                                        {
+                            {
                                 <div class="col-sm-6">(@ViewDataTyped.Project.GetUnsecuredFunding().ToStringCurrency() identified as @Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding))</div>
                             }
                         </div>
@@ -328,10 +328,24 @@
                             ProjectExpendituresDetail.RenderPartialView(Html, ViewDataTyped.ProjectExpendituresDetailViewData);
                         }
                     </div>
+
+                </div>
+
+                <h2 class="sectionHeader">Activities</h2>
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        <h2>
+                            <a href="@ViewDataTyped.EditStaffTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span></a>
+                            Staff Time Activities
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        @ViewDataTyped.Project.StaffTimeActivities.Count
+                    </div>
                 </div>
 
                 @foreach (var classificationSystem in ViewDataTyped.ClassificationSystems)
-                                        {
+                {
                     <h2 data-toc-skip class="sectionHeader">@classificationSystem.ClassificationSystemNamePluralized</h2>
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
@@ -343,9 +357,9 @@
                         <div class="panel-body">
                             @{ var projectClassifications = ViewDataTyped.Project.ProjectClassifications.Where(x => x.Classification.ClassificationSystemID == classificationSystem.ClassificationSystemID).ToList(); }
                             @if (projectClassifications.Count > 0)
-                                        {
-                                            foreach (var projectClassificationBatch in projectClassifications.OrderBy(x => x.Classification.ClassificationSortOrder).ThenBy(x=>x.Classification.DisplayName).Batch(3))
-                                            {
+                            {
+                                foreach (var projectClassificationBatch in projectClassifications.OrderBy(x => x.Classification.ClassificationSortOrder).ThenBy(x => x.Classification.DisplayName).Batch(3))
+                                {
                                     <div class="row" style="padding-top: 10px;">
                                         @foreach (var projectClassification in projectClassificationBatch)
                                         {
@@ -360,7 +374,7 @@
                             }
                             else
                             {
-                                    <p class="systemText">No @classificationSystem.ClassificationSystemNamePluralized set for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                                <p class="systemText">No @classificationSystem.ClassificationSystemNamePluralized set for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                             }
                         </div>
                     </div>
@@ -388,7 +402,7 @@
                         @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.ProjectNotesViewData); }
                         @if (ViewDataTyped.UserHasEditProjectPermissions)
                         {
-                            <hr/>
+                            <hr />
                             <strong>Internal Notes</strong>
                             EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalNotesViewData);
                         }

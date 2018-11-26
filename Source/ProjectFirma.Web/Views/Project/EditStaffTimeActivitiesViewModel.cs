@@ -22,8 +22,10 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Project
@@ -53,10 +55,15 @@ namespace ProjectFirma.Web.Views.Project
             {
                 staffTimeActivitysUpdated = StaffTimeActivities.Select(x => x.ToStaffTimeActivity()).ToList();
             }
-            
+
+            project.StaffTimeActivities.AddAll(staffTimeActivitysUpdated.Where(x =>
+                x.StaffTimeActivityID == ModelObjectHelpers.NotYetAssignedID));
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
             currentStaffTimeActivitys.Merge(staffTimeActivitysUpdated,
                 allStaffTimeActivitys,
-                (x, y) => x.StaffTimeActivityID == y.StaffTimeActivityID,
+                (x, y) => x.StaffTimeActivityID == y.StaffTimeActivityID && x.StaffTimeActivityID != ModelObjectHelpers.NotYetAssignedID && y.StaffTimeActivityID != ModelObjectHelpers.NotYetAssignedID,
                 (x, y) =>
                 {
                     x.StaffTimeActivityEndDate = y.StaffTimeActivityEndDate;
@@ -69,8 +76,8 @@ namespace ProjectFirma.Web.Views.Project
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (StaffTimeActivities.Any(x =>
-                x.StaffTimeActivityEndDate.GetValueOrDefault() < x.StaffTimeActivityStartDate))
+            if (StaffTimeActivities?.Any(x =>
+                x.StaffTimeActivityEndDate != null && x.StaffTimeActivityEndDate.Value < x.StaffTimeActivityStartDate) ?? false)
             {
                 yield return new ValidationResult("End Date cannot be before Start Date");
             }
