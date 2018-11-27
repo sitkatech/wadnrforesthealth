@@ -906,5 +906,48 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var viewData = new EditStaffTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
             return RazorView<EditStaffTimeActivities, EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>(viewData, viewModel);
         }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public ViewResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var treatmentActivities = project.TreatmentActivities.ToList();
+            var treatmentActivitySimples = treatmentActivities.Select(x => new TreatmentActivitySimple(x));
+            var viewModel = new EditTreatmentActivitiesViewModel(project, treatmentActivitySimples.ToList());
+            return ViewEditTreatmentActivities(project, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey, EditTreatmentActivitiesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var currentTreatmentActivities = project.TreatmentActivities.ToList();
+            if (!ModelState.IsValid)
+            {
+                return ViewEditTreatmentActivities(project, viewModel);
+            }
+            return UpdateTreatmentActivities(viewModel, currentTreatmentActivities, project);
+        }
+
+        private static ActionResult UpdateTreatmentActivities(
+            EditTreatmentActivitiesViewModel viewModel,
+            List<TreatmentActivity> currentTreatmentActivities, Project project)
+        {
+            HttpRequestStorage.DatabaseEntities.TreatmentActivities.Load();
+            var allTreatmentActivities = HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.Local;
+
+            viewModel.UpdateModel(currentTreatmentActivities, allTreatmentActivities, project);
+            return RedirectToActionStatic(new SitkaRoute<ProjectController>(x=>x.Detail(project)));
+        }
+
+        private ViewResult ViewEditTreatmentActivities(Project project, EditTreatmentActivitiesViewModel viewModel)
+        {
+            var allTreatmentTypes = TreatmentType.All.Select(x=>new TreatmentTypeSimple(x)).ToList();
+            var viewData = new EditTreatmentActivitiesViewData(project, allTreatmentTypes, CurrentPerson);
+            return RazorView<EditTreatmentActivities, EditTreatmentActivitiesViewData, EditTreatmentActivitiesViewModel>(viewData, viewModel);
+        }
     }
 }

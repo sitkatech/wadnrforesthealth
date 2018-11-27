@@ -519,16 +519,6 @@ namespace ProjectFirma.Web.Models
             set => ProjectCustomAttributes = (ICollection<ProjectCustomAttribute>) value;
         }
 
-        public decimal GetTotalStaffTimeHours()
-        {
-            return StaffTimeActivities.Sum(x => x.StaffTimeActivityHours);
-        } 
-
-        public decimal GetTotalStaffTimeAmount()
-        {
-            return StaffTimeActivities.Sum(x => x.TotalAmount);
-        } 
-
         public List<GooglePieChartSlice> GetExpenditureGooglePieChartSlices()
         {
             var sortOrder = 0;
@@ -677,6 +667,21 @@ namespace ProjectFirma.Web.Models
         public string GetImplementationStartYear()
         {
             return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
+        }
+
+        public decimal GetTotalTreatmentAcreage()
+        {
+            return TreatmentActivities.Sum(x => x.TreatmentActivityAcresTreated);
+        }
+
+        public decimal GetTotalStaffTimeHours()
+        {
+            return StaffTimeActivities.Sum(x => x.StaffTimeActivityHours);
+        }
+
+        public decimal GetTotalStaffTimeAmount()
+        {
+            return StaffTimeActivities.Sum(x => x.TotalAmount);
         }
     }
 }

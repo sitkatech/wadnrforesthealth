@@ -444,6 +444,8 @@
     <Compile Include="Models\ProjectWorkflowSectionGrouping.cs" />
     <Compile Include="Models\StaffTimeActivity.cs" />
     <Compile Include="Models\StaffTimeActivitySimple.cs" />
+    <Compile Include="Models\TreatmentActivitySimple.cs" />
+    <Compile Include="Models\TreatmentTypeSimple.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="UnitTestCommon\TestGeospatialAreaType.cs" />
     <Compile Include="UnitTestCommon\TestStaffTimeActivity.cs" />
@@ -489,8 +491,11 @@
     <Compile Include="Views\ProjectUpdate\EditProjectUpdateConfigurationViewModel.cs" />
     <Compile Include="Common\FirmaHelpersTest.cs" />
     <Compile Include="Views\ProjectUpdate\ProjectUpdateViewData.cs" />
+    <Compile Include="Views\Project\EditTreatmentActivities.cs" />
     <Compile Include="Views\Project\EditStaffTimeActivities.cs" />
     <Compile Include="Views\Project\EditStaffTimeActivitiesViewData.cs" />
+    <Compile Include="Views\Project\EditTreatmentActivitiesViewData.cs" />
+    <Compile Include="Views\Project\EditTreatmentActivitiesViewModel.cs" />
     <Compile Include="Views\Project\EditStaffTimeActivitiesViewModel.cs" />
     <Compile Include="Views\Project\EditStaffTimeActivitysViewModelTest.cs" />
     <Compile Include="Views\Results\ConfigureAccomplishmentsDashboard.cs" />
@@ -985,6 +990,7 @@
     <Content Include="Views\CustomPage\Index.cshtml" />
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
+    <Content Include="Views\Project\TreatmentActivityController.js" />
     <Content Include="Views\Project\StaffTimeActivityController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
@@ -1726,6 +1732,7 @@
     <Compile Include="Views\ProjectCreate\GeospatialArea.cs" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewData.cs" />
     <Content Include="Views\Project\EditStaffTimeActivities.cshtml" />
+    <Content Include="Views\Project\EditTreatmentActivities.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

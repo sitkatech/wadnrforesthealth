@@ -335,12 +335,18 @@
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h2>
-                            <a href="@ViewDataTyped.EditStaffTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span></a>
-                            Staff Time Activities
+                            Activities
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <h4>Staff Time Activities</h4>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Staff Time Activities</h4>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditStaffTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                            </div>
+                        </div>
                         @if (ViewDataTyped.Project.StaffTimeActivities.Any())
                         {
                             var staffTimeActivities = ViewDataTyped.Project.StaffTimeActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
@@ -402,6 +408,90 @@
                         {
                             <p class="systemText">No Staff Time Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Treatment Activities</h4>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditTreatmentActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                            </div>
+                        </div>
+
+                        @if (ViewDataTyped.Project.TreatmentActivities.Any())
+                        {
+                            <div class="row">
+                                <div class="col-sm-2"><strong>Total Acres Treated:</strong></div>
+                                <div class="col-sm-2 text-right">
+                                    <span>
+                                        @ViewDataTyped.Project.GetTotalTreatmentAcreage()
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <table class="table table-striped table-condensed table-hover">
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th class="text-right">Treatment Type</th>
+                                    <th class="text-right">Acres Treated</th>
+                                    <th class="text-right">Notes</th>
+                                </tr>
+                                @foreach (var treatmentActivity in ViewDataTyped.Project.TreatmentActivities.ToList().OrderBy(x => x.TreatmentActivityStartDate))
+                                {
+                                    <tr>
+                                        <td>@treatmentActivity.TreatmentActivityStartDate.ToShortDateString()</td>
+                                        <td>
+                                            @if (treatmentActivity.TreatmentActivityEndDate != null)
+                                            {
+                                                <text>@treatmentActivity.TreatmentActivityEndDate.Value.ToShortDateString()</text>
+                                            }
+                                            else
+                                            {
+                                                <p class="systemText">N/A</p>
+                                            }
+                                        </td>
+                                        <td class="text-right">@treatmentActivity.TreatmentActivityType.TreatmentTypeDisplayName</td>
+                                        <td class="text-right">@treatmentActivity.TreatmentActivityAcresTreated</td>
+                                        <td class="text-right">@treatmentActivity.TreatmentActivityNotes</td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <p class="systemText">No Treatment Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                        }
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Travel Activities</h4>
+                            </div>
+                            <div class="col-sm-6 text-right">
+
+                            </div>
+                        </div>
+                        <p class="systemText">Coming Soon!</p>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Contractor Time Activities</h4>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                            </div>
+                        </div>
+                        <p class="systemText">Coming Soon!</p>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Supplies</h4>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                            </div>
+                        </div>
+                        <p class="systemText">Coming Soon!</p>
+
                     </div>
                 </div>
 
