@@ -344,7 +344,8 @@
                                 <h4>Staff Time Activities</h4>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditStaffTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                @if (ViewDataTyped.UserHasEditProjectPermissions)
+                                {<a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditStaffTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>}
                             </div>
                         </div>
                         @if (ViewDataTyped.Project.StaffTimeActivities.Any())
@@ -414,7 +415,10 @@
                                 <h4>Treatment Activities</h4>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditTreatmentActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                @if (ViewDataTyped.UserHasEditProjectPermissions)
+                                {
+                                    <a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditTreatmentActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                }
                             </div>
                         </div>
 
