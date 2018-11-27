@@ -68,6 +68,8 @@ namespace ProjectFirma.Web.Views.Project
                     x.TreatmentActivityEndDate = y.TreatmentActivityEndDate;
                     x.TreatmentActivityNotes = y.TreatmentActivityNotes;
                     x.TreatmentActivityStartDate = y.TreatmentActivityStartDate;
+                    x.TreatmentActivityAcresTreated = y.TreatmentActivityAcresTreated;
+                    x.TreatmentActivityTypeID = y.TreatmentActivityTypeID;
                 });
         }
 

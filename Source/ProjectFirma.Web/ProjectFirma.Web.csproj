@@ -445,6 +445,7 @@
     <Compile Include="Models\ProjectWorkflowSectionGrouping.cs" />
     <Compile Include="Models\StaffTimeActivity.cs" />
     <Compile Include="Models\StaffTimeActivitySimple.cs" />
+    <Compile Include="Models\TreatmentActivity.cs" />
     <Compile Include="Models\TreatmentActivitySimple.cs" />
     <Compile Include="Models\TreatmentTypeSimple.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />

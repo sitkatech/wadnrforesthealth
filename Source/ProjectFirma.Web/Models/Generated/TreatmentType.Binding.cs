@@ -18,7 +18,8 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class TreatmentType : IHavePrimaryKey
     {
-        public static readonly TreatmentTypeToDo ToDo = TreatmentTypeToDo.Instance;
+        public static readonly TreatmentTypeTreatmentOne TreatmentOne = TreatmentTypeTreatmentOne.Instance;
+        public static readonly TreatmentTypeTreatmentEleven TreatmentEleven = TreatmentTypeTreatmentEleven.Instance;
 
         public static readonly List<TreatmentType> All;
         public static readonly ReadOnlyDictionary<int, TreatmentType> AllLookupDictionary;
@@ -28,7 +29,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentType()
         {
-            All = new List<TreatmentType> { ToDo };
+            All = new List<TreatmentType> { TreatmentOne, TreatmentEleven };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentType>(All.ToDictionary(x => x.TreatmentTypeID));
         }
 
@@ -98,8 +99,10 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case TreatmentTypeEnum.ToDo:
-                    return ToDo;
+                case TreatmentTypeEnum.TreatmentEleven:
+                    return TreatmentEleven;
+                case TreatmentTypeEnum.TreatmentOne:
+                    return TreatmentOne;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -108,12 +111,19 @@ namespace ProjectFirma.Web.Models
 
     public enum TreatmentTypeEnum
     {
-        ToDo = 1
+        TreatmentOne = 1,
+        TreatmentEleven = 2
     }
 
-    public partial class TreatmentTypeToDo : TreatmentType
+    public partial class TreatmentTypeTreatmentOne : TreatmentType
     {
-        private TreatmentTypeToDo(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
-        public static readonly TreatmentTypeToDo Instance = new TreatmentTypeToDo(1, @"ToDo", @"To-do");
+        private TreatmentTypeTreatmentOne(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeTreatmentOne Instance = new TreatmentTypeTreatmentOne(1, @"TreatmentOne", @"Treatment #1");
+    }
+
+    public partial class TreatmentTypeTreatmentEleven : TreatmentType
+    {
+        private TreatmentTypeTreatmentEleven(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeTreatmentEleven Instance = new TreatmentTypeTreatmentEleven(2, @"TreatmentEleven", @"Treatment XI");
     }
 }

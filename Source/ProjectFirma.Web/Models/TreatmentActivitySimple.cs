@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Models
 {
@@ -52,7 +53,7 @@ namespace ProjectFirma.Web.Models
         public TreatmentActivity ToTreatmentActivity()
         {
             // None of the nullables will ever default, thanks to RequiredAttribute
-            return new TreatmentActivity(TreatmentActivityID.GetValueOrDefault(), ProjectID.GetValueOrDefault(), FundingSourceID.GetValueOrDefault(), TreatmentActivityTypeID.GetValueOrDefault(), TreatmentActivityAcresTreated.GetValueOrDefault(), TreatmentActivityStartDate.GetValueOrDefault(),TreatmentActivityEndDate, TreatmentActivityNotes);
+            return new TreatmentActivity(TreatmentActivityID ?? ModelObjectHelpers.NotYetAssignedID, ProjectID.GetValueOrDefault(), FundingSourceID.GetValueOrDefault(), TreatmentActivityTypeID.GetValueOrDefault(), TreatmentActivityAcresTreated.GetValueOrDefault(), TreatmentActivityStartDate.GetValueOrDefault(),TreatmentActivityEndDate, TreatmentActivityNotes);
         }
     }
 }

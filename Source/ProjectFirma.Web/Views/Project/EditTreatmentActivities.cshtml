@@ -115,10 +115,10 @@
                             <td>
                                 <!--TODO lol-->
                                 <select class="form-control" ng-model="treatmentActivity.TreatmentActivityTypeID" title="Select a Treatment Type">
-                                    <option value="null" disabled selected>Select a Treatment Type</option>
+                                    <option value="null" disabled ng-selected="!treatmentType.TreatmentTypeID">Select a Treatment Type</option>
                                     <option ng-repeat="treatmentType in AngularViewData.AllTreatmentTypes"
                                             value="{{treatmentType.TreatmentTypeID}}"
-                                            ng-selected="treatmentActivity.TreatmentActivityTypeID == treatmentType.TreatmentTypeID"
+                                            ng-selected="treatmentType.TreatmentTypeID && (treatmentActivity.TreatmentActivityTypeID == treatmentType.TreatmentTypeID)"
                                             ng-bind="treatmentType.TreatmentTypeDisplayName"
                                             data-tokens="{{treatmentType.TreatmentTypeDisplayName}}"></option>
                                 </select>

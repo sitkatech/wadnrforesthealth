@@ -21,7 +21,8 @@ values
 --TODO
 Insert into dbo.TreatmentType (TreatmentTypeID, TreatmentTypeName, TreatmentTypeDisplayName)
 values
-(1, 'ToDo', 'To-do')
+(1, 'TreatmentOne', 'Treatment #1'),
+(2, 'TreatmentEleven', 'Treatment XI')
 
 Create Table dbo.StaffTimeActivity(
 	StaffTimeActivityID int not null identity(1,1) constraint PK_StaffTimeActivity_StaffTimeActivityID primary key,
