@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Views.Project
     {
         public List<TreatmentTypeSimple> AllTreatmentTypes { get; }
         public int ProjectID { get; }
-        public ViewDataForAngularClass ViewDataForAngular { get; set; }
+        public ViewDataForAngularClass ViewDataForAngular { get; }
         public string ProjectUrl { get; }
 
         public EditTreatmentActivitiesViewData(Models.Project project, List<TreatmentTypeSimple> allTreatmentTypes, Person currentPerson) : base(currentPerson)
@@ -47,9 +48,12 @@ namespace ProjectFirma.Web.Views.Project
         {
             public List<TreatmentTypeSimple> AllTreatmentTypes { get; }
             public int ProjectID { get; }
+            public List<FundingSourceSimple> AllFundingSources { get; }
 
             public ViewDataForAngularClass(List<TreatmentTypeSimple> allTreatmentTypes, int projectID)
             {
+                // todo: pull this out to the controller
+                AllFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
                 AllTreatmentTypes = allTreatmentTypes;
                 ProjectID = projectID;
             }

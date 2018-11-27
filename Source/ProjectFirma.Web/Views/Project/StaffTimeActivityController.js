@@ -76,6 +76,19 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
             });
     };
 
+    $scope.addFundingSource = function () {
+        var newStaffTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
+        $scope.AngularModel.StaffTimeActivities.push(newStaffTimeActivity);
+        $scope.resetFundingSourceIDToAdd();
+    };
+
+    $scope.deleteFundingSource = function (fundingSourceToDelete) {
+        var staffTimeActivitiesWeCareAbout = $scope.staffTimeActivitiesForFundingSource(fundingSourceToDelete, true);
+        for (var i = 0; i < staffTimeActivitiesWeCareAbout.length; i++) {
+            $scope.deleteActivity(staffTimeActivitiesWeCareAbout[i]);
+        }
+    };
+
     $scope.nonBlankActivities = function() {
         var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
             function(f) {
@@ -91,12 +104,6 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
             });
         return filtered;
     };
-    
-    $scope.addFundingSource = function () {
-        var newStaffTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
-        $scope.AngularModel.StaffTimeActivities.push(newStaffTimeActivity);
-        $scope.resetFundingSourceIDToAdd();
-    };
 
     $scope.createNewRow = function (projectID, fundingSourceID)
     {
@@ -106,13 +113,6 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
             FundingSourceID: fundingSource.FundingSourceID,
         };
         return newStaffTimeActivity;
-    };
-
-    $scope.deleteFundingSource = function (fundingSourceToDelete) {
-        var staffTimeActivitiesWeCareAbout = $scope.staffTimeActivitiesForFundingSource(fundingSourceToDelete, true);
-        for (var i = 0; i < staffTimeActivitiesWeCareAbout.length; i++) {
-            $scope.deleteActivity(staffTimeActivitiesWeCareAbout[i]);
-        }
     };
 
     $scope.deleteActivity = function(activityToDelete) {

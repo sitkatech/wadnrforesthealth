@@ -51,12 +51,44 @@
     <div class="col-sm-12">
         <div ng-app="ProjectFirmaApp" id="EditFundingSourceExpendituresApp" ng-controller="TreatmentActivityController">
             <div class="row">
-                <div class="col-sm-4"><strong>Total Acres Treated: </strong>
-                    {{ getOverallTotalAcreage() }}</div>
+                <div class="col-sm-4">
+                    <strong>Total Acres Treated: </strong>
+                    {{ getOverallTotalAcreage() }}
+                </div>
             </div>
-            
-            <hr/>
-            
+
+            <hr />
+
+            <div class="form-group">
+                <label class="control-label">@FieldDefinition.FundingSource.GetFieldDefinitionLabel() to Add:</label>
+                <div class="input-group">
+                    <select ng-model="FundingSourceIDToAdd"
+                            class="selectpicker"
+                            data-live-search="true"
+                            data-container="body"
+                            title="Select a @FieldDefinition.FundingSource.GetFieldDefinitionLabel() to Add"
+                            data-width="100%">
+                        <option value="null" disabled selected>Select a @FieldDefinition.FundingSource.GetFieldDefinitionLabel() to Add</option>
+                        <option ng-repeat="fundingSource in filteredFundingSources()"
+                                value="{{fundingSource.FundingSourceID}}"
+                                ng-selected="FundingSourceIDToAdd == fundingSource.FundingSourceID"
+                                ng-bind="fundingSource.DisplayName"
+                                data-tokens="{{fundingSource.DisplayName}}"></option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-firma" type="button" ng-click="addFundingSource()">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </span>
+                </div>
+                <br />
+            </div>
+
+
+            <div ng-repeat="fundingSource in fundingSourcesWithActivities() | orderBy:[fundingSource.DisplayName]">
+                <span class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.FundingSource.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.FundingSource.GetFieldDefinitionLabel()" ng-click="deleteFundingSource(fundingSource)" style="cursor: pointer"></span>
+                <label ng-bind="fundingSource.DisplayName"></label>
+
                 <table class="table table-responsive"
                        style="padding-left: 18px; margin-bottom: 25px; display: block; overflow: auto; background-color: #f1f1f1">
                     <thead>
@@ -70,7 +102,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="treatmentActivity in treatmentActivitiesForForm()">
+                        <tr ng-repeat="treatmentActivity in treatmentActivitiesForFundingSource(fundingSource)">
                             <td>
                                 <span class="glyphicon glyphicon-trash" title="Remove row" alt="Remove row" ng-if="!rowIsEmpty(treatmentActivity)" ng-click="deleteActivity(treatmentActivity)" style="cursor: pointer"></span>
                             </td>
@@ -100,12 +132,14 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
 
             @using (Html.BeginForm())
             {
                 <div ng-repeat="treatmentActivity in nonBlankActivities() | orderBy:[getFundingSourceName]">
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityID).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityID}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.ProjectID}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].FundingSourceID).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.FundingSourceID}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityStartDate).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityStartDate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityEndDate).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityEndDate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityNotes).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityNotes}}" />

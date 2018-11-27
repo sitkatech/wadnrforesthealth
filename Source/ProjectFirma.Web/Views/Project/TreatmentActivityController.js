@@ -26,12 +26,76 @@ angular.module("ProjectFirmaApp").controller("TreatmentActivityController", func
         $scope.addBlankRowsIfAppropriate();
     });
 
-    $scope.resetFundingSourceIDToAdd = function() {
+    $scope.resetFundingSourceIDToAdd = function () {
         $scope.FundingSourceIDToAdd = null;
     };
-    
+
     $scope.getAllUsedFundingSourceIds = function () {
         return _.map($scope.AngularModel.TreatmentActivities, function (p) { return p.FundingSourceID; });
+    };
+
+    $scope.filteredFundingSources = function () {
+        var usedFundingSourceIDs = $scope.getAllUsedFundingSourceIds();
+        return _($scope.AngularViewData.AllFundingSources).filter(function (f) {
+            return f.IsActive && !_.contains(usedFundingSourceIDs, f.FundingSourceID);
+        }).sortBy(function (fs) {
+            return [fs.FundingSourceName.toLowerCase()];
+        }).value();
+    };
+
+    $scope.getFundingSourceName = function (treatmentActivity) {
+        var fundingSourceToFind = $scope.getFundingSource(treatmentActivity.FundingSourceID);
+        return fundingSourceToFind.DisplayName;
+    };
+
+    $scope.getFundingSource = function (fundingSourceId) {
+        return _.find($scope.AngularViewData.AllFundingSources, function (f) { return fundingSourceId == f.FundingSourceID; });
+    };
+
+    $scope.treatmentActivitiesForFundingSource = function (fundingSource, ignoreBlanks) {
+        if (!fundingSource) {
+            debugger;
+        }
+        var filtered = _.filter($scope.AngularModel.TreatmentActivities,
+            function (a) {
+                if (a === undefined) {
+                    debugger;
+                }
+                
+                return a.FundingSourceID == fundingSource.FundingSourceID;
+            });
+        if (!ignoreBlanks) {
+            var a = [];
+            for (var i = 0; i < filtered.length - 1; i++) {
+                if ($scope.rowIsEmpty(filtered[i])) {
+                    a.push(i);
+                }
+            }
+            for (var i = 0; i < a.length; i++) {
+                Sitka.Methods.removeFromJsonArray(filtered, filtered[a[i]]);
+            }
+        }
+        return filtered;
+    };
+
+    $scope.fundingSourcesWithActivities = function () {
+        return _.filter($scope.AngularViewData.AllFundingSources,
+            function (f) {
+                return $scope.treatmentActivitiesForFundingSource(f).length > 0;
+            });
+    };
+
+    $scope.addFundingSource = function () {
+        var newTreatmentActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
+        $scope.AngularModel.TreatmentActivities.push(newTreatmentActivity);
+        $scope.resetFundingSourceIDToAdd();
+    };
+
+    $scope.deleteFundingSource = function (fundingSourceToDelete) {
+        var treatmentActivitiesWeCareAbout = $scope.treatmentActivitiesForFundingSource(fundingSourceToDelete, true);
+        for (var i = 0; i < treatmentActivitiesWeCareAbout.length; i++) {
+            $scope.deleteActivity(treatmentActivitiesWeCareAbout[i]);
+        }
     };
     
     $scope.getTreatmentTypeName = function (treatmentActivity) {
@@ -51,21 +115,6 @@ angular.module("ProjectFirmaApp").controller("TreatmentActivityController", func
         return filtered;
     };
 
-    $scope.treatmentActivitiesForForm = function() {
-        var filtered = $scope.AngularModel.TreatmentActivities;
-        var a = [];
-        for (var i = 0; i < filtered.length - 1; i++) {
-            if ($scope.rowIsEmpty(filtered[i])) {
-                a.push(i);
-            }
-        }
-        for (var i = 0; i < a.length; i++) {
-            Sitka.Methods.removeFromJsonArray(filtered, filtered[a[i]]);
-        }
-
-        return filtered;
-    };
-
     $scope.blankActivities = function () {
         var filtered = _.filter($scope.AngularModel.TreatmentActivities,
             function (f) {
@@ -74,11 +123,13 @@ angular.module("ProjectFirmaApp").controller("TreatmentActivityController", func
         return filtered;
     };
 
-    $scope.createNewRow = function () {
-        var newTreatmentActivity = {
-            ProjectID: $scope.AngularViewData.ProjectID
-    };
-        return newTreatmentActivity;
+    $scope.createNewRow = function (projectID, fundingSourceID) {
+        var fundingSource = $scope.getFundingSource(fundingSourceID);
+        var newStaffTimeActivity = {
+            ProjectID: projectID,
+            FundingSourceID: fundingSource.FundingSourceID,
+        };
+        return newStaffTimeActivity;
     };
 
     $scope.deleteActivity = function(activityToDelete) {
@@ -94,9 +145,13 @@ angular.module("ProjectFirmaApp").controller("TreatmentActivityController", func
     };
 
     $scope.addBlankRowsIfAppropriate = function () {
-        var treatmentActivities = $scope.AngularModel.TreatmentActivities;
-        if (treatmentActivities.length === 0 || !$scope.rowIsEmpty(treatmentActivities[treatmentActivities.length - 1])) {
-            $scope.AngularModel.TreatmentActivities.push($scope.createNewRow());
+        var fundingSourcesWeCareAbout = $scope.fundingSourcesWithActivities();
+        for (var i = 0; i < fundingSourcesWeCareAbout.length; i++) {
+            var treatmentActivitiesWeCareAbout =
+                $scope.treatmentActivitiesForFundingSource(fundingSourcesWeCareAbout[i]);
+            if (!$scope.rowIsEmpty(treatmentActivitiesWeCareAbout[treatmentActivitiesWeCareAbout.length - 1])) {
+                $scope.AngularModel.TreatmentActivities.push($scope.createNewRow($scope.AngularViewData.ProjectID, fundingSourcesWeCareAbout[i].FundingSourceID));
+            }
         }
     };
 
