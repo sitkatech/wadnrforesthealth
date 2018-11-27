@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[TreatmentActivityID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
+	[FundingSourceID] [int] NOT NULL,
 	[TreatmentActivityTypeID] [int] NOT NULL,
 	[TreatmentActivityAcresTreated] [decimal](18, 0) NOT NULL,
 	[TreatmentActivityStartDate] [datetime] NOT NULL,
@@ -22,6 +23,16 @@ CREATE TABLE [dbo].[TreatmentActivity](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_FundingSource_FundingSourceID] FOREIGN KEY([FundingSourceID])
+REFERENCES [dbo].[FundingSource] ([FundingSourceID])
+GO
+ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_FundingSource_FundingSourceID]
+GO
+ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_FundingSource_FundingSourceID_TenantID] FOREIGN KEY([FundingSourceID], [TenantID])
+REFERENCES [dbo].[FundingSource] ([FundingSourceID], [TenantID])
+GO
+ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_FundingSource_FundingSourceID_TenantID]
 GO
 ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])

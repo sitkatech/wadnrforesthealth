@@ -1346,6 +1346,7 @@
           <ScalarProperty Name="TreatmentActivityID" ColumnName="TreatmentActivityID" />
           <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="TreatmentActivityTypeID" ColumnName="TreatmentActivityTypeID" />
           <ScalarProperty Name="TreatmentActivityAcresTreated" ColumnName="TreatmentActivityAcresTreated" />
           <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />

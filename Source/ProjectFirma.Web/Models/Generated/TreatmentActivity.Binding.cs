@@ -30,10 +30,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int treatmentActivityID, int projectID, int treatmentActivityTypeID, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate, DateTime? treatmentActivityEndDate, string treatmentActivityNotes) : this()
+        public TreatmentActivity(int treatmentActivityID, int projectID, int fundingSourceID, int treatmentActivityTypeID, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate, DateTime? treatmentActivityEndDate, string treatmentActivityNotes) : this()
         {
             this.TreatmentActivityID = treatmentActivityID;
             this.ProjectID = projectID;
+            this.FundingSourceID = fundingSourceID;
             this.TreatmentActivityTypeID = treatmentActivityTypeID;
             this.TreatmentActivityAcresTreated = treatmentActivityAcresTreated;
             this.TreatmentActivityStartDate = treatmentActivityStartDate;
@@ -44,12 +45,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int projectID, int treatmentActivityTypeID, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate) : this()
+        public TreatmentActivity(int projectID, int fundingSourceID, int treatmentActivityTypeID, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
+            this.FundingSourceID = fundingSourceID;
             this.TreatmentActivityTypeID = treatmentActivityTypeID;
             this.TreatmentActivityAcresTreated = treatmentActivityAcresTreated;
             this.TreatmentActivityStartDate = treatmentActivityStartDate;
@@ -58,13 +60,16 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public TreatmentActivity(Project project, TreatmentType treatmentActivityType, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate) : this()
+        public TreatmentActivity(Project project, FundingSource fundingSource, TreatmentType treatmentActivityType, decimal treatmentActivityAcresTreated, DateTime treatmentActivityStartDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectID = project.ProjectID;
             this.Project = project;
             project.TreatmentActivities.Add(this);
+            this.FundingSourceID = fundingSource.FundingSourceID;
+            this.FundingSource = fundingSource;
+            fundingSource.TreatmentActivities.Add(this);
             this.TreatmentActivityTypeID = treatmentActivityType.TreatmentTypeID;
             this.TreatmentActivityAcresTreated = treatmentActivityAcresTreated;
             this.TreatmentActivityStartDate = treatmentActivityStartDate;
@@ -73,9 +78,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static TreatmentActivity CreateNewBlank(Project project, TreatmentType treatmentActivityType)
+        public static TreatmentActivity CreateNewBlank(Project project, FundingSource fundingSource, TreatmentType treatmentActivityType)
         {
-            return new TreatmentActivity(project, treatmentActivityType, default(decimal), default(DateTime));
+            return new TreatmentActivity(project, fundingSource, treatmentActivityType, default(decimal), default(DateTime));
         }
 
         /// <summary>
@@ -113,6 +118,7 @@ namespace ProjectFirma.Web.Models
         public int TreatmentActivityID { get; set; }
         public int TenantID { get; private set; }
         public int ProjectID { get; set; }
+        public int FundingSourceID { get; set; }
         public int TreatmentActivityTypeID { get; set; }
         public decimal TreatmentActivityAcresTreated { get; set; }
         public DateTime TreatmentActivityStartDate { get; set; }
@@ -123,6 +129,7 @@ namespace ProjectFirma.Web.Models
 
         public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
+        public virtual FundingSource FundingSource { get; set; }
         public TreatmentType TreatmentActivityType { get { return TreatmentType.AllLookupDictionary[TreatmentActivityTypeID]; } }
 
         public static class FieldLengths

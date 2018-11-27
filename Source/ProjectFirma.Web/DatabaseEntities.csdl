@@ -247,6 +247,10 @@
       <End Role="FundingSource" EntitySet="FundingSource" />
       <End Role="StaffTimeActivities" EntitySet="StaffTimeActivity" />
     </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID">
+      <End Role="FundingSource" EntitySet="FundingSource" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="GeospatialAreas" EntitySet="GeospatialArea" />
@@ -998,6 +1002,7 @@
     <NavigationProperty Name="ProjectFundingSourceRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequests" />
     <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
     <NavigationProperty Name="StaffTimeActivities" Relationship="ProjectFirma.Web.Models.FK_StaffTimeActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="StaffTimeActivities" />
+    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="FundingTypeData">
     <Key>
@@ -2321,11 +2326,13 @@
     <Property Name="TreatmentActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <Property Name="TreatmentActivityTypeID" Type="Int32" Nullable="false" />
     <Property Name="TreatmentActivityAcresTreated" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TreatmentActivityStartDate" Type="DateTime" Nullable="false" />
     <Property Name="TreatmentActivityEndDate" Type="DateTime" />
     <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="TreatmentActivities" ToRole="FundingSource" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
   </EntityType>
   <EntityType Name="vGeoServerGeospatialArea">
@@ -2762,6 +2769,18 @@
         <PropertyRef Name="FundingSourceID" />
       </Principal>
       <Dependent Role="StaffTimeActivities">
+        <PropertyRef Name="FundingSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_FundingSource_FundingSourceID">
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundingSource">
+        <PropertyRef Name="FundingSourceID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
         <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>

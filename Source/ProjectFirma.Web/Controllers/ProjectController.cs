@@ -897,7 +897,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var allStaffTimeActivities = HttpRequestStorage.DatabaseEntities.AllStaffTimeActivities.Local;
 
             viewModel.UpdateModel(currentStaffTimeActivities, allStaffTimeActivities, project);
-            return RedirectToActionStatic(new SitkaRoute<ProjectController>(x=>x.Detail(project)));
+            return new RedirectResult(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project)) + "#activities");
         }
 
         private ViewResult ViewEditStaffTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
@@ -940,7 +940,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var allTreatmentActivities = HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.Local;
 
             viewModel.UpdateModel(currentTreatmentActivities, allTreatmentActivities, project);
-            return RedirectToActionStatic(new SitkaRoute<ProjectController>(x=>x.Detail(project)));
+            return new RedirectResult( SitkaRoute<ProjectController>.BuildUrlFromExpression(x=>x.Detail(project)) + "#activities");
         }
 
         private ViewResult ViewEditTreatmentActivities(Project project, EditTreatmentActivitiesViewModel viewModel)

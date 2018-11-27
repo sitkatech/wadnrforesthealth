@@ -19,7 +19,12 @@ namespace ProjectFirma.Web.Models
         public DateTime? TreatmentActivityEndDate { get; set; }
 
         [Required(ErrorMessage = "Acres Treated is required.")]
+        [DisplayName("Acres Treated")]
+        [Range(0d, 50000000)]
         public decimal? TreatmentActivityAcresTreated { get; set; }
+
+        [Required(ErrorMessage = "Grant is required.")]
+        public int? FundingSourceID { get; set; }
 
         public string TreatmentActivityNotes { get; set; }
 
@@ -40,13 +45,14 @@ namespace ProjectFirma.Web.Models
             TreatmentActivityStartDate = y.TreatmentActivityStartDate;
             TreatmentActivityTypeID = y.TreatmentActivityTypeID;
             TreatmentActivityAcresTreated = y.TreatmentActivityAcresTreated;
+            FundingSourceID = y.FundingSourceID;
             ProjectID = y.ProjectID;
         }
 
         public TreatmentActivity ToTreatmentActivity()
         {
             // None of the nullables will ever default, thanks to RequiredAttribute
-            return new TreatmentActivity(TreatmentActivityID.GetValueOrDefault(), ProjectID.GetValueOrDefault(), TreatmentActivityTypeID.GetValueOrDefault(), TreatmentActivityAcresTreated.GetValueOrDefault(), TreatmentActivityStartDate.GetValueOrDefault(),TreatmentActivityEndDate, TreatmentActivityNotes);
+            return new TreatmentActivity(TreatmentActivityID.GetValueOrDefault(), ProjectID.GetValueOrDefault(), FundingSourceID.GetValueOrDefault(), TreatmentActivityTypeID.GetValueOrDefault(), TreatmentActivityAcresTreated.GetValueOrDefault(), TreatmentActivityStartDate.GetValueOrDefault(),TreatmentActivityEndDate, TreatmentActivityNotes);
         }
     }
 }

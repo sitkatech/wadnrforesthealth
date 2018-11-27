@@ -42,11 +42,13 @@ Create Table dbo.TreatmentActivity(
 	TreatmentActivityID int not null identity(1,1) constraint PK_TreatmentActivity_TreatmentActivityID primary key,
 	TenantID int not null constraint FK_TreatmentActivity_Tenant_TenantID foreign key references dbo.Tenant(TenantID),
 	ProjectID int not null constraint FK_TreatmentActivity_Project_ProjectID foreign key references dbo.Project(ProjectID),
+	FundingSourceID int not null constraint FK_TreatmentActivity_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID),
 	TreatmentActivityTypeID int not null constraint FK_TreatmentActivity_TreatmentType_TreatmentActivityTypeID foreign key references dbo.TreatmentType(TreatmentTypeID),
 	TreatmentActivityAcresTreated decimal not null,
 	TreatmentActivityStartDate datetime not null,
 	TreatmentActivityEndDate datetime null,
 	TreatmentActivityNotes varchar(max) null,
 	Constraint AK_TreatmentActivity_TreatmentActivityID_TenantID unique(TreatmentActivityID, TenantID),
-	Constraint FK_TreatmentActivity_Project_ProjectID_TenantID foreign key (ProjectID, TenantID) references dbo.Project(ProjectID, TenantID)
+	Constraint FK_TreatmentActivity_Project_ProjectID_TenantID foreign key (ProjectID, TenantID) references dbo.Project(ProjectID, TenantID),
+	Constraint FK_TreatmentActivity_FundingSource_FundingSourceID_TenantID foreign key (FundingSourceID, TenantID) references dbo.FundingSource(FundingSourceID, TenantID)
 )
