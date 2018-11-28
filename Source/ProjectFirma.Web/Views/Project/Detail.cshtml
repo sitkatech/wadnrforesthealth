@@ -341,7 +341,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h4>Contractor Time Activities</h4>
+                                <h4>Contractor Time</h4>
                             </div>
                             <div class="col-sm-6 text-right">
                                 @if (ViewDataTyped.UserHasEditProjectPermissions)
@@ -381,7 +381,6 @@
                                         <th class="text-right">Acreage</th>
                                         <th class="text-right">Rate</th>
                                         <th class="text-right">Total Amount</th>
-                                        <th class="text-right">Notes</th>
                                     </tr>
                                     foreach (var contractorTimeActivity in fundingSource.OrderBy(x=>x.ContractorTimeActivityStartDate))
                                     {
@@ -401,7 +400,6 @@
                                             <td class="text-right">@contractorTimeActivity.ContractorTimeActivityHours</td>
                                             <td class="text-right">@contractorTimeActivity.ContractorTimeActivityRate.ToStringCurrency()</td>
                                             <td class="text-right">@contractorTimeActivity.TotalAmount.ToStringCurrency()</td>
-                                            <td class="text-right">@contractorTimeActivity.ContractorTimeActivityNotes</td>
                                         </tr>
                                     }
                                 }
@@ -409,12 +407,12 @@
                         }
                         else
                         {
-                            <p class="systemText">No Contractor Time Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                            <p class="systemText">No Contractor Time identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
                         <hr />
                         <div class="row">
                             <div class="col-sm-6">
-                                <h4>Treatment Activities</h4>
+                                <h4>Treatments</h4>
                             </div>
                             <div class="col-sm-6 text-right">
                                 @if (ViewDataTyped.UserHasEditProjectPermissions)
@@ -448,7 +446,6 @@
                                         <th class="text-right">Allocated Amount</th>
                                         <th class="text-right">Total Cost</th>
                                         <th class="text-right">Grant Cost</th>
-                                        <th class="text-right">Notes</th>
                                     </tr>
                                     foreach (var treatmentActivity in fundingSource.OrderBy(x=>x.TreatmentActivityStartDate))
                                      {
@@ -473,7 +470,6 @@
                                              <td class="text-right">@treatmentActivity.TreatmentActivityAllocatedAmount</td>
                                              <td class="text-right">@treatmentActivity.TreatmentActivityTotalCost</td>
                                              <td class="text-right">@treatmentActivity.TreatmentActivityGrantCost</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityNotes</td>
                                          </tr>
                                      }
                                 }
@@ -481,7 +477,7 @@
                         }
                         else
                         {
-                            <p class="systemText">No Treatment Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                            <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
                     </div>
                 </div>

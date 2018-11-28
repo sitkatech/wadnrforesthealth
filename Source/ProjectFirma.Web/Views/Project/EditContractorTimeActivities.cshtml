@@ -108,7 +108,6 @@
                             <th>Acreage <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Hours <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Rate <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Notes</th>
                             <th class="text-right">Total Amount</th>
                         </tr>
                     </thead>
@@ -131,9 +130,6 @@
                             </td>
                             <td>
                                 <input ng-model="contractorTimeActivity.ContractorTimeActivityRate" type="text" class="sitkaCurrency form-control text-right" ng-currency />
-                            </td>
-                            <td>
-                                <input ng-model="contractorTimeActivity.ContractorTimeActivityNotes" class="form-control" />
                             </td>
                             <td class="text-right">
                                 <span ng-bind="getTotalAmountForActivity(contractorTimeActivity) | currency:'$'"></span>
