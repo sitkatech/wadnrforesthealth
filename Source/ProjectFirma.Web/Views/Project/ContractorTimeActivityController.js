@@ -122,6 +122,7 @@ angular.module("ProjectFirmaApp").controller("ContractorTimeActivityController",
     $scope.rowIsEmpty = function(contractorTimeActivity) {
         return !(contractorTimeActivity.ContractorTimeActivityHours ||
             contractorTimeActivity.ContractorTimeActivityRate ||
+            contractorTimeActivity.ContractorTimeActivityHours ||
             contractorTimeActivity.ContractorTimeActivityTotalAmount ||
             contractorTimeActivity.ContractorTimeActivityStartDate ||
             contractorTimeActivity.ContractorTimeActivityEndDate ||

@@ -105,6 +105,7 @@
                             <th></th>
                             <th>Start Date <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>End Date</th>
+                            <th>Acreage <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Hours <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Rate <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Notes</th>
@@ -121,6 +122,9 @@
                             </td>
                             <td>
                                 <input ng-model="contractorTimeActivity.ContractorTimeActivityEndDate" type="text" class="sitkaDatePicker form-control" />
+                            </td>
+                            <td>
+                                <input ng-model="contractorTimeActivity.ContractorTimeActivityAcreage" type="number" class="form-control text-right" style="padding-right:2px" />
                             </td>
                             <td>
                                 <input ng-model="contractorTimeActivity.ContractorTimeActivityHours" type="number" class="form-control text-right" style="padding-right:2px" />
@@ -148,6 +152,7 @@
                     <input type="hidden" name="@Html.NameFor(x => x.ContractorTimeActivities[0].ContractorTimeActivityStartDate).ToString().Replace("0", "{{$index}}")" value="{{contractorTimeActivity.ContractorTimeActivityStartDate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.ContractorTimeActivities[0].ContractorTimeActivityEndDate).ToString().Replace("0", "{{$index}}")" value="{{contractorTimeActivity.ContractorTimeActivityEndDate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.ContractorTimeActivities[0].ContractorTimeActivityHours).ToString().Replace("0", "{{$index}}")" value="{{contractorTimeActivity.ContractorTimeActivityHours}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ContractorTimeActivities[0].ContractorTimeActivityAcreage).ToString().Replace("0", "{{$index}}")" value="{{contractorTimeActivity.ContractorTimeActivityAcreage}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.ContractorTimeActivities[0].ContractorTimeActivityRate).ToString().Replace("0", "{{$index}}")" value="{{contractorTimeActivity.ContractorTimeActivityRate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.ContractorTimeActivities[0].ContractorTimeActivityNotes).ToString().Replace("0", "{{$index}}")" value="{{contractorTimeActivity.ContractorTimeActivityNotes}}" />
                 </div>

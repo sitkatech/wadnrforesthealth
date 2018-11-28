@@ -140,7 +140,15 @@ angular.module("ProjectFirmaApp").controller("TreatmentActivityController", func
         return !(treatmentActivity.TreatmentActivityTypeID ||
             treatmentActivity.TreatmentActivityStartDate ||
             treatmentActivity.TreatmentActivityEndDate ||
-            treatmentActivity.TreatmentActivityAcresTreated ||
+            treatmentActivity.TreatmentActivityFootprintAcres ||
+            treatmentActivity.TreatmentActivityBrushControlAcres ||
+            treatmentActivity.TreatmentActivityThinningAcres ||
+            treatmentActivity.TreatmentActivityPruningAcres ||
+            treatmentActivity.TreatmentActivitySlashAcres ||
+            treatmentActivity.TreatmentActivityPrescribedBurnAcres ||
+            treatmentActivity.TreatmentActivityAllocatedAmount ||
+            treatmentActivity.TreatmentActivityTotalCost ||
+            treatmentActivity.TreatmentActivityGrantCost ||
             (treatmentActivity.TreatmentActivityNotes && treatmentActivity.TreatmentActivityNotes.replace(/\s+/, "")));
     };
 

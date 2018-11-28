@@ -79,9 +79,15 @@ namespace ProjectFirma.Web.Models
         public ContractorTimeActivity ToContractorTimeActivity()
         {
             // None of the nullables will ever default, thanks to RequiredAttribute
-            return new ContractorTimeActivity(ContractorTimeActivityID ?? ModelObjectHelpers.NotYetAssignedID, ProjectID, FundingSourceID.GetValueOrDefault(),
-                ContractorTimeActivityHours.GetValueOrDefault(), ContractorTimeActivityRate.GetValueOrDefault(), ContractorTimeActivityStartDate.GetValueOrDefault(),
-                ContractorTimeActivityEndDate, ContractorTimeActivityNotes);
+            return new ContractorTimeActivity(ContractorTimeActivityID ?? ModelObjectHelpers.NotYetAssignedID,
+                ProjectID,
+                FundingSourceID.GetValueOrDefault(),
+                ContractorTimeActivityAcreage.GetValueOrDefault(),
+                ContractorTimeActivityHours.GetValueOrDefault(),
+                ContractorTimeActivityRate.GetValueOrDefault(),
+                ContractorTimeActivityStartDate.GetValueOrDefault(),
+                ContractorTimeActivityEndDate,
+                ContractorTimeActivityNotes);
         }
     }
 }

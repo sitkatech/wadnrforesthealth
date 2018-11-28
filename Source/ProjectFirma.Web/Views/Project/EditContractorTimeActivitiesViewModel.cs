@@ -67,6 +67,7 @@ namespace ProjectFirma.Web.Views.Project
                 {
                     x.ContractorTimeActivityEndDate = y.ContractorTimeActivityEndDate;
                     x.ContractorTimeActivityHours = y.ContractorTimeActivityHours;
+                    x.ContractorTimeActivityAcreage = y.ContractorTimeActivityAcreage;
                     x.ContractorTimeActivityNotes = y.ContractorTimeActivityNotes;
                     x.ContractorTimeActivityRate = y.ContractorTimeActivityRate;
                     x.ContractorTimeActivityStartDate = y.ContractorTimeActivityStartDate;

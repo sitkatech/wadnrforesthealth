@@ -372,12 +372,13 @@
                                 @foreach (var fundingSource in contractorTimeActivities)
                                 {
                                     <tr>
-                                        <th colspan="6">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
+                                        <th colspan="7">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
                                     </tr>
                                     <tr>
                                         <th>Start Date</th>
                                         <th>End Date</th>
                                         <th class="text-right">Hours</th>
+                                        <th class="text-right">Acreage</th>
                                         <th class="text-right">Rate</th>
                                         <th class="text-right">Total Amount</th>
                                         <th class="text-right">Notes</th>
@@ -396,6 +397,7 @@
                                                     <p class="systemText">N/A</p>
                                                 }
                                             </td>
+                                            <td class="text-right">@contractorTimeActivity.ContractorTimeActivityAcreage</td>
                                             <td class="text-right">@contractorTimeActivity.ContractorTimeActivityHours</td>
                                             <td class="text-right">@contractorTimeActivity.ContractorTimeActivityRate.ToStringCurrency()</td>
                                             <td class="text-right">@contractorTimeActivity.TotalAmount.ToStringCurrency()</td>
@@ -481,36 +483,6 @@
                         {
                             <p class="systemText">No Treatment Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h4>Travel Activities</h4>
-                            </div>
-                            <div class="col-sm-6 text-right">
-
-                            </div>
-                        </div>
-                        <p class="systemText">Coming Soon!</p>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h4>Contractor Time Activities</h4>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                            </div>
-                        </div>
-                        <p class="systemText">Coming Soon!</p>
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h4>Supplies</h4>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                            </div>
-                        </div>
-                        <p class="systemText">Coming Soon!</p>
-
                     </div>
                 </div>
 

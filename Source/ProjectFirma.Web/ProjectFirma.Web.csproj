@@ -450,7 +450,6 @@
     <Compile Include="Models\TreatmentTypeSimple.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="UnitTestCommon\TestGeospatialAreaType.cs" />
-    <Compile Include="UnitTestCommon\TestStaffTimeActivity.cs" />
     <Compile Include="Views\Home\TrainingVideo.cs" />
     <Compile Include="Views\Home\TrainingVideoViewData.cs" />
     <Compile Include="Views\PerformanceMeasure\TechnicalAssistanceParameters.cs" />
@@ -500,7 +499,6 @@
     <Compile Include="Views\Project\EditTreatmentActivitiesViewData.cs" />
     <Compile Include="Views\Project\EditTreatmentActivitiesViewModel.cs" />
     <Compile Include="Views\Project\EditContractorTimeActivitiesViewModel.cs" />
-    <Compile Include="Views\Project\EditContractorTimeActivitysViewModelTest.cs" />
     <Compile Include="Views\Results\ConfigureAccomplishmentsDashboard.cs" />
     <Compile Include="Views\ProjectCreate\ValidateImportExternalProjectDataViewModel.cs" />
     <Compile Include="Models\ImportExternalProjectStaging.cs" />
