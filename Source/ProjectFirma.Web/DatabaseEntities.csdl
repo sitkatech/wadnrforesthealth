@@ -2334,9 +2334,9 @@
     <Property Name="TreatmentActivityPruningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TreatmentActivitySlashAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TreatmentActivityPrescribedBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityAllocatedAmount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityTotalCost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityGrantCost" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityAllocatedAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TreatmentActivityTotalCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TreatmentActivityGrantCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="TreatmentActivityStartDate" Type="DateTime" Nullable="false" />
     <Property Name="TreatmentActivityEndDate" Type="DateTime" />
     <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />

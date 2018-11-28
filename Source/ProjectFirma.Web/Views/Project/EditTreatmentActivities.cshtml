@@ -87,15 +87,15 @@
                             <th></th>
                             <th>Start Date <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>End Date</th>
-                            <th>Footprint Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Brush Control Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Thinning Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Pruning Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Slash Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Prescribed Burn Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Allocated Amount <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Total Cost <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Grant Cost <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Footprint Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Brush Control Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Thinning Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Pruning Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Slash Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Prescribed Burn Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Allocated Amount <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Total Cost <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th class="text-right">Grant Cost <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,18 +107,18 @@
                                 <input ng-model="treatmentActivity.TreatmentActivityStartDate" type="text" class="sitkaDatePicker form-control" datetime="shortDate" datetime-model="shortDate" />
                             </td>
                             <td>
-                                <input ng-model="treatmentActivity.TreatmentActivityEndDate" type="text" class="sitkaDatePicker form-control" />
+                                <input ng-model="treatmentActivity.TreatmentActivityEndDate" type="text" class="text-right sitkaDatePicker form-control" />
                             </td>
                             
-                            <td><input ng-model="treatmentActivity.TreatmentActivityFootprintAcres" type="number" class="form-control" /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityBrushControlAcres" type="number" class="form-control" /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityThinningAcres" type="number" class="form-control" /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityPruningAcres" type="number" class="form-control" /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivitySlashAcres" type="number" class="form-control" /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityPrescribedBurnAcres" type="number" class="form-control" /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityAllocatedAmount" type="text" class="sitkaCurrency form-control text-right" ng-currency /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityTotalCost" type="text" class="sitkaCurrency form-control text-right" ng-currency /></td>
-                            <td><input ng-model="treatmentActivity.TreatmentActivityGrantCost" type="text" class="sitkaCurrency form-control text-right" ng-currency /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityFootprintAcres" type="number" class="text-right form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityBrushControlAcres" type="number" class="text-right form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityThinningAcres" type="number" class="text-right form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityPruningAcres" type="number" class="text-right form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivitySlashAcres" type="number" class="text-right form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityPrescribedBurnAcres" type="number" class="text-right form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityAllocatedAmount" type="text" class="text-right sitkaCurrency form-control text-right" ng-currency /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityTotalCost" type="text" class="text-right sitkaCurrency form-control text-right" ng-currency /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityGrantCost" type="text" class="text-right sitkaCurrency form-control text-right" ng-currency /></td>
                         </tr>
                     </tbody>
                 </table>
