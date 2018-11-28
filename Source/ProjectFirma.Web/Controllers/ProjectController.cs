@@ -869,42 +869,42 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         public ViewResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var staffTimeActivities = project.StaffTimeActivities.ToList();
-            var staffTimeActivitySimples = staffTimeActivities.Select(x => new StaffTimeActivitySimple(x));
-            var viewModel = new EditStaffTimeActivitiesViewModel(project, staffTimeActivitySimples.ToList());
+            var contractorTimeActivities = project.ContractorTimeActivities.ToList();
+            var contractorTimeActivitySimples = contractorTimeActivities.Select(x => new ContractorTimeActivitySimple(x));
+            var viewModel = new EditContractorTimeActivitiesViewModel(project, contractorTimeActivitySimples.ToList());
             return ViewEditContractorTimeActivities(project, viewModel);
         }
 
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditStaffTimeActivitiesViewModel viewModel)
+        public ActionResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditContractorTimeActivitiesViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentStaffTimeActivities = project.StaffTimeActivities.ToList();
+            var currentContractorTimeActivities = project.ContractorTimeActivities.ToList();
             if (!ModelState.IsValid)
             {
                 return ViewEditContractorTimeActivities(project, viewModel);
             }
-            return UpdateContractorTimeActivities(viewModel, currentStaffTimeActivities, project);
+            return UpdateContractorTimeActivities(viewModel, currentContractorTimeActivities, project);
         }
 
         private static ActionResult UpdateContractorTimeActivities(
-            EditStaffTimeActivitiesViewModel viewModel,
-            List<StaffTimeActivity> currentStaffTimeActivities, Project project)
+            EditContractorTimeActivitiesViewModel viewModel,
+            List<ContractorTimeActivity> currentContractorTimeActivities, Project project)
         {
-            HttpRequestStorage.DatabaseEntities.StaffTimeActivities.Load();
-            var allStaffTimeActivities = HttpRequestStorage.DatabaseEntities.AllStaffTimeActivities.Local;
+            HttpRequestStorage.DatabaseEntities.ContractorTimeActivities.Load();
+            var allContractorTimeActivities = HttpRequestStorage.DatabaseEntities.AllContractorTimeActivities.Local;
 
-            viewModel.UpdateModel(currentStaffTimeActivities, allStaffTimeActivities, project);
+            viewModel.UpdateModel(currentContractorTimeActivities, allContractorTimeActivities, project);
             return new RedirectResult(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project)) + "#activities");
         }
 
-        private ViewResult ViewEditContractorTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
+        private ViewResult ViewEditContractorTimeActivities(Project project, EditContractorTimeActivitiesViewModel viewModel)
         {
             var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditStaffTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
-            return RazorView<EditStaffTimeActivities, EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>(viewData, viewModel);
+            var viewData = new EditContractorTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
+            return RazorView<EditContractorTimeActivities, EditContractorTimeActivitiesViewData, EditContractorTimeActivitiesViewModel>(viewData, viewModel);
         }
 
         [HttpGet]

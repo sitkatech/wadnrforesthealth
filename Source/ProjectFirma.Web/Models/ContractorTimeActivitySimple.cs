@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="StaffTimeActivitySimple.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ContractorTimeActivitySimple.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -20,22 +20,15 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
-using System.Linq;
-using ProjectFirma.Web.Models;
-using LtInfo.Common;
 using LtInfo.Common.Models;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Views.ProjectUpdate;
 
 namespace ProjectFirma.Web.Models
 {
-    public class StaffTimeActivitySimple
+    public class ContractorTimeActivitySimple
     {
-        public int? StaffTimeActivityID { get; set; }
+        public int? ContractorTimeActivityID { get; set; }
 
         [Required(ErrorMessage="Grant is required.")]
         public int? FundingSourceID { get; set; }
@@ -45,45 +38,50 @@ namespace ProjectFirma.Web.Models
 
         [Required(ErrorMessage = "Start Date is required.")]
         [DisplayName("Start Date")]
-        public DateTime? StaffTimeActivityStartDate { get; set; }
+        public DateTime? ContractorTimeActivityStartDate { get; set; }
 
         [DisplayName("End Date")]
-        public DateTime? StaffTimeActivityEndDate { get; set; }
+        public DateTime? ContractorTimeActivityEndDate { get; set; }
 
         [Required(ErrorMessage = "Number of Hours is required.")]
         [Range(0d, 50000000)]
-        public decimal? StaffTimeActivityHours { get; set; }
+        public decimal? ContractorTimeActivityHours { get; set; }
 
         [Required(ErrorMessage = "Rate is required.")]
         [Range(0d, 50000000)]
-        public decimal? StaffTimeActivityRate { get; set; }
+        public decimal? ContractorTimeActivityRate { get; set; }
 
-        public string StaffTimeActivityNotes { get; set; }
+        [Required(ErrorMessage = "Acreage is required.")]
+        [Range(0d, 50000000)]
+        public decimal? ContractorTimeActivityAcreage { get; set; }
+
+        public string ContractorTimeActivityNotes { get; set; }
 
         // Needed by ModelBinder
-        public StaffTimeActivitySimple()
+        public ContractorTimeActivitySimple()
         {
 
         }
 
-        public StaffTimeActivitySimple(StaffTimeActivity y)
+        public ContractorTimeActivitySimple(ContractorTimeActivity y)
         {
-            StaffTimeActivityID = y.StaffTimeActivityID;
-            StaffTimeActivityEndDate = y.StaffTimeActivityEndDate;
-            StaffTimeActivityHours = y.StaffTimeActivityHours;
-            StaffTimeActivityNotes = y.StaffTimeActivityNotes;
-            StaffTimeActivityRate = y.StaffTimeActivityRate;
-            StaffTimeActivityStartDate = y.StaffTimeActivityStartDate;
+            ContractorTimeActivityID = y.ContractorTimeActivityID;
+            ContractorTimeActivityEndDate = y.ContractorTimeActivityEndDate;
+            ContractorTimeActivityHours = y.ContractorTimeActivityHours;
+            ContractorTimeActivityNotes = y.ContractorTimeActivityNotes;
+            ContractorTimeActivityRate = y.ContractorTimeActivityRate;
+            ContractorTimeActivityStartDate = y.ContractorTimeActivityStartDate;
+            ContractorTimeActivityAcreage = y.ContractorTimeActivityAcreage;
             FundingSourceID = y.FundingSourceID;
             ProjectID = y.ProjectID;
         }
 
-        public StaffTimeActivity ToStaffTimeActivity()
+        public ContractorTimeActivity ToContractorTimeActivity()
         {
             // None of the nullables will ever default, thanks to RequiredAttribute
-            return new StaffTimeActivity(StaffTimeActivityID ?? ModelObjectHelpers.NotYetAssignedID, ProjectID, FundingSourceID.GetValueOrDefault(),
-                StaffTimeActivityHours.GetValueOrDefault(), StaffTimeActivityRate.GetValueOrDefault(), StaffTimeActivityStartDate.GetValueOrDefault(),
-                StaffTimeActivityEndDate, StaffTimeActivityNotes);
+            return new ContractorTimeActivity(ContractorTimeActivityID ?? ModelObjectHelpers.NotYetAssignedID, ProjectID, FundingSourceID.GetValueOrDefault(),
+                ContractorTimeActivityHours.GetValueOrDefault(), ContractorTimeActivityRate.GetValueOrDefault(), ContractorTimeActivityStartDate.GetValueOrDefault(),
+                ContractorTimeActivityEndDate, ContractorTimeActivityNotes);
         }
     }
 }

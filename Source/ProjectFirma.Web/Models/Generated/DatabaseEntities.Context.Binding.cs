@@ -42,6 +42,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<Classification> Classifications { get { return AllClassifications.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ClassificationSystem> AllClassificationSystems { get; set; }
         public virtual IQueryable<ClassificationSystem> ClassificationSystems { get { return AllClassificationSystems.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<ContractorTimeActivity> AllContractorTimeActivities { get; set; }
+        public virtual IQueryable<ContractorTimeActivity> ContractorTimeActivities { get { return AllContractorTimeActivities.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<CostParameterSet> AllCostParameterSets { get; set; }
         public virtual IQueryable<CostParameterSet> CostParameterSets { get { return AllCostParameterSets.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<County> AllCounties { get; set; }
@@ -214,8 +216,6 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<SnapshotProject> SnapshotProjects { get { return AllSnapshotProjects.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<Snapshot> AllSnapshots { get; set; }
         public virtual IQueryable<Snapshot> Snapshots { get { return AllSnapshots.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
-        public virtual DbSet<StaffTimeActivity> AllStaffTimeActivities { get; set; }
-        public virtual IQueryable<StaffTimeActivity> StaffTimeActivities { get { return AllStaffTimeActivities.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<StateProvince> AllStateProvinces { get; set; }
         public virtual IQueryable<StateProvince> StateProvinces { get { return AllStateProvinces.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<SupportRequestLog> AllSupportRequestLogs { get; set; }
@@ -279,6 +279,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ClassificationSystem":
                     return ClassificationSystems.GetClassificationSystem(primaryKey);
+
+                case "ContractorTimeActivity":
+                    return ContractorTimeActivities.GetContractorTimeActivity(primaryKey);
 
                 case "CostParameterSet":
                     return CostParameterSets.GetCostParameterSet(primaryKey);
@@ -677,9 +680,6 @@ namespace ProjectFirma.Web.Models
 
                 case "Snapshot":
                     return Snapshots.GetSnapshot(primaryKey);
-
-                case "StaffTimeActivity":
-                    return StaffTimeActivities.GetStaffTimeActivity(primaryKey);
 
                 case "StateProvince":
                     return StateProvinces.GetStateProvince(primaryKey);

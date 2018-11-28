@@ -671,12 +671,12 @@ namespace ProjectFirma.Web.Models
 
         public decimal GetTotalStaffTimeHours()
         {
-            return StaffTimeActivities.Sum(x => x.StaffTimeActivityHours);
+            return ContractorTimeActivities.Sum(x => x.ContractorTimeActivityHours);
         }
 
         public decimal GetTotalStaffTimeAmount()
         {
-            return StaffTimeActivities.Sum(x => x.TotalAmount);
+            return ContractorTimeActivities.Sum(x => x.TotalAmount);
         }
     }
 }

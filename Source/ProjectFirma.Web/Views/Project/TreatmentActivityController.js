@@ -125,11 +125,11 @@ angular.module("ProjectFirmaApp").controller("TreatmentActivityController", func
 
     $scope.createNewRow = function (projectID, fundingSourceID) {
         var fundingSource = $scope.getFundingSource(fundingSourceID);
-        var newStaffTimeActivity = {
+        var newActivity = {
             ProjectID: projectID,
             FundingSourceID: fundingSource.FundingSourceID,
         };
-        return newStaffTimeActivity;
+        return newActivity;
     };
 
     $scope.deleteActivity = function(activityToDelete) {

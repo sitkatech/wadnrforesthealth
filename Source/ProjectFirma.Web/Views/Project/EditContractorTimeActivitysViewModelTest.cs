@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditStaffTimeActivitysViewModelTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditContractorTimeActivitysViewModelTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -29,7 +29,7 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Views.Project
 {
     [TestFixture]
-    public class EditStaffTimeActivitysViewModelTest
+    public class EditContractorTimeActivitysViewModelTest
     {
         [Test]
         public void AllViewModelFieldsAreSetFromConstructorTest()
@@ -41,19 +41,19 @@ namespace ProjectFirma.Web.Views.Project
             var fundingSource4 = TestFramework.TestFundingSource.Create();
 
             var project = TestFramework.TestProject.Create();
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource1, 1, 2, 3, DateTime.Now);
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource2, 1, 2, 3, DateTime.Now);
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource3, 1, 2, 3, DateTime.Now);
-            TestFramework.TestStaffTimeActivity.Create(project, fundingSource4, 1, 2, 3, DateTime.Now);
+            TestFramework.TestContractorTimeActivity.Create(project, fundingSource1, 1, 2, 3, DateTime.Now);
+            TestFramework.TestContractorTimeActivity.Create(project, fundingSource2, 1, 2, 3, DateTime.Now);
+            TestFramework.TestContractorTimeActivity.Create(project, fundingSource3, 1, 2, 3, DateTime.Now);
+            TestFramework.TestContractorTimeActivity.Create(project, fundingSource4, 1, 2, 3, DateTime.Now);
 
             var allFundingSources = new List<Models.FundingSource> {fundingSource1, fundingSource2, fundingSource3, fundingSource4};
 
             // Act
-            var staffTimeActivities = project.StaffTimeActivities.ToList();
-            var viewModel = new EditStaffTimeActivitiesViewModel(project, staffTimeActivities.Select(x=>new StaffTimeActivitySimple(x)).ToList());
+            var contractorTimeActivities = project.ContractorTimeActivities.ToList();
+            var viewModel = new EditContractorTimeActivitiesViewModel(project, contractorTimeActivities.Select(x=>new ContractorTimeActivitySimple(x)).ToList());
 
             // Assert
-            Assert.That(viewModel.StaffTimeActivities.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));
+            Assert.That(viewModel.ContractorTimeActivities.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));
         }
     }
 }

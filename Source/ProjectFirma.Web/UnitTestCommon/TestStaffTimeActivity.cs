@@ -5,14 +5,14 @@ namespace ProjectFirma.Web.UnitTestCommon
 {
     public static partial class TestFramework
     {
-        public static partial class TestStaffTimeActivity
+        public static partial class TestContractorTimeActivity
         {
-            public static StaffTimeActivity Create(Project project, FundingSource fundingSource, decimal staffTimeActivityHours,
-                decimal staffTimeActivityRate, decimal staffTimeActivityTotalAmount,
-                DateTime staffTimeActivityStartDate)
+            public static ContractorTimeActivity Create(Project project, FundingSource fundingSource, decimal contractorTimeActivityHours,
+                decimal contractorTimeActivityRate, decimal contractorTimeActivityTotalAmount,
+                DateTime contractorTimeActivityStartDate)
             {
-                return new StaffTimeActivity(project, fundingSource, staffTimeActivityHours, staffTimeActivityRate,
-                     staffTimeActivityStartDate);
+                return new ContractorTimeActivity(project, fundingSource, contractorTimeActivityHours, contractorTimeActivityRate,
+                     contractorTimeActivityStartDate);
             }
         }
     }

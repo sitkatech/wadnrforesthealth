@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="StaffTimeActivityController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ContractorTimeActivityController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,7 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", function ($scope, angularModelAndViewData)
+angular.module("ProjectFirmaApp").controller("ContractorTimeActivityController", function ($scope, angularModelAndViewData)
 {
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
@@ -31,7 +31,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     };
     
     $scope.getAllUsedFundingSourceIds = function () {
-        return _.map($scope.AngularModel.StaffTimeActivities, function (p) { return p.FundingSourceID; });
+        return _.map($scope.AngularModel.ContractorTimeActivities, function (p) { return p.FundingSourceID; });
     };
 
     $scope.filteredFundingSources = function () {
@@ -43,8 +43,8 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
             }).value();
     };
 
-    $scope.getFundingSourceName = function (staffTimeActivity) {
-        var fundingSourceToFind = $scope.getFundingSource(staffTimeActivity.FundingSourceID);
+    $scope.getFundingSourceName = function (contractorTimeActivity) {
+        var fundingSourceToFind = $scope.getFundingSource(contractorTimeActivity.FundingSourceID);
         return fundingSourceToFind.DisplayName;
     };
 
@@ -52,8 +52,8 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
         return _.find($scope.AngularViewData.AllFundingSources, function (f) { return fundingSourceId == f.FundingSourceID; });
     };
 
-    $scope.staffTimeActivitiesForFundingSource = function(fundingSource, ignoreBlanks) {
-        var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
+    $scope.contractorTimeActivitiesForFundingSource = function(fundingSource, ignoreBlanks) {
+        var filtered = _.filter($scope.AngularModel.ContractorTimeActivities,
             function (a) { return a.FundingSourceID == fundingSource.FundingSourceID; });
         if (!ignoreBlanks) {
             var a = [];
@@ -72,25 +72,25 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.fundingSourcesWithActivities = function() {
         return _.filter($scope.AngularViewData.AllFundingSources,
             function(f) {
-                return $scope.staffTimeActivitiesForFundingSource(f).length > 0;
+                return $scope.contractorTimeActivitiesForFundingSource(f).length > 0;
             });
     };
 
     $scope.addFundingSource = function () {
-        var newStaffTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
-        $scope.AngularModel.StaffTimeActivities.push(newStaffTimeActivity);
+        var newContractorTimeActivity = $scope.createNewRow($scope.AngularViewData.ProjectID, $scope.FundingSourceIDToAdd);
+        $scope.AngularModel.ContractorTimeActivities.push(newContractorTimeActivity);
         $scope.resetFundingSourceIDToAdd();
     };
 
     $scope.deleteFundingSource = function (fundingSourceToDelete) {
-        var staffTimeActivitiesWeCareAbout = $scope.staffTimeActivitiesForFundingSource(fundingSourceToDelete, true);
-        for (var i = 0; i < staffTimeActivitiesWeCareAbout.length; i++) {
-            $scope.deleteActivity(staffTimeActivitiesWeCareAbout[i]);
+        var contractorTimeActivitiesWeCareAbout = $scope.contractorTimeActivitiesForFundingSource(fundingSourceToDelete, true);
+        for (var i = 0; i < contractorTimeActivitiesWeCareAbout.length; i++) {
+            $scope.deleteActivity(contractorTimeActivitiesWeCareAbout[i]);
         }
     };
 
     $scope.nonBlankActivities = function() {
-        var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
+        var filtered = _.filter($scope.AngularModel.ContractorTimeActivities,
             function(f) {
                 return !$scope.rowIsEmpty(f);
             });
@@ -98,7 +98,7 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     };
 
     $scope.blankActivities = function () {
-        var filtered = _.filter($scope.AngularModel.StaffTimeActivities,
+        var filtered = _.filter($scope.AngularModel.ContractorTimeActivities,
             function (f) {
                 return $scope.rowIsEmpty(f);
             });
@@ -108,44 +108,44 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     $scope.createNewRow = function (projectID, fundingSourceID)
     {
         var fundingSource = $scope.getFundingSource(fundingSourceID);
-        var newStaffTimeActivity = {
+        var newContractorTimeActivity = {
             ProjectID: projectID,
             FundingSourceID: fundingSource.FundingSourceID,
         };
-        return newStaffTimeActivity;
+        return newContractorTimeActivity;
     };
 
     $scope.deleteActivity = function(activityToDelete) {
-        Sitka.Methods.removeFromJsonArray($scope.AngularModel.StaffTimeActivities, activityToDelete);
+        Sitka.Methods.removeFromJsonArray($scope.AngularModel.ContractorTimeActivities, activityToDelete);
     }
 
-    $scope.rowIsEmpty = function(staffTimeActivity) {
-        return !(staffTimeActivity.StaffTimeActivityHours ||
-            staffTimeActivity.StaffTimeActivityRate ||
-            staffTimeActivity.StaffTimeActivityTotalAmount ||
-            staffTimeActivity.StaffTimeActivityStartDate ||
-            staffTimeActivity.StaffTimeActivityEndDate ||
-            (staffTimeActivity.StaffTimeActivityNotes && staffTimeActivity.StaffTimeActivityNotes.replace(/\s+/, "")));
+    $scope.rowIsEmpty = function(contractorTimeActivity) {
+        return !(contractorTimeActivity.ContractorTimeActivityHours ||
+            contractorTimeActivity.ContractorTimeActivityRate ||
+            contractorTimeActivity.ContractorTimeActivityTotalAmount ||
+            contractorTimeActivity.ContractorTimeActivityStartDate ||
+            contractorTimeActivity.ContractorTimeActivityEndDate ||
+            (contractorTimeActivity.ContractorTimeActivityNotes && contractorTimeActivity.ContractorTimeActivityNotes.replace(/\s+/, "")));
     };
 
     $scope.addBlankRowsIfAppropriate = function() {
         var fundingSourcesWeCareAbout = $scope.fundingSourcesWithActivities();
         for (var i = 0; i < fundingSourcesWeCareAbout.length; i++) {
-            var staffTimeActivitiesWeCareAbout =
-                $scope.staffTimeActivitiesForFundingSource(fundingSourcesWeCareAbout[i]);
-            if (!$scope.rowIsEmpty(staffTimeActivitiesWeCareAbout[staffTimeActivitiesWeCareAbout.length - 1])) {
-                $scope.AngularModel.StaffTimeActivities.push($scope.createNewRow($scope.AngularViewData.ProjectID, fundingSourcesWeCareAbout[i].FundingSourceID));
+            var contractorTimeActivitiesWeCareAbout =
+                $scope.contractorTimeActivitiesForFundingSource(fundingSourcesWeCareAbout[i]);
+            if (!$scope.rowIsEmpty(contractorTimeActivitiesWeCareAbout[contractorTimeActivitiesWeCareAbout.length - 1])) {
+                $scope.AngularModel.ContractorTimeActivities.push($scope.createNewRow($scope.AngularViewData.ProjectID, fundingSourcesWeCareAbout[i].FundingSourceID));
             }
         }
     };
 
-    $scope.getTotalAmountForActivity = function(staffTimeActivity) {
-        return staffTimeActivity.StaffTimeActivityHours * staffTimeActivity.StaffTimeActivityRate;
+    $scope.getTotalAmountForActivity = function(contractorTimeActivity) {
+        return contractorTimeActivity.ContractorTimeActivityHours * contractorTimeActivity.ContractorTimeActivityRate;
     };
     
     $scope.getOverallTotalHours = function () {
         return Number(_.reduce($scope.nonBlankActivities(),
-            function (m, x) { return Number(m) + Number(x.StaffTimeActivityHours); },
+            function (m, x) { return Number(m) + Number(x.ContractorTimeActivityHours); },
             0));
     };
 
@@ -156,8 +156,8 @@ angular.module("ProjectFirmaApp").controller("StaffTimeActivityController", func
     };
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
-    if ($scope.AngularModel.StaffTimeActivities == null) {
-        $scope.AngularModel.StaffTimeActivities = [];
+    if ($scope.AngularModel.ContractorTimeActivities == null) {
+        $scope.AngularModel.ContractorTimeActivities = [];
     }
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
     $scope.resetFundingSourceIDToAdd();

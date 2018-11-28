@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditStaffTimeActivitysViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="JsonExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,54 +18,11 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
+
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
-
-namespace ProjectFirma.Web.Views.Project
-{
-    public class EditStaffTimeActivitiesViewData : FirmaViewData
-    {
-        public List<FundingSourceSimple> AllFundingSources { get; }
-        public int ProjectID { get; }
-        public ViewDataForAngularClass ViewDataForAngular { get; set; }
-        public string ProjectUrl { get; }
-
-        private EditStaffTimeActivitiesViewData(List<FundingSourceSimple> allFundingSources, Models.Project project, Person currentPerson) : base(currentPerson)
-        {
-            AllFundingSources = allFundingSources;
-            ProjectID = project.ProjectID;
-            ViewDataForAngular = new ViewDataForAngularClass(AllFundingSources, ProjectID);
-            ProjectUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(ProjectID));
-
-            EntityName = Models.FieldDefinition.Project.GetFieldDefinitionLabel();
-            PageTitle = $"Edit {project.DisplayName} Staff Time Activities";
-        }
-
-        public EditStaffTimeActivitiesViewData(Models.Project project,
-            List<FundingSourceSimple> allFundingSources, Person currentPerson)
-            : this(allFundingSources, project, currentPerson)
-        {
-        }
-
-        public class ViewDataForAngularClass
-        {
-            public List<FundingSourceSimple> AllFundingSources { get; }
-            public int ProjectID { get; }
-
-            public ViewDataForAngularClass(List<FundingSourceSimple> allFundingSources, int projectID)
-            {
-                AllFundingSources = allFundingSources;
-                ProjectID = projectID;
-            }
-        }
-    }
-}
 
 public static class JsonExtensions
 {

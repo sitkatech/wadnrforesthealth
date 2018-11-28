@@ -341,16 +341,16 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h4>Staff Time Activities</h4>
+                                <h4>Contractor Time Activities</h4>
                             </div>
                             <div class="col-sm-6 text-right">
                                 @if (ViewDataTyped.UserHasEditProjectPermissions)
-                                {<a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditStaffTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>}
+                                {<a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditContractorTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>}
                             </div>
                         </div>
-                        @if (ViewDataTyped.Project.StaffTimeActivities.Any())
+                        @if (ViewDataTyped.Project.ContractorTimeActivities.Any())
                         {
-                            var staffTimeActivities = ViewDataTyped.Project.StaffTimeActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
+                            var contractorTimeActivities = ViewDataTyped.Project.ContractorTimeActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
                             <div class="row">
                                 <div class="col-sm-2"><strong>Staff Time Hours:</strong></div>
                                 <div class="col-sm-2 text-right">
@@ -369,7 +369,7 @@
                             </div>
                             <br />
                             <table class="table table-striped table-condensed table-hover">
-                                @foreach (var fundingSource in staffTimeActivities)
+                                @foreach (var fundingSource in contractorTimeActivities)
                                 {
                                     <tr>
                                         <th colspan="6">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
@@ -382,24 +382,24 @@
                                         <th class="text-right">Total Amount</th>
                                         <th class="text-right">Notes</th>
                                     </tr>
-                                    foreach (var staffTimeActivity in fundingSource.OrderBy(x=>x.StaffTimeActivityStartDate))
+                                    foreach (var contractorTimeActivity in fundingSource.OrderBy(x=>x.ContractorTimeActivityStartDate))
                                     {
                                         <tr>
-                                            <td>@staffTimeActivity.StaffTimeActivityStartDate.ToShortDateString()</td>
+                                            <td>@contractorTimeActivity.ContractorTimeActivityStartDate.ToShortDateString()</td>
                                             <td>
-                                                @if (staffTimeActivity.StaffTimeActivityEndDate != null)
+                                                @if (contractorTimeActivity.ContractorTimeActivityEndDate != null)
                                                 {
-                                                    <text>@staffTimeActivity.StaffTimeActivityEndDate.Value.ToShortDateString()</text>
+                                                    <text>@contractorTimeActivity.ContractorTimeActivityEndDate.Value.ToShortDateString()</text>
                                                 }
                                                 else
                                                 {
                                                     <p class="systemText">N/A</p>
                                                 }
                                             </td>
-                                            <td class="text-right">@staffTimeActivity.StaffTimeActivityHours</td>
-                                            <td class="text-right">@staffTimeActivity.StaffTimeActivityRate.ToStringCurrency()</td>
-                                            <td class="text-right">@staffTimeActivity.TotalAmount.ToStringCurrency()</td>
-                                            <td class="text-right">@staffTimeActivity.StaffTimeActivityNotes</td>
+                                            <td class="text-right">@contractorTimeActivity.ContractorTimeActivityHours</td>
+                                            <td class="text-right">@contractorTimeActivity.ContractorTimeActivityRate.ToStringCurrency()</td>
+                                            <td class="text-right">@contractorTimeActivity.TotalAmount.ToStringCurrency()</td>
+                                            <td class="text-right">@contractorTimeActivity.ContractorTimeActivityNotes</td>
                                         </tr>
                                     }
                                 }
@@ -407,7 +407,7 @@
                         }
                         else
                         {
-                            <p class="systemText">No Staff Time Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                            <p class="systemText">No Contractor Time Activities identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
                         <hr />
                         <div class="row">
@@ -421,24 +421,18 @@
                                 }
                             </div>
                         </div>
+                        
+                        <br/>
 
                         @if (ViewDataTyped.Project.TreatmentActivities.Any())
                         {
                             var treatmentActivities = ViewDataTyped.Project.TreatmentActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
-                            <div class="row">
-                                <div class="col-sm-2"><strong>Total Acres Treated:</strong></div>
-                                <div class="col-sm-2 text-right">
-                                    <span>
-                                        @ViewDataTyped.Project.GetTotalTreatmentAcreage()
-                                    </span>
-                                </div>
-                            </div>
-                            <br />
+                            
                             <table class="table table-striped table-condensed table-hover">
                                 @foreach (var fundingSource in treatmentActivities)
                                 {
                                     <tr>
-                                        <th colspan="5">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
+                                        <th colspan="12">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
                                     </tr>
                                     <tr>
                                         <th>Start Date</th>

@@ -18,19 +18,20 @@ values
 (4, 'ContractorTime', 'Contractor Time'),
 (5, 'Supplies', 'Supplies')
 
-Create Table dbo.StaffTimeActivity(
-	StaffTimeActivityID int not null identity(1,1) constraint PK_StaffTimeActivity_StaffTimeActivityID primary key,
-	TenantID int not null constraint FK_StaffTimeActivity_Tenant_TenantID foreign key references dbo.Tenant(TenantID),
-	ProjectID int not null constraint FK_StaffTimeActivity_Project_ProjectID foreign key references dbo.Project(ProjectID),
-	FundingSourceID int not null constraint FK_StaffTimeActivity_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID),
-	StaffTimeActivityHours decimal not null,
-	StaffTimeActivityRate money not null,
-	StaffTimeActivityStartDate datetime not null,
-	StaffTimeActivityEndDate datetime null,
-	StaffTimeActivityNotes varchar(max) null,
-	Constraint AK_StaffTimeActivity_StaffTimeActivityID_TenantID unique(StaffTimeActivityID, TenantID),
-	Constraint FK_StaffTimeActivity_Project_ProjectID_TenantID foreign key (ProjectID, TenantID) references dbo.Project(ProjectID, TenantID),
-	Constraint FK_StaffTimeActivity_FundingSource_FundingSourceID_TenantID foreign key (FundingSourceID, TenantID) references dbo.FundingSource(FundingSourceID, TenantID)
+Create Table dbo.ContractorTimeActivity(
+	ContractorTimeActivityID int not null identity(1,1) constraint PK_ContractorTimeActivity_ContractorTimeActivityID primary key,
+	TenantID int not null constraint FK_ContractorTimeActivity_Tenant_TenantID foreign key references dbo.Tenant(TenantID),
+	ProjectID int not null constraint FK_ContractorTimeActivity_Project_ProjectID foreign key references dbo.Project(ProjectID),
+	FundingSourceID int not null constraint FK_ContractorTimeActivity_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID),
+	ContractorTimeActivityAcreage decimal not null,
+	ContractorTimeActivityHours decimal not null,
+	ContractorTimeActivityRate money not null,
+	ContractorTimeActivityStartDate datetime not null,
+	ContractorTimeActivityEndDate datetime null,
+	ContractorTimeActivityNotes varchar(max) null,
+	Constraint AK_ContractorTimeActivity_ContractorTimeActivityID_TenantID unique(ContractorTimeActivityID, TenantID),
+	Constraint FK_ContractorTimeActivity_Project_ProjectID_TenantID foreign key (ProjectID, TenantID) references dbo.Project(ProjectID, TenantID),
+	Constraint FK_ContractorTimeActivity_FundingSource_FundingSourceID_TenantID foreign key (FundingSourceID, TenantID) references dbo.FundingSource(FundingSourceID, TenantID)
 )
 
 Create Table dbo.TreatmentActivity(

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditStaffTimeActivitys.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditContractorTimeActivitys.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Views.Project
 {
-    public abstract class EditStaffTimeActivities : LtInfo.Common.Mvc.TypedWebViewPage<EditStaffTimeActivitiesViewData, EditStaffTimeActivitiesViewModel>
+    public abstract class EditContractorTimeActivities : LtInfo.Common.Mvc.TypedWebViewPage<EditContractorTimeActivitiesViewData, EditContractorTimeActivitiesViewModel>
     {
     }
 }
