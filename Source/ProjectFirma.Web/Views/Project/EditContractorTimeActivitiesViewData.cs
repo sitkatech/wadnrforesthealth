@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(ProjectID));
 
             EntityName = Models.FieldDefinition.Project.GetFieldDefinitionLabel();
-            PageTitle = $"Edit {project.DisplayName} Contractor Time Activities";
+            PageTitle = $"Edit {project.DisplayName} Contractor Time";
         }
 
         public EditContractorTimeActivitiesViewData(Models.Project project,
