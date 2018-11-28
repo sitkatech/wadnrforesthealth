@@ -68,8 +68,16 @@ namespace ProjectFirma.Web.Views.Project
                     x.TreatmentActivityEndDate = y.TreatmentActivityEndDate;
                     x.TreatmentActivityNotes = y.TreatmentActivityNotes;
                     x.TreatmentActivityStartDate = y.TreatmentActivityStartDate;
-                    x.TreatmentActivityAcresTreated = y.TreatmentActivityAcresTreated;
-                    x.TreatmentActivityTypeID = y.TreatmentActivityTypeID;
+
+                    x.TreatmentActivityFootprintAcres = y.TreatmentActivityFootprintAcres;
+                    x.TreatmentActivityBrushControlAcres = y.TreatmentActivityBrushControlAcres;
+                    x.TreatmentActivityThinningAcres = y.TreatmentActivityThinningAcres;
+                    x.TreatmentActivityPruningAcres = y.TreatmentActivityPruningAcres;
+                    x.TreatmentActivitySlashAcres = y.TreatmentActivitySlashAcres;
+                    x.TreatmentActivityPrescribedBurnAcres = y.TreatmentActivityPrescribedBurnAcres;
+                    x.TreatmentActivityAllocatedAmount = y.TreatmentActivityAllocatedAmount;
+                    x.TreatmentActivityTotalCost = y.TreatmentActivityTotalCost;
+                    x.TreatmentActivityGrantCost = y.TreatmentActivityGrantCost;
                 });
         }
 

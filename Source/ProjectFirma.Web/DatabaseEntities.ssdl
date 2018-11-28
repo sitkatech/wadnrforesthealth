@@ -2255,8 +2255,15 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
-    <Property Name="TreatmentActivityTypeID" Type="int" Nullable="false" />
-    <Property Name="TreatmentActivityAcresTreated" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityFootprintAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityBrushControlAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityThinningAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityPruningAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityPrescribedBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityAllocatedAmount" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityTotalCost" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityGrantCost" Type="decimal" Nullable="false" />
     <Property Name="TreatmentActivityStartDate" Type="datetime" Nullable="false" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />

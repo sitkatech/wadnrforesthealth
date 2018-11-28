@@ -7,8 +7,15 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[FundingSourceID] [int] NOT NULL,
-	[TreatmentActivityTypeID] [int] NOT NULL,
-	[TreatmentActivityAcresTreated] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityFootprintAcres] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityBrushControlAcres] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityThinningAcres] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityPruningAcres] [decimal](18, 0) NOT NULL,
+	[TreatmentActivitySlashAcres] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityPrescribedBurnAcres] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityAllocatedAmount] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityTotalCost] [decimal](18, 0) NOT NULL,
+	[TreatmentActivityGrantCost] [decimal](18, 0) NOT NULL,
 	[TreatmentActivityStartDate] [datetime] NOT NULL,
 	[TreatmentActivityEndDate] [datetime] NULL,
 	[TreatmentActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -48,8 +55,3 @@ ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentA
 REFERENCES [dbo].[Tenant] ([TenantID])
 GO
 ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_Tenant_TenantID]
-GO
-ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_TreatmentType_TreatmentActivityTypeID] FOREIGN KEY([TreatmentActivityTypeID])
-REFERENCES [dbo].[TreatmentType] ([TreatmentTypeID])
-GO
-ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_TreatmentType_TreatmentActivityTypeID]

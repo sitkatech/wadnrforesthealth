@@ -323,7 +323,7 @@ namespace ProjectFirma.Web.Views.Project
                 new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
 
             EditStaffTimeActivitiesUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditStaffTimeActivities(project));
+                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
             EditTreatmentActivitiesUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditTreatmentActivities(project));

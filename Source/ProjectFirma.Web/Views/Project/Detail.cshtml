@@ -443,8 +443,15 @@
                                     <tr>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        <th class="text-right">Treatment Type</th>
-                                        <th class="text-right">Acres Treated</th>
+                                        <th class="text-right">Footprint Acres</th>
+                                        <th class="text-right">Brush Control Acres</th>
+                                        <th class="text-right">Thinning Acres</th>
+                                        <th class="text-right">Pruning Acres</th>
+                                        <th class="text-right">Slash Acres</th>
+                                        <th class="text-right">Prescribed Burn Acres</th>
+                                        <th class="text-right">Allocated Amount</th>
+                                        <th class="text-right">Total Cost</th>
+                                        <th class="text-right">Grant Cost</th>
                                         <th class="text-right">Notes</th>
                                     </tr>
                                     foreach (var treatmentActivity in fundingSource.OrderBy(x=>x.TreatmentActivityStartDate))
@@ -461,8 +468,15 @@
                                                      <p class="systemText">N/A</p>
                                                  }
                                              </td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityType.TreatmentTypeDisplayName</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityAcresTreated</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityFootprintAcres</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityBrushControlAcres</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityThinningAcres</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityPruningAcres</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivitySlashAcres</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityPrescribedBurnAcres</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityAllocatedAmount</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityTotalCost</td>
+                                             <td class="text-right">@treatmentActivity.TreatmentActivityGrantCost</td>
                                              <td class="text-right">@treatmentActivity.TreatmentActivityNotes</td>
                                          </tr>
                                      }

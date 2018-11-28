@@ -1347,8 +1347,15 @@
           <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-          <ScalarProperty Name="TreatmentActivityTypeID" ColumnName="TreatmentActivityTypeID" />
-          <ScalarProperty Name="TreatmentActivityAcresTreated" ColumnName="TreatmentActivityAcresTreated" />
+          <ScalarProperty Name="TreatmentActivityFootprintAcres" ColumnName="TreatmentActivityFootprintAcres" />
+          <ScalarProperty Name="TreatmentActivityBrushControlAcres" ColumnName="TreatmentActivityBrushControlAcres" />
+          <ScalarProperty Name="TreatmentActivityThinningAcres" ColumnName="TreatmentActivityThinningAcres" />
+          <ScalarProperty Name="TreatmentActivityPruningAcres" ColumnName="TreatmentActivityPruningAcres" />
+          <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
+          <ScalarProperty Name="TreatmentActivityPrescribedBurnAcres" ColumnName="TreatmentActivityPrescribedBurnAcres" />
+          <ScalarProperty Name="TreatmentActivityAllocatedAmount" ColumnName="TreatmentActivityAllocatedAmount" />
+          <ScalarProperty Name="TreatmentActivityTotalCost" ColumnName="TreatmentActivityTotalCost" />
+          <ScalarProperty Name="TreatmentActivityGrantCost" ColumnName="TreatmentActivityGrantCost" />
           <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
           <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />

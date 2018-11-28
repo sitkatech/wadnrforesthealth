@@ -669,11 +669,6 @@ namespace ProjectFirma.Web.Models
             return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
         }
 
-        public decimal GetTotalTreatmentAcreage()
-        {
-            return TreatmentActivities.Sum(x => x.TreatmentActivityAcresTreated);
-        }
-
         public decimal GetTotalStaffTimeHours()
         {
             return StaffTimeActivities.Sum(x => x.StaffTimeActivityHours);

@@ -494,7 +494,7 @@
     <Compile Include="Common\FirmaHelpersTest.cs" />
     <Compile Include="Views\ProjectUpdate\ProjectUpdateViewData.cs" />
     <Compile Include="Views\Project\EditTreatmentActivities.cs" />
-    <Compile Include="Views\Project\EditStaffTimeActivities.cs" />
+    <Compile Include="Views\Project\EditContractorTimeActivities.cs" />
     <Compile Include="Views\Project\EditStaffTimeActivitiesViewData.cs" />
     <Compile Include="Views\Project\EditTreatmentActivitiesViewData.cs" />
     <Compile Include="Views\Project\EditTreatmentActivitiesViewModel.cs" />
@@ -1733,7 +1733,7 @@
     <Content Include="Views\Shared\UserStewardshipAreas\EditUserStewardshipAreas.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialArea.cs" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewData.cs" />
-    <Content Include="Views\Project\EditStaffTimeActivities.cshtml" />
+    <Content Include="Views\Project\EditContractorTimeActivities.cshtml" />
     <Content Include="Views\Project\EditTreatmentActivities.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>

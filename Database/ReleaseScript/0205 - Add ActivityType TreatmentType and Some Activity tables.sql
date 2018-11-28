@@ -18,12 +18,6 @@ values
 (4, 'ContractorTime', 'Contractor Time'),
 (5, 'Supplies', 'Supplies')
 
---TODO
-Insert into dbo.TreatmentType (TreatmentTypeID, TreatmentTypeName, TreatmentTypeDisplayName)
-values
-(1, 'TreatmentOne', 'Treatment #1'),
-(2, 'TreatmentEleven', 'Treatment XI')
-
 Create Table dbo.StaffTimeActivity(
 	StaffTimeActivityID int not null identity(1,1) constraint PK_StaffTimeActivity_StaffTimeActivityID primary key,
 	TenantID int not null constraint FK_StaffTimeActivity_Tenant_TenantID foreign key references dbo.Tenant(TenantID),
@@ -44,8 +38,15 @@ Create Table dbo.TreatmentActivity(
 	TenantID int not null constraint FK_TreatmentActivity_Tenant_TenantID foreign key references dbo.Tenant(TenantID),
 	ProjectID int not null constraint FK_TreatmentActivity_Project_ProjectID foreign key references dbo.Project(ProjectID),
 	FundingSourceID int not null constraint FK_TreatmentActivity_FundingSource_FundingSourceID foreign key references dbo.FundingSource(FundingSourceID),
-	TreatmentActivityTypeID int not null constraint FK_TreatmentActivity_TreatmentType_TreatmentActivityTypeID foreign key references dbo.TreatmentType(TreatmentTypeID),
-	TreatmentActivityAcresTreated decimal not null,
+	TreatmentActivityFootprintAcres decimal not null,
+	TreatmentActivityBrushControlAcres decimal not null,
+	TreatmentActivityThinningAcres decimal not null,
+	TreatmentActivityPruningAcres decimal not null,
+	TreatmentActivitySlashAcres decimal not null,
+	TreatmentActivityPrescribedBurnAcres decimal not null,
+	TreatmentActivityAllocatedAmount decimal not null,
+	TreatmentActivityTotalCost decimal not null,
+	TreatmentActivityGrantCost decimal not null,
 	TreatmentActivityStartDate datetime not null,
 	TreatmentActivityEndDate datetime null,
 	TreatmentActivityNotes varchar(max) null,

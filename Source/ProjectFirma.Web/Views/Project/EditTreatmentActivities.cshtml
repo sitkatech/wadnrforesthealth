@@ -96,8 +96,15 @@
                             <th></th>
                             <th>Start Date <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>End Date</th>
-                            <th>Treatment Type <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
-                            <th>Acres Treated <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Footprint Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>BrushControl Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Thinning Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Pruning Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Slash Acres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Prescribed BurnA cres <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Allocated Amount <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Total Cost <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
+                            <th>Grant Cost <sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></th>
                             <th>Notes</th>
                         </tr>
                     </thead>
@@ -112,20 +119,17 @@
                             <td>
                                 <input ng-model="treatmentActivity.TreatmentActivityEndDate" type="text" class="sitkaDatePicker form-control" />
                             </td>
-                            <td>
-                                <!--TODO lol-->
-                                <select class="form-control" ng-model="treatmentActivity.TreatmentActivityTypeID" title="Select a Treatment Type">
-                                    <option value="null" disabled ng-selected="!treatmentType.TreatmentTypeID">Select a Treatment Type</option>
-                                    <option ng-repeat="treatmentType in AngularViewData.AllTreatmentTypes"
-                                            value="{{treatmentType.TreatmentTypeID}}"
-                                            ng-selected="treatmentType.TreatmentTypeID && (treatmentActivity.TreatmentActivityTypeID == treatmentType.TreatmentTypeID)"
-                                            ng-bind="treatmentType.TreatmentTypeDisplayName"
-                                            data-tokens="{{treatmentType.TreatmentTypeDisplayName}}"></option>
-                                </select>
-                            </td>
-                            <td>
-                                <input ng-model="treatmentActivity.TreatmentActivityAcresTreated" type="number" class="form-control text-right" style="padding-right:2px" />
-                            </td>
+                            
+                            <td><input ng-model="treatmentActivity.TreatmentActivityFootprintAcres" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityBrushControlAcres" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityThinningAcres" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityPruningAcres" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivitySlashAcres" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityPrescribedBurnAcres" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityAllocatedAmount" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityTotalCost" type="number" class="form-control" /></td>
+                            <td><input ng-model="treatmentActivity.TreatmentActivityGrantCost" type="number" class="form-control" /></td>
+
                             <td>
                                 <input ng-model="treatmentActivity.TreatmentActivityNotes" class="form-control" />
                             </td>
@@ -143,8 +147,15 @@
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityStartDate).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityStartDate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityEndDate).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityEndDate}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityNotes).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityNotes}}" />
-                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityAcresTreated).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityAcresTreated}}" />
-                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityTypeID).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityTypeID}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityFootprintAcres).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityFootprintAcres}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityBrushControlAcres).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityBrushControlAcres}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityThinningAcres).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityThinningAcres}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityPruningAcres).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityPruningAcres}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivitySlashAcres).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivitySlashAcres}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityPrescribedBurnAcres).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityPrescribedBurnAcres}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityAllocatedAmount).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityAllocatedAmount}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityTotalCost).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityTotalCost}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.TreatmentActivities[0].TreatmentActivityGrantCost).ToString().Replace("0", "{{$index}}")" value="{{treatmentActivity.TreatmentActivityGrantCost}}" />
                 </div>
                 <div class="row">
                     <div class="col-sm-6">

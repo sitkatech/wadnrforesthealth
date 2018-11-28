@@ -866,30 +866,30 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
 
         [HttpGet]
         [ProjectEditAsAdminFeature]
-        public ViewResult EditStaffTimeActivities(ProjectPrimaryKey projectPrimaryKey)
+        public ViewResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
             var staffTimeActivities = project.StaffTimeActivities.ToList();
             var staffTimeActivitySimples = staffTimeActivities.Select(x => new StaffTimeActivitySimple(x));
             var viewModel = new EditStaffTimeActivitiesViewModel(project, staffTimeActivitySimples.ToList());
-            return ViewEditStaffTimeActivities(project, viewModel);
+            return ViewEditContractorTimeActivities(project, viewModel);
         }
 
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditStaffTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditStaffTimeActivitiesViewModel viewModel)
+        public ActionResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditStaffTimeActivitiesViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             var currentStaffTimeActivities = project.StaffTimeActivities.ToList();
             if (!ModelState.IsValid)
             {
-                return ViewEditStaffTimeActivities(project, viewModel);
+                return ViewEditContractorTimeActivities(project, viewModel);
             }
-            return UpdateStaffTimeActivities(viewModel, currentStaffTimeActivities, project);
+            return UpdateContractorTimeActivities(viewModel, currentStaffTimeActivities, project);
         }
 
-        private static ActionResult UpdateStaffTimeActivities(
+        private static ActionResult UpdateContractorTimeActivities(
             EditStaffTimeActivitiesViewModel viewModel,
             List<StaffTimeActivity> currentStaffTimeActivities, Project project)
         {
@@ -900,7 +900,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return new RedirectResult(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project)) + "#activities");
         }
 
-        private ViewResult ViewEditStaffTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
+        private ViewResult ViewEditContractorTimeActivities(Project project, EditStaffTimeActivitiesViewModel viewModel)
         {
             var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var viewData = new EditStaffTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
