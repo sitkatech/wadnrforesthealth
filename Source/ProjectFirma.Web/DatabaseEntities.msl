@@ -90,6 +90,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ContractorTimeActivity">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ContractorTimeActivity">
+        <MappingFragment StoreEntitySet="ContractorTimeActivity">
+          <ScalarProperty Name="ContractorTimeActivityID" ColumnName="ContractorTimeActivityID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
+          <ScalarProperty Name="ContractorTimeActivityAcreage" ColumnName="ContractorTimeActivityAcreage" />
+          <ScalarProperty Name="ContractorTimeActivityHours" ColumnName="ContractorTimeActivityHours" />
+          <ScalarProperty Name="ContractorTimeActivityRate" ColumnName="ContractorTimeActivityRate" />
+          <ScalarProperty Name="ContractorTimeActivityStartDate" ColumnName="ContractorTimeActivityStartDate" />
+          <ScalarProperty Name="ContractorTimeActivityEndDate" ColumnName="ContractorTimeActivityEndDate" />
+          <ScalarProperty Name="ContractorTimeActivityNotes" ColumnName="ContractorTimeActivityNotes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CostParameterSet">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CostParameterSet">
         <MappingFragment StoreEntitySet="CostParameterSet">
@@ -1322,6 +1338,28 @@
           <ScalarProperty Name="VideoDescription" ColumnName="VideoDescription" />
           <ScalarProperty Name="VideoUploadDate" ColumnName="VideoUploadDate" />
           <ScalarProperty Name="VideoURL" ColumnName="VideoURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentActivity">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentActivity">
+        <MappingFragment StoreEntitySet="TreatmentActivity">
+          <ScalarProperty Name="TreatmentActivityID" ColumnName="TreatmentActivityID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
+          <ScalarProperty Name="TreatmentActivityFootprintAcres" ColumnName="TreatmentActivityFootprintAcres" />
+          <ScalarProperty Name="TreatmentActivityBrushControlAcres" ColumnName="TreatmentActivityBrushControlAcres" />
+          <ScalarProperty Name="TreatmentActivityThinningAcres" ColumnName="TreatmentActivityThinningAcres" />
+          <ScalarProperty Name="TreatmentActivityPruningAcres" ColumnName="TreatmentActivityPruningAcres" />
+          <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
+          <ScalarProperty Name="TreatmentActivityPrescribedBurnAcres" ColumnName="TreatmentActivityPrescribedBurnAcres" />
+          <ScalarProperty Name="TreatmentActivityAllocatedAmount" ColumnName="TreatmentActivityAllocatedAmount" />
+          <ScalarProperty Name="TreatmentActivityTotalCost" ColumnName="TreatmentActivityTotalCost" />
+          <ScalarProperty Name="TreatmentActivityGrantCost" ColumnName="TreatmentActivityGrantCost" />
+          <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
+          <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
+          <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

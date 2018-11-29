@@ -8,6 +8,7 @@
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
+    <EntitySet Name="ContractorTimeActivity" EntityType="ProjectFirma.Web.Models.ContractorTimeActivity" />
     <EntitySet Name="CostParameterSet" EntityType="ProjectFirma.Web.Models.CostParameterSet" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
@@ -104,6 +105,7 @@
     <EntitySet Name="TechnicalAssistanceParameter" EntityType="ProjectFirma.Web.Models.TechnicalAssistanceParameter" />
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.TenantAttribute" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
+    <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.vGeoServerGeospatialArea" />
     <AssociationSet Name="FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID" Association="ProjectFirma.Web.Models.FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID">
       <End Role="AssessmentGoal" EntitySet="AssessmentGoal" />
@@ -140,6 +142,14 @@
     <AssociationSet Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
       <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractorTimeActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_ContractorTimeActivity_FundingSource_FundingSourceID">
+      <End Role="FundingSource" EntitySet="FundingSource" />
+      <End Role="ContractorTimeActivities" EntitySet="ContractorTimeActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContractorTimeActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ContractorTimeActivity_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ContractorTimeActivities" EntitySet="ContractorTimeActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
@@ -240,6 +250,10 @@
     <AssociationSet Name="FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID">
       <End Role="FundingSource" EntitySet="FundingSource" />
       <End Role="ProjectFundingSourceRequestUpdates" EntitySet="ProjectFundingSourceRequestUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID">
+      <End Role="FundingSource" EntitySet="FundingSource" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
@@ -617,6 +631,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="SnapshotProjects" EntitySet="SnapshotProject" />
     </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectBudgetUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectBudgetUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectBudgetUpdates" EntitySet="ProjectBudgetUpdate" />
@@ -837,6 +855,23 @@
     <Property Name="ClassificationSystemListPageContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Classifications" Relationship="ProjectFirma.Web.Models.FK_Classification_ClassificationSystem_ClassificationSystemID" FromRole="ClassificationSystem" ToRole="Classifications" />
   </EntityType>
+  <EntityType Name="ContractorTimeActivity">
+    <Key>
+      <PropertyRef Name="ContractorTimeActivityID" />
+    </Key>
+    <Property Name="ContractorTimeActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <Property Name="ContractorTimeActivityAcreage" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="ContractorTimeActivityHours" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="ContractorTimeActivityRate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="ContractorTimeActivityStartDate" Type="DateTime" Nullable="false" />
+    <Property Name="ContractorTimeActivityEndDate" Type="DateTime" />
+    <Property Name="ContractorTimeActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_ContractorTimeActivity_FundingSource_FundingSourceID" FromRole="ContractorTimeActivities" ToRole="FundingSource" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ContractorTimeActivity_Project_ProjectID" FromRole="ContractorTimeActivities" ToRole="Project" />
+  </EntityType>
   <EntityType Name="CostParameterSet">
     <Key>
       <PropertyRef Name="CostParameterSetID" />
@@ -976,6 +1011,7 @@
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="FundingSourceDescription" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="FundingSourceAmount" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="ContractorTimeActivities" Relationship="ProjectFirma.Web.Models.FK_ContractorTimeActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ContractorTimeActivities" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="FundingSources" ToRole="Organization" />
     <NavigationProperty Name="ProjectBudgets" Relationship="ProjectFirma.Web.Models.FK_ProjectBudget_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectBudgets" />
     <NavigationProperty Name="ProjectBudgetUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectBudgetUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectBudgetUpdates" />
@@ -983,6 +1019,7 @@
     <NavigationProperty Name="ProjectFundingSourceExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceExpenditureUpdates" />
     <NavigationProperty Name="ProjectFundingSourceRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequests" />
     <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
+    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="FundingTypeData">
     <Key>
@@ -1468,6 +1505,7 @@
     <Property Name="ReviewedByPersonID" Type="Int32" />
     <Property Name="DefaultBoundingBox" Type="Geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="ContractorTimeActivities" Relationship="ProjectFirma.Web.Models.FK_ContractorTimeActivity_Project_ProjectID" FromRole="Project" ToRole="ContractorTimeActivities" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
     <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
@@ -1495,6 +1533,7 @@
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
     <NavigationProperty Name="SnapshotProjects" Relationship="ProjectFirma.Web.Models.FK_SnapshotProject_Project_ProjectID" FromRole="Project" ToRole="SnapshotProjects" />
+    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="Project" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="ProjectAssessmentQuestion">
     <Key>
@@ -2281,6 +2320,29 @@
     <Property Name="VideoUploadDate" Type="DateTime" Nullable="false" />
     <Property Name="VideoURL" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
   </EntityType>
+  <EntityType Name="TreatmentActivity">
+    <Key>
+      <PropertyRef Name="TreatmentActivityID" />
+    </Key>
+    <Property Name="TreatmentActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentActivityFootprintAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityBrushControlAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityThinningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityPruningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivitySlashAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityPrescribedBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityAllocatedAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TreatmentActivityTotalCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TreatmentActivityGrantCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="TreatmentActivityStartDate" Type="DateTime" Nullable="false" />
+    <Property Name="TreatmentActivityEndDate" Type="DateTime" />
+    <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="TreatmentActivities" ToRole="FundingSource" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
+  </EntityType>
   <EntityType Name="vGeoServerGeospatialArea">
     <Key>
       <PropertyRef Name="GeospatialAreaID" />
@@ -2404,6 +2466,30 @@
       </Principal>
       <Dependent Role="ClassificationPerformanceMeasures">
         <PropertyRef Name="PerformanceMeasureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractorTimeActivity_FundingSource_FundingSourceID">
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
+    <End Role="ContractorTimeActivities" Type="ProjectFirma.Web.Models.ContractorTimeActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundingSource">
+        <PropertyRef Name="FundingSourceID" />
+      </Principal>
+      <Dependent Role="ContractorTimeActivities">
+        <PropertyRef Name="FundingSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContractorTimeActivity_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ContractorTimeActivities" Type="ProjectFirma.Web.Models.ContractorTimeActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ContractorTimeActivities">
+        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2703,6 +2789,18 @@
         <PropertyRef Name="FundingSourceID" />
       </Principal>
       <Dependent Role="ProjectFundingSourceRequestUpdates">
+        <PropertyRef Name="FundingSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_FundingSource_FundingSourceID">
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FundingSource">
+        <PropertyRef Name="FundingSourceID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
         <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>
@@ -3831,6 +3929,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="SnapshotProjects">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>

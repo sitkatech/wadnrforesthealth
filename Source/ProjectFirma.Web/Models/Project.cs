@@ -668,5 +668,15 @@ namespace ProjectFirma.Web.Models
         {
             return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
         }
+
+        public decimal GetTotalStaffTimeHours()
+        {
+            return ContractorTimeActivities.Sum(x => x.ContractorTimeActivityHours);
+        }
+
+        public decimal GetTotalStaffTimeAmount()
+        {
+            return ContractorTimeActivities.Sum(x => x.TotalAmount);
+        }
     }
 }

@@ -23,12 +23,14 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected FundingSource()
         {
+            this.ContractorTimeActivities = new HashSet<ContractorTimeActivity>();
             this.ProjectBudgets = new HashSet<ProjectBudget>();
             this.ProjectBudgetUpdates = new HashSet<ProjectBudgetUpdate>();
             this.ProjectFundingSourceExpenditures = new HashSet<ProjectFundingSourceExpenditure>();
             this.ProjectFundingSourceExpenditureUpdates = new HashSet<ProjectFundingSourceExpenditureUpdate>();
             this.ProjectFundingSourceRequests = new HashSet<ProjectFundingSourceRequest>();
             this.ProjectFundingSourceRequestUpdates = new HashSet<ProjectFundingSourceRequestUpdate>();
+            this.TreatmentActivities = new HashSet<TreatmentActivity>();
             this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
@@ -86,13 +88,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectBudgets.Any() || ProjectBudgetUpdates.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceExpenditureUpdates.Any() || ProjectFundingSourceRequests.Any() || ProjectFundingSourceRequestUpdates.Any();
+            return ContractorTimeActivities.Any() || ProjectBudgets.Any() || ProjectBudgetUpdates.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceExpenditureUpdates.Any() || ProjectFundingSourceRequests.Any() || ProjectFundingSourceRequestUpdates.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundingSource).Name, typeof(ProjectBudget).Name, typeof(ProjectBudgetUpdate).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceExpenditureUpdate).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectFundingSourceRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundingSource).Name, typeof(ContractorTimeActivity).Name, typeof(ProjectBudget).Name, typeof(ProjectBudgetUpdate).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceExpenditureUpdate).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectFundingSourceRequestUpdate).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -108,6 +110,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
+
+            foreach(var x in ContractorTimeActivities.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in ProjectBudgets.ToList())
             {
@@ -138,6 +145,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in TreatmentActivities.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
             dbContext.AllFundingSources.Remove(this);
         }
 
@@ -152,12 +164,14 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FundingSourceID; } set { FundingSourceID = value; } }
 
+        public virtual ICollection<ContractorTimeActivity> ContractorTimeActivities { get; set; }
         public virtual ICollection<ProjectBudget> ProjectBudgets { get; set; }
         public virtual ICollection<ProjectBudgetUpdate> ProjectBudgetUpdates { get; set; }
         public virtual ICollection<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
         public virtual ICollection<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
         public virtual ICollection<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
         public virtual ICollection<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
+        public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
         public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Organization Organization { get; set; }
 

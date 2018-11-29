@@ -42,6 +42,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<Classification> Classifications { get { return AllClassifications.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ClassificationSystem> AllClassificationSystems { get; set; }
         public virtual IQueryable<ClassificationSystem> ClassificationSystems { get { return AllClassificationSystems.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<ContractorTimeActivity> AllContractorTimeActivities { get; set; }
+        public virtual IQueryable<ContractorTimeActivity> ContractorTimeActivities { get { return AllContractorTimeActivities.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<CostParameterSet> AllCostParameterSets { get; set; }
         public virtual IQueryable<CostParameterSet> CostParameterSets { get { return AllCostParameterSets.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<County> AllCounties { get; set; }
@@ -234,6 +236,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<TenantAttribute> TenantAttributes { get { return AllTenantAttributes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<TrainingVideo> AllTrainingVideos { get; set; }
         public virtual IQueryable<TrainingVideo> TrainingVideos { get { return AllTrainingVideos.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<TreatmentActivity> AllTreatmentActivities { get; set; }
+        public virtual IQueryable<TreatmentActivity> TreatmentActivities { get { return AllTreatmentActivities.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<vGeoServerGeospatialArea> vGeoServerGeospatialAreas { get; set; }
 
         public object LoadType(Type type, int primaryKey)
@@ -244,6 +248,11 @@ namespace ProjectFirma.Web.Models
                     var accomplishmentsDashboardFundingDisplayType = AccomplishmentsDashboardFundingDisplayType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(accomplishmentsDashboardFundingDisplayType, "AccomplishmentsDashboardFundingDisplayType", primaryKey);
                     return accomplishmentsDashboardFundingDisplayType;
+
+                case "ActivityType":
+                    var activityType = ActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(activityType, "ActivityType", primaryKey);
+                    return activityType;
 
                 case "AssessmentGoal":
                     return AssessmentGoals.GetAssessmentGoal(primaryKey);
@@ -270,6 +279,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ClassificationSystem":
                     return ClassificationSystems.GetClassificationSystem(primaryKey);
+
+                case "ContractorTimeActivity":
+                    return ContractorTimeActivities.GetContractorTimeActivity(primaryKey);
 
                 case "CostParameterSet":
                     return CostParameterSets.GetCostParameterSet(primaryKey);
@@ -713,6 +725,14 @@ namespace ProjectFirma.Web.Models
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);
+
+                case "TreatmentActivity":
+                    return TreatmentActivities.GetTreatmentActivity(primaryKey);
+
+                case "TreatmentType":
+                    var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(treatmentType, "TreatmentType", primaryKey);
+                    return treatmentType;
                 default:
                     throw new NotImplementedException(string.Format("No loader for type \"{0}\"", type.FullName));
             }

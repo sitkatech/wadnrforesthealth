@@ -286,7 +286,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            Check.Assert(project.ProjectStage != ProjectStage.Terminated, $"There is no Fact Sheet available for this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
+            Check.Assert(project.ProjectStage != ProjectStage.Terminated, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
         private ViewResult ViewBackwardLookingFactSheet(Project project)
@@ -521,7 +521,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteProject(Project project, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} '{project.DisplayName}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.Project.GetFieldDefinitionLabel()} '{project.DisplayName}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -537,7 +537,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteProject(project, viewModel);
             }
 
-            var message = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
+            var message = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
             project.DeleteFull();
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -862,6 +862,92 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
                 var content = System.IO.File.ReadAllBytes(outputFile.FileInfo.FullName);
                 return File(content, "application/pdf", fileName);
             }
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public ViewResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var contractorTimeActivities = project.ContractorTimeActivities.ToList();
+            var contractorTimeActivitySimples = contractorTimeActivities.Select(x => new ContractorTimeActivitySimple(x));
+            var viewModel = new EditContractorTimeActivitiesViewModel(project, contractorTimeActivitySimples.ToList());
+            return ViewEditContractorTimeActivities(project, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditContractorTimeActivitiesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var currentContractorTimeActivities = project.ContractorTimeActivities.ToList();
+            if (!ModelState.IsValid)
+            {
+                return ViewEditContractorTimeActivities(project, viewModel);
+            }
+            return UpdateContractorTimeActivities(viewModel, currentContractorTimeActivities, project);
+        }
+
+        private static ActionResult UpdateContractorTimeActivities(
+            EditContractorTimeActivitiesViewModel viewModel,
+            List<ContractorTimeActivity> currentContractorTimeActivities, Project project)
+        {
+            HttpRequestStorage.DatabaseEntities.ContractorTimeActivities.Load();
+            var allContractorTimeActivities = HttpRequestStorage.DatabaseEntities.AllContractorTimeActivities.Local;
+
+            viewModel.UpdateModel(currentContractorTimeActivities, allContractorTimeActivities, project);
+            return new RedirectResult(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project)) + "#activities");
+        }
+
+        private ViewResult ViewEditContractorTimeActivities(Project project, EditContractorTimeActivitiesViewModel viewModel)
+        {
+            var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var viewData = new EditContractorTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
+            return RazorView<EditContractorTimeActivities, EditContractorTimeActivitiesViewData, EditContractorTimeActivitiesViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public ViewResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var treatmentActivities = project.TreatmentActivities.ToList();
+            var treatmentActivitySimples = treatmentActivities.Select(x => new TreatmentActivitySimple(x));
+            var viewModel = new EditTreatmentActivitiesViewModel(project, treatmentActivitySimples.ToList());
+            return ViewEditTreatmentActivities(project, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey, EditTreatmentActivitiesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var currentTreatmentActivities = project.TreatmentActivities.ToList();
+            if (!ModelState.IsValid)
+            {
+                return ViewEditTreatmentActivities(project, viewModel);
+            }
+            return UpdateTreatmentActivities(viewModel, currentTreatmentActivities, project);
+        }
+
+        private static ActionResult UpdateTreatmentActivities(
+            EditTreatmentActivitiesViewModel viewModel,
+            List<TreatmentActivity> currentTreatmentActivities, Project project)
+        {
+            HttpRequestStorage.DatabaseEntities.TreatmentActivities.Load();
+            var allTreatmentActivities = HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.Local;
+
+            viewModel.UpdateModel(currentTreatmentActivities, allTreatmentActivities, project);
+            return new RedirectResult( SitkaRoute<ProjectController>.BuildUrlFromExpression(x=>x.Detail(project)) + "#activities");
+        }
+
+        private ViewResult ViewEditTreatmentActivities(Project project, EditTreatmentActivitiesViewModel viewModel)
+        {
+            var allTreatmentTypes = TreatmentType.All.Select(x=>new TreatmentTypeSimple(x)).ToList();
+            var viewData = new EditTreatmentActivitiesViewData(project, allTreatmentTypes, CurrentPerson);
+            return RazorView<EditTreatmentActivities, EditTreatmentActivitiesViewData, EditTreatmentActivitiesViewModel>(viewData, viewModel);
         }
     }
 }

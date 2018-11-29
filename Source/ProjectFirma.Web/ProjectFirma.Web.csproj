@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ActivityType.Binding.cs" />
+    <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\AssessmentGoal.Binding.cs" />
     <Compile Include="Models\Generated\AssessmentGoal.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\AssessmentGoalPrimaryKey.Binding.cs" />
@@ -71,6 +73,9 @@
     <Compile Include="Models\Generated\ClassificationSystem.Binding.cs" />
     <Compile Include="Models\Generated\ClassificationSystem.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ClassificationSystemPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ContractorTimeActivity.Binding.cs" />
+    <Compile Include="Models\Generated\ContractorTimeActivity.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ContractorTimeActivityPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CostParameterSet.Binding.cs" />
     <Compile Include="Models\Generated\CostParameterSet.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CostParameterSetPrimaryKey.Binding.cs" />
@@ -422,6 +427,11 @@
     <Compile Include="Models\Generated\TrainingVideo.Binding.cs" />
     <Compile Include="Models\Generated\TrainingVideo.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\TrainingVideoPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentActivity.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentActivity.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\TreatmentActivityPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
+    <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerGeospatialArea.Binding.cs" />
     <Compile Include="Controllers\ProjectInternalNoteController.cs" />
     <Compile Include="Models\GeospatialAreaType.cs" />
@@ -433,6 +443,11 @@
     <Compile Include="Models\ProjectStewardshipAreaType.cs" />
     <Compile Include="Models\ProjectUpdateBatchModelExtensions.cs" />
     <Compile Include="Models\ProjectWorkflowSectionGrouping.cs" />
+    <Compile Include="Models\ContractorTimeActivity.cs" />
+    <Compile Include="Models\ContractorTimeActivitySimple.cs" />
+    <Compile Include="Models\TreatmentActivity.cs" />
+    <Compile Include="Models\TreatmentActivitySimple.cs" />
+    <Compile Include="Models\TreatmentTypeSimple.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="UnitTestCommon\TestGeospatialAreaType.cs" />
     <Compile Include="Views\Home\TrainingVideo.cs" />
@@ -477,6 +492,13 @@
     <Compile Include="Views\ProjectUpdate\EditProjectUpdateConfigurationViewModel.cs" />
     <Compile Include="Common\FirmaHelpersTest.cs" />
     <Compile Include="Views\ProjectUpdate\ProjectUpdateViewData.cs" />
+    <Compile Include="Views\Project\EditContractorTimeActivitiesViewData.cs" />
+    <Compile Include="Views\Project\EditTreatmentActivities.cs" />
+    <Compile Include="Views\Project\EditContractorTimeActivities.cs" />
+    <Compile Include="Common\JsonExtensions.cs" />
+    <Compile Include="Views\Project\EditTreatmentActivitiesViewData.cs" />
+    <Compile Include="Views\Project\EditTreatmentActivitiesViewModel.cs" />
+    <Compile Include="Views\Project\EditContractorTimeActivitiesViewModel.cs" />
     <Compile Include="Views\Results\ConfigureAccomplishmentsDashboard.cs" />
     <Compile Include="Views\ProjectCreate\ValidateImportExternalProjectDataViewModel.cs" />
     <Compile Include="Models\ImportExternalProjectStaging.cs" />
@@ -969,6 +991,8 @@
     <Content Include="Views\CustomPage\Index.cshtml" />
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
+    <Content Include="Views\Project\TreatmentActivityController.js" />
+    <Content Include="Views\Project\ContractorTimeActivityController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
@@ -1708,6 +1732,8 @@
     <Content Include="Views\Shared\UserStewardshipAreas\EditUserStewardshipAreas.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialArea.cs" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewData.cs" />
+    <Content Include="Views\Project\EditContractorTimeActivities.cshtml" />
+    <Content Include="Views\Project\EditTreatmentActivities.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
