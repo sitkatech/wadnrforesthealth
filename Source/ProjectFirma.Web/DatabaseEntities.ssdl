@@ -2270,7 +2270,7 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'ProjectFirma.dbo.vGeoServerGeospatialArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <EntityType Name="vGeoServerGeospatialArea">
     <Key>
