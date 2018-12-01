@@ -71,7 +71,7 @@ GO
 declare @geospatialAreaTypeID int
 
 insert into dbo.GeospatialAreaType(TenantID, GeospatialAreaTypeName, GeospatialAreaTypeNamePluralized, GeospatialAreaIntroContent, GeospatialAreaTypeDefinition, MapServiceUrl, GeospatialAreaLayerName)
-values (10, 'Priority Area', 'Priority Areas', 'Priority Areas', 'WA DNR Priority Areas', 'https://localhost-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms', 'WADNRForestHealth:PriorityArea') 
+values (10, 'Priority Area', 'Priority Areas', 'Priority Areas', 'WA DNR Priority Areas', 'https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms', 'WADNRForestHealth:PriorityArea') 
 
 select @geospatialAreaTypeID = scope_identity()
 
