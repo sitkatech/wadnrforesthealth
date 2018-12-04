@@ -20,7 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -67,7 +66,7 @@ namespace ProjectFirma.Web.Common
                         }
                         else
                         {
-                            return Tenant.SitkaTechnologyGroup;
+                            return Tenant.WashingtonDepartmentOfNaturalResources;
                         }
                     });
             }
@@ -89,7 +88,7 @@ namespace ProjectFirma.Web.Common
         public static void StartContextForTest()
         {
             var context = MakeNewContext(true);
-            SetValue(TenantKey, Tenant.SitkaTechnologyGroup);
+            SetValue(TenantKey, Tenant.WashingtonDepartmentOfNaturalResources);
             SetValue(DatabaseContextKey, context);
         }
 

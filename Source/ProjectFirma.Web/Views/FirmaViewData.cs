@@ -49,9 +49,9 @@ namespace ProjectFirma.Web.Views
         public ViewPageContentViewData ViewPageContentViewData { get; }
         public LtInfoMenuItem HelpMenu { get; private set; }
         public ViewPageContentViewData CustomFooterViewData { get; }
-        public string TenantName { get; private set; }
-        public string TenantDisplayName { get; private set; }
-        public string TenantBannerLogoUrl { get; private set; }
+        public string TenantName { get; }
+        public string TenantDisplayName { get; }
+        public string TenantBannerLogoUrl { get; }
 
         /// <summary>
         /// Call for page without associated FirmaPage
@@ -212,12 +212,6 @@ namespace ProjectFirma.Web.Views
             // Group 4 - Other
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.InternalSetupNotes()), currentPerson, "Internal Setup Notes", "Group4"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.StyleGuide()), currentPerson, "Style Guide", "Group4"));
-
-            // Group 5 - Project Firma Configuation stuff
-            if (HttpRequestStorage.Tenant == Models.Tenant.SitkaTechnologyGroup)
-            {
-                manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.DemoScript()), currentPerson, "Demo Script", "Group5")); // TODO: poor man's hack until we do tenant specific menu and features
-            }
             
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CostParameterSetController>(c => c.Detail()), currentPerson, "Cost Parameters", "Group5"));            
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationAndRelationshipTypeController>(c => c.Index()), currentPerson, Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabelPluralized(), "Group5"));
