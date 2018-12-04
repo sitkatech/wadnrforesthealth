@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
-using Newtonsoft.Json;
 
 namespace ProjectFirma.Web.Models
 {
@@ -74,18 +73,5 @@ namespace ProjectFirma.Web.Models
         {
             get { return string.Format("{0} {1}", FirstName, LastName); }
         }
-    }
-
-    public class Saml2UserClaims
-    {
-        // core
-        [JsonProperty("uniqueIdentifiier")]
-        public string UniqueIdentifiier { get; set; }
-
-        [JsonProperty("displayName")]
-        public string DisplayName { get; set; }
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
     }
 }

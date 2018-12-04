@@ -168,9 +168,10 @@ namespace ProjectFirma.Web.Common
             {
                 var claimsDictionary = claimsIdentity.Claims.ToList().GroupBy(x => x.Type, StringComparer.InvariantCultureIgnoreCase).ToDictionary(x => x.Key, x => x.First().Value);
                 // core claims always supplied
-                saml2UserClaims.UniqueIdentifiier = GetStringClaimValue(claimsDictionary, ClaimTypes.NameIdentifier);
+                saml2UserClaims.UniqueIdentifier = GetStringClaimValue(claimsDictionary, ClaimTypes.NameIdentifier);
                 saml2UserClaims.DisplayName = GetStringClaimValue(claimsDictionary, ClaimTypes.Name);
                 saml2UserClaims.Email = GetStringClaimValue(claimsDictionary, ClaimTypes.Email);
+                saml2UserClaims.Username = GetStringClaimValue(claimsDictionary, ClaimTypes.WindowsAccountName);
             }
             else
             {
@@ -249,7 +250,7 @@ namespace ProjectFirma.Web.Common
             {
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
-                var user = getUserByGuid(saml2UserClaims.UniqueIdentifiier);
+                var user = getUserByGuid(saml2UserClaims.UniqueIdentifier);
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)
                 {

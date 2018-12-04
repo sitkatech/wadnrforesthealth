@@ -21,7 +21,8 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using ProjectFirma.Web.Common;
@@ -29,8 +30,7 @@ using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
-using Keystone.Common;
-using Keystone.Common.OpenID;
+using AuthorizationContext = System.Web.Mvc.AuthorizationContext;
 
 namespace ProjectFirma.Web.Security
 {
@@ -56,11 +56,18 @@ namespace ProjectFirma.Web.Security
         {
             Roles = CalculateRoleNameStringFromFeature();
 
-            // MR #321 - force reload of user roles onto IClaimsIdentity
-            KeystoneOpenIDUtilities.AddLocalUserAccountRolesToClaims(HttpRequestStorage.Person, HttpRequestStorage.GetHttpContextUserThroughOwin().Identity);
+            AddLocalUserAccountRolesToClaims(HttpRequestStorage.Person, HttpRequestStorage.GetHttpContextUserThroughOwin().Identity);
 
             // This ends up making the calls into the RoleProvider
             base.OnAuthorization(filterContext);
+        }
+
+        private static void AddLocalUserAccountRolesToClaims(Person user, IIdentity userIdentity)
+        {
+            if (userIdentity is ClaimsIdentity claimsIdentity)
+            {
+                user.RoleNames.ToList().ForEach(role => claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role)));
+            }
         }
 
         internal string CalculateRoleNameStringFromFeature()
