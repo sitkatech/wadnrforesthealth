@@ -97,7 +97,7 @@ namespace ProjectFirma.Web.Models
 
         public static string GetKeystoneEditLink(this Person person)
         {
-            return $"{FirmaWebConfiguration.KeystoneUserProfileUrl}{person.PersonGuid}";
+            return $"{FirmaWebConfiguration.KeystoneUserProfileUrl}{person.PersonUniqueIdentifier}";
         }
     }
 }

@@ -19,20 +19,17 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Common;
-using Keystone.Common;
-using LtInfo.Common;
 using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class Person : IAuditableEntity, IKeystoneUser
+    public partial class Person : IAuditableEntity
     {
-        private const int AnonymousPersonID = -999;
+        public const int AnonymousPersonID = -999;
 
         /// <summary>
         /// Needed for Keystone; basically <see cref="HttpRequestStorage.Person" /> is set to this fake
@@ -115,13 +112,6 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public void SetKeystoneUserClaims(IKeystoneUserClaims keystoneUserClaims)
-        {
-            Organization = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => x.OrganizationGuid.HasValue).SingleOrDefault(x => x.OrganizationGuid == keystoneUserClaims.OrganizationGuid);
-            Phone = keystoneUserClaims.PrimaryPhone.ToPhoneNumberString();
-            Email = keystoneUserClaims.Email;
-        }
-
         public bool CanStewardProject(Project project)
         {
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.CanStewardProject(this, project) ?? true;
@@ -154,5 +144,11 @@ namespace ProjectFirma.Web.Models
         public bool CanViewProposals => MultiTenantHelpers.ShowProposalsToThePublic() || !IsAnonymousOrUnassigned;       
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);
 
+        public string Id => PersonUniqueIdentifier.ToString();
+        public string UserName
+        {
+            get => LoginName;
+            set => LoginName = value;
+        }
     }
 }

@@ -21,11 +21,12 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Runtime.Serialization;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web;
 using LtInfo.Common;
 using ProjectFirma.Web.Models;
-using Keystone.Common;
 using LtInfo.Common.DesignByContract;
 using Person = ProjectFirma.Web.Models.Person;
 
@@ -43,9 +44,19 @@ namespace ProjectFirma.Web.Common
             get { return new List<string>(); }
         }
 
+        public static IPrincipal GetHttpContextUserThroughOwin()
+        {
+            return HttpContext.Current.GetOwinContext().Authentication.User;
+        }
+
         public static Person Person
         {
-            get { return GetValueOrDefault(PersonKey, () => KeystoneClaimsHelpers.GetUserFromPrincipal(Thread.CurrentPrincipal, Person.GetAnonymousSitkaUser(), DatabaseEntities.People.GetPersonByPersonGuid)); }
+            get
+            {
+                return GetValueOrDefault(PersonKey,
+                    () => Saml2ClaimsHelpers.GetOpenIDUserFromPrincipal(GetHttpContextUserThroughOwin(),
+                        Person.GetAnonymousSitkaUser(), DatabaseEntities.People.GetPersonByPersonUniqueIdentifier));
+            }
             set { SetValue(PersonKey, value); }
         }
 
@@ -132,6 +143,128 @@ namespace ProjectFirma.Web.Common
                 BackingStore[PersonKey] = null;
             }
             BackingStore.Remove(PersonKey);
+        }
+    }
+
+    public class Saml2ClaimNotFoundException : Exception
+    {
+        public Saml2ClaimNotFoundException(string message) : base(message) { }
+        public Saml2ClaimNotFoundException() { }
+        public Saml2ClaimNotFoundException(string message, Exception innerException) : base(message, innerException) { }
+        protected Saml2ClaimNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
+
+    public static class Saml2ClaimsHelpers
+    {
+        public static Saml2UserClaims ParseOpenIDClaims(IIdentity userIdentity)
+        {
+            if (userIdentity == null)
+            {
+                throw new NullReferenceException($"Should have {nameof(IIdentity)}");
+            }
+
+            var saml2UserClaims = new Saml2UserClaims();
+            if (userIdentity is ClaimsIdentity claimsIdentity)
+            {
+                var claimsDictionary = claimsIdentity.Claims.ToList().GroupBy(x => x.Type, StringComparer.InvariantCultureIgnoreCase).ToDictionary(x => x.Key, x => x.First().Value);
+                // core claims always supplied
+                saml2UserClaims.UniqueIdentifiier = GetStringClaimValue(claimsDictionary, ClaimTypes.NameIdentifier);
+                saml2UserClaims.DisplayName = GetStringClaimValue(claimsDictionary, ClaimTypes.Name);
+                saml2UserClaims.Email = GetStringClaimValue(claimsDictionary, ClaimTypes.Email);
+            }
+            else
+            {
+                throw new Saml2ClaimNotFoundException($"The {nameof(IIdentity)} is not expected type {nameof(ClaimsIdentity)}. {nameof(IIdentity.Name)}: {userIdentity.Name}");
+            }
+
+            return saml2UserClaims;
+        }
+
+        private static void EnsureClaimTypeExists(IReadOnlyDictionary<string, string> claimsDictionary, string claimType)
+        {
+            if (!claimsDictionary.ContainsKey(claimType))
+            {
+                throw new Saml2ClaimNotFoundException(claimType);
+            }
+        }
+
+        private static Guid GetGuidClaimValue(IReadOnlyDictionary<string, string> claimsDictionary, string claimType)
+        {
+            EnsureClaimTypeExists(claimsDictionary, claimType);
+            Guid.TryParse(claimsDictionary[claimType], out var claimValue);
+            return claimValue;
+        }
+
+        private static Guid? GetGuidOptionalClaimValue(IReadOnlyDictionary<string, string> claimsDictionary, string claimType)
+        {
+            if (claimsDictionary.ContainsKey(claimType) && Guid.TryParse(claimsDictionary[claimType], out var claimValue))
+            {
+                return claimValue;
+            }
+            return null;
+        }
+
+        private static string GetStringClaimValue(IReadOnlyDictionary<string, string> claimsDictionary, string claimType)
+        {
+            EnsureClaimTypeExists(claimsDictionary, claimType);
+            return claimsDictionary[claimType];
+        }
+
+        private static string GetStringOptionalClaimValue(IReadOnlyDictionary<string, string> claimsDictionary, string claimType)
+        {
+            return claimsDictionary.ContainsKey(claimType) ? claimsDictionary[claimType] : null;
+        }
+
+        private static TimeZoneInfo GetTimeZoneInfoClaimValue(IReadOnlyDictionary<string, string> claimsDictionary, string claimType)
+        {
+            var claimValue = TimeZoneInfo.Local;
+            if (claimsDictionary.ContainsKey(claimType))
+            {
+                try
+                {
+                    return TimeZoneInfo.FromSerializedString(claimsDictionary[claimType]);
+                }
+                catch
+                {
+                    return claimValue;
+                }
+            }
+
+            return claimValue;
+        }
+
+        public static Person GetOpenIDUserFromPrincipal(IPrincipal principal, Person anonymousSitkaUser, Func<string, Person> getUserByGuid)
+        {
+            if (principal?.Identity == null || !principal.Identity.IsAuthenticated)
+            {
+                return anonymousSitkaUser;
+            }
+
+            // calls to the account provisioning service from keystone are authenticated calls, but not by forms auth tickets.  they come in with the user identity of the
+            // application pool that keystone runs under and have an authentication type of "Kerberos". these particular invokations need to be treated the same way as the
+            // unauthenticated calls over basic bindings - that is they do not map to a MM user and should be considered "anonymous".
+
+            //These are OpenID AuthenticationTypes, WIF ones include "Keberos" and "Federation"
+            if (principal.Identity.AuthenticationType == "ApplicationCookie")
+            {
+                // otherwise remap claims from principal
+                var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
+                var user = getUserByGuid(saml2UserClaims.UniqueIdentifiier);
+                var names = saml2UserClaims.DisplayName.Split(' ');
+                if (names.Length == 2)
+                {
+                    user.FirstName = names[0];
+                    user.LastName = names[1];
+                }
+                else
+                {
+                    user.FirstName = saml2UserClaims.DisplayName;
+                }
+                user.Email = saml2UserClaims.Email;
+                
+                return user;
+            }
+            return anonymousSitkaUser;
         }
     }
 }

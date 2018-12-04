@@ -55,10 +55,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, Guid personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName) : this()
+        public Person(int personID, string personUniqueIdentifier, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName) : this()
         {
             this.PersonID = personID;
-            this.PersonGuid = personGuid;
+            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -78,12 +78,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(Guid personGuid, string firstName, string lastName, string email, int roleID, DateTime createDate, bool isActive, int organizationID, bool receiveSupportEmails, string loginName) : this()
+        public Person(string personUniqueIdentifier, string firstName, string lastName, string email, int roleID, DateTime createDate, bool isActive, int organizationID, bool receiveSupportEmails, string loginName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.PersonGuid = personGuid;
+            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -98,11 +98,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(Guid personGuid, string firstName, string lastName, string email, Role role, DateTime createDate, bool isActive, Organization organization, bool receiveSupportEmails, string loginName) : this()
+        public Person(string personUniqueIdentifier, string firstName, string lastName, string email, Role role, DateTime createDate, bool isActive, Organization organization, bool receiveSupportEmails, string loginName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.PersonGuid = personGuid;
+            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -121,7 +121,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Person CreateNewBlank(Role role, Organization organization)
         {
-            return new Person(default(Guid), default(string), default(string), default(string), role, default(DateTime), default(bool), organization, default(bool), default(string));
+            return new Person(default(string), default(string), default(string), default(string), role, default(DateTime), default(bool), organization, default(bool), default(string));
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int PersonID { get; set; }
         public int TenantID { get; private set; }
-        public Guid PersonGuid { get; set; }
+        public string PersonUniqueIdentifier { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -338,6 +338,7 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
+            public const int PersonUniqueIdentifier = 100;
             public const int FirstName = 100;
             public const int LastName = 100;
             public const int Email = 255;

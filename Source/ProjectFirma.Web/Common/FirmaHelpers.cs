@@ -54,10 +54,8 @@ namespace ProjectFirma.Web.Common
 
         public static string GenerateLogInUrlWithReturnUrl()
         {
-            var logInUrl = SitkaRoute<AccountController>.BuildUrlFromExpression(c => c.LogOn());
-
             var returnUrl = HttpContext.Current.Request.Url.AbsoluteUri;
-
+            var logInUrl = SitkaRoute<AccountController>.BuildUrlFromExpression(c => c.Login(null));
             return OnErrorOrNotFoundPage(returnUrl) ? logInUrl : String.Format("{0}?returnUrl={1}", logInUrl, HttpUtility.UrlEncode(returnUrl));
         }
 

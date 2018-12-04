@@ -42,17 +42,17 @@ namespace ProjectFirma.Web.Models
             return person;
         }
 
-        public static Person GetPersonByPersonGuid(this IQueryable<Person> people, Guid personGuid)
+        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier)
         {
-            return GetPersonByPersonGuid(people, personGuid, false);
+            return GetPersonByPersonUniqueIdentifier(people, personUniqueIdentifier, false);
         }
 
-        public static Person GetPersonByPersonGuid(this IQueryable<Person> people, Guid personGuid, bool requireRecordFound)
+        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier, bool requireRecordFound)
         {
-            var person = people.SingleOrDefault(x => x.PersonGuid == personGuid);
+            var person = people.SingleOrDefault(x => x.PersonUniqueIdentifier == personUniqueIdentifier);
             if (requireRecordFound)
             {
-                Check.RequireNotNullThrowNotFound(person, personGuid.ToString());
+                Check.RequireNotNullThrowNotFound(person, personUniqueIdentifier.ToString());
             }
             return person;
         }

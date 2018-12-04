@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using Newtonsoft.Json;
 
 namespace ProjectFirma.Web.Models
 {
@@ -32,36 +33,13 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public PersonSimple(int personID, Guid personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, Guid? webServiceAccessToken, string organizationShortNameIfAvailable)
-            : this()
-        {
-            PersonID = personID;
-            PersonGuid = personGuid;
-            FirstName = firstName;
-            LastName = lastName;
-            FullNameWithOrgShortName = $"{FirstName} {LastName} ({organizationShortNameIfAvailable})";
-            Email = email;
-            Phone = phone;
-            PasswordPdfK2SaltHash = passwordPdfK2SaltHash;
-            RoleID = roleID;
-            CreateDate = createDate;
-            UpdateDate = updateDate;
-            LastActivityDate = lastActivityDate;
-            IsActive = isActive;
-            OrganizationID = organizationID;
-            WebServiceAccessToken = webServiceAccessToken;
-        }
-
-        /// <summary>
         /// Constructor for building a new simple object with the POCO class
         /// </summary>
         public PersonSimple(Person person)
             : this()
         {
             PersonID = person.PersonID;
-            PersonGuid = person.PersonGuid;
+            PersonGuid = person.PersonUniqueIdentifier;
             FirstName = person.FirstName;
             LastName = person.LastName;
             FullNameWithOrgShortName = $"{FirstName} {LastName} ({person.Organization.OrganizationShortNameIfAvailable})";
@@ -78,7 +56,7 @@ namespace ProjectFirma.Web.Models
         }
 
         public int PersonID { get; set; }
-        public Guid PersonGuid { get; set; }
+        public string PersonGuid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullNameWithOrgShortName { get; set; }
@@ -96,5 +74,18 @@ namespace ProjectFirma.Web.Models
         {
             get { return string.Format("{0} {1}", FirstName, LastName); }
         }
+    }
+
+    public class Saml2UserClaims
+    {
+        // core
+        [JsonProperty("uniqueIdentifiier")]
+        public string UniqueIdentifiier { get; set; }
+
+        [JsonProperty("displayName")]
+        public string DisplayName { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
     }
 }

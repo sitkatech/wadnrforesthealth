@@ -294,14 +294,14 @@ namespace ProjectFirma.Web.Controllers
 
                 var firmaPerson =
                     HttpRequestStorage.DatabaseEntities.People.SingleOrDefault(
-                        x => x.PersonGuid == keystoneUser.UserGuid);
+                        x => x.PersonUniqueIdentifier == keystoneUser.UserGuid.ToString());
                 if (firmaPerson != null)
                 {
                     firmaPerson.OrganizationID = firmaOrganization.OrganizationID;
                 }
                 else
                 {
-                    firmaPerson = new Person(keystoneUser.UserGuid, keystoneUser.FirstName, keystoneUser.LastName,
+                    firmaPerson = new Person(keystoneUser.UserGuid.ToString(), keystoneUser.FirstName, keystoneUser.LastName,
                         keystoneUser.Email, Role.Unassigned, DateTime.Now, true, firmaOrganization, false,
                         keystoneUser.LoginName);
                     HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);

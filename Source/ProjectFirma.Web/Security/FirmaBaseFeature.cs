@@ -30,6 +30,7 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
 using Keystone.Common;
+using Keystone.Common.OpenID;
 
 namespace ProjectFirma.Web.Security
 {
@@ -56,7 +57,7 @@ namespace ProjectFirma.Web.Security
             Roles = CalculateRoleNameStringFromFeature();
 
             // MR #321 - force reload of user roles onto IClaimsIdentity
-            KeystoneUtilities.AddLocalUserAccountRolesToClaims(HttpRequestStorage.Person, Thread.CurrentPrincipal.Identity);
+            KeystoneOpenIDUtilities.AddLocalUserAccountRolesToClaims(HttpRequestStorage.Person, HttpRequestStorage.GetHttpContextUserThroughOwin().Identity);
 
             // This ends up making the calls into the RoleProvider
             base.OnAuthorization(filterContext);
@@ -79,7 +80,7 @@ namespace ProjectFirma.Web.Security
             {
                 return true; 
             }
-            return person != null && _grantedRoles.Any(x => x.RoleID == person.Role.RoleID);
+            return person.PersonID != Person.AnonymousPersonID && _grantedRoles.Any(x => x.RoleID == person.Role.RoleID);
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
