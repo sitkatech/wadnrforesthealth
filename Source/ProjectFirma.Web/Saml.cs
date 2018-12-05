@@ -64,6 +64,15 @@ namespace Saml
     {
         public X509Certificate2 cert;
 
+        public Certificate()
+        {
+        }
+
+        public Certificate(X509Certificate2 cert)
+        {
+            this.cert = cert;
+        }
+
         public void LoadCertificate(FileInfo certificatePath)
         {
             var certificate = File.ReadAllBytes(certificatePath.FullName);
@@ -114,6 +123,11 @@ namespace Saml
 
             _certificate = new Certificate();
             _certificate.LoadCertificate(certficateFileInfo);
+        }
+
+        public Response(X509Certificate2 certificate)
+        {
+            _certificate = new Certificate(certificate);
         }
 
         public void LoadXml(string xml)

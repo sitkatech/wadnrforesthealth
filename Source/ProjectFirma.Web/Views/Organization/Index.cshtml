@@ -21,19 +21,11 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
-@using LtInfo.Common.ModalDialog
-@using ProjectFirma.Web.Models
 @inherits ProjectFirma.Web.Views.Organization.Index
 @section JavascriptAndStylesContent
 {
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
 }
-
-@section RightOfPageTitle
-{
-    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("Pull {0} from Keystone", FieldDefinition.Organization.GetFieldDefinitionLabel()), ViewDataTyped.PullOrganizationFromKeystoneUrl, string.Format("Pull {0} from Keystone", FieldDefinition.Organization.GetFieldDefinitionLabel()), new List<string> { "btn", "btn-firma", "btn-sm" }, ViewDataTyped.UserIsSitkaAdmin)
-}
-
 
 @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
 

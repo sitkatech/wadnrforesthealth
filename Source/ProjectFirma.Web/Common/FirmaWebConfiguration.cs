@@ -20,11 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web.Configuration;
 using LtInfo.Common;
-using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Common
@@ -42,18 +40,16 @@ namespace ProjectFirma.Web.Common
         public static readonly int DefaultSupportPersonID = Int32.Parse(SitkaConfiguration.GetRequiredAppSetting("DefaultSupportPersonID"));
 
         public static readonly TimeSpan HttpRuntimeExecutionTimeout = ((HttpRuntimeSection)WebConfigurationManager.GetSection("system.web/httpRuntime")).ExecutionTimeout;       
-        public static readonly string KeystoneUrl = SitkaConfiguration.GetRequiredAppSetting("KeystoneUrl");
-        public static readonly string KeystoneRegisterUserUrl = SitkaConfiguration.GetRequiredAppSetting("KeystoneRegisterUserUrl");
-        public static readonly string KeystoneUserProfileUrl = SitkaConfiguration.GetRequiredAppSetting("KeystoneUserProfileUrl");
-        public static readonly Guid KeystoneWebServiceApplicationGuid = Guid.Parse(SitkaConfiguration.GetRequiredAppSetting("KeystoneWebServiceApplicationGuid"));
-       
-        public static readonly DirectoryInfo LogFileFolder = ParseLogFileFolder();
+        public static readonly string SAWUrl = SitkaConfiguration.GetRequiredAppSetting("SAWUrl");
 
         public static readonly FirmaEnvironment FirmaEnvironment = FirmaEnvironment.MakeFirmaEnvironment(SitkaConfiguration.GetRequiredAppSetting("FirmaEnvironment"));
 
         public static readonly string CanonicalHostName = CanonicalHostNames.FirstOrDefault();
+        public static readonly string Saml2EntityID = SitkaConfiguration.GetRequiredAppSetting("Saml2EntityID");
+        public static readonly string Saml2EndPoint = SitkaConfiguration.GetRequiredAppSetting("Saml2EndPoint");
 
         public static List<string> CanonicalHostNames => Tenant.All.OrderBy(x => x.TenantID).Select(x => FirmaEnvironment.GetCanonicalHostNameForEnvironment(x)).ToList();
+        public static string SamlIDPCertificateSerialNumber = SitkaConfiguration.GetRequiredAppSetting("SamlIDPCertificateSerialNumber");
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
         {
@@ -69,16 +65,5 @@ namespace ProjectFirma.Web.Common
             //Use the domain name  (laketahoeinfo.org -->  should use www.laketahoeinfo.org for the match)
             return canonicalHostNames.FirstOrDefault(h => h.EndsWith(hostName, StringComparison.InvariantCultureIgnoreCase)) ?? CanonicalHostName;
         }
-
-
-
-        private static DirectoryInfo ParseLogFileFolder()
-        {
-            const string appSettingKeyName = "LogFileFolder";
-            var logFileFolder = SitkaConfiguration.GetRequiredAppSetting(appSettingKeyName);
-            Check.RequireDirectoryExists(logFileFolder, "App setting {0} must be a folder that exists, folder does not exist.");
-            return new DirectoryInfo(logFileFolder);
-        }
     }
-
 }

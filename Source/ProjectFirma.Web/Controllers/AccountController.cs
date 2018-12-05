@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         public ActionResult LogOn(string returnUrl)
         {
-            var samlResponse = new Response(new FileInfo(HostingEnvironment.MapPath("~/saw_test_key.txt")));
+            var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.SamlIDPCertificateSerialNumber));
             samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
 
             if (samlResponse.IsValid())

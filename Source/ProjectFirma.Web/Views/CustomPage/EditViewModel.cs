@@ -19,20 +19,14 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using LtInfo.Common;
 using LtInfo.Common.Models;
-using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.KeystoneDataService;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.CustomPage
 {

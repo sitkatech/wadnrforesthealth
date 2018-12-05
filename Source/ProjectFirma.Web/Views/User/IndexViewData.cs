@@ -27,14 +27,12 @@ namespace ProjectFirma.Web.Views.User
 {
     public class IndexViewData : FirmaViewData
     {
-        public readonly IndexGridSpec GridSpec;
-        public readonly string GridName;
-        public readonly string GridDataUrl;
-        public readonly string KeystoneUrl;
-        public readonly string KeystoneRegisterUserUrl;
-        
-        public readonly string PullUserFromKeystoneUrl;
-        public readonly bool UserIsSitkaAdmin;
+        public IndexGridSpec GridSpec { get; }
+        public string GridName { get; }
+        public string GridDataUrl { get; }
+        public string SAWUrl { get; }
+
+        public bool UserIsSitkaAdmin { get; }
 
         public IndexViewData(Person currentPerson) : base(currentPerson)
         {
@@ -42,10 +40,8 @@ namespace ProjectFirma.Web.Views.User
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "User", ObjectNamePlural = "Users", SaveFiltersInCookie = true};
             GridName = "UserGrid";
             GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
-            KeystoneUrl = FirmaWebConfiguration.KeystoneUrl;
-            KeystoneRegisterUserUrl = FirmaWebConfiguration.KeystoneRegisterUserUrl;
+            SAWUrl = FirmaWebConfiguration.SAWUrl;
 
-            PullUserFromKeystoneUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.PullUserFromKeystone());
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
         }
     }

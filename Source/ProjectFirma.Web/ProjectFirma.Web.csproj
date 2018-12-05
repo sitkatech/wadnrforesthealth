@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\CertificateHelpers.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
@@ -923,9 +924,6 @@
     <Content Include="Content\Bootstrap\firma\iswcc.theme.less" />
     <Content Include="Content\Bootstrap\firma\dnr.theme.less" />
     <Content Include="Content\img\WashingtonDepartmentOfNaturalResources\site.webmanifest" />
-    <None Include="Service References\KeystoneDataService\KeystoneData.disco" />
-    <None Include="Service References\KeystoneDataService\configuration91.svcinfo" />
-    <None Include="Service References\KeystoneDataService\configuration.svcinfo" />
     <Content Include="ScriptsCustom\bootstrap-ckeditor-fix.js" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.js" />
     <Content Include="ScriptsCustom\BootstrapModalAlert.min.js" />
@@ -960,28 +958,7 @@
     <Content Include="Scripts\autonumeric\autonumeric-4.2.15.min.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
     <Content Include="Scripts\waypoints.min.js" />
-    <Content Include="Service References\KeystoneDataService\ProjectFirma.Web.KeystoneDataService.Organization.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\KeystoneDataService\ProjectFirma.Web.KeystoneDataService.UserProfile.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\KeystoneDataService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Views\Home\FeaturedProjects.cshtml" />
-    <None Include="Service References\KeystoneDataService\KeystoneData.wsdl" />
-    <None Include="Service References\KeystoneDataService\KeystoneData.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\KeystoneDataService\KeystoneData1.wsdl" />
-    <None Include="Service References\KeystoneDataService\KeystoneData1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\KeystoneDataService\KeystoneData2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Organization\PullOrganizationFromKeystone.cshtml" />
     <Content Include="Views\OrganizationAndRelationshipType\EditRelationshipType.cshtml" />
     <Content Include="Views\Organization\EditBoundary.cshtml" />
@@ -1010,11 +987,6 @@
     <Compile Include="Security\OrganizationAndRelationshipTypeViewFeature.cs" />
     <Compile Include="Security\SitkaAdminFeature.cs" />
     <Compile Include="Security\SpendingByOrganizationTypeByTaxonomyTrunkByTaxonomyBranchViewFeature.cs" />
-    <Compile Include="Service References\KeystoneDataService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="UnitTestCommon\TestOrganizationType.cs" />
     <Compile Include="Views\Home\FeaturedProjects.cs" />
     <Compile Include="Views\Home\FeaturedProjectsViewData.cs" />
@@ -1624,9 +1596,6 @@
     <Compile Include="Views\Tenant\EditBasicsViewData.cs" />
     <Compile Include="Views\Tenant\EditBasicsViewModel.cs" />
     <Compile Include="Views\Tenant\DetailGridSpec.cs" />
-    <Compile Include="Views\User\PullUserFromKeystone.cs" />
-    <Compile Include="Views\User\PullUserFromKeystoneViewData.cs" />
-    <Compile Include="Views\User\PullUserFromKeystoneViewModel.cs" />
     <Compile Include="Views\WebServices\ViewAccessToken.cs" />
     <Compile Include="Views\WebServices\Index.cs" />
     <Compile Include="Views\WebServices\ViewAccessTokenViewData.cs" />
@@ -1678,7 +1647,6 @@
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationSimpleController.js" />
     <Content Include="Views\Shared\ProjectGeospatialAreaControls\EditProjectGeospatialAreasController.js" />
     <Content Include="Views\Shared\UserStewardshipAreas\EditUserStewardshipAreasController.js" />
-    <Content Include="Views\User\PullUserFromKeystone.cshtml" />
     <Content Include="Views\Tenant\Detail.cshtml" />
     <Content Include="Views\Tenant\EditBasics.cshtml" />
     <Content Include="Views\Tenant\EditBoundingBox.cshtml" />
@@ -3732,9 +3700,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\KeystoneDataService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

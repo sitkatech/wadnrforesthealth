@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Web.Hosting;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using ProjectFirma.Web.Common;
 using Sustainsys.Saml2;
 using Sustainsys.Saml2.Configuration;
 using Sustainsys.Saml2.Metadata;
@@ -46,12 +45,12 @@ namespace ProjectFirma.Web
                 }
             };
 
-            var idp = new IdentityProvider(new EntityId("https://test-secureaccess.wa.gov/FIM2/sps/sawidp/saml20"), spOptions)
+            var idp = new IdentityProvider(new EntityId(FirmaWebConfiguration.Saml2EndPoint), spOptions)
             {
                 AllowUnsolicitedAuthnResponse = true,
                 Binding = Saml2BindingType.HttpPost,
-                SingleSignOnServiceUrl = new Uri("https://test-secureaccess.wa.gov/FIM2/sps/sawidp/saml20/logininitial?&NameIdFormat=Email&PartnerId=https://wadnrforesthealth.localhost.projectfirma.com"),
-                SingleLogoutServiceUrl = new Uri("https://test-secureaccess.wa.gov/FIM2/sps/sawidp/saml20/slo"),
+                SingleSignOnServiceUrl = new Uri($"{FirmaWebConfiguration.Saml2EndPoint}/logininitial?&NameIdFormat=Email&PartnerId={FirmaWebConfiguration.Saml2EntityID}"),
+                SingleLogoutServiceUrl = new Uri($"{FirmaWebConfiguration.Saml2EndPoint}/slo"),
             };
 
             saml2Options.IdentityProviders.Add(idp);
@@ -63,10 +62,9 @@ namespace ProjectFirma.Web
         {
             var spOptions = new SPOptions
             {
-                EntityId = new EntityId("https://wadnrforesthealth.localhost.projectfirma.com"),
-                ReturnUrl = new Uri("https://wadnrforesthealth.localhost.projectfirma.com/")
+                EntityId = new EntityId(FirmaWebConfiguration.Saml2EntityID),
+                ReturnUrl = new Uri(FirmaWebConfiguration.Saml2EntityID)
             };
-            spOptions.ServiceCertificates.Add(new X509Certificate2(HostingEnvironment.MapPath("~/wadnrforesthealth.localhost.projectfirma.com.pfx"), "W@$h1ngt0nDNR"));
             return spOptions;
         }
     }
