@@ -56,7 +56,6 @@
     <httpRuntime requestValidationMode="2.0" maxRequestLength="${max-request-length}" maxUrlLength="${max-request-url-length}" maxQueryStringLength="${max-request-querystring-length}" ${httpruntime-executiontimeout-optional}/>
     <compilation debug="true" targetFramework="4.6.2">
       <assemblies>
-        <add assembly="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
         <add assembly="System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
       </assemblies>
     </compilation>
@@ -102,7 +101,7 @@
   </system.webServer>
   <log4net>
     <appender name="FileAppender" type="log4net.Appender.RollingFileAppender">
-      <param name="File" value="C:\Sitka\ProjectFirma\Logs\WEB.log" />
+      <param name="File" value="C:\Sitka\WADNRForestHealth\Logs\WEB.log" />
       <param name="AppendToFile" value="true" />
       <rollingStyle value="Date" />
       <datePattern value="yyyyMMdd" />
@@ -120,7 +119,7 @@
     <appender name="SmtpAppender" type="LtInfo.Common.SmtpAppenderWithPathAndExceptionTypeInSubject, LtInfo.Common">
       <to value="AppAlerts-LT@sitkatech.com" />
       <from value="Application Alerts LT Info &lt;AppAlerts-LT@sitkatech.com&gt;" />
-      <subject value="ProjectFirma Alert: ${environment} application error" />
+      <subject value="WADNRForestHealth Alert: ${environment} application error" />
       <smtpHost value="${smtp-server}" />
       <bufferSize value="1" />
       <threshold value="ERROR" />
@@ -135,6 +134,54 @@
   </log4net>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Xml.XPath.XDocument" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.1.0.0" newVersion="4.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Threading.Overlapped" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.1.0.0" newVersion="4.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Security.SecureString" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.1.0.0" newVersion="4.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Security.Cryptography.Algorithms" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.3.0.0" newVersion="4.3.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.Serialization.Primitives" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Sockets" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Http" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.IO.Compression" publicKeyToken="B77A5C561934E089" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Globalization.Extensions" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.1.0.0" newVersion="4.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Diagnostics.Tracing" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Diagnostics.StackTrace" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.1.0.0" newVersion="4.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Data.Common" publicKeyToken="B03F5F7F11D50A3A" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="WebMatrix.Data" publicKeyToken="31bf3856ad364e35" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
@@ -184,20 +231,28 @@
         <bindingRedirect oldVersion="0.0.0.0-2.5.5631.0" newVersion="2.5.5631.0" />
       </dependentAssembly>
       <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
         <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
         <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
-        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
         <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
       </dependentAssembly>
       <dependentAssembly>
-        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
