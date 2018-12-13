@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Project Create()
             {
                 var taxonomyLeaf = TestTaxonomyLeaf.Create();
-                var projectStage = ProjectStage.PlanningDesign;
+                var projectStage = ProjectStage.Planned;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
                 var project = Project.CreateNewBlank(taxonomyLeaf, projectStage, ProjectLocationSimpleType.None,
                     FundingType.Capital, ProjectApprovalStatus.Approved);
@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var taxonomyLeaf = TestTaxonomyLeaf.Create(dbContext);
 
-                var projectStage = ProjectStage.PlanningDesign;
+                var projectStage = ProjectStage.Planned;
                 var project = new Project(taxonomyLeaf,
                     projectStage,
                     string.Format("Test Project Name {0}", Guid.NewGuid()),

@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.Tenant
         [Required]
         public bool? ProjectExternalDataSourceEnabled { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ShowProposalsToThePublic)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ShowApplicationsToThePublic)]
         [Required]
         public bool? ShowProposalsToThePublic { get; set; }
 

@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
         {
             var projects =
                 HttpRequestStorage.DatabaseEntities.Projects
-                    .Where(x => x.ProjectStageID != ProjectStage.Terminated.ProjectStageID && x.ProjectStageID != ProjectStage.Deferred.ProjectStageID)
+                    .Where(x => x.ProjectStageID != ProjectStage.Cancelled.ProjectStageID && x.ProjectStageID != ProjectStage.Deferred.ProjectStageID)
                     .ToList();                    
             return
                 projects

@@ -607,7 +607,7 @@ namespace ProjectFirma.Web.Models
 
         public bool IsProposal()
         {
-            return ProjectStage == ProjectStage.Proposal;
+            return ProjectStage == ProjectStage.Application;
         }
 
         public bool IsActiveProposal()
@@ -643,12 +643,12 @@ namespace ProjectFirma.Web.Models
 
         public bool AreReportedPerformanceMeasuresRelevant()
         {
-            return ProjectStage != ProjectStage.Proposal && ProjectStage != ProjectStage.PlanningDesign;
+            return ProjectStage != ProjectStage.Application && ProjectStage != ProjectStage.Planned;
         }
 
         public bool AreReportedExpendituresRelevant()
         {
-            return ProjectStage != ProjectStage.Proposal;
+            return ProjectStage != ProjectStage.Application;
         }
 
         public static List<ProjectSectionSimple> GetApplicableProposalWizardSections(Project project, bool ignoreStatus)

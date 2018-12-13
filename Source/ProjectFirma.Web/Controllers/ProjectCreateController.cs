@@ -172,7 +172,7 @@ namespace ProjectFirma.Web.Controllers
             var basicsViewModel = new BasicsViewModel();
             if (newProjectIsProposal)
             {
-                basicsViewModel.ProjectStageID = ProjectStage.Proposal.ProjectStageID;
+                basicsViewModel.ProjectStageID = ProjectStage.Application.ProjectStageID;
             }
             
             return ViewCreateAndEditBasics(basicsViewModel, !newProjectIsProposal);
@@ -277,7 +277,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Proposal.ProjectStageID;
+                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Application.ProjectStageID;
                 return ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey) ? ViewEditBasics(project, viewModel) : ViewCreateAndEditBasics(viewModel, showProjectStageDropDown);
             }
 
@@ -288,7 +288,7 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(project, CurrentPerson);
 
-            if (project.ProjectStage == ProjectStage.Proposal)
+            if (project.ProjectStage == ProjectStage.Application)
             {
                 DeletePerformanceMeasureActuals(project);
                 project.GetPerformanceMeasuresExemptReportingYears().DeleteProjectExemptReportingYear();
@@ -296,7 +296,7 @@ namespace ProjectFirma.Web.Controllers
                 project.GetExpendituresExemptReportingYears().DeleteProjectExemptReportingYear();
             }
 
-            if (project.ProjectStage == ProjectStage.PlanningDesign)
+            if (project.ProjectStage == ProjectStage.Planned)
             {
                 DeletePerformanceMeasureActuals(project);
                 project.GetPerformanceMeasuresExemptReportingYears().DeleteProjectExemptReportingYear();
@@ -1247,9 +1247,9 @@ namespace ProjectFirma.Web.Controllers
             project.ReviewedByPerson = CurrentPerson;
 
             // Business logic: An approved Proposal becomes an active project in the Planning and Design stage
-            if (project.ProjectStageID == ProjectStage.Proposal.ProjectStageID)
+            if (project.ProjectStageID == ProjectStage.Application.ProjectStageID)
             {
-                project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+                project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             }
 
             GenerateApprovalAuditLogEntries(project);

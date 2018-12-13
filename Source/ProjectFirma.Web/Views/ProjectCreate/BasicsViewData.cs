@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         private string ProjectDisplayName { get; }
         public bool IsEditable = true;
 
-        public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Proposal}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
+        public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Application}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
 
         public BasicsViewData(Person currentPerson, IEnumerable<FundingType> fundingTypes,
             IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs, bool showProjectStageDropDown, string instructionsPageUrl,
@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
-            ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Proposal;
+            ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
             ProjectDisplayName = project.DisplayName;
             AssignParameters(taxonomyLeafs, fundingTypes, projectCustomAttributeTypes);
         }

@@ -333,7 +333,7 @@ namespace ProjectFirma.Web.Models
             private set => _areProjectBasicsValid = value;
         }
 
-        public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.PlanningDesign;
+        public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;
 
         public PerformanceMeasuresValidationResult ValidatePerformanceMeasures()
         {
@@ -641,7 +641,7 @@ namespace ProjectFirma.Web.Models
         public bool AreAccomplishmentsRelevant()
         {
             var projectStage = ProjectUpdate == null ? Project.ProjectStage : ProjectUpdate.ProjectStage;
-            return projectStage != ProjectStage.PlanningDesign;
+            return projectStage != ProjectStage.Planned;
         }
 
         public List<ProjectSectionSimple> GetApplicableWizardSections(bool ignoreStatus)

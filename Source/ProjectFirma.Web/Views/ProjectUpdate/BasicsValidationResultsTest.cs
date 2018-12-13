@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             Assert.That(!warningMessages.Contains(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear));
 
-            projectUpdate.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            projectUpdate.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             projectUpdate.PlanningDesignStartYear = 2020;
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 

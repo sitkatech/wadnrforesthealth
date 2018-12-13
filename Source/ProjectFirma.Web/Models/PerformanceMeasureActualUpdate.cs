@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models
                                     performanceMeasureActual.CalendarYear, performanceMeasureActual.ActualValue)));
                 }
                 // use expected values if any only if we are not in Planning/Design
-                else if (currentStage != ProjectStage.PlanningDesign)
+                else if (currentStage != ProjectStage.Planned)
                 {
                     var currentPerformanceMeasureExpecteds =
                         new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.ToList());

@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Controllers
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 taxonomyLeafDisplayName,
-                ProjectStage.All.Except(new[] {ProjectStage.Proposal}), FundingType.All, organizations,
+                ProjectStage.All.Except(new[] {ProjectStage.Application}), FundingType.All, organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
                 totalExpenditures,
@@ -263,9 +263,9 @@ namespace ProjectFirma.Web.Controllers
 
         private static List<ProjectStage> GetActiveProjectStages(Project project)
         {
-            var activeProjectStages = new List<ProjectStage> {ProjectStage.Proposal, ProjectStage.PlanningDesign, ProjectStage.Implementation, ProjectStage.Completed, ProjectStage.PostImplementation};
+            var activeProjectStages = new List<ProjectStage> {ProjectStage.Application, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed, ProjectStage.PostImplementation};
 
-            if (project.ProjectStage == ProjectStage.Terminated)
+            if (project.ProjectStage == ProjectStage.Cancelled)
             {
                 activeProjectStages.Remove(ProjectStage.Implementation);
                 activeProjectStages.Remove(ProjectStage.Completed);
@@ -286,7 +286,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            Check.Assert(project.ProjectStage != ProjectStage.Terminated, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
+            Check.Assert(project.ProjectStage != ProjectStage.Cancelled, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
         private ViewResult ViewBackwardLookingFactSheet(Project project)
@@ -432,7 +432,7 @@ namespace ProjectFirma.Web.Controllers
             return FullDatabaseExcelDownloadImpl(
                 HttpRequestStorage.DatabaseEntities.Projects.ToList()
                     .GetProposalsVisibleToUser(CurrentPerson),
-                FieldDefinition.Proposal.GetFieldDefinitionLabelPluralized());
+                FieldDefinition.Application.GetFieldDefinitionLabelPluralized());
         }
 
         [ProjectsViewFullListFeature]
@@ -831,7 +831,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var projectCreateUrl =
                 SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(projectPrimaryKey));
             var projectStewardLabel = FieldDefinition.ProjectSteward.GetFieldDefinitionLabel();
-            var proposalLabel = FieldDefinition.Proposal.GetFieldDefinitionLabel();
+            var proposalLabel = FieldDefinition.Application.GetFieldDefinitionLabel();
 
             var confirmMessage = CurrentPerson.RoleID == Role.ProjectSteward.RoleID
                 ? $"Although you are a {projectStewardLabel}, you do not have permission to edit this {proposalLabel} through this page because it is pending approval. You can <a href='{projectCreateUrl}'>review, edit, or approve</a> the proposal."

@@ -515,7 +515,7 @@ namespace ProjectFirma.Web.Models
             var projectUpdateBatch = projectUpdate.ProjectUpdateBatch;
 
             Assert.That(projectUpdate.ProjectStage.RequiresPerformanceMeasureActuals(), Is.True, "Should be in stage that requires performance measure actual values");
-            Assert.That(projectUpdate.ProjectStage, Is.Not.EqualTo(ProjectStage.PlanningDesign), "Should not be in Planning/Design");
+            Assert.That(projectUpdate.ProjectStage, Is.Not.EqualTo(ProjectStage.Planned), "Should not be in Planning/Design");
             Assert.That(projectUpdate.ImplementationStartYear, Is.Null, "Should not have an Implementation Start Year set");
 
             var result = projectUpdateBatch.ValidatePerformanceMeasures();
@@ -612,11 +612,11 @@ namespace ProjectFirma.Web.Models
         public void ValidatePerformanceMeasuresAndForceValidationProjectUpdateInPlanningDesignTest()
         {
             var projectUpdate = TestFramework.TestProjectUpdate.Create();
-            projectUpdate.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            projectUpdate.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             var projectUpdateBatch = projectUpdate.ProjectUpdateBatch;
 
             Assert.That(projectUpdate.ProjectStage.RequiresPerformanceMeasureActuals(), Is.False, "Should be in stage that requires performance measure actual values");
-            Assert.That(projectUpdate.ProjectStage, Is.EqualTo(ProjectStage.PlanningDesign), "Should not be in Planning/Design");
+            Assert.That(projectUpdate.ProjectStage, Is.EqualTo(ProjectStage.Planned), "Should not be in Planning/Design");
 
             Assert.That(projectUpdate.ImplementationStartYear, Is.Null, "Should not have an Implementation Start Year set");
             var result = projectUpdateBatch.ValidatePerformanceMeasures();

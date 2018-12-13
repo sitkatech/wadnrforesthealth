@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Models
             var isPersonViewingThePrimaryContact = person.PersonID == PersonID;
             if (isPersonViewingThePrimaryContact)
             {
-                return ProjectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Terminated).ToList();
+                return ProjectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Cancelled).ToList();
             }
             return ProjectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposals(person.CanViewProposals).ToList();
         }

@@ -178,7 +178,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 }
             }
             
-            if (ImplementationStartYear == null && ProjectStageID != ProjectStage.Terminated.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
+            if (ImplementationStartYear == null && ProjectStageID != ProjectStage.Cancelled.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(
                     $"Implementation year is required when the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} stage is not Deferred or Terminated",
@@ -196,7 +196,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearMustBePastOrPresentForCompletedProjects, m => m.CompletionYear);
             }
 
-            if (ProjectStageID == ProjectStage.PlanningDesign.ProjectStageID && PlanningDesignStartYear > currentYear)
+            if (ProjectStageID == ProjectStage.Planned.ProjectStageID && PlanningDesignStartYear > currentYear)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the Planning / Design start year must be less than or equal to the current year",

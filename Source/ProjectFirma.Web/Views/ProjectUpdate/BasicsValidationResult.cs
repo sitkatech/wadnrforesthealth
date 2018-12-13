@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(PlanningDesignStartYearIsRequired);
             }
-            if (projectUpdate.ImplementationStartYear == null && projectUpdate.ProjectStage != ProjectStage.Terminated && projectUpdate.ProjectStage != ProjectStage.Deferred )
+            if (projectUpdate.ImplementationStartYear == null && projectUpdate.ProjectStage != ProjectStage.Cancelled && projectUpdate.ProjectStage != ProjectStage.Deferred )
             {
                 _warningMessages.Add(ImplementationStartYearIsRequired);
             }
@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(CompletionYearShouldBeLessThanCurrentYear);
             }
-            if (projectUpdate.ProjectStage == ProjectStage.PlanningDesign && projectUpdate.PlanningDesignStartYear > currentYear)
+            if (projectUpdate.ProjectStage == ProjectStage.Planned && projectUpdate.PlanningDesignStartYear > currentYear)
             {
                 _warningMessages.Add(PlanningDesignStartYearShouldBeLessThanCurrentYear);
             }
