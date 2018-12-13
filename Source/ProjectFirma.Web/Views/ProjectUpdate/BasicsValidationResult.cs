@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 _warningMessages.Add(ImplementationStartYearIsRequired);
             }
                         
-            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.GetCompletionAnnum() == null)
+            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.GetCompletionYear() == null)
             {
                 _warningMessages.Add(CompletionDateIsRequired);
             }
@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             }
             
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
-            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.GetCompletionAnnum() > currentYear)
+            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.GetCompletionYear() > currentYear)
             {
                 _warningMessages.Add(CompletionDateShouldBeLessThanCurrentYear);
             }
@@ -80,11 +80,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate);
             }
-            if (projectUpdate.GetCompletionAnnum() < projectUpdate.GetImplementationStartYear())
+            if (projectUpdate.GetCompletionYear() < projectUpdate.GetImplementationStartYear())
             {
                 _warningMessages.Add(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear);
             }
-            if (projectUpdate.GetCompletionAnnum() < projectUpdate.PlannedDate?.Year)
+            if (projectUpdate.GetCompletionYear() < projectUpdate.PlannedDate?.Year)
             {
                 _warningMessages.Add(FirmaValidationMessages.CompletionDateGreaterThanEqualToPlannedDate);
             }

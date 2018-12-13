@@ -279,7 +279,7 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
-          <ScalarProperty Name="EndYear" ColumnName="EndYear" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="EstimatedCost" ColumnName="EstimatedCost" />
         </MappingFragment>
       </EntityTypeMapping>

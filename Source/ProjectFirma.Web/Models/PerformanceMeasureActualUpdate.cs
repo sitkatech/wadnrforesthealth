@@ -37,8 +37,8 @@ namespace ProjectFirma.Web.Models
                 var currentPerformanceMeasureActuals = project.PerformanceMeasureActuals.ToList();
                 var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
                 var completionYear = projectUpdateBatch.ProjectUpdate != null
-                    ? projectUpdateBatch.ProjectUpdate.GetCompletionAnnum()
-                    : project.GetCompletionAnnum();
+                    ? projectUpdateBatch.ProjectUpdate.GetCompletionYear()
+                    : project.GetCompletionYear();
                 var currentStage = projectUpdateBatch.ProjectUpdate != null
                     ? projectUpdateBatch.ProjectUpdate.ProjectStage
                     : project.ProjectStage;

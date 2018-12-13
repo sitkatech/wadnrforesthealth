@@ -1074,7 +1074,7 @@
     <Property Name="Description" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ApprovalStartDate" Type="DateTime" />
-    <Property Name="EndYear" Type="Int16" />
+    <Property Name="EndDate" Type="DateTime" />
     <Property Name="EstimatedCost" Type="Double" />
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
   </EntityType>
@@ -1485,7 +1485,7 @@
     <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="ApprovalStartDate" Type="DateTime" />
-    <Property Name="CompletionDate" Type="Int32" />
+    <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
     <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
@@ -1996,7 +1996,7 @@
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="ApprovalStartDate" Type="DateTime" />
-    <Property Name="CompletionDate" Type="Int32" />
+    <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />

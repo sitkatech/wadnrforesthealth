@@ -38,8 +38,8 @@ namespace ProjectFirma.Web.Models
         public string Inkind { get; set; }
         public string StartMonth { get; set; }
         public string EndMonth { get; set; }
-        public DateTime? StartYear { get; set; }
-        public short? EndYear { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string HasPlan { get; set; }
         public string PlanName { get; set; }
         public string PlanBy { get; set; }
@@ -56,9 +56,9 @@ namespace ProjectFirma.Web.Models
             {
                 ProjectName = ProjectName,
                 Description = Description,
-                PlannedDate = StartYear,
-                ApprovalStartDate = StartYear,
-                EndYear = EndYear,
+                PlannedDate = StartDate,
+                ApprovalStartDate = StartDate,
+                EndDate = EndDate,
                 EstimatedCost = Cash
             };
         }

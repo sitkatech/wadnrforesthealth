@@ -408,13 +408,13 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                if (GetImplementationStartYear() == GetCompletionAnnum() && GetImplementationStartYear().HasValue)
+                if (GetImplementationStartYear() == GetCompletionYear() && GetImplementationStartYear().HasValue)
                 {
                     return GetImplementationStartYear().Value.ToString(CultureInfo.InvariantCulture);
                 }
 
                 return
-                    $"{GetImplementationStartYear()?.ToString(CultureInfo.InvariantCulture) ?? "?"} - {GetCompletionAnnum()?.ToString(CultureInfo.InvariantCulture) ?? "?"}";
+                    $"{GetImplementationStartYear()?.ToString(CultureInfo.InvariantCulture) ?? "?"} - {GetCompletionYear()?.ToString(CultureInfo.InvariantCulture) ?? "?"}";
             }
         }
 
@@ -662,7 +662,7 @@ namespace ProjectFirma.Web.Models
         }
         public string GetCompletionDateFormatted()
         {
-            return GetCompletionAnnum().HasValue ? MultiTenantHelpers.FormatReportingYear(GetCompletionAnnum().Value) : null;
+            return CompletionDate?.ToShortDateString();
         }
         public string GetApprovalStartDateFormatted()
         {
@@ -684,9 +684,9 @@ namespace ProjectFirma.Web.Models
             return ApprovalStartDate?.Year;
         }
 
-        public int? GetCompletionAnnum()
+        public int? GetCompletionYear()
         {
-            return CompletionDate;
+            return CompletionDate?.Year;
         }
     }
 }

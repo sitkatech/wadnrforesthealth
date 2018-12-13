@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
-        public int? CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.TaxonomyLeaf)]
         [Required(ErrorMessage = "This field is required.")]
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             FundingTypeID = project.FundingTypeID;
             ApprovalStartDate = project.ApprovalStartDate;
             PlannedDate = project.PlannedDate;
-            CompletionDate = project.GetCompletionAnnum();
+            CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
@@ -144,24 +144,24 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     m => m.ApprovalStartDate);
             }
 
-            if (CompletionDate < ApprovalStartDate?.Year)
+            if (CompletionDate < ApprovalStartDate)
             {
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>(
+                yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>(
                     FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,
                     m => m.CompletionDate);
             }
 
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
+                yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
-            if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now.Year)
+            if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now)
             {
                 var errorMessage = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed or Post-Implementation stage: " +
                                    $"the {Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be less than or equal to the current year";
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.CompletionDate);
+                yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>(errorMessage, m => m.CompletionDate);
             }
 
             if (HasExistingProjectUpdate && OldProjectStageID != ProjectStageID)

@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         string ProjectLocationNotes { get; set; }
         DateTime? PlannedDate { get; }
         int? GetImplementationStartYear();
-        int? GetCompletionAnnum();
+        int? GetCompletionYear();
         ProjectStage ProjectStage { get; }
         FundingType FundingType { get; }
         decimal? EstimatedTotalCost { get; }

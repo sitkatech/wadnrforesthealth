@@ -77,7 +77,7 @@ To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expend
                 @if (CostParameterSet.CanCalculateTotalRemainingOperatingCostInYearOfExpenditure(ViewDataTyped.Project))
                 {
                     <td>
-                        <span style="font-weight: bold">@ViewDataTyped.TotalOperatingCostInYearOfExpenditure.ToStringCurrency()</span> (For years @ViewDataTyped.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.GetCompletionAnnum() using @ViewDataTyped.InflationRate.ToStringPercent() annual inflation)
+                        <span style="font-weight: bold">@ViewDataTyped.TotalOperatingCostInYearOfExpenditure.ToStringCurrency()</span> (For years @ViewDataTyped.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.GetCompletionYear() using @ViewDataTyped.InflationRate.ToStringPercent() annual inflation)
                     </td>
                 }
             </tr>

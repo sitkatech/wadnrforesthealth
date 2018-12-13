@@ -95,5 +95,47 @@ drop constraint CK_Project_CompletionYearHasToBeSetWhenStageIsInCompletedOrPostI
 exec sp_rename 'dbo.Project.CompletionYear', 'CompletionDate', 'COLUMN';
 exec sp_rename 'dbo.ProjectUpdate.CompletionYear', 'CompletionDate', 'COLUMN';
 go
+
+-- CompletionDate int->DateTime
+-- CompletionDate int -> datetime (nondestructive)
+alter table dbo.project
+add CompletionDateTemp datetime null
+go
+
+update dbo.Project
+set CompletionDateTemp = DATEFROMPARTS(CompletionDate, 1, 1)
+
+alter table dbo.Project
+alter column CompletionDate datetime null
+go
+
+update dbo.Project
+set CompletionDate = CompletionDateTemp
+
+alter table dbo.Project
+drop column CompletionDateTemp
+
+alter table dbo.ProjectUpdate
+add CompletionDateTemp datetime null
+go
+
+update dbo.ProjectUpdate
+set CompletionDateTemp = DATEFROMPARTS(CompletionDate, 1, 1)
+
+alter table dbo.ProjectUpdate
+alter column CompletionDate datetime null
+go
+
+update dbo.ProjectUpdate
+set CompletionDate = CompletionDateTemp
+
+alter table dbo.ProjectUpdate
+drop column CompletionDateTemp
+
+
 alter table dbo.Project
 add constraint CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation CHECK (([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionDate] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4)))
+
+exec sp_rename 'dbo.ImportExternalProjectStaging.EndYear', 'EndDate', 'COLUMN';
+alter table dbo.ImportExternalProjectStaging
+alter column EndDate datetime null

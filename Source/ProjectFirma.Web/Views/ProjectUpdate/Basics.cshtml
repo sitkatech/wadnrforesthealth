@@ -111,7 +111,7 @@ Source code is available upon request via <support@sitkatech.com>.
             }
             else
             {
-                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetImplementationStartYear()</p>
+                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetApprovalStartDateFormatted()</p>
             }
         </div>
     </div>
@@ -122,12 +122,12 @@ Source code is available upon request via <support@sitkatech.com>.
         <div class="col-sm-8">
             @if (ViewDataTyped.IsEditable)
             {
-                @Html.DropDownListFor(m => m.CompletionDate, ViewDataTyped.CompletionDateRange, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
                 @Html.ValidationMessageFor(m => m.CompletionDate)
             }
             else
             {
-                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionAnnum()</p>
+                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionDateFormatted()</p>
             }
         </div>
     </div>
@@ -191,7 +191,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.LabelWithSugarFor(FieldDefinition.CalculatedTotalRemainingOperatingCost)
                 </div>
                 <div class="col-sm-8">
-                    <p class="form-control-static">@ViewDataTyped.TotalOperatingCostInYearOfExpenditure.ToStringCurrency() (For years @ViewDataTyped.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.ProjectUpdate.GetCompletionAnnum() using @ViewDataTyped.InflationRate.ToStringPercent() annual inflation)</p>
+                    <p class="form-control-static">@ViewDataTyped.TotalOperatingCostInYearOfExpenditure.ToStringCurrency() (For years @ViewDataTyped.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.ProjectUpdate.GetCompletionYear() using @ViewDataTyped.InflationRate.ToStringPercent() annual inflation)</p>
                 </div>
             </div>
         }

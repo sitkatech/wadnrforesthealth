@@ -197,7 +197,7 @@ namespace ProjectFirma.Web.Controllers
                 ProjectDescription = importExternalProjectStaging.Description,
                 PlannedDate = importExternalProjectStaging.PlannedDate,
                 ApprovalStartDate = importExternalProjectStaging.ApprovalStartDate,
-                CompletionDate = importExternalProjectStaging.EndYear,
+                CompletionDate = importExternalProjectStaging.EndDate,
                 EstimatedTotalCost = importExternalProjectStaging.EstimatedCost
             };
             return ViewCreateAndEditBasics(viewModel, true);
@@ -685,7 +685,6 @@ namespace ProjectFirma.Web.Controllers
             var layerGeoJsons = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide);
             var mapInitJson = new MapInitJson($"project_{project.ProjectID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) {AllowFullScreen = false, DisablePopups = true };
             
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
             var mapPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationSimpleFormID(project);
             var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
@@ -1197,7 +1196,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(project.ProjectID);
-            //TODO: Change "reviewer" to specific reviewer as determined by tentant review 
+            //TODO: Change "reviewer" to specific reviewer as determined by tenant review 
             var viewData = new ConfirmDialogFormViewData($"Are you sure you want to submit {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" to the reviewer?");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -1282,7 +1281,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(project.ProjectID);
-            //TODO: Change "reviewer" to specific reviewer as determined by tentant review 
+            //TODO: Change "reviewer" to specific reviewer as determined by tenant review 
             var viewData = new ConfirmDialogFormViewData($"Are you sure you want to withdraw {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" from review?");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -1294,7 +1293,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             project.ProjectApprovalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
-            //TODO: Change "reviewer" to specific reviewer as determined by tentant review 
+            //TODO: Change "reviewer" to specific reviewer as determined by tenant review 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} withdrawn from review.");
             return new ModalDialogFormJsonResult(project.GetDetailUrl());
         }

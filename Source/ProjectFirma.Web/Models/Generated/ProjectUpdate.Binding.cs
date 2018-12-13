@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? approvalStartDate, int? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int? primaryContactPersonID) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int? primaryContactPersonID) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.Models
         public int ProjectStageID { get; set; }
         public string ProjectDescription { get; set; }
         public DateTime? ApprovalStartDate { get; set; }
-        public int? CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
         public string ProjectLocationNotes { get; set; }

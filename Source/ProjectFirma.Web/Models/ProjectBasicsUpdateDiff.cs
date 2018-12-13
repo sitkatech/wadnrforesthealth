@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
 
         private bool HasCompletionDateChanged()
         {
-            return OriginalProjectUpdate.GetCompletionAnnum() != ModifiedProjectUpdate.GetCompletionAnnum();
+            return OriginalProjectUpdate.GetCompletionYear() != ModifiedProjectUpdate.GetCompletionYear();
         }
 
         private bool HasImplementationStartYearChanged()
