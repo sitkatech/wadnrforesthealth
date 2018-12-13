@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Models
             {
                 ProjectName = ProjectName,
                 Description = Description,
-                PlanningDesignStartYear = StartYear,
+                PlannedDate = StartYear,
                 ImplementationStartYear = StartYear,
                 EndYear = EndYear,
                 EstimatedCost = Cash

@@ -51,9 +51,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [Required]
         public int? ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlanningDesignStartYear)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         [Required]
-        public int? PlanningDesignStartYear { get; set; }
+        public int? PlannedDate { get; set; }
         
         [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
         [Required]
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             FundingTypeID = project.FundingTypeID;
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
-            PlanningDesignStartYear = project.PlanningDesignStartYear;
+            PlannedDate = project.PlannedDate;
             ImplementationStartYear = project.ImplementationStartYear;
             CompletionYear = project.CompletionYear;
             ProjectCustomAttributes = new ProjectCustomAttributes(project);
@@ -127,7 +127,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
             }
             
-            project.PlanningDesignStartYear = PlanningDesignStartYear;
+            project.PlannedDate = PlannedDate;
             project.ImplementationStartYear = ImplementationStartYear;
             project.CompletionYear = CompletionYear;
             ProjectCustomAttributes?.UpdateModel(project, person);
@@ -152,9 +152,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, string>(FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ImplementationStartYear < PlanningDesignStartYear)
+            if (ImplementationStartYear < PlannedDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear, m => m.ImplementationStartYear);
+                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate, m => m.ImplementationStartYear);
             }
 
             if (CompletionYear < ImplementationStartYear)
@@ -162,9 +162,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear, m => m.CompletionYear);
             }
 
-            if (CompletionYear < PlanningDesignStartYear)
+            if (CompletionYear < PlannedDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToPlanningDesignStartYear, m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToPlannedDate, m => m.CompletionYear);
             }
 
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
@@ -196,11 +196,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearMustBePastOrPresentForCompletedProjects, m => m.CompletionYear);
             }
 
-            if (ProjectStageID == ProjectStage.Planned.ProjectStageID && PlanningDesignStartYear > currentYear)
+            if (ProjectStageID == ProjectStage.Planned.ProjectStageID && PlannedDate > currentYear)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the Planning / Design start year must be less than or equal to the current year",
-                    m => m.PlanningDesignStartYear);
+                    m => m.PlannedDate);
             }
         }
     }

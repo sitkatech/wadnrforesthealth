@@ -13,7 +13,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,
 	[ProjectLocationNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[PlanningDesignStartYear] [int] NULL,
+	[PlannedDate] [int] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
 	[EstimatedAnnualOperatingCost] [decimal](18, 0) NULL,
 	[PrimaryContactPersonID] [int] NULL,

@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Models
             return 
                 HasProjectDescriptionChanged() ||
                 HasProjectStageChanged() ||
-                HasPlanningDesignStartYearChanged() ||
+                HasPlannedDateChanged() ||
                 HasImplementationStartYearChanged() ||
                 HasCompletionYearChanged() ||
                 HasEstimatedTotalCostChanged() ||
@@ -63,9 +63,9 @@ namespace ProjectFirma.Web.Models
             return OriginalProjectUpdate.ImplementationStartYear != ModifiedProjectUpdate.ImplementationStartYear;
         }
 
-        private bool HasPlanningDesignStartYearChanged()
+        private bool HasPlannedDateChanged()
         {
-            return OriginalProjectUpdate.PlanningDesignStartYear != ModifiedProjectUpdate.PlanningDesignStartYear;
+            return OriginalProjectUpdate.PlannedDate != ModifiedProjectUpdate.PlannedDate;
         }
 
         private bool HasProjectStageChanged()

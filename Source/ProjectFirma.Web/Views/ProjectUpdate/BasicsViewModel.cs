@@ -40,8 +40,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
         public int ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlanningDesignStartYear)]
-        public int? PlanningDesignStartYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
+        public int? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
         public int? ImplementationStartYear { get; set; }
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             ProjectDescription = projectUpdate.ProjectDescription;
             ProjectStageID = projectUpdate.ProjectStageID;
-            PlanningDesignStartYear = projectUpdate.PlanningDesignStartYear;
+            PlannedDate = projectUpdate.PlannedDate;
             ImplementationStartYear = projectUpdate.ImplementationStartYear;
             CompletionYear = projectUpdate.CompletionYear;
             EstimatedTotalCost = projectUpdate.EstimatedTotalCost;
@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             projectUpdate.ProjectDescription = ProjectDescription;
             projectUpdate.ProjectStageID = ProjectStageID;
-            projectUpdate.PlanningDesignStartYear = PlanningDesignStartYear;
+            projectUpdate.PlannedDate = PlannedDate;
             projectUpdate.ImplementationStartYear = ImplementationStartYear;
             projectUpdate.CompletionYear = CompletionYear;
             projectUpdate.EstimatedTotalCost = EstimatedTotalCost;
@@ -95,10 +95,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ImplementationStartYear < PlanningDesignStartYear)
+            if (ImplementationStartYear < PlannedDate)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(
-                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear,
+                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
                     m => m.ImplementationStartYear);
             }
 

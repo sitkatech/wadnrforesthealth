@@ -54,8 +54,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
         public int? ImplementationStartYear { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlanningDesignStartYear)]
-        public int? PlanningDesignStartYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
+        public int? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
         public int? CompletionYear { get; set; }
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             OldProjectStageID = project.ProjectStageID;
             FundingTypeID = project.FundingTypeID;
             ImplementationStartYear = project.ImplementationStartYear;
-            PlanningDesignStartYear = project.PlanningDesignStartYear;
+            PlannedDate = project.PlannedDate;
             CompletionYear = project.CompletionYear;
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.ProjectStageID = ProjectStageID;
             project.FundingTypeID = FundingTypeID;
             project.ImplementationStartYear = ImplementationStartYear;
-            project.PlanningDesignStartYear = PlanningDesignStartYear;
+            project.PlannedDate = PlannedDate;
             project.CompletionYear = CompletionYear;
 
             if (FundingTypeID == FundingType.Capital.FundingTypeID)
@@ -137,10 +137,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ImplementationStartYear < PlanningDesignStartYear)
+            if (ImplementationStartYear < PlannedDate)
             {
                 yield return new SitkaValidationResult<EditProjectViewModel, int?>(
-                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear,
+                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
                     m => m.ImplementationStartYear);
             }
 

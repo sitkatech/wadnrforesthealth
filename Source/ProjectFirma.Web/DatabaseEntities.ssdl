@@ -1087,7 +1087,7 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" MaxLength="140" />
     <Property Name="Description" Type="varchar" MaxLength="4000" />
-    <Property Name="PlanningDesignStartYear" Type="smallint" />
+    <Property Name="PlannedDate" Type="smallint" />
     <Property Name="ImplementationStartYear" Type="smallint" />
     <Property Name="EndYear" Type="smallint" />
     <Property Name="EstimatedCost" Type="float" />
@@ -1512,7 +1512,7 @@ warning 6035: The relationship 'FK_TreatmentActivity_Project_ProjectID_TenantID'
     <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="IsFeatured" Type="bit" Nullable="false" />
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
-    <Property Name="PlanningDesignStartYear" Type="int" />
+    <Property Name="PlannedDate" Type="int" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
     <Property Name="EstimatedAnnualOperatingCost" Type="money" />
     <Property Name="FundingTypeID" Type="int" Nullable="false" />
@@ -1934,7 +1934,7 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
-    <Property Name="PlanningDesignStartYear" Type="int" />
+    <Property Name="PlannedDate" Type="int" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
     <Property Name="EstimatedAnnualOperatingCost" Type="decimal" />
     <Property Name="PrimaryContactPersonID" Type="int" />

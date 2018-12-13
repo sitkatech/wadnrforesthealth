@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class BasicsViewData : ProjectUpdateViewData
     {
-        public IEnumerable<SelectListItem> PlanningDesignStartYearRange { get; }
+        public IEnumerable<SelectListItem> PlannedDateRange { get; }
         public IEnumerable<SelectListItem> ImplementationStartYearRange { get; }
         public IEnumerable<SelectListItem> CompletionYearRange { get; }
         public IEnumerable<SelectListItem> ProjectStages { get; }
@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectUpdate = projectUpdate;
             TaxonomyLeafDisplayName = projectUpdate.ProjectUpdateBatch.Project.TaxonomyLeaf.DisplayName;
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
-            PlanningDesignStartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
+            PlannedDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             ImplementationStartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             CompletionYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshBasics(Project));

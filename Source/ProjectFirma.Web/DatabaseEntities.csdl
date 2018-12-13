@@ -1072,7 +1072,7 @@
     <Property Name="CreateDate" Type="DateTime" Nullable="false" />
     <Property Name="ProjectName" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="Description" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlanningDesignStartYear" Type="Int16" />
+    <Property Name="PlannedDate" Type="Int16" />
     <Property Name="ImplementationStartYear" Type="Int16" />
     <Property Name="EndYear" Type="Int16" />
     <Property Name="EstimatedCost" Type="Double" />
@@ -1491,7 +1491,7 @@
     <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlanningDesignStartYear" Type="Int32" />
+    <Property Name="PlannedDate" Type="Int32" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
     <Property Name="EstimatedAnnualOperatingCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="FundingTypeID" Type="Int32" Nullable="false" />
@@ -2000,7 +2000,7 @@
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlanningDesignStartYear" Type="Int32" />
+    <Property Name="PlannedDate" Type="Int32" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
     <Property Name="EstimatedAnnualOperatingCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />

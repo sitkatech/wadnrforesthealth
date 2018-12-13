@@ -25,9 +25,9 @@ namespace ProjectFirma.Web.Common
 {
     public static class FirmaValidationMessages
     {
-        public static readonly string ImplementationStartYearGreaterThanPlanningDesignStartYear = $"{FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} must be greater than or equal to {FieldDefinition.PlanningDesignStartYear.GetFieldDefinitionLabel()}.";
+        public static readonly string ImplementationStartYearGreaterThanPlannedDate = $"{FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} must be greater than or equal to {FieldDefinition.PlannedDate.GetFieldDefinitionLabel()}.";
         public static readonly string CompletionYearGreaterThanEqualToImplementationStartYear = $"{FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()}.";
-        public static readonly string CompletionYearGreaterThanEqualToPlanningDesignStartYear = $"{FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.PlanningDesignStartYear.GetFieldDefinitionLabel()}.";
+        public static readonly string CompletionYearGreaterThanEqualToPlannedDate = $"{FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.PlannedDate.GetFieldDefinitionLabel()}.";
         public static readonly string UpdateSectionIsDependentUponBasicsSection = "Your project's \"Basics\" page must be complete before you can begin updating this section.";
         public static readonly string ProjectNameUnique = $"{FieldDefinition.ProjectName.GetFieldDefinitionLabel()} already exists.";
         public static readonly string OrganizationNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} name already exists.";

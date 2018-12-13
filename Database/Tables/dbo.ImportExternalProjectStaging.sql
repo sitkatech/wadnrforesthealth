@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[ImportExternalProjectStaging](
 	[CreateDate] [datetime] NOT NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Description] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[PlanningDesignStartYear] [smallint] NULL,
+	[PlannedDate] [smallint] NULL,
 	[ImplementationStartYear] [smallint] NULL,
 	[EndYear] [smallint] NULL,
 	[EstimatedCost] [float] NULL,

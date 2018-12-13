@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         {
             //var person = TestFramework.TestPerson.Create();
             //var project = TestFramework.TestProject.Create();
-            //project.PlanningDesignStartYear = 1900;
+            //project.PlannedDate = 1900;
             //project.ImplementationStartYear = 1910;
             //project.CompletionYear = 1920;
             //project.ProjectDescription = "Orginal project description.";
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Models
 
             //Assert.That(projectUpdate.IsBasicSectionUpdated(), Is.False);
             
-            //projectUpdate.PlanningDesignStartYear = 2000;
+            //projectUpdate.PlannedDate = 2000;
             //projectUpdate.ImplementationStartYear = 2010;
             //projectUpdate.CompletionYear = 2020;
             //projectUpdate.ProjectDescription = "Updated project description.";

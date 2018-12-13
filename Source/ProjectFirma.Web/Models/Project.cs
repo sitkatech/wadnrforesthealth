@@ -656,9 +656,9 @@ namespace ProjectFirma.Web.Models
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus)).OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
         }
 
-        public string GetPlanningDesignStartYear()
+        public string GetPlannedDate()
         {
-            return PlanningDesignStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(PlanningDesignStartYear.Value) : null;
+            return PlannedDate.HasValue ? MultiTenantHelpers.FormatReportingYear(PlannedDate.Value) : null;
         }
         public string GetCompletionYear()
         {

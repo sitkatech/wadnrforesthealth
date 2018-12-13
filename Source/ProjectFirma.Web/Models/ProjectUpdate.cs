@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models
         {
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
-            PlanningDesignStartYear = project.PlanningDesignStartYear;
+            PlannedDate = project.PlannedDate;
             ImplementationStartYear = project.ImplementationStartYear;
             CompletionYear = project.CompletionYear;
             EstimatedTotalCost = project.EstimatedTotalCost;
@@ -71,7 +71,7 @@ namespace ProjectFirma.Web.Models
         {
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID;
-            project.PlanningDesignStartYear = PlanningDesignStartYear;
+            project.PlannedDate = PlannedDate;
             project.ImplementationStartYear = ImplementationStartYear;
             project.CompletionYear = CompletionYear;
             project.EstimatedTotalCost = EstimatedTotalCost;
@@ -153,9 +153,9 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectOrganizationUpdates.SingleOrDefault(x => x.RelationshipType.IsPrimaryContact)?.Organization;
         }
 
-        public string GetPlanningDesignStartYear()
+        public string GetPlannedDate()
         {
-            return PlanningDesignStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(PlanningDesignStartYear.Value) : null;
+            return PlannedDate.HasValue ? MultiTenantHelpers.FormatReportingYear(PlannedDate.Value) : null;
         }
         public string GetCompletionYear()
         {

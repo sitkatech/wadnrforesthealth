@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         int ProjectLocationSimpleTypeID { get; set; }
         string ProjectLocationNotes { get; set; }
 
-        int? PlanningDesignStartYear { get; }
+        int? PlannedDate { get; }
         int? ImplementationStartYear { get; }
         int? CompletionYear { get; }
 

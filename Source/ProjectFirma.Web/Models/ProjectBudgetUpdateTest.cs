@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Models
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2013, 777);
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2014, 888);
 
-            projectUpdate.PlanningDesignStartYear = project.ProjectBudgets.Min(x => x.CalendarYear);
+            projectUpdate.PlannedDate = project.ProjectBudgets.Min(x => x.CalendarYear);
             projectUpdate.CompletionYear = project.ProjectBudgets.Max(x => x.CalendarYear);
 
             // Act

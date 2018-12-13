@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
             TaxonomyLeaf = project.TaxonomyLeaf.TaxonomyLeafName;
             ProjectDescription = project.ProjectDescription;
 
-            PlanningStartDate = project.PlanningDesignStartYear;
+            PlanningStartDate = project.PlannedDate;
             ImplementationStartDate = project.ImplementationStartYear;
             EndDate = project.CompletionYear;
             Stage = project.ProjectStage.ProjectStageDisplayName;

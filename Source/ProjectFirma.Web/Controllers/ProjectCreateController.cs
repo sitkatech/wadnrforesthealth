@@ -196,7 +196,7 @@ namespace ProjectFirma.Web.Controllers
                 ImportExternalProjectStagingID = importExternalProjectStaging.ImportExternalProjectStagingID,
                 ProjectName = importExternalProjectStaging.ProjectName,
                 ProjectDescription = importExternalProjectStaging.Description,
-                PlanningDesignStartYear = importExternalProjectStaging.PlanningDesignStartYear,
+                PlannedDate = importExternalProjectStaging.PlannedDate,
                 ImplementationStartYear = importExternalProjectStaging.ImplementationStartYear,
                 CompletionYear = importExternalProjectStaging.EndYear,
                 EstimatedTotalCost = importExternalProjectStaging.EstimatedCost

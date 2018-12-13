@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, int? implementationStartYear, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, int? planningDesignStartYear, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int fundingTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, int? implementationStartYear, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, int? plannedDate, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int fundingTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Models
             this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
             this.IsFeatured = isFeatured;
             this.ProjectLocationNotes = projectLocationNotes;
-            this.PlanningDesignStartYear = planningDesignStartYear;
+            this.PlannedDate = plannedDate;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
             this.EstimatedAnnualOperatingCost = estimatedAnnualOperatingCost;
             this.FundingTypeID = fundingTypeID;
@@ -299,7 +299,7 @@ namespace ProjectFirma.Web.Models
         public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public bool IsFeatured { get; set; }
         public string ProjectLocationNotes { get; set; }
-        public int? PlanningDesignStartYear { get; set; }
+        public int? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
         public decimal? EstimatedAnnualOperatingCost { get; set; }
         public int FundingTypeID { get; set; }

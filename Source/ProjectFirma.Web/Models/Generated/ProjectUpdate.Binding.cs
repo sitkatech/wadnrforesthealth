@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, int? implementationStartYear, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, int? planningDesignStartYear, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int? primaryContactPersonID) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, int? implementationStartYear, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, int? plannedDate, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int? primaryContactPersonID) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
             this.ProjectLocationNotes = projectLocationNotes;
-            this.PlanningDesignStartYear = planningDesignStartYear;
+            this.PlannedDate = plannedDate;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
             this.EstimatedAnnualOperatingCost = estimatedAnnualOperatingCost;
             this.PrimaryContactPersonID = primaryContactPersonID;
@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Models
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
         public string ProjectLocationNotes { get; set; }
-        public int? PlanningDesignStartYear { get; set; }
+        public int? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
         public decimal? EstimatedAnnualOperatingCost { get; set; }
         public int? PrimaryContactPersonID { get; set; }
