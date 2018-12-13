@@ -88,3 +88,12 @@ alter table dbo.ImportExternalProjectStaging
 alter column ApprovalStartDate datetime null
 alter table dbo.ImportExternalProjectStaging
 alter column PlannedDate datetime null
+
+-- Completion Year -> Completion Date
+alter table dbo.Project
+drop constraint CK_Project_CompletionYearHasToBeSetWhenStageIsInCompletedOrPostImplementation 
+exec sp_rename 'dbo.Project.CompletionYear', 'CompletionDate', 'COLUMN';
+exec sp_rename 'dbo.ProjectUpdate.CompletionYear', 'CompletionDate', 'COLUMN';
+go
+alter table dbo.Project
+add constraint CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation CHECK (([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionDate] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4)))

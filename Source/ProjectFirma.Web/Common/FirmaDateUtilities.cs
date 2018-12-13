@@ -94,12 +94,12 @@ namespace ProjectFirma.Web.Common
 
         public static List<int> CalculateCalendarYearRangeForExpendituresAccountingForExistingYears(List<int> existingYears, IProject project, int currentYearToUse)
         {
-            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlannedDate, project?.CompletionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), currentYearToUse);
+            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlannedDate, project.GetCompletionAnnum(), currentYearToUse, MultiTenantHelpers.GetMinimumYear(), currentYearToUse);
         }
 
         public static List<int> CalculateCalendarYearRangeForBudgetsAccountingForExistingYears(List<int> existingYears, IProject project, int currentYearToUse)
         {
-            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlannedDate, project?.CompletionYear, currentYearToUse, null, null);
+            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlannedDate, project.GetCompletionAnnum(), currentYearToUse, null, null);
         }
 
         public static List<int> CalculateCalendarYearRangeAccountingForExistingYears(List<int> existingYears, DateTime? startDate, int? endYear, int currentYearToUse, int? floorYear, int? ceilingYear)

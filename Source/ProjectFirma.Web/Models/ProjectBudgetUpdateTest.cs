@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
-        public void CreateFromProjectTestStartYearAndCompletionYearTheSameAsExistingBudgetRecords()
+        public void CreateFromProjectTestStartYearAndCompletionDateTheSameAsExistingBudgetRecords()
         {
             // Arrange
             var project = TestFramework.TestProject.Create(-777, "Project-777");
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Models
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2014, 888);
 
             projectUpdate.PlannedDate = new DateTime(project.ProjectBudgets.Min(x => x.CalendarYear), 1, 1);
-            projectUpdate.CompletionYear = project.ProjectBudgets.Max(x => x.CalendarYear);
+            projectUpdate.CompletionDate = project.ProjectBudgets.Max(x => x.CalendarYear);
 
             // Act
             ProjectBudgetUpdate.CreateFromProject(projectUpdateBatch);

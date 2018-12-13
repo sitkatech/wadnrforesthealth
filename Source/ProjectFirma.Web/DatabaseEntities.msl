@@ -605,7 +605,7 @@
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
           <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
-          <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
+          <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
           <ScalarProperty Name="PerformanceMeasureActualYearsExemptionExplanation" ColumnName="PerformanceMeasureActualYearsExemptionExplanation" />
@@ -1052,7 +1052,7 @@
           <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
           <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
-          <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
+          <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />

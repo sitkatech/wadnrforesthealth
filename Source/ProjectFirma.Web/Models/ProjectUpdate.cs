@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
             ProjectStageID = project.ProjectStageID;
             PlannedDate = project.PlannedDate;
             ApprovalStartDate = project.ApprovalStartDate;
-            CompletionYear = project.CompletionYear;
+            CompletionDate = project.GetCompletionAnnum();
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
         }
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Models
             project.ProjectStageID = ProjectStageID;
             project.PlannedDate = PlannedDate;
             project.ApprovalStartDate = ApprovalStartDate;
-            project.CompletionYear = CompletionYear;
+            project.CompletionDate = GetCompletionAnnum();
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
             project.PrimaryContactPersonID = PrimaryContactPersonID;
@@ -161,6 +161,11 @@ namespace ProjectFirma.Web.Models
         public int? GetImplementationStartYear()
         {
             return ApprovalStartDate?.Year;
+        }
+
+        public int? GetCompletionAnnum()
+        {
+            return CompletionDate;
         }
     }
 }

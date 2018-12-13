@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int fundingTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, int? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int fundingTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectName = projectName;
             this.ProjectDescription = projectDescription;
             this.ApprovalStartDate = approvalStartDate;
-            this.CompletionYear = completionYear;
+            this.CompletionDate = completionDate;
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
             this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
@@ -293,7 +293,7 @@ namespace ProjectFirma.Web.Models
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
         public DateTime? ApprovalStartDate { get; set; }
-        public int? CompletionYear { get; set; }
+        public int? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
         public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }

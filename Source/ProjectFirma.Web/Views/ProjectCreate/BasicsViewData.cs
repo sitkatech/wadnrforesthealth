@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public IEnumerable<SelectListItem> TaxonomyLeafs { get; private set; }
         public IEnumerable<SelectListItem> FundingTypes { get; private set; }
         public IEnumerable<SelectListItem> StartYearRange { get; private set; }
-        public IEnumerable<SelectListItem> CompletionYearRange { get; private set; }
+        public IEnumerable<SelectListItem> CompletionDateRange { get; private set; }
         public bool HasCanStewardProjectsOrganizationRelationship { get; private set; }
         public bool HasThreeTierTaxonomy { get; private set; }
         public bool ShowProjectStageDropDown { get; }
@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             StartYearRange =
                 FirmaDateUtilities.YearsForUserInput()
                     .ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
-            CompletionYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
+            CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasCanStewardProjectsOrganizationRelationship = MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship();
 
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();

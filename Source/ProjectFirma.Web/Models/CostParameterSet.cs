@@ -58,15 +58,15 @@ namespace ProjectFirma.Web.Models
             if (!CanCalculateCapitalCostInYearOfExpenditure(project))
                 return null;
 
-            return FirmaMathUtilities.FutureValueOfPresentSum(project.EstimatedTotalCost.Value, inflationRate, currentRTPYearForPVCalculations, project.CompletionYear.Value);
+            return FirmaMathUtilities.FutureValueOfPresentSum(project.EstimatedTotalCost.Value, inflationRate, currentRTPYearForPVCalculations, project.GetCompletionAnnum().Value);
         }
 
         public static bool CanCalculateCapitalCostInYearOfExpenditure(IProject project)
         {
             return project.FundingType == FundingType.Capital 
                 && project.EstimatedTotalCost.HasValue
-                && project.CompletionYear.HasValue 
-                && project.CompletionYear >= GetCurrentRTPYearForPVCalculations()
+                && project.GetCompletionAnnum().HasValue 
+                && project.GetCompletionAnnum() >= GetCurrentRTPYearForPVCalculations()
                 && project.ProjectStage.IsStagedIncludedInTransporationCostCalculations();
         }
 
@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Models
                 GetLatestInflationRate(),
                 GetCurrentRTPYearForPVCalculations(),
                 project.GetImplementationStartYear().Value,
-                project.CompletionYear.Value);
+                project.GetCompletionAnnum().Value);
         }
 
         //Only public for unit testing
@@ -98,9 +98,9 @@ namespace ProjectFirma.Web.Models
         {
             return project.FundingType == FundingType.OperationsAndMaintenance 
                 && project.EstimatedAnnualOperatingCost.HasValue
-                && project.CompletionYear.HasValue 
+                && project.GetCompletionAnnum().HasValue 
                 && project.GetImplementationStartYear().HasValue 
-                && project.CompletionYear >= GetCurrentRTPYearForPVCalculations()
+                && project.GetCompletionAnnum() >= GetCurrentRTPYearForPVCalculations()
                 && project.ProjectStage.IsStagedIncludedInTransporationCostCalculations();
         }
 
@@ -109,14 +109,14 @@ namespace ProjectFirma.Web.Models
             if (!CanCalculateLifecycleOperatingCost(project))
                 return null;
 
-            return (project.CompletionYear - project.GetImplementationStartYear())*project.EstimatedAnnualOperatingCost;
+            return (project.GetCompletionAnnum() - project.GetImplementationStartYear())*project.EstimatedAnnualOperatingCost;
         }
 
         public static bool CanCalculateLifecycleOperatingCost(IProject project)
         {
             return project.FundingType == FundingType.OperationsAndMaintenance
                 && project.EstimatedAnnualOperatingCost.HasValue
-                && project.CompletionYear.HasValue
+                && project.GetCompletionAnnum().HasValue
                 && project.GetImplementationStartYear().HasValue;
         }
 

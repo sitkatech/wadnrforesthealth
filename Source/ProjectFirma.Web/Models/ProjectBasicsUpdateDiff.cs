@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
                 HasProjectStageChanged() ||
                 HasPlannedDateChanged() ||
                 HasImplementationStartYearChanged() ||
-                HasCompletionYearChanged() ||
+                HasCompletionDateChanged() ||
                 HasEstimatedTotalCostChanged() ||
                 HasEstimatedAnnualOperatingCostChanged();
         }
@@ -53,9 +53,9 @@ namespace ProjectFirma.Web.Models
             return OriginalProjectUpdate.EstimatedTotalCost != ModifiedProjectUpdate.EstimatedTotalCost;
         }
 
-        private bool HasCompletionYearChanged()
+        private bool HasCompletionDateChanged()
         {
-            return OriginalProjectUpdate.CompletionYear != ModifiedProjectUpdate.CompletionYear;
+            return OriginalProjectUpdate.GetCompletionAnnum() != ModifiedProjectUpdate.GetCompletionAnnum();
         }
 
         private bool HasImplementationStartYearChanged()

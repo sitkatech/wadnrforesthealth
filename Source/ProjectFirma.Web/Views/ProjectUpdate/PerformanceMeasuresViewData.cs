@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ViewDataForAngular = viewDataForAngularEditor;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.PerformanceMeasuresComment, projectUpdateBatch.IsReturned);
             IsImplementationStartYearValid = projectUpdateBatch.ProjectUpdate.GetImplementationStartYear().HasValue &&
-                                             projectUpdateBatch.ProjectUpdate.GetImplementationStartYear() < projectUpdateBatch.ProjectUpdate.CompletionYear;
+                                             projectUpdateBatch.ProjectUpdate.GetImplementationStartYear() < projectUpdateBatch.ProjectUpdate.GetCompletionAnnum();
 
             ReportingYearLabel = "Year";
         }

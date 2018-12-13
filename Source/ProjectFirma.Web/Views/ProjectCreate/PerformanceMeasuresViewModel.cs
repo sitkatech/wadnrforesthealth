@@ -150,7 +150,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             // validation 1: ensure that we have PM values from ProjectUpdate start year to min(endyear, currentyear)
             var exemptYears = projectExemptReportingYearSimples.Where(x => x.IsExempt).Select(x => x.CalendarYear).ToList();
-            var yearsExpected = project.GetProjectUpdateImplementationStartToCompletionYearRange()
+            var yearsExpected = project.GetProjectUpdateImplementationStartToCompletionDateRange()
                 .Where(x => !exemptYears.Contains(x)).ToList();
             var yearsEntered = performanceMeasureActualSimples.Select(x => x.CalendarYear.GetValueOrDefault()).Distinct();
             var missingYears = yearsExpected.GetMissingYears(yearsEntered);

@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
 
             PlanningStartDate = project.PlannedDate;
             ImplementationStartDate = project.GetImplementationStartYear();
-            EndDate = project.CompletionYear;
+            EndDate = project.GetCompletionAnnum();
             Stage = project.ProjectStage.ProjectStageDisplayName;
 
             Latitude = project.ProjectLocationPointLatitude;

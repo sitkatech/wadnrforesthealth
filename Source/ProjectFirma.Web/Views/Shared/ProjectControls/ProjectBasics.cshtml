@@ -118,11 +118,11 @@ Source code is available upon request via <support@sitkatech.com>.
                     <span>@ViewDataTyped.ProjectBasicsCalculatedCosts.TotalOperatingCostInYearOfExpenditure.ToStringCurrency()</span>
                     @if (ViewDataTyped.UserHasProjectBudgetManagePermissions)
                     {
-                        <span>(For years @ViewDataTyped.ProjectBasicsCalculatedCosts.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.CompletionYear using <a href="@ViewDataTyped.ProjectBasicsCalculatedCosts.EditInflationUrl">@ViewDataTyped.ProjectBasicsCalculatedCosts.InflationRate.ToStringPercent() annual inflation</a>)</span>
+                        <span>(For years @ViewDataTyped.ProjectBasicsCalculatedCosts.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.GetCompletionAnnum() using <a href="@ViewDataTyped.ProjectBasicsCalculatedCosts.EditInflationUrl">@ViewDataTyped.ProjectBasicsCalculatedCosts.InflationRate.ToStringPercent() annual inflation</a>)</span>
                     }
                     else
                     {
-                        <span>(For years @ViewDataTyped.ProjectBasicsCalculatedCosts.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.CompletionYear using @ViewDataTyped.ProjectBasicsCalculatedCosts.InflationRate.ToStringPercent() annual inflation)</span>
+                        <span>(For years @ViewDataTyped.ProjectBasicsCalculatedCosts.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.GetCompletionAnnum() using @ViewDataTyped.ProjectBasicsCalculatedCosts.InflationRate.ToStringPercent() annual inflation)</span>
                     }
                 </div>
             }
@@ -158,10 +158,10 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.CompletionYear)
+            @Html.LabelWithSugarFor(FieldDefinition.CompletionDate)
         </div>
         <div class="col-xs-6">
-            @ViewDataTyped.Project.GetCompletionYear()
+            @ViewDataTyped.Project.GetCompletionDateFormatted()
         </div>
     </div>
 </div>

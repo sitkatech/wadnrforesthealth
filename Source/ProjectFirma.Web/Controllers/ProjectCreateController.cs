@@ -197,7 +197,7 @@ namespace ProjectFirma.Web.Controllers
                 ProjectDescription = importExternalProjectStaging.Description,
                 PlannedDate = importExternalProjectStaging.PlannedDate,
                 ApprovalStartDate = importExternalProjectStaging.ApprovalStartDate,
-                CompletionYear = importExternalProjectStaging.EndYear,
+                CompletionDate = importExternalProjectStaging.EndYear,
                 EstimatedTotalCost = importExternalProjectStaging.EstimatedCost
             };
             return ViewCreateAndEditBasics(viewModel, true);
@@ -382,7 +382,7 @@ namespace ProjectFirma.Web.Controllers
                     .ToList();
             var projectExemptReportingYears = project.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
             var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
-            var possibleYearsToExempt = project.GetProjectUpdateImplementationStartToCompletionYearRange();
+            var possibleYearsToExempt = project.GetProjectUpdateImplementationStartToCompletionDateRange();
             projectExemptReportingYears.AddRange(
                 possibleYearsToExempt.Where(x => !currentExemptedYears.Contains(x))
                     .Select((x, index) => new ProjectExemptReportingYearSimple(-(index + 1), project.ProjectID, x)));

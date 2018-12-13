@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
             //var project = TestFramework.TestProject.Create();
             //project.PlannedDate = 1900;
             //project.ApprovalStartDate = 1910;
-            //project.CompletionYear = 1920;
+            //project.CompletionDate = 1920;
             //project.ProjectDescription = "Orginal project description.";
 
             //var projectUpdateBatch = ProjectUpdateBatch.CreateNewProjectUpdateBatchForProject(project, person);
@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Models
             
             //projectUpdate.PlannedDate = 2000;
             //projectUpdate.ImplementationStartYear = 2010;
-            //projectUpdate.CompletionYear = 2020;
+            //projectUpdate.CompletionDate = 2020;
             //projectUpdate.ProjectDescription = "Updated project description.";
 
             //Assert.That(projectUpdate.IsBasicSectionUpdated(), Is.True);

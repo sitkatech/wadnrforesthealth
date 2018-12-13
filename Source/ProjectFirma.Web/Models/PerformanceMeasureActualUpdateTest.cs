@@ -206,14 +206,14 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
-        public void CreateFromProjectWhenNoCompletionYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCurrentYearTest()
+        public void CreateFromProjectWhenNoCompletionDateAndHaveActualValuesExpectValuesFromLastEnteredYearToCurrentYearTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
             var performanceMeasure1 = TestFramework.TestPerformanceMeasure.CreateWithSubcategories(-1000, "PerformanceMeasure1");
             var performanceMeasure2 = TestFramework.TestPerformanceMeasure.CreateWithSubcategories(-1001, "PerformanceMeasure2");
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
 
-            Assert.That(project.CompletionYear, Is.Null, $"Precondition: {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Completion Year should not be set");
+            Assert.That(project.GetCompletionAnnum(), Is.Null, $"Precondition: {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Completion Year should not be set");
 
             var performanceMeasureActual1 = TestFramework.TestPerformanceMeasureActual.Create(-2001, project, performanceMeasure1, 177, 2010);
             TestFramework.TestPerformanceMeasureActualSubcategoryOption.Create(-3003,
@@ -305,15 +305,15 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
-        public void CreateFromProjectWhenHaveCompletionYearEarlierThanCurrentYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCompletionYearTest()
+        public void CreateFromProjectWhenHaveCompletionDateEarlierThanCurrentYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCompletionDateTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
-            project.CompletionYear = 2013;
+            project.CompletionDate = 2013;
             var performanceMeasure1 = TestFramework.TestPerformanceMeasure.CreateWithSubcategories(-1000, "PerformanceMeasure1");
             var performanceMeasure2 = TestFramework.TestPerformanceMeasure.CreateWithSubcategories(-1001, "PerformanceMeasure2");
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
 
-            Assert.That(project.CompletionYear, Is.LessThanOrEqualTo(DateTime.Today.Year), $"Precondition: {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Completion Year should be less than or equal to current year");
+            Assert.That(project.GetCompletionAnnum(), Is.LessThanOrEqualTo(DateTime.Today.Year), $"Precondition: {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Completion Year should be less than or equal to current year");
 
             var performanceMeasureActual1 = TestFramework.TestPerformanceMeasureActual.Create(-2001, project, performanceMeasure1, 177, 2010);
             TestFramework.TestPerformanceMeasureActualSubcategoryOption.Create(-3003,
@@ -400,20 +400,20 @@ namespace ProjectFirma.Web.Models
 
             // Assert
             var maxEnteredYear = project.PerformanceMeasureActuals.Max(x => x.CalendarYear);
-            AssertNewPerformanceMeasureActualUpdateCreatedCorrectly(projectUpdateBatch, project.PerformanceMeasureActuals, project.CompletionYear.Value, maxEnteredYear);
+            AssertNewPerformanceMeasureActualUpdateCreatedCorrectly(projectUpdateBatch, project.PerformanceMeasureActuals, project.GetCompletionAnnum().Value, maxEnteredYear);
         }
 
         [Test]
-        public void CreateFromProjectWhenHaveCompletionYearLaterThanCurrentYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCurrentYearTest()
+        public void CreateFromProjectWhenHaveCompletionDateLaterThanCurrentYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCurrentYearTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForRequiredReporting();
-            project.CompletionYear = currentYear + 1;
+            project.CompletionDate = currentYear + 1;
             var performanceMeasure1 = TestFramework.TestPerformanceMeasure.CreateWithSubcategories(-1000, "PerformanceMeasure1");
             var performanceMeasure2 = TestFramework.TestPerformanceMeasure.CreateWithSubcategories(-1001, "PerformanceMeasure2");
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
 
-            Assert.That(project.CompletionYear, Is.GreaterThan(currentYear), $"Precondition: {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Completion Year should be later than current year");
+            Assert.That(project.GetCompletionAnnum(), Is.GreaterThan(currentYear), $"Precondition: {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Completion Year should be later than current year");
 
             var performanceMeasureActual1 = TestFramework.TestPerformanceMeasureActual.Create(-2001, project, performanceMeasure1, 177, 2010);
             TestFramework.TestPerformanceMeasureActualSubcategoryOption.Create(-3003,

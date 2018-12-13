@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
     {
         public IEnumerable<SelectListItem> TaxonomyLeafs { get; }
         public IEnumerable<SelectListItem> StartYearRange { get; }
-        public IEnumerable<SelectListItem> CompletionYearRange { get; }
+        public IEnumerable<SelectListItem> CompletionDateRange { get; }
         public IEnumerable<SelectListItem> ProjectStages { get; }
         public IEnumerable<SelectListItem> FundingTypes { get; }
         public IEnumerable<SelectListItem> Organizations { get; }
@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             DefaultPrimaryContactPerson = defaultPrimaryContactPerson;
             TaxonomyLeafs = taxonomyLeafs.ToGroupedSelectList();
             StartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
-            CompletionYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
+            CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
             DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;

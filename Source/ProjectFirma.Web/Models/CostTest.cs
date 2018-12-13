@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
             var project = TestFramework.TestProject.Create();
             project.EstimatedTotalCost = 2000000m;
             project.ApprovalStartDate = new DateTime(2013,1,1);
-            project.CompletionYear = 2020;
+            project.CompletionDate = 2020;
 
             var inflationRate = 0.02m;
             var expectedExpenditureYearCostCalculated = CostParameterSet.CalculateCapitalCostInYearOfExpenditureImpl(project, inflationRate, 2016) ?? 0;
@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Models
 
             project.EstimatedTotalCost = 2000000m;
             project.ApprovalStartDate = null;
-            project.CompletionYear = null;
+            project.CompletionDate = null;
 
             var inflationRate = 0.02m;
 
@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Models
 
             project.EstimatedTotalCost = null;
             project.ApprovalStartDate = new DateTime(2013, 1, 1);
-            project.CompletionYear = 2020;
+            project.CompletionDate = 2020;
 
             Assert.That(CostParameterSet.CalculateCapitalCostInYearOfExpenditureImpl(project, inflationRate, 2016), Is.Null, "Incorrect implementation of nullable type.");
         }
@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
 
             var project = TestFramework.TestProject.Create();
             project.ApprovalStartDate = new DateTime(2017, 1, 1);
-            project.CompletionYear = 2035;
+            project.CompletionDate = 2035;
             project.EstimatedAnnualOperatingCost = 100000m;
             project.FundingTypeID = FundingType.OperationsAndMaintenance.FundingTypeID;
 
@@ -110,12 +110,12 @@ namespace ProjectFirma.Web.Models
                 inflationRate,
                 baseYear,
                 project.GetImplementationStartYear().Value,
-                project.CompletionYear.Value);
+                project.GetCompletionAnnum().Value);
             expectedTotalOperatingCost.AssertThatIsWithinOneDollarOf(totalOperatingCost.Value);
 
 
             project.ApprovalStartDate = new DateTime(2020, 1, 1);
-            project.CompletionYear = 2040;
+            project.CompletionDate = 2040;
             project.EstimatedAnnualOperatingCost = 100000m;
 
             expectedTotalOperatingCost = 2790869m; //From Karen Fink's calculations
@@ -123,7 +123,7 @@ namespace ProjectFirma.Web.Models
                 inflationRate,
                 baseYear,
                 project.GetImplementationStartYear().Value,
-                project.CompletionYear.Value);
+                project.GetCompletionAnnum().Value);
             expectedTotalOperatingCost.AssertThatIsWithinOneDollarOf(totalOperatingCost.Value);
         }
     }

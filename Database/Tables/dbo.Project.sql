@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[Project](
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ApprovalStartDate] [datetime] NULL,
-	[CompletionYear] [int] NULL,
+	[CompletionDate] [int] NULL,
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,
 	[PerformanceMeasureActualYearsExemptionExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -106,9 +106,9 @@ ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_AnnualCostFo
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_AnnualCostForOperationsProjectsOnly]
 GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_CompletionYearHasToBeSetWhenStageIsInCompletedOrPostImplementation] CHECK  ((([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionYear] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4))))
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation] CHECK  ((([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionDate] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4))))
 GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_CompletionYearHasToBeSetWhenStageIsInCompletedOrPostImplementation]
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ProjectCannotHaveProjectStageProposalAndApprovalStatusApproved] CHECK  (([ProjectStageID]<>(1) OR [ProjectApprovalStatusID]<>(3)))
 GO

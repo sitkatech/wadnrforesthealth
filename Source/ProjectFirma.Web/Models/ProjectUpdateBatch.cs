@@ -347,7 +347,7 @@ namespace ProjectFirma.Web.Models
             if (ProjectUpdate.ProjectStage.RequiresPerformanceMeasureActuals() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
             {
                 var exemptYears = this.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList();
-                var yearsExpected = ProjectUpdate.GetProjectUpdateImplementationStartToCompletionYearRange().Where(x => !exemptYears.Contains(x)).ToList();
+                var yearsExpected = ProjectUpdate.GetProjectUpdateImplementationStartToCompletionDateRange().Where(x => !exemptYears.Contains(x)).ToList();
                 var yearsEntered = PerformanceMeasureActualUpdates.Select(x => x.CalendarYear).Distinct();
                 missingYears = yearsExpected.GetMissingYears(yearsEntered);
             }
@@ -428,7 +428,7 @@ namespace ProjectFirma.Web.Models
             if (ProjectUpdate.ProjectStage.RequiresReportedExpenditures() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
             {
                 // validation 1: ensure that we have expenditure values from ProjectUpdate start year to min(endyear, currentyear)
-                var yearsExpected = ProjectUpdate.GetProjectUpdatePlanningDesignStartToCompletionYearRange();
+                var yearsExpected = ProjectUpdate.GetProjectUpdatePlanningDesignStartToCompletionDateRange();
                 var validateExpenditures = ExpendituresValidationResult.ValidateImpl(
                     this.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList(),
                     NoExpendituresToReportExplanation, yearsExpected, new List<IFundingSourceExpenditure>(ProjectFundingSourceExpenditureUpdates));

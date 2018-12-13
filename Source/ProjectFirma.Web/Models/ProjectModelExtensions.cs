@@ -86,13 +86,13 @@ namespace ProjectFirma.Web.Models
             return ProjectMapSimplePopuUrlTemplate.ParameterReplace(project.ProjectID);
         }
 
-        public static List<int> GetProjectUpdateImplementationStartToCompletionYearRange(this IProject projectUpdate)
+        public static List<int> GetProjectUpdateImplementationStartToCompletionDateRange(this IProject projectUpdate)
         {
             var startYear = projectUpdate.GetImplementationStartYear();
             return GetYearRangesImpl(projectUpdate, !startYear.HasValue ?  null : (DateTime?) new DateTime(startYear.Value, 1, 1) );
         }
 
-        public static List<int> GetProjectUpdatePlanningDesignStartToCompletionYearRange(this IProject projectUpdate)
+        public static List<int> GetProjectUpdatePlanningDesignStartToCompletionDateRange(this IProject projectUpdate)
         {
             var startYear = projectUpdate?.PlannedDate;
             return GetYearRangesImpl(projectUpdate, startYear);
@@ -117,25 +117,25 @@ namespace ProjectFirma.Web.Models
             if (projectUpdate != null)
             {
                 if (startDate.HasValue && startDate.Value.Year < MultiTenantHelpers.GetMinimumYear() &&
-                    (projectUpdate.CompletionYear.HasValue && projectUpdate.CompletionYear.Value < MultiTenantHelpers.GetMinimumYear()))
+                    (projectUpdate.GetCompletionAnnum().HasValue && projectUpdate.GetCompletionAnnum().Value < MultiTenantHelpers.GetMinimumYear()))
                 {
                     // both start and completion year are before the minimum year, so no year range required
                     return new List<int>();
                 }
 
-                if (startDate.HasValue && startDate.Value.Year > currentYearToUse && (projectUpdate.CompletionYear.HasValue && projectUpdate.CompletionYear.Value > currentYearToUse))
+                if (startDate.HasValue && startDate.Value.Year > currentYearToUse && (projectUpdate.GetCompletionAnnum().HasValue && projectUpdate.GetCompletionAnnum().Value > currentYearToUse))
                 {
                     return new List<int>();
                 }
 
-                if (startDate.HasValue && projectUpdate.CompletionYear.HasValue && startDate.Value.Year > projectUpdate.CompletionYear.Value)
+                if (startDate.HasValue && projectUpdate.GetCompletionAnnum().HasValue && startDate.Value.Year > projectUpdate.GetCompletionAnnum().Value)
                 {
                     return new List<int>();
                 }
             }
             return FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(),
                 startDate,
-                projectUpdate?.CompletionYear,
+                projectUpdate.GetCompletionAnnum(),
                 currentYearToUse,
                 MultiTenantHelpers.GetMinimumYear(),
                 currentYearToUse);

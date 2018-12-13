@@ -57,8 +57,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         public DateTime? PlannedDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
-        public int? CompletionYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
+        public int? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.TaxonomyLeaf)]
         [Required(ErrorMessage = "This field is required.")]
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             FundingTypeID = project.FundingTypeID;
             ApprovalStartDate = project.ApprovalStartDate;
             PlannedDate = project.PlannedDate;
-            CompletionYear = project.CompletionYear;
+            CompletionDate = project.GetCompletionAnnum();
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
@@ -111,7 +111,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.FundingTypeID = FundingTypeID;
             project.ApprovalStartDate = ApprovalStartDate;
             project.PlannedDate = PlannedDate;
-            project.CompletionYear = CompletionYear;
+            project.CompletionDate = CompletionDate;
 
             if (FundingTypeID == FundingType.Capital.FundingTypeID)
             {
@@ -144,24 +144,24 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     m => m.ApprovalStartDate);
             }
 
-            if (CompletionYear < ApprovalStartDate?.Year)
+            if (CompletionDate < ApprovalStartDate?.Year)
             {
                 yield return new SitkaValidationResult<EditProjectViewModel, int?>(
-                    FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear,
-                    m => m.CompletionYear);
+                    FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,
+                    m => m.CompletionDate);
             }
 
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionYear.HasValue)
+            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionYear);
+                yield return new SitkaValidationResult<EditProjectViewModel, int?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
-            if (isCompletedOrPostImplementation && CompletionYear > DateTime.Now.Year)
+            if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now.Year)
             {
                 var errorMessage = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed or Post-Implementation stage: " +
-                                   $"the {Models.FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} must be less than or equal to the current year";
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.CompletionYear);
+                                   $"the {Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be less than or equal to the current year";
+                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.CompletionDate);
             }
 
             if (HasExistingProjectUpdate && OldProjectStageID != ProjectStageID)

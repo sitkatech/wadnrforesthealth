@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ApprovalStartDate] [datetime] NULL,
-	[CompletionYear] [int] NULL,
+	[CompletionDate] [int] NULL,
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,
 	[ProjectLocationNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
