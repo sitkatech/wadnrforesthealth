@@ -2291,7 +2291,7 @@
     <Property Name="ToolDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RecaptchaPublicKey" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RecaptchaPrivateKey" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ShowProposalsToThePublic" Type="Boolean" Nullable="false" />
+    <Property Name="ShowApplicationsToThePublic" Type="Boolean" Nullable="false" />
     <Property Name="TaxonomyLevelID" Type="Int32" Nullable="false" />
     <Property Name="AssociatePerfomanceMeasureTaxonomyLevelID" Type="Int32" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />

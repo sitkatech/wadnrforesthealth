@@ -143,7 +143,7 @@ namespace ProjectFirma.Web.Views.Organization
                                         (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create funding sources for their organization
                                          CurrentPerson.OrganizationID == organization.OrganizationID);
             ShowProposals = currentPerson.CanViewProposals;
-            ProposalsPanelHeader = MultiTenantHelpers.ShowProposalsToThePublic()
+            ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()
                 ? Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()
                 : $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} (Not Visible to the Public)";
 

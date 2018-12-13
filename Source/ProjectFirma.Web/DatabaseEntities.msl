@@ -1313,7 +1313,7 @@
           <ScalarProperty Name="ToolDisplayName" ColumnName="ToolDisplayName" />
           <ScalarProperty Name="RecaptchaPublicKey" ColumnName="RecaptchaPublicKey" />
           <ScalarProperty Name="RecaptchaPrivateKey" ColumnName="RecaptchaPrivateKey" />
-          <ScalarProperty Name="ShowProposalsToThePublic" ColumnName="ShowProposalsToThePublic" />
+          <ScalarProperty Name="ShowApplicationsToThePublic" ColumnName="ShowApplicationsToThePublic" />
           <ScalarProperty Name="TaxonomyLevelID" ColumnName="TaxonomyLevelID" />
           <ScalarProperty Name="AssociatePerfomanceMeasureTaxonomyLevelID" ColumnName="AssociatePerfomanceMeasureTaxonomyLevelID" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
