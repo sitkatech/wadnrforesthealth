@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public int ProjectStageID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
-        public int? PlannedDate { get; set; }
+        public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
         public int? ImplementationStartYear { get; set; }
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ImplementationStartYear < PlannedDate)
+            if (ImplementationStartYear < PlannedDate?.Year)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(
                     FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,

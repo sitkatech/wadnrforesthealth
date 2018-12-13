@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         [Required]
-        public int? PlannedDate { get; set; }
+        public DateTime? PlannedDate { get; set; }
         
         [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
         [Required]
@@ -152,7 +152,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, string>(FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ImplementationStartYear < PlannedDate)
+            if (ImplementationStartYear < PlannedDate?.Year)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate, m => m.ImplementationStartYear);
             }
@@ -162,7 +162,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear, m => m.CompletionYear);
             }
 
-            if (CompletionYear < PlannedDate)
+            if (CompletionYear < PlannedDate?.Year)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToPlannedDate, m => m.CompletionYear);
             }
@@ -196,9 +196,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearMustBePastOrPresentForCompletedProjects, m => m.CompletionYear);
             }
 
-            if (ProjectStageID == ProjectStage.Planned.ProjectStageID && PlannedDate > currentYear)
+            if (ProjectStageID == ProjectStage.Planned.ProjectStageID && PlannedDate?.Year > currentYear)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the Planning / Design start year must be less than or equal to the current year",
                     m => m.PlannedDate);
             }

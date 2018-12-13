@@ -58,7 +58,6 @@ using ExpectedFundingViewModel = ProjectFirma.Web.Views.ProjectCreate.ExpectedFu
 using Expenditures = ProjectFirma.Web.Views.ProjectCreate.Expenditures;
 using ExpendituresViewData = ProjectFirma.Web.Views.ProjectCreate.ExpendituresViewData;
 using ExpendituresViewModel = ProjectFirma.Web.Views.ProjectCreate.ExpendituresViewModel;
-using GeospatialArea = ProjectFirma.Web.Models.GeospatialArea;
 using LocationDetailed = ProjectFirma.Web.Views.ProjectCreate.LocationDetailed;
 using LocationDetailedViewData = ProjectFirma.Web.Views.ProjectCreate.LocationDetailedViewData;
 using LocationDetailedViewModel = ProjectFirma.Web.Views.ProjectCreate.LocationDetailedViewModel;
@@ -196,7 +195,7 @@ namespace ProjectFirma.Web.Controllers
                 ImportExternalProjectStagingID = importExternalProjectStaging.ImportExternalProjectStagingID,
                 ProjectName = importExternalProjectStaging.ProjectName,
                 ProjectDescription = importExternalProjectStaging.Description,
-                PlannedDate = importExternalProjectStaging.PlannedDate,
+                PlannedDate = importExternalProjectStaging.PlannedDate.HasValue ? (DateTime?) new DateTime(importExternalProjectStaging.PlannedDate.Value,1,1) : null,
                 ImplementationStartYear = importExternalProjectStaging.ImplementationStartYear,
                 CompletionYear = importExternalProjectStaging.EndYear,
                 EstimatedTotalCost = importExternalProjectStaging.EstimatedCost
@@ -1028,7 +1027,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var canDelete = !projectNote.HasDependentObjects();
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete this note for {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} '{projectNote.Project.DisplayName}'?"
+                ? $"Are you sure you want to delete this note for {FieldDefinition.Project.GetFieldDefinitionLabel()} '{projectNote.Project.DisplayName}'?"
                 : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {FieldDefinition.ProjectNote.GetFieldDefinitionLabel()}");
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
@@ -1121,7 +1120,7 @@ namespace ProjectFirma.Web.Controllers
             var canDelete = !projectDocument.HasDependentObjects();
             var confirmMessage = canDelete
                 ? $"Are you sure you want to delete \"{projectDocument.DisplayName}\" from this {FieldDefinition.Project.GetFieldDefinitionLabel()}?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Document");
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {FieldDefinition.Project.GetFieldDefinitionLabel()} Document");
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
 
@@ -1185,7 +1184,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteProject(project, viewModel);
             }
-            var message = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
+            var message = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
             project.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -1355,7 +1354,7 @@ namespace ProjectFirma.Web.Controllers
 
         private ActionResult GoToNextSection(FormViewModel viewModel, Project project, string currentSectionName)
         {
-            var applicableWizardSections = Models.Project.GetApplicableProposalWizardSections(project, true);
+            var applicableWizardSections = Project.GetApplicableProposalWizardSections(project, true);
             var currentSection = applicableWizardSections.Single(x => x.SectionDisplayName.Equals(currentSectionName, StringComparison.InvariantCultureIgnoreCase));
             var nextProjectUpdateSection = applicableWizardSections.Where(x => x.SortOrder > currentSection.SortOrder).OrderBy(x => x.SortOrder).FirstOrDefault();
             var nextSection = viewModel.AutoAdvance && nextProjectUpdateSection != null ? nextProjectUpdateSection.SectionUrl : currentSection.SectionUrl;
@@ -1488,7 +1487,7 @@ namespace ProjectFirma.Web.Controllers
 
                 var webResponse = (HttpWebResponse) webRequest.GetResponse();
                 Check.Assert(webResponse.StatusCode == HttpStatusCode.OK,
-                    $"Request to {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} External Import Data Uri {viewModel.RequestUri} should resolve 200.");
+                    $"Request to {FieldDefinition.Project.GetFieldDefinitionLabel()} External Import Data Uri {viewModel.RequestUri} should resolve 200.");
 
                 var responseStream = webResponse.GetResponseStream();
 

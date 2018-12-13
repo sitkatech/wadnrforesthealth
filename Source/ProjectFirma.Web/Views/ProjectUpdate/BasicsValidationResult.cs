@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(CompletionYearShouldBeLessThanCurrentYear);
             }
-            if (projectUpdate.ProjectStage == ProjectStage.Planned && projectUpdate.PlannedDate > currentYear)
+            if (projectUpdate.ProjectStage == ProjectStage.Planned && projectUpdate.PlannedDate?.Year > currentYear)
             {
                 _warningMessages.Add(PlannedDateShouldBeLessThanCurrentYear);
             }
@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 _warningMessages.Add(ImplementationStartYearShouldBeLessThanCurrentYear);
             }
 
-            if (projectUpdate.ImplementationStartYear < projectUpdate.PlannedDate)
+            if (projectUpdate.ImplementationStartYear < projectUpdate.PlannedDate?.Year)
             {
                 _warningMessages.Add(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate);
             }
@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear);
             }
-            if (projectUpdate.CompletionYear < projectUpdate.PlannedDate)
+            if (projectUpdate.CompletionYear < projectUpdate.PlannedDate?.Year)
             {
                 _warningMessages.Add(FirmaValidationMessages.CompletionYearGreaterThanEqualToPlannedDate);
             }

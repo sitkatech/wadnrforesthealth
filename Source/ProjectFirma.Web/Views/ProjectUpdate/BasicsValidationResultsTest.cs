@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.UnitTestCommon;
@@ -61,7 +63,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             Assert.That(!warningMessages.Contains(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear));
 
             projectUpdate.ProjectStageID = ProjectStage.Planned.ProjectStageID;
-            projectUpdate.PlannedDate = 2020;
+            projectUpdate.PlannedDate = new DateTime(2020,1,1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
             Assert.That(!warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));

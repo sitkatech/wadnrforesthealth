@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models
         public static List<int> CalculateCalendarYearRangeForExpenditures(this IList<ProjectFundingSourceExpenditureUpdate> projectFundingSourceExpenditureUpdates, ProjectUpdate projectUpdate)
         {
             if (projectUpdate.CompletionYear < projectUpdate.ImplementationStartYear) return new List<int>();
-            if (projectUpdate.CompletionYear < projectUpdate.PlannedDate) return new List<int>();
+            if (projectUpdate.CompletionYear < projectUpdate.PlannedDate.GetValueOrDefault().Year) return new List<int>();
 
             var existingYears = projectFundingSourceExpenditureUpdates.Select(x => x.CalendarYear).ToList();
             return FirmaDateUtilities.CalculateCalendarYearRangeForExpendituresAccountingForExistingYears(existingYears, projectUpdate, FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting());

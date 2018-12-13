@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public int? ImplementationStartYear { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
-        public int? PlannedDate { get; set; }
+        public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
         public int? CompletionYear { get; set; }
@@ -137,7 +137,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ImplementationStartYear < PlannedDate)
+            if (ImplementationStartYear < PlannedDate?.Year)
             {
                 yield return new SitkaValidationResult<EditProjectViewModel, int?>(
                     FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,

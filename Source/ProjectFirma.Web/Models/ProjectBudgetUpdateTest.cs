@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Linq;
 using ProjectFirma.Web.UnitTestCommon;
 using NUnit.Framework;
@@ -62,7 +64,7 @@ namespace ProjectFirma.Web.Models
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2013, 777);
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2014, 888);
 
-            projectUpdate.PlannedDate = project.ProjectBudgets.Min(x => x.CalendarYear);
+            projectUpdate.PlannedDate = new DateTime(project.ProjectBudgets.Min(x => x.CalendarYear), 1, 1);
             projectUpdate.CompletionYear = project.ProjectBudgets.Max(x => x.CalendarYear);
 
             // Act

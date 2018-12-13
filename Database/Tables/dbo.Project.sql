@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[Project](
 	[PerformanceMeasureActualYearsExemptionExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[IsFeatured] [bit] NOT NULL,
 	[ProjectLocationNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[PlannedDate] [int] NULL,
+	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
 	[EstimatedAnnualOperatingCost] [money] NULL,
 	[FundingTypeID] [int] NOT NULL,

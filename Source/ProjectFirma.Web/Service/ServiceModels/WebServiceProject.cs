@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -67,7 +69,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
         [DataMember] public string TaxonomyLeaf { get; set; }
         [DataMember] public string ProjectDescription { get; set; }
 
-        [DataMember] public int? PlanningStartDate { get; set; }
+        [DataMember] public DateTime? PlanningStartDate { get; set; }
         [DataMember] public int? ImplementationStartDate { get; set; }
         [DataMember] public int? EndDate { get; set; }        
         [DataMember] public string Stage { get; set; }

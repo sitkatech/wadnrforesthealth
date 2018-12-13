@@ -658,7 +658,7 @@ namespace ProjectFirma.Web.Models
 
         public string GetPlannedDate()
         {
-            return PlannedDate.HasValue ? MultiTenantHelpers.FormatReportingYear(PlannedDate.Value) : null;
+            return PlannedDate?.ToShortDateString();
         }
         public string GetCompletionYear()
         {
