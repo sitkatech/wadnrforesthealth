@@ -664,9 +664,9 @@ namespace ProjectFirma.Web.Models
         {
             return CompletionYear.HasValue ? MultiTenantHelpers.FormatReportingYear(CompletionYear.Value) : null;
         }
-        public string GetImplementationStartYearFormatted()
+        public string GetApprovalStartDateFormatted()
         {
-            return GetImplementationStartYear().HasValue ? MultiTenantHelpers.FormatReportingYear(GetImplementationStartYear().Value) : null;
+            return ApprovalStartDate?.ToShortDateString();
         }
 
         public decimal GetTotalStaffTimeHours()
@@ -681,7 +681,7 @@ namespace ProjectFirma.Web.Models
 
         public int? GetImplementationStartYear()
         {
-            return ApprovalStartDate;
+            return ApprovalStartDate?.Year;
         }
     }
 }

@@ -105,11 +105,11 @@ Source code is available upon request via <support@sitkatech.com>.
 
         <div class="form-group">
             <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.ImplementationStartYear)
+                @Html.LabelWithSugarFor(m => m.ApprovalStartDate)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.ImplementationStartYear, ViewDataTyped.StartYearRange, new {style = "width: auto;", @class = "form-control"})
-                @Html.ValidationMessageFor(m => m.ImplementationStartYear)
+                @Html.EditorFor(m => m.ApprovalStartDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                @Html.ValidationMessageFor(m => m.ApprovalStartDate)
             </div>
         </div>
 

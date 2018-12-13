@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionYearIsRequired));
 
-            projectUpdate.ApprovalStartDate = 2010;
+            projectUpdate.ApprovalStartDate = new DateTime(2010, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
             Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionYearIsRequired));
             Assert.That(warningMessages.Contains(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear));
 
-            projectUpdate.ApprovalStartDate = 2006;
+            projectUpdate.ApprovalStartDate = new DateTime(2006, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();            
 
             Assert.That(!warningMessages.Contains(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear));
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
 
             projectUpdate.ProjectStageID = ProjectStage.Implementation.ProjectStageID;
-            projectUpdate.ApprovalStartDate = 2020;
+            projectUpdate.ApprovalStartDate = new DateTime(2020, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearShouldBeLessThanCurrentYear));

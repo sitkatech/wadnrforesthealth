@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.UnitTestCommon;
 using NUnit.Framework;
@@ -61,7 +63,7 @@ namespace ProjectFirma.Web.Models
         {
             var project = TestFramework.TestProject.Create();
             project.EstimatedTotalCost = 2000000m;
-            project.ApprovalStartDate = 2013;
+            project.ApprovalStartDate = new DateTime(2013,1,1);
             project.CompletionYear = 2020;
 
             var inflationRate = 0.02m;
@@ -85,7 +87,7 @@ namespace ProjectFirma.Web.Models
             Assert.That(CostParameterSet.CalculateCapitalCostInYearOfExpenditureImpl(project, inflationRate, 2016), Is.Null, "Incorrect implementation of nullable type.");
 
             project.EstimatedTotalCost = null;
-            project.ApprovalStartDate = 2013;
+            project.ApprovalStartDate = new DateTime(2013, 1, 1);
             project.CompletionYear = 2020;
 
             Assert.That(CostParameterSet.CalculateCapitalCostInYearOfExpenditureImpl(project, inflationRate, 2016), Is.Null, "Incorrect implementation of nullable type.");
@@ -98,7 +100,7 @@ namespace ProjectFirma.Web.Models
             var baseYear = 2016;
 
             var project = TestFramework.TestProject.Create();
-            project.ApprovalStartDate = 2017;
+            project.ApprovalStartDate = new DateTime(2017, 1, 1);
             project.CompletionYear = 2035;
             project.EstimatedAnnualOperatingCost = 100000m;
             project.FundingTypeID = FundingType.OperationsAndMaintenance.FundingTypeID;
@@ -112,7 +114,7 @@ namespace ProjectFirma.Web.Models
             expectedTotalOperatingCost.AssertThatIsWithinOneDollarOf(totalOperatingCost.Value);
 
 
-            project.ApprovalStartDate = 2020;
+            project.ApprovalStartDate = new DateTime(2020, 1, 1);
             project.CompletionYear = 2040;
             project.EstimatedAnnualOperatingCost = 100000m;
 

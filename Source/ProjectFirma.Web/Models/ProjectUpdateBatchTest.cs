@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Models
             var projectUpdate = TestFramework.TestProjectUpdate.Create(projectUpdateBatch);
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForRequiredReporting();
             projectUpdate.PlannedDate = new DateTime(currentYear, 1, 1);
-            projectUpdate.ApprovalStartDate = currentYear;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear, 1, 1);
             projectUpdate.CompletionYear = currentYear;
 
             Assert.That(projectUpdateBatch.IsApproved, Is.False);
@@ -205,19 +205,19 @@ namespace ProjectFirma.Web.Models
 
             // now set a start year
             // start year before minimum year for reporting (2007), no completion year
-            projectUpdate.ApprovalStartDate = 2004;
+            projectUpdate.ApprovalStartDate = new DateTime(2004,1,1);
             AssertYearRangeForPerformanceMeasuresCorrect(projectUpdateBatch, MultiTenantHelpers.GetMinimumYear(), currentYear);
 
             // start year in the past but greater than minimum year for reporting (2007), no completion year
-            projectUpdate.ApprovalStartDate = currentYear - 1;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear - 1, 1, 1);
             AssertYearRangeForPerformanceMeasuresCorrect(projectUpdateBatch, projectUpdate.GetImplementationStartYear().Value, currentYear);
 
             // start year in the future, no completion year
-            projectUpdate.ApprovalStartDate = currentYear + 1;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear + 1, 1, 1);
             AssertYearRangeForPerformanceMeasuresCorrect(projectUpdateBatch, currentYear, currentYear);
 
             // now set a completion year that is less than current year; expect the range to be start year to completion year
-            projectUpdate.ApprovalStartDate = currentYear - 1;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear - 1, 1, 1);
             projectUpdate.CompletionYear = currentYear - 1;
             AssertYearRangeForPerformanceMeasuresCorrect(projectUpdateBatch, projectUpdate.GetImplementationStartYear().Value, projectUpdate.CompletionYear.Value);
 
@@ -245,20 +245,20 @@ namespace ProjectFirma.Web.Models
             AssertYearRangeForPerformanceMeasuresCorrect(projectUpdateBatch, currentYear, currentYear);
 
             // invalid year combo; should default to just using the start year
-            projectUpdate.ApprovalStartDate = 2012;
+            projectUpdate.ApprovalStartDate = new DateTime(2012, 1, 1);
             projectUpdate.CompletionYear = 2011;
 
             var result = projectUpdateBatch.ProjectUpdate.GetProjectUpdateImplementationStartToCompletionYearRange();
             Assert.That(result, Is.Empty, "Both start and completion years before the minimum year; expect it to return an empty range");
 
             // both start and completion years before the minimum year; expect it to return an empty range
-            projectUpdate.ApprovalStartDate = 2003;
+            projectUpdate.ApprovalStartDate = new DateTime(2003, 1, 1);
             projectUpdate.CompletionYear = 2005;
             result = projectUpdateBatch.ProjectUpdate.GetProjectUpdateImplementationStartToCompletionYearRange();
             Assert.That(result, Is.Empty, "Both start and completion years before the minimum year; expect it to return an empty range");
 
             // both start and completion years after the current year; expect it to return an empty range
-            projectUpdate.ApprovalStartDate = currentYear + 2;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear + 2, 1, 1);
             projectUpdate.CompletionYear = currentYear + 4;
             result = projectUpdateBatch.ProjectUpdate.GetProjectUpdateImplementationStartToCompletionYearRange();
             Assert.That(result, Is.Empty, "Both start and completion years after the current year; expect it to return an empty range");
@@ -432,7 +432,7 @@ namespace ProjectFirma.Web.Models
 
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForRequiredReporting();
             projectUpdate.PlannedDate = new DateTime(2005, 1 ,1);
-            projectUpdate.ApprovalStartDate = currentYear;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear, 1, 1);
             AssertExpenditureYears(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList(),
                 MultiTenantHelpers.GetMinimumYear(),
                 currentYear,
@@ -449,7 +449,7 @@ namespace ProjectFirma.Web.Models
                 "Has start year but no completion year, expect range of start year to be at least current year to be missing");
 
             projectUpdate.CompletionYear = currentYear - 1;
-            projectUpdate.ApprovalStartDate = currentYear - 1;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear - 1, 1, 1);
             AssertExpenditureYears(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList(),
                 projectUpdate.PlannedDate.GetValueOrDefault().Year,
                 projectUpdate.CompletionYear.Value,
@@ -466,7 +466,7 @@ namespace ProjectFirma.Web.Models
                 "Has start year and completion year after current year, expect range of start year to current year to be missing");
 
             projectUpdate.PlannedDate = new DateTime(2002,1,1);
-            projectUpdate.ApprovalStartDate = 2003;
+            projectUpdate.ApprovalStartDate = new DateTime(2003, 1, 1);
             projectUpdate.CompletionYear = 2006;
             result = projectUpdateBatch.ValidateExpendituresAndForceValidation();
             Assert.That(result, Is.Empty, $"Should be valid since the {FieldDefinition.Project.GetFieldDefinitionLabel()} start and completion year is before 2007");
@@ -474,7 +474,7 @@ namespace ProjectFirma.Web.Models
 
             // now add some expenditure update records
             projectUpdate.PlannedDate = new DateTime(currentYear - 1,1,1);
-            projectUpdate.ApprovalStartDate = currentYear;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear, 1, 1);
             projectUpdate.CompletionYear = currentYear + 2;
             var organization1 = TestFramework.TestOrganization.Create("Org1");
             var fundingSource1 = TestFramework.TestFundingSource.Create(organization1, "Funding Source 1");
@@ -525,7 +525,7 @@ namespace ProjectFirma.Web.Models
 
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForRequiredReporting();
             projectUpdate.PlannedDate = new DateTime(2004,1,1);
-            projectUpdate.ApprovalStartDate = 2005;
+            projectUpdate.ApprovalStartDate = new DateTime(2005, 1, 1);
             AssertPerformanceMeasures(projectUpdateBatch.PerformanceMeasureActualUpdates.ToList(),
                 MultiTenantHelpers.GetMinimumYear(),
                 currentYear,
@@ -533,7 +533,7 @@ namespace ProjectFirma.Web.Models
                 false,
                 "Has start year before 2007 but no completion year, expect range of 2007 to at least current year to be missing");
 
-            projectUpdate.ApprovalStartDate = currentYear - 1;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear - 1, 1, 1);
             AssertPerformanceMeasures(projectUpdateBatch.PerformanceMeasureActualUpdates.ToList(),
                 projectUpdate.GetImplementationStartYear().Value,
                 currentYear,
@@ -558,7 +558,7 @@ namespace ProjectFirma.Web.Models
                 "Has start year and completion year after current year, expect range of start year to current year to be missing");
 
             projectUpdate.PlannedDate = new DateTime(2001,1,1);
-            projectUpdate.ApprovalStartDate = 2002;
+            projectUpdate.ApprovalStartDate = new DateTime(2002, 1, 1);
             projectUpdate.CompletionYear = 2006;
             result = projectUpdateBatch.ValidatePerformanceMeasures();
             Assert.That(result.IsValid, Is.EqualTo(true), $"Should be valid since the {FieldDefinition.Project.GetFieldDefinitionLabel()} start and completion year is before 2007");
@@ -566,7 +566,7 @@ namespace ProjectFirma.Web.Models
             Assert.That(result.PerformanceMeasureActualUpdatesWithWarnings, Is.Empty, "Should have no warnings");
 
             // now add some performance measure reported value records
-            projectUpdate.ApprovalStartDate = currentYear - 1;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear - 1, 1, 1);
             projectUpdate.CompletionYear = currentYear + 2;
             TestFramework.TestPerformanceMeasureActualUpdate.Create(projectUpdateBatch, currentYear + 2); // record after current year
             TestFramework.TestPerformanceMeasureActualUpdate.Create(projectUpdateBatch, projectUpdate.GetImplementationStartYear().Value - 2); // record before start year
@@ -625,7 +625,7 @@ namespace ProjectFirma.Web.Models
             Assert.That(result.GetWarningMessages(), Is.EquivalentTo(new List<string> { FirmaValidationMessages.UpdateSectionIsDependentUponBasicsSection }));
 
             var currentYear = DateTime.Today.Year;
-            projectUpdate.ApprovalStartDate = currentYear;
+            projectUpdate.ApprovalStartDate = new DateTime(currentYear, 1, 1);
             projectUpdate.PlannedDate = new DateTime(currentYear - 1,1,1);
             result = projectUpdateBatch.ValidatePerformanceMeasures();
             Assert.That(result.IsValid, Is.True, "ProjectUpdate in Planning/Design stage, ignore the missing years validation");

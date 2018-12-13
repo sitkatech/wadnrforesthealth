@@ -195,8 +195,8 @@ namespace ProjectFirma.Web.Controllers
                 ImportExternalProjectStagingID = importExternalProjectStaging.ImportExternalProjectStagingID,
                 ProjectName = importExternalProjectStaging.ProjectName,
                 ProjectDescription = importExternalProjectStaging.Description,
-                PlannedDate = importExternalProjectStaging.PlannedDate.HasValue ? (DateTime?) new DateTime(importExternalProjectStaging.PlannedDate.Value,1,1) : null,
-                ImplementationStartYear = importExternalProjectStaging.ApprovalStartDate,
+                PlannedDate = importExternalProjectStaging.PlannedDate,
+                ApprovalStartDate = importExternalProjectStaging.ApprovalStartDate,
                 CompletionYear = importExternalProjectStaging.EndYear,
                 EstimatedTotalCost = importExternalProjectStaging.EstimatedCost
             };

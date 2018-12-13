@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[ProjectUpdateBatchID] [int] NOT NULL,
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ApprovalStartDate] [int] NULL,
+	[ApprovalStartDate] [datetime] NULL,
 	[CompletionYear] [int] NULL,
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,

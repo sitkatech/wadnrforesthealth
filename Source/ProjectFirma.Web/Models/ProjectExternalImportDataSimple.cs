@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
         public string Inkind { get; set; }
         public string StartMonth { get; set; }
         public string EndMonth { get; set; }
-        public short? StartYear { get; set; }
+        public DateTime? StartYear { get; set; }
         public short? EndYear { get; set; }
         public string HasPlan { get; set; }
         public string PlanName { get; set; }

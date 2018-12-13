@@ -1072,8 +1072,8 @@
     <Property Name="CreateDate" Type="DateTime" Nullable="false" />
     <Property Name="ProjectName" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="Description" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlannedDate" Type="Int16" />
-    <Property Name="ApprovalStartDate" Type="Int16" />
+    <Property Name="PlannedDate" Type="DateTime" />
+    <Property Name="ApprovalStartDate" Type="DateTime" />
     <Property Name="EndYear" Type="Int16" />
     <Property Name="EstimatedCost" Type="Double" />
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
@@ -1484,7 +1484,7 @@
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="ApprovalStartDate" Type="Int32" />
+    <Property Name="ApprovalStartDate" Type="DateTime" />
     <Property Name="CompletionYear" Type="Int32" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
@@ -1995,7 +1995,7 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="ApprovalStartDate" Type="Int32" />
+    <Property Name="ApprovalStartDate" Type="DateTime" />
     <Property Name="CompletionYear" Type="Int32" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />

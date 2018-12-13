@@ -1087,8 +1087,8 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" MaxLength="140" />
     <Property Name="Description" Type="varchar" MaxLength="4000" />
-    <Property Name="PlannedDate" Type="smallint" />
-    <Property Name="ApprovalStartDate" Type="smallint" />
+    <Property Name="PlannedDate" Type="datetime" />
+    <Property Name="ApprovalStartDate" Type="datetime" />
     <Property Name="EndYear" Type="smallint" />
     <Property Name="EstimatedCost" Type="float" />
   </EntityType>
@@ -1505,7 +1505,7 @@ warning 6035: The relationship 'FK_TreatmentActivity_Project_ProjectID_TenantID'
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
     <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
-    <Property Name="ApprovalStartDate" Type="int" />
+    <Property Name="ApprovalStartDate" Type="datetime" />
     <Property Name="CompletionYear" Type="int" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
@@ -1929,7 +1929,7 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
-    <Property Name="ApprovalStartDate" Type="int" />
+    <Property Name="ApprovalStartDate" Type="datetime" />
     <Property Name="CompletionYear" Type="int" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />

@@ -48,3 +48,43 @@ drop constraint CK_Project_ImplementationStartYearLessThanEqualToCompletionYear 
 exec sp_rename 'dbo.ImportExternalProjectStaging.ImplementationStartYear', 'ApprovalStartDate', 'COLUMN';
 exec sp_rename 'dbo.Project.ImplementationStartYear', 'ApprovalStartDate', 'COLUMN';
 exec sp_rename 'dbo.ProjectUpdate.ImplementationStartYear', 'ApprovalStartDate', 'COLUMN';
+
+-- ApprovalStartDate int -> datetime (nondestructive)
+alter table dbo.project
+add ApprovalStartDateTemp datetime null
+go
+
+update dbo.Project
+set ApprovalStartDateTemp = DATEFROMPARTS(ApprovalStartDate, 1, 1)
+
+alter table dbo.Project
+alter column ApprovalStartDate datetime null
+go
+
+update dbo.Project
+set ApprovalStartDate = ApprovalStartDateTemp
+
+alter table dbo.Project
+drop column ApprovalStartDateTemp
+
+alter table dbo.ProjectUpdate
+add ApprovalStartDateTemp datetime null
+go
+
+update dbo.ProjectUpdate
+set ApprovalStartDateTemp = DATEFROMPARTS(ApprovalStartDate, 1, 1)
+
+alter table dbo.ProjectUpdate
+alter column ApprovalStartDate datetime null
+go
+
+update dbo.ProjectUpdate
+set ApprovalStartDate = ApprovalStartDateTemp
+
+alter table dbo.ProjectUpdate
+drop column ApprovalStartDateTemp
+
+alter table dbo.ImportExternalProjectStaging
+alter column ApprovalStartDate datetime null
+alter table dbo.ImportExternalProjectStaging
+alter column PlannedDate datetime null

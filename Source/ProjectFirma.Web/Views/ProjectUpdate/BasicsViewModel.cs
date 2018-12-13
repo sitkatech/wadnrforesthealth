@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
-        public int? ImplementationStartYear { get; set; }
+        public DateTime? ApprovalStartDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
         public int? CompletionYear { get; set; }
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectDescription = projectUpdate.ProjectDescription;
             ProjectStageID = projectUpdate.ProjectStageID;
             PlannedDate = projectUpdate.PlannedDate;
-            ImplementationStartYear = projectUpdate.GetImplementationStartYear();
+            ApprovalStartDate = projectUpdate.ApprovalStartDate;
             CompletionYear = projectUpdate.CompletionYear;
             EstimatedTotalCost = projectUpdate.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = projectUpdate.EstimatedAnnualOperatingCost;
@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ProjectDescription = ProjectDescription;
             projectUpdate.ProjectStageID = ProjectStageID;
             projectUpdate.PlannedDate = PlannedDate;
-            projectUpdate.ApprovalStartDate = ImplementationStartYear;
+            projectUpdate.ApprovalStartDate = ApprovalStartDate;
             projectUpdate.CompletionYear = CompletionYear;
             projectUpdate.EstimatedTotalCost = EstimatedTotalCost;
             projectUpdate.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
@@ -95,14 +95,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ImplementationStartYear < PlannedDate?.Year)
+            if (ApprovalStartDate < PlannedDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
-                    m => m.ImplementationStartYear);
+                    m => m.ApprovalStartDate);
             }
 
-            if (CompletionYear < ImplementationStartYear)
+            if (CompletionYear < ApprovalStartDate?.Year)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(
                     FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear,
