@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
             ProjectDescription = project.ProjectDescription;
 
             PlanningStartDate = project.PlannedDate;
-            ImplementationStartDate = project.ImplementationStartYear;
+            ImplementationStartDate = project.GetImplementationStartYear();
             EndDate = project.CompletionYear;
             Stage = project.ProjectStage.ProjectStageDisplayName;
 

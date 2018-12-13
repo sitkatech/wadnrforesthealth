@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Models
 
         private bool HasImplementationStartYearChanged()
         {
-            return OriginalProjectUpdate.ImplementationStartYear != ModifiedProjectUpdate.ImplementationStartYear;
+            return OriginalProjectUpdate.GetImplementationStartYear() != ModifiedProjectUpdate.GetImplementationStartYear();
         }
 
         private bool HasPlannedDateChanged()

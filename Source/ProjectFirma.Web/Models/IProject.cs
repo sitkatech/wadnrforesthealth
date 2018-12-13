@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         int ProjectLocationSimpleTypeID { get; set; }
         string ProjectLocationNotes { get; set; }
         DateTime? PlannedDate { get; }
-        int? ImplementationStartYear { get; }
+        int? GetImplementationStartYear();
         int? CompletionYear { get; }
         ProjectStage ProjectStage { get; }
         FundingType FundingType { get; }

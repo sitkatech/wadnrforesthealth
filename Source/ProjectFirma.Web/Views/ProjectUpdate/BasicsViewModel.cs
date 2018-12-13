@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         public DateTime? PlannedDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
         public int? ImplementationStartYear { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectDescription = projectUpdate.ProjectDescription;
             ProjectStageID = projectUpdate.ProjectStageID;
             PlannedDate = projectUpdate.PlannedDate;
-            ImplementationStartYear = projectUpdate.ImplementationStartYear;
+            ImplementationStartYear = projectUpdate.GetImplementationStartYear();
             CompletionYear = projectUpdate.CompletionYear;
             EstimatedTotalCost = projectUpdate.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = projectUpdate.EstimatedAnnualOperatingCost;
@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ProjectDescription = ProjectDescription;
             projectUpdate.ProjectStageID = ProjectStageID;
             projectUpdate.PlannedDate = PlannedDate;
-            projectUpdate.ImplementationStartYear = ImplementationStartYear;
+            projectUpdate.ApprovalStartDate = ImplementationStartYear;
             projectUpdate.CompletionYear = CompletionYear;
             projectUpdate.EstimatedTotalCost = EstimatedTotalCost;
             projectUpdate.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;

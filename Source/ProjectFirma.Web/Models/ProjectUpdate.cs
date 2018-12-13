@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             PlannedDate = project.PlannedDate;
-            ImplementationStartYear = project.ImplementationStartYear;
+            ApprovalStartDate = project.GetImplementationStartYear();
             CompletionYear = project.CompletionYear;
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Models
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID;
             project.PlannedDate = PlannedDate;
-            project.ImplementationStartYear = ImplementationStartYear;
+            project.ApprovalStartDate = GetImplementationStartYear();
             project.CompletionYear = CompletionYear;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
@@ -157,13 +157,10 @@ namespace ProjectFirma.Web.Models
         {
             return PlannedDate?.ToShortDateString();
         }
-        public string GetCompletionYear()
+
+        public int? GetImplementationStartYear()
         {
-            return CompletionYear.HasValue ? MultiTenantHelpers.FormatReportingYear(CompletionYear.Value) : null;
-        }
-        public string GetImplementationStartYear()
-        {
-            return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
+            return ApprovalStartDate;
         }
     }
 }

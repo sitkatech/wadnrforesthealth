@@ -30,12 +30,12 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
     public class BasicsValidationResult
     {
         public static readonly string PlannedDateIsRequired = $"{Models.FieldDefinition.PlannedDate.GetFieldDefinitionLabel()} is a required field.";
-        public static readonly string ImplementationStartYearIsRequired = $"{Models.FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} is a required field.";
+        public static readonly string ImplementationStartYearIsRequired = $"{Models.FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()} is a required field.";
         public static readonly string CompletionYearIsRequired = $"For projects in the Completed or Post-Implementation stage, {Models.FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} is a required field.";
         public static readonly string ProjectDescriptionIsRequired = $"{Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel()} is required.";
         public static readonly string CompletionYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the {Models.FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
         public static readonly string PlannedDateShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the {Models.FieldDefinition.PlannedDate.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
-        public static readonly string ImplementationStartYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Implementation stage, the {Models.FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
+        public static readonly string ImplementationStartYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Implementation stage, the {Models.FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
 
         private readonly List<string> _warningMessages;
 
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(PlannedDateIsRequired);
             }
-            if (projectUpdate.ImplementationStartYear == null && projectUpdate.ProjectStage != ProjectStage.Cancelled && projectUpdate.ProjectStage != ProjectStage.Deferred )
+            if (projectUpdate.GetImplementationStartYear() == null && projectUpdate.ProjectStage != ProjectStage.Cancelled && projectUpdate.ProjectStage != ProjectStage.Deferred )
             {
                 _warningMessages.Add(ImplementationStartYearIsRequired);
             }
@@ -71,16 +71,16 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 _warningMessages.Add(PlannedDateShouldBeLessThanCurrentYear);
             }
-            if (projectUpdate.ProjectStage == ProjectStage.Implementation && projectUpdate.ImplementationStartYear > currentYear)
+            if (projectUpdate.ProjectStage == ProjectStage.Implementation && projectUpdate.GetImplementationStartYear() > currentYear)
             {
                 _warningMessages.Add(ImplementationStartYearShouldBeLessThanCurrentYear);
             }
 
-            if (projectUpdate.ImplementationStartYear < projectUpdate.PlannedDate?.Year)
+            if (projectUpdate.GetImplementationStartYear() < projectUpdate.PlannedDate?.Year)
             {
                 _warningMessages.Add(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate);
             }
-            if (projectUpdate.CompletionYear < projectUpdate.ImplementationStartYear)
+            if (projectUpdate.CompletionYear < projectUpdate.GetImplementationStartYear())
             {
                 _warningMessages.Add(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear);
             }

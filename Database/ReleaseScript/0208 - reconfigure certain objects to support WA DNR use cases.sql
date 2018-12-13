@@ -41,3 +41,10 @@ set PlannedDate = PlannedDateTemp
 
 alter table dbo.ProjectUpdate
 drop column PlannedDateTemp
+
+-- ImplementationStartYear -> ApprovalStartDate
+Alter Table dbo.Project
+drop constraint CK_Project_ImplementationStartYearLessThanEqualToCompletionYear  -- This constraint will be added back later when CompletionYear becomes CompletionDate
+exec sp_rename 'dbo.ImportExternalProjectStaging.ImplementationStartYear', 'ApprovalStartDate', 'COLUMN';
+exec sp_rename 'dbo.Project.ImplementationStartYear', 'ApprovalStartDate', 'COLUMN';
+exec sp_rename 'dbo.ProjectUpdate.ImplementationStartYear', 'ApprovalStartDate', 'COLUMN';

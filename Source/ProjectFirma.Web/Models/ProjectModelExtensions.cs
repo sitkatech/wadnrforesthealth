@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<int> GetProjectUpdateImplementationStartToCompletionYearRange(this IProject projectUpdate)
         {
-            var startYear = projectUpdate?.ImplementationStartYear;
+            var startYear = projectUpdate.GetImplementationStartYear();
             return GetYearRangesImpl(projectUpdate, !startYear.HasValue ?  null : (DateTime?) new DateTime(startYear.Value, 1, 1) );
         }
 

@@ -53,8 +53,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 performanceMeasureActualUpdates.Select(x => x.CalendarYear).Distinct().Select(x => new CalendarYearString(x)).ToList());
             ViewDataForAngular = viewDataForAngularEditor;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.PerformanceMeasuresComment, projectUpdateBatch.IsReturned);
-            IsImplementationStartYearValid = projectUpdateBatch.ProjectUpdate.ImplementationStartYear.HasValue &&
-                                             projectUpdateBatch.ProjectUpdate.ImplementationStartYear < projectUpdateBatch.ProjectUpdate.CompletionYear;
+            IsImplementationStartYearValid = projectUpdateBatch.ProjectUpdate.GetImplementationStartYear().HasValue &&
+                                             projectUpdateBatch.ProjectUpdate.GetImplementationStartYear() < projectUpdateBatch.ProjectUpdate.CompletionYear;
 
             ReportingYearLabel = "Year";
         }

@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
             //var person = TestFramework.TestPerson.Create();
             //var project = TestFramework.TestProject.Create();
             //project.PlannedDate = 1900;
-            //project.ImplementationStartYear = 1910;
+            //project.ApprovalStartDate = 1910;
             //project.CompletionYear = 1920;
             //project.ProjectDescription = "Orginal project description.";
 

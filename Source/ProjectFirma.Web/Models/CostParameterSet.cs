@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
 
         public static int? StartYearForTotalCostCalculations(IProject project)
         {
-            return StartYearForTotalCostCalculationsImpl(project.ImplementationStartYear);
+            return StartYearForTotalCostCalculationsImpl(project.GetImplementationStartYear());
         }
         
         private static int? StartYearForTotalCostCalculationsImpl(int? startYear)
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Models
             return CalculateTotalRemainingOperatingCostImpl(project.EstimatedAnnualOperatingCost.Value,
                 GetLatestInflationRate(),
                 GetCurrentRTPYearForPVCalculations(),
-                project.ImplementationStartYear.Value,
+                project.GetImplementationStartYear().Value,
                 project.CompletionYear.Value);
         }
 
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Models
             return project.FundingType == FundingType.OperationsAndMaintenance 
                 && project.EstimatedAnnualOperatingCost.HasValue
                 && project.CompletionYear.HasValue 
-                && project.ImplementationStartYear.HasValue 
+                && project.GetImplementationStartYear().HasValue 
                 && project.CompletionYear >= GetCurrentRTPYearForPVCalculations()
                 && project.ProjectStage.IsStagedIncludedInTransporationCostCalculations();
         }
@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Models
             if (!CanCalculateLifecycleOperatingCost(project))
                 return null;
 
-            return (project.CompletionYear - project.ImplementationStartYear)*project.EstimatedAnnualOperatingCost;
+            return (project.CompletionYear - project.GetImplementationStartYear())*project.EstimatedAnnualOperatingCost;
         }
 
         public static bool CanCalculateLifecycleOperatingCost(IProject project)
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Models
             return project.FundingType == FundingType.OperationsAndMaintenance
                 && project.EstimatedAnnualOperatingCost.HasValue
                 && project.CompletionYear.HasValue
-                && project.ImplementationStartYear.HasValue;
+                && project.GetImplementationStartYear().HasValue;
         }
 
         public static int GetCurrentRTPYearForPVCalculations()

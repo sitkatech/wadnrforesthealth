@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[ImportExternalProjectStaging](
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Description] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PlannedDate] [smallint] NULL,
-	[ImplementationStartYear] [smallint] NULL,
+	[ApprovalStartDate] [smallint] NULL,
 	[EndYear] [smallint] NULL,
 	[EstimatedCost] [float] NULL,
  CONSTRAINT [PK_ImportExternalProjectStaging_ImportExternalProjectStagingID] PRIMARY KEY CLUSTERED 

@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [Required]
         public DateTime? PlannedDate { get; set; }
         
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
         [Required]
         public int? ImplementationStartYear { get; set; }
 
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             EstimatedTotalCost = project.EstimatedTotalCost;
             EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
             PlannedDate = project.PlannedDate;
-            ImplementationStartYear = project.ImplementationStartYear;
+            ImplementationStartYear = project.GetImplementationStartYear();
             CompletionYear = project.CompletionYear;
             ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             }
             
             project.PlannedDate = PlannedDate;
-            project.ImplementationStartYear = ImplementationStartYear;
+            project.ApprovalStartDate = ImplementationStartYear;
             project.CompletionYear = CompletionYear;
             ProjectCustomAttributes?.UpdateModel(project, person);
         }

@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Models
                     if (currentPerformanceMeasureExpecteds.Any())
                     {
                         // we want to pre-create records from project Start Year to current year; if no start year then we just create for current year
-                        var initialYearToFill = project.ImplementationStartYear ?? currentYear;
+                        var initialYearToFill = project.GetImplementationStartYear() ?? currentYear;
                         performanceMeasureActualUpdates.AddRange(
                             CreatePerformanceMeasureActualUpdateRecordsForGivenYearToCurrentYear(projectUpdateBatch,
                                 currentPerformanceMeasureExpecteds,

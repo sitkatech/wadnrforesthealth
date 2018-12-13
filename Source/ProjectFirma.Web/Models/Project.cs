@@ -408,13 +408,13 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                if (ImplementationStartYear == CompletionYear && ImplementationStartYear.HasValue)
+                if (GetImplementationStartYear() == CompletionYear && GetImplementationStartYear().HasValue)
                 {
-                    return ImplementationStartYear.Value.ToString(CultureInfo.InvariantCulture);
+                    return GetImplementationStartYear().Value.ToString(CultureInfo.InvariantCulture);
                 }
 
                 return
-                    $"{ImplementationStartYear?.ToString(CultureInfo.InvariantCulture) ?? "?"} - {CompletionYear?.ToString(CultureInfo.InvariantCulture) ?? "?"}";
+                    $"{GetImplementationStartYear()?.ToString(CultureInfo.InvariantCulture) ?? "?"} - {CompletionYear?.ToString(CultureInfo.InvariantCulture) ?? "?"}";
             }
         }
 
@@ -664,9 +664,9 @@ namespace ProjectFirma.Web.Models
         {
             return CompletionYear.HasValue ? MultiTenantHelpers.FormatReportingYear(CompletionYear.Value) : null;
         }
-        public string GetImplementationStartYear()
+        public string GetImplementationStartYearFormatted()
         {
-            return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
+            return GetImplementationStartYear().HasValue ? MultiTenantHelpers.FormatReportingYear(GetImplementationStartYear().Value) : null;
         }
 
         public decimal GetTotalStaffTimeHours()
@@ -677,6 +677,11 @@ namespace ProjectFirma.Web.Models
         public decimal GetTotalStaffTimeAmount()
         {
             return ContractorTimeActivities.Sum(x => x.TotalAmount);
+        }
+
+        public int? GetImplementationStartYear()
+        {
+            return ApprovalStartDate;
         }
     }
 }

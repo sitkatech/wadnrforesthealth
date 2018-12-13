@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [Required]
         public int FundingTypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
         public int? ImplementationStartYear { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectStageID = project.ProjectStageID;
             OldProjectStageID = project.ProjectStageID;
             FundingTypeID = project.FundingTypeID;
-            ImplementationStartYear = project.ImplementationStartYear;
+            ImplementationStartYear = project.GetImplementationStartYear();
             PlannedDate = project.PlannedDate;
             CompletionYear = project.CompletionYear;
             EstimatedTotalCost = project.EstimatedTotalCost;
@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.TaxonomyLeafID = TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectStageID = ProjectStageID;
             project.FundingTypeID = FundingTypeID;
-            project.ImplementationStartYear = ImplementationStartYear;
+            project.ApprovalStartDate = ImplementationStartYear;
             project.PlannedDate = PlannedDate;
             project.CompletionYear = CompletionYear;
 

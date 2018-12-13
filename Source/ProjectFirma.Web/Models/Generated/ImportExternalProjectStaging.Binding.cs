@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ImportExternalProjectStaging(int importExternalProjectStagingID, int createPersonID, DateTime createDate, string projectName, string description, short? plannedDate, short? implementationStartYear, short? endYear, double? estimatedCost) : this()
+        public ImportExternalProjectStaging(int importExternalProjectStagingID, int createPersonID, DateTime createDate, string projectName, string description, short? plannedDate, short? approvalStartDate, short? endYear, double? estimatedCost) : this()
         {
             this.ImportExternalProjectStagingID = importExternalProjectStagingID;
             this.CreatePersonID = createPersonID;
@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectName = projectName;
             this.Description = description;
             this.PlannedDate = plannedDate;
-            this.ImplementationStartYear = implementationStartYear;
+            this.ApprovalStartDate = approvalStartDate;
             this.EndYear = endYear;
             this.EstimatedCost = estimatedCost;
         }
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Models
         public string ProjectName { get; set; }
         public string Description { get; set; }
         public short? PlannedDate { get; set; }
-        public short? ImplementationStartYear { get; set; }
+        public short? ApprovalStartDate { get; set; }
         public short? EndYear { get; set; }
         public double? EstimatedCost { get; set; }
         [NotMapped]
