@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views.Shared.ProjectControls
 @using LtInfo.Common.HtmlHelperExtensions
+@using Microsoft.Web.Mvc.Html
 @using ProjectFirma.Web.Common
 @inherits EditProject
 
@@ -97,7 +98,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.PlannedDate)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.PlannedDate, ViewDataTyped.StartYearRange, new {style = "width: auto;", @class = "form-control"})
+                @Html.EditorFor(m => m.PlannedDate, new {style = "width: auto;", @class = "form-control"})
                 @Html.ValidationMessageFor(m => m.PlannedDate)
             </div>
         </div>

@@ -147,7 +147,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.PlannedDate)
             </div>
             <div class="col-xs-12 col-sm-8">
-                @Html.DropDownListFor(m => m.PlannedDate, ViewDataTyped.StartYearRange, new { @class = "form-control", style = "width: auto;" })
+                @Html.EditorFor(m => m.PlannedDate, new { @class = "form-control", style = "width: auto;" })
                 @Html.ValidationMessageFor(m => m.PlannedDate)
             </div>
         </div>

@@ -90,7 +90,7 @@ Source code is available upon request via <support@sitkatech.com>.
         <div class="col-sm-8">
             @if (ViewDataTyped.IsEditable)
             {
-                @Html.DropDownListFor(m => m.PlannedDate, ViewDataTyped.PlannedDateRange, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
                 @Html.ValidationMessageFor(m => m.PlannedDate)
             }
             else
