@@ -128,112 +128,112 @@
             </div>
             <div class="col-sm-12 col-md-9 col-lg-10">
                 <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() Overview</h2>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectUrl, string.Format("Edit {0}", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasEditProjectPermissions)
-                                Basics
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            @{ ProjectBasics.RenderPartialView(Html, ViewDataTyped.ProjectBasicsViewData); }
-                        </div>
-                    </div>
-                    @if (ViewDataTyped.ProjectCustomAttributeTypes.Any())
-                    {
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
                                 <h3>
-                                    @FieldDefinition.Project.FieldDefinitionDisplayName Attributes
+                                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectUrl, string.Format("Edit {0}", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasEditProjectPermissions)
+                                    Basics
                                 </h3>
                             </div>
                             <div class="panel-body">
-                                <dl class="dl-horizontal">
-                                    @foreach (var projectCustomAttributeType in ViewDataTyped.ProjectCustomAttributeTypes)
-                                    {
-                                        var projectCustomAttribute = ViewDataTyped.Project.ProjectCustomAttributes.SingleOrDefault(x => x.ProjectCustomAttributeTypeID == projectCustomAttributeType.ProjectCustomAttributeTypeID);
-                                        <dt style="white-space: normal;">
-                                            @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
-                                            {
-                                                @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
-                                            }
-                                            @projectCustomAttributeType.ProjectCustomAttributeTypeName
-                                        </dt>
-                                        <dd>
-                                            @if (projectCustomAttribute != null)
-                                            {
-                                                    @* ReSharper disable once ConvertIfStatementToConditionalTernaryExpression *@
-                                                if (projectCustomAttributeType.ProjectCustomAttributeDataType == ProjectCustomAttributeDataType.DateTime)
+                                @{ ProjectBasics.RenderPartialView(Html, ViewDataTyped.ProjectBasicsViewData); }
+                            </div>
+                        </div>
+                        @if (ViewDataTyped.ProjectCustomAttributeTypes.Any())
+                        {
+                            <div class="panel panelFirma">
+                                <div class="panel-heading panelTitle">
+                                    <h3>
+                                        @FieldDefinition.Project.FieldDefinitionDisplayName Attributes
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <dl class="dl-horizontal">
+                                        @foreach (var projectCustomAttributeType in ViewDataTyped.ProjectCustomAttributeTypes)
+                                        {
+                                            var projectCustomAttribute = ViewDataTyped.Project.ProjectCustomAttributes.SingleOrDefault(x => x.ProjectCustomAttributeTypeID == projectCustomAttributeType.ProjectCustomAttributeTypeID);
+                                            <dt style="white-space: normal;">
+                                                @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
                                                 {
-                                                    @(StringToDateString(projectCustomAttribute.Values.Single().AttributeValue))
+                                                    @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
+                                                }
+                                                @projectCustomAttributeType.ProjectCustomAttributeTypeName
+                                            </dt>
+                                            <dd>
+                                                @if (projectCustomAttribute != null)
+                                                {
+                                                    @* ReSharper disable once ConvertIfStatementToConditionalTernaryExpression *@
+                                                    if (projectCustomAttributeType.ProjectCustomAttributeDataType == ProjectCustomAttributeDataType.DateTime)
+                                                    {
+                                                        @(StringToDateString(projectCustomAttribute.Values.Single().AttributeValue))
+                                                    }
+                                                    else
+                                                    {
+                                                        @(string.Join(", ", projectCustomAttribute.Values.Select(x => x.AttributeValue)))
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    @(string.Join(", ", projectCustomAttribute.Values.Select(x => x.AttributeValue)))
+                                                    <em class="text-muted">None</em>
                                                 }
-                                            }
-                                            else
-                                            {
-                                                <em class="text-muted">None</em>
-                                            }
-                                        </dd>
-                                    }
-                                </dl>
+                                            </dd>
+                                        }
+                                    </dl>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            @if (ViewDataTyped.UserHasEditProjectPermissions)
-                            {
-                                <a id="editLocationDropdownButton" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
-                                    <h3>
-                                        @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit")
-                                        Location
-                                        <span class="caret"></span>
-                                    </h3>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="editLocationDropdownButton" style="top: 36px; left: auto;">
-                                    <li>@ModalDialogFormHelper.ModalDialogFormLink("Simple", ViewDataTyped.EditSimpleProjectLocationUrl, string.Format("Edit {0} - Simple", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
-                                    <li>@ModalDialogFormHelper.ModalDialogFormLink("Detailed", ViewDataTyped.EditDetailedProjectLocationUrl, string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
-
-                                    @foreach (var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
-                                    {
-                                        <li>@ModalDialogFormHelper.ModalDialogFormLink(geospatialAreaType.GeospatialAreaTypeNamePluralized, geospatialAreaType.GetEditGeospatialAreasUrl(ViewDataTyped.Project), string.Format("Edit {0}", geospatialAreaType.GeospatialAreaTypeNamePluralized), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectGeospatialAreaFormID)</li>
-                                    }
-
-                                    <li>@ModalDialogFormHelper.ModalDialogFormLink("Map Extent", ViewDataTyped.EditProjectBoundingBoxUrl, string.Format("Edit {0} - Map Extent", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectBoundingBoxFormID)</li>
-                                </ul>
-                            }
-                            else
-                            {
-                                <h3>Location</h3>
-                            }
-                        </div>
-                        <div class="panel-body">
-                            @{ ProjectLocationSummary.RenderPartialView(Html, ViewDataTyped.ProjectLocationSummaryViewData); }
-                        </div>
                     </div>
-                    @if (ViewDataTyped.UserHasProjectAdminPermissions)
-                    {
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
-                                <h3>Tags</h3>
+                                @if (ViewDataTyped.UserHasEditProjectPermissions)
+                                {
+                                    <a id="editLocationDropdownButton" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
+                                        <h3>
+                                            @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit")
+                                            Location
+                                            <span class="caret"></span>
+                                        </h3>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="editLocationDropdownButton" style="top: 36px; left: auto;">
+                                        <li>@ModalDialogFormHelper.ModalDialogFormLink("Simple", ViewDataTyped.EditSimpleProjectLocationUrl, string.Format("Edit {0} - Simple", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
+                                        <li>@ModalDialogFormHelper.ModalDialogFormLink("Detailed", ViewDataTyped.EditDetailedProjectLocationUrl, string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
+
+                                        @foreach (var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
+                                        {
+                                            <li>@ModalDialogFormHelper.ModalDialogFormLink(geospatialAreaType.GeospatialAreaTypeNamePluralized, geospatialAreaType.GetEditGeospatialAreasUrl(ViewDataTyped.Project), string.Format("Edit {0}", geospatialAreaType.GeospatialAreaTypeNamePluralized), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectGeospatialAreaFormID)</li>
+                                        }
+
+                                        <li>@ModalDialogFormHelper.ModalDialogFormLink("Map Extent", ViewDataTyped.EditProjectBoundingBoxUrl, string.Format("Edit {0} - Map Extent", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectBoundingBoxFormID)</li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <h3>Location</h3>
+                                }
                             </div>
                             <div class="panel-body">
-                                @{ ProjectBasicsTags.RenderPartialView(Html, ViewDataTyped.ProjectBasicsTagsViewData); }
+                                @{ ProjectLocationSummary.RenderPartialView(Html, ViewDataTyped.ProjectLocationSummaryViewData); }
                             </div>
                         </div>
-                    }
+                        @if (ViewDataTyped.UserHasProjectAdminPermissions)
+                        {
+                            <div class="panel panelFirma">
+                                <div class="panel-heading panelTitle">
+                                    <h3>Tags</h3>
+                                </div>
+                                <div class="panel-body">
+                                    @{ ProjectBasicsTags.RenderPartialView(Html, ViewDataTyped.ProjectBasicsTagsViewData); }
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h3>
@@ -246,40 +246,42 @@
                     </div>
                 </div>
 
-                <h2 class="sectionHeader">@MultiTenantHelpers.GetPerformanceMeasureNamePluralized()</h2>
-                <div class="panel panelFirma">
-                    <div class="panel-heading panelTitle">
-                        <h3>
-                            @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureExpectedsUrl, "Edit Expected " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasEditProjectPermissions)
-                            Expected @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        @{ PerformanceMeasureExpectedSummary.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureExpectedSummaryViewData); }
-                    </div>
-                </div>
-                <div class="panel panelFirma">
-                    <div class="panel-heading panelTitle">
-                        <h3>
-                            @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureActualsUrl, "Edit Reported " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasPerformanceMeasureActualManagePermissions)
-                            Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        @if (ViewDataTyped.Project.IsProposal())
-                        {
-                            <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Proposal stage.</p>
-                        }
-                        else if (ViewDataTyped.Project.ProjectStage == ProjectStage.Planned)
-                        {
-                            <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Planning/Design stage.</p>
-                        }
-                        else
-                        {
-                            PerformanceMeasureReportedValuesGrouped.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureReportedValuesGroupedViewData);
-                        }
-                    </div>
-                </div>
+                @*TODO Neutered Per WA DNR #1446. May decide to bring it back later
+
+        <h2 class="sectionHeader">@MultiTenantHelpers.GetPerformanceMeasureNamePluralized()</h2>
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h3>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureExpectedsUrl, "Edit Expected " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasEditProjectPermissions)
+                    Expected @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
+                </h3>
+            </div>
+            <div class="panel-body">
+                @{ PerformanceMeasureExpectedSummary.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureExpectedSummaryViewData); }
+            </div>
+        </div>
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h3>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureActualsUrl, "Edit Reported " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasPerformanceMeasureActualManagePermissions)
+                    Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
+                </h3>
+            </div>
+            <div class="panel-body">
+                @if (ViewDataTyped.Project.IsProposal())
+                {
+                    <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Proposal stage.</p>
+                }
+                else if (ViewDataTyped.Project.ProjectStage == ProjectStage.Planned)
+                {
+                    <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Planning/Design stage.</p>
+                }
+                else
+                {
+                    PerformanceMeasureReportedValuesGrouped.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureReportedValuesGroupedViewData);
+                }
+            </div>
+        </div>*@
 
                 <h2 class="sectionHeader">Funding</h2>
                 <div class="panel panelFirma">
@@ -384,7 +386,7 @@
                                         <th class="text-right">Rate</th>
                                         <th class="text-right">Total Amount</th>
                                     </tr>
-                                    foreach (var contractorTimeActivity in fundingSource.OrderBy(x=>x.ContractorTimeActivityStartDate))
+                                    foreach (var contractorTimeActivity in fundingSource.OrderBy(x => x.ContractorTimeActivityStartDate))
                                     {
                                         <tr>
                                             <td>@contractorTimeActivity.ContractorTimeActivityStartDate.ToShortDateString()</td>
@@ -423,60 +425,62 @@
                                 }
                             </div>
                         </div>
-                        
-                        <br/>
-                        
+
+                        <br />
+
                         @if (ViewDataTyped.Project.TreatmentActivities.Any())
                         {
                             var treatmentActivities = ViewDataTyped.Project.TreatmentActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
 
 
-                            <div style="overflow: auto;"><table class="table table-striped table-condensed table-hover">
-                                @foreach (var fundingSource in treatmentActivities)
-                                {
-                                    <tr>
-                                        <th colspan="12">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th style="width:auto;" class="text-right">Footprint Acres</th>
-                                        <th style="width:auto;" class="text-right">Brush Control Acres</th>
-                                        <th style="width:auto;" class="text-right">Thinning Acres</th>
-                                        <th style="width:auto;" class="text-right">Pruning Acres</th>
-                                        <th style="width:auto;" class="text-right">Slash Acres</th>
-                                        <th style="width:auto;" class="text-right">Prescribed Burn Acres</th>
-                                        <th style="width:auto;" class="text-right">Allocated Amount</th>
-                                        <th style="width:auto;" class="text-right">Total Cost</th>
-                                        <th style="width:auto;" class="text-right">Grant Cost</th>
-                                    </tr>
-                                    foreach (var treatmentActivity in fundingSource.OrderBy(x=>x.TreatmentActivityStartDate))
-                                     {
-                                         <tr>
-                                             <td>@treatmentActivity.TreatmentActivityStartDate.ToShortDateString()</td>
-                                             <td>
-                                                 @if (treatmentActivity.TreatmentActivityEndDate != null)
-                                                 {
-                                                     <text>@treatmentActivity.TreatmentActivityEndDate.Value.ToShortDateString()</text>
-                                                 }
-                                                 else
-                                                 {
-                                                     <p class="systemText">N/A</p>
-                                                 }
-                                             </td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityFootprintAcres</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityBrushControlAcres</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityThinningAcres</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityPruningAcres</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivitySlashAcres</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityPrescribedBurnAcres</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityAllocatedAmount.ToStringCurrency()</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityTotalCost.ToStringCurrency()</td>
-                                             <td class="text-right">@treatmentActivity.TreatmentActivityGrantCost.ToStringCurrency()</td>
-                                         </tr>
-                                     }
-                                }
-                            </table></div>
+                            <div style="overflow: auto;">
+                                <table class="table table-striped table-condensed table-hover">
+                                    @foreach (var fundingSource in treatmentActivities)
+                                    {
+                                        <tr>
+                                            <th colspan="12">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th style="width:auto;" class="text-right">Footprint Acres</th>
+                                            <th style="width:auto;" class="text-right">Brush Control Acres</th>
+                                            <th style="width:auto;" class="text-right">Thinning Acres</th>
+                                            <th style="width:auto;" class="text-right">Pruning Acres</th>
+                                            <th style="width:auto;" class="text-right">Slash Acres</th>
+                                            <th style="width:auto;" class="text-right">Prescribed Burn Acres</th>
+                                            <th style="width:auto;" class="text-right">Allocated Amount</th>
+                                            <th style="width:auto;" class="text-right">Total Cost</th>
+                                            <th style="width:auto;" class="text-right">Grant Cost</th>
+                                        </tr>
+                                        foreach (var treatmentActivity in fundingSource.OrderBy(x => x.TreatmentActivityStartDate))
+                                        {
+                                            <tr>
+                                                <td>@treatmentActivity.TreatmentActivityStartDate.ToShortDateString()</td>
+                                                <td>
+                                                    @if (treatmentActivity.TreatmentActivityEndDate != null)
+                                                    {
+                                                        <text>@treatmentActivity.TreatmentActivityEndDate.Value.ToShortDateString()</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="systemText">N/A</p>
+                                                    }
+                                                </td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityFootprintAcres</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityBrushControlAcres</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityThinningAcres</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityPruningAcres</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivitySlashAcres</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityPrescribedBurnAcres</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityAllocatedAmount.ToStringCurrency()</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityTotalCost.ToStringCurrency()</td>
+                                                <td class="text-right">@treatmentActivity.TreatmentActivityGrantCost.ToStringCurrency()</td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
                         }
                         else
                         {

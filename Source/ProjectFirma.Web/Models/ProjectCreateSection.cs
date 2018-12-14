@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Views.ProjectCreate;
 using ProjectFirma.Web.Common;
@@ -70,12 +69,14 @@ namespace ProjectFirma.Web.Models
     {
         public override bool IsComplete(Project project)
         {
-            if (project == null)
-            {
-                return false;
-            }
-            var pmValidationResults = new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
-            return !pmValidationResults.Any();
+            return true;
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //if (project == null)
+            //{
+            //    return false;
+            //}
+            //var pmValidationResults = new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
+            //return !pmValidationResults.Any();
         }
 
         public override string GetSectionUrl(Project project)
@@ -88,18 +89,20 @@ namespace ProjectFirma.Web.Models
     {
         public override bool IsComplete(Project project)
         {
-            if (project == null)
-            {
-                return false;
-            }
-            var pmValidationResults = new PerformanceMeasuresViewModel(
-                project.PerformanceMeasureActuals.Select(x => new PerformanceMeasureActualSimple(x)).ToList(),
-                project.PerformanceMeasureActualYearsExemptionExplanation,
-                project.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList())
-                {
-                    ProjectID = project.ProjectID
-                }.GetValidationResults();
-            return !pmValidationResults.Any();
+            return true;
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //if (project == null)
+            //{
+            //    return false;
+            //}
+            //var pmValidationResults = new PerformanceMeasuresViewModel(
+            //    project.PerformanceMeasureActuals.Select(x => new PerformanceMeasureActualSimple(x)).ToList(),
+            //    project.PerformanceMeasureActualYearsExemptionExplanation,
+            //    project.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList())
+            //    {
+            //        ProjectID = project.ProjectID
+            //    }.GetValidationResults();
+            //return !pmValidationResults.Any();
         }
 
         public override string GetSectionUrl(Project project)
