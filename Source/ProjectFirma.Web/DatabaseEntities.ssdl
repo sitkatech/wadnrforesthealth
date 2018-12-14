@@ -1413,7 +1413,7 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
     </Key>
     <Property Name="PersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="PersonGuid" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PersonGuid" Type="uniqueidentifier" />
     <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="Email" Type="varchar" Nullable="false" MaxLength="255" />

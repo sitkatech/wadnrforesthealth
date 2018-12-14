@@ -34,6 +34,8 @@ namespace ProjectFirma.Web.Models
     public static class OrganizationModelExtensions
     {
         public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<OrganizationController>.BuildUrlFromExpression(t => t.DeleteOrganization(UrlTemplate.Parameter1Int)));
+        public const int WadnrID = 4704;
+
         public static string GetDeleteUrl(this Organization organization)
         {
             return DeleteUrlTemplate.ParameterReplace(organization.OrganizationID);

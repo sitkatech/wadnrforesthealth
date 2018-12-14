@@ -5,7 +5,7 @@ GO
 CREATE TABLE [dbo].[Person](
 	[PersonID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
-	[PersonGuid] [uniqueidentifier] NOT NULL,
+	[PersonGuid] [uniqueidentifier] NULL,
 	[FirstName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[LastName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Email] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,

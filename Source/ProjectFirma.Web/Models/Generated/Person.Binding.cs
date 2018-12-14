@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, Guid personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName) : this()
+        public Person(int personID, Guid? personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName) : this()
         {
             this.PersonID = personID;
             this.PersonGuid = personGuid;
@@ -78,12 +78,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(Guid personGuid, string firstName, string lastName, string email, int roleID, DateTime createDate, bool isActive, int organizationID, bool receiveSupportEmails, string loginName) : this()
+        public Person(string firstName, string lastName, string email, int roleID, DateTime createDate, bool isActive, int organizationID, bool receiveSupportEmails, string loginName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.PersonGuid = personGuid;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -98,11 +97,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(Guid personGuid, string firstName, string lastName, string email, Role role, DateTime createDate, bool isActive, Organization organization, bool receiveSupportEmails, string loginName) : this()
+        public Person(string firstName, string lastName, string email, Role role, DateTime createDate, bool isActive, Organization organization, bool receiveSupportEmails, string loginName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.PersonGuid = personGuid;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -121,7 +119,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Person CreateNewBlank(Role role, Organization organization)
         {
-            return new Person(default(Guid), default(string), default(string), default(string), role, default(DateTime), default(bool), organization, default(bool), default(string));
+            return new Person(default(string), default(string), default(string), role, default(DateTime), default(bool), organization, default(bool), default(string));
         }
 
         /// <summary>
@@ -144,10 +142,9 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteChildren(HttpRequestStorage.DatabaseEntities);
+            DeleteChildren(dbContext);
             dbContext.AllPeople.Remove(this);
         }
-
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
@@ -288,7 +285,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int PersonID { get; set; }
         public int TenantID { get; private set; }
-        public Guid PersonGuid { get; set; }
+        public Guid? PersonGuid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

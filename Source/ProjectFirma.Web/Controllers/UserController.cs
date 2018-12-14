@@ -147,6 +147,18 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
+        [HttpGet]
+        [ContactManageFeature]
+        public void AddContact()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddContact(object viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         [UserViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
