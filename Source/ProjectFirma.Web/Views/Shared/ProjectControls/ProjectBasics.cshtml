@@ -75,30 +75,6 @@ Source code is available upon request via <support@sitkatech.com>.
     <hr />
 
     <div class="row">
-        <div class="col-xs-6">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)
-        </div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.GetSecuredFunding().ToStringCurrency()
-        </div><div class="row">
-        </div>
-        <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.UnfundedNeed)
-        </div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.UnfundedNeed().ToStringCurrency()
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="row">
         <div class="col-xs-6">
             @Html.LabelWithSugarFor(FieldDefinition.PlannedDate)
         </div>

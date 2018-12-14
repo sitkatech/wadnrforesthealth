@@ -28,70 +28,71 @@ Source code is available upon request via <support@sitkatech.com>.
         z-index: 999;
     }
 </style>
-
-<div>
-    <div id="@ViewDataTyped.ProjectLocationSummaryMapInitJson.MapDivID" style="height: 390px">
-    </div>
-    <span style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</span>
-</div>
-
-<div>
-    @if (ViewDataTyped.HasLocationNotes)
-    {
-        <div style="margin-bottom: 5px">
-            <label>
-                Location Notes
-            </label>
-            <div style="padding-left: 20px">
-                @ViewDataTyped.ProjectLocationNotes
+<div class="row">
+    <div class="col-sm-6">
+        <div>
+            <div id="@ViewDataTyped.ProjectLocationSummaryMapInitJson.MapDivID" style="height: 390px">
             </div>
+            <span style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</span>
         </div>
-    }
-    @if (ViewDataTyped.HasLocationInformation)
-    {
-        <div style="margin-bottom: 5px">
-            <label>
-                Location Information
-            </label>
-            <div id="projectLocationInformationContainer" style="padding-left: 20px"></div>
-        </div>
-    }
-    @foreach(var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
-    {
-        <hr />
-        <div style="margin-bottom: 5px">
-            <label>
-                @geospatialAreaType.GeospatialAreaTypeNamePluralized
-            </label>
-            <ul class="noListStyle">
-                @foreach (var geospatialArea in ViewDataTyped.GeospatialAreas.Where(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).OrderBy(x => x.DisplayName))
-                {
-                    <li>
-                        <a href="@geospatialArea.GetDetailUrl()">@geospatialArea.DisplayName</a>
-                    </li>
-                }
-                @if (ViewDataTyped.GeospatialAreas.All(x => x.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID))
-                {
-                    <li style="list-style-type: none; margin-left: -40px;">
-                        None Selected
-                    </li>
-                }
-            </ul>
-        </div>
-        if (ViewDataTyped.DictionaryGeoNotes.ContainsKey(geospatialAreaType.GeospatialAreaTypeID))
+        @if (ViewDataTyped.HasLocationNotes)
         {
             <div style="margin-bottom: 5px">
                 <label>
-                    @geospatialAreaType.GeospatialAreaTypeNamePluralized Notes
+                    Location Notes
                 </label>
                 <div style="padding-left: 20px">
-                    @ViewDataTyped.DictionaryGeoNotes[geospatialAreaType.GeospatialAreaTypeID]
+                    @ViewDataTyped.ProjectLocationNotes
                 </div>
             </div>
         }
-    }
+    </div>
+    <div class="col-sm-6">
+        @if (ViewDataTyped.HasLocationInformation)
+        {
+            <div style="margin-bottom: 5px">
+                <label>
+                    Location Information
+                </label>
+                <div id="projectLocationInformationContainer" style="padding-left: 20px"></div>
+            </div>
+        }
+        @foreach (var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
+        {
+            <hr />
+            <div style="margin-bottom: 5px">
+                <label>
+                    @geospatialAreaType.GeospatialAreaTypeNamePluralized
+                </label>
+                <ul class="noListStyle">
+                    @foreach (var geospatialArea in ViewDataTyped.GeospatialAreas.Where(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).OrderBy(x => x.DisplayName))
+                    {
+                        <li>
+                            <a href="@geospatialArea.GetDetailUrl()">@geospatialArea.DisplayName</a>
+                        </li>
+                    }
+                    @if (ViewDataTyped.GeospatialAreas.All(x => x.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID))
+                    {
+                        <li style="list-style-type: none; margin-left: -40px;">
+                            None Selected
+                        </li>
+                    }
+                </ul>
+            </div>
+            if (ViewDataTyped.DictionaryGeoNotes.ContainsKey(geospatialAreaType.GeospatialAreaTypeID))
+            {
+                <div style="margin-bottom: 5px">
+                    <label>
+                        @geospatialAreaType.GeospatialAreaTypeNamePluralized Notes
+                    </label>
+                    <div style="padding-left: 20px">
+                        @ViewDataTyped.DictionaryGeoNotes[geospatialAreaType.GeospatialAreaTypeID]
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>
-
 <script type="text/javascript">
     jQuery(document).ready(function()
     {

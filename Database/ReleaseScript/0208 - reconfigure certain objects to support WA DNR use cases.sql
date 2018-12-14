@@ -167,3 +167,12 @@ drop column EstimatedAnnualOperatingCost
 
 drop table dbo.FundingTypeData
 drop table dbo.FundingType
+
+-- support changes to Project Detail Page
+Alter Table dbo.Project
+Alter Column EstimatedTotalCost money null
+
+
+
+-- ice field definition data for field definitions that got iced
+delete from FieldDefinitionData where FieldDefinitionDataID in (1505, 1517,1518)
