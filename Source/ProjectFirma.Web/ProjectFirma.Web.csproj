@@ -444,6 +444,7 @@
     <Compile Include="Models\TreatmentActivitySimple.cs" />
     <Compile Include="Models\TreatmentTypeSimple.cs" />
     <Compile Include="Security\ContactManageFeature.cs" />
+    <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="UnitTestCommon\TestGeospatialAreaType.cs" />
     <Compile Include="Views\Home\TrainingVideo.cs" />

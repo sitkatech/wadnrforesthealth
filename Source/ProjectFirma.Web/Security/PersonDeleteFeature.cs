@@ -9,7 +9,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Person> _firmaFeatureWithContextImpl;
 
         public PersonDeleteFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
+            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.Normal, Role.ProjectSteward })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Person>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -22,11 +22,16 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Person contextModelObject)
         {
-            var hasPermissionByPerson = HasPermissionByPerson(person);
+            var hasPermissionByPerson = new ContactManageFeature().HasPermissionByPerson(person);
             if (!hasPermissionByPerson)
             {
                 return new PermissionCheckResult(
-                    $"You don't have permission to delete {contextModelObject.DisplayName}");
+                    $"You don't have permission to delete {contextModelObject.FullNameFirstLast}");
+            }
+
+            if (contextModelObject.PersonGuid != null)
+            {
+                return new PermissionCheckResult($"{contextModelObject.FullNameFirstLast} cannot be deleted because they are a user with an account.");
             }
             return new PermissionCheckResult();
         }

@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [PersonDeleteFeature]
         public PartialViewResult Delete(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [PersonDeleteFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult Delete(PersonPrimaryKey personPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
