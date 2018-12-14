@@ -32,9 +32,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
     {
         public IEnumerable<SelectListItem> TaxonomyLeafs { get; }
         public IEnumerable<SelectListItem> StartYearRange { get; }
-        public IEnumerable<SelectListItem> CompletionYearRange { get; }
+        public IEnumerable<SelectListItem> CompletionDateRange { get; }
         public IEnumerable<SelectListItem> ProjectStages { get; }
-        public IEnumerable<SelectListItem> FundingTypes { get; }
         public IEnumerable<SelectListItem> Organizations { get; }
         public IEnumerable<SelectListItem> PrimaryContactPeople { get; }
         public Person DefaultPrimaryContactPerson { get; }
@@ -48,7 +47,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public EditProjectViewData(EditProjectType editProjectType,
             string taxonomyLeafDisplayName,
             IEnumerable<ProjectStage> projectStages,
-            IEnumerable<FundingType> fundingTypes,
             IEnumerable<Models.Organization> organizations,
             IEnumerable<Person> primaryContactPeople,
             Person defaultPrimaryContactPerson,
@@ -60,7 +58,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             TaxonomyLeafDisplayName = taxonomyLeafDisplayName;
             TotalExpenditures = totalExpenditures;
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
-            FundingTypes = fundingTypes.OrderBy(x => x.GetFundingTypeSortOrder()).ToSelectList(x => x.FundingTypeID.ToString(CultureInfo.InvariantCulture), y => y.GetFundingTypeDisplayName());
+            
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             PrimaryContactPeople = primaryContactPeople.ToSelectListWithEmptyFirstRow(
                     x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLastAndOrgShortName,
@@ -68,7 +66,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             DefaultPrimaryContactPerson = defaultPrimaryContactPerson;
             TaxonomyLeafs = taxonomyLeafs.ToGroupedSelectList();
             StartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
-            CompletionYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
+            CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
             DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;

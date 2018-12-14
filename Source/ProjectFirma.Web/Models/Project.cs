@@ -408,13 +408,13 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                if (ImplementationStartYear == CompletionYear && ImplementationStartYear.HasValue)
+                if (GetImplementationStartYear() == GetCompletionYear() && GetImplementationStartYear().HasValue)
                 {
-                    return ImplementationStartYear.Value.ToString(CultureInfo.InvariantCulture);
+                    return GetImplementationStartYear().Value.ToString(CultureInfo.InvariantCulture);
                 }
 
                 return
-                    $"{ImplementationStartYear?.ToString(CultureInfo.InvariantCulture) ?? "?"} - {CompletionYear?.ToString(CultureInfo.InvariantCulture) ?? "?"}";
+                    $"{GetImplementationStartYear()?.ToString(CultureInfo.InvariantCulture) ?? "?"} - {GetCompletionYear()?.ToString(CultureInfo.InvariantCulture) ?? "?"}";
             }
         }
 
@@ -607,7 +607,7 @@ namespace ProjectFirma.Web.Models
 
         public bool IsProposal()
         {
-            return ProjectStage == ProjectStage.Proposal;
+            return ProjectStage == ProjectStage.Application;
         }
 
         public bool IsActiveProposal()
@@ -643,12 +643,12 @@ namespace ProjectFirma.Web.Models
 
         public bool AreReportedPerformanceMeasuresRelevant()
         {
-            return ProjectStage != ProjectStage.Proposal && ProjectStage != ProjectStage.PlanningDesign;
+            return ProjectStage != ProjectStage.Application && ProjectStage != ProjectStage.Planned;
         }
 
         public bool AreReportedExpendituresRelevant()
         {
-            return ProjectStage != ProjectStage.Proposal;
+            return ProjectStage != ProjectStage.Application;
         }
 
         public static List<ProjectSectionSimple> GetApplicableProposalWizardSections(Project project, bool ignoreStatus)
@@ -656,17 +656,17 @@ namespace ProjectFirma.Web.Models
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus)).OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
         }
 
-        public string GetPlanningDesignStartYear()
+        public string GetPlannedDate()
         {
-            return PlanningDesignStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(PlanningDesignStartYear.Value) : null;
+            return PlannedDate?.ToShortDateString();
         }
-        public string GetCompletionYear()
+        public string GetCompletionDateFormatted()
         {
-            return CompletionYear.HasValue ? MultiTenantHelpers.FormatReportingYear(CompletionYear.Value) : null;
+            return CompletionDate?.ToShortDateString();
         }
-        public string GetImplementationStartYear()
+        public string GetApprovalStartDateFormatted()
         {
-            return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
+            return ApprovalStartDate?.ToShortDateString();
         }
 
         public decimal GetTotalStaffTimeHours()
@@ -677,6 +677,16 @@ namespace ProjectFirma.Web.Models
         public decimal GetTotalStaffTimeAmount()
         {
             return ContractorTimeActivities.Sum(x => x.TotalAmount);
+        }
+
+        public int? GetImplementationStartYear()
+        {
+            return ApprovalStartDate?.Year;
+        }
+
+        public int? GetCompletionYear()
+        {
+            return CompletionDate?.Year;
         }
     }
 }

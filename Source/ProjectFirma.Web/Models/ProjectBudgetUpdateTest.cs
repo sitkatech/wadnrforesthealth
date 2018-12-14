@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Linq;
 using ProjectFirma.Web.UnitTestCommon;
 using NUnit.Framework;
@@ -46,7 +48,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
-        public void CreateFromProjectTestStartYearAndCompletionYearTheSameAsExistingBudgetRecords()
+        public void CreateFromProjectTestStartYearAndCompletionDateTheSameAsExistingBudgetRecords()
         {
             // Arrange
             var project = TestFramework.TestProject.Create(-777, "Project-777");
@@ -62,8 +64,8 @@ namespace ProjectFirma.Web.Models
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2013, 777);
             TestFramework.TestProjectBudget.Create(project, fundingSource2, 2014, 888);
 
-            projectUpdate.PlanningDesignStartYear = project.ProjectBudgets.Min(x => x.CalendarYear);
-            projectUpdate.CompletionYear = project.ProjectBudgets.Max(x => x.CalendarYear);
+            projectUpdate.PlannedDate = new DateTime(project.ProjectBudgets.Min(x => x.CalendarYear), 1, 1);
+            projectUpdate.CompletionDate = new DateTime(project.ProjectBudgets.Max(x => x.CalendarYear),1,1);
 
             // Act
             ProjectBudgetUpdate.CreateFromProject(projectUpdateBatch);
@@ -71,37 +73,37 @@ namespace ProjectFirma.Web.Models
             // Assert
             AssertThatNoProjectBudgetRecordsLeftBehind(project, projectUpdateBatch);
 
-            Assert.That(project.ProjectBudgets.Count, Is.EqualTo(projectUpdateBatch.ProjectBudgetUpdates.Count), $"Should not have any extra records, should be a match with existing {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} record");
+            Assert.That(project.ProjectBudgets.Count, Is.EqualTo(projectUpdateBatch.ProjectBudgetUpdates.Count), $"Should not have any extra records, should be a match with existing {FieldDefinition.Project.GetFieldDefinitionLabel()} record");
         }
 
         private static void AssertThatNoProjectBudgetRecordsLeftBehind(Project project, ProjectUpdateBatch projectUpdateBatch)
         {
             // Assert - all existing rows from the project record should be there
-            foreach (var ProjectBudget in project.ProjectBudgets)
+            foreach (var projectBudget in project.ProjectBudgets)
             {
                 var projectBudgetUpdate =
                     projectUpdateBatch.ProjectBudgetUpdates.SingleOrDefault(
                         x =>
-                            x.ProjectCostTypeID == ProjectBudget.ProjectCostTypeID && x.CalendarYear == ProjectBudget.CalendarYear &&
-                            x.FundingSourceID == ProjectBudget.FundingSourceID && x.MonetaryAmount == ProjectBudget.MonetaryAmount);
-                AssertCloneProjectBudgetSuccessful(projectBudgetUpdate, projectUpdateBatch, ProjectBudget);
+                            x.ProjectCostTypeID == projectBudget.ProjectCostTypeID && x.CalendarYear == projectBudget.CalendarYear &&
+                            x.FundingSourceID == projectBudget.FundingSourceID && x.MonetaryAmount == projectBudget.MonetaryAmount);
+                AssertCloneProjectBudgetSuccessful(projectBudgetUpdate, projectUpdateBatch, projectBudget);
             }
         }
 
-        private static void AssertCloneProjectBudgetSuccessful(ProjectBudgetUpdate newProjectBudgetUpdate, ProjectUpdateBatch projectUpdateBatch, IProjectBudgetAmount ProjectBudgetAmount)
+        private static void AssertCloneProjectBudgetSuccessful(ProjectBudgetUpdate newProjectBudgetUpdate, ProjectUpdateBatch projectUpdateBatch, IProjectBudgetAmount projectBudgetAmount)
         {
-            Assert.That(newProjectBudgetUpdate.ProjectUpdateBatchID, Is.EqualTo(projectUpdateBatch.ProjectUpdateBatchID), $"Should have assigned it to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update batch");
-            Assert.That(newProjectBudgetUpdate.ProjectCostTypeID, Is.EqualTo(ProjectBudgetAmount.ProjectCostTypeID), $"Should have cloned transporation {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} cost type correctly");
-            Assert.That(newProjectBudgetUpdate.FundingSourceID, Is.EqualTo(ProjectBudgetAmount.FundingSourceID), "Should have cloned funding source correctly");
-            Assert.That(newProjectBudgetUpdate.CalendarYear, Is.EqualTo(ProjectBudgetAmount.CalendarYear), "Should be set to the new calendar year");
-            Assert.That(newProjectBudgetUpdate.MonetaryAmount, Is.EqualTo(ProjectBudgetAmount.MonetaryAmount), "Should be set to the new budget amount");
+            Assert.That(newProjectBudgetUpdate.ProjectUpdateBatchID, Is.EqualTo(projectUpdateBatch.ProjectUpdateBatchID), $"Should have assigned it to this {FieldDefinition.Project.GetFieldDefinitionLabel()} update batch");
+            Assert.That(newProjectBudgetUpdate.ProjectCostTypeID, Is.EqualTo(projectBudgetAmount.ProjectCostTypeID), $"Should have cloned transporation {FieldDefinition.Project.GetFieldDefinitionLabel()} cost type correctly");
+            Assert.That(newProjectBudgetUpdate.FundingSourceID, Is.EqualTo(projectBudgetAmount.FundingSourceID), "Should have cloned funding source correctly");
+            Assert.That(newProjectBudgetUpdate.CalendarYear, Is.EqualTo(projectBudgetAmount.CalendarYear), "Should be set to the new calendar year");
+            Assert.That(newProjectBudgetUpdate.MonetaryAmount, Is.EqualTo(projectBudgetAmount.MonetaryAmount), "Should be set to the new budget amount");
         }
 
-        private static void AssertCloneProjectBudgetSuccessful(ProjectBudgetUpdate newProjectBudgetUpdate, ProjectUpdateBatch projectUpdateBatch, IProjectBudgetAmount ProjectBudgetAmount, int newCalendarYear, decimal? budgetedAmount)
+        private static void AssertCloneProjectBudgetSuccessful(ProjectBudgetUpdate newProjectBudgetUpdate, ProjectUpdateBatch projectUpdateBatch, IProjectBudgetAmount projectBudgetAmount, int newCalendarYear, decimal? budgetedAmount)
         {
-            Assert.That(newProjectBudgetUpdate.ProjectUpdateBatchID, Is.EqualTo(projectUpdateBatch.ProjectUpdateBatchID), $"Should have assigned it to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update batch");
-            Assert.That(newProjectBudgetUpdate.ProjectCostTypeID, Is.EqualTo(ProjectBudgetAmount.ProjectCostTypeID), $"Should have cloned transporation {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} cost type correctly");
-            Assert.That(newProjectBudgetUpdate.FundingSourceID, Is.EqualTo(ProjectBudgetAmount.FundingSourceID), "Should have cloned funding source correctly");
+            Assert.That(newProjectBudgetUpdate.ProjectUpdateBatchID, Is.EqualTo(projectUpdateBatch.ProjectUpdateBatchID), $"Should have assigned it to this {FieldDefinition.Project.GetFieldDefinitionLabel()} update batch");
+            Assert.That(newProjectBudgetUpdate.ProjectCostTypeID, Is.EqualTo(projectBudgetAmount.ProjectCostTypeID), $"Should have cloned transporation {FieldDefinition.Project.GetFieldDefinitionLabel()} cost type correctly");
+            Assert.That(newProjectBudgetUpdate.FundingSourceID, Is.EqualTo(projectBudgetAmount.FundingSourceID), "Should have cloned funding source correctly");
             Assert.That(newProjectBudgetUpdate.CalendarYear, Is.EqualTo(newCalendarYear), "Should be set to the new calendar year");
             Assert.That(newProjectBudgetUpdate.MonetaryAmount, Is.EqualTo(budgetedAmount), "Should be set to the new budget amount");
         }

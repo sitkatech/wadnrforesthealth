@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 
@@ -31,26 +33,17 @@ namespace ProjectFirma.Web.Models
         ProjectLocationSimpleType ProjectLocationSimpleType { get; }
         int ProjectLocationSimpleTypeID { get; set; }
         string ProjectLocationNotes { get; set; }
-
-        int? PlanningDesignStartYear { get; }
-        int? ImplementationStartYear { get; }
-        int? CompletionYear { get; }
-
+        DateTime? PlannedDate { get; }
+        int? GetImplementationStartYear();
+        int? GetCompletionYear();
         ProjectStage ProjectStage { get; }
-        FundingType FundingType { get; }
-
         decimal? EstimatedTotalCost { get; }
-        decimal? EstimatedAnnualOperatingCost { get; }
         IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes { get; set; }
-
         IEnumerable<IQuestionAnswer> GetQuestionAnswers();
-
         IEnumerable<IProjectLocation> GetProjectLocationDetails();
         DbGeometry GetDefaultBoundingBox();
         IEnumerable<GeospatialArea> GetProjectGeospatialAreas();
-
         GeoJSON.Net.Feature.FeatureCollection DetailedLocationToGeoJsonFeatureCollection();
-
         GeoJSON.Net.Feature.FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties);        
     }
 }

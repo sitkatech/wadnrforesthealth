@@ -43,13 +43,13 @@ namespace ProjectFirma.Web.Models
             _forwardLookingFactSheetProjectStages ?? (_forwardLookingFactSheetProjectStages =
             new List<ProjectStage>
             {
-                Proposal,
+                Application,
                 Deferred,
-                PlanningDesign
+                Planned
             });
     }
 
-    public partial class ProjectStageProposal
+    public partial class ProjectStageApplication
     {
         public override bool IsOnCompletedList()
         {
@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Models
     }
 
 
-    public partial class ProjectStagePlanningDesign
+    public partial class ProjectStagePlanned
     {
         public override bool IsOnCompletedList()
         {
@@ -124,7 +124,7 @@ namespace ProjectFirma.Web.Models
         {
             return All.Except(new[]
             {
-                Proposal
+                Application
             });
         }
     }
@@ -163,7 +163,7 @@ namespace ProjectFirma.Web.Models
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
         {
-            return All.Except(new ProjectStage[] {PlanningDesign, Proposal});
+            return All.Except(new ProjectStage[] {Planned, Application});
         }
     }
 
@@ -205,7 +205,7 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectStageTerminated
+    public partial class ProjectStageCancelled
     {
         public override bool IsOnCompletedList()
         {
@@ -240,7 +240,7 @@ namespace ProjectFirma.Web.Models
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
         {
-            return new[] { Terminated };
+            return new[] { Cancelled };
         }
     }
 
@@ -316,7 +316,7 @@ namespace ProjectFirma.Web.Models
 
         public override IEnumerable<ProjectStage> GetProjectStagesThatProjectCanUpdateTo()
         {
-            return All.Except(new List<ProjectStage> { Proposal, PlanningDesign, Implementation });
+            return All.Except(new List<ProjectStage> { Application, Planned, Implementation });
         }
     }
 }

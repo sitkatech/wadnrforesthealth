@@ -25,11 +25,11 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View {0} List", FieldDefinitionEnum.Proposal)]
+    [SecurityFeatureDescription("View {0} List", FieldDefinitionEnum.Application)]
     public class ProjectsInProposalStageViewListFeature : FirmaFeature
     {
         public ProjectsInProposalStageViewListFeature()
-            : base(MultiTenantHelpers.ShowProposalsToThePublic() ? new List<Role>() : FirmaBaseFeatureHelpers.AllRolesExceptUnassigned)
+            : base(MultiTenantHelpers.ShowApplicationsToThePublic() ? new List<Role>() : FirmaBaseFeatureHelpers.AllRolesExceptUnassigned)
         {
         }
     }

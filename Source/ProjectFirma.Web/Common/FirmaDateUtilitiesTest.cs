@@ -42,13 +42,13 @@ namespace ProjectFirma.Web.Common
             // Testing if only have a start year
             // -- Start Year in the past: should go from Start Year to Current Year
             var startYear = currentYearToUse - 2;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, currentYearToUse)));
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, currentYearToUse)));
             // -- Start Year same as current year: should just be Start Year
             startYear = currentYearToUse;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, startYear)));
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, startYear)));
             // -- Start Year in the future: should just be the ceiling year
             startYear = currentYearToUse + 3;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(ceilingYear, ceilingYear)));
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(ceilingYear, ceilingYear)));
 
             // Testing if only have a completion year
             var completionYear = currentYearToUse - 2;
@@ -68,42 +68,42 @@ namespace ProjectFirma.Web.Common
             startYear = currentYearToUse - 2;
             // -- Completion year in the past
             completionYear = currentYearToUse - 1;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
             // -- Completion year same as current year
             completionYear = currentYearToUse;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
             // -- Completion year in future, should only go up to the ceiling year
             completionYear = startYear + 5;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, ceilingYear)));
 
             // -- Start Year same as current year
             startYear = currentYearToUse;
             // -- Completion year in the past; should throw since that cannot happen!
             completionYear = currentYearToUse - 1;
-            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), "Cannot have a start year > end year!");
+            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), "Cannot have a start year > end year!");
             // -- Completion year same as current year
             completionYear = currentYearToUse;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
             // -- Completion year in future
             completionYear = startYear + 5;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, ceilingYear)));
 
             // -- Start Year in the future
             startYear = currentYearToUse + 2;
             // -- Completion year in the past; should throw since that cannot happen!
             completionYear = currentYearToUse - 1;
-            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), "Cannot have a start year > end year!");
+            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), "Cannot have a start year > end year!");
             // -- Completion year same as current year
             completionYear = currentYearToUse;
-            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), "Cannot have a start year > end year!");
+            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), "Cannot have a start year > end year!");
             // -- Completion year in future
             completionYear = startYear + 5;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(ceilingYear, ceilingYear)));
 
             // If we have existing budget records, we need to factor those in
@@ -117,11 +117,11 @@ namespace ProjectFirma.Web.Common
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, null, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, yearAfterCurrentYear)));
             // start year provided
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, currentYearToUse, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, new DateTime(currentYearToUse, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, currentYearToUse)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, currentYearToUse, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, new DateTime(currentYearToUse, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, yearAfterCurrentYear)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, currentYearToUse, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, new DateTime(currentYearToUse, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, yearAfterCurrentYear)));
             // end year provided
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, null, currentYearToUse, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
@@ -131,11 +131,11 @@ namespace ProjectFirma.Web.Common
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, null, currentYearToUse, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, yearAfterCurrentYear)));
             // start year and end year provided
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, currentYearToUse - 1, currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, new DateTime(currentYearToUse - 1,1,1), currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, ceilingYear)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, currentYearToUse - 1, currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, new DateTime(currentYearToUse - 1, 1, 1), currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, yearAfterCurrentYear)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, currentYearToUse - 1, currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, new DateTime(currentYearToUse - 1, 1, 1), currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse - 1, yearAfterCurrentYear)));
         }
 
@@ -151,13 +151,13 @@ namespace ProjectFirma.Web.Common
             // Testing if only have a start year
             // -- Start Year in the past: should go from Start Year to Current Year
             var startYear = currentYearToUse - 2;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, currentYearToUse)));
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, currentYearToUse)));
             // -- Start Year same as current year: should just be Start Year
             startYear = currentYearToUse;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, startYear)));
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, startYear)));
             // -- Start Year in the future: should just be Start Year
             startYear = currentYearToUse + 3;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, startYear)));
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, startYear)));
 
             // Testing if only have a completion year
             var completionYear = currentYearToUse - 2;
@@ -177,42 +177,42 @@ namespace ProjectFirma.Web.Common
             startYear = currentYearToUse - 2;
             // -- Completion year in the past
             completionYear = currentYearToUse - 1;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
             // -- Completion year same as current year
             completionYear = currentYearToUse;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
             // -- Completion year in future
             completionYear = startYear + 5;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
 
             // -- Start Year same as current year
             startYear = currentYearToUse;
             // -- Completion year in the past; should throw since that cannot happen!
             completionYear = currentYearToUse - 1;
-            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), "Cannot have a start year > end year!");
+            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), "Cannot have a start year > end year!");
             // -- Completion year same as current year
             completionYear = currentYearToUse;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
             // -- Completion year in future
             completionYear = startYear + 5;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
 
             // -- Start Year in the future
             startYear = currentYearToUse + 2;
             // -- Completion year in the past; should throw since that cannot happen!
             completionYear = currentYearToUse - 1;
-            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), "Cannot have a start year > end year!");
+            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), "Cannot have a start year > end year!");
             // -- Completion year same as current year
             completionYear = currentYearToUse;
-            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), "Cannot have a start year > end year!");
+            Assert.Throws<PreconditionException>(() => FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null), "Cannot have a start year > end year!");
             // -- Completion year in future
             completionYear = startYear + 5;
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), startYear, completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), new DateTime(startYear, 1, 1), completionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(startYear, completionYear)));
 
             // If we have existing budget records, we need to factor those in
@@ -226,11 +226,11 @@ namespace ProjectFirma.Web.Common
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, null, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, yearAfterCurrentYear)));
             // start year provided
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, currentYearToUse, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, new DateTime(currentYearToUse, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, currentYearToUse)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, currentYearToUse, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, new DateTime(currentYearToUse, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, yearAfterCurrentYear)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, currentYearToUse, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, new DateTime(currentYearToUse, 1, 1), null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, yearAfterCurrentYear)));
             // end year provided
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, null, currentYearToUse, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
@@ -240,11 +240,11 @@ namespace ProjectFirma.Web.Common
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, null, currentYearToUse, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, yearAfterCurrentYear)));
             // start year and end year provided
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, currentYearToUse - 1, currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear }, new DateTime(currentYearToUse - 1, 1, 1), currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, currentYearToUse + 1)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, currentYearToUse - 1, currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearBeforeCurrentYear, yearAfterCurrentYear }, new DateTime(currentYearToUse - 1, 1, 1), currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(yearBeforeCurrentYear, yearAfterCurrentYear)));
-            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, currentYearToUse - 1, currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
+            Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int> { yearAfterCurrentYear }, new DateTime(currentYearToUse - 1, 1, 1), currentYearToUse + 1, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), null),
                 Is.EquivalentTo(FirmaDateUtilities.GetRangeOfYears(currentYearToUse - 1, yearAfterCurrentYear)));
         }
 

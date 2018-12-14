@@ -40,20 +40,17 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
         public int ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlanningDesignStartYear)]
-        public int? PlanningDesignStartYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
+        public DateTime? PlannedDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
-        public int? ImplementationStartYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
+        public DateTime? ApprovalStartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
-        public int? CompletionYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
+        public DateTime? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         public Money? EstimatedTotalCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedAnnualOperatingCost)]
-        public Money? EstimatedAnnualOperatingCost { get; set; }
 
         [DisplayName("Reviewer Comments")]
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
@@ -72,11 +69,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             ProjectDescription = projectUpdate.ProjectDescription;
             ProjectStageID = projectUpdate.ProjectStageID;
-            PlanningDesignStartYear = projectUpdate.PlanningDesignStartYear;
-            ImplementationStartYear = projectUpdate.ImplementationStartYear;
-            CompletionYear = projectUpdate.CompletionYear;
+            PlannedDate = projectUpdate.PlannedDate;
+            ApprovalStartDate = projectUpdate.ApprovalStartDate;
+            CompletionDate = projectUpdate.CompletionDate;
             EstimatedTotalCost = projectUpdate.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = projectUpdate.EstimatedAnnualOperatingCost;
             Comments = comments;
             ProjectCustomAttributes = new ProjectCustomAttributes(projectUpdate);
         }
@@ -85,41 +81,40 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             projectUpdate.ProjectDescription = ProjectDescription;
             projectUpdate.ProjectStageID = ProjectStageID;
-            projectUpdate.PlanningDesignStartYear = PlanningDesignStartYear;
-            projectUpdate.ImplementationStartYear = ImplementationStartYear;
-            projectUpdate.CompletionYear = CompletionYear;
+            projectUpdate.PlannedDate = PlannedDate;
+            projectUpdate.ApprovalStartDate = ApprovalStartDate;
+            projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.EstimatedTotalCost = EstimatedTotalCost;
-            projectUpdate.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
             ProjectCustomAttributes?.UpdateModel(projectUpdate, currentPerson);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ImplementationStartYear < PlanningDesignStartYear)
+            if (ApprovalStartDate < PlannedDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
-                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear,
-                    m => m.ImplementationStartYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
+                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
+                    m => m.ApprovalStartDate);
             }
 
-            if (CompletionYear < ImplementationStartYear)
+            if (CompletionDate < ApprovalStartDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
-                    FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear,
-                    m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
+                    FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,
+                    m => m.CompletionDate);
             }
 
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionYear.HasValue)
+            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
-            if (isCompletedOrPostImplementation && CompletionYear > DateTime.Now.Year)
+            if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the Completion Year needs to be less than or equal to the current year",
-                    m => m.CompletionYear);
+                    m => m.CompletionDate);
             }
         }
     }

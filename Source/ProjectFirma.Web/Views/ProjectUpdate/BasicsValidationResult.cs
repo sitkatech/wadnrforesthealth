@@ -29,13 +29,13 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class BasicsValidationResult
     {
-        public static readonly string PlanningDesignStartYearIsRequired = $"{Models.FieldDefinition.PlanningDesignStartYear.GetFieldDefinitionLabel()} is a required field.";
-        public static readonly string ImplementationStartYearIsRequired = $"{Models.FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} is a required field.";
-        public static readonly string CompletionYearIsRequired = $"For projects in the Completed or Post-Implementation stage, {Models.FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} is a required field.";
+        public static readonly string PlannedDateIsRequired = $"{Models.FieldDefinition.PlannedDate.GetFieldDefinitionLabel()} is a required field.";
+        public static readonly string ImplementationStartYearIsRequired = $"{Models.FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()} is a required field.";
+        public static readonly string CompletionDateIsRequired = $"For projects in the Completed or Post-Implementation stage, {Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} is a required field.";
         public static readonly string ProjectDescriptionIsRequired = $"{Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel()} is required.";
-        public static readonly string CompletionYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the {Models.FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
-        public static readonly string PlanningDesignStartYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the {Models.FieldDefinition.PlanningDesignStartYear.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
-        public static readonly string ImplementationStartYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Implementation stage, the {Models.FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
+        public static readonly string CompletionDateShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the {Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
+        public static readonly string PlannedDateShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the {Models.FieldDefinition.PlannedDate.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
+        public static readonly string ImplementationStartYearShouldBeLessThanCurrentYear = $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Implementation stage, the {Models.FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()} needs to be less than or equal to this year";
 
         private readonly List<string> _warningMessages;
 
@@ -43,18 +43,18 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             _warningMessages = new List<string>();
 
-            if (projectUpdate.PlanningDesignStartYear == null)
+            if (projectUpdate.PlannedDate == null)
             {
-                _warningMessages.Add(PlanningDesignStartYearIsRequired);
+                _warningMessages.Add(PlannedDateIsRequired);
             }
-            if (projectUpdate.ImplementationStartYear == null && projectUpdate.ProjectStage != ProjectStage.Terminated && projectUpdate.ProjectStage != ProjectStage.Deferred )
+            if (projectUpdate.GetImplementationStartYear() == null && projectUpdate.ProjectStage != ProjectStage.Cancelled && projectUpdate.ProjectStage != ProjectStage.Deferred )
             {
                 _warningMessages.Add(ImplementationStartYearIsRequired);
             }
                         
-            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.CompletionYear == null)
+            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.GetCompletionYear() == null)
             {
-                _warningMessages.Add(CompletionYearIsRequired);
+                _warningMessages.Add(CompletionDateIsRequired);
             }
 
             if (GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(projectUpdate.ProjectDescription))
@@ -63,30 +63,30 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             }
             
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
-            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.CompletionYear > currentYear)
+            if ((projectUpdate.ProjectStage == ProjectStage.Completed || projectUpdate.ProjectStage == ProjectStage.PostImplementation) && projectUpdate.GetCompletionYear() > currentYear)
             {
-                _warningMessages.Add(CompletionYearShouldBeLessThanCurrentYear);
+                _warningMessages.Add(CompletionDateShouldBeLessThanCurrentYear);
             }
-            if (projectUpdate.ProjectStage == ProjectStage.PlanningDesign && projectUpdate.PlanningDesignStartYear > currentYear)
+            if (projectUpdate.ProjectStage == ProjectStage.Planned && projectUpdate.PlannedDate?.Year > currentYear)
             {
-                _warningMessages.Add(PlanningDesignStartYearShouldBeLessThanCurrentYear);
+                _warningMessages.Add(PlannedDateShouldBeLessThanCurrentYear);
             }
-            if (projectUpdate.ProjectStage == ProjectStage.Implementation && projectUpdate.ImplementationStartYear > currentYear)
+            if (projectUpdate.ProjectStage == ProjectStage.Implementation && projectUpdate.GetImplementationStartYear() > currentYear)
             {
                 _warningMessages.Add(ImplementationStartYearShouldBeLessThanCurrentYear);
             }
 
-            if (projectUpdate.ImplementationStartYear < projectUpdate.PlanningDesignStartYear)
+            if (projectUpdate.GetImplementationStartYear() < projectUpdate.PlannedDate?.Year)
             {
-                _warningMessages.Add(FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear);
+                _warningMessages.Add(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate);
             }
-            if (projectUpdate.CompletionYear < projectUpdate.ImplementationStartYear)
+            if (projectUpdate.GetCompletionYear() < projectUpdate.GetImplementationStartYear())
             {
-                _warningMessages.Add(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear);
+                _warningMessages.Add(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear);
             }
-            if (projectUpdate.CompletionYear < projectUpdate.PlanningDesignStartYear)
+            if (projectUpdate.GetCompletionYear() < projectUpdate.PlannedDate?.Year)
             {
-                _warningMessages.Add(FirmaValidationMessages.CompletionYearGreaterThanEqualToPlanningDesignStartYear);
+                _warningMessages.Add(FirmaValidationMessages.CompletionDateGreaterThanEqualToPlannedDate);
             }
         }
 

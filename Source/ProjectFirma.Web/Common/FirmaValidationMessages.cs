@@ -25,9 +25,9 @@ namespace ProjectFirma.Web.Common
 {
     public static class FirmaValidationMessages
     {
-        public static readonly string ImplementationStartYearGreaterThanPlanningDesignStartYear = $"{FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} must be greater than or equal to {FieldDefinition.PlanningDesignStartYear.GetFieldDefinitionLabel()}.";
-        public static readonly string CompletionYearGreaterThanEqualToImplementationStartYear = $"{FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()}.";
-        public static readonly string CompletionYearGreaterThanEqualToPlanningDesignStartYear = $"{FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.PlanningDesignStartYear.GetFieldDefinitionLabel()}.";
+        public static readonly string ImplementationStartYearGreaterThanPlannedDate = $"{FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()} must be greater than or equal to {FieldDefinition.PlannedDate.GetFieldDefinitionLabel()}.";
+        public static readonly string CompletionDateGreaterThanEqualToImplementationStartYear = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()}.";
+        public static readonly string CompletionDateGreaterThanEqualToPlannedDate = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.PlannedDate.GetFieldDefinitionLabel()}.";
         public static readonly string UpdateSectionIsDependentUponBasicsSection = "Your project's \"Basics\" page must be complete before you can begin updating this section.";
         public static readonly string ProjectNameUnique = $"{FieldDefinition.ProjectName.GetFieldDefinitionLabel()} already exists.";
         public static readonly string OrganizationNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} name already exists.";
@@ -38,11 +38,11 @@ namespace ProjectFirma.Web.Common
         public static readonly string ExplanationNecessaryForProjectExemptYears = $"Please provide an explanation of why the {FieldDefinition.ReportingYear.GetFieldDefinitionLabelPluralized()} are exempt.";
         public static readonly string ExplanationNotNecessaryForProjectExemptYears = $"Explanation is not necessary since no {FieldDefinition.ReportingYear.GetFieldDefinitionLabelPluralized()} are exempt.";
         public static readonly string TagNameUnique = $"{FieldDefinition.TagName.GetFieldDefinitionLabel()} already exists.";
-        public static readonly string CompletionYearMustBePastOrPresentForCompletedProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Completed and Post-Implementation stages cannot have a {FieldDefinition.CompletionYear.GetFieldDefinitionLabel()} in the future.";
+        public static readonly string CompletionDateMustBePastOrPresentForCompletedProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Completed and Post-Implementation stages cannot have a {FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} in the future.";
         public const string LettersNumbersSpacesDashesAndUnderscoresOnly = "Only letters, numbers, spaces, dashes and underscores are allowed.";
         public const string LettersOnly = "Only letters are allowed.";
         public const string MoreThanOneProjectUpdateInProgress = "Cannot determine latest update state; more than one update is in progress.";
-        public static readonly string ImplementationYearMustBePastOrPresentForImplementationProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Implementation stage cannot have an {FieldDefinition.ImplementationStartYear.GetFieldDefinitionLabel()} in the future.";
+        public static readonly string ImplementationYearMustBePastOrPresentForImplementationProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Implementation stage cannot have an {FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel()} in the future.";
     }
 }
 

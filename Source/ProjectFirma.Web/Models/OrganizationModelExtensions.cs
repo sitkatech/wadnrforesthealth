@@ -134,7 +134,7 @@ namespace ProjectFirma.Web.Models
         {
             Check.Assert(MultiTenantHelpers.DisplayAccomplishmentDashboard());
             return organization.GetAllAssociatedProjects()
-                .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowProposalsToThePublic())
+                .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowApplicationsToThePublic())
                 .Where(x => x.GetOrganizationsToReportInAccomplishments().Any(y => y == organization))
                 .ToList();
         }

@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Models
             {
                 // Planning / Design Project
                 var planningDesignProject = TestFramework.TestProject.Create();
-                planningDesignProject.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+                planningDesignProject.ProjectStageID = ProjectStage.Planned.ProjectStageID;
 
                 // - View PMs -
                 TestExpectedUserPermission(userAnonymous, viewPerformanceMeasureFeature, true);
@@ -206,7 +206,7 @@ namespace ProjectFirma.Web.Models
             {
                 // Terminated Project
                 var terminatedProject = TestFramework.TestProject.Create();
-                terminatedProject.ProjectStageID = ProjectStage.Terminated.ProjectStageID;
+                terminatedProject.ProjectStageID = ProjectStage.Cancelled.ProjectStageID;
 
                 // - View PMs -
                 TestExpectedUserPermission(userAnonymous, viewPerformanceMeasureFeature, false);
@@ -256,7 +256,7 @@ namespace ProjectFirma.Web.Models
             // ----------------
             {
                 var planningDesignProject = TestFramework.TestProject.Create();
-                planningDesignProject.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+                planningDesignProject.ProjectStageID = ProjectStage.Planned.ProjectStageID;
 
                 // - Edit Actual PMs -
                 TestExpectedUserPermission(userAnonymous, planningDesignProject, editPerformanceMeasureActualFeature, false);
@@ -298,7 +298,7 @@ namespace ProjectFirma.Web.Models
             // ----------------
             {
                 var planningDesignProject = TestFramework.TestProject.Create();
-                planningDesignProject.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+                planningDesignProject.ProjectStageID = ProjectStage.Planned.ProjectStageID;
 
                 // - Edit Actual PMs -
                 TestExpectedUserPermission(userAnonymous, planningDesignProject, manageReportedExpendituresFeature, false);

@@ -127,7 +127,7 @@ namespace ProjectFirma.Web.Controllers
             else
             {
                 projects = HttpRequestStorage.DatabaseEntities.Projects.ToList()
-                    .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowProposalsToThePublic()).ToList();
+                    .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowApplicationsToThePublic()).ToList();
             }
 
             var projectCount = projects.Count;
@@ -155,7 +155,7 @@ namespace ProjectFirma.Web.Controllers
             }
             else
             {
-                projects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsAndProposals(MultiTenantHelpers.ShowProposalsToThePublic()).ToList();
+                projects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjectsAndProposals(MultiTenantHelpers.ShowApplicationsToThePublic()).ToList();
             }
 
             var associatePerformanceMeasureTaxonomyLevel = MultiTenantHelpers.GetAssociatePerformanceMeasureTaxonomyLevel();
@@ -211,7 +211,7 @@ namespace ProjectFirma.Web.Controllers
             else
             {
                 partnerOrganizations = HttpRequestStorage.DatabaseEntities.Projects.ToList()
-                    .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowProposalsToThePublic())
+                    .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowApplicationsToThePublic())
                     .SelectMany(x => x.GetAssociatedOrganizations().Where(y => y.Organization.OrganizationType.IsFundingType && //filter by only orgs that can be funders to remove state senate and assessbly districts 
                                                                                y.Organization.IsActive))
                     .Where(x => includeReportingOrganizationType || !x.Organization.CanBeReportedInAccomplishmentsDashboard())

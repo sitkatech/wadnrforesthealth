@@ -120,11 +120,6 @@
     <Compile Include="Models\Generated\FundingSource.Binding.cs" />
     <Compile Include="Models\Generated\FundingSource.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FundingSourcePrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\FundingType.Binding.cs" />
-    <Compile Include="Models\Generated\FundingTypeData.Binding.cs" />
-    <Compile Include="Models\Generated\FundingTypeData.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\FundingTypeDataPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\FundingTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GeospatialArea.Binding.cs" />
     <Compile Include="Models\Generated\GeospatialArea.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GeospatialAreaPrimaryKey.Binding.cs" />
@@ -582,8 +577,6 @@
     <Compile Include="Common\SitkaRouteTableEntry.cs" />
     <Compile Include="Controllers\ProjectFundingSourceRequestController.cs" />
     <Compile Include="Controllers\GoogleChartController.cs" />
-    <Compile Include="Models\FundingType.cs" />
-    <Compile Include="Models\FundingTypeData.DatabaseContextExtensions.cs" />
     <Compile Include="Models\HslColor.cs" />
     <Compile Include="Models\IFundingSourceRequestAmount.cs" />
     <Compile Include="Models\OrganizationType.DatabaseContextExtensions.cs" />

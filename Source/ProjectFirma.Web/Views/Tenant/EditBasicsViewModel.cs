@@ -81,9 +81,9 @@ namespace ProjectFirma.Web.Views.Tenant
         [Required]
         public bool? ProjectExternalDataSourceEnabled { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ShowProposalsToThePublic)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ShowApplicationsToThePublic)]
         [Required]
-        public bool? ShowProposalsToThePublic { get; set; }
+        public bool? ShowApplicationsToThePublic { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ShowLeadImplementerLogoOnFactSheet)]
         public bool ShowLeadImplementerLogoOnFactSheet { get; set; }
@@ -108,7 +108,7 @@ namespace ProjectFirma.Web.Views.Tenant
             AssociatePerfomanceMeasureTaxonomyLevelID = tenantAttribute.AssociatePerfomanceMeasureTaxonomyLevelID;
             MinimumYear = tenantAttribute.MinimumYear;
             ProjectExternalDataSourceEnabled = tenantAttribute.ProjectExternalDataSourceEnabled;
-            ShowProposalsToThePublic = tenantAttribute.ShowProposalsToThePublic;
+            ShowApplicationsToThePublic = tenantAttribute.ShowApplicationsToThePublic;
             ShowLeadImplementerLogoOnFactSheet = tenantAttribute.ShowLeadImplementerLogoOnFactSheet;
             EnableAccomplishmentsDashboard = tenantAttribute.EnableAccomplishmentsDashboard;
         }
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Views.Tenant
         {
             attribute.TenantDisplayName = TenantDisplayName;
             attribute.ToolDisplayName = ToolDisplayName;
-            attribute.ShowProposalsToThePublic = ShowProposalsToThePublic.GetValueOrDefault();
+            attribute.ShowApplicationsToThePublic = ShowApplicationsToThePublic.GetValueOrDefault();
             attribute.ShowLeadImplementerLogoOnFactSheet = ShowLeadImplementerLogoOnFactSheet;
             attribute.EnableAccomplishmentsDashboard = EnableAccomplishmentsDashboard;
 

@@ -112,7 +112,8 @@ namespace ProjectFirma.Web.Models
             ProjectFundingSourceRequestUpdate.CreateFromProject(projectUpdateBatch);
 
             // performance measures
-            PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
 
             // project performance measures exempt reporting years
             ProjectExemptReportingYearUpdate.CreatePerformanceMeasuresExemptReportingYearsFromProject(projectUpdateBatch);
@@ -333,7 +334,7 @@ namespace ProjectFirma.Web.Models
             private set => _areProjectBasicsValid = value;
         }
 
-        public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.PlanningDesign;
+        public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;
 
         public PerformanceMeasuresValidationResult ValidatePerformanceMeasures()
         {
@@ -347,7 +348,7 @@ namespace ProjectFirma.Web.Models
             if (ProjectUpdate.ProjectStage.RequiresPerformanceMeasureActuals() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
             {
                 var exemptYears = this.GetPerformanceMeasuresExemptReportingYears().Select(x => x.CalendarYear).ToList();
-                var yearsExpected = ProjectUpdate.GetProjectUpdateImplementationStartToCompletionYearRange().Where(x => !exemptYears.Contains(x)).ToList();
+                var yearsExpected = ProjectUpdate.GetProjectUpdateImplementationStartToCompletionDateRange().Where(x => !exemptYears.Contains(x)).ToList();
                 var yearsEntered = PerformanceMeasureActualUpdates.Select(x => x.CalendarYear).Distinct();
                 missingYears = yearsExpected.GetMissingYears(yearsEntered);
             }
@@ -428,7 +429,7 @@ namespace ProjectFirma.Web.Models
             if (ProjectUpdate.ProjectStage.RequiresReportedExpenditures() || ProjectUpdate.ProjectStage == ProjectStage.Completed)
             {
                 // validation 1: ensure that we have expenditure values from ProjectUpdate start year to min(endyear, currentyear)
-                var yearsExpected = ProjectUpdate.GetProjectUpdatePlanningDesignStartToCompletionYearRange();
+                var yearsExpected = ProjectUpdate.GetProjectUpdatePlanningDesignStartToCompletionDateRange();
                 var validateExpenditures = ExpendituresValidationResult.ValidateImpl(
                     this.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList(),
                     NoExpendituresToReportExplanation, yearsExpected, new List<IFundingSourceExpenditure>(ProjectFundingSourceExpenditureUpdates));
@@ -579,9 +580,10 @@ namespace ProjectFirma.Web.Models
             // only relevant for stages past planning/design
             if (!NewStageIsPlanningDesign)
             {
-                // performance measures
-                PerformanceMeasureActualUpdate.CommitChangesToProject(this, performanceMeasureActuals,
-                    performanceMeasureActualSubcategoryOptions);
+                //// performance measures
+                // TODO Neutered Per WA DNR #1446. May decide to bring it back later 
+                //PerformanceMeasureActualUpdate.CommitChangesToProject(this, performanceMeasureActuals,
+                //    performanceMeasureActualSubcategoryOptions);
 
                 // project exempt reporting years
                 ProjectExemptReportingYearUpdate.CommitChangesToProject(this, projectExemptReportingYears);
@@ -641,7 +643,7 @@ namespace ProjectFirma.Web.Models
         public bool AreAccomplishmentsRelevant()
         {
             var projectStage = ProjectUpdate == null ? Project.ProjectStage : ProjectUpdate.ProjectStage;
-            return projectStage != ProjectStage.PlanningDesign;
+            return projectStage != ProjectStage.Planned;
         }
 
         public List<ProjectSectionSimple> GetApplicableWizardSections(bool ignoreStatus)

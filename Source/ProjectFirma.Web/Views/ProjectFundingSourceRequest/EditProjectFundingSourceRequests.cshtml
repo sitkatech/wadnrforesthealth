@@ -51,6 +51,7 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-xs-12">
         <div ng-app="ProjectFirmaApp" id="EditFundingSourceRequestsApp" ng-controller="ProjectFundingSourceRequestController" style="max-height: 600px;">
@@ -154,6 +155,14 @@ Source code is available upon request via <support@sitkatech.com>.
 
             @using (Html.BeginForm())
             {
+                @Html.HiddenFor(m=>m.ForProject)
+                <div class="form-group">
+                    <div class="col-md-3">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
+                    <div class="col-md-9">
+                        @Html.EditorFor(m => m.ProjectEstimatedTotalCost)
+                        @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
+                    </div>
+                </div>
                 <div ng-repeat="projectFundingSourceRequest in AngularModel.ProjectFundingSourceRequests | orderBy:[getFundingSourceName, getProjectName]">
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectFundingSourceRequests[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceRequest.ProjectID}}"/>
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectFundingSourceRequests[0].FundingSourceID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceRequest.FundingSourceID}}"/>

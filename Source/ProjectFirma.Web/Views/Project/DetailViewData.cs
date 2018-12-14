@@ -137,7 +137,7 @@ namespace ProjectFirma.Web.Views.Project
 
             var projectAlerts = new List<string>();
             var proposedProjectListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Proposed());
-            var backToAllProposalsText = "Back to all Proposals";
+            var backToAllProposalsText = "Back to all Applications";
             var pendingProjectsListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Pending());
             var backToAllPendingProjectsText = $"Back to all Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}";
 
@@ -175,8 +175,8 @@ namespace ProjectFirma.Web.Views.Project
                 ProjectUpdateButtonText =
                     projectApprovalStatus == ProjectApprovalStatus.Draft ||
                     projectApprovalStatus == ProjectApprovalStatus.Returned
-                        ? "Edit Proposal"
-                        : "Review Proposal";
+                        ? "Edit Application"
+                        : "Review Application";
                 ProjectWizardUrl =
                     SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(project.ProjectID));
                 CanLaunchProjectOrProposalWizard = userCanEditProposal;

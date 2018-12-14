@@ -51,26 +51,19 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [Required]
         public int? ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlanningDesignStartYear)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         [Required]
-        public int? PlanningDesignStartYear { get; set; }
+        public DateTime? PlannedDate { get; set; }
         
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ImplementationStartYear)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
         [Required]
-        public int? ImplementationStartYear { get; set; }
+        public DateTime? ApprovalStartDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionYear)]
-        public int? CompletionYear { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
+        public DateTime? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         public Money? EstimatedTotalCost { get; set; }
-        
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedAnnualOperatingCost)]
-        public Money? EstimatedAnnualOperatingCost { get; set; }
-      
-        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingType)]
-        [Required]
-        public int FundingTypeID { get; set; }
 
         public int? ImportExternalProjectStagingID { get; set; }
 
@@ -90,12 +83,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ProjectName = project.ProjectName;
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;            
-            FundingTypeID = project.FundingTypeID;
             EstimatedTotalCost = project.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
-            PlanningDesignStartYear = project.PlanningDesignStartYear;
-            ImplementationStartYear = project.ImplementationStartYear;
-            CompletionYear = project.CompletionYear;
+            PlannedDate = project.PlannedDate;
+            ApprovalStartDate = project.ApprovalStartDate;
+            CompletionDate = project.CompletionDate;
             ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
 
@@ -114,22 +105,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID;
-            project.FundingTypeID = FundingTypeID;
-            if (FundingTypeID == FundingType.Capital.FundingTypeID)
-            {
-                project.EstimatedTotalCost = EstimatedTotalCost;
-                project.EstimatedAnnualOperatingCost = null;
-                
-            }
-            else if (FundingTypeID == FundingType.OperationsAndMaintenance.FundingTypeID)
-            {
-                project.EstimatedTotalCost = null;
-                project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
-            }
-            
-            project.PlanningDesignStartYear = PlanningDesignStartYear;
-            project.ImplementationStartYear = ImplementationStartYear;
-            project.CompletionYear = CompletionYear;
+            project.EstimatedTotalCost = EstimatedTotalCost;
+
+            project.PlannedDate = PlannedDate;
+            project.ApprovalStartDate = ApprovalStartDate;
+            project.CompletionDate = CompletionDate;
             ProjectCustomAttributes?.UpdateModel(project, person);
         }
 
@@ -152,55 +132,55 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, string>(FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ImplementationStartYear < PlanningDesignStartYear)
+            if (ApprovalStartDate < PlannedDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear, m => m.ImplementationStartYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate, m => m.ApprovalStartDate);
             }
 
-            if (CompletionYear < ImplementationStartYear)
+            if (CompletionDate < ApprovalStartDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear, m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear, m => m.CompletionDate);
             }
 
-            if (CompletionYear < PlanningDesignStartYear)
+            if (CompletionDate < PlannedDate)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearGreaterThanEqualToPlanningDesignStartYear, m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.CompletionDateGreaterThanEqualToPlannedDate, m => m.CompletionDate);
             }
 
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
             if (ProjectStageID == ProjectStage.Implementation.ProjectStageID)
             {
-                if (ImplementationStartYear > currentYear)
+                if (ApprovalStartDate?.Year > currentYear)
                 {
-                    yield return new SitkaValidationResult<BasicsViewModel, int?>(
+                    yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                         FirmaValidationMessages.ImplementationYearMustBePastOrPresentForImplementationProjects,
-                        m => m.ImplementationStartYear);
+                        m => m.ApprovalStartDate);
                 }
             }
             
-            if (ImplementationStartYear == null && ProjectStageID != ProjectStage.Terminated.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
+            if (ApprovalStartDate == null && ProjectStageID != ProjectStage.Cancelled.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Implementation year is required when the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} stage is not Deferred or Terminated",
-                    m => m.ImplementationStartYear);
+                    m => m.ApprovalStartDate);
             }
 
-            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionYear.HasValue)
+            if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
             if ((ProjectStageID == ProjectStage.Completed.ProjectStageID ||
-                ProjectStageID == ProjectStage.PostImplementation.ProjectStageID) && CompletionYear > currentYear)
+                ProjectStageID == ProjectStage.PostImplementation.ProjectStageID) && CompletionDate?.Year > currentYear)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(FirmaValidationMessages.CompletionYearMustBePastOrPresentForCompletedProjects, m => m.CompletionYear);
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.CompletionDateMustBePastOrPresentForCompletedProjects, m => m.CompletionDate);
             }
 
-            if (ProjectStageID == ProjectStage.PlanningDesign.ProjectStageID && PlanningDesignStartYear > currentYear)
+            if (ProjectStageID == ProjectStage.Planned.ProjectStageID && PlannedDate?.Year > currentYear)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(
+                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the Planning / Design start year must be less than or equal to the current year",
-                    m => m.PlanningDesignStartYear);
+                    m => m.PlannedDate);
             }
         }
     }

@@ -66,8 +66,6 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<FirmaPage> FirmaPages { get { return AllFirmaPages.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<FundingSource> AllFundingSources { get; set; }
         public virtual IQueryable<FundingSource> FundingSources { get { return AllFundingSources.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
-        public virtual DbSet<FundingTypeData> AllFundingTypeDatas { get; set; }
-        public virtual IQueryable<FundingTypeData> FundingTypeDatas { get { return AllFundingTypeDatas.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<GeospatialArea> AllGeospatialAreas { get; set; }
         public virtual IQueryable<GeospatialArea> GeospatialAreas { get { return AllGeospatialAreas.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<GeospatialAreaType> AllGeospatialAreaTypes { get; set; }
@@ -340,14 +338,6 @@ namespace ProjectFirma.Web.Models
 
                 case "FundingSource":
                     return FundingSources.GetFundingSource(primaryKey);
-
-                case "FundingTypeData":
-                    return FundingTypeDatas.GetFundingTypeData(primaryKey);
-
-                case "FundingType":
-                    var fundingType = FundingType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(fundingType, "FundingType", primaryKey);
-                    return fundingType;
 
                 case "GeospatialArea":
                     return GeospatialAreas.GetGeospatialArea(primaryKey);

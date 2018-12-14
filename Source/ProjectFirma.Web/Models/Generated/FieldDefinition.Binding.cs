@@ -34,11 +34,11 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionPhotoTiming PhotoTiming = FieldDefinitionPhotoTiming.Instance;
         public static readonly FieldDefinitionOrganizationPrimaryContact OrganizationPrimaryContact = FieldDefinitionOrganizationPrimaryContact.Instance;
         public static readonly FieldDefinitionTaxonomyBranch TaxonomyBranch = FieldDefinitionTaxonomyBranch.Instance;
-        public static readonly FieldDefinitionCompletionYear CompletionYear = FieldDefinitionCompletionYear.Instance;
+        public static readonly FieldDefinitionCompletionDate CompletionDate = FieldDefinitionCompletionDate.Instance;
         public static readonly FieldDefinitionProjectDescription ProjectDescription = FieldDefinitionProjectDescription.Instance;
         public static readonly FieldDefinitionProjectName ProjectName = FieldDefinitionProjectName.Instance;
         public static readonly FieldDefinitionProjectNote ProjectNote = FieldDefinitionProjectNote.Instance;
-        public static readonly FieldDefinitionImplementationStartYear ImplementationStartYear = FieldDefinitionImplementationStartYear.Instance;
+        public static readonly FieldDefinitionApprovalStartDate ApprovalStartDate = FieldDefinitionApprovalStartDate.Instance;
         public static readonly FieldDefinitionReportedValue ReportedValue = FieldDefinitionReportedValue.Instance;
         public static readonly FieldDefinitionOrganizationType OrganizationType = FieldDefinitionOrganizationType.Instance;
         public static readonly FieldDefinitionSecuredFunding SecuredFunding = FieldDefinitionSecuredFunding.Instance;
@@ -55,20 +55,17 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionFundedAmount FundedAmount = FieldDefinitionFundedAmount.Instance;
         public static readonly FieldDefinitionProjectLocation ProjectLocation = FieldDefinitionProjectLocation.Instance;
         public static readonly FieldDefinitionExcludeFromFactSheet ExcludeFromFactSheet = FieldDefinitionExcludeFromFactSheet.Instance;
-        public static readonly FieldDefinitionFundingType FundingType = FieldDefinitionFundingType.Instance;
         public static readonly FieldDefinitionProjectCostInYearOfExpenditure ProjectCostInYearOfExpenditure = FieldDefinitionProjectCostInYearOfExpenditure.Instance;
         public static readonly FieldDefinitionGlobalInflationRate GlobalInflationRate = FieldDefinitionGlobalInflationRate.Instance;
         public static readonly FieldDefinitionReportingYear ReportingYear = FieldDefinitionReportingYear.Instance;
         public static readonly FieldDefinitionTagName TagName = FieldDefinitionTagName.Instance;
         public static readonly FieldDefinitionTagDescription TagDescription = FieldDefinitionTagDescription.Instance;
         public static readonly FieldDefinitionReportedExpenditure ReportedExpenditure = FieldDefinitionReportedExpenditure.Instance;
-        public static readonly FieldDefinitionProposal Proposal = FieldDefinitionProposal.Instance;
+        public static readonly FieldDefinitionApplication Application = FieldDefinitionApplication.Instance;
         public static readonly FieldDefinitionSpendingAssociatedWithPM SpendingAssociatedWithPM = FieldDefinitionSpendingAssociatedWithPM.Instance;
-        public static readonly FieldDefinitionPlanningDesignStartYear PlanningDesignStartYear = FieldDefinitionPlanningDesignStartYear.Instance;
+        public static readonly FieldDefinitionPlannedDate PlannedDate = FieldDefinitionPlannedDate.Instance;
         public static readonly FieldDefinitionAssociatedTaxonomyBranches AssociatedTaxonomyBranches = FieldDefinitionAssociatedTaxonomyBranches.Instance;
         public static readonly FieldDefinitionExternalLinks ExternalLinks = FieldDefinitionExternalLinks.Instance;
-        public static readonly FieldDefinitionEstimatedAnnualOperatingCost EstimatedAnnualOperatingCost = FieldDefinitionEstimatedAnnualOperatingCost.Instance;
-        public static readonly FieldDefinitionCalculatedTotalRemainingOperatingCost CalculatedTotalRemainingOperatingCost = FieldDefinitionCalculatedTotalRemainingOperatingCost.Instance;
         public static readonly FieldDefinitionCurrentYearForPVCalculations CurrentYearForPVCalculations = FieldDefinitionCurrentYearForPVCalculations.Instance;
         public static readonly FieldDefinitionLifecycleOperatingCost LifecycleOperatingCost = FieldDefinitionLifecycleOperatingCost.Instance;
         public static readonly FieldDefinitionPerformanceMeasureChartTitle PerformanceMeasureChartTitle = FieldDefinitionPerformanceMeasureChartTitle.Instance;
@@ -96,7 +93,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionTaxonomyTrunkDescription TaxonomyTrunkDescription = FieldDefinitionTaxonomyTrunkDescription.Instance;
         public static readonly FieldDefinitionTaxonomyBranchDescription TaxonomyBranchDescription = FieldDefinitionTaxonomyBranchDescription.Instance;
         public static readonly FieldDefinitionTaxonomyLeafDescription TaxonomyLeafDescription = FieldDefinitionTaxonomyLeafDescription.Instance;
-        public static readonly FieldDefinitionShowProposalsToThePublic ShowProposalsToThePublic = FieldDefinitionShowProposalsToThePublic.Instance;
+        public static readonly FieldDefinitionShowApplicationsToThePublic ShowApplicationsToThePublic = FieldDefinitionShowApplicationsToThePublic.Instance;
         public static readonly FieldDefinitionShowLeadImplementerLogoOnFactSheet ShowLeadImplementerLogoOnFactSheet = FieldDefinitionShowLeadImplementerLogoOnFactSheet.Instance;
         public static readonly FieldDefinitionProjectCustomAttribute ProjectCustomAttribute = FieldDefinitionProjectCustomAttribute.Instance;
         public static readonly FieldDefinitionProjectCustomAttributeDataType ProjectCustomAttributeDataType = FieldDefinitionProjectCustomAttributeDataType.Instance;
@@ -117,7 +114,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { TaxonomyLeaf, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionYear, ProjectDescription, ProjectName, ProjectNote, ImplementationStartYear, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, FundingType, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Proposal, SpendingAssociatedWithPM, PlanningDesignStartYear, AssociatedTaxonomyBranches, ExternalLinks, EstimatedAnnualOperatingCost, CalculatedTotalRemainingOperatingCost, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, TaxonomyLeafDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, TaxonomyLeafDescription, ShowProposalsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote };
+            All = new List<FieldDefinition> { TaxonomyLeaf, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ApprovalStartDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, PlannedDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, TaxonomyLeafDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, TaxonomyLeafDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -195,10 +192,12 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
+                case FieldDefinitionEnum.Application:
+                    return Application;
+                case FieldDefinitionEnum.ApprovalStartDate:
+                    return ApprovalStartDate;
                 case FieldDefinitionEnum.AssociatedTaxonomyBranches:
                     return AssociatedTaxonomyBranches;
-                case FieldDefinitionEnum.CalculatedTotalRemainingOperatingCost:
-                    return CalculatedTotalRemainingOperatingCost;
                 case FieldDefinitionEnum.ChartLastUpdatedDate:
                     return ChartLastUpdatedDate;
                 case FieldDefinitionEnum.Classification:
@@ -215,14 +214,12 @@ namespace ProjectFirma.Web.Models
                     return ClassificationSystem;
                 case FieldDefinitionEnum.ClassificationSystemName:
                     return ClassificationSystemName;
-                case FieldDefinitionEnum.CompletionYear:
-                    return CompletionYear;
+                case FieldDefinitionEnum.CompletionDate:
+                    return CompletionDate;
                 case FieldDefinitionEnum.CurrentYearForPVCalculations:
                     return CurrentYearForPVCalculations;
                 case FieldDefinitionEnum.CustomPageDisplayType:
                     return CustomPageDisplayType;
-                case FieldDefinitionEnum.EstimatedAnnualOperatingCost:
-                    return EstimatedAnnualOperatingCost;
                 case FieldDefinitionEnum.EstimatedTotalCost:
                     return EstimatedTotalCost;
                 case FieldDefinitionEnum.ExcludeFromFactSheet:
@@ -237,12 +234,8 @@ namespace ProjectFirma.Web.Models
                     return FundingSource;
                 case FieldDefinitionEnum.FundingSourceAmount:
                     return FundingSourceAmount;
-                case FieldDefinitionEnum.FundingType:
-                    return FundingType;
                 case FieldDefinitionEnum.GlobalInflationRate:
                     return GlobalInflationRate;
-                case FieldDefinitionEnum.ImplementationStartYear:
-                    return ImplementationStartYear;
                 case FieldDefinitionEnum.IsPrimaryContactOrganization:
                     return IsPrimaryContactOrganization;
                 case FieldDefinitionEnum.IsPrimaryTaxonomyBranch:
@@ -289,8 +282,8 @@ namespace ProjectFirma.Web.Models
                     return PhotoCredit;
                 case FieldDefinitionEnum.PhotoTiming:
                     return PhotoTiming;
-                case FieldDefinitionEnum.PlanningDesignStartYear:
-                    return PlanningDesignStartYear;
+                case FieldDefinitionEnum.PlannedDate:
+                    return PlannedDate;
                 case FieldDefinitionEnum.Project:
                     return Project;
                 case FieldDefinitionEnum.ProjectCostInYearOfExpenditure:
@@ -329,8 +322,6 @@ namespace ProjectFirma.Web.Models
                     return ProjectUpdateKickOffDate;
                 case FieldDefinitionEnum.ProjectUpdateReminderInterval:
                     return ProjectUpdateReminderInterval;
-                case FieldDefinitionEnum.Proposal:
-                    return Proposal;
                 case FieldDefinitionEnum.Region:
                     return Region;
                 case FieldDefinitionEnum.ReportedExpenditure:
@@ -343,10 +334,10 @@ namespace ProjectFirma.Web.Models
                     return RoleName;
                 case FieldDefinitionEnum.SecuredFunding:
                     return SecuredFunding;
+                case FieldDefinitionEnum.ShowApplicationsToThePublic:
+                    return ShowApplicationsToThePublic;
                 case FieldDefinitionEnum.ShowLeadImplementerLogoOnFactSheet:
                     return ShowLeadImplementerLogoOnFactSheet;
-                case FieldDefinitionEnum.ShowProposalsToThePublic:
-                    return ShowProposalsToThePublic;
                 case FieldDefinitionEnum.SpendingAssociatedWithPM:
                     return SpendingAssociatedWithPM;
                 case FieldDefinitionEnum.TagDescription:
@@ -399,11 +390,11 @@ namespace ProjectFirma.Web.Models
         PhotoTiming = 24,
         OrganizationPrimaryContact = 25,
         TaxonomyBranch = 26,
-        CompletionYear = 28,
+        CompletionDate = 28,
         ProjectDescription = 29,
         ProjectName = 30,
         ProjectNote = 31,
-        ImplementationStartYear = 32,
+        ApprovalStartDate = 32,
         ReportedValue = 33,
         OrganizationType = 34,
         SecuredFunding = 35,
@@ -420,20 +411,17 @@ namespace ProjectFirma.Web.Models
         FundedAmount = 56,
         ProjectLocation = 57,
         ExcludeFromFactSheet = 64,
-        FundingType = 73,
         ProjectCostInYearOfExpenditure = 74,
         GlobalInflationRate = 75,
         ReportingYear = 76,
         TagName = 77,
         TagDescription = 78,
         ReportedExpenditure = 80,
-        Proposal = 81,
+        Application = 81,
         SpendingAssociatedWithPM = 85,
-        PlanningDesignStartYear = 86,
+        PlannedDate = 86,
         AssociatedTaxonomyBranches = 87,
         ExternalLinks = 88,
-        EstimatedAnnualOperatingCost = 89,
-        CalculatedTotalRemainingOperatingCost = 90,
         CurrentYearForPVCalculations = 91,
         LifecycleOperatingCost = 92,
         PerformanceMeasureChartTitle = 97,
@@ -461,7 +449,7 @@ namespace ProjectFirma.Web.Models
         TaxonomyTrunkDescription = 254,
         TaxonomyBranchDescription = 255,
         TaxonomyLeafDescription = 256,
-        ShowProposalsToThePublic = 257,
+        ShowApplicationsToThePublic = 257,
         ShowLeadImplementerLogoOnFactSheet = 258,
         ProjectCustomAttribute = 259,
         ProjectCustomAttributeDataType = 260,
@@ -571,10 +559,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionTaxonomyBranch Instance = new FieldDefinitionTaxonomyBranch(26, @"TaxonomyBranch", @"Taxonomy Branch", @"<p>The second level record in the hierarchical project taxonomy system.</p>");
     }
 
-    public partial class FieldDefinitionCompletionYear : FieldDefinition
+    public partial class FieldDefinitionCompletionDate : FieldDefinition
     {
-        private FieldDefinitionCompletionYear(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionCompletionYear Instance = new FieldDefinitionCompletionYear(28, @"CompletionYear", @"Completion Year", @"<p>The year implementation of the project was completed or is anticipated to be completed. Projects are considered &quot;complete&quot; when all activities have been performed, including post-implementation activities such as monitoring vegetation establishment, and all&nbsp;reporting requirements have been satisfied. &nbsp;For more detailed information, see the definition for &quot;Stage&quot;.</p>");
+        private FieldDefinitionCompletionDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionCompletionDate Instance = new FieldDefinitionCompletionDate(28, @"CompletionDate", @"Completion Date", @"<p>The year implementation of the project was completed or is anticipated to be completed. Projects are considered &quot;complete&quot; when all activities have been performed, including post-implementation activities such as monitoring vegetation establishment, and all&nbsp;reporting requirements have been satisfied. &nbsp;For more detailed information, see the definition for &quot;Stage&quot;.</p>");
     }
 
     public partial class FieldDefinitionProjectDescription : FieldDefinition
@@ -595,10 +583,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectNote Instance = new FieldDefinitionProjectNote(31, @"ProjectNote", @"Project Note", @"<p>Any important information about a project that would be useful to staff or project implementers.</p>");
     }
 
-    public partial class FieldDefinitionImplementationStartYear : FieldDefinition
+    public partial class FieldDefinitionApprovalStartDate : FieldDefinition
     {
-        private FieldDefinitionImplementationStartYear(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionImplementationStartYear Instance = new FieldDefinitionImplementationStartYear(32, @"ImplementationStartYear", @"Implementation Start Year", @"<p>The year during which project construction or program implementation was started or is expected to be started. Contrast with &quot;Planning / Design Start Year.&quot; For more detailed information on implementation stages, see the definition for &quot;Stage&quot;.</p>");
+        private FieldDefinitionApprovalStartDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionApprovalStartDate Instance = new FieldDefinitionApprovalStartDate(32, @"ApprovalStartDate", @"Approval/Start Date", @"<p>The year during which project construction or program implementation was started or is expected to be started. Contrast with &quot;Planning / Design Start Year.&quot; For more detailed information on implementation stages, see the definition for &quot;Stage&quot;.</p>");
     }
 
     public partial class FieldDefinitionReportedValue : FieldDefinition
@@ -622,7 +610,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionProjectStage : FieldDefinition
     {
         private FieldDefinitionProjectStage(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectStage Instance = new FieldDefinitionProjectStage(36, @"ProjectStage", @"Project Stage", @"<p>Where a project exists in the project life cycle - Planning/Design, Implementation, Complete, Terminated, etc.</p>");
+        public static readonly FieldDefinitionProjectStage Instance = new FieldDefinitionProjectStage(36, @"ProjectStage", @"Project Stage", @"<p>Where a project exists in the project life cycle - Planned, Implementation, Complete, Cancelled, etc.</p>");
     }
 
     public partial class FieldDefinitionClassificationName : FieldDefinition
@@ -697,12 +685,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionExcludeFromFactSheet Instance = new FieldDefinitionExcludeFromFactSheet(64, @"ExcludeFromFactSheet", @"Exclude from Fact Sheet", @"<p>Flags a photo so that it is not included in the photos shown on the project&#39;s Fact Sheet. Some projects have tons of photos -- use this checkbox to control which photos are included.</p>");
     }
 
-    public partial class FieldDefinitionFundingType : FieldDefinition
-    {
-        private FieldDefinitionFundingType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFundingType Instance = new FieldDefinitionFundingType(73, @"FundingType", @"Funding Type", @"<p>Field shows whether project is a capital (Capital) versus operations and maintenance (Operations and Maintenance) project.&nbsp;</p>");
-    }
-
     public partial class FieldDefinitionProjectCostInYearOfExpenditure : FieldDefinition
     {
         private FieldDefinitionProjectCostInYearOfExpenditure(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
@@ -739,10 +721,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionReportedExpenditure Instance = new FieldDefinitionReportedExpenditure(80, @"ReportedExpenditure", @"Reported Expenditure", @"<p>An expenditure, tied to a Funding Source, as reported by the project implementer.</p>");
     }
 
-    public partial class FieldDefinitionProposal : FieldDefinition
+    public partial class FieldDefinitionApplication : FieldDefinition
     {
-        private FieldDefinitionProposal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProposal Instance = new FieldDefinitionProposal(81, @"Proposal", @"Proposal", @"<p>A project suggested by an program partner that will be reviewed for inclusion in the program. The system administrators are responsible for reviewing, and if appropriate, approving proposals.</p>");
+        private FieldDefinitionApplication(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionApplication Instance = new FieldDefinitionApplication(81, @"Application", @"Application", @"<p>A project suggested by an program partner that will be reviewed for inclusion in the program. The system administrators are responsible for reviewing, and if appropriate, approving proposals.</p>");
     }
 
     public partial class FieldDefinitionSpendingAssociatedWithPM : FieldDefinition
@@ -751,10 +733,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionSpendingAssociatedWithPM Instance = new FieldDefinitionSpendingAssociatedWithPM(85, @"SpendingAssociatedWithPM", @"Spending Associated with PM", @"<p>The estimated spending allotted to the Performance Measure.</p>");
     }
 
-    public partial class FieldDefinitionPlanningDesignStartYear : FieldDefinition
+    public partial class FieldDefinitionPlannedDate : FieldDefinition
     {
-        private FieldDefinitionPlanningDesignStartYear(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionPlanningDesignStartYear Instance = new FieldDefinitionPlanningDesignStartYear(86, @"PlanningDesignStartYear", @"Planning / Design Start Year", @"<p>The year during which project planning and design began. All projects should have a Planning / Design Start Year and it may not be a year in the future. Contrast with &quot;Implementation Start Year.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>");
+        private FieldDefinitionPlannedDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionPlannedDate Instance = new FieldDefinitionPlannedDate(86, @"PlannedDate", @"Planned Date", @"<p>The date on which project planning and design began. All projects should have a Planned Date and it may not be a date in the future. Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>");
     }
 
     public partial class FieldDefinitionAssociatedTaxonomyBranches : FieldDefinition
@@ -769,18 +751,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionExternalLinks Instance = new FieldDefinitionExternalLinks(88, @"ExternalLinks", @"External Links", @"<p>Links to external web pages where you might find additional information.</p>");
     }
 
-    public partial class FieldDefinitionEstimatedAnnualOperatingCost : FieldDefinition
-    {
-        private FieldDefinitionEstimatedAnnualOperatingCost(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionEstimatedAnnualOperatingCost Instance = new FieldDefinitionEstimatedAnnualOperatingCost(89, @"EstimatedAnnualOperatingCost", @"Est. Annual Operating Cost", @"<p>This is the estimated cost of one year of operation in present-year dollars (present-year is set by the tool administrators). This field is only available to operations and maintenance projects.&nbsp;</p>");
-    }
-
-    public partial class FieldDefinitionCalculatedTotalRemainingOperatingCost : FieldDefinition
-    {
-        private FieldDefinitionCalculatedTotalRemainingOperatingCost(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionCalculatedTotalRemainingOperatingCost Instance = new FieldDefinitionCalculatedTotalRemainingOperatingCost(90, @"CalculatedTotalRemainingOperatingCost", @"Remaining Operating Cost", @"<p>This field uses the transportation annual inflation factor (set by the administrators) to inflate the &quot;Estimated Annual Operating Cost&quot; to a cost-in-year-of-expenditure dollars for each year that the project will be in operation, then sums the costs across all years of operation. This field is only calculated for transportation operations and maintenance projects.&nbsp;</p>");
-    }
-
     public partial class FieldDefinitionCurrentYearForPVCalculations : FieldDefinition
     {
         private FieldDefinitionCurrentYearForPVCalculations(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
@@ -790,7 +760,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionLifecycleOperatingCost : FieldDefinition
     {
         private FieldDefinitionLifecycleOperatingCost(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionLifecycleOperatingCost Instance = new FieldDefinitionLifecycleOperatingCost(92, @"LifecycleOperatingCost", @"Lifecycle Operating Cost", @"<p>Sum of the annual operating cost from the Implementation Start Year to Completion Year. Not inflation adjusted.</p>");
+        public static readonly FieldDefinitionLifecycleOperatingCost Instance = new FieldDefinitionLifecycleOperatingCost(92, @"LifecycleOperatingCost", @"Lifecycle Operating Cost", @"<p>Sum of the annual operating cost from the Approval/Start Date to Completion Date. Not inflation adjusted.</p>");
     }
 
     public partial class FieldDefinitionPerformanceMeasureChartTitle : FieldDefinition
@@ -880,7 +850,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionProjectSteward : FieldDefinition
     {
         private FieldDefinitionProjectSteward(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectSteward Instance = new FieldDefinitionProjectSteward(246, @"ProjectSteward", @"Project Steward", @"<p>A person who can approve Project Proposals, create new Projects, approve Project Updates, and create Funding Sources for their Organization.</p>");
+        public static readonly FieldDefinitionProjectSteward Instance = new FieldDefinitionProjectSteward(246, @"ProjectSteward", @"Project Steward", @"<p>A person who can approve Project Applications, create new Projects, approve Project Updates, and create Funding Sources for their Organization.</p>");
     }
 
     public partial class FieldDefinitionChartLastUpdatedDate : FieldDefinition
@@ -943,10 +913,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionTaxonomyLeafDescription Instance = new FieldDefinitionTaxonomyLeafDescription(256, @"TaxonomyLeafDescription", @"Taxonomy Leaf Description", @"<p>The long-form description of the entries in the project taxonomy system.</p>");
     }
 
-    public partial class FieldDefinitionShowProposalsToThePublic : FieldDefinition
+    public partial class FieldDefinitionShowApplicationsToThePublic : FieldDefinition
     {
-        private FieldDefinitionShowProposalsToThePublic(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionShowProposalsToThePublic Instance = new FieldDefinitionShowProposalsToThePublic(257, @"ShowProposalsToThePublic", @"Show Proposals To The Public", @"<p>When this option is set, projects in the Pending Approval state will be shown on project maps and on the Proposal page. When not set, no proposals will be visible to anonymous users. All proposals should be shown on the proposals page for Normal+ users.</p>");
+        private FieldDefinitionShowApplicationsToThePublic(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionShowApplicationsToThePublic Instance = new FieldDefinitionShowApplicationsToThePublic(257, @"ShowApplicationsToThePublic", @"Show Applications To The Public", @"<p>When this option is set, projects in the Pending Approval state will be shown on project maps and on the Application page. When not set, no proposals will be visible to anonymous users. All proposals should be shown on the proposals page for Normal+ users.</p>");
     }
 
     public partial class FieldDefinitionShowLeadImplementerLogoOnFactSheet : FieldDefinition

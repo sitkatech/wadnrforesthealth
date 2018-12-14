@@ -51,12 +51,12 @@ namespace ProjectFirma.Web.Security
             if (contextModelObject.IsProposal() && person.IsAnonymousUser)
             {
                 // do not allow if user is anonymous and do not show proposals to public
-                if (!MultiTenantHelpers.ShowProposalsToThePublic())
+                if (!MultiTenantHelpers.ShowApplicationsToThePublic())
                 {
                     return new PermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
                 }
                 // do not allow if user is anonymous and show proposals to public and stage a stage other than pending 
-                if (MultiTenantHelpers.ShowProposalsToThePublic() && contextModelObject.ProjectApprovalStatus != ProjectApprovalStatus.PendingApproval)
+                if (MultiTenantHelpers.ShowApplicationsToThePublic() && contextModelObject.ProjectApprovalStatus != ProjectApprovalStatus.PendingApproval)
                 {
                     return new PermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
                 }                

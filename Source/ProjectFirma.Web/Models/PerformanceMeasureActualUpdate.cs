@@ -37,8 +37,8 @@ namespace ProjectFirma.Web.Models
                 var currentPerformanceMeasureActuals = project.PerformanceMeasureActuals.ToList();
                 var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
                 var completionYear = projectUpdateBatch.ProjectUpdate != null
-                    ? projectUpdateBatch.ProjectUpdate.CompletionYear
-                    : project.CompletionYear;
+                    ? projectUpdateBatch.ProjectUpdate.GetCompletionYear()
+                    : project.GetCompletionYear();
                 var currentStage = projectUpdateBatch.ProjectUpdate != null
                     ? projectUpdateBatch.ProjectUpdate.ProjectStage
                     : project.ProjectStage;
@@ -53,14 +53,14 @@ namespace ProjectFirma.Web.Models
                                     performanceMeasureActual.CalendarYear, performanceMeasureActual.ActualValue)));
                 }
                 // use expected values if any only if we are not in Planning/Design
-                else if (currentStage != ProjectStage.PlanningDesign)
+                else if (currentStage != ProjectStage.Planned)
                 {
                     var currentPerformanceMeasureExpecteds =
                         new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.ToList());
                     if (currentPerformanceMeasureExpecteds.Any())
                     {
                         // we want to pre-create records from project Start Year to current year; if no start year then we just create for current year
-                        var initialYearToFill = project.ImplementationStartYear ?? currentYear;
+                        var initialYearToFill = project.GetImplementationStartYear() ?? currentYear;
                         performanceMeasureActualUpdates.AddRange(
                             CreatePerformanceMeasureActualUpdateRecordsForGivenYearToCurrentYear(projectUpdateBatch,
                                 currentPerformanceMeasureExpecteds,

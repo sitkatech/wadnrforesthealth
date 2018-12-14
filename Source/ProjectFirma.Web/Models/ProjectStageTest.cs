@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Models
         public void RequiresReportedExpendituresTest()
         {
             Assert.That(ProjectStage.All.Where(x => x.RequiresReportedExpenditures()),
-                Is.EquivalentTo(new ProjectStage[] {ProjectStage.Implementation, ProjectStage.PlanningDesign, ProjectStage.PostImplementation}));
+                Is.EquivalentTo(new ProjectStage[] {ProjectStage.Implementation, ProjectStage.Planned, ProjectStage.PostImplementation}));
         }
 
         [Test]

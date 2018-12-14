@@ -33,19 +33,13 @@ namespace ProjectFirma.Web.Models
 
         public bool HasChanged()
         {
-            return 
+            return
                 HasProjectDescriptionChanged() ||
                 HasProjectStageChanged() ||
-                HasPlanningDesignStartYearChanged() ||
+                HasPlannedDateChanged() ||
                 HasImplementationStartYearChanged() ||
-                HasCompletionYearChanged() ||
-                HasEstimatedTotalCostChanged() ||
-                HasEstimatedAnnualOperatingCostChanged();
-        }
-
-        private bool HasEstimatedAnnualOperatingCostChanged()
-        {
-            return OriginalProjectUpdate.EstimatedAnnualOperatingCost != ModifiedProjectUpdate.EstimatedAnnualOperatingCost;
+                HasCompletionDateChanged() ||
+                HasEstimatedTotalCostChanged();
         }
 
         private bool HasEstimatedTotalCostChanged()
@@ -53,19 +47,19 @@ namespace ProjectFirma.Web.Models
             return OriginalProjectUpdate.EstimatedTotalCost != ModifiedProjectUpdate.EstimatedTotalCost;
         }
 
-        private bool HasCompletionYearChanged()
+        private bool HasCompletionDateChanged()
         {
-            return OriginalProjectUpdate.CompletionYear != ModifiedProjectUpdate.CompletionYear;
+            return OriginalProjectUpdate.GetCompletionYear() != ModifiedProjectUpdate.GetCompletionYear();
         }
 
         private bool HasImplementationStartYearChanged()
         {
-            return OriginalProjectUpdate.ImplementationStartYear != ModifiedProjectUpdate.ImplementationStartYear;
+            return OriginalProjectUpdate.GetImplementationStartYear() != ModifiedProjectUpdate.GetImplementationStartYear();
         }
 
-        private bool HasPlanningDesignStartYearChanged()
+        private bool HasPlannedDateChanged()
         {
-            return OriginalProjectUpdate.PlanningDesignStartYear != ModifiedProjectUpdate.PlanningDesignStartYear;
+            return OriginalProjectUpdate.PlannedDate != ModifiedProjectUpdate.PlannedDate;
         }
 
         private bool HasProjectStageChanged()

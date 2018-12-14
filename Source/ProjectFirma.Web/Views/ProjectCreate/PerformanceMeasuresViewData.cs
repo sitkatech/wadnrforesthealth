@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 performanceMeasureActuals.Select(x => x.CalendarYear).Distinct().Select(x => new CalendarYearString(x)).ToList());
             ViewDataForAngular = viewDataForAngularEditor;
             
-            IsImplementationStartYearValid = project.ImplementationStartYear.HasValue && project.ImplementationStartYear < project.CompletionYear;
+            IsImplementationStartYearValid = project.GetImplementationStartYear().HasValue && project.GetImplementationStartYear() < project.GetCompletionYear();
             ReportingYearLabel = "Year";
         }
 

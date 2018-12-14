@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Models
-@using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using Newtonsoft.Json.Linq
@@ -123,29 +122,6 @@ Source code is available upon request via <support@sitkatech.com>.
             <p>
                 <label class="control-label">Summary of Total @FieldDefinition.Project.GetFieldDefinitionLabel() Costs and Funding:</label>
             </p>
-            @if (ViewDataTyped.Project.FundingType == FundingType.OperationsAndMaintenance)
-                {
-                <table>
-                    <tr>
-                        <td style="width: 240px">
-                            Estimated Annual Operating Cost:
-                        </td>
-                        <td>
-                            <span>@ViewDataTyped.Project.EstimatedAnnualOperatingCost.ToStringCurrency()</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Estimated Total Operating Cost:
-                        </td>
-                        <td>
-                            <span>@ViewDataTyped.Project.EstimatedTotalCost</span>
-                        </td>
-                    </tr>
-                </table>
-            }
-            else
-            {
                 <div class="row">
                     <div class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost):</div>
                     <div class="col-sm-3 text-right">
@@ -177,7 +153,6 @@ Source code is available upon request via <support@sitkatech.com>.
                             </span> identified as @Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding))
                         </div>
                     </div>
-            }
         </div>
     </div>
 }

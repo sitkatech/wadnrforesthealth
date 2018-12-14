@@ -72,18 +72,18 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
     //    public void ProjectYearRangesTest()
     //    {
     //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.ImplementationStartYear, null as int?);
-    //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.CompletionYear, null as int?);
+    //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.CompletionDate, null as int?);
 
     //        var project = TestFramework.TestProject.Create();
-    //        project.CompletionYear = 2007;
+    //        project.CompletionDate = 2007;
     //        var viewModel = new EditProjectViewModel(project, false);
-    //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.CompletionYear, viewModel);
+    //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.CompletionDate, viewModel);
 
     //        viewModel.ImplementationStartYear = 2010;
-    //        _viewModel.ShouldHaveValidationErrorFor(person => person.CompletionYear, viewModel);
+    //        _viewModel.ShouldHaveValidationErrorFor(person => person.CompletionDate, viewModel);
 
     //        viewModel.ImplementationStartYear = 2007;
-    //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.CompletionYear, viewModel);
+    //        _viewModel.ShouldNotHaveValidationErrorFor(person => person.CompletionDate, viewModel);
     //    }
 
     //    [Test]
