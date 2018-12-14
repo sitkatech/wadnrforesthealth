@@ -54,9 +54,9 @@
 </div>
 
 
-@*TODO Neutered Per WA DNR #1446. May decide to bring it back later
+
     <div class="row">
-        <div class="col-md-@(ViewDataTyped.CanHaveAssociatedPerformanceMeasures && ViewDataTyped.PerformanceMeasureChartViewDatas.Any() ? 6 : 12)">
+        <div class="col-md-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h2>@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditTaxonomyLeafUrl, string.Format("Edit {0} - {1}", ViewDataTyped.TaxonomyLeafDisplayName, ViewDataTyped.TaxonomyLeaf.DisplayName), ViewDataTyped.UserHasTaxonomyLeafManagePermissions) Basics</h2>
@@ -88,30 +88,8 @@
                     Some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() operate over larger areas and are not represented on the map, but are listed in the @FieldDefinition.Project.GetFieldDefinitionLabel() grid below. A <a href="@ViewDataTyped.ProjectMapFilteredUrl">full-screen, filterable version of this map</a> is also available.
                 </div>
             </div>
-            @{ RelatedPerformanceMeasures.RenderPartialView(Html, ViewDataTyped.RelatedPerformanceMeasuresViewData); }
         </div>
-
-        @if (ViewDataTyped.CanHaveAssociatedPerformanceMeasures && ViewDataTyped.PerformanceMeasureChartViewDatas.Any())
-        {
-            <div class="col-md-6">
-                @foreach (var batch in ViewDataTyped.PerformanceMeasureChartViewDatas.Batch(3))
-                {
-                    <div class="row">
-                        @foreach (var performanceMeasureChartViewData in batch)
-                        {
-                            <div class="col-md-4" style="width: 500px">
-                                <div class="panel panelFirma">
-                                    <div class="panel-body">
-                                        @{ PerformanceMeasureChart.RenderPartialView(Html, performanceMeasureChartViewData); }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
-        }
-    </div>*@
+    </div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panelFirma">
