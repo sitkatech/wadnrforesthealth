@@ -20,7 +20,6 @@
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
-    <EntitySet Name="FundingTypeData" EntityType="ProjectFirma.Web.Models.FundingTypeData" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.GeospatialArea" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.ImportExternalProjectStaging" />
@@ -1021,17 +1020,6 @@
     <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="TreatmentActivities" />
   </EntityType>
-  <EntityType Name="FundingTypeData">
-    <Key>
-      <PropertyRef Name="FundingTypeDataID" />
-    </Key>
-    <Property Name="FundingTypeDataID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="Int32" Nullable="false" />
-    <Property Name="FundingTypeID" Type="Int32" Nullable="false" />
-    <Property Name="FundingTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="FundingTypeShortName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="SortOrder" Type="Int32" Nullable="false" />
-  </EntityType>
   <EntityType Name="GeospatialArea">
     <Key>
       <PropertyRef Name="GeospatialAreaID" />
@@ -1493,8 +1481,6 @@
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
-    <Property Name="EstimatedAnnualOperatingCost" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="FundingTypeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
     <Property Name="ProjectApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="ProposingPersonID" Type="Int32" />
@@ -2002,7 +1988,6 @@
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
-    <Property Name="EstimatedAnnualOperatingCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />

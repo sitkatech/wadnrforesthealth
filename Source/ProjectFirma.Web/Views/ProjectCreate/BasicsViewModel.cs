@@ -64,13 +64,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         public Money? EstimatedTotalCost { get; set; }
-        
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedAnnualOperatingCost)]
-        public Money? EstimatedAnnualOperatingCost { get; set; }
-      
-        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingType)]
-        [Required]
-        public int FundingTypeID { get; set; }
 
         public int? ImportExternalProjectStagingID { get; set; }
 
@@ -90,9 +83,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ProjectName = project.ProjectName;
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;            
-            FundingTypeID = project.FundingTypeID;
             EstimatedTotalCost = project.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
             PlannedDate = project.PlannedDate;
             ApprovalStartDate = project.ApprovalStartDate;
             CompletionDate = project.CompletionDate;
@@ -114,19 +105,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID;
-            project.FundingTypeID = FundingTypeID;
-            if (FundingTypeID == FundingType.Capital.FundingTypeID)
-            {
-                project.EstimatedTotalCost = EstimatedTotalCost;
-                project.EstimatedAnnualOperatingCost = null;
-                
-            }
-            else if (FundingTypeID == FundingType.OperationsAndMaintenance.FundingTypeID)
-            {
-                project.EstimatedTotalCost = null;
-                project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
-            }
-            
+            project.EstimatedTotalCost = EstimatedTotalCost;
+
             project.PlannedDate = PlannedDate;
             project.ApprovalStartDate = ApprovalStartDate;
             project.CompletionDate = CompletionDate;

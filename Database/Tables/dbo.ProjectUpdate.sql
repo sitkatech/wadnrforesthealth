@@ -15,7 +15,6 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[ProjectLocationNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
-	[EstimatedAnnualOperatingCost] [decimal](18, 0) NULL,
 	[PrimaryContactPersonID] [int] NULL,
  CONSTRAINT [PK_ProjectUpdate_ProjectUpdateID] PRIMARY KEY CLUSTERED 
 (

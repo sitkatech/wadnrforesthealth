@@ -37,9 +37,7 @@ namespace ProjectFirma.Web.Models
         int? GetImplementationStartYear();
         int? GetCompletionYear();
         ProjectStage ProjectStage { get; }
-        FundingType FundingType { get; }
         decimal? EstimatedTotalCost { get; }
-        decimal? EstimatedAnnualOperatingCost { get; }
         IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         IEnumerable<IQuestionAnswer> GetQuestionAnswers();
         IEnumerable<IProjectLocation> GetProjectLocationDetails();

@@ -231,18 +231,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FundingTypeData">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FundingTypeData">
-        <MappingFragment StoreEntitySet="FundingTypeData">
-          <ScalarProperty Name="FundingTypeDataID" ColumnName="FundingTypeDataID" />
-          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
-          <ScalarProperty Name="FundingTypeID" ColumnName="FundingTypeID" />
-          <ScalarProperty Name="FundingTypeDisplayName" ColumnName="FundingTypeDisplayName" />
-          <ScalarProperty Name="FundingTypeShortName" ColumnName="FundingTypeShortName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GeospatialArea">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GeospatialArea">
         <MappingFragment StoreEntitySet="GeospatialArea">
@@ -613,8 +601,6 @@
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="EstimatedAnnualOperatingCost" ColumnName="EstimatedAnnualOperatingCost" />
-          <ScalarProperty Name="FundingTypeID" ColumnName="FundingTypeID" />
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="ProjectApprovalStatusID" ColumnName="ProjectApprovalStatusID" />
           <ScalarProperty Name="ProposingPersonID" ColumnName="ProposingPersonID" />
@@ -1058,7 +1044,6 @@
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="EstimatedAnnualOperatingCost" ColumnName="EstimatedAnnualOperatingCost" />
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
         </MappingFragment>
       </EntityTypeMapping>

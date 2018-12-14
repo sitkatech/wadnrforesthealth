@@ -52,9 +52,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         public Money? EstimatedTotalCost { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedAnnualOperatingCost)]
-        public Money? EstimatedAnnualOperatingCost { get; set; }
-
         [DisplayName("Reviewer Comments")]
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
         public string Comments { get; set; }
@@ -76,7 +73,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ApprovalStartDate = projectUpdate.ApprovalStartDate;
             CompletionDate = projectUpdate.CompletionDate;
             EstimatedTotalCost = projectUpdate.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = projectUpdate.EstimatedAnnualOperatingCost;
             Comments = comments;
             ProjectCustomAttributes = new ProjectCustomAttributes(projectUpdate);
         }
@@ -89,7 +85,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ApprovalStartDate = ApprovalStartDate;
             projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.EstimatedTotalCost = EstimatedTotalCost;
-            projectUpdate.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
             ProjectCustomAttributes?.UpdateModel(projectUpdate, currentPerson);
         }
 

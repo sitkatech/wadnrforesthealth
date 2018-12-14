@@ -47,10 +47,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [Required]
         public int ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.FundingType)]
-        [Required]
-        public int FundingTypeID { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
         public DateTime? ApprovalStartDate { get; set; }
 
@@ -66,9 +62,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         public Money? EstimatedTotalCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedAnnualOperatingCost)]
-        public Money? EstimatedAnnualOperatingCost { get; set; }
 
         public bool HasExistingProjectUpdate { get; set; }
 
@@ -92,12 +85,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             OldProjectStageID = project.ProjectStageID;
-            FundingTypeID = project.FundingTypeID;
             ApprovalStartDate = project.ApprovalStartDate;
             PlannedDate = project.PlannedDate;
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
             ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
@@ -108,22 +99,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.ProjectDescription = ProjectDescription;
             project.TaxonomyLeafID = TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectStageID = ProjectStageID;
-            project.FundingTypeID = FundingTypeID;
             project.ApprovalStartDate = ApprovalStartDate;
             project.PlannedDate = PlannedDate;
             project.CompletionDate = CompletionDate;
-
-            if (FundingTypeID == FundingType.Capital.FundingTypeID)
-            {
-                project.EstimatedTotalCost = EstimatedTotalCost;
-                project.EstimatedAnnualOperatingCost = null;
-
-            }
-            else if (FundingTypeID == FundingType.OperationsAndMaintenance.FundingTypeID)
-            {
-                project.EstimatedTotalCost = null;
-                project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
-            }
+            project.EstimatedTotalCost = EstimatedTotalCost;
 
             ProjectCustomAttributes?.UpdateModel(project, currentPerson);
         }

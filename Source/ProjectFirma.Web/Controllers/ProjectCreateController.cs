@@ -220,7 +220,6 @@ namespace ProjectFirma.Web.Controllers
                 viewModel.ProjectDescription,
                 false,
                 ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
-                viewModel.FundingTypeID,
                 ProjectApprovalStatus.Draft.ProjectApprovalStatusID)
             {
                 ProposingPerson = CurrentPerson,
@@ -237,7 +236,7 @@ namespace ProjectFirma.Web.Controllers
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))
                 : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, FundingType.All, taxonomyLeafs, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, taxonomyLeafs, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -267,7 +266,7 @@ namespace ProjectFirma.Web.Controllers
             
             var taxonomyLeafs = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs;
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, taxonomyLeafs, FundingType.All, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, taxonomyLeafs, projectCustomAttributeTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }

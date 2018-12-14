@@ -2129,7 +2129,6 @@ namespace ProjectFirma.Web.Controllers
             var dummyProject = Project.CreateNewBlank(TaxonomyLeaf.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
-                FundingType.Capital,
                 ProjectApprovalStatus.Approved);
 
             var dummyProjectUpdateBatch = ProjectUpdateBatch.CreateNewBlank(dummyProject, CurrentPerson, ProjectUpdateState.Created);

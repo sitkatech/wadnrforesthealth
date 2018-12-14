@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var projectStage = ProjectStage.Planned;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
                 var project = Project.CreateNewBlank(taxonomyLeaf, projectStage, ProjectLocationSimpleType.None,
-                    FundingType.Capital, ProjectApprovalStatus.Approved);
+                     ProjectApprovalStatus.Approved);
                 return project;
             }
 
@@ -49,7 +49,6 @@ namespace ProjectFirma.Web.UnitTestCommon
                     MakeTestName("Test Project Description"),
                     false,
                     ProjectLocationSimpleType.None,
-                    FundingType.Capital,
                     // TODO: Verify that this is correct or use the correct value
                     ProjectApprovalStatus.Approved);
 
@@ -62,7 +61,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var taxonomyLeaf = TestTaxonomyLeaf.Create();
                 var projectStage = ProjectStage.Implementation;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = new Project(taxonomyLeaf, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, FundingType.Capital, ProjectApprovalStatus.Approved)
+                var project = new Project(taxonomyLeaf, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved)
                 {
                     ProjectID = projectID
                 };

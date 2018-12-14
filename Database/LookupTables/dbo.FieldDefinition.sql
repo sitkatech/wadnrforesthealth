@@ -40,7 +40,6 @@ VALUES
 (56, N'FundedAmount', N'Funded Amount', N'<p>The amount of funding, by funding source, expended on a project for a specific year. To see the total amount of funding expended on a project, click on the specific project.</p>'),
 (57, N'ProjectLocation', N'Project Location', N'<p>The location where the project was/is being implemented. Project locations can be set by picking a location description from a list or by plotting a point on the map. Project location information is used for summarizing project&nbsp;accomplishments by geospatial categories such as State, County, or GeospatialArea.</p>'),
 (64, N'ExcludeFromFactSheet', N'Exclude from Fact Sheet', N'<p>Flags a photo so that it is not included in the photos shown on the project&#39;s Fact Sheet. Some projects have tons of photos -- use this checkbox to control which photos are included.</p>'),
-(73, N'FundingType', N'Funding Type', N'<p>Field shows whether project is a capital (Capital) versus operations and maintenance (Operations and Maintenance) project.&nbsp;</p>'),
 (74, N'ProjectCostInYearOfExpenditure', N'Cost in Year of Expenditure', N'<p>This is the expected cost of the project in the year that it will be constructed, taking into account inflation.&nbsp;</p>'),
 (75, N'GlobalInflationRate', N'Global Inflation Rate', N'<p>Annual rate of inflation expected for project costs.&nbsp;</p>'),
 (76, N'ReportingYear', N'Reporting Year', N'<p>The current year used for reporting purposes, which is defined as the previous calendar year until after November 1st of the present calendar year.</p>'),
@@ -52,8 +51,8 @@ VALUES
 (86, N'PlannedDate', N'Planned Date', N'<p>The date on which project planning and design began. All projects should have a Planned Date and it may not be a date in the future. Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
 (87, N'AssociatedTaxonomyBranches', N'Associated Taxonomy Branches', N'<p>External&nbsp;programs that are related to the content you are reviewing. You may wish to look up these programs to learn more.</p>'),
 (88, N'ExternalLinks', N'External Links', N'<p>Links to external web pages where you might find additional information.</p>'),
-(89, N'EstimatedAnnualOperatingCost', N'Est. Annual Operating Cost', N'<p>This is the estimated cost of one year of operation in present-year dollars (present-year is set by the tool administrators). This field is only available to operations and maintenance projects.&nbsp;</p>'),
-(90, N'CalculatedTotalRemainingOperatingCost', N'Remaining Operating Cost', N'<p>This field uses the transportation annual inflation factor (set by the administrators) to inflate the &quot;Estimated Annual Operating Cost&quot; to a cost-in-year-of-expenditure dollars for each year that the project will be in operation, then sums the costs across all years of operation. This field is only calculated for transportation operations and maintenance projects.&nbsp;</p>'),
+
+
 (91, N'CurrentYearForPVCalculations', N'Current Year for PV Calculations', N'<p>The year to use as the starting point for inflation calculations.</p>'),
 (92, N'LifecycleOperatingCost', N'Lifecycle Operating Cost', N'<p>Sum of the annual operating cost from the Approval/Start Date to Completion Date. Not inflation adjusted.</p>'),
 (97, N'PerformanceMeasureChartTitle', N'Performance Measure Chart Title', N'<p>A short title for the Indicator (aka Performance Measure) used for charts throughout ProjectFirma.</p>'),

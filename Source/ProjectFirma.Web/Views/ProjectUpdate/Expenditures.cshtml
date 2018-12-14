@@ -55,36 +55,10 @@ To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expend
         Other financial information for this @FieldDefinition.Project.GetFieldDefinitionLabel() that might be helpful:
     </p>
 
-    @if (ViewDataTyped.Project.FundingType == FundingType.Capital)
-    {
-        <div style="width: 300px">@FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.EstimatedTotalCost.ToStringCurrency()</span></div>
-        <div style="width: 300px">@FieldDefinition.SecuredFunding.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.GetSecuredFunding().ToStringCurrency()</span></div>
-        <div style="width: 300px">@FieldDefinition.UnfundedNeed.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.UnfundedNeed.ToStringCurrency()</span></div>
-    }
-    else if (ViewDataTyped.Project.FundingType == FundingType.OperationsAndMaintenance)
-    {
-        <table>
-            <tr>
-                <td style="width: 200px">
-                    @FieldDefinition.EstimatedAnnualOperatingCost.GetFieldDefinitionLabel():
-                </td>
-                <td>
-                    <span style="font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.EstimatedAnnualOperatingCost.ToStringCurrency()</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Estimated Total Operating Cost:
-                </td>
-                @if (CostParameterSet.CanCalculateTotalRemainingOperatingCostInYearOfExpenditure(ViewDataTyped.ProjectUpdateBatch.ProjectUpdate))
-                {
-                    <td>
-                        <span style="font-weight: bold">@ViewDataTyped.TotalOperatingCostInYearOfExpenditure.ToStringCurrency()</span> (For years @ViewDataTyped.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.GetCompletionYear() using @ViewDataTyped.InflationRate.ToStringPercent() annual inflation)
-                    </td>
-                }
-            </tr>
-        </table>
-    }
+    <div style="width: 300px">@FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.EstimatedTotalCost.ToStringCurrency()</span></div>
+    <div style="width: 300px">@FieldDefinition.SecuredFunding.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.GetSecuredFunding().ToStringCurrency()</span></div>
+    <div style="width: 300px">@FieldDefinition.UnfundedNeed.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.UnfundedNeed.ToStringCurrency()</span></div>
+
 </div>
 
 @if (!ViewDataTyped.IsEditable)

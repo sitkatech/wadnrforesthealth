@@ -57,7 +57,6 @@ namespace ProjectFirma.Web.Models
             ApprovalStartDate = project.ApprovalStartDate;
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
         }
 
         public void LoadSimpleLocationFromProject(Project project)
@@ -75,7 +74,6 @@ namespace ProjectFirma.Web.Models
             project.ApprovalStartDate = ApprovalStartDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
-            project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
             project.PrimaryContactPersonID = PrimaryContactPersonID;
         }
 
@@ -89,8 +87,6 @@ namespace ProjectFirma.Web.Models
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
 
         public bool HasProjectLocationDetail => DetailedLocationToGeoJsonFeatureCollection().Features.Any();
-
-        public FundingType FundingType => ProjectUpdateBatch.Project.FundingType;
 
         public IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes
         {

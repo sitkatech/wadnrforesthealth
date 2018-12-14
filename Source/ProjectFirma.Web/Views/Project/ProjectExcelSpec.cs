@@ -49,7 +49,6 @@ namespace ProjectFirma.Web.Views.Project
             AddColumn(Models.FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel(), x => x.GetImplementationStartYear());
             AddColumn(Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel(), x => x.GetCompletionYear());
             AddColumn(Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel(), x => x.ProjectDescription);
-            AddColumn(Models.FieldDefinition.FundingType.GetFieldDefinitionLabel(), x => x.FundingType.GetFundingTypeShortName());
             AddColumn(Models.FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(), x => x.EstimatedTotalCost);
             AddColumn(Models.FieldDefinition.SecuredFunding.GetFieldDefinitionLabel(), x => x.GetSecuredFunding());
             AddColumn(Models.FieldDefinition.UnfundedNeed.GetFieldDefinitionLabel(), x => x.UnfundedNeed());

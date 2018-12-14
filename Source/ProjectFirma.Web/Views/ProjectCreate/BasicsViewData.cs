@@ -31,7 +31,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     public class BasicsViewData : ProjectCreateViewData
     {
         public IEnumerable<SelectListItem> TaxonomyLeafs { get; private set; }
-        public IEnumerable<SelectListItem> FundingTypes { get; private set; }
         public IEnumerable<SelectListItem> StartYearRange { get; private set; }
         public IEnumerable<SelectListItem> CompletionDateRange { get; private set; }
         public bool HasCanStewardProjectsOrganizationRelationship { get; private set; }
@@ -43,36 +42,34 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Application}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
 
-        public BasicsViewData(Person currentPerson, IEnumerable<FundingType> fundingTypes,
+        public BasicsViewData(Person currentPerson,
             IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs, bool showProjectStageDropDown, string instructionsPageUrl,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, instructionsPageUrl)
         {
             // This constructor is only used for the case where we're coming from the instructions, so we hide the dropdown if they clicked the button for proposing a new project.
             ShowProjectStageDropDown = showProjectStageDropDown;
-            AssignParameters(taxonomyLeafs, fundingTypes, projectCustomAttributeTypes);
+            AssignParameters(taxonomyLeafs, projectCustomAttributeTypes);
         }
 
         public BasicsViewData(Person currentPerson,
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
             IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs,
-            IEnumerable<FundingType> fundingTypes,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
             ProjectDisplayName = project.DisplayName;
-            AssignParameters(taxonomyLeafs, fundingTypes, projectCustomAttributeTypes);
+            AssignParameters(taxonomyLeafs, projectCustomAttributeTypes);
         }
 
         private void AssignParameters(IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs,
-            IEnumerable<FundingType> fundingTypes,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
         {
             TaxonomyLeafs = taxonomyLeafs.ToList().OrderTaxonomyLeaves().ToList().ToGroupedSelectList();
             
-            FundingTypes = fundingTypes.ToSelectList(x => x.FundingTypeID.ToString(CultureInfo.InvariantCulture), y => y.GetFundingTypeDisplayName());
+            
             StartYearRange =
                 FirmaDateUtilities.YearsForUserInput()
                     .ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);

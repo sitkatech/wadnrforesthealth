@@ -134,8 +134,36 @@ drop column CompletionDateTemp
 
 
 alter table dbo.Project
-add constraint CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation CHECK (([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionDate] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4)))
+add constraint CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation CHECK ((ProjectStageID=(8) OR ProjectStageID=(4)) AND CompletionDate IS NOT NULL OR NOT (ProjectStageID=(8) OR ProjectStageID=(4)))
 
 exec sp_rename 'dbo.ImportExternalProjectStaging.EndYear', 'EndDate', 'COLUMN';
 alter table dbo.ImportExternalProjectStaging
 alter column EndDate datetime null
+
+-- put back the constraints that we removed before
+Alter Table dbo.Project
+add constraint CK_Project_ApprovalStartDateLessThanEqualToCompletionDate CHECK  ((ApprovalStartDate IS NULL OR CompletionDate IS NULL OR CompletionDate>=ApprovalStartDate))
+
+Alter Table dbo.Project
+add Constraint CK_Project_PlannedDateLessThanEqualToImplementationDate   CHECK  ((PlannedDate IS NULL OR ApprovalStartDate IS NULL OR ApprovalStartDate>=PlannedDate))
+
+-- Get rid of annual operating cost and funding type
+
+alter table dbo.Project
+drop constraint CK_Project_AnnualCostForOperationsProjectsOnly
+alter table dbo.Project
+drop constraint CK_Project_TotalOrAnnualCostNotBoth
+alter table dbo.Project
+drop constraint CK_Project_TotalCostForCapitalProjectsOnly
+alter table dbo.Project
+drop constraint FK_Project_FundingType_FundingTypeID
+
+alter table dbo.Project
+drop column EstimatedAnnualOperatingCost
+alter table dbo.Project
+drop column FundingTypeID
+alter table dbo.ProjectUpdate
+drop column EstimatedAnnualOperatingCost
+
+drop table dbo.FundingTypeData
+drop table dbo.FundingType

@@ -37,7 +37,6 @@ namespace ProjectFirma.Web.Views.Snapshot
             Add(Models.FieldDefinition.PlannedDate.ToGridHeaderString(), x => x.Project.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ApprovalStartDate.ToGridHeaderString(), x => x.Project.GetApprovalStartDateFormatted(), 115, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.Project.GetCompletionDateFormatted(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.FundingType.ToGridHeaderString(), x => x.Project.FundingType.GetFundingTypeShortName(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.Project.EstimatedTotalCost, 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.SecuredFunding.ToGridHeaderString(), x => x.Project.GetSecuredFunding(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.UnfundedNeed.ToGridHeaderString(), x => x.Project.UnfundedNeed(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);

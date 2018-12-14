@@ -20,7 +20,6 @@
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.Store.FirmaPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.Store.FundingSource" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="FundingTypeData" EntityType="ProjectFirma.Web.Models.Store.FundingTypeData" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.Store.GeospatialArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.Store.GeospatialAreaType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.Store.ImportExternalProjectStaging" store:Type="Tables" Schema="dbo" />
@@ -1033,17 +1032,6 @@ warning 6035: The relationship 'FK_TreatmentActivity_FundingSource_FundingSource
     <Property Name="FundingSourceDescription" Type="varchar" MaxLength="500" />
     <Property Name="FundingSourceAmount" Type="money" />
   </EntityType>
-  <EntityType Name="FundingTypeData">
-    <Key>
-      <PropertyRef Name="FundingTypeDataID" />
-    </Key>
-    <Property Name="FundingTypeDataID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="FundingTypeID" Type="int" Nullable="false" />
-    <Property Name="FundingTypeDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="FundingTypeShortName" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="SortOrder" Type="int" Nullable="false" />
-  </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PersonStewardGeospatialArea_GeospatialAreaID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectGeospatialArea_GeospatialArea_GeospatialAreaID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -1514,8 +1502,6 @@ warning 6035: The relationship 'FK_TreatmentActivity_Project_ProjectID_TenantID'
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
-    <Property Name="EstimatedAnnualOperatingCost" Type="money" />
-    <Property Name="FundingTypeID" Type="int" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="ProjectApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="ProposingPersonID" Type="int" />
@@ -1936,7 +1922,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
     <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="4000" />
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
-    <Property Name="EstimatedAnnualOperatingCost" Type="decimal" />
     <Property Name="PrimaryContactPersonID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:

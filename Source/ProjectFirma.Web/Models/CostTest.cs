@@ -92,39 +92,5 @@ namespace ProjectFirma.Web.Models
 
             Assert.That(CostParameterSet.CalculateCapitalCostInYearOfExpenditureImpl(project, inflationRate, 2016), Is.Null, "Incorrect implementation of nullable type.");
         }
-
-        [Test]
-        public void TestTotalOperatingCostFromAnnualOperatingCost()
-        {
-            var inflationRate = 0.02m;
-            var baseYear = 2016;
-
-            var project = TestFramework.TestProject.Create();
-            project.ApprovalStartDate = new DateTime(2017, 1, 1);
-            project.CompletionDate = new DateTime(2035, 1, 1);
-            project.EstimatedAnnualOperatingCost = 100000m;
-            project.FundingTypeID = FundingType.OperationsAndMaintenance.FundingTypeID;
-
-            var expectedTotalOperatingCost = 2329737m; //From Karen Fink's calculations
-            var totalOperatingCost = CostParameterSet.CalculateTotalRemainingOperatingCostImpl(project.EstimatedAnnualOperatingCost.Value,
-                inflationRate,
-                baseYear,
-                project.GetImplementationStartYear().Value,
-                project.GetCompletionYear().Value);
-            expectedTotalOperatingCost.AssertThatIsWithinOneDollarOf(totalOperatingCost.Value);
-
-
-            project.ApprovalStartDate = new DateTime(2020, 1, 1);
-            project.CompletionDate = new DateTime(2040, 1, 1);
-            project.EstimatedAnnualOperatingCost = 100000m;
-
-            expectedTotalOperatingCost = 2790869m; //From Karen Fink's calculations
-            totalOperatingCost = CostParameterSet.CalculateTotalRemainingOperatingCostImpl(project.EstimatedAnnualOperatingCost.Value,
-                inflationRate,
-                baseYear,
-                project.GetImplementationStartYear().Value,
-                project.GetCompletionYear().Value);
-            expectedTotalOperatingCost.AssertThatIsWithinOneDollarOf(totalOperatingCost.Value);
-        }
     }
 }

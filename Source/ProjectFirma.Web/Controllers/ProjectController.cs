@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Controllers
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 taxonomyLeafDisplayName,
-                ProjectStage.All.Except(new[] {ProjectStage.Application}), FundingType.All, organizations,
+                ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
                 totalExpenditures,
@@ -156,7 +156,7 @@ namespace ProjectFirma.Web.Controllers
                 userHasEditProjectPermissions);
             var internalNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(project.ProjectInternalNotes)),
-                SitkaRoute<ProjectInternalNoteController>.BuildUrlFromExpression(x => x.New(project)),  //TODO: clone the ProjectNoteController to the ProjectInternalNoteController
+                SitkaRoute<ProjectInternalNoteController>.BuildUrlFromExpression(x => x.New(project)),
                 project.DisplayName,
                 userHasEditProjectPermissions);
             var entityExternalLinksViewData = new EntityExternalLinksViewData(ExternalLink.CreateFromEntityExternalLink(new List<IEntityExternalLink>(project.ProjectExternalLinks)));
@@ -364,8 +364,7 @@ namespace ProjectFirma.Web.Controllers
         [ProjectsViewFullListFeature]
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
-            var fundingTypes = HttpRequestStorage.DatabaseEntities.FundingTypeDatas.ToDictionary(x => x.FundingTypeID);
-            var gridSpec = new IndexGridSpec(CurrentPerson, fundingTypes);
+            var gridSpec = new IndexGridSpec(CurrentPerson);
             var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectFundingSourceRequests).Include(x => x.ProjectFundingSourceExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectGeospatialAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;

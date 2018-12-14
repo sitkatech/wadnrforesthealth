@@ -33,19 +33,13 @@ namespace ProjectFirma.Web.Models
 
         public bool HasChanged()
         {
-            return 
+            return
                 HasProjectDescriptionChanged() ||
                 HasProjectStageChanged() ||
                 HasPlannedDateChanged() ||
                 HasImplementationStartYearChanged() ||
                 HasCompletionDateChanged() ||
-                HasEstimatedTotalCostChanged() ||
-                HasEstimatedAnnualOperatingCostChanged();
-        }
-
-        private bool HasEstimatedAnnualOperatingCostChanged()
-        {
-            return OriginalProjectUpdate.EstimatedAnnualOperatingCost != ModifiedProjectUpdate.EstimatedAnnualOperatingCost;
+                HasEstimatedTotalCostChanged();
         }
 
         private bool HasEstimatedTotalCostChanged()
