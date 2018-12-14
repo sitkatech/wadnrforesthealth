@@ -78,7 +78,9 @@ namespace ProjectFirma.Web.Models
     {
         public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
         {
-            return projectUpdateBatch.ArePerformanceMeasuresValid();
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //return projectUpdateBatch.ArePerformanceMeasuresValid();
+            return true;
         }
 
         public override string GetSectionUrl(Project project)

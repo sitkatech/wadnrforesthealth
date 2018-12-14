@@ -115,10 +115,11 @@ namespace ProjectFirma.Web.Models
 
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
-            if (project != null && project.AreReportedPerformanceMeasuresRelevant())
-            {
-                return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
-            }
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //if (project != null && project.AreReportedPerformanceMeasuresRelevant())
+            //{
+            //    return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
+            //}
 
             return new List<ProjectSectionSimple>();
         }
@@ -126,12 +127,13 @@ namespace ProjectFirma.Web.Models
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
             UpdateStatus updateStatus, bool ignoreStatus)
         {
-            if (projectUpdateBatch.AreAccomplishmentsRelevant())
-            {
-                return GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
-            }
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //if (projectUpdateBatch.AreAccomplishmentsRelevant())
+            //{
+            //    return GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
+            //}
 
-            return  new List<ProjectSectionSimple>();
+            return new List<ProjectSectionSimple>();
         }
     }
 

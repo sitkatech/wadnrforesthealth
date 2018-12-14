@@ -112,7 +112,8 @@ namespace ProjectFirma.Web.Models
             ProjectFundingSourceRequestUpdate.CreateFromProject(projectUpdateBatch);
 
             // performance measures
-            PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
+            // TODO Neutered Per WA DNR #1446. May decide to bring it back later
+            //PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);
 
             // project performance measures exempt reporting years
             ProjectExemptReportingYearUpdate.CreatePerformanceMeasuresExemptReportingYearsFromProject(projectUpdateBatch);
@@ -579,9 +580,10 @@ namespace ProjectFirma.Web.Models
             // only relevant for stages past planning/design
             if (!NewStageIsPlanningDesign)
             {
-                // performance measures
-                PerformanceMeasureActualUpdate.CommitChangesToProject(this, performanceMeasureActuals,
-                    performanceMeasureActualSubcategoryOptions);
+                //// performance measures
+                // TODO Neutered Per WA DNR #1446. May decide to bring it back later 
+                //PerformanceMeasureActualUpdate.CommitChangesToProject(this, performanceMeasureActuals,
+                //    performanceMeasureActualSubcategoryOptions);
 
                 // project exempt reporting years
                 ProjectExemptReportingYearUpdate.CommitChangesToProject(this, projectExemptReportingYears);
