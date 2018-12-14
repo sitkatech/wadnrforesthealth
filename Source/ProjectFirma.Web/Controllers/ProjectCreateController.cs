@@ -198,7 +198,6 @@ namespace ProjectFirma.Web.Controllers
                 PlannedDate = importExternalProjectStaging.PlannedDate,
                 ApprovalStartDate = importExternalProjectStaging.ApprovalStartDate,
                 CompletionDate = importExternalProjectStaging.EndDate,
-                EstimatedTotalCost = importExternalProjectStaging.EstimatedCost
             };
             return ViewCreateAndEditBasics(viewModel, true);
         }
@@ -453,7 +452,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult ExpectedFunding(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList());
+            var viewModel = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(), project.EstimatedTotalCost);
             return ViewExpectedFunding(project, viewModel);
         }
 

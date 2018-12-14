@@ -567,13 +567,14 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            var projectUpdate = projectUpdateBatch.ProjectUpdate;
             if (projectUpdateBatch == null)
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
             var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectFundingSourceRequestUpdates,
-                projectUpdateBatch.ExpectedFundingComment);
+                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost);
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
         }
 
@@ -595,7 +596,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Load();
             var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
             var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequestUpdates.Local;
-            viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding);
+            viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding, projectUpdateBatch.ProjectUpdate);
             if (projectUpdateBatch.IsSubmitted)
             {
                 projectUpdateBatch.ExpectedFundingComment = viewModel.Comments;

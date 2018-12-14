@@ -62,9 +62,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
-        public Money? EstimatedTotalCost { get; set; }
-
         public int? ImportExternalProjectStagingID { get; set; }
 
         public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
@@ -82,8 +79,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ProjectID = project.ProjectID;
             ProjectName = project.ProjectName;
             ProjectDescription = project.ProjectDescription;
-            ProjectStageID = project.ProjectStageID;            
-            EstimatedTotalCost = project.EstimatedTotalCost;
+            ProjectStageID = project.ProjectStageID;
             PlannedDate = project.PlannedDate;
             ApprovalStartDate = project.ApprovalStartDate;
             CompletionDate = project.CompletionDate;
@@ -105,7 +101,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID;
-            project.EstimatedTotalCost = EstimatedTotalCost;
 
             project.PlannedDate = PlannedDate;
             project.ApprovalStartDate = ApprovalStartDate;

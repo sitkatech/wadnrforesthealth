@@ -48,6 +48,14 @@ Source code is available upon request via <support@sitkatech.com>.
 @using (Html.BeginForm())
 {
     <div ng-app="ProjectFirmaApp" ng-controller="ExpectedFundingController">
+        <div class="form-group row">
+            <div class="col-md-3" style="padding-left: 0;">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.ProjectEstimatedTotalCost)
+                @Html.ValidationMessageFor(x => x.ProjectEstimatedTotalCost)
+            </div>
+        </div>
+        <hr />
         <div class="form-group">
             <label class="control-label">@FieldDefinition.FundingSource.GetFieldDefinitionLabel() to Add:</label>
             <div class="input-group">

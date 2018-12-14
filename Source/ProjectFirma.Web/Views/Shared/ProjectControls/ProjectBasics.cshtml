@@ -64,10 +64,10 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-5">
             @Html.LabelWithSugarFor(FieldDefinition.ProjectDescription)
         </div>
-        <div class="col-xs-12" style="padding-left: 20px">
+        <div class="col-xs-7">
             @Html.Raw(ViewDataTyped.Project.ProjectDescription.HtmlEncodeWithBreaks())
         </div>
     </div>
@@ -75,26 +75,26 @@ Source code is available upon request via <support@sitkatech.com>.
     <hr />
 
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             @Html.LabelWithSugarFor(FieldDefinition.PlannedDate)
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-7">
             @ViewDataTyped.Project.GetPlannedDate()
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             @Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate)
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-7">
             @ViewDataTyped.Project.GetApprovalStartDateFormatted()
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             @Html.LabelWithSugarFor(FieldDefinition.CompletionDate)
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-7">
             @ViewDataTyped.Project.GetCompletionDateFormatted()
         </div>
     </div>
