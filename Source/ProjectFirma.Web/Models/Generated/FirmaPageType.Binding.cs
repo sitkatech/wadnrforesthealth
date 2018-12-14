@@ -40,7 +40,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeTagList TagList = FirmaPageTypeTagList.Instance;
         public static readonly FirmaPageTypeSpendingByPerformanceMeasureByProject SpendingByPerformanceMeasureByProject = FirmaPageTypeSpendingByPerformanceMeasureByProject.Instance;
         public static readonly FirmaPageTypeProposals Proposals = FirmaPageTypeProposals.Instance;
-        public static readonly FirmaPageTypeMyOrganizationsProjects MyOrganizationsProjects = FirmaPageTypeMyOrganizationsProjects.Instance;
         public static readonly FirmaPageTypeManageUpdateNotifications ManageUpdateNotifications = FirmaPageTypeManageUpdateNotifications.Instance;
         public static readonly FirmaPageTypeMonitoringProgramsList MonitoringProgramsList = FirmaPageTypeMonitoringProgramsList.Instance;
         public static readonly FirmaPageTypeProposeProjectInstructions ProposeProjectInstructions = FirmaPageTypeProposeProjectInstructions.Instance;
@@ -62,7 +61,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectResults, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, CostParameterSet, FullProjectListSimple, Taxonomy, TagList, SpendingByPerformanceMeasureByProject, Proposals, MyOrganizationsProjects, ManageUpdateNotifications, MonitoringProgramsList, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, ProjectCreateImportExternal, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectResults, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, CostParameterSet, FullProjectListSimple, Taxonomy, TagList, SpendingByPerformanceMeasureByProject, Proposals, ManageUpdateNotifications, MonitoringProgramsList, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, ProjectCreateImportExternal, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -168,8 +167,6 @@ namespace ProjectFirma.Web.Models
                     return ManageUpdateNotifications;
                 case FirmaPageTypeEnum.MonitoringProgramsList:
                     return MonitoringProgramsList;
-                case FirmaPageTypeEnum.MyOrganizationsProjects:
-                    return MyOrganizationsProjects;
                 case FirmaPageTypeEnum.MyProjects:
                     return MyProjects;
                 case FirmaPageTypeEnum.OrganizationsList:
@@ -234,7 +231,6 @@ namespace ProjectFirma.Web.Models
         TagList = 36,
         SpendingByPerformanceMeasureByProject = 37,
         Proposals = 38,
-        MyOrganizationsProjects = 39,
         ManageUpdateNotifications = 41,
         MonitoringProgramsList = 44,
         ProposeProjectInstructions = 45,
@@ -379,12 +375,6 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeProposals(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeProposals Instance = new FirmaPageTypeProposals(38, @"Proposals", @"Proposals", 1);
-    }
-
-    public partial class FirmaPageTypeMyOrganizationsProjects : FirmaPageType
-    {
-        private FirmaPageTypeMyOrganizationsProjects(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeMyOrganizationsProjects Instance = new FirmaPageTypeMyOrganizationsProjects(39, @"MyOrganizationsProjects", @"My Organization's Projects", 1);
     }
 
     public partial class FirmaPageTypeManageUpdateNotifications : FirmaPageType

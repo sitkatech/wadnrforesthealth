@@ -25,7 +25,6 @@ values
 (36, 'TagList', 'Tag List', 1),
 (37, 'SpendingByPerformanceMeasureByProject', 'Spending by Performance Measure by Project', 1),
 (38, 'Proposals', 'Proposals', 1),
-(39, 'MyOrganizationsProjects', 'My Organization''s Projects', 1),
 (41, 'ManageUpdateNotifications', 'Manage Project Update Notifications', 1),
 (44, 'MonitoringProgramsList', 'Monitoring Programs', 1),
 (45, 'ProposeProjectInstructions', 'Propose Project Instructions', 2),

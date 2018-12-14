@@ -95,11 +95,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate());
     }
 
-    public partial class FirmaPageTypeMyOrganizationsProjects
-    {
-        public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.MyOrganizationsProjects());
-    }
-
     public partial class FirmaPageTypeProjectResults
     {
         public override string GetViewUrl() => SitkaRoute<ResultsController>.BuildUrlFromExpression(x => x.AccomplishmentsDashboard());

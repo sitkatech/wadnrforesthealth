@@ -759,14 +759,6 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         }
 
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ViewResult MyOrganizationsProjects()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.MyOrganizationsProjects);
-            var viewData = new MyOrganizationsProjectsViewData(CurrentPerson, firmaPage);
-            return RazorView<MyOrganizationsProjects, MyOrganizationsProjectsViewData>(viewData);
-        }
-
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
         public GridJsonNetJObjectResult<Project> MyOrganizationsProjectsGridJsonData()
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, true);
