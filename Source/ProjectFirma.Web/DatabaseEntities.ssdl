@@ -1416,7 +1416,7 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
     <Property Name="PersonGuid" Type="uniqueidentifier" />
     <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
     <Property Name="Phone" Type="varchar" MaxLength="30" />
     <Property Name="PasswordPdfK2SaltHash" Type="nvarchar" MaxLength="1000" />
     <Property Name="RoleID" Type="int" Nullable="false" />
@@ -1428,6 +1428,9 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
     <Property Name="ReceiveSupportEmails" Type="bit" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
     <Property Name="LoginName" Type="varchar" Nullable="false" MaxLength="128" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="100" />
+    <Property Name="StatewideVendorNumber" Type="varchar" MaxLength="100" />
+    <Property Name="Notes" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="PersonStewardGeospatialArea">
     <Key>

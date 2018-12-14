@@ -1389,7 +1389,7 @@
     <Property Name="PersonGuid" Type="Guid" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="Phone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="PasswordPdfK2SaltHash" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
     <Property Name="RoleID" Type="Int32" Nullable="false" />
@@ -1401,6 +1401,9 @@
     <Property Name="ReceiveSupportEmails" Type="Boolean" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="Guid" />
     <Property Name="LoginName" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="StatewideVendorNumber" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" />

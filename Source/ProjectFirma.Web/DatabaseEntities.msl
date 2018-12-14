@@ -550,6 +550,9 @@
           <ScalarProperty Name="ReceiveSupportEmails" ColumnName="ReceiveSupportEmails" />
           <ScalarProperty Name="WebServiceAccessToken" ColumnName="WebServiceAccessToken" />
           <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
