@@ -553,6 +553,7 @@
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
           <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

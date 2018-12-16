@@ -23,6 +23,7 @@ CREATE TABLE [dbo].[Person](
 	[MiddleName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[StatewideVendorNumber] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Notes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[PersonAddress] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC

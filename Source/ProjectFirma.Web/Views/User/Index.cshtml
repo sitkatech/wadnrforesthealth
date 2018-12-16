@@ -18,6 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
+@using LtInfo.Common.BootstrapWrappers
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
@@ -31,6 +32,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @section RightOfPageTitle
 {
     @ModalDialogFormHelper.ModalDialogFormLink("Pull User from Keystone", ViewDataTyped.PullUserFromKeystoneUrl, "Pull User from Keystone", new List<string>{"btn", "btn-firma", "btn-sm"}, ViewDataTyped.UserIsSitkaAdmin)
+    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add Contact", BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus")), ViewDataTyped.AddContactUrl, "Add Contact", new List<string>{"btn", "btn-firma", "btn-sm"}, ViewDataTyped.UserCanAddContact)
 }
 <p>
     Users listed here all have Single Sign On (SSO) accounts provisioned by <a href="@ViewDataTyped.KeystoneUrl">Sitka's Keystone service</a>. To create a new account, end users must <a href="@ViewDataTyped.KeystoneRegisterUserUrl">request an account</a>.

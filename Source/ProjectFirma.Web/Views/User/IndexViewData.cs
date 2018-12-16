@@ -47,6 +47,11 @@ namespace ProjectFirma.Web.Views.User
 
             PullUserFromKeystoneUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.PullUserFromKeystone());
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());
+            UserCanAddContact = new ContactManageFeature().HasPermissionByPerson(currentPerson);
         }
+
+        public string AddContactUrl { get; set; }
+        public bool UserCanAddContact { get; set; }
     }
 }

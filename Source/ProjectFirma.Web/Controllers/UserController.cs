@@ -147,18 +147,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
-        [HttpGet]
-        [ContactManageFeature]
-        public void AddContact()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddContact(object viewModel)
-        {
-            throw new NotImplementedException();
-        }
-
         [UserViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
@@ -313,9 +301,10 @@ namespace ProjectFirma.Web.Controllers
                 }
                 else
                 {
-                    firmaPerson = new Person(keystoneUser.UserGuid, keystoneUser.FirstName, keystoneUser.LastName,
-                        keystoneUser.Email, Role.Unassigned, DateTime.Now, true, firmaOrganization, false,
-                        keystoneUser.LoginName);
+                    // todo: fix
+                    //firmaPerson = new Person(keystoneUser.UserGuid, keystoneUser.FirstName, keystoneUser.LastName,
+                    //    keystoneUser.Email, Role.Unassigned, DateTime.Now, true, firmaOrganization, false,
+                    //    keystoneUser.LoginName);
                     HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
                 }
 
@@ -405,6 +394,36 @@ namespace ProjectFirma.Web.Controllers
 
             return RazorPartialView<EditUserStewardshipAreas, EditUserStewardshipAreasViewData, EditUserStewardshipAreasViewModel>(viewData, viewModel);
         }
-    }
 
+
+        [HttpGet]
+        [ContactManageFeature]
+        public PartialViewResult AddContact()
+        {
+            var viewModel = new EditContactViewModel();
+            return ViewAddContact(viewModel);
+        }
+
+        [HttpPost]
+        [ContactManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult AddContact(EditContactViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewAddContact(viewModel);
+            }
+
+            // create new contact here
+
+            SetMessageForDisplay($"Successfully added {viewModel.FirstName} {viewModel.LastName}");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewAddContact(EditContactViewModel viewModel)
+        {
+            var viewData = new EditContactViewData();
+            return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
+        }
+    }
 }

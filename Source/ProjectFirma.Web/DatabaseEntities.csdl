@@ -1404,6 +1404,7 @@
     <Property Name="MiddleName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="StatewideVendorNumber" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="PersonAddress" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" />

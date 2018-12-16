@@ -1431,6 +1431,7 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
     <Property Name="MiddleName" Type="varchar" MaxLength="100" />
     <Property Name="StatewideVendorNumber" Type="varchar" MaxLength="100" />
     <Property Name="Notes" Type="varchar(max)" />
+    <Property Name="PersonAddress" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="PersonStewardGeospatialArea">
     <Key>

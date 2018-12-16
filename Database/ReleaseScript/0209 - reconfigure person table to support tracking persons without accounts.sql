@@ -11,4 +11,7 @@ alter table dbo.Person
 add Notes varchar(max) null
 
 alter table dbo.Person
+add PersonAddress varchar(max) null
+
+alter table dbo.Person
 alter column Email varchar(255) null

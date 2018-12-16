@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Models
             : this()
         {
             PersonID = person.PersonID;
-            PersonGuid = person.PersonGuid;
+            PersonGuid = person.PersonGuid.GetValueOrDefault();
             FirstName = person.FirstName;
             LastName = person.LastName;
             FullNameWithOrgShortName = $"{FirstName} {LastName} ({person.Organization.OrganizationShortNameIfAvailable})";

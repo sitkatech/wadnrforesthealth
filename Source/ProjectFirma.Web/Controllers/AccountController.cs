@@ -62,16 +62,12 @@ namespace ProjectFirma.Web.Controllers
                 // new user - provision with limited role
                 SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", keystoneUserClaims.UserGuid);
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                person = new Person(keystoneUserClaims.UserGuid,
-                    keystoneUserClaims.FirstName,
-                    keystoneUserClaims.LastName,
-                    keystoneUserClaims.Email,
-                    Role.Unassigned.RoleID,
-                    DateTime.Now,
-                    true,
-                    unknownOrganization.OrganizationID,
-                    false,
-                    keystoneUserClaims.LoginName);
+                person = new Person(keystoneUserClaims.FirstName, keystoneUserClaims.LastName, Role.Unassigned.RoleID,
+                    DateTime.Now, true, unknownOrganization.OrganizationID, false, keystoneUserClaims.LoginName)
+                {
+                    PersonGuid = keystoneUserClaims.UserGuid,
+                    Email = keystoneUserClaims.Email
+                };
                 HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
                 sendNewUserNotification = true;
             }
