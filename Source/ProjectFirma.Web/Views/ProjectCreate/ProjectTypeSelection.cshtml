@@ -31,17 +31,17 @@ Source code is available upon request via <support@sitkatech.com>.
     <div class="form-group">
         <div class="radio">
             <label>
-                @Html.RadioButtonFor(m => m.CreateType, ProjectTypeSelectionViewModel.ProjectCreateType.Proposal)
-                <strong>Add a proposal for a future @FieldDefinition.Project.GetFieldDefinitionLabel()</strong>
+                @Html.RadioButtonFor(m => m.CreateType, ProjectTypeSelectionViewModel.ProjectCreateType.Application)
+                <strong>Add an application for a future @FieldDefinition.Project.GetFieldDefinitionLabel()</strong>
             </label>
-            <div class="radioExplanationText">This will create a new @FieldDefinition.Project.GetFieldDefinitionLabel() in Proposal stage. When a proposal is reviewed and selected for implementation an administrator can advance the @FieldDefinition.Project.GetFieldDefinitionLabel() to the Planning/Design stage.</div>
+            <div class="radioExplanationText">This will create a new @FieldDefinition.Project.GetFieldDefinitionLabel() in the Application stage. When an application is reviewed and selected for implementation an administrator can advance the @FieldDefinition.Project.GetFieldDefinitionLabel() to the Planned stage.</div>
         </div>
         <div class="radio" style="margin-top: 10px;">
             <label>
                 @Html.RadioButtonFor(m => m.CreateType, ProjectTypeSelectionViewModel.ProjectCreateType.Existing)
                 <strong>Enter an existing @FieldDefinition.Project.GetFieldDefinitionLabel() that is already underway or complete</strong>
             </label>
-            <div class="radioExplanationText">This will create a new @FieldDefinition.Project.GetFieldDefinitionLabel() record for an existing @FieldDefinition.Project.GetFieldDefinitionLabel(). You will be asked to select the @FieldDefinition.Project.GetFieldDefinitionLabel() stage (e.g. Planning/Design, Implementation, or Complete). An administrator will review the @FieldDefinition.Project.GetFieldDefinitionLabel() before it becomes publicly visible.</div>
+            <div class="radioExplanationText">This will create a new @FieldDefinition.Project.GetFieldDefinitionLabel() record for an existing @FieldDefinition.Project.GetFieldDefinitionLabel(). You will be asked to select the @FieldDefinition.Project.GetFieldDefinitionLabel() stage (e.g. Planned, Implementation, or Complete). An administrator will review the @FieldDefinition.Project.GetFieldDefinitionLabel() before it becomes publicly visible.</div>
         </div>
         @if (ViewDataTyped.TenantAttribute.ProjectExternalDataSourceEnabled)
         {

@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     {
         public enum ProjectCreateType
         {
-            Proposal,
+            Application,
             Existing,
             ImportExternal
         }
