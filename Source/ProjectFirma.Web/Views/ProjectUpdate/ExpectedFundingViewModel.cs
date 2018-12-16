@@ -47,9 +47,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public ExpectedFundingViewModel(Money? projectEstimatedTotalCost)
+        public ExpectedFundingViewModel()
         {
-            ProjectEstimatedTotalCost = projectEstimatedTotalCost;
+            
         }
 
         public ExpectedFundingViewModel(List<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates,

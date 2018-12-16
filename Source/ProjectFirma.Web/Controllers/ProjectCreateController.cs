@@ -103,7 +103,7 @@ namespace ProjectFirma.Web.Controllers
 
             switch (viewModel.CreateType)
             {
-                case ProjectTypeSelectionViewModel.ProjectCreateType.Proposal:
+                case ProjectTypeSelectionViewModel.ProjectCreateType.Application:
                     return new ModalDialogFormJsonResult(
                         SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null)));
                 case ProjectTypeSelectionViewModel.ProjectCreateType.Existing:
