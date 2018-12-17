@@ -1,12 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class EditContactViewModel : FormViewModel
+    public class EditContactViewModel : FormViewModel, IValidatableObject
     {
         /// <summary>
         /// Needed by ModdelBinder
@@ -72,5 +75,14 @@ namespace ProjectFirma.Web.Views.User
         [DisplayName("Notes")]
         [StringLength(Person.FieldLengths.Notes)]
         public string Notes { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Phone.Length != 10 || //number of digits in an american phone number
+                !Phone.All(char.IsDigit)) // phone numbers must be digits
+            {
+                yield return new SitkaValidationResult<EditContactViewModel, string>("Phone number was invalid.", m=>m.Phone);
+            }
+        }
     }
 }
