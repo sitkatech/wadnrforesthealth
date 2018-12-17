@@ -343,6 +343,8 @@ namespace ProjectFirma.Web.Models
             public const int LoginName = 128;
             public const int MiddleName = 100;
             public const int StatewideVendorNumber = 100;
+            public const int Notes = 500;
+            public const int PersonAddress = 255;
         }
     }
 }

@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var canDelete = !person.HasDependentObjects() && person != CurrentPerson;
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete {person.FullNameFirstLastAndOrg}?"
+                ? $"Are you sure you want to delete {person.FullNameFirstLast}?"
                 : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage("Person", SitkaRoute<UserController>.BuildLinkFromExpression(x => x.Detail(person), "here"));
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
@@ -435,6 +435,32 @@ namespace ProjectFirma.Web.Controllers
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
             var viewData = new EditContactViewData(organizations);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ContactManageFeature]
+        public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
+            {
+            var person = personPrimaryKey.EntityObject;
+            var viewModel = new EditContactViewModel(person);
+            return ViewAddContact(viewModel);
+        }
+
+        [HttpPost]
+        [ContactManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, EditContactViewModel viewModel)
+        {
+            var person = personPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewAddContact(viewModel);
+            }
+
+            viewModel.UpdateModel(person);
+
+            SetMessageForDisplay($"Successfully updated {person.FullNameFirstLast}");
+            return new ModalDialogFormJsonResult();
         }
     }
 }

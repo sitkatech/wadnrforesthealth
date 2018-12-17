@@ -1,11 +1,47 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.User
 {
     public class EditContactViewModel : FormViewModel
     {
+        /// <summary>
+        /// Needed by ModdelBinder
+        ///     </summary>
+        public EditContactViewModel()
+        {
+
+        }
+
+        public EditContactViewModel(Person person)
+        {
+            FirstName = person.FirstName;
+            MiddleName = person.MiddleName;
+            LastName = person.LastName;
+            Email = person.Email;
+            Address = person.PersonAddress;
+            Phone = person.Phone;
+            OrganizationID = person.OrganizationID;
+            StatewideVendorNumber = person.StatewideVendorNumber;
+            Notes = person.Notes;
+        }
+
+        public void UpdateModel(Person person)
+        {
+            person.FirstName = FirstName;
+            person.MiddleName = MiddleName;
+            person.LastName = LastName;
+            person.Email = Email;
+            person.PersonAddress = Address;
+            person.Phone = Phone;
+            person.OrganizationID = OrganizationID;
+            person.StatewideVendorNumber = StatewideVendorNumber;
+            person.Notes = Notes;
+        }
+
         [Required]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -21,6 +57,7 @@ namespace ProjectFirma.Web.Views.User
         public string Email { get; set; }
 
         [DisplayName("Mailing Address")]
+        [StringLength(Person.FieldLengths.PersonAddress)]
         public string Address { get; set; }
 
         [DisplayName("Phone Number")]
@@ -29,10 +66,11 @@ namespace ProjectFirma.Web.Views.User
         [DisplayName("Organization")]
         public int? OrganizationID { get; set; }
 
-        [DisplayName("Statewide Vendor Number")]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.StatewideVendorNumber)]
         public string StatewideVendorNumber { get; set; }
 
         [DisplayName("Notes")]
+        [StringLength(Person.FieldLengths.Notes)]
         public string Notes { get; set; }
     }
 }

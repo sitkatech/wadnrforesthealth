@@ -24,6 +24,7 @@
 @using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
@@ -71,12 +72,16 @@
     <div class="col-md-6">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
+                @if (ViewDataTyped.PersonIsMereContact)
+                {
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, string.Format("Edit Contact"), 950, ViewDataTyped.UserHasManageContactPermissions)
+                }
                 Basics
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-4 fieldLabel text-right">Name</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.FullNameFirstLast</div>
+                    <div class="col-xs-8">@ViewDataTyped.Person.FullNameFirstLastAndMiddle</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4 fieldLabel text-right">Email</div>
@@ -86,25 +91,48 @@
                     <div class="col-xs-4 fieldLabel text-right">Phone</div>
                     <div class="col-xs-8">@ViewDataTyped.Person.Phone.ToPhoneNumberString()</div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.LoginName</div>
-                </div>
+                @if (!ViewDataTyped.PersonIsMereContact)
+                {
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
+                        <div class="col-xs-8">@ViewDataTyped.Person.LoginName</div>
+                    </div>
+                }
                 <div class="row">
                     <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
                     <div class="col-xs-8">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>
                 </div>
                 @if (ViewDataTyped.UserHasPersonManagePermissions)
                 {
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Last Activity</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
-                    </div>
+                    if (!ViewDataTyped.PersonIsMereContact)
+                    {
+                        <div class="row">
+                            <div class="col-xs-4 fieldLabel text-right">Last Activity</div>
+                            <div class="col-xs-8">@ViewDataTyped.Person.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="col-xs-4 fieldLabel text-right">Created Date</div>
                         <div class="col-xs-8">@ViewDataTyped.Person.CreateDate.ToStringDateTimeNoLeadingZeros()</div>
                     </div>
                 }
+                @if (ViewDataTyped.PersonIsMereContact)
+                {
+                    
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">Mailing Address</div>
+                        <div class="col-xs-8">@ViewDataTyped.Person.PersonAddress</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
+                        <div class="col-xs-8">@ViewDataTyped.Person.StatewideVendorNumber</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 fieldLabel text-right">Notes</div>
+                        <div class="col-xs-8">@ViewDataTyped.Person.Notes</div>
+                    </div>
+                }
+
                 @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPersonManagePermissions || ViewDataTyped.IsViewingSelf)
                 {
                     <div class="alert" role="alert">

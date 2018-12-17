@@ -47,6 +47,8 @@ namespace ProjectFirma.Web.Views.User
         public bool TenantHasStewardshipAreas { get; }
         
         public bool PersonIsMereContact { get; }
+        public string EditContactUrl { get; }
+        public bool UserHasManageContactPermissions { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -87,6 +89,8 @@ namespace ProjectFirma.Web.Views.User
             ActivateInactivateUrl = activateInactivateUrl;
 
             TenantHasStewardshipAreas = MultiTenantHelpers.GetProjectStewardshipAreaType() != null;
+            EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
+            UserHasManageContactPermissions = new ContactManageFeature().HasPermissionByPerson(currentPerson);
         }
 
         public readonly HtmlString EditRolesLink;

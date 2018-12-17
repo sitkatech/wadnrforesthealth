@@ -153,6 +153,6 @@ namespace ProjectFirma.Web.Models
 
         public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;       
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);
-
+        public string FullNameFirstLastAndMiddle => $"{FirstName} {MiddleName} {LastName}";
     }
 }
