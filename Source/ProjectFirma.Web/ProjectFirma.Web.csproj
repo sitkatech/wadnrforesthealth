@@ -338,6 +338,11 @@
     <Compile Include="Models\Generated\ProjectOrganizationUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectOrganizationUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectOrganizationUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectPerson.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectPerson.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectPersonPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectPersonRelationshipType.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectPersonRelationshipTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectStage.Binding.cs" />
     <Compile Include="Models\Generated\ProjectStagePrimaryKey.Binding.cs" />
@@ -428,6 +433,14 @@
     <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerGeospatialArea.Binding.cs" />
+    <Compile Include="Models\ProjectPersonRelationship.cs" />
+    <Compile Include="Models\ProjectPersonRelationshipTypeSimple.cs" />
+    <Compile Include="Models\ProjectPersonSimple.cs" />
+    <Compile Include="Views\Shared\ProjectPerson\EditPeople.cs" />
+    <Compile Include="Views\Shared\ProjectPerson\EditPeopleViewData.cs" />
+    <Compile Include="Views\Shared\ProjectPerson\EditPeopleViewModel.cs" />
+    <Compile Include="Views\Shared\ProjectPerson\ProjectPeopleDetail.cs" />
+    <Compile Include="Views\Shared\ProjectPerson\ProjectPeopleDetailViewData.cs" />
     <Compile Include="Views\User\EditContact.cs" />
     <Compile Include="Views\User\EditContactViewData.cs" />
     <Compile Include="Views\User\EditContactViewModel.cs" />
@@ -993,6 +1006,7 @@
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
     <Content Include="Views\Project\TreatmentActivityController.js" />
     <Content Include="Views\Project\ContractorTimeActivityController.js" />
+    <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
@@ -1735,6 +1749,8 @@
     <Content Include="Views\Project\EditContractorTimeActivities.cshtml" />
     <Content Include="Views\Project\EditTreatmentActivities.cshtml" />
     <Content Include="Views\User\EditContact.cshtml" />
+    <Content Include="Views\Shared\ProjectPerson\EditPeople.cshtml" />
+    <Content Include="Views\Shared\ProjectPerson\ProjectPeopleDetail.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

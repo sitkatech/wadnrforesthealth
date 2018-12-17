@@ -90,4 +90,5 @@ VALUES
 (266, N'NormalUser', N'Normal User', N'Users with this role can propose new Projects, update existing Projects where their organization is the Lead Implementer, and view almost every page within the Project Tracker.'),
 (267, N'ProjectStewardshipArea', N'Project Stewardship Area', 'Indicates which attribute of a project is used to determine if a Project Steward is permitted to edit that project.'),
 (268, N'ProjectInternalNote', N'Internal Note', N'<p>Any important information about a project that should only be visible to Administrators.</p>'),
-(269, N'StatewideVendorNumber', 'Statewide Vendor Number', 'A number assigned by the State to vendors.')
+(269, N'StatewideVendorNumber', 'Statewide Vendor Number', 'A number assigned by the State to vendors.'),
+(270, N'Contact', 'Contact', 'A person who is associated with a project who may or may not have an account in the system.')

@@ -190,6 +190,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<ProjectOrganization> ProjectOrganizations { get { return AllProjectOrganizations.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectOrganizationUpdate> AllProjectOrganizationUpdates { get; set; }
         public virtual IQueryable<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get { return AllProjectOrganizationUpdates.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<ProjectPerson> AllProjectPeople { get; set; }
+        public virtual IQueryable<ProjectPerson> ProjectPeople { get { return AllProjectPeople.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<Project> AllProjects { get; set; }
         public virtual IQueryable<Project> Projects { get { return AllProjects.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectTag> AllProjectTags { get; set; }
@@ -599,6 +601,14 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectOrganizationUpdate":
                     return ProjectOrganizationUpdates.GetProjectOrganizationUpdate(primaryKey);
+
+                case "ProjectPerson":
+                    return ProjectPeople.GetProjectPerson(primaryKey);
+
+                case "ProjectPersonRelationshipType":
+                    var projectPersonRelationshipType = ProjectPersonRelationshipType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(projectPersonRelationshipType, "ProjectPersonRelationshipType", primaryKey);
+                    return projectPersonRelationshipType;
 
                 case "Project":
                     return Projects.GetProject(primaryKey);

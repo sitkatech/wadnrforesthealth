@@ -1,0 +1,65 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="ProjectPeopleDetail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using ProjectFirma.Web.Models
+@using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Views.Shared.ProjectPerson
+@inherits ProjectPeopleDetail
+
+   
+@if (ViewDataTyped.AllProjectPeople.Any())
+{
+    <table class="summaryLayout table table-borderless">
+        <tr>
+            <th class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.ProjectRelationshipType)</th>
+            <th class="col-sm-9">Contact</th>
+        </tr>
+        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.OrderBy(x => x.RelationshipTypeName))
+        {
+            var projectPeople = ViewDataTyped.AllProjectPeople.Where(x => x.RelationshipType == relationshipType).OrderBy(x => x.Person.FullNameFirstLast).ToList();
+            <tr>
+                @if (projectPeople.Count > 1)
+                {
+                    <td>@(relationshipType.RelationshipTypeName + "s")</td>
+                }
+                else
+                {
+                    <td>@relationshipType.RelationshipTypeName</td>
+                }
+                <td>
+                    <ul style="list-style-type: none; padding-left: 0; margin-left: 0;">
+                        @foreach (var x in projectPeople)
+                        {
+                            <li>
+                                <span class="@x.DisplayCssClass">@x.Person.FullNameFirstLast</span>
+                            </li>
+                        }
+                    </ul>
+                </td>
+
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p class="systemText">No people set for this project.</p>
+}

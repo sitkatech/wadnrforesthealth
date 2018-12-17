@@ -1023,6 +1023,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectPerson">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPerson">
+        <MappingFragment StoreEntitySet="ProjectPerson">
+          <ScalarProperty Name="ProjectPersonID" ColumnName="ProjectPersonID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="ProjectPersonRelationshipTypeID" ColumnName="ProjectPersonRelationshipTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProjectTag">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectTag">
         <MappingFragment StoreEntitySet="ProjectTag">
