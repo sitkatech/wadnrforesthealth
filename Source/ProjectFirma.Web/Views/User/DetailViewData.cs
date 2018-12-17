@@ -45,6 +45,8 @@ namespace ProjectFirma.Web.Views.User
         public string UserNotificationGridDataUrl { get; }
         public string ActivateInactivateUrl { get; }
         public bool TenantHasStewardshipAreas { get; }
+        
+        public bool PersonIsMereContact { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -58,6 +60,7 @@ namespace ProjectFirma.Web.Views.User
             : base(currentPerson)
         {
             Person = personToView;
+            PersonIsMereContact = !personToView.PersonGuid.HasValue;
             PageTitle = personToView.FullNameFirstLast + (!personToView.IsActive ? " (inactive)" : string.Empty);
             EntityName = "User";
             //TODO: This gets pulled up to root
