@@ -46,9 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Views\User\EditContact.cs" />
-    <Compile Include="Views\User\EditContactViewData.cs" />
-    <Compile Include="Views\User\EditContactViewModel.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
@@ -431,6 +428,9 @@
     <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerGeospatialArea.Binding.cs" />
+    <Compile Include="Views\User\EditContact.cs" />
+    <Compile Include="Views\User\EditContactViewData.cs" />
+    <Compile Include="Views\User\EditContactViewModel.cs" />
     <Compile Include="Controllers\ProjectInternalNoteController.cs" />
     <Compile Include="Models\GeospatialAreaType.cs" />
     <Compile Include="Models\PerformanceMeasureDataSourceTypeTechnicalAssistanceValue.cs" />
@@ -857,6 +857,8 @@
     <Content Include="Content\img\WashingtonDepartmentOfNaturalResources\favicon.ico" />
     <Content Include="Content\img\WashingtonDepartmentOfNaturalResources\mstile-150x150.png" />
     <Content Include="Content\img\WashingtonDepartmentOfNaturalResources\safari-pinned-tab.svg" />
+    <Content Include="Content\JQuery\jquery.mask.js" />
+    <Content Include="Content\JQuery\jquery.mask.min.js" />
     <Content Include="Content\leaflet\leaflet.groupedlayercontrol\leaflet.groupedlayercontrol.min.css" />
     <Content Include="Content\leaflet\leaflet.groupedlayercontrol\leaflet.groupedlayercontrol.min.js" />
     <Content Include="Content\qtip\jquery.qtip.es5.js">

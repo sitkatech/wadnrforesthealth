@@ -1424,10 +1424,10 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
     <Property Name="UpdateDate" Type="datetime" />
     <Property Name="LastActivityDate" Type="datetime" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
-    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" />
     <Property Name="ReceiveSupportEmails" Type="bit" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
-    <Property Name="LoginName" Type="varchar" Nullable="false" MaxLength="128" />
+    <Property Name="LoginName" Type="varchar" MaxLength="128" />
     <Property Name="MiddleName" Type="varchar" MaxLength="100" />
     <Property Name="StatewideVendorNumber" Type="varchar" MaxLength="100" />
     <Property Name="Notes" Type="varchar(max)" />
@@ -2988,7 +2988,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">

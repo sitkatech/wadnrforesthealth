@@ -38,8 +38,8 @@ namespace ProjectFirma.Web.Views.User
 
         public IndexViewData(Person currentPerson) : base(currentPerson)
         {
-            PageTitle = "Users";
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "User", ObjectNamePlural = "Users", SaveFiltersInCookie = true};
+            PageTitle = "Users and Contacts";
+            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true};
             GridName = "UserGrid";
             GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
             KeystoneUrl = FirmaWebConfiguration.KeystoneUrl;

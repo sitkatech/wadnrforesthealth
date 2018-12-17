@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, Guid? personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress) : this()
+        public Person(int personID, Guid? personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress) : this()
         {
             this.PersonID = personID;
             this.PersonGuid = personGuid;
@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, int organizationID, bool receiveSupportEmails, string loginName) : this()
+        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -92,15 +92,13 @@ namespace ProjectFirma.Web.Models
             this.RoleID = roleID;
             this.CreateDate = createDate;
             this.IsActive = isActive;
-            this.OrganizationID = organizationID;
             this.ReceiveSupportEmails = receiveSupportEmails;
-            this.LoginName = loginName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, Organization organization, bool receiveSupportEmails, string loginName) : this()
+        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -109,19 +107,15 @@ namespace ProjectFirma.Web.Models
             this.RoleID = role.RoleID;
             this.CreateDate = createDate;
             this.IsActive = isActive;
-            this.OrganizationID = organization.OrganizationID;
-            this.Organization = organization;
-            organization.People.Add(this);
             this.ReceiveSupportEmails = receiveSupportEmails;
-            this.LoginName = loginName;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Person CreateNewBlank(Role role, Organization organization)
+        public static Person CreateNewBlank(Role role)
         {
-            return new Person(default(string), default(string), role, default(DateTime), default(bool), organization, default(bool), default(string));
+            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool));
         }
 
         /// <summary>
@@ -298,7 +292,7 @@ namespace ProjectFirma.Web.Models
         public DateTime? UpdateDate { get; set; }
         public DateTime? LastActivityDate { get; set; }
         public bool IsActive { get; set; }
-        public int OrganizationID { get; set; }
+        public int? OrganizationID { get; set; }
         public bool ReceiveSupportEmails { get; set; }
         public Guid? WebServiceAccessToken { get; set; }
         public string LoginName { get; set; }

@@ -63,10 +63,12 @@ namespace ProjectFirma.Web.Controllers
                 SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", keystoneUserClaims.UserGuid);
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(keystoneUserClaims.FirstName, keystoneUserClaims.LastName, Role.Unassigned.RoleID,
-                    DateTime.Now, true, unknownOrganization.OrganizationID, false, keystoneUserClaims.LoginName)
+                    DateTime.Now, true, false)
                 {
                     PersonGuid = keystoneUserClaims.UserGuid,
-                    Email = keystoneUserClaims.Email
+                    Email = keystoneUserClaims.Email,
+                    LoginName = keystoneUserClaims.LoginName,
+                    OrganizationID = unknownOrganization.OrganizationID
                 };
                 HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
                 sendNewUserNotification = true;

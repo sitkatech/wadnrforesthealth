@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -301,10 +302,14 @@ namespace ProjectFirma.Web.Controllers
                 }
                 else
                 {
-                    // todo: fix
-                    //firmaPerson = new Person(keystoneUser.UserGuid, keystoneUser.FirstName, keystoneUser.LastName,
-                    //    keystoneUser.Email, Role.Unassigned, DateTime.Now, true, firmaOrganization, false,
-                    //    keystoneUser.LoginName);
+                    firmaPerson = new Person(keystoneUser.FirstName, keystoneUser.LastName,
+                        Role.Unassigned, DateTime.Now, true, false)
+                    {
+                        PersonGuid = keystoneUser.UserGuid,
+                        Email = keystoneUser.Email,
+                        LoginName = keystoneUser.LoginName,
+                        Organization = firmaOrganization
+                    };
                     HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
                 }
 
@@ -414,7 +419,10 @@ namespace ProjectFirma.Web.Controllers
                 return ViewAddContact(viewModel);
             }
 
-            // create new contact here
+            var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
+                    Role.Unassigned.RoleID, DateTime.Now, true, false)
+                { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID };
+            HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
 
             SetMessageForDisplay($"Successfully added {viewModel.FirstName} {viewModel.LastName}");
             return new ModalDialogFormJsonResult();
@@ -422,7 +430,10 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewAddContact(EditContactViewModel viewModel)
         {
-            var viewData = new EditContactViewData();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.AsEnumerable()
+                .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
+            var viewData = new EditContactViewData(organizations);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
     }

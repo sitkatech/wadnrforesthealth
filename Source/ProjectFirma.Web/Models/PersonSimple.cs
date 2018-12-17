@@ -90,7 +90,7 @@ namespace ProjectFirma.Web.Models
         public DateTime? UpdateDate { get; set; }
         public DateTime? LastActivityDate { get; set; }
         public bool IsActive { get; set; }
-        public int OrganizationID { get; set; }
+        public int? OrganizationID { get; set; }
         public Guid? WebServiceAccessToken { get; set; }
         public string DisplayName
         {

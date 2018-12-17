@@ -15,3 +15,9 @@ add PersonAddress varchar(max) null
 
 alter table dbo.Person
 alter column Email varchar(255) null
+
+alter table dbo.Person
+alter column LoginName varchar(128) null
+
+alter table dbo.Person
+alter column OrganizationID int null
