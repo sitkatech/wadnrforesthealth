@@ -45,6 +45,10 @@ namespace ProjectFirma.Web.Views.User
         public string UserNotificationGridDataUrl { get; }
         public string ActivateInactivateUrl { get; }
         public bool TenantHasStewardshipAreas { get; }
+        
+        public bool PersonIsMereContact { get; }
+        public string EditContactUrl { get; }
+        public bool UserHasManageContactPermissions { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -58,6 +62,7 @@ namespace ProjectFirma.Web.Views.User
             : base(currentPerson)
         {
             Person = personToView;
+            PersonIsMereContact = string.IsNullOrWhiteSpace(personToView.PersonUniqueIdentifier);
             PageTitle = personToView.FullNameFirstLast + (!personToView.IsActive ? " (inactive)" : string.Empty);
             EntityName = "User";
             //TODO: This gets pulled up to root
@@ -84,6 +89,8 @@ namespace ProjectFirma.Web.Views.User
             ActivateInactivateUrl = activateInactivateUrl;
 
             TenantHasStewardshipAreas = MultiTenantHelpers.GetProjectStewardshipAreaType() != null;
+            EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
+            UserHasManageContactPermissions = new ContactManageFeature().HasPermissionByPerson(currentPerson);
         }
 
         public readonly HtmlString EditRolesLink;

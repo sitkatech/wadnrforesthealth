@@ -18,11 +18,11 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class ProjectStage : IHavePrimaryKey
     {
-        public static readonly ProjectStageProposal Proposal = ProjectStageProposal.Instance;
-        public static readonly ProjectStagePlanningDesign PlanningDesign = ProjectStagePlanningDesign.Instance;
+        public static readonly ProjectStageApplication Application = ProjectStageApplication.Instance;
+        public static readonly ProjectStagePlanned Planned = ProjectStagePlanned.Instance;
         public static readonly ProjectStageImplementation Implementation = ProjectStageImplementation.Instance;
         public static readonly ProjectStageCompleted Completed = ProjectStageCompleted.Instance;
-        public static readonly ProjectStageTerminated Terminated = ProjectStageTerminated.Instance;
+        public static readonly ProjectStageCancelled Cancelled = ProjectStageCancelled.Instance;
         public static readonly ProjectStageDeferred Deferred = ProjectStageDeferred.Instance;
         public static readonly ProjectStagePostImplementation PostImplementation = ProjectStagePostImplementation.Instance;
 
@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectStage()
         {
-            All = new List<ProjectStage> { Proposal, PlanningDesign, Implementation, Completed, Terminated, Deferred, PostImplementation };
+            All = new List<ProjectStage> { Application, Planned, Implementation, Completed, Cancelled, Deferred, PostImplementation };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectStage>(All.ToDictionary(x => x.ProjectStageID));
         }
 
@@ -108,20 +108,20 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
+                case ProjectStageEnum.Application:
+                    return Application;
+                case ProjectStageEnum.Cancelled:
+                    return Cancelled;
                 case ProjectStageEnum.Completed:
                     return Completed;
                 case ProjectStageEnum.Deferred:
                     return Deferred;
                 case ProjectStageEnum.Implementation:
                     return Implementation;
-                case ProjectStageEnum.PlanningDesign:
-                    return PlanningDesign;
+                case ProjectStageEnum.Planned:
+                    return Planned;
                 case ProjectStageEnum.PostImplementation:
                     return PostImplementation;
-                case ProjectStageEnum.Proposal:
-                    return Proposal;
-                case ProjectStageEnum.Terminated:
-                    return Terminated;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -130,25 +130,25 @@ namespace ProjectFirma.Web.Models
 
     public enum ProjectStageEnum
     {
-        Proposal = 1,
-        PlanningDesign = 2,
+        Application = 1,
+        Planned = 2,
         Implementation = 3,
         Completed = 4,
-        Terminated = 5,
+        Cancelled = 5,
         Deferred = 6,
         PostImplementation = 8
     }
 
-    public partial class ProjectStageProposal : ProjectStage
+    public partial class ProjectStageApplication : ProjectStage
     {
-        private ProjectStageProposal(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
-        public static readonly ProjectStageProposal Instance = new ProjectStageProposal(1, @"Proposal", @"Proposal", 5, @"#dbbdff");
+        private ProjectStageApplication(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
+        public static readonly ProjectStageApplication Instance = new ProjectStageApplication(1, @"Application", @"Application", 5, @"#dbbdff");
     }
 
-    public partial class ProjectStagePlanningDesign : ProjectStage
+    public partial class ProjectStagePlanned : ProjectStage
     {
-        private ProjectStagePlanningDesign(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
-        public static readonly ProjectStagePlanningDesign Instance = new ProjectStagePlanningDesign(2, @"PlanningDesign", @"Planning/Design", 20, @"#80B2FF");
+        private ProjectStagePlanned(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
+        public static readonly ProjectStagePlanned Instance = new ProjectStagePlanned(2, @"Planned", @"Planned", 20, @"#80B2FF");
     }
 
     public partial class ProjectStageImplementation : ProjectStage
@@ -163,10 +163,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectStageCompleted Instance = new ProjectStageCompleted(4, @"Completed", @"Completed", 50, @"#000066");
     }
 
-    public partial class ProjectStageTerminated : ProjectStage
+    public partial class ProjectStageCancelled : ProjectStage
     {
-        private ProjectStageTerminated(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
-        public static readonly ProjectStageTerminated Instance = new ProjectStageTerminated(5, @"Terminated", @"Terminated", 25, @"#D6D6D6");
+        private ProjectStageCancelled(int projectStageID, string projectStageName, string projectStageDisplayName, int sortOrder, string projectStageColor) : base(projectStageID, projectStageName, projectStageDisplayName, sortOrder, projectStageColor) {}
+        public static readonly ProjectStageCancelled Instance = new ProjectStageCancelled(5, @"Cancelled", @"Cancelled", 25, @"#D6D6D6");
     }
 
     public partial class ProjectStageDeferred : ProjectStage

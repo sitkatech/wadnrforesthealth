@@ -80,9 +80,9 @@ namespace ProjectFirma.Web.Models
             var dbContext = HttpRequestStorage.DatabaseEntities;
             var objectContext = dbContext.GetObjectContext();
             var testProject = TestFramework.TestProject.Insert(dbContext);
-            var originalProjectStageName = ProjectStage.PlanningDesign.ProjectStageDisplayName;
+            var originalProjectStageName = ProjectStage.Planned.ProjectStageDisplayName;
             // Act
-            var newProjectStage = ProjectStage.Terminated;
+            var newProjectStage = ProjectStage.Cancelled;
             testProject.ProjectStageID = newProjectStage.ProjectStageID;
 
             var changeTracker = dbContext.ChangeTracker;

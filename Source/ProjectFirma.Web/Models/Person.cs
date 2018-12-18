@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Models
             var isPersonViewingThePrimaryContact = person.PersonID == PersonID;
             if (isPersonViewingThePrimaryContact)
             {
-                return ProjectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Terminated).ToList();
+                return ProjectsWhereYouAreThePrimaryContactPerson.ToList().Where(x => x.ProjectStage != ProjectStage.Cancelled).ToList();
             }
             return ProjectsWhereYouAreThePrimaryContactPerson.ToList().GetActiveProjectsAndProposals(person.CanViewProposals).ToList();
         }
@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Models
                     // the presence of roles switches you from being IsAuthenticated or not
                     return new List<string>();
                 }
-                var roleNames = new List<string> {Role.RoleName};
+                var roleNames = new List<string> { Role.RoleName };
                 return roleNames;
             }
         }
@@ -141,7 +141,8 @@ namespace ProjectFirma.Web.Models
 
         public bool IsAnonymousOrUnassigned => IsAnonymousUser || Role == Role.Unassigned;
 
-        public bool CanViewProposals => MultiTenantHelpers.ShowProposalsToThePublic() || !IsAnonymousOrUnassigned;       
+        public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);
+        public string FullNameFirstLastAndMiddle => $"{FirstName} {MiddleName} {LastName}";
     }
 }

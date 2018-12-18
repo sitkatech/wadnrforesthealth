@@ -35,7 +35,6 @@ namespace ProjectFirma.Web.Models
                 TaxonomyLeaf.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
-                FundingType.Capital,
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
                 ProjectApprovalStatus.Approved);
 

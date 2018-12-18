@@ -19,18 +19,29 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using Newtonsoft.Json;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
 {
     public class EditProjectFundingSourceRequestsViewModel : FormViewModel, IValidatableObject
     {
+        [DisplayName("Estimated Total cost")]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedTotalCost { get; set; }
+
+        [Required]
+        public bool? ForProject { get; set; }
+
         public List<ProjectFundingSourceRequestSimple> ProjectFundingSourceRequests { get; set; }
 
         /// <summary>
@@ -41,14 +52,16 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         }
 
         public EditProjectFundingSourceRequestsViewModel(
-            List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests)
+            List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, bool forProject, Money? projectEstimatedTotalCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequests
                 .Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
+            ProjectEstimatedTotalCost = projectEstimatedTotalCost;
+            ForProject = forProject;
         }
 
         public void UpdateModel(List<Models.ProjectFundingSourceRequest> currentProjectFundingSourceRequests,
-            IList<Models.ProjectFundingSourceRequest> allProjectFundingSourceRequests)
+            IList<Models.ProjectFundingSourceRequest> allProjectFundingSourceRequests, Models.Project project)
         {
             var projectFundingSourceRequestsUpdated = new List<Models.ProjectFundingSourceRequest>();
             if (ProjectFundingSourceRequests != null)
@@ -56,6 +69,16 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
                 // Completely rebuild the list
                 projectFundingSourceRequestsUpdated = ProjectFundingSourceRequests
                     .Select(x => x.ToProjectFundingSourceRequest()).ToList();
+            }
+
+            if (ForProject ?? false) // never null
+            {
+                if (project == null)
+                {
+                    throw new InvalidOperationException(
+                        "Project is required to update Funding Source Requests for a Project");
+                }
+                project.EstimatedTotalCost = ProjectEstimatedTotalCost;
             }
 
             currentProjectFundingSourceRequests.Merge(projectFundingSourceRequestsUpdated,

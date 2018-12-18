@@ -72,12 +72,12 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult Login(string returnUrl)
         {
             // Request a redirect to the external login provider
-            return new ChallengeResult("wadnr", Url.Action("LogOn", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult("wadnr", Url.Action("SAWPost", "Account", new { ReturnUrl = returnUrl }));
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult LogOn(string returnUrl)
+        public ActionResult SAWPost(string returnUrl)
         {
             var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.SamlIDPCertificateSerialNumber));
             samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
@@ -156,43 +156,24 @@ namespace ProjectFirma.Web.Controllers
 
             if (person == null)
             {
-                // we need to do one more check; check if the email exists
-                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false);
-
-                if (person == null)
+                // new user - provision with limited role
+                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", personUniqueIdentifier);
+                var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
+                person = new Person(firstName, lastName, Role.Unassigned.RoleID,
+                    DateTime.Now, true, false)
                 {
-                    // new user - provision with limited role
-                    SitkaHttpApplication.Logger.DebugFormat(
-                        "In SyncLocalAccountStore - creating local profile for User '{0}'",
-                        personUniqueIdentifier);
-                    var unknownOrganization =
-                        HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                    person = new Person(personUniqueIdentifier,
-                        firstName,
-                        lastName,
-                        email,
-                        Role.Unassigned.RoleID,
-                        DateTime.Now,
-                        true,
-                        unknownOrganization.OrganizationID,
-                        false,
-                        username);
-                    HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
-                    sendNewUserNotification = true;
-                }
-                else
-                {
-                    person.PersonUniqueIdentifier = personUniqueIdentifier;
-                    // existing user - sync values
-                    SitkaHttpApplication.Logger.DebugFormat(
-                        "In SyncLocalAccountStore - syncing local profile for User '{0}'", personUniqueIdentifier);
-                }
+                    PersonUniqueIdentifier = personUniqueIdentifier,
+                    Email = email,
+                    LoginName = username,
+                    OrganizationID = unknownOrganization.OrganizationID
+                };
+                HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
+                sendNewUserNotification = true;
             }
             else
             {
                 // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat(
-                    "In SyncLocalAccountStore - syncing local profile for User '{0}'", personUniqueIdentifier);
+                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - syncing local profile for User '{0}'", personUniqueIdentifier);
             }
 
             person.FirstName = firstName;

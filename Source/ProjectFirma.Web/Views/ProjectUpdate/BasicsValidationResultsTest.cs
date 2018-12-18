@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.UnitTestCommon;
@@ -36,41 +38,41 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ProjectStageID = ProjectStage.Completed.ProjectStageID;
             var warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlanningDesignStartYearIsRequired));
+            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
-            Assert.That(warningMessages.Contains(BasicsValidationResult.CompletionYearIsRequired));
+            Assert.That(warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
                                     
-            projectUpdate.CompletionYear = 2007;
+            projectUpdate.CompletionDate = new DateTime(2007, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlanningDesignStartYearIsRequired));
+            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
-            Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionYearIsRequired));
+            Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
 
-            projectUpdate.ImplementationStartYear = 2010;
+            projectUpdate.ApprovalStartDate = new DateTime(2010, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlanningDesignStartYearIsRequired));
+            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
-            Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionYearIsRequired));
-            Assert.That(warningMessages.Contains(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear));
+            Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
+            Assert.That(warningMessages.Contains(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear));
 
-            projectUpdate.ImplementationStartYear = 2006;
+            projectUpdate.ApprovalStartDate = new DateTime(2006, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();            
 
-            Assert.That(!warningMessages.Contains(FirmaValidationMessages.CompletionYearGreaterThanEqualToImplementationStartYear));
+            Assert.That(!warningMessages.Contains(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear));
 
-            projectUpdate.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
-            projectUpdate.PlanningDesignStartYear = 2020;
+            projectUpdate.ProjectStageID = ProjectStage.Planned.ProjectStageID;
+            projectUpdate.PlannedDate = new DateTime(2020,1,1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(!warningMessages.Contains(BasicsValidationResult.PlanningDesignStartYearIsRequired));
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlanningDesignStartYearShouldBeLessThanCurrentYear));
-            Assert.That(warningMessages.Contains(FirmaValidationMessages.ImplementationStartYearGreaterThanPlanningDesignStartYear));
+            Assert.That(!warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
+            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateShouldBeLessThanCurrentYear));
+            Assert.That(warningMessages.Contains(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate));
 
 
             projectUpdate.ProjectStageID = ProjectStage.Implementation.ProjectStageID;
-            projectUpdate.ImplementationStartYear = 2020;
+            projectUpdate.ApprovalStartDate = new DateTime(2020, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearShouldBeLessThanCurrentYear));

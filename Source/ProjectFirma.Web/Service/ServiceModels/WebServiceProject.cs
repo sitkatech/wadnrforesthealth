@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -41,9 +43,9 @@ namespace ProjectFirma.Web.Service.ServiceModels
             TaxonomyLeaf = project.TaxonomyLeaf.TaxonomyLeafName;
             ProjectDescription = project.ProjectDescription;
 
-            PlanningStartDate = project.PlanningDesignStartYear;
-            ImplementationStartDate = project.ImplementationStartYear;
-            EndDate = project.CompletionYear;
+            PlanningStartDate = project.PlannedDate;
+            ImplementationStartDate = project.GetImplementationStartYear();
+            EndDate = project.GetCompletionYear();
             Stage = project.ProjectStage.ProjectStageDisplayName;
 
             Latitude = project.ProjectLocationPointLatitude;
@@ -67,7 +69,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
         [DataMember] public string TaxonomyLeaf { get; set; }
         [DataMember] public string ProjectDescription { get; set; }
 
-        [DataMember] public int? PlanningStartDate { get; set; }
+        [DataMember] public DateTime? PlanningStartDate { get; set; }
         [DataMember] public int? ImplementationStartDate { get; set; }
         [DataMember] public int? EndDate { get; set; }        
         [DataMember] public string Stage { get; set; }
@@ -92,7 +94,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
         {
             var projects =
                 HttpRequestStorage.DatabaseEntities.Projects
-                    .Where(x => x.ProjectStageID != ProjectStage.Terminated.ProjectStageID && x.ProjectStageID != ProjectStage.Deferred.ProjectStageID)
+                    .Where(x => x.ProjectStageID != ProjectStage.Cancelled.ProjectStageID && x.ProjectStageID != ProjectStage.Deferred.ProjectStageID)
                     .ToList();                    
             return
                 projects

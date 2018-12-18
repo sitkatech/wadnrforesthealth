@@ -94,26 +94,26 @@ namespace ProjectFirma.Web.Common
 
         public static List<int> CalculateCalendarYearRangeForExpendituresAccountingForExistingYears(List<int> existingYears, IProject project, int currentYearToUse)
         {
-            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlanningDesignStartYear, project?.CompletionYear, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), currentYearToUse);
+            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlannedDate, project.GetCompletionYear(), currentYearToUse, MultiTenantHelpers.GetMinimumYear(), currentYearToUse);
         }
 
         public static List<int> CalculateCalendarYearRangeForBudgetsAccountingForExistingYears(List<int> existingYears, IProject project, int currentYearToUse)
         {
-            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlanningDesignStartYear, project?.CompletionYear, currentYearToUse, null, null);
+            return CalculateCalendarYearRangeAccountingForExistingYears(existingYears, project?.PlannedDate, project.GetCompletionYear(), currentYearToUse, null, null);
         }
 
-        public static List<int> CalculateCalendarYearRangeAccountingForExistingYears(List<int> existingYears, int? startYear, int? endYear, int currentYearToUse, int? floorYear, int? ceilingYear)
+        public static List<int> CalculateCalendarYearRangeAccountingForExistingYears(List<int> existingYears, DateTime? startDate, int? endYear, int currentYearToUse, int? floorYear, int? ceilingYear)
         {
-            Check.Require((!endYear.HasValue && !startYear.HasValue) // both not provided
-                          || (endYear.HasValue && (!startYear.HasValue || endYear.Value >= startYear.Value)) // endYear provided and needs to either have start year null or start year <= end year
+            Check.Require((!endYear.HasValue && !startDate.HasValue) // both not provided
+                          || (endYear.HasValue && (!startDate.HasValue || endYear.Value >= startDate.Value.Year)) // endYear provided and needs to either have start year null or start year <= end year
                           || !endYear.HasValue // only have startYear
                 ,
-                $"Start Year {startYear} and End Year {endYear} are out of order!");
+                $"Start Year {startDate} and End Year {endYear} are out of order!");
             var currentYear = currentYearToUse;
             var defaultStartYear = currentYear;
-            if (startYear.HasValue)
+            if (startDate.HasValue)
             {
-                defaultStartYear = startYear.Value;
+                defaultStartYear = startDate.Value.Year;
             }
             else if (endYear.HasValue && endYear.Value <= currentYear)
             {
@@ -124,9 +124,9 @@ namespace ProjectFirma.Web.Common
             {
                 defaultEndYear = endYear.Value;
             }
-            else if (startYear.HasValue && startYear.Value > currentYear)
+            else if (startDate.HasValue && startDate.Value.Year > currentYear)
             {
-                defaultEndYear = startYear.Value;
+                defaultEndYear = startDate.Value.Year;
             }
 
             // if provided a floor year, make the minimum be that

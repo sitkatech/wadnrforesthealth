@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string personUniqueIdentifier, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName) : this()
+        public Person(int personID, string personUniqueIdentifier, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress) : this()
         {
             this.PersonID = personID;
             this.PersonUniqueIdentifier = personUniqueIdentifier;
@@ -73,55 +73,49 @@ namespace ProjectFirma.Web.Models
             this.ReceiveSupportEmails = receiveSupportEmails;
             this.WebServiceAccessToken = webServiceAccessToken;
             this.LoginName = loginName;
+            this.MiddleName = middleName;
+            this.StatewideVendorNumber = statewideVendorNumber;
+            this.Notes = notes;
+            this.PersonAddress = personAddress;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(string personUniqueIdentifier, string firstName, string lastName, string email, int roleID, DateTime createDate, bool isActive, int organizationID, bool receiveSupportEmails, string loginName) : this()
+        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.Email = email;
             this.RoleID = roleID;
             this.CreateDate = createDate;
             this.IsActive = isActive;
-            this.OrganizationID = organizationID;
             this.ReceiveSupportEmails = receiveSupportEmails;
-            this.LoginName = loginName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(string personUniqueIdentifier, string firstName, string lastName, string email, Role role, DateTime createDate, bool isActive, Organization organization, bool receiveSupportEmails, string loginName) : this()
+        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.Email = email;
             this.RoleID = role.RoleID;
             this.CreateDate = createDate;
             this.IsActive = isActive;
-            this.OrganizationID = organization.OrganizationID;
-            this.Organization = organization;
-            organization.People.Add(this);
             this.ReceiveSupportEmails = receiveSupportEmails;
-            this.LoginName = loginName;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Person CreateNewBlank(Role role, Organization organization)
+        public static Person CreateNewBlank(Role role)
         {
-            return new Person(default(string), default(string), default(string), default(string), role, default(DateTime), default(bool), organization, default(bool), default(string));
+            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool));
         }
 
         /// <summary>
@@ -142,15 +136,15 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull()
+        public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteFull(HttpRequestStorage.DatabaseEntities);
+            DeleteChildren(dbContext);
+            dbContext.AllPeople.Remove(this);
         }
-
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
+        public void DeleteChildren(DatabaseEntities dbContext)
         {
 
             foreach(var x in AuditLogs.ToList())
@@ -282,7 +276,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-            dbContext.AllPeople.Remove(this);
         }
 
         [Key]
@@ -299,10 +292,14 @@ namespace ProjectFirma.Web.Models
         public DateTime? UpdateDate { get; set; }
         public DateTime? LastActivityDate { get; set; }
         public bool IsActive { get; set; }
-        public int OrganizationID { get; set; }
+        public int? OrganizationID { get; set; }
         public bool ReceiveSupportEmails { get; set; }
         public Guid? WebServiceAccessToken { get; set; }
         public string LoginName { get; set; }
+        public string MiddleName { get; set; }
+        public string StatewideVendorNumber { get; set; }
+        public string Notes { get; set; }
+        public string PersonAddress { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonID; } set { PersonID = value; } }
 
@@ -345,6 +342,10 @@ namespace ProjectFirma.Web.Models
             public const int Phone = 30;
             public const int PasswordPdfK2SaltHash = 1000;
             public const int LoginName = 128;
+            public const int MiddleName = 100;
+            public const int StatewideVendorNumber = 100;
+            public const int Notes = 500;
+            public const int PersonAddress = 255;
         }
     }
 }

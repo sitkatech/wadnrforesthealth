@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -26,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using Newtonsoft.Json;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
@@ -37,23 +40,29 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public List<ProjectFundingSourceRequestSimple> ProjectFundingSourceRequests { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedTotalCost { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
         public ExpectedFundingViewModel()
         {
+            
         }
 
         public ExpectedFundingViewModel(List<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates,
-            string comments)
+            string comments, Money? projectEstimatedTotalCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequestUpdates.Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
             Comments = comments;
+            ProjectEstimatedTotalCost = projectEstimatedTotalCost;
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
             List<ProjectFundingSourceRequestUpdate> currentProjectFundingSourceRequestUpdates,
-            IList<ProjectFundingSourceRequestUpdate> allProjectFundingSourceRequestUpdates)
+            IList<ProjectFundingSourceRequestUpdate> allProjectFundingSourceRequestUpdates, Models.ProjectUpdate projectUpdate)
         {
             var projectFundingSourceRequestUpdatesUpdated = new List<ProjectFundingSourceRequestUpdate>();
             if (ProjectFundingSourceRequests != null)
@@ -70,6 +79,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     x.SecuredAmount = y.SecuredAmount;
                     x.UnsecuredAmount = y.UnsecuredAmount;
                 });
+
+            projectUpdate.EstimatedTotalCost = ProjectEstimatedTotalCost;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

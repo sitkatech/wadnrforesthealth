@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Models
         public void IsUpdateMandatoryForProjectWithoutExistingUpdateTest()
         {
             var project = TestFramework.TestProject.Create();
-            project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
             project.ProjectStageID = ProjectStage.Implementation.ProjectStageID;
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Models
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(false));
             project.ProjectStageID = ProjectStage.Deferred.ProjectStageID;
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(false));
-            project.ProjectStageID = ProjectStage.Terminated.ProjectStageID;
+            project.ProjectStageID = ProjectStage.Cancelled.ProjectStageID;
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(false));
         }
 
@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Models
         public void IsUpdateMandatoryForProjectWithUpdateInPreviousReportingYearTest()
         {
             var project = TestFramework.TestProject.Create();
-            project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
             projectUpdateBatch.LastUpdateDate = DateTime.Now.AddYears(-1);
             Assert.That(project.IsUpdateMandatory, Is.EqualTo(true));
@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Models
         public void IsUpdateMandatoryForProjectWithASingleUpdateInCurrentReportingYearTest()
         {
             var project = TestFramework.TestProject.Create();
-            project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
             projectUpdateBatch.LastUpdateDate = DateTime.Now;
 
@@ -127,7 +127,7 @@ namespace ProjectFirma.Web.Models
         public void IsUpdateMandatoryForProjectWithMultipleUpdatesInCurrentReportingYearTest()
         {
             var project = TestFramework.TestProject.Create();
-            project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
             projectUpdateBatch.LastUpdateDate = DateTime.Now;
             // create a "approved" transition
@@ -144,7 +144,7 @@ namespace ProjectFirma.Web.Models
         public void IsUpdateMandatoryForProjectWitUpdatesInCurrentReportingYearAndPreviousYearTest()
         {
             var project = TestFramework.TestProject.Create();
-            project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+            project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             var projectUpdateBatch = TestFramework.TestProjectUpdateBatch.Create(project);
             projectUpdateBatch.LastUpdateDate = DateTime.Now.AddYears(-1);
             // create a "approved" transition

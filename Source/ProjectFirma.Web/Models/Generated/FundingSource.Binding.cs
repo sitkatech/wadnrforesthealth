@@ -100,15 +100,15 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull()
+        public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteFull(HttpRequestStorage.DatabaseEntities);
+            DeleteChildren(dbContext);
+            dbContext.AllFundingSources.Remove(this);
         }
-
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
+        public void DeleteChildren(DatabaseEntities dbContext)
         {
 
             foreach(var x in ContractorTimeActivities.ToList())
@@ -150,7 +150,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-            dbContext.AllFundingSources.Remove(this);
         }
 
         [Key]

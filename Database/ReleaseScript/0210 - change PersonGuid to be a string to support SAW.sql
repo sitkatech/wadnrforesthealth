@@ -1,7 +1,7 @@
 ALTER TABLE dbo.Person DROP CONSTRAINT AK_Person_PersonGuid_TenantID
 GO
 
-alter table dbo.Person alter column PersonGuid varchar(100) not null
+alter table dbo.Person alter column PersonGuid varchar(100) null
 GO
 exec sp_rename 'dbo.Person.PersonGuid', 'PersonUniqueIdentifier', 'COLUMN'
 GO

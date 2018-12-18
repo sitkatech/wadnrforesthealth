@@ -32,8 +32,8 @@ Source code is available upon request via <support@sitkatech.com>.
     <tr style="background-color: #999">     
         <th colspan="2">@Html.LabelWithSugarFor(FieldDefinition.ProjectName)</th>        
         <th>@Html.LabelWithSugarFor(FieldDefinition.ProjectStage)</th>
-        <th style="white-space: nowrap; text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ImplementationStartYear)</th>
-        <th style="white-space: nowrap; text-align: right">@Html.LabelWithSugarFor(FieldDefinition.CompletionYear)</th>
+        <th style="white-space: nowrap; text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate)</th>
+        <th style="white-space: nowrap; text-align: right">@Html.LabelWithSugarFor(FieldDefinition.CompletionDate)</th>
     </tr>
     @foreach (var project in ViewDataTyped.Projects)
     {
@@ -41,8 +41,8 @@ Source code is available upon request via <support@sitkatech.com>.
             <td><a href="@project.GetFactSheetUrl()">@FirmaDhtmlxGridHtmlHelpers.FactSheetIcon</a>
             <td><a href="@project.GetDetailUrl()">@project.ProjectName</a></td>
             <td style="white-space: nowrap">@project.ProjectStage.ProjectStageDisplayName</td>
-            <td style="text-align: right">@project.ImplementationStartYear</td>
-            <td style="text-align: right">@project.CompletionYear</td>
+            <td style="text-align: right">@project.GetImplementationStartYear()</td>
+            <td style="text-align: right">@project.GetCompletionYear()</td>
         </tr>
     }
 </table>

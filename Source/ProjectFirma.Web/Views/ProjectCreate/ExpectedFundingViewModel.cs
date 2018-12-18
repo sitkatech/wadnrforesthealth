@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,12 +27,17 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using Newtonsoft.Json;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ExpectedFundingViewModel : FormViewModel, IValidatableObject
     {
         public List<ProjectFundingSourceRequestSimple> ProjectFundingSourceRequests { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedTotalCost { get; set; }
 
 
         /// <summary>
@@ -41,10 +47,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
         }
 
-        public ExpectedFundingViewModel(List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests)
+        public ExpectedFundingViewModel(List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, Money? projectEstimatedTotalCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequests
                 .Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
+            ProjectEstimatedTotalCost = projectEstimatedTotalCost;
         }
 
         public void UpdateModel(Models.Project project,
@@ -67,6 +74,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                     x.SecuredAmount = y.SecuredAmount;
                     x.UnsecuredAmount = y.UnsecuredAmount;
                 });
+            project.EstimatedTotalCost = ProjectEstimatedTotalCost;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

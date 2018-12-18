@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -38,7 +40,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var currentProjectFundingSourceRequests = project.ProjectFundingSourceRequests.ToList();
-            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests);
+            Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
+            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests, true, projectEstimatedTotalCost);
             return ViewEditProjectFundingSourceRequests(project, viewModel);
         }
 
@@ -53,7 +56,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectFundingSourceRequests(project, viewModel);
             }
-            return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests);
+            return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests, project);
         }
 
         [HttpGet]
@@ -62,7 +65,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var fundingSource = fundingSourcePrimaryKey.EntityObject;
             var currentProjectFundingSourceRequests = fundingSource.ProjectFundingSourceRequests.ToList();
-            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests);
+            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests,false, null);
             return ViewEditProjectFundingSourceRequests(fundingSource, viewModel);
         }
 
@@ -77,15 +80,16 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectFundingSourceRequests(fundingSource, viewModel);
             }
-            return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests);
+            return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests, null);
         }
 
-        private static ActionResult UpdateProjectFundingSourceRequests(EditProjectFundingSourceRequestsViewModel viewModel,
-            List<ProjectFundingSourceRequest> currentProjectFundingSourceRequests)
+        private static ActionResult UpdateProjectFundingSourceRequests(
+            EditProjectFundingSourceRequestsViewModel viewModel,
+            List<ProjectFundingSourceRequest> currentProjectFundingSourceRequests, Project project)
         {
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
             var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequests.Local;
-            viewModel.UpdateModel(currentProjectFundingSourceRequests, allProjectFundingSourceRequests);
+            viewModel.UpdateModel(currentProjectFundingSourceRequests, allProjectFundingSourceRequests, project);
 
             
             return new ModalDialogFormJsonResult();

@@ -296,6 +296,68 @@ namespace ProjectFirma.Web.Controllers
 
             return RazorPartialView<EditUserStewardshipAreas, EditUserStewardshipAreasViewData, EditUserStewardshipAreasViewModel>(viewData, viewModel);
         }
+
+        [HttpGet]
+        [ContactManageFeature]
+        public PartialViewResult AddContact()
+        {
+            var viewModel = new EditContactViewModel();
+            return ViewAddContact(viewModel);
+        }
+
+        [HttpPost]
+        [ContactManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult AddContact(EditContactViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewAddContact(viewModel);
+            }
+
+            var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
+                    Role.Unassigned.RoleID, DateTime.Now, true, false)
+            { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID };
+            HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
+
+            SetMessageForDisplay($"Successfully added {viewModel.FirstName} {viewModel.LastName}");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewAddContact(EditContactViewModel viewModel)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.AsEnumerable()
+                .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
+                    x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
+            var viewData = new EditContactViewData(organizations);
+            return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ContactManageFeature]
+        public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
+        {
+            var person = personPrimaryKey.EntityObject;
+            var viewModel = new EditContactViewModel(person);
+            return ViewAddContact(viewModel);
+        }
+
+        [HttpPost]
+        [ContactManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, EditContactViewModel viewModel)
+        {
+            var person = personPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewAddContact(viewModel);
+            }
+
+            viewModel.UpdateModel(person);
+
+            SetMessageForDisplay($"Successfully updated {person.FullNameFirstLast}");
+            return new ModalDialogFormJsonResult();
+        }
     }
 
 }

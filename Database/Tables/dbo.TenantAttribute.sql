@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[TenantAttribute](
 	[ToolDisplayName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[RecaptchaPublicKey] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[RecaptchaPrivateKey] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[ShowProposalsToThePublic] [bit] NOT NULL,
+	[ShowApplicationsToThePublic] [bit] NOT NULL,
 	[TaxonomyLevelID] [int] NOT NULL,
 	[AssociatePerfomanceMeasureTaxonomyLevelID] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,

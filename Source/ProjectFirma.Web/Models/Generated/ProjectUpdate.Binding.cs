@@ -30,20 +30,19 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, int? implementationStartYear, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, int? planningDesignStartYear, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int? primaryContactPersonID) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectStageID = projectStageID;
             this.ProjectDescription = projectDescription;
-            this.ImplementationStartYear = implementationStartYear;
-            this.CompletionYear = completionYear;
+            this.ApprovalStartDate = approvalStartDate;
+            this.CompletionDate = completionDate;
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
             this.ProjectLocationNotes = projectLocationNotes;
-            this.PlanningDesignStartYear = planningDesignStartYear;
+            this.PlannedDate = plannedDate;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
-            this.EstimatedAnnualOperatingCost = estimatedAnnualOperatingCost;
             this.PrimaryContactPersonID = primaryContactPersonID;
         }
 
@@ -101,16 +100,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull()
-        {
-            DeleteFull(HttpRequestStorage.DatabaseEntities);
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
+            
             dbContext.AllProjectUpdates.Remove(this);
         }
 
@@ -120,14 +112,13 @@ namespace ProjectFirma.Web.Models
         public int ProjectUpdateBatchID { get; set; }
         public int ProjectStageID { get; set; }
         public string ProjectDescription { get; set; }
-        public int? ImplementationStartYear { get; set; }
-        public int? CompletionYear { get; set; }
+        public DateTime? ApprovalStartDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
         public string ProjectLocationNotes { get; set; }
-        public int? PlanningDesignStartYear { get; set; }
+        public DateTime? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
-        public decimal? EstimatedAnnualOperatingCost { get; set; }
         public int? PrimaryContactPersonID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateID; } set { ProjectUpdateID = value; } }

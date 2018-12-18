@@ -32,6 +32,29 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// </summary>
+        public PersonSimple(int personID, string personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, Guid? webServiceAccessToken, string organizationShortNameIfAvailable)
+            : this()
+        {
+            PersonID = personID;
+            PersonGuid = personGuid;
+            FirstName = firstName;
+            LastName = lastName;
+            FullNameWithOrgShortName = $"{FirstName} {LastName} ({organizationShortNameIfAvailable})";
+            Email = email;
+            Phone = phone;
+            PasswordPdfK2SaltHash = passwordPdfK2SaltHash;
+            RoleID = roleID;
+            CreateDate = createDate;
+            UpdateDate = updateDate;
+            LastActivityDate = lastActivityDate;
+            IsActive = isActive;
+            OrganizationID = organizationID;
+            WebServiceAccessToken = webServiceAccessToken;
+        }
+
+        /// <summary>
         /// Constructor for building a new simple object with the POCO class
         /// </summary>
         public PersonSimple(Person person)
@@ -67,7 +90,7 @@ namespace ProjectFirma.Web.Models
         public DateTime? UpdateDate { get; set; }
         public DateTime? LastActivityDate { get; set; }
         public bool IsActive { get; set; }
-        public int OrganizationID { get; set; }
+        public int? OrganizationID { get; set; }
         public Guid? WebServiceAccessToken { get; set; }
         public string DisplayName
         {

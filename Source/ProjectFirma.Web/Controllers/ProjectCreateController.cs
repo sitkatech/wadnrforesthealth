@@ -58,7 +58,6 @@ using ExpectedFundingViewModel = ProjectFirma.Web.Views.ProjectCreate.ExpectedFu
 using Expenditures = ProjectFirma.Web.Views.ProjectCreate.Expenditures;
 using ExpendituresViewData = ProjectFirma.Web.Views.ProjectCreate.ExpendituresViewData;
 using ExpendituresViewModel = ProjectFirma.Web.Views.ProjectCreate.ExpendituresViewModel;
-using GeospatialArea = ProjectFirma.Web.Models.GeospatialArea;
 using LocationDetailed = ProjectFirma.Web.Views.ProjectCreate.LocationDetailed;
 using LocationDetailedViewData = ProjectFirma.Web.Views.ProjectCreate.LocationDetailedViewData;
 using LocationDetailedViewModel = ProjectFirma.Web.Views.ProjectCreate.LocationDetailedViewModel;
@@ -104,7 +103,7 @@ namespace ProjectFirma.Web.Controllers
 
             switch (viewModel.CreateType)
             {
-                case ProjectTypeSelectionViewModel.ProjectCreateType.Proposal:
+                case ProjectTypeSelectionViewModel.ProjectCreateType.Application:
                     return new ModalDialogFormJsonResult(
                         SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null)));
                 case ProjectTypeSelectionViewModel.ProjectCreateType.Existing:
@@ -172,7 +171,7 @@ namespace ProjectFirma.Web.Controllers
             var basicsViewModel = new BasicsViewModel();
             if (newProjectIsProposal)
             {
-                basicsViewModel.ProjectStageID = ProjectStage.Proposal.ProjectStageID;
+                basicsViewModel.ProjectStageID = ProjectStage.Application.ProjectStageID;
             }
             
             return ViewCreateAndEditBasics(basicsViewModel, !newProjectIsProposal);
@@ -196,10 +195,9 @@ namespace ProjectFirma.Web.Controllers
                 ImportExternalProjectStagingID = importExternalProjectStaging.ImportExternalProjectStagingID,
                 ProjectName = importExternalProjectStaging.ProjectName,
                 ProjectDescription = importExternalProjectStaging.Description,
-                PlanningDesignStartYear = importExternalProjectStaging.PlanningDesignStartYear,
-                ImplementationStartYear = importExternalProjectStaging.ImplementationStartYear,
-                CompletionYear = importExternalProjectStaging.EndYear,
-                EstimatedTotalCost = importExternalProjectStaging.EstimatedCost
+                PlannedDate = importExternalProjectStaging.PlannedDate,
+                ApprovalStartDate = importExternalProjectStaging.ApprovalStartDate,
+                CompletionDate = importExternalProjectStaging.EndDate,
             };
             return ViewCreateAndEditBasics(viewModel, true);
         }
@@ -221,7 +219,6 @@ namespace ProjectFirma.Web.Controllers
                 viewModel.ProjectDescription,
                 false,
                 ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
-                viewModel.FundingTypeID,
                 ProjectApprovalStatus.Draft.ProjectApprovalStatusID)
             {
                 ProposingPerson = CurrentPerson,
@@ -238,7 +235,7 @@ namespace ProjectFirma.Web.Controllers
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))
                 : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, FundingType.All, taxonomyLeafs, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, taxonomyLeafs, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -268,7 +265,7 @@ namespace ProjectFirma.Web.Controllers
             
             var taxonomyLeafs = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs;
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, taxonomyLeafs, FundingType.All, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, taxonomyLeafs, projectCustomAttributeTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -277,7 +274,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Proposal.ProjectStageID;
+                var showProjectStageDropDown = viewModel.ProjectStageID != ProjectStage.Application.ProjectStageID;
                 return ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey) ? ViewEditBasics(project, viewModel) : ViewCreateAndEditBasics(viewModel, showProjectStageDropDown);
             }
 
@@ -288,7 +285,7 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(project, CurrentPerson);
 
-            if (project.ProjectStage == ProjectStage.Proposal)
+            if (project.ProjectStage == ProjectStage.Application)
             {
                 DeletePerformanceMeasureActuals(project);
                 project.GetPerformanceMeasuresExemptReportingYears().DeleteProjectExemptReportingYear();
@@ -296,7 +293,7 @@ namespace ProjectFirma.Web.Controllers
                 project.GetExpendituresExemptReportingYears().DeleteProjectExemptReportingYear();
             }
 
-            if (project.ProjectStage == ProjectStage.PlanningDesign)
+            if (project.ProjectStage == ProjectStage.Planned)
             {
                 DeletePerformanceMeasureActuals(project);
                 project.GetPerformanceMeasuresExemptReportingYears().DeleteProjectExemptReportingYear();
@@ -383,7 +380,7 @@ namespace ProjectFirma.Web.Controllers
                     .ToList();
             var projectExemptReportingYears = project.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
             var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
-            var possibleYearsToExempt = project.GetProjectUpdateImplementationStartToCompletionYearRange();
+            var possibleYearsToExempt = project.GetProjectUpdateImplementationStartToCompletionDateRange();
             projectExemptReportingYears.AddRange(
                 possibleYearsToExempt.Where(x => !currentExemptedYears.Contains(x))
                     .Select((x, index) => new ProjectExemptReportingYearSimple(-(index + 1), project.ProjectID, x)));
@@ -455,7 +452,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult ExpectedFunding(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList());
+            var viewModel = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(), project.EstimatedTotalCost);
             return ViewExpectedFunding(project, viewModel);
         }
 
@@ -686,7 +683,6 @@ namespace ProjectFirma.Web.Controllers
             var layerGeoJsons = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide);
             var mapInitJson = new MapInitJson($"project_{project.ProjectID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) {AllowFullScreen = false, DisablePopups = true };
             
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
             var mapPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationSimpleFormID(project);
             var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
@@ -932,7 +928,7 @@ namespace ProjectFirma.Web.Controllers
             }
             else
             {
-                projectGeospatialAreaTypeNote?.DeleteFull();
+                projectGeospatialAreaTypeNote?.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {geospatialAreaType.GeospatialAreaTypeNamePluralized} successfully saved.");
@@ -1028,7 +1024,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var canDelete = !projectNote.HasDependentObjects();
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete this note for {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} '{projectNote.Project.DisplayName}'?"
+                ? $"Are you sure you want to delete this note for {FieldDefinition.Project.GetFieldDefinitionLabel()} '{projectNote.Project.DisplayName}'?"
                 : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {FieldDefinition.ProjectNote.GetFieldDefinitionLabel()}");
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
@@ -1121,7 +1117,7 @@ namespace ProjectFirma.Web.Controllers
             var canDelete = !projectDocument.HasDependentObjects();
             var confirmMessage = canDelete
                 ? $"Are you sure you want to delete \"{projectDocument.DisplayName}\" from this {FieldDefinition.Project.GetFieldDefinitionLabel()}?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Document");
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {FieldDefinition.Project.GetFieldDefinitionLabel()} Document");
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
 
@@ -1185,8 +1181,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteProject(project, viewModel);
             }
-            var message = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
-            project.DeleteFull();
+            var message = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
+            project.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -1198,7 +1194,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(project.ProjectID);
-            //TODO: Change "reviewer" to specific reviewer as determined by tentant review 
+            //TODO: Change "reviewer" to specific reviewer as determined by tenant review 
             var viewData = new ConfirmDialogFormViewData($"Are you sure you want to submit {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" to the reviewer?");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -1247,9 +1243,9 @@ namespace ProjectFirma.Web.Controllers
             project.ReviewedByPerson = CurrentPerson;
 
             // Business logic: An approved Proposal becomes an active project in the Planning and Design stage
-            if (project.ProjectStageID == ProjectStage.Proposal.ProjectStageID)
+            if (project.ProjectStageID == ProjectStage.Application.ProjectStageID)
             {
-                project.ProjectStageID = ProjectStage.PlanningDesign.ProjectStageID;
+                project.ProjectStageID = ProjectStage.Planned.ProjectStageID;
             }
 
             GenerateApprovalAuditLogEntries(project);
@@ -1283,7 +1279,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(project.ProjectID);
-            //TODO: Change "reviewer" to specific reviewer as determined by tentant review 
+            //TODO: Change "reviewer" to specific reviewer as determined by tenant review 
             var viewData = new ConfirmDialogFormViewData($"Are you sure you want to withdraw {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" from review?");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -1295,7 +1291,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             project.ProjectApprovalStatusID = ProjectApprovalStatus.Draft.ProjectApprovalStatusID;
-            //TODO: Change "reviewer" to specific reviewer as determined by tentant review 
+            //TODO: Change "reviewer" to specific reviewer as determined by tenant review 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} withdrawn from review.");
             return new ModalDialogFormJsonResult(project.GetDetailUrl());
         }
@@ -1355,7 +1351,7 @@ namespace ProjectFirma.Web.Controllers
 
         private ActionResult GoToNextSection(FormViewModel viewModel, Project project, string currentSectionName)
         {
-            var applicableWizardSections = Models.Project.GetApplicableProposalWizardSections(project, true);
+            var applicableWizardSections = Project.GetApplicableProposalWizardSections(project, true);
             var currentSection = applicableWizardSections.Single(x => x.SectionDisplayName.Equals(currentSectionName, StringComparison.InvariantCultureIgnoreCase));
             var nextProjectUpdateSection = applicableWizardSections.Where(x => x.SortOrder > currentSection.SortOrder).OrderBy(x => x.SortOrder).FirstOrDefault();
             var nextSection = viewModel.AutoAdvance && nextProjectUpdateSection != null ? nextProjectUpdateSection.SectionUrl : currentSection.SectionUrl;
@@ -1488,7 +1484,7 @@ namespace ProjectFirma.Web.Controllers
 
                 var webResponse = (HttpWebResponse) webRequest.GetResponse();
                 Check.Assert(webResponse.StatusCode == HttpStatusCode.OK,
-                    $"Request to {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} External Import Data Uri {viewModel.RequestUri} should resolve 200.");
+                    $"Request to {FieldDefinition.Project.GetFieldDefinitionLabel()} External Import Data Uri {viewModel.RequestUri} should resolve 200.");
 
                 var responseStream = webResponse.GetResponseStream();
 

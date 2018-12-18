@@ -54,24 +54,22 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, int? implementationStartYear, int? completionYear, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, int? planningDesignStartYear, int projectLocationSimpleTypeID, decimal? estimatedAnnualOperatingCost, int fundingTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
             this.ProjectStageID = projectStageID;
             this.ProjectName = projectName;
             this.ProjectDescription = projectDescription;
-            this.ImplementationStartYear = implementationStartYear;
-            this.CompletionYear = completionYear;
+            this.ApprovalStartDate = approvalStartDate;
+            this.CompletionDate = completionDate;
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
             this.PerformanceMeasureActualYearsExemptionExplanation = performanceMeasureActualYearsExemptionExplanation;
             this.IsFeatured = isFeatured;
             this.ProjectLocationNotes = projectLocationNotes;
-            this.PlanningDesignStartYear = planningDesignStartYear;
+            this.PlannedDate = plannedDate;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
-            this.EstimatedAnnualOperatingCost = estimatedAnnualOperatingCost;
-            this.FundingTypeID = fundingTypeID;
             this.PrimaryContactPersonID = primaryContactPersonID;
             this.ProjectApprovalStatusID = projectApprovalStatusID;
             this.ProposingPersonID = proposingPersonID;
@@ -87,7 +85,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int fundingTypeID, int projectApprovalStatusID) : this()
+        public Project(int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -98,14 +96,13 @@ namespace ProjectFirma.Web.Models
             this.ProjectDescription = projectDescription;
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
-            this.FundingTypeID = fundingTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatusID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Project(TaxonomyLeaf taxonomyLeaf, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, FundingType fundingType, ProjectApprovalStatus projectApprovalStatus) : this()
+        public Project(TaxonomyLeaf taxonomyLeaf, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -117,16 +114,15 @@ namespace ProjectFirma.Web.Models
             this.ProjectDescription = projectDescription;
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleType.ProjectLocationSimpleTypeID;
-            this.FundingTypeID = fundingType.FundingTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatus.ProjectApprovalStatusID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Project CreateNewBlank(TaxonomyLeaf taxonomyLeaf, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, FundingType fundingType, ProjectApprovalStatus projectApprovalStatus)
+        public static Project CreateNewBlank(TaxonomyLeaf taxonomyLeaf, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus)
         {
-            return new Project(taxonomyLeaf, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, fundingType, projectApprovalStatus);
+            return new Project(taxonomyLeaf, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus);
         }
 
         /// <summary>
@@ -147,15 +143,15 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull()
+        public void DeleteFull(DatabaseEntities dbContext)
         {
-            DeleteFull(HttpRequestStorage.DatabaseEntities);
+            DeleteChildren(dbContext);
+            dbContext.AllProjects.Remove(this);
         }
-
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
+        public void DeleteChildren(DatabaseEntities dbContext)
         {
 
             foreach(var x in ContractorTimeActivities.ToList())
@@ -282,7 +278,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-            dbContext.AllProjects.Remove(this);
         }
 
         [Key]
@@ -292,17 +287,15 @@ namespace ProjectFirma.Web.Models
         public int ProjectStageID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
-        public int? ImplementationStartYear { get; set; }
-        public int? CompletionYear { get; set; }
+        public DateTime? ApprovalStartDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
         public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public bool IsFeatured { get; set; }
         public string ProjectLocationNotes { get; set; }
-        public int? PlanningDesignStartYear { get; set; }
+        public DateTime? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
-        public decimal? EstimatedAnnualOperatingCost { get; set; }
-        public int FundingTypeID { get; set; }
         public int? PrimaryContactPersonID { get; set; }
         public int ProjectApprovalStatusID { get; set; }
         public int? ProposingPersonID { get; set; }
@@ -345,7 +338,6 @@ namespace ProjectFirma.Web.Models
         public virtual TaxonomyLeaf TaxonomyLeaf { get; set; }
         public ProjectStage ProjectStage { get { return ProjectStage.AllLookupDictionary[ProjectStageID]; } }
         public ProjectLocationSimpleType ProjectLocationSimpleType { get { return ProjectLocationSimpleType.AllLookupDictionary[ProjectLocationSimpleTypeID]; } }
-        public FundingType FundingType { get { return FundingType.AllLookupDictionary[FundingTypeID]; } }
         public virtual Person PrimaryContactPerson { get; set; }
         public virtual Person ProposingPerson { get; set; }
         public virtual Person ReviewedByPerson { get; set; }

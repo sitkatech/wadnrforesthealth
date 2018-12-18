@@ -30,16 +30,16 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ImportExternalProjectStaging(int importExternalProjectStagingID, int createPersonID, DateTime createDate, string projectName, string description, short? planningDesignStartYear, short? implementationStartYear, short? endYear, double? estimatedCost) : this()
+        public ImportExternalProjectStaging(int importExternalProjectStagingID, int createPersonID, DateTime createDate, string projectName, string description, DateTime? plannedDate, DateTime? approvalStartDate, DateTime? endDate, double? estimatedCost) : this()
         {
             this.ImportExternalProjectStagingID = importExternalProjectStagingID;
             this.CreatePersonID = createPersonID;
             this.CreateDate = createDate;
             this.ProjectName = projectName;
             this.Description = description;
-            this.PlanningDesignStartYear = planningDesignStartYear;
-            this.ImplementationStartYear = implementationStartYear;
-            this.EndYear = endYear;
+            this.PlannedDate = plannedDate;
+            this.ApprovalStartDate = approvalStartDate;
+            this.EndDate = endDate;
             this.EstimatedCost = estimatedCost;
         }
 
@@ -94,16 +94,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public void DeleteFull()
-        {
-            DeleteFull(HttpRequestStorage.DatabaseEntities);
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
+            
             dbContext.AllImportExternalProjectStagings.Remove(this);
         }
 
@@ -114,9 +107,9 @@ namespace ProjectFirma.Web.Models
         public DateTime CreateDate { get; set; }
         public string ProjectName { get; set; }
         public string Description { get; set; }
-        public short? PlanningDesignStartYear { get; set; }
-        public short? ImplementationStartYear { get; set; }
-        public short? EndYear { get; set; }
+        public DateTime? PlannedDate { get; set; }
+        public DateTime? ApprovalStartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public double? EstimatedCost { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ImportExternalProjectStagingID; } set { ImportExternalProjectStagingID = value; } }

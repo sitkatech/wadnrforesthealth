@@ -20,7 +20,6 @@
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
-    <EntitySet Name="FundingTypeData" EntityType="ProjectFirma.Web.Models.FundingTypeData" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.GeospatialArea" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.ImportExternalProjectStaging" />
@@ -1021,17 +1020,6 @@
     <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="TreatmentActivities" />
   </EntityType>
-  <EntityType Name="FundingTypeData">
-    <Key>
-      <PropertyRef Name="FundingTypeDataID" />
-    </Key>
-    <Property Name="FundingTypeDataID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="Int32" Nullable="false" />
-    <Property Name="FundingTypeID" Type="Int32" Nullable="false" />
-    <Property Name="FundingTypeDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="FundingTypeShortName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="SortOrder" Type="Int32" Nullable="false" />
-  </EntityType>
   <EntityType Name="GeospatialArea">
     <Key>
       <PropertyRef Name="GeospatialAreaID" />
@@ -1072,9 +1060,9 @@
     <Property Name="CreateDate" Type="DateTime" Nullable="false" />
     <Property Name="ProjectName" Type="String" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="Description" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlanningDesignStartYear" Type="Int16" />
-    <Property Name="ImplementationStartYear" Type="Int16" />
-    <Property Name="EndYear" Type="Int16" />
+    <Property Name="PlannedDate" Type="DateTime" />
+    <Property Name="ApprovalStartDate" Type="DateTime" />
+    <Property Name="EndDate" Type="DateTime" />
     <Property Name="EstimatedCost" Type="Double" />
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
   </EntityType>
@@ -1398,10 +1386,10 @@
     </Key>
     <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
-    <Property Name="PersonUniqueIdentifier" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PersonUniqueIdentifier" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="Phone" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="PasswordPdfK2SaltHash" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
     <Property Name="RoleID" Type="Int32" Nullable="false" />
@@ -1409,10 +1397,14 @@
     <Property Name="UpdateDate" Type="DateTime" />
     <Property Name="LastActivityDate" Type="DateTime" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="OrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="OrganizationID" Type="Int32" />
     <Property Name="ReceiveSupportEmails" Type="Boolean" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="Guid" />
-    <Property Name="LoginName" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+    <Property Name="LoginName" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="StatewideVendorNumber" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+    <Property Name="PersonAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" />
@@ -1484,17 +1476,15 @@
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="140" Unicode="false" FixedLength="false" />
     <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="ImplementationStartYear" Type="Int32" />
-    <Property Name="CompletionYear" Type="Int32" />
+    <Property Name="ApprovalStartDate" Type="DateTime" />
+    <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
     <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlanningDesignStartYear" Type="Int32" />
+    <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
-    <Property Name="EstimatedAnnualOperatingCost" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="FundingTypeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
     <Property Name="ProjectApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="ProposingPersonID" Type="Int32" />
@@ -1995,14 +1985,13 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="ProjectStageID" Type="Int32" Nullable="false" />
     <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="ImplementationStartYear" Type="Int32" />
-    <Property Name="CompletionYear" Type="Int32" />
+    <Property Name="ApprovalStartDate" Type="DateTime" />
+    <Property Name="CompletionDate" Type="DateTime" />
     <Property Name="EstimatedTotalCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ProjectLocationPoint" Type="Geometry" />
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
-    <Property Name="PlanningDesignStartYear" Type="Int32" />
+    <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
-    <Property Name="EstimatedAnnualOperatingCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
@@ -2291,7 +2280,7 @@
     <Property Name="ToolDisplayName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RecaptchaPublicKey" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RecaptchaPrivateKey" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="ShowProposalsToThePublic" Type="Boolean" Nullable="false" />
+    <Property Name="ShowApplicationsToThePublic" Type="Boolean" Nullable="false" />
     <Property Name="TaxonomyLevelID" Type="Int32" Nullable="false" />
     <Property Name="AssociatePerfomanceMeasureTaxonomyLevelID" Type="Int32" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -3010,7 +2999,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="1" />
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Person" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">

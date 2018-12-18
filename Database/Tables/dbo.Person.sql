@@ -5,10 +5,10 @@ GO
 CREATE TABLE [dbo].[Person](
 	[PersonID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
-	[PersonUniqueIdentifier] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[PersonUniqueIdentifier] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FirstName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[LastName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[Email] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[Email] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Phone] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PasswordPdfK2SaltHash] [nvarchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[RoleID] [int] NOT NULL,
@@ -16,10 +16,14 @@ CREATE TABLE [dbo].[Person](
 	[UpdateDate] [datetime] NULL,
 	[LastActivityDate] [datetime] NULL,
 	[IsActive] [bit] NOT NULL,
-	[OrganizationID] [int] NOT NULL,
+	[OrganizationID] [int] NULL,
 	[ReceiveSupportEmails] [bit] NOT NULL,
 	[WebServiceAccessToken] [uniqueidentifier] NULL,
-	[LoginName] [varchar](128) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[LoginName] [varchar](128) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[MiddleName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[StatewideVendorNumber] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Notes] [varchar](500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[PersonAddress] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC

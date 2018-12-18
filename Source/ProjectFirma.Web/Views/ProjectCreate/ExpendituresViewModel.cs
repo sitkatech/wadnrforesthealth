@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             var errors = new List<ValidationResult>();
             var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == ProjectID);
             var validationErrors = ExpendituresValidationResult.Validate(ProjectFundingSourceExpenditures,
-                ProjectExemptReportingYears, Explanation, project.GetProjectUpdatePlanningDesignStartToCompletionYearRange());
+                ProjectExemptReportingYears, Explanation, project.GetProjectUpdatePlanningDesignStartToCompletionDateRange());
             errors.AddRange(validationErrors.Select(x => new ValidationResult(x)));
 
             return errors;

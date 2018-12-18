@@ -200,9 +200,9 @@ namespace ProjectFirma.Web.Common
             return HttpRequestStorage.DatabaseEntities.RelationshipTypes.SingleOrDefault(x => x.IsPrimaryContact);
         }
 
-        public static bool ShowProposalsToThePublic()
+        public static bool ShowApplicationsToThePublic()
         {
-            return HttpRequestStorage.Tenant.GetTenantAttribute().ShowProposalsToThePublic;
+            return HttpRequestStorage.Tenant.GetTenantAttribute().ShowApplicationsToThePublic;
         }
 
         public static bool ShowLeadImplementerLogoOnFactSheet()

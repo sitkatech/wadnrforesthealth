@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
                 if (!projectOrganizations.Any(x => primaryContactRelationshipTypeIDs.Contains(x.RelationshipTypeID)))
                 {
                     ProjectOrganizationSimples.AddRange(primaryContactRelationshipTypeIDs.Select(x =>
-                        new ProjectOrganizationSimple(currentPerson.OrganizationID, x)));
+                        new ProjectOrganizationSimple(currentPerson.OrganizationID.GetValueOrDefault(), x)));
                 }
             }
         }

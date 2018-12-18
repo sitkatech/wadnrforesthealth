@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Web;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
@@ -34,7 +36,7 @@ namespace ProjectFirma.Web.Views.User
             if (hasDeletePermission)
             {
                 Add(string.Empty,
-                    x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.HasDependentObjects(), !x.HasDependentObjects()),
+                    x => string.IsNullOrWhiteSpace(x.PersonUniqueIdentifier) ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.HasDependentObjects(), !x.HasDependentObjects()) : new HtmlString(""),
                     30, DhtmlxGridColumnFilterType.None);
             }
             Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, DhtmlxGridColumnFilterType.Html);
@@ -42,7 +44,7 @@ namespace ProjectFirma.Web.Views.User
             Add("Email", a => a.Email, 200);
             Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => a.Organization.GetShortNameAsUrl(), 200);
             Add("Phone", a => a.Phone.ToPhoneNumberString(), 100);
-            Add("Username", a => a.LoginName.ToString(), 200);
+            Add("Username", a => a.LoginName?.ToString(), 200);
             Add("Last Activity", a => a.LastActivityDate, 120);
             Add("Role", a => a.Role.GetDisplayNameAsUrl(), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Active?", a => a.IsActive.ToYesNo(), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);

@@ -330,7 +330,7 @@ namespace ProjectFirma.Web.Controllers
                     .ToList();
             var projectExemptReportingYearUpdates = projectUpdateBatch.GetPerformanceMeasuresExemptReportingYears().Select(x => new ProjectExemptReportingYearUpdateSimple(x)).ToList();
             var currentExemptedYears = projectExemptReportingYearUpdates.Select(x => x.CalendarYear).ToList();
-            var possibleYearsToExempt = projectUpdateBatch.ProjectUpdate.GetProjectUpdateImplementationStartToCompletionYearRange();
+            var possibleYearsToExempt = projectUpdateBatch.ProjectUpdate.GetProjectUpdateImplementationStartToCompletionDateRange();
             projectExemptReportingYearUpdates.AddRange(
                 possibleYearsToExempt.Where(x => !currentExemptedYears.Contains(x))
                     .Select((x, index) => new ProjectExemptReportingYearUpdateSimple(-(index + 1), projectUpdateBatch.ProjectUpdateBatchID, x)));
@@ -567,13 +567,14 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            var projectUpdate = projectUpdateBatch.ProjectUpdate;
             if (projectUpdateBatch == null)
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
             var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectFundingSourceRequestUpdates,
-                projectUpdateBatch.ExpectedFundingComment);
+                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost);
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
         }
 
@@ -595,7 +596,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Load();
             var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
             var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequestUpdates.Local;
-            viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding);
+            viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding, projectUpdateBatch.ProjectUpdate);
             if (projectUpdateBatch.IsSubmitted)
             {
                 projectUpdateBatch.ExpectedFundingComment = viewModel.Comments;
@@ -1064,7 +1065,7 @@ namespace ProjectFirma.Web.Controllers
             }
             else
             {
-                projectGeospatialAreaTypeNoteUpdate?.DeleteFull();
+                projectGeospatialAreaTypeNoteUpdate?.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             if (projectUpdateBatch.IsSubmitted)
             {
@@ -1534,7 +1535,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {FieldDefinition.Project.GetFieldDefinitionLabel()} Update to delete for {FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
-            projectUpdateBatch.DeleteFull();
+            projectUpdateBatch.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Update successfully deleted.");
             return new ModalDialogFormJsonResult(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project)));
         }
@@ -2129,7 +2130,6 @@ namespace ProjectFirma.Web.Controllers
             var dummyProject = Project.CreateNewBlank(TaxonomyLeaf.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
-                FundingType.Capital,
                 ProjectApprovalStatus.Approved);
 
             var dummyProjectUpdateBatch = ProjectUpdateBatch.CreateNewBlank(dummyProject, CurrentPerson, ProjectUpdateState.Created);
@@ -2552,7 +2552,7 @@ namespace ProjectFirma.Web.Controllers
         private ActionResult TickleLastUpdateDateAndGoToNextSection(FormViewModel viewModel, ProjectUpdateBatch projectUpdateBatch, string currentSectionName)
         {
             projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
-            var applicableWizardSections = projectUpdateBatch.GetApplicableWizardSections();
+            var applicableWizardSections = projectUpdateBatch.GetApplicableWizardSections(true);
             var currentSection = applicableWizardSections.Single(x => x.SectionDisplayName.Equals(currentSectionName, StringComparison.InvariantCultureIgnoreCase));
             var nextProjectUpdateSection = applicableWizardSections.Where(x => x.SortOrder > currentSection.SortOrder).OrderBy(x => x.SortOrder).FirstOrDefault();
             var nextSection = viewModel.AutoAdvance && nextProjectUpdateSection != null ? nextProjectUpdateSection.SectionUrl : currentSection.SectionUrl;

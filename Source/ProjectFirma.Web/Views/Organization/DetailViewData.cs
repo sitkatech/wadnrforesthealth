@@ -143,15 +143,15 @@ namespace ProjectFirma.Web.Views.Organization
                                         (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create funding sources for their organization
                                          CurrentPerson.OrganizationID == organization.OrganizationID);
             ShowProposals = currentPerson.CanViewProposals;
-            ProposalsPanelHeader = MultiTenantHelpers.ShowProposalsToThePublic()
-                ? Models.FieldDefinition.Proposal.GetFieldDefinitionLabelPluralized()
-                : $"{Models.FieldDefinition.Proposal.GetFieldDefinitionLabelPluralized()} (Not Visible to the Public)";
+            ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()
+                ? Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()
+                : $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} (Not Visible to the Public)";
 
             ProposalsGridSpec =
                 new ProjectsIncludingLeadImplementingGridSpec(organization, CurrentPerson, true)
                 {
-                    ObjectNameSingular = $"{Models.FieldDefinition.Proposal.GetFieldDefinitionLabel()}",
-                    ObjectNamePlural = $"{Models.FieldDefinition.Proposal.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
+                    ObjectNameSingular = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}",
+                    ObjectNamePlural = $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
                     SaveFiltersInCookie = true
                 };
 

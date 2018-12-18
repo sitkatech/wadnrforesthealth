@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Controllers
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 taxonomyLeafDisplayName,
-                ProjectStage.All.Except(new[] {ProjectStage.Proposal}), FundingType.All, organizations,
+                ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
                 totalExpenditures,
@@ -156,7 +156,7 @@ namespace ProjectFirma.Web.Controllers
                 userHasEditProjectPermissions);
             var internalNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(project.ProjectInternalNotes)),
-                SitkaRoute<ProjectInternalNoteController>.BuildUrlFromExpression(x => x.New(project)),  //TODO: clone the ProjectNoteController to the ProjectInternalNoteController
+                SitkaRoute<ProjectInternalNoteController>.BuildUrlFromExpression(x => x.New(project)),
                 project.DisplayName,
                 userHasEditProjectPermissions);
             var entityExternalLinksViewData = new EntityExternalLinksViewData(ExternalLink.CreateFromEntityExternalLink(new List<IEntityExternalLink>(project.ProjectExternalLinks)));
@@ -263,9 +263,9 @@ namespace ProjectFirma.Web.Controllers
 
         private static List<ProjectStage> GetActiveProjectStages(Project project)
         {
-            var activeProjectStages = new List<ProjectStage> {ProjectStage.Proposal, ProjectStage.PlanningDesign, ProjectStage.Implementation, ProjectStage.Completed, ProjectStage.PostImplementation};
+            var activeProjectStages = new List<ProjectStage> {ProjectStage.Application, ProjectStage.Planned, ProjectStage.Implementation, ProjectStage.Completed, ProjectStage.PostImplementation};
 
-            if (project.ProjectStage == ProjectStage.Terminated)
+            if (project.ProjectStage == ProjectStage.Cancelled)
             {
                 activeProjectStages.Remove(ProjectStage.Implementation);
                 activeProjectStages.Remove(ProjectStage.Completed);
@@ -286,7 +286,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            Check.Assert(project.ProjectStage != ProjectStage.Terminated, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
+            Check.Assert(project.ProjectStage != ProjectStage.Cancelled, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
         private ViewResult ViewBackwardLookingFactSheet(Project project)
@@ -364,8 +364,7 @@ namespace ProjectFirma.Web.Controllers
         [ProjectsViewFullListFeature]
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
-            var fundingTypes = HttpRequestStorage.DatabaseEntities.FundingTypeDatas.ToDictionary(x => x.FundingTypeID);
-            var gridSpec = new IndexGridSpec(CurrentPerson, fundingTypes);
+            var gridSpec = new IndexGridSpec(CurrentPerson);
             var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectFundingSourceRequests).Include(x => x.ProjectFundingSourceExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectGeospatialAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;
@@ -432,7 +431,7 @@ namespace ProjectFirma.Web.Controllers
             return FullDatabaseExcelDownloadImpl(
                 HttpRequestStorage.DatabaseEntities.Projects.ToList()
                     .GetProposalsVisibleToUser(CurrentPerson),
-                FieldDefinition.Proposal.GetFieldDefinitionLabelPluralized());
+                FieldDefinition.Application.GetFieldDefinitionLabelPluralized());
         }
 
         [ProjectsViewFullListFeature]
@@ -538,7 +537,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var message = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.DisplayName}\" successfully deleted.";
-            project.DeleteFull();
+            project.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
@@ -760,14 +759,6 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         }
 
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
-        public ViewResult MyOrganizationsProjects()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.MyOrganizationsProjects);
-            var viewData = new MyOrganizationsProjectsViewData(CurrentPerson, firmaPage);
-            return RazorView<MyOrganizationsProjects, MyOrganizationsProjectsViewData>(viewData);
-        }
-
-        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
         public GridJsonNetJObjectResult<Project> MyOrganizationsProjectsGridJsonData()
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, true);
@@ -831,7 +822,7 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             var projectCreateUrl =
                 SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(projectPrimaryKey));
             var projectStewardLabel = FieldDefinition.ProjectSteward.GetFieldDefinitionLabel();
-            var proposalLabel = FieldDefinition.Proposal.GetFieldDefinitionLabel();
+            var proposalLabel = FieldDefinition.Application.GetFieldDefinitionLabel();
 
             var confirmMessage = CurrentPerson.RoleID == Role.ProjectSteward.RoleID
                 ? $"Although you are a {projectStewardLabel}, you do not have permission to edit this {proposalLabel} through this page because it is pending approval. You can <a href='{projectCreateUrl}'>review, edit, or approve</a> the proposal."

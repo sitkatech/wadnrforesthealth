@@ -53,11 +53,10 @@ namespace ProjectFirma.Web.Models
         {
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
-            PlanningDesignStartYear = project.PlanningDesignStartYear;
-            ImplementationStartYear = project.ImplementationStartYear;
-            CompletionYear = project.CompletionYear;
+            PlannedDate = project.PlannedDate;
+            ApprovalStartDate = project.ApprovalStartDate;
+            CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
-            EstimatedAnnualOperatingCost = project.EstimatedAnnualOperatingCost;
         }
 
         public void LoadSimpleLocationFromProject(Project project)
@@ -71,11 +70,10 @@ namespace ProjectFirma.Web.Models
         {
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID;
-            project.PlanningDesignStartYear = PlanningDesignStartYear;
-            project.ImplementationStartYear = ImplementationStartYear;
-            project.CompletionYear = CompletionYear;
+            project.PlannedDate = PlannedDate;
+            project.ApprovalStartDate = ApprovalStartDate;
+            project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
-            project.EstimatedAnnualOperatingCost = EstimatedAnnualOperatingCost;
             project.PrimaryContactPersonID = PrimaryContactPersonID;
         }
 
@@ -89,8 +87,6 @@ namespace ProjectFirma.Web.Models
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
 
         public bool HasProjectLocationDetail => DetailedLocationToGeoJsonFeatureCollection().Features.Any();
-
-        public FundingType FundingType => ProjectUpdateBatch.Project.FundingType;
 
         public IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes
         {
@@ -153,17 +149,28 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectOrganizationUpdates.SingleOrDefault(x => x.RelationshipType.IsPrimaryContact)?.Organization;
         }
 
-        public string GetPlanningDesignStartYear()
+        public string GetPlannedDate()
         {
-            return PlanningDesignStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(PlanningDesignStartYear.Value) : null;
+            return PlannedDate?.ToShortDateString();
         }
-        public string GetCompletionYear()
+
+        public int? GetImplementationStartYear()
         {
-            return CompletionYear.HasValue ? MultiTenantHelpers.FormatReportingYear(CompletionYear.Value) : null;
+            return ApprovalStartDate?.Year;
         }
-        public string GetImplementationStartYear()
+
+        public int? GetCompletionYear()
         {
-            return ImplementationStartYear.HasValue ? MultiTenantHelpers.FormatReportingYear(ImplementationStartYear.Value) : null;
+            return CompletionDate?.Year;
+        }
+        public string GetCompletionDateFormatted()
+        {
+            return CompletionDate?.ToShortDateString();
+        }
+
+        public string GetApprovalStartDateFormatted()
+        {
+            return ApprovalStartDate?.ToShortDateString();
         }
     }
 }

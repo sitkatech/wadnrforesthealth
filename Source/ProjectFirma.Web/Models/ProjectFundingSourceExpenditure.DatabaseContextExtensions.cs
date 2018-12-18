@@ -37,8 +37,10 @@ namespace ProjectFirma.Web.Models
         public static List<int> CalculateCalendarYearRangeForExpenditures(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, FundingSource fundingSource)
         {
             var existingYears = projectFundingSourceExpenditures.Select(x => x.CalendarYear).ToList();
+            var fundingSourceProjectsWhereYouAreTheFundingSourceMinCalendarYear = fundingSource.ProjectsWhereYouAreTheFundingSourceMinCalendarYear;
             return FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(existingYears,
-                fundingSource.ProjectsWhereYouAreTheFundingSourceMinCalendarYear,
+                fundingSourceProjectsWhereYouAreTheFundingSourceMinCalendarYear.HasValue ?
+                (DateTime?) new DateTime(fundingSourceProjectsWhereYouAreTheFundingSourceMinCalendarYear.Value, 1, 1) : null,
                 fundingSource.ProjectsWhereYouAreTheFundingSourceMaxCalendarYear,
                 DateTime.Today.Year,
                 MultiTenantHelpers.GetMinimumYear(),

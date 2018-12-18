@@ -56,112 +56,46 @@ Source code is available upon request via <support@sitkatech.com>.
 
     <hr />
     <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.ProjectStage)
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-9">
             @ViewDataTyped.Project.ProjectStage.ProjectStageDisplayName
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.ProjectDescription)
         </div>
-        <div class="col-xs-12" style="padding-left: 20px">
+        <div class="col-sm-9">
             @Html.Raw(ViewDataTyped.Project.ProjectDescription.HtmlEncodeWithBreaks())
         </div>
     </div>
 
     <hr />
 
-    @switch (ViewDataTyped.Project.FundingType.ToEnum)
-    {
-        case FundingTypeEnum.Capital:
-            <div class="row">
-                <div class="col-xs-6">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</div>
-                <div class="col-xs-6">
-                    @ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6">
-                    @Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)
-                </div>
-                <div class="col-xs-6">
-                    @ViewDataTyped.Project.GetSecuredFunding().ToStringCurrency()
-                </div><div class="row">
-                </div>
-                <div class="col-xs-6">
-                    @Html.LabelWithSugarFor(FieldDefinition.UnfundedNeed)
-                </div>
-                <div class="col-xs-6">
-                    @ViewDataTyped.Project.UnfundedNeed().ToStringCurrency()
-                </div>
-            </div>
-                    break;
-        case FundingTypeEnum.OperationsAndMaintenance:
-        <div class="row">
-            <div class="col-xs-6">
-                @Html.LabelWithSugarFor(FieldDefinition.EstimatedAnnualOperatingCost)
-            </div>
-            <div class="col-xs-6">
-                @ViewDataTyped.Project.EstimatedAnnualOperatingCost.ToStringCurrency()
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                @Html.LabelWithSugarFor(FieldDefinition.CalculatedTotalRemainingOperatingCost)
-            </div>
-            @if (CostParameterSet.CanCalculateTotalRemainingOperatingCostInYearOfExpenditure(ViewDataTyped.Project))
-            {
-                <div class="col-xs-6">
-                    <span>@ViewDataTyped.ProjectBasicsCalculatedCosts.TotalOperatingCostInYearOfExpenditure.ToStringCurrency()</span>
-                    @if (ViewDataTyped.UserHasProjectBudgetManagePermissions)
-                    {
-                        <span>(For years @ViewDataTyped.ProjectBasicsCalculatedCosts.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.CompletionYear using <a href="@ViewDataTyped.ProjectBasicsCalculatedCosts.EditInflationUrl">@ViewDataTyped.ProjectBasicsCalculatedCosts.InflationRate.ToStringPercent() annual inflation</a>)</span>
-                    }
-                    else
-                    {
-                        <span>(For years @ViewDataTyped.ProjectBasicsCalculatedCosts.StartYearForTotalOperatingCostCalculation-@ViewDataTyped.Project.CompletionYear using @ViewDataTyped.ProjectBasicsCalculatedCosts.InflationRate.ToStringPercent() annual inflation)</span>
-                    }
-                </div>
-            }
-        </div>
-            break;
-    }
     <div class="row">
-        <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.FundingType)
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.PlannedDate)
         </div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.FundingType.GetFundingTypeDisplayName()
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="row">
-        <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.PlanningDesignStartYear)
-        </div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.GetPlanningDesignStartYear()
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.GetPlannedDate()
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.ImplementationStartYear)
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate)
         </div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.GetImplementationStartYear()
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.GetApprovalStartDateFormatted()
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6">
-            @Html.LabelWithSugarFor(FieldDefinition.CompletionYear)
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.CompletionDate)
         </div>
-        <div class="col-xs-6">
-            @ViewDataTyped.Project.GetCompletionYear()
+        <div class="col-sm-9">
+            @ViewDataTyped.Project.GetCompletionDateFormatted()
         </div>
     </div>
 </div>

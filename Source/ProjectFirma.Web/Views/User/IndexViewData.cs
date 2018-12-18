@@ -36,13 +36,18 @@ namespace ProjectFirma.Web.Views.User
 
         public IndexViewData(Person currentPerson) : base(currentPerson)
         {
-            PageTitle = "Users";
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "User", ObjectNamePlural = "Users", SaveFiltersInCookie = true};
+            PageTitle = "Users and Contacts";
+            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Person", ObjectNamePlural = "People", SaveFiltersInCookie = true};
             GridName = "UserGrid";
             GridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
             SAWUrl = FirmaWebConfiguration.SAWUrl;
 
             UserIsSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.AddContact());
+            UserCanAddContact = new ContactManageFeature().HasPermissionByPerson(currentPerson);
         }
+
+        public string AddContactUrl { get; set; }
+        public bool UserCanAddContact { get; set; }
     }
 }

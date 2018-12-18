@@ -231,18 +231,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FundingTypeData">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FundingTypeData">
-        <MappingFragment StoreEntitySet="FundingTypeData">
-          <ScalarProperty Name="FundingTypeDataID" ColumnName="FundingTypeDataID" />
-          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
-          <ScalarProperty Name="FundingTypeID" ColumnName="FundingTypeID" />
-          <ScalarProperty Name="FundingTypeDisplayName" ColumnName="FundingTypeDisplayName" />
-          <ScalarProperty Name="FundingTypeShortName" ColumnName="FundingTypeShortName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GeospatialArea">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GeospatialArea">
         <MappingFragment StoreEntitySet="GeospatialArea">
@@ -277,9 +265,9 @@
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="PlanningDesignStartYear" ColumnName="PlanningDesignStartYear" />
-          <ScalarProperty Name="ImplementationStartYear" ColumnName="ImplementationStartYear" />
-          <ScalarProperty Name="EndYear" ColumnName="EndYear" />
+          <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
+          <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="EstimatedCost" ColumnName="EstimatedCost" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -562,6 +550,10 @@
           <ScalarProperty Name="ReceiveSupportEmails" ColumnName="ReceiveSupportEmails" />
           <ScalarProperty Name="WebServiceAccessToken" ColumnName="WebServiceAccessToken" />
           <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -604,17 +596,15 @@
           <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
-          <ScalarProperty Name="ImplementationStartYear" ColumnName="ImplementationStartYear" />
-          <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
+          <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
+          <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
           <ScalarProperty Name="PerformanceMeasureActualYearsExemptionExplanation" ColumnName="PerformanceMeasureActualYearsExemptionExplanation" />
           <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
-          <ScalarProperty Name="PlanningDesignStartYear" ColumnName="PlanningDesignStartYear" />
+          <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="EstimatedAnnualOperatingCost" ColumnName="EstimatedAnnualOperatingCost" />
-          <ScalarProperty Name="FundingTypeID" ColumnName="FundingTypeID" />
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="ProjectApprovalStatusID" ColumnName="ProjectApprovalStatusID" />
           <ScalarProperty Name="ProposingPersonID" ColumnName="ProposingPersonID" />
@@ -1051,14 +1041,13 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
-          <ScalarProperty Name="ImplementationStartYear" ColumnName="ImplementationStartYear" />
-          <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
+          <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
+          <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
           <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
-          <ScalarProperty Name="PlanningDesignStartYear" ColumnName="PlanningDesignStartYear" />
+          <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="EstimatedAnnualOperatingCost" ColumnName="EstimatedAnnualOperatingCost" />
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -1313,7 +1302,7 @@
           <ScalarProperty Name="ToolDisplayName" ColumnName="ToolDisplayName" />
           <ScalarProperty Name="RecaptchaPublicKey" ColumnName="RecaptchaPublicKey" />
           <ScalarProperty Name="RecaptchaPrivateKey" ColumnName="RecaptchaPrivateKey" />
-          <ScalarProperty Name="ShowProposalsToThePublic" ColumnName="ShowProposalsToThePublic" />
+          <ScalarProperty Name="ShowApplicationsToThePublic" ColumnName="ShowApplicationsToThePublic" />
           <ScalarProperty Name="TaxonomyLevelID" ColumnName="TaxonomyLevelID" />
           <ScalarProperty Name="AssociatePerfomanceMeasureTaxonomyLevelID" ColumnName="AssociatePerfomanceMeasureTaxonomyLevelID" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
