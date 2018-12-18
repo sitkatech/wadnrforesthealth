@@ -68,66 +68,33 @@ Source code is available upon request via <support@sitkatech.com>.
 <div id="EditPeopleAngularApp" ng-controller="ProjectPersonController">
     <div class="row">
         <div class="col-md-12">
-            <p>Select the@FieldDefinition.Person.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Project.GetFieldDefinitionLabel(). Some association types have a single person; these are marked with a required symbol (<sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>). Other assocation types apply to any number of people and are not required.</p>
-            <p class="systemText">@FieldDefinition.Project.GetFieldDefinitionLabel() Funders are not set in this editor. They are determined by the @FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized() in the @FieldDefinition.Project.GetFieldDefinitionLabel() Expected Funding and Reported Expenditures.</p>
-        </div>
+            <p>Select the @FieldDefinition.Contact.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Project.GetFieldDefinitionLabel(). Some association types allow a single contact; these are marked with a required symbol (<sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>). Other assocation types apply to any number of people and are not required.</p></div>
     </div>
-
-    @*------------------------------------ Primary Contact Relationship Type (if there is one) and Primary Contact ------------------------------------*@
-    <br />
-    <div ng-show="AngularViewData.PrimaryContactRelationshipTypeSimple != null">
-        <div class="row">
-            @*Relationship type and description*@
-            <div class="col-md-12"><label ng-bind="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeName"></label><sup ng-show="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-push-8">
-                <p class="smallExplanationText" ng-bind="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeDescription"></p>
-            </div>
-            <div class="col-md-8 col-md-pull-4">
-                <div class="row">
-                    @*Selectpicker*@
-                    <div class="col-md-12">
-                        <div class="input-group" style="width: 100%;">
-                            <select class="selectpicker form-control" id="todo{{AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID}}" ng-model="selectedPersonID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID],AngularViewData.PrimaryContactRelationshipTypeSimple)" data-width="100%" data-live-search="true" data-size="8">
-                                <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactRelationshipTypeSimple)">Select one</option>
-                                <option ng-repeat="person in getAvailablePeopleForRelationshipType(AngularViewData.PrimaryContactRelationshipTypeSimple)"
-                                        ng-bind="person.PersonName"
-                                        ng-value="person.PersonID"
-                                        ng-selected="isOptionSelected(person,AngularViewData.PrimaryContactRelationshipTypeSimple)"></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
 
     @*------------------------------------ All Other Relationship Types ------------------------------------*@
-    <div ng-repeat="relationshipType in AngularViewData.AllRelationshipTypes | orderBy:['-RelationshipTypeCanOnlyBeRelatedOnceToAProject','RelationshipTypeName']">
+    <div ng-repeat="projectPersonRelationshipType in AngularViewData.AllProjectPersonRelationshipTypes | orderBy:['ProjectPersonRelationshipTypeName']">
         <hr />
         <div class="row">
             @*Relationship type and description*@
-            <div class="col-md-12"><label ng-bind="relationshipType.RelationshipTypeName"></label><sup ng-show="relationshipType.RelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
+            <div class="col-md-12"><label ng-bind="projectPersonRelationshipType.ProjectPersonRelationshipTypeName"></label><sup ng-show="projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-push-8">
-                <p class="smallExplanationText" ng-bind="relationshipType.RelationshipTypeDescription"></p>
+                <p class="smallExplanationText" ng-bind="projectPersonRelationshipType.ProjectPersonRelationshipTypeDescription"></p>
             </div>
             <div class="col-md-8 col-md-pull-4">
                 <div class="row">
                     @*Selectpicker*@
                     <div class="col-md-12">
                         <div class="input-group" style="width: 100%;">
-                            <select class="selectpicker" id="todo{{relationshipType.RelationshipTypeID}}" ng-model="selectedPersonID[relationshipType.RelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[relationshipType.RelationshipTypeID],relationshipType)" data-width="100%" data-live-search="true" data-size="8">
-                                <option value="" disabled selected ng-bind="dropdownDefaultOption(relationshipType)">Select one</option>
-                                <option ng-repeat="person in getAvailablePeopleForRelationshipType(relationshipType)"
-                                        ng-bind="person.PersonName"
+                            <select class="selectpicker" id="todo{{projectPersonRelationshipType.ProjectPersonRelationshipTypeID}}" ng-model="selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID],projectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
+                                <option value="" disabled selected ng-bind="dropdownDefaultOption(projectPersonRelationshipType)">Select one</option>
+                                <option ng-repeat="person in getAvailablePeopleForProjectPersonRelationshipType(projectPersonRelationshipType)"
+                                        ng-bind="person.FullName"
                                         ng-value="person.PersonID"
-                                        ng-selected="isOptionSelected(person,relationshipType)"></option>
+                                        ng-selected="isOptionSelected(person,projectPersonRelationshipType)"></option>
                             </select>
-                            <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectPersonSimple(selectedPersonID[relationshipType.RelationshipTypeID], relationshipType.RelationshipTypeID)" ng-disabled="!selectedPersonID[relationshipType.RelationshipTypeID]" ng-show="!relationshipType.RelationshipTypeCanOnlyBeRelatedOnceToAProject">
+                            <button type="button" class="btn btn-sm btn-firma" ng-click="addProjectPersonSimple(selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID], projectPersonRelationshipType.ProjectPersonRelationshipTypeID)" ng-disabled="!selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-show="!projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Add
                             </button>
@@ -135,14 +102,14 @@ Source code is available upon request via <support@sitkatech.com>.
                     </div>
                 </div>
 
-                <div class="row" ng-repeat="person in chosenPeopleForRelationshipType(relationshipType.RelationshipTypeID)" ng-hide="relationshipType.RelationshipTypeCanOnlyBeRelatedOnceToAProject" style="margin-top: 5px;">
+                <div class="row" ng-repeat="person in chosenPeopleForProjectPersonRelationshipType(projectPersonRelationshipType.ProjectPersonRelationshipTypeID)" ng-hide="projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject" style="margin-top: 5px;">
                     @*Selections*@
                     <div class="col-md-12">
                         <span>
-                            <a href="#" ng-click="removeProjectPersonSimple(person.PersonID, relationshipType.RelationshipTypeID); $event.preventDefault();">
+                            <a href="#" ng-click="removeProjectPersonSimple(person.PersonID, projectPersonRelationshipType.ProjectPersonRelationshipTypeID); $event.preventDefault();">
                                 <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()"></i>
                             </a>
-                        </span><span ng-bind="person.PersonName"></span>
+                        </span><span ng-bind="person.FullName"></span>
                     </div>
                 </div>
             </div>
@@ -153,7 +120,7 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         <div ng-repeat="projectPerson in AngularModel.ProjectPersonSimples">
             <input type="hidden" name="@Html.NameFor(x => x.ProjectPersonSimples[0].PersonID).ToString().Replace("0", "{{$index}}")" value="{{projectPerson.PersonID}}" />
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectPersonSimples[0].RelationshipTypeID).ToString().Replace("0", "{{$index}}")" value="{{projectPerson.RelationshipTypeID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectPersonSimples[0].ProjectPersonRelationshipTypeID).ToString().Replace("0", "{{$index}}")" value="{{projectPerson.ProjectPersonRelationshipTypeID}}" />
         </div>
     }
 </div>

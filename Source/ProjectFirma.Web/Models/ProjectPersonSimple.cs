@@ -17,7 +17,7 @@
         {
             PersonID = projectPerson.PersonID;
             PersonName = projectPerson.Person.FullNameFirstLast;
-            RelationshipTypeID = projectPerson.ProjectPersonRelationshipTypeID;
+            ProjectPersonRelationshipTypeID = projectPerson.ProjectPersonRelationshipTypeID;
         }
 
         // todo
@@ -28,14 +28,14 @@
         //    RelationshipTypeID = projectPerson.RelationshipTypeID;
         //}
 
-        public ProjectPersonSimple(int organizationID, int relationshipTypeID)
+        public ProjectPersonSimple(int personID, int projectPersonRelationshipTypeID)
         {
-            PersonID = organizationID;
-            RelationshipTypeID = relationshipTypeID;
+            PersonID = personID;
+            ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
         }
 
         public int PersonID { get; set; }
-        public int RelationshipTypeID { get; set; }
+        public int ProjectPersonRelationshipTypeID { get; set; }
         public string PersonName { get; private set; }
 
         // todo

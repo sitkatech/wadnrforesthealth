@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
         public void UpdateModel(Models.Project project, ICollection<Models.ProjectPerson> allProjectPeople)
         {
             var projectPeopleUpdated = ProjectPersonSimples.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.PersonID)).Select(x =>
-                new Models.ProjectPerson(project.ProjectID, x.PersonID, x.RelationshipTypeID)).ToList();
+                new Models.ProjectPerson(project.ProjectID, x.PersonID, x.ProjectPersonRelationshipTypeID)).ToList();
 
             project.ProjectPeople.Merge(projectPeopleUpdated,
                 allProjectPeople,
@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
                 ProjectPersonSimples = new List<ProjectPersonSimple>();
             }
 
-            if (ProjectPersonSimples.GroupBy(x => new { x.RelationshipTypeID, x.PersonID }).Any(x => x.Count() > 1))
+            if (ProjectPersonSimples.GroupBy(x => new { RelationshipTypeID = x.ProjectPersonRelationshipTypeID, x.PersonID }).Any(x => x.Count() > 1))
             {
                 errors.Add(new ValidationResult($"Cannot have the same relationship type listed for the same {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()} multiple times."));
             }
@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
             var relationshipTypeThatMustBeRelatedOnceToAProject = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Where(x => x.CanOnlyBeRelatedOnceToAProject).ToList();
 
             var projectPeopleGroupedByRelationshipTypeID =
-                ProjectPersonSimples.GroupBy(x => x.RelationshipTypeID).ToList();
+                ProjectPersonSimples.GroupBy(x => x.ProjectPersonRelationshipTypeID).ToList();
 
             errors.AddRange(relationshipTypeThatMustBeRelatedOnceToAProject
                 .Where(rt => projectPeopleGroupedByRelationshipTypeID.Count(po => po.Key == rt.RelationshipTypeID) > 1)

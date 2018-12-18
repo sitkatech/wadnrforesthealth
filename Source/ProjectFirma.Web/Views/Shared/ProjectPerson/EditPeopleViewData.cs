@@ -28,12 +28,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
     public class EditPeopleViewData
     {
         public List<PersonSimple> AllPeople { get; }
-        public List<ProjectPersonRelationshipTypeSimple> AllRelationshipTypes { get; }
+        public List<ProjectPersonRelationshipTypeSimple> AllProjectPersonRelationshipTypes { get; }
 
         public EditPeopleViewData(IEnumerable<Person> allPeople, IEnumerable<ProjectPersonRelationshipType> allRelationshipTypes)
         {
             AllPeople = allPeople.Select(x => new PersonSimple(x)).ToList();
-            AllRelationshipTypes = allRelationshipTypes.Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();   
+            AllProjectPersonRelationshipTypes = allRelationshipTypes.Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();   
         }
     }
 }
