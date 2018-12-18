@@ -31,17 +31,17 @@
             <th class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.ProjectRelationshipType)</th>
             <th class="col-sm-9">Contact</th>
         </tr>
-        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.OrderBy(x => x.RelationshipTypeName))
+        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.OrderBy(x => x.ProjectPersonRelationshipTypeDisplayName))
         {
-            var projectPeople = ViewDataTyped.AllProjectPeople.Where(x => x.RelationshipType == relationshipType).OrderBy(x => x.Person.FullNameFirstLast).ToList();
+            var projectPeople = ViewDataTyped.AllProjectPeople.Where(x => x.ProjectPersonRelationshipType == relationshipType).OrderBy(x => x.Person.FullNameFirstLast).ToList();
             <tr>
                 @if (projectPeople.Count > 1)
                 {
-                    <td>@(relationshipType.RelationshipTypeName + "s")</td>
+                    <td>@(relationshipType.ProjectPersonRelationshipTypeName + "s")</td>
                 }
                 else
                 {
-                    <td>@relationshipType.RelationshipTypeName</td>
+                    <td>@relationshipType.ProjectPersonRelationshipTypeName</td>
                 }
                 <td>
                     <ul style="list-style-type: none; padding-left: 0; margin-left: 0;">

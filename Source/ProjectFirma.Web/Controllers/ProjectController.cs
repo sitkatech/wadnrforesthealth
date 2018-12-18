@@ -45,6 +45,7 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
+using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
@@ -175,6 +176,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
 
+            var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList());
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,
@@ -210,7 +212,7 @@ namespace ProjectFirma.Web.Controllers
                 projectOrganizationsDetailViewData,
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID,
-                projectCustomAttributeTypes, geospatialAreaTypes);
+                projectCustomAttributeTypes, geospatialAreaTypes, projectPeopleDetailViewData);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

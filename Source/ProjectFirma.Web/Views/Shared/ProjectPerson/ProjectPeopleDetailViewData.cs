@@ -28,14 +28,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
     public class ProjectPeopleDetailViewData : FirmaUserControlViewData
     {
         public List<ProjectPersonRelationship> AllProjectPeople { get; }
-        public List<RelationshipType> SetRelationshipTypes { get; }
-        public Person PrimaryContactPerson { get; }
+        public List<ProjectPersonRelationshipType> SetRelationshipTypes { get; }
 
-        public ProjectPeopleDetailViewData(List<ProjectPersonRelationship> allProjectPeople, Person primaryContactPerson)
+        public ProjectPeopleDetailViewData(List<ProjectPersonRelationship> allProjectPeople)
         {
             AllProjectPeople = allProjectPeople;
-            SetRelationshipTypes = AllProjectPeople.Select(x=>x.RelationshipType).Distinct().ToList();
-            PrimaryContactPerson = primaryContactPerson;
+            SetRelationshipTypes = AllProjectPeople.Select(x=>x.ProjectPersonRelationshipType).Distinct().ToList();
         }
     }
 }

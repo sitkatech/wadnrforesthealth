@@ -4,18 +4,18 @@
     {
         public Project Project { get; }
         public Person Person { get; }
-        public RelationshipType RelationshipType { get; }
+        public ProjectPersonRelationshipType ProjectPersonRelationshipType { get; }
         public string DisplayCssClass { get; }
 
 
-        public ProjectPersonRelationship(Project project, Person organization, RelationshipType relationshipType)
+        public ProjectPersonRelationship(Project project, Person person, ProjectPersonRelationshipType relationshipType)
         {
             Project = project;
-            Person = organization;
-            RelationshipType = relationshipType;
+            Person = person;
+            ProjectPersonRelationshipType = relationshipType;
         }
 
-        public ProjectPersonRelationship(Project project, Person organization, RelationshipType relationshipType, string displayCssClass) : this(project, organization, relationshipType)
+        public ProjectPersonRelationship(Project project, Person person, ProjectPersonRelationshipType relationshipType, string displayCssClass) : this(project, person, relationshipType)
         {
             DisplayCssClass = displayCssClass;
         }
