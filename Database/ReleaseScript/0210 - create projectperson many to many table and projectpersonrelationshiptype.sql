@@ -2,15 +2,16 @@
 Create Table dbo.ProjectPersonRelationshipType(
 ProjectPersonRelationshipTypeID int not null constraint PK_ProjectPersonRelationshipType_ProjectPersonRelationshipTypeID primary key,
 ProjectPersonRelationshipTypeName varchar(25) not null constraint AK_ProjectPersonRelationshipType_ProjectPersonRelationshipTypeName unique,
-ProjectPersonRelationshipTypeDisplayName varchar(25) not null constraint AK_ProjectPersonRelationshipType_ProjectPersonRelationshipTypeDisplayName unique
+ProjectPersonRelationshipTypeDisplayName varchar(25) not null constraint AK_ProjectPersonRelationshipType_ProjectPersonRelationshipTypeDisplayName unique,
+IsRequired bit not null
 )
 
-insert into dbo.ProjectPersonRelationshipType (ProjectPersonRelationshipTypeID,ProjectPersonRelationshipTypeName,ProjectPersonRelationshipTypeDisplayName)
+insert into dbo.ProjectPersonRelationshipType (ProjectPersonRelationshipTypeID,ProjectPersonRelationshipTypeName,ProjectPersonRelationshipTypeDisplayName, IsRequired)
 values
-(1, 'PrimaryContact', 'Primary Contact'),
-(2,'Landowner','Landowner'),
-(3,'Contractor','Contractor'),
-(4,'Partner','Partner')
+(1, 'PrimaryContact', 'Primary Contact', 1),
+(2,'Landowner','Landowner', 0),
+(3,'Contractor','Contractor', 0),
+(4,'Partner','Partner', 0)
 
 
 -- das many many

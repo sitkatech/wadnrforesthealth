@@ -188,5 +188,6 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
+    console.log($scope.AngularViewData);
     $scope.selectedPersonID = {};
 });

@@ -38,17 +38,19 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName)
+        protected ProjectPersonRelationshipType(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, bool isRequired)
         {
             ProjectPersonRelationshipTypeID = projectPersonRelationshipTypeID;
             ProjectPersonRelationshipTypeName = projectPersonRelationshipTypeName;
             ProjectPersonRelationshipTypeDisplayName = projectPersonRelationshipTypeDisplayName;
+            IsRequired = isRequired;
         }
 
         [Key]
         public int ProjectPersonRelationshipTypeID { get; private set; }
         public string ProjectPersonRelationshipTypeName { get; private set; }
         public string ProjectPersonRelationshipTypeDisplayName { get; private set; }
+        public bool IsRequired { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectPersonRelationshipTypeID; } }
 
@@ -125,25 +127,25 @@ namespace ProjectFirma.Web.Models
 
     public partial class ProjectPersonRelationshipTypePrimaryContact : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName) {}
-        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact");
+        private ProjectPersonRelationshipTypePrimaryContact(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, isRequired) {}
+        public static readonly ProjectPersonRelationshipTypePrimaryContact Instance = new ProjectPersonRelationshipTypePrimaryContact(1, @"PrimaryContact", @"Primary Contact", true);
     }
 
     public partial class ProjectPersonRelationshipTypeLandowner : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName) {}
-        public static readonly ProjectPersonRelationshipTypeLandowner Instance = new ProjectPersonRelationshipTypeLandowner(2, @"Landowner", @"Landowner");
+        private ProjectPersonRelationshipTypeLandowner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, isRequired) {}
+        public static readonly ProjectPersonRelationshipTypeLandowner Instance = new ProjectPersonRelationshipTypeLandowner(2, @"Landowner", @"Landowner", false);
     }
 
     public partial class ProjectPersonRelationshipTypeContractor : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName) {}
-        public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor");
+        private ProjectPersonRelationshipTypeContractor(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, isRequired) {}
+        public static readonly ProjectPersonRelationshipTypeContractor Instance = new ProjectPersonRelationshipTypeContractor(3, @"Contractor", @"Contractor", false);
     }
 
     public partial class ProjectPersonRelationshipTypePartner : ProjectPersonRelationshipType
     {
-        private ProjectPersonRelationshipTypePartner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName) {}
-        public static readonly ProjectPersonRelationshipTypePartner Instance = new ProjectPersonRelationshipTypePartner(4, @"Partner", @"Partner");
+        private ProjectPersonRelationshipTypePartner(int projectPersonRelationshipTypeID, string projectPersonRelationshipTypeName, string projectPersonRelationshipTypeDisplayName, bool isRequired) : base(projectPersonRelationshipTypeID, projectPersonRelationshipTypeName, projectPersonRelationshipTypeDisplayName, isRequired) {}
+        public static readonly ProjectPersonRelationshipTypePartner Instance = new ProjectPersonRelationshipTypePartner(4, @"Partner", @"Partner", false);
     }
 }

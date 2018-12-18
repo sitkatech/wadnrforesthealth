@@ -12,11 +12,12 @@
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectPersonRelationshipTypeSimple(int relationshipTypeID, string relationshipTypeName)
+        public ProjectPersonRelationshipTypeSimple(int relationshipTypeID, string relationshipTypeName, bool isRequired)
             : this()
         {
             ProjectPersonRelationshipTypeID = relationshipTypeID;
             ProjectPersonRelationshipTypeName = relationshipTypeName;
+            IsRequired = isRequired;
         }
 
         /// <summary>
@@ -27,9 +28,13 @@
         {
             ProjectPersonRelationshipTypeID = relationshipType.ProjectPersonRelationshipTypeID;
             ProjectPersonRelationshipTypeName = relationshipType.ProjectPersonRelationshipTypeName;
+            ProjectPersonRelationshipTypeDisplayName = relationshipType.ProjectPersonRelationshipTypeDisplayName;
+            IsRequired = relationshipType.IsRequired;
         }
 
+        public bool IsRequired { get; set; }
         public int ProjectPersonRelationshipTypeID { get; set; }
         public string ProjectPersonRelationshipTypeName { get; set; }
+        public string ProjectPersonRelationshipTypeDisplayName { get; set; }
     }
 }

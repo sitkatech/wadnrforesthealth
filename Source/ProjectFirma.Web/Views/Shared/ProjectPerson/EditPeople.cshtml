@@ -68,7 +68,7 @@ Source code is available upon request via <support@sitkatech.com>.
 <div id="EditPeopleAngularApp" ng-controller="ProjectPersonController">
     <div class="row">
         <div class="col-md-12">
-            <p>Select the @FieldDefinition.Contact.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Project.GetFieldDefinitionLabel(). Some association types allow a single contact; these are marked with a required symbol (<sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>). Other assocation types apply to any number of people and are not required.</p></div>
+            <p>Select the @FieldDefinition.Contact.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Project.GetFieldDefinitionLabel(). The Primary Contact relationship is required, can have only one contact associated, and is marked with a required symbol (<sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>). Other relationship types can apply to any number of contacts and are not required.</p></div>
     </div>
 
     @*------------------------------------ All Other Relationship Types ------------------------------------*@
@@ -76,7 +76,7 @@ Source code is available upon request via <support@sitkatech.com>.
         <hr />
         <div class="row">
             @*Relationship type and description*@
-            <div class="col-md-12"><label ng-bind="projectPersonRelationshipType.ProjectPersonRelationshipTypeName"></label><sup ng-show="projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
+            <div class="col-md-12"><label ng-bind="projectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName"></label><sup ng-show="projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-push-8">
