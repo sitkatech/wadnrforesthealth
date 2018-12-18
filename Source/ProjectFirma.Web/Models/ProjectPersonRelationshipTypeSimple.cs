@@ -1,4 +1,6 @@
-﻿namespace ProjectFirma.Web.Models
+﻿using System.Web;
+
+namespace ProjectFirma.Web.Models
 {
     public class ProjectPersonRelationshipTypeSimple
     {
@@ -7,17 +9,6 @@
         /// </summary>
         public ProjectPersonRelationshipTypeSimple()
         {
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public ProjectPersonRelationshipTypeSimple(int relationshipTypeID, string relationshipTypeName, bool isRequired)
-            : this()
-        {
-            ProjectPersonRelationshipTypeID = relationshipTypeID;
-            ProjectPersonRelationshipTypeName = relationshipTypeName;
-            IsRequired = isRequired;
         }
 
         /// <summary>
@@ -30,11 +21,13 @@
             ProjectPersonRelationshipTypeName = relationshipType.ProjectPersonRelationshipTypeName;
             ProjectPersonRelationshipTypeDisplayName = relationshipType.ProjectPersonRelationshipTypeDisplayName;
             IsRequired = relationshipType.IsRequired;
+            ProjectPersonRelationshipTypeDescription = relationshipType.FieldDefinition.GetFieldDefinitionDescription().ToString();
         }
 
         public bool IsRequired { get; set; }
         public int ProjectPersonRelationshipTypeID { get; set; }
         public string ProjectPersonRelationshipTypeName { get; set; }
         public string ProjectPersonRelationshipTypeDisplayName { get; set; }
+        public string ProjectPersonRelationshipTypeDescription { get; set; }
     }
 }

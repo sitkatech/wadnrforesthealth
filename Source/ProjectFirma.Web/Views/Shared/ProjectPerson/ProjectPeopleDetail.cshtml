@@ -20,6 +20,7 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views.Shared.ProjectPerson
 @inherits ProjectPeopleDetail
 
@@ -28,8 +29,8 @@
 {
     <table class="summaryLayout table table-borderless">
         <tr>
-            <th class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.ProjectRelationshipType)</th>
-            <th class="col-sm-9">Contact</th>
+            <th class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.ContactRelationshipType)</th>
+            <th class="col-sm-9">@Html.LabelWithSugarFor(FieldDefinition.Contact)</th>
         </tr>
         @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.OrderByDescending(x=>x.IsRequired).ThenBy(x => x.ProjectPersonRelationshipTypeDisplayName))
         {
@@ -47,9 +48,18 @@
                     <ul style="list-style-type: none; padding-left: 0; margin-left: 0;">
                         @foreach (var x in projectPeople)
                         {
-                            <li>
-                                <span class="@x.DisplayCssClass">@x.Person.FullNameFirstLast</span>
-                            </li>
+                            if(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, x.Person).HasPermission)
+                             {
+                                 <li>
+                                     <span class="@x.DisplayCssClass">@x.Person.GetFullNameFirstLastAsUrl()</span>
+                                 </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <span class="@x.DisplayCssClass">@x.Person.FullNameFirstLast</span>
+                                </li>
+                            }
                         }
                     </ul>
                 </td>

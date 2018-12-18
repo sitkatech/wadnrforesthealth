@@ -29,10 +29,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
     {
         public List<ProjectPersonRelationship> AllProjectPeople { get; }
         public List<ProjectPersonRelationshipType> SetRelationshipTypes { get; }
+        public Person CurrentPerson { get; }
 
-        public ProjectPeopleDetailViewData(List<ProjectPersonRelationship> allProjectPeople)
+        public ProjectPeopleDetailViewData(List<ProjectPersonRelationship> allProjectPeople, Person currentPerson)
         {
             AllProjectPeople = allProjectPeople;
+            CurrentPerson = currentPerson;
             SetRelationshipTypes = AllProjectPeople.Select(x=>x.ProjectPersonRelationshipType).Distinct().ToList();
         }
     }

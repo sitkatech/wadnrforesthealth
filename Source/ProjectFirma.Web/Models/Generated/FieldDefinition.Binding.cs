@@ -107,6 +107,11 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionProjectInternalNote ProjectInternalNote = FieldDefinitionProjectInternalNote.Instance;
         public static readonly FieldDefinitionStatewideVendorNumber StatewideVendorNumber = FieldDefinitionStatewideVendorNumber.Instance;
         public static readonly FieldDefinitionContact Contact = FieldDefinitionContact.Instance;
+        public static readonly FieldDefinitionContactRelationshipType ContactRelationshipType = FieldDefinitionContactRelationshipType.Instance;
+        public static readonly FieldDefinitionContractor Contractor = FieldDefinitionContractor.Instance;
+        public static readonly FieldDefinitionLandowner Landowner = FieldDefinitionLandowner.Instance;
+        public static readonly FieldDefinitionPartner Partner = FieldDefinitionPartner.Instance;
+        public static readonly FieldDefinitionPrimaryContact PrimaryContact = FieldDefinitionPrimaryContact.Instance;
 
         public static readonly List<FieldDefinition> All;
         public static readonly ReadOnlyDictionary<int, FieldDefinition> AllLookupDictionary;
@@ -116,7 +121,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { TaxonomyLeaf, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ApprovalStartDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, PlannedDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, TaxonomyLeafDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, TaxonomyLeafDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact };
+            All = new List<FieldDefinition> { TaxonomyLeaf, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ApprovalStartDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, PlannedDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, TaxonomyLeafDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, TaxonomyLeafDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -130,7 +135,7 @@ namespace ProjectFirma.Web.Models
             FieldDefinitionDisplayName = fieldDefinitionDisplayName;
             DefaultDefinition = defaultDefinition;
         }
-
+        public List<ProjectPersonRelationshipType> ProjectPersonRelationshipTypes { get { return ProjectPersonRelationshipType.All.Where(x => x.FieldDefinitionID == FieldDefinitionID).ToList(); } }
         [Key]
         public int FieldDefinitionID { get; private set; }
         public string FieldDefinitionName { get; private set; }
@@ -220,6 +225,10 @@ namespace ProjectFirma.Web.Models
                     return CompletionDate;
                 case FieldDefinitionEnum.Contact:
                     return Contact;
+                case FieldDefinitionEnum.ContactRelationshipType:
+                    return ContactRelationshipType;
+                case FieldDefinitionEnum.Contractor:
+                    return Contractor;
                 case FieldDefinitionEnum.CurrentYearForPVCalculations:
                     return CurrentYearForPVCalculations;
                 case FieldDefinitionEnum.CustomPageDisplayType:
@@ -244,6 +253,8 @@ namespace ProjectFirma.Web.Models
                     return IsPrimaryContactOrganization;
                 case FieldDefinitionEnum.IsPrimaryTaxonomyBranch:
                     return IsPrimaryTaxonomyBranch;
+                case FieldDefinitionEnum.Landowner:
+                    return Landowner;
                 case FieldDefinitionEnum.LifecycleOperatingCost:
                     return LifecycleOperatingCost;
                 case FieldDefinitionEnum.MeasurementUnit:
@@ -264,6 +275,8 @@ namespace ProjectFirma.Web.Models
                     return OrganizationPrimaryContact;
                 case FieldDefinitionEnum.OrganizationType:
                     return OrganizationType;
+                case FieldDefinitionEnum.Partner:
+                    return Partner;
                 case FieldDefinitionEnum.Password:
                     return Password;
                 case FieldDefinitionEnum.PerformanceMeasure:
@@ -288,6 +301,8 @@ namespace ProjectFirma.Web.Models
                     return PhotoTiming;
                 case FieldDefinitionEnum.PlannedDate:
                     return PlannedDate;
+                case FieldDefinitionEnum.PrimaryContact:
+                    return PrimaryContact;
                 case FieldDefinitionEnum.Project:
                     return Project;
                 case FieldDefinitionEnum.ProjectCostInYearOfExpenditure:
@@ -468,7 +483,12 @@ namespace ProjectFirma.Web.Models
         ProjectStewardshipArea = 267,
         ProjectInternalNote = 268,
         StatewideVendorNumber = 269,
-        Contact = 270
+        Contact = 270,
+        ContactRelationshipType = 271,
+        Contractor = 272,
+        Landowner = 273,
+        Partner = 274,
+        PrimaryContact = 275
     }
 
     public partial class FieldDefinitionTaxonomyLeaf : FieldDefinition
@@ -558,7 +578,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionOrganizationPrimaryContact : FieldDefinition
     {
         private FieldDefinitionOrganizationPrimaryContact(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionOrganizationPrimaryContact Instance = new FieldDefinitionOrganizationPrimaryContact(25, @"OrganizationPrimaryContact", @"Primary Contact", @"<p>An individual at the listed organization responsible for reporting accomplishments and expenditures achieved by the project or program, and who should be contacted when there are questions related to any project associated to the organization.</p>");
+        public static readonly FieldDefinitionOrganizationPrimaryContact Instance = new FieldDefinitionOrganizationPrimaryContact(25, @"OrganizationPrimaryContact", @"Organization Primary Contact", @"<p>An individual at the listed organization responsible for reporting accomplishments and expenditures achieved by the project or program, and who should be contacted when there are questions related to any project associated to the organization.</p>");
     }
 
     public partial class FieldDefinitionTaxonomyBranch : FieldDefinition
@@ -1003,5 +1023,35 @@ namespace ProjectFirma.Web.Models
     {
         private FieldDefinitionContact(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
         public static readonly FieldDefinitionContact Instance = new FieldDefinitionContact(270, @"Contact", @"Contact", @"A person who is associated with a project who may or may not have an account in the system.");
+    }
+
+    public partial class FieldDefinitionContactRelationshipType : FieldDefinition
+    {
+        private FieldDefinitionContactRelationshipType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionContactRelationshipType Instance = new FieldDefinitionContactRelationshipType(271, @"ContactRelationshipType", @"Contact Relationship Type", @"<p>A categorization of a relationship between an organization and a contact, e.g. Landowner, Contractor.</p>");
+    }
+
+    public partial class FieldDefinitionContractor : FieldDefinition
+    {
+        private FieldDefinitionContractor(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionContractor Instance = new FieldDefinitionContractor(272, @"Contractor", @"Contractor", @"Placeholder definition for Contractor.");
+    }
+
+    public partial class FieldDefinitionLandowner : FieldDefinition
+    {
+        private FieldDefinitionLandowner(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionLandowner Instance = new FieldDefinitionLandowner(273, @"Landowner", @"Landowner", @"Placeholder definition for Landowner.");
+    }
+
+    public partial class FieldDefinitionPartner : FieldDefinition
+    {
+        private FieldDefinitionPartner(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionPartner Instance = new FieldDefinitionPartner(274, @"Partner", @"Partner", @"Placeholder definition for Partner.");
+    }
+
+    public partial class FieldDefinitionPrimaryContact : FieldDefinition
+    {
+        private FieldDefinitionPrimaryContact(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionPrimaryContact Instance = new FieldDefinitionPrimaryContact(275, @"PrimaryContact", @"Primary Contact", @"Placeholder definition for Primary Contact.");
     }
 }
