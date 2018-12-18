@@ -129,9 +129,9 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
 
     $scope.dropdownDefaultOption = function(projectPersonProjectPersonRelationshipType) {
         if (projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject) {
-            return "Select the " + projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeName;
+            return "Select the " + projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName;
         } else {
-            return "Add a " + projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeName;
+            return "Add a " + projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName;
         }
     };
 
