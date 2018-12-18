@@ -62,8 +62,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
 
         public IEnumerable<ValidationResult> GetValidationResults()
         {
-            var errors = new List<ValidationResult>();
-
             if (ProjectPersonSimples == null)
             {
                 ProjectPersonSimples = new List<ProjectPersonSimple>();
@@ -71,25 +69,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
 
             if (ProjectPersonSimples.GroupBy(x => new { RelationshipTypeID = x.ProjectPersonRelationshipTypeID, x.PersonID }).Any(x => x.Count() > 1))
             {
-                errors.Add(new ValidationResult($"Cannot have the same relationship type listed for the same {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()} multiple times."));
+                yield return new ValidationResult(
+                    $"Cannot have the same relationship type listed for the same {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()} multiple times.");
             }
-            
-            var relationshipTypeThatMustBeRelatedOnceToAProject = HttpRequestStorage.DatabaseEntities.RelationshipTypes.Where(x => x.CanOnlyBeRelatedOnceToAProject).ToList();
-
-            var projectPeopleGroupedByRelationshipTypeID =
-                ProjectPersonSimples.GroupBy(x => x.ProjectPersonRelationshipTypeID).ToList();
-
-            errors.AddRange(relationshipTypeThatMustBeRelatedOnceToAProject
-                .Where(rt => projectPeopleGroupedByRelationshipTypeID.Count(po => po.Key == rt.RelationshipTypeID) > 1)
-                .Select(relationshipType => new ValidationResult(
-                    $"Cannot have more than one {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()} with a {Models.FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()} set to \"{relationshipType.RelationshipTypeName}\".")));
-
-            errors.AddRange(relationshipTypeThatMustBeRelatedOnceToAProject
-                .Where(rt => projectPeopleGroupedByRelationshipTypeID.Count(po => po.Key == rt.RelationshipTypeID) == 0)
-                .Select(relationshipType => new ValidationResult(
-                    $"Must have one {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()} with a {Models.FieldDefinition.ProjectRelationshipType.GetFieldDefinitionLabel()} set to \"{relationshipType.RelationshipTypeName}\".")));
-
-            return errors;
         }
     }
 }
