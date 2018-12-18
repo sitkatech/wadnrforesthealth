@@ -29,11 +29,16 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
     {
         public List<PersonSimple> AllPeople { get; }
         public List<ProjectPersonRelationshipTypeSimple> AllProjectPersonRelationshipTypes { get; }
+        public ProjectPersonRelationshipTypeSimple PrimaryContactProjectPersonRelationshipType { get; }
 
         public EditPeopleViewData(IEnumerable<Person> allPeople, IEnumerable<ProjectPersonRelationshipType> allRelationshipTypes)
         {
             AllPeople = allPeople.Select(x => new PersonSimple(x)).ToList();
-            AllProjectPersonRelationshipTypes = allRelationshipTypes.Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();   
+            AllProjectPersonRelationshipTypes = allRelationshipTypes.Except(new List<ProjectPersonRelationshipType>{
+                ProjectPersonRelationshipType.PrimaryContact
+            }).Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();
+            PrimaryContactProjectPersonRelationshipType =
+                new ProjectPersonRelationshipTypeSimple(ProjectPersonRelationshipType.PrimaryContact);
         }
     }
 }

@@ -31,7 +31,7 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
 
     $scope.getAvailablePeopleForProjectPersonRelationshipType = function(projectPersonProjectPersonRelationshipType) {
         var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
-        if (projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject) {
+        if (projectPersonProjectPersonRelationshipType.IsRequired) {
             return peopleForProjectPersonRelationshipType;
         } else {
             var usedPeople = _.filter($scope.AngularModel.ProjectPersonSimples,
@@ -94,7 +94,7 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
 
     $scope.selectionChanged = function(personID, projectPersonProjectPersonRelationshipType) {
         // changing the dropdown selection for a one-and-only-one relationship type should update the model
-        if (projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject) {
+        if (projectPersonProjectPersonRelationshipType.IsRequired) {
             // if there's already a projectPersonSimple for this relationship type, just change the PersonID
             var projectPersonSimple =
                 Sitka.Methods.findElementInJsonArray($scope.AngularModel.ProjectPersonSimples,
@@ -117,7 +117,7 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
     };
 
     $scope.isOptionSelected = function(person, projectPersonProjectPersonRelationshipType) {
-        if (!projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject) {
+        if (!projectPersonProjectPersonRelationshipType.IsRequired) {
             return false;
         }
         return _.any($scope.AngularModel.ProjectPersonSimples,

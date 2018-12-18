@@ -72,6 +72,25 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
                 yield return new ValidationResult(
                     $"Cannot have the same relationship type listed for the same {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()} multiple times.");
             }
+
+            var requiredRelationshipTypes = ProjectPersonRelationshipType.All.Where(x => x.IsRequired);
+            var chosenRelationshipTypeIDs = ProjectPersonSimples.Select(x => x.ProjectPersonRelationshipTypeID).Distinct().ToList();
+
+            foreach (var relationshipType in requiredRelationshipTypes)
+            {
+                if (!chosenRelationshipTypeIDs.Contains(relationshipType.ProjectPersonRelationshipTypeID))
+                {
+                    yield return new ValidationResult(
+                        $"The {relationshipType.ProjectPersonRelationshipTypeDisplayName} contact relationship is required.");
+                }
+
+                if (ProjectPersonSimples.Count(x =>
+                        x.ProjectPersonRelationshipTypeID == relationshipType.ProjectPersonRelationshipTypeID) > 1)
+                {
+                    yield return new ValidationResult(
+                        $"The {relationshipType.ProjectPersonRelationshipTypeDisplayName} relationship can only be assigned to one contact.");
+                }
+            }
         }
     }
 }
