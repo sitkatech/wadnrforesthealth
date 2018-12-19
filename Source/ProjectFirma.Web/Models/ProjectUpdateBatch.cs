@@ -335,6 +335,7 @@ namespace ProjectFirma.Web.Models
         }
 
         public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;
+        public string ContactsComment { get; set; } // tODO: put in databae
 
         public PerformanceMeasuresValidationResult ValidatePerformanceMeasures()
         {
@@ -649,6 +650,11 @@ namespace ProjectFirma.Web.Models
         public List<ProjectSectionSimple> GetApplicableWizardSections(bool ignoreStatus)
         {
             return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectUpdateSections(this, null, ignoreStatus)).OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
+        }
+
+        public bool AreContactsValid()
+        {
+            throw new NotImplementedException(); // todo: clone AreOrganizationsValid()
         }
     }
 }

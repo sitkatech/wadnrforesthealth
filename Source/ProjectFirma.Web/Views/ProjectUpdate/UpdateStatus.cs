@@ -22,17 +22,18 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class UpdateStatus
     {
-        public readonly bool IsBasicsUpdated;
-        public readonly bool IsPerformanceMeasuresUpdated;
-        public readonly bool IsExpectedFundingUpdated;
-        public readonly bool IsExpendituresUpdated;
-        public readonly bool IsBudgetsUpdated;
-        public readonly bool IsPhotosUpdated;
-        public readonly bool IsLocationSimpleUpdated;
-        public readonly bool IsLocationDetailUpdated;
-        public readonly bool IsExternalLinksUpdated;
-        public readonly bool IsNotesUpdated;
-        public readonly bool IsOrganizationsUpdated;
+        public bool IsBasicsUpdated { get; }
+        public bool IsPerformanceMeasuresUpdated { get; }
+        public bool IsExpectedFundingUpdated { get; }
+        public bool IsExpendituresUpdated { get; }
+        public bool IsBudgetsUpdated { get; }
+        public bool IsPhotosUpdated { get; }
+        public bool IsLocationSimpleUpdated { get; }
+        public bool IsLocationDetailUpdated { get; }
+        public bool IsExternalLinksUpdated { get; }
+        public bool IsNotesUpdated { get; }
+        public bool IsOrganizationsUpdated { get; }
+        public bool IsContactsUpdated { get; }
 
         public UpdateStatus(bool isBasicsUpdated,
             bool isPerformanceMeasuresUpdated,
@@ -44,7 +45,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             bool isExternalLinksUpdated,
             bool isNotesUpdated,
             bool isExpectedFundingUpdated,
-            bool isOrganizationsUpdated)
+            bool isOrganizationsUpdated,
+            bool isContactsUpdated)
         {
             IsBasicsUpdated = isBasicsUpdated;
             IsPerformanceMeasuresUpdated = isPerformanceMeasuresUpdated;
@@ -57,6 +59,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             IsNotesUpdated = isNotesUpdated;
             IsExpectedFundingUpdated = isExpectedFundingUpdated;
             IsOrganizationsUpdated = isOrganizationsUpdated;
+            IsContactsUpdated = isContactsUpdated;
         }
     }
 }

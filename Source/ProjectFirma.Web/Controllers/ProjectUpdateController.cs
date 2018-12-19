@@ -2490,6 +2490,11 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Organizations, OrganizationsViewData, OrganizationsViewModel>(viewData, viewModel);
         }
 
+        public void Contacts(Project project)
+        {
+            throw new NotImplementedException(); // todo: clone Organizations methods from above
+        }
+
         private UpdateStatus GetUpdateStatus(ProjectUpdateBatch projectUpdateBatch)
         {
             var isPerformanceMeasuresUpdated = DiffPerformanceMeasuresImpl(projectUpdateBatch.ProjectID).HasChanged;
@@ -2508,6 +2513,7 @@ namespace ProjectFirma.Web.Controllers
             var isExpectedFundingUpdated = DiffExpectedFundingImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             var isOrganizationsUpdated = DiffOrganizationsImpl(projectUpdateBatch.ProjectID).HasChanged;
+            var isContactsUpdated = false;//TODO: DiffContactsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             return new UpdateStatus(isBasicsUpdated,
                 isPerformanceMeasuresUpdated,
@@ -2520,7 +2526,13 @@ namespace ProjectFirma.Web.Controllers
                 isExternalLinksUpdated,
                 isNotesUpdated,
                 isExpectedFundingUpdated,
-                isOrganizationsUpdated);
+                isOrganizationsUpdated,
+                isContactsUpdated);
+        }
+
+        private HtmlDiffContainer DiffContactsImpl(int projectID)
+        {
+            throw new NotImplementedException(); // todo: clone DiffOrganizationsImpl
         }
 
         private PartialViewResult ViewHtmlDiff(string htmlDiff, string diffTitle)
@@ -2705,6 +2717,16 @@ namespace ProjectFirma.Web.Controllers
                 MultiTenantHelpers.GetToolDisplayName()).GetEmailContentPreview();
 
             return emailContentPreview;
+        }
+
+        public void RefreshContacts(Project project)
+        {
+            throw new NotImplementedException(); // todo clone refresh organizations
+        }
+
+        public void DiffContacts(Project project)
+        {
+            throw new NotImplementedException(); // todo clone diff organizations
         }
     }
 }

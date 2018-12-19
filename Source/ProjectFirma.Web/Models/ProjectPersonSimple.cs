@@ -20,6 +20,13 @@
             ProjectPersonRelationshipTypeID = projectPerson.ProjectPersonRelationshipTypeID;
         }
 
+        public ProjectPersonSimple(ProjectPersonUpdate projectPersonUpdate)
+        {
+            PersonID = projectPersonUpdate.PersonID;
+            PersonName = projectPersonUpdate.Person.FullNameFirstLast;
+            ProjectPersonRelationshipTypeID = projectPersonUpdate.ProjectPersonRelationshipTypeID;
+        }
+
         // todo
         //public ProjectPersonSimple(ProjectPersonUpdate projectPerson)
         //{
@@ -38,10 +45,10 @@
         public int ProjectPersonRelationshipTypeID { get; set; }
         public string PersonName { get; private set; }
 
-        // todo
-        //public ProjectPersonUpdate ToProjectPersonUpdate(ProjectUpdateBatch projectUpdateBatch)
-        //{
-        //    return new ProjectPersonUpdate(projectUpdateBatch.ProjectUpdateBatchID, PersonID, RelationshipTypeID);
-        //}
+        
+        public ProjectPersonUpdate ToProjectPersonUpdate(ProjectUpdateBatch projectUpdateBatch)
+        {
+            return new ProjectPersonUpdate(projectUpdateBatch.ProjectUpdateBatchID, PersonID, ProjectPersonRelationshipTypeID);
+        }
     }
 }
