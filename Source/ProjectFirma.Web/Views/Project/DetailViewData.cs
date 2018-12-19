@@ -189,7 +189,7 @@ namespace ProjectFirma.Web.Views.Project
                 if (userHasProjectAdminPermissions || currentPerson.CanStewardProject(project))
                 {
                     projectAlerts.Add(
-                        $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Proposal stage. Any edits to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} must be made using the Add New {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} workflow.");
+                        $"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the {Models.FieldDefinition.Application.GetFieldDefinitionLabel()} stage. Any edits to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} must be made using the Add New {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} workflow.");
                 }
             }
             else if (project.IsPendingProject())

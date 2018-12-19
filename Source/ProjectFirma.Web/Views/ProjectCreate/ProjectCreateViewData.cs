@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             // ReSharper restore PossibleNullReferenceException
             IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
             InstructionsPageUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Instructions(project));
-            var pagetitle = project.ProjectStage == ProjectStage.Application ? $"Propose {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}" : $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+            var pagetitle = project.ProjectStage == ProjectStage.Application ? $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}" : $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
             PageTitle = $"{pagetitle}: {project.DisplayName}";
 
             ProposalDetailUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project));

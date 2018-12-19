@@ -336,7 +336,7 @@
                     <div class="panel-body">
                         @if (ViewDataTyped.Project.IsProposal())
                         {
-                            <p>Reported Expenditures are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Proposal stage.</p>
+                            <p>Reported Expenditures are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the @FieldDefinition.Application.GetFieldDefinitionLabel() stage.</p>
                         }
                         else
                         {

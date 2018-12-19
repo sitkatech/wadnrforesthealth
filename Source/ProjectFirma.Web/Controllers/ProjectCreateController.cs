@@ -1263,7 +1263,7 @@ namespace ProjectFirma.Web.Controllers
             var auditLog = new AuditLog(CurrentPerson, DateTime.Now, AuditLogEventType.Added, "Project", project.ProjectID, "ProjectID", project.ProjectID.ToString())
             {
                 ProjectID = project.ProjectID,
-                AuditDescription = $"Proposal {project.DisplayName} approved."
+                AuditDescription = $"{FieldDefinition.Application.GetFieldDefinitionLabel()} {project.DisplayName} approved."
             };
             HttpRequestStorage.DatabaseEntities.AllAuditLogs.Add(auditLog);
         }
