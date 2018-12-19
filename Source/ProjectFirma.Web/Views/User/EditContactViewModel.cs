@@ -6,6 +6,7 @@ using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using System.Text.RegularExpressions;
 
 namespace ProjectFirma.Web.Views.User
 {
@@ -80,8 +81,10 @@ namespace ProjectFirma.Web.Views.User
         {
             if (Phone != null)
             {
-                if (Phone.Length != 10 || //number of digits in an american phone number
-                    !Phone.All(char.IsDigit)) // phone numbers must be digits
+                Regex strip = new Regex(@"[()\-\s]"); // don't worry about whitespace characters or "phone-number" characters
+                var phoneNumberToTest = strip.Replace(Phone, "");
+                if (phoneNumberToTest.Length != 10 || //number of digits in an american phone number
+                    !phoneNumberToTest.All(char.IsDigit)) // phone numbers must be digits
                 {
                     yield return new SitkaValidationResult<EditContactViewModel, string>("Phone number was invalid.",
                         m => m.Phone);
