@@ -1103,6 +1103,7 @@
           <ScalarProperty Name="OrganizationsComment" ColumnName="OrganizationsComment" />
           <ScalarProperty Name="OrganizationsDiffLog" ColumnName="OrganizationsDiffLog" />
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
+          <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

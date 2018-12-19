@@ -50,6 +50,7 @@ using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls;
 using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
+using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using ProjectFirma.Web.Views.Shared.SortOrder;
 using Basics = ProjectFirma.Web.Views.ProjectUpdate.Basics;
 using BasicsViewData = ProjectFirma.Web.Views.ProjectUpdate.BasicsViewData;
@@ -88,6 +89,7 @@ namespace ProjectFirma.Web.Controllers
         public const string ExternalLinksPartialViewPath = "~/Views/Shared/TextControls/EntityExternalLinks.cshtml";
         public const string EntityNotesPartialViewPath = "~/Views/Shared/TextControls/EntityNotes.cshtml";
         public const string ProjectOrganizationsPartialViewPath = "~/Views/Shared/ProjectOrganization/ProjectOrganizationsDetail.cshtml";
+        public const string ProjectPeoplePartialViewPath = "~/Views/Shared/ProjectPerson/ProjectPeopleDetail.cshtml";
         //public const string ProjectDocumentsPartialViewPath = "~/Views/Shared/ProjectDocument/ProjectDocumentsDetail.cshtml";
 
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
@@ -1329,6 +1331,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectGeospatialAreaTypeNotes = HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreaTypeNotes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
             var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.AllProjectOrganizations.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
+            var allProjectPeople = HttpRequestStorage.DatabaseEntities.AllProjectPeople.Local;
             HttpRequestStorage.DatabaseEntities.ProjectDocuments.Load();
             var allProjectDocuments = HttpRequestStorage.DatabaseEntities.AllProjectDocuments.Local;
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.Load();
@@ -1354,7 +1358,8 @@ namespace ProjectFirma.Web.Controllers
                 allProjectOrganizations,
                 allProjectDocuments,
                 allProjectCustomAttributes,
-                allProjectCustomAttributeValues);
+                allProjectCustomAttributeValues,
+                allProjectPeople);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
@@ -2490,9 +2495,62 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Organizations, OrganizationsViewData, OrganizationsViewModel>(viewData, viewModel);
         }
 
-        public void Contacts(Project project)
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
+        public ActionResult Contacts(ProjectPrimaryKey projectPrimaryKey)
         {
-            throw new NotImplementedException(); // todo: clone Organizations methods from above
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+
+            var viewModel = new ContactsViewModel(projectUpdateBatch);
+
+            return ViewContacts(projectUpdateBatch, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectUpdateCreateEditSubmitFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Contacts(ProjectPrimaryKey projectPrimaryKey, ContactsViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+
+            if (!ModelState.IsValid)
+            {
+                return ViewContacts(projectUpdateBatch, viewModel);
+            }
+
+            
+
+            HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.Load();
+            var projectPersonUpdates = projectUpdateBatch.ProjectPersonUpdates.ToList();
+            var allProjectPersonUpdates = HttpRequestStorage.DatabaseEntities.AllProjectPersonUpdates.Local;
+
+            viewModel.UpdateModel(projectUpdateBatch,projectPersonUpdates, allProjectPersonUpdates);
+            if (projectUpdateBatch.IsSubmitted)
+            {
+                projectUpdateBatch.ContactsComment = viewModel.Comments;
+            }
+
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.Contact.GetFieldDefinitionLabelPluralized()} successfully saved.");
+
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
+                ProjectUpdateSection.Contacts.ProjectUpdateSectionDisplayName);
+        }
+
+        private ActionResult ViewContacts(ProjectUpdateBatch projectUpdateBatch, ContactsViewModel viewModel)
+        {
+            var updateStatus = GetUpdateStatus(projectUpdateBatch);
+            var organizationsValidationResult = projectUpdateBatch.ValidateContacts();
+
+            var allPeople = HttpRequestStorage.DatabaseEntities.People.ToList();
+
+            var editPersonsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All);
+
+            var projectPersonsDetailViewData = new ProjectPeopleDetailViewData(projectUpdateBatch.ProjectPersonUpdates.Select(x => new ProjectPersonRelationship(x.ProjectUpdateBatch.Project, x.Person, x.ProjectPersonRelationshipType)).ToList(), projectUpdateBatch.ProjectUpdate.GetPrimaryContact());
+            var viewData = new ContactsViewData(CurrentPerson, projectUpdateBatch, updateStatus, editPersonsViewData, organizationsValidationResult,projectPersonsDetailViewData);
+
+            return RazorView<Contacts, ContactsViewData, ContactsViewModel>(viewData, viewModel);
         }
 
         private UpdateStatus GetUpdateStatus(ProjectUpdateBatch projectUpdateBatch)
@@ -2605,6 +2663,38 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
+        public ActionResult RefreshContacts(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
+            var viewModel = new ConfirmDialogFormViewModel(projectUpdateBatch.ProjectUpdateBatchID);
+            return ViewRefreshContacts(viewModel);
+        }
+
+        [HttpPost]
+        [ProjectUpdateCreateEditSubmitFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult RefreshContacts(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
+            projectUpdateBatch.DeleteProjectContactUpdates();
+            // refresh data
+            ProjectPersonUpdate.CreateFromProject(projectUpdateBatch);
+            projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewRefreshContacts(ConfirmDialogFormViewModel viewModel)
+        {
+            var viewData =
+                new ConfirmDialogFormViewData(
+                    $"Are you sure you want to refresh the {FieldDefinition.Contact.GetFieldDefinitionLabelPluralized()} for this {FieldDefinition.Project.GetFieldDefinitionLabel()}? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()}. Any updates made in this section will be lost.");
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
         public PartialViewResult DiffOrganizations(ProjectPrimaryKey projectPrimaryKey)
         {
             var htmlDiffContainer = DiffOrganizationsImpl(projectPrimaryKey);
@@ -2674,9 +2764,87 @@ namespace ProjectFirma.Web.Controllers
             return partialViewAsString;
         }
 
+        [HttpGet]
+        [ProjectUpdateCreateEditSubmitFeature]
+        public PartialViewResult DiffContacts(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var htmlDiffContainer = DiffContactsImpl(projectPrimaryKey);
+            var htmlDiff = new HtmlDiff.HtmlDiff(htmlDiffContainer.OriginalHtml, htmlDiffContainer.UpdatedHtml);
+            return ViewHtmlDiff(htmlDiff.Build(), string.Empty);
+        }
+
+        private HtmlDiffContainer DiffContactsImpl(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update for {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
+
+            var projectPeopleOriginal = new List<IProjectPerson>(project.ProjectPeople.ToList());
+            var projectPeopleUpdated = new List<IProjectPerson>(projectUpdateBatch.ProjectPersonUpdates.ToList());
+
+            var updatedHtml = GeneratePartialViewForModifiedContacts(projectPeopleOriginal, projectPeopleUpdated, projectUpdateBatch.ProjectUpdate);
+            var originalHtml = GeneratePartialViewForOriginalContacts(projectPeopleOriginal, projectPeopleUpdated, projectUpdateBatch.Project);
+
+            return new HtmlDiffContainer(originalHtml, updatedHtml);
+        }
+
+        private string GeneratePartialViewForModifiedContacts(
+            List<IProjectPerson> projectPeopleOriginal,
+            List<IProjectPerson> projectPeopleUpdated, ProjectUpdate projectUpdate)
+        {
+            var peopleInOriginal = projectPeopleOriginal;
+            var peopleInUpdated = projectPeopleUpdated;
+            var comparer = new ProjectPersonEqualityComparer();
+
+            var peopleOnlyInOriginal = peopleInOriginal.Where(x => !peopleInUpdated.Contains(x, comparer)).ToList();
+            var projectPeople = projectPeopleOriginal.Select(x => new ProjectPerson(x)).ToList();
+
+
+            projectPeople.AddRange(projectPeopleUpdated.Where(x => !peopleInOriginal.Contains(x, comparer)).Select(x =>
+                new ProjectPerson(x.Person, x.ProjectPersonRelationshipType, HtmlDiffContainer.DisplayCssClassAddedElement)));
+            projectPeople
+                .Where(x => peopleOnlyInOriginal.Contains(x, comparer))
+                .ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
+
+            return GeneratePartialViewForPeopleAsString(projectPeople, projectUpdate.GetPrimaryContact());
+        }
+
+        private string GeneratePartialViewForOriginalContacts(
+            List<IProjectPerson> projectPeopleOriginal,
+            List<IProjectPerson> projectPeopleUpdated, Project project)
+        {
+            var peopleInOriginal = projectPeopleOriginal;
+            var peopleInUpdated = projectPeopleUpdated;
+            var comparer = new ProjectPersonEqualityComparer();
+
+            var peopleOnlyInUpdated = peopleInUpdated.Where(x => !peopleInOriginal.Contains(x, comparer)).ToList();
+            var projectPeople = projectPeopleUpdated.Select(x => new ProjectPerson(x)).ToList();
+
+            projectPeople.AddRange(projectPeopleOriginal.Where(x => !peopleInUpdated.Contains(x, comparer)).Select(x =>
+                new ProjectPerson(x.Person, x.ProjectPersonRelationshipType, HtmlDiffContainer.DisplayCssClassDeletedElement)));
+            projectPeople
+                .Where(x => peopleOnlyInUpdated.Contains(x, comparer))
+                .ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
+
+            return GeneratePartialViewForPeopleAsString(projectPeople, project.GetPrimaryContact());
+        }
+
+        private string GeneratePartialViewForPeopleAsString(IEnumerable<ProjectPerson> projectPeople, Person primaryContactPerson)
+        {
+            var viewData = new ProjectPeopleDetailViewData(projectPeople.Select(x => new ProjectPersonRelationship(x.Project, x.Person, x.ProjectPersonRelationshipType, x.DisplayCssClass)).ToList(), primaryContactPerson);
+            var partialViewAsString = RenderPartialViewToString(ProjectPeoplePartialViewPath, viewData);
+            return partialViewAsString;
+        }
+
         public class ProjectOrganizationEqualityComparer : EqualityComparerByProperty<IProjectOrganization>
         {
             public ProjectOrganizationEqualityComparer() : base(x => new {x.Organization.OrganizationID, x.RelationshipType.RelationshipTypeID})
+            {                
+            }
+        }
+
+        public class ProjectPersonEqualityComparer : EqualityComparerByProperty<IProjectPerson>
+        {
+            public ProjectPersonEqualityComparer() : base(x => new {x.Person.PersonID, x.ProjectPersonRelationshipType.ProjectPersonRelationshipTypeID})
             {                
             }
         }
@@ -2717,16 +2885,6 @@ namespace ProjectFirma.Web.Controllers
                 MultiTenantHelpers.GetToolDisplayName()).GetEmailContentPreview();
 
             return emailContentPreview;
-        }
-
-        public void RefreshContacts(Project project)
-        {
-            throw new NotImplementedException(); // todo clone refresh organizations
-        }
-
-        public void DiffContacts(Project project)
-        {
-            throw new NotImplementedException(); // todo clone diff organizations
         }
     }
 }

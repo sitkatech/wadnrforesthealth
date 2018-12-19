@@ -110,7 +110,8 @@ namespace ProjectFirma.Web.Models
                             new List<ProjectOrganization>(),
                             new List<ProjectDocument>(),
                             new List<ProjectCustomAttribute>(),
-                            new List<ProjectCustomAttributeValue>()),
+                            new List<ProjectCustomAttributeValue>(),
+                            new List<ProjectPerson>()),
                     "Should not be allowed to approve yet");
             Assert.That(preconditionException.Message, Is.StringContaining($"You cannot approve a {FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted"));
 
@@ -138,7 +139,8 @@ namespace ProjectFirma.Web.Models
                 new List<ProjectOrganization>(),
                 new List<ProjectDocument>(),
                 new List<ProjectCustomAttribute>(),
-                new List<ProjectCustomAttributeValue>());
+                new List<ProjectCustomAttributeValue>(),
+                new List<ProjectPerson>());
             Assert.That(projectUpdateBatch.IsApproved, Is.True);
             Assert.That(projectUpdateBatch.IsReadyToSubmit, Is.False);
             Assert.That(projectUpdateBatch.IsSubmitted, Is.False);

@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation) : this()
+        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment) : this()
         {
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectID = projectID;
@@ -74,6 +74,7 @@ namespace ProjectFirma.Web.Models
             this.OrganizationsComment = organizationsComment;
             this.OrganizationsDiffLog = organizationsDiffLog;
             this.NoExpendituresToReportExplanation = noExpendituresToReportExplanation;
+            this.ContactsComment = contactsComment;
         }
 
         /// <summary>
@@ -300,6 +301,7 @@ namespace ProjectFirma.Web.Models
         public string OrganizationsComment { get; set; }
         public string OrganizationsDiffLog { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
+        public string ContactsComment { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateBatchID; } set { ProjectUpdateBatchID = value; } }
 
@@ -341,6 +343,7 @@ namespace ProjectFirma.Web.Models
             public const int ExpectedFundingComment = 1000;
             public const int OrganizationsComment = 1000;
             public const int OrganizationsDiffLog = 1;
+            public const int ContactsComment = 1000;
         }
     }
 }

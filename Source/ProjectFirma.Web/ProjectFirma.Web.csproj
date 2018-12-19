@@ -437,9 +437,11 @@
     <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerGeospatialArea.Binding.cs" />
     <Compile Include="Controllers\ProjectPersonController.cs" />
+    <Compile Include="Models\ProjectPerson.cs" />
     <Compile Include="Models\ProjectPersonRelationship.cs" />
     <Compile Include="Models\ProjectPersonRelationshipTypeSimple.cs" />
     <Compile Include="Models\ProjectPersonSimple.cs" />
+    <Compile Include="Models\ProjectPersonUpdate.cs" />
     <Compile Include="Views\ProjectUpdate\Contacts.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />

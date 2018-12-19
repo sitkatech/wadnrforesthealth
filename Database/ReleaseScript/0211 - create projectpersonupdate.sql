@@ -68,3 +68,5 @@ GO
 ALTER TABLE [dbo].[ProjectPersonUpdate] CHECK CONSTRAINT [FK_ProjectPersonUpdate_Tenant_TenantID]
 GO
 
+alter table dbo.ProjectUpdateBatch
+Add ContactsComment varchar(1000) null

@@ -2019,6 +2019,7 @@ warning 6035: The relationship 'FK_ProjectUpdateHistory_ProjectUpdateBatch_Proje
     <Property Name="OrganizationsComment" Type="varchar" MaxLength="1000" />
     <Property Name="OrganizationsDiffLog" Type="varchar" MaxLength="1" />
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
+    <Property Name="ContactsComment" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
