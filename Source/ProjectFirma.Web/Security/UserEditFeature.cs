@@ -18,10 +18,50 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+using ProjectFirma.Web.Models;
+
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Edit User")]
-    public class UserEditFeature : FirmaAdminFeature
+    public class UserEditFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<Person>
     {
+        private readonly FirmaFeatureWithContextImpl<Person> _firmaFeatureWithContextImpl;
+
+        public UserEditFeature()
+            : base(new List<Role> {Role.SitkaAdmin, Role.Admin, Role.Normal, Role.ProjectSteward})
+        {
+            _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Person>(this);
+            ActionFilter = _firmaFeatureWithContextImpl;
+        }
+
+        public void DemandPermission(Person person, Person contextModelObject)
+        {
+            _firmaFeatureWithContextImpl.DemandPermission(person, contextModelObject);
+        }
+
+        public PermissionCheckResult HasPermission(Person person, Person contextModelObject)
+        {
+            var hasContactManagePermissions = new ContactManageFeature().HasPermissionByPerson(person);
+            var hasAdminPermissions = new FirmaAdminFeature().HasPermissionByPerson(person);
+
+            if (contextModelObject.PersonGuid == null)
+            {
+                if (hasContactManagePermissions)
+                {
+                    return new PermissionCheckResult();
+                }
+            }
+            else
+            {
+                if (hasAdminPermissions)
+                {
+                    return new PermissionCheckResult();
+                }
+            }
+
+            return new PermissionCheckResult($"You do not have permission to edit {contextModelObject.FullNameFirstLast}");
+        }
     }
 }

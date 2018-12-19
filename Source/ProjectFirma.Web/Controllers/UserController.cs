@@ -438,7 +438,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [ContactManageFeature]
+        [UserEditFeature]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
             {
             var person = personPrimaryKey.EntityObject;
@@ -447,7 +447,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [ContactManageFeature]
+        [UserEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, EditContactViewModel viewModel)
         {

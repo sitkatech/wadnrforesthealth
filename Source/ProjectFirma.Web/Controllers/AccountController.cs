@@ -54,21 +54,19 @@ namespace ProjectFirma.Web.Controllers
                 userIdentity.IsAuthenticated);
 
             var sendNewUserNotification = false;
-            var sendNewOrganizationNotification = false;
+
             var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonGuid(keystoneUserClaims.UserGuid);
 
             if (person == null)
             {
                 // new user - provision with limited role
                 SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", keystoneUserClaims.UserGuid);
-                var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(keystoneUserClaims.FirstName, keystoneUserClaims.LastName, Role.Unassigned.RoleID,
                     DateTime.Now, true, false)
                 {
                     PersonGuid = keystoneUserClaims.UserGuid,
                     Email = keystoneUserClaims.Email,
-                    LoginName = keystoneUserClaims.LoginName,
-                    OrganizationID = unknownOrganization.OrganizationID
+                    LoginName = keystoneUserClaims.LoginName
                 };
                 HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
                 sendNewUserNotification = true;
@@ -86,35 +84,36 @@ namespace ProjectFirma.Web.Controllers
             person.LoginName = keystoneUserClaims.LoginName;
 
             // handle the organization
-            if (keystoneUserClaims.OrganizationGuid.HasValue)
-            {
-                // first look by guid, then by name; if not available, create it on the fly since it is a person org
-                var organization = (HttpRequestStorage.DatabaseEntities.Organizations.GetOrganizationByOrganizationGuid(keystoneUserClaims.OrganizationGuid.Value) ??
-                                    HttpRequestStorage.DatabaseEntities.Organizations.GetOrganizationByOrganizationName(keystoneUserClaims.OrganizationName));
+            // removed per WA DNR #1411
+            //if (keystoneUserClaims.OrganizationGuid.HasValue)
+            //{
+            //    // first look by guid, then by name; if not available, create it on the fly since it is a person org
+            //    var organization = (HttpRequestStorage.DatabaseEntities.Organizations.GetOrganizationByOrganizationGuid(keystoneUserClaims.OrganizationGuid.Value) ??
+            //                        HttpRequestStorage.DatabaseEntities.Organizations.GetOrganizationByOrganizationName(keystoneUserClaims.OrganizationName));
 
-                if (organization == null)
-                {
-                    var defaultOrganizationType = HttpRequestStorage.DatabaseEntities.OrganizationTypes.GetDefaultOrganizationType();
-                    organization = new Organization(keystoneUserClaims.OrganizationName, true, defaultOrganizationType);
-                    HttpRequestStorage.DatabaseEntities.AllOrganizations.Add(organization);
-                    sendNewOrganizationNotification = true;
-                }
+            //    if (organization == null)
+            //    {
+            //        var defaultOrganizationType = HttpRequestStorage.DatabaseEntities.OrganizationTypes.GetDefaultOrganizationType();
+            //        organization = new Organization(keystoneUserClaims.OrganizationName, true, defaultOrganizationType);
+            //        HttpRequestStorage.DatabaseEntities.AllOrganizations.Add(organization);
+            //        sendNewOrganizationNotification = true;
+            //    }
 
-                organization.OrganizationName = keystoneUserClaims.OrganizationName;
+            //    organization.OrganizationName = keystoneUserClaims.OrganizationName;
 
-                if (!organization.OrganizationGuid.HasValue)
-                {
-                    organization.OrganizationGuid = keystoneUserClaims.OrganizationGuid;
-                }
-                person.Organization = organization;
-                person.OrganizationID = organization.OrganizationID;
-            }
-            else
-            {
-                var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                person.OrganizationID = unknownOrganization.OrganizationID;
-                //Assign user to magic Unkown Organization ID
-            }
+            //    if (!organization.OrganizationGuid.HasValue)
+            //    {
+            //        organization.OrganizationGuid = keystoneUserClaims.OrganizationGuid;
+            //    }
+            //    person.Organization = organization;
+            //    person.OrganizationID = organization.OrganizationID;
+            //}
+            //else
+            //{
+            //    var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
+            //    person.OrganizationID = unknownOrganization.OrganizationID;
+            //    //Assign user to magic Unkown Organization ID
+            //}
 
             person.UpdateDate = DateTime.Now;
             HttpRequestStorage.Person = person;
@@ -125,11 +124,6 @@ namespace ProjectFirma.Web.Controllers
             if (sendNewUserNotification)
             {
                 SendNewUserCreatedMessage(person, ipAddress, userAgent, keystoneUserClaims.LoginName);
-            }
-
-            if (sendNewOrganizationNotification)
-            {
-                SendNewOrganizationCreatedMessage(person, ipAddress, userAgent, keystoneUserClaims.LoginName);
             }
 
             return HttpRequestStorage.Person;
