@@ -26,3 +26,10 @@ insert into dbo.FieldDefinition values (269, N'StatewideVendorNumber', 'Statewid
 
 Insert into FieldDefinitionData ([TenantID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel])
 Select TenantID, 269, Null, Null from Tenant
+
+alter table dbo.Person
+Add AddedByPersonID int null
+GO
+
+Alter Table dbo.Person
+Add Constraint FK_Person_Person_AddedByPersonID_PersonID foreign key (AddedByPersonID) references dbo.Person(PersonID)

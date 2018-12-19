@@ -554,6 +554,7 @@
           <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
+          <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

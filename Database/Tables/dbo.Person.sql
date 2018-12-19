@@ -24,6 +24,7 @@ CREATE TABLE [dbo].[Person](
 	[StatewideVendorNumber] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Notes] [varchar](500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PersonAddress] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[AddedByPersonID] [int] NULL,
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC
@@ -64,6 +65,11 @@ ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Organization_O
 REFERENCES [dbo].[Organization] ([OrganizationID], [TenantID])
 GO
 ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Organization_OrganizationID_TenantID]
+GO
+ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Person_AddedByPersonID_PersonID] FOREIGN KEY([AddedByPersonID])
+REFERENCES [dbo].[Person] ([PersonID])
+GO
+ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Person_AddedByPersonID_PersonID]
 GO
 ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Role_RoleID] FOREIGN KEY([RoleID])
 REFERENCES [dbo].[Role] ([RoleID])

@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.User
     {
         public IndexGridSpec(Person currentPerson)
         {
-            var hasDeletePermission = new UserEditFeature().HasPermissionByPerson(currentPerson);
+            var hasDeletePermission = new PersonDeleteFeature().HasPermissionByPerson(currentPerson);
             if (hasDeletePermission)
             {
                 Add(string.Empty,
@@ -50,6 +50,8 @@ namespace ProjectFirma.Web.Views.User
             Add("Active?", a => a.IsActive.ToYesNo(), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Receives Support Emails?", a => a.ReceiveSupportEmails.ToYesNo(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
+            Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
+            Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
         }
     }
 }

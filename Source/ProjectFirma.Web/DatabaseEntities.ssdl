@@ -359,6 +359,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="Organization" EntitySet="Organization" />
       <End Role="People" EntitySet="Person" />
     </AssociationSet>
+    <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Person_Person_AddedByPersonID_PersonID">
+      <End Role="AddedByPerson" EntitySet="Person" />
+      <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
     <AssociationSet Name="FK_PersonStewardGeospatialArea_GeospatialArea_GeospatialAreaID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardGeospatialArea_GeospatialArea_GeospatialAreaID">
       <End Role="GeospatialArea" EntitySet="GeospatialArea" />
       <End Role="PersonStewardGeospatialAreas" EntitySet="PersonStewardGeospatialArea" />
@@ -1452,6 +1456,7 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
     <Property Name="StatewideVendorNumber" Type="varchar" MaxLength="100" />
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
+    <Property Name="AddedByPersonID" Type="int" />
   </EntityType>
   <EntityType Name="PersonStewardGeospatialArea">
     <Key>
@@ -3039,6 +3044,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="People">
         <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Person_AddedByPersonID_PersonID">
+    <End Role="AddedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="PeopleWhereYouAreTheAddedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
+        <PropertyRef Name="AddedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

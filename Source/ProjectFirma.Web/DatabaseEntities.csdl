@@ -468,6 +468,10 @@
       <End Role="PerformanceMeasureSubcategoryOption" EntitySet="PerformanceMeasureSubcategoryOption" />
       <End Role="SnapshotPerformanceMeasureSubcategoryOptions" EntitySet="SnapshotPerformanceMeasureSubcategoryOption" />
     </AssociationSet>
+    <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID">
+      <End Role="AddedByPerson" EntitySet="Person" />
+      <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
     <AssociationSet Name="FK_PersonStewardGeospatialArea_Person_PersonID" Association="ProjectFirma.Web.Models.FK_PersonStewardGeospatialArea_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="PersonStewardGeospatialAreas" EntitySet="PersonStewardGeospatialArea" />
@@ -1423,6 +1427,7 @@
     <Property Name="StatewideVendorNumber" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="PersonAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="AddedByPersonID" Type="Int32" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" />
@@ -1431,6 +1436,8 @@
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Person_Organization_OrganizationID" FromRole="People" ToRole="Organization" />
     <NavigationProperty Name="PerformanceMeasureNotesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="PerformanceMeasureNotesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" />
+    <NavigationProperty Name="PeopleWhereYouAreTheAddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="AddedByPerson" ToRole="PeopleWhereYouAreTheAddedByPerson" />
+    <NavigationProperty Name="AddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="PeopleWhereYouAreTheAddedByPerson" ToRole="AddedByPerson" />
     <NavigationProperty Name="PersonStewardGeospatialAreas" Relationship="ProjectFirma.Web.Models.FK_PersonStewardGeospatialArea_Person_PersonID" FromRole="Person" ToRole="PersonStewardGeospatialAreas" />
     <NavigationProperty Name="PersonStewardOrganizations" Relationship="ProjectFirma.Web.Models.FK_PersonStewardOrganization_Person_PersonID" FromRole="Person" ToRole="PersonStewardOrganizations" />
     <NavigationProperty Name="PersonStewardTaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="Person" ToRole="PersonStewardTaxonomyBranches" />
@@ -3474,6 +3481,18 @@
       </Principal>
       <Dependent Role="SnapshotPerformanceMeasureSubcategoryOptions">
         <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Person_AddedByPersonID_PersonID">
+    <End Role="AddedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="PeopleWhereYouAreTheAddedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
+        <PropertyRef Name="AddedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

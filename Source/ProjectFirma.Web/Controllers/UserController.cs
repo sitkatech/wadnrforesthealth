@@ -40,14 +40,14 @@ namespace ProjectFirma.Web.Controllers
 {
     public class UserController : FirmaBaseController
     {
-        [UserEditFeature]
+        [ContactManageFeature]
         public ViewResult Index()
         {
             var viewData = new IndexViewData(CurrentPerson);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [UserEditFeature]
+        [ContactManageFeature]
         public GridJsonNetJObjectResult<Person> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
@@ -421,7 +421,7 @@ namespace ProjectFirma.Web.Controllers
 
             var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
                     Role.Unassigned.RoleID, DateTime.Now, true, false)
-                { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID };
+                { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
 
             SetMessageForDisplay($"Successfully added {viewModel.FirstName} {viewModel.LastName}");
