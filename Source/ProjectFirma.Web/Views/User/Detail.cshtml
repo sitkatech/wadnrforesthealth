@@ -48,13 +48,13 @@
 
 @section RightOfPageTitle
 {
-    @if (ViewDataTyped.UserHasPersonManagePermissions && !ViewDataTyped.PersonIsMereContact)
+    @if (ViewDataTyped.UserHasPermissionToManageThisPerson && !ViewDataTyped.PersonIsMereContact)
     {
         @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} {1} User", "<span class='glyphicon glyphicon-edit blue''></span>", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), ViewDataTyped.ActivateInactivateUrl, string.Format("{0} this user?", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), 400, "Continue", "Cancel", null, null, null)
     }
 }
 
-@if (ViewDataTyped.UserHasPersonManagePermissions)
+@if (ViewDataTyped.UserHasPermissionToManageThisPerson)
 {
     <div>
         <a class="btn backButton" href="@ViewDataTyped.Index">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Users</a>
@@ -72,10 +72,7 @@
     <div class="col-md-6">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                @if (ViewDataTyped.PersonIsMereContact)
-                {
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, string.Format("Edit Contact"), 950, ViewDataTyped.UserHasManageContactPermissions)
-                }
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, string.Format("Edit Contact"), 950, ViewDataTyped.UserHasPermissionToManageThisPerson)
                 Basics
             </div>
             <div class="panel-body">
@@ -102,7 +99,7 @@
                     <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
                     <div class="col-xs-8">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>
                 </div>
-                @if (ViewDataTyped.UserHasPersonManagePermissions)
+                @if (ViewDataTyped.UserHasPermissionToManageThisPerson)
                 {
                     if (!ViewDataTyped.PersonIsMereContact)
                     {
@@ -133,7 +130,7 @@
                     </div>
                 }
 
-                @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPersonManagePermissions || ViewDataTyped.IsViewingSelf)
+                @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPermissionToManageThisPerson || ViewDataTyped.IsViewingSelf)
                 {
                     <div class="alert" role="alert">
                         This information can be <a target="_blank" class="alert-link" href="@ViewDataTyped.Person.GetKeystoneEditLink()">edited here</a>
@@ -142,7 +139,7 @@
             </div>
         </div>
     </div>
-    @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPersonManagePermissions || ViewDataTyped.IsViewingSelf)
+    @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPermissionToManageThisPerson || ViewDataTyped.IsViewingSelf)
     {
         <div class="col-md-6">
             <div class="panel panelFirma">
@@ -153,7 +150,7 @@
                     <div class="row">
                         <div class="col-xs-4 fieldLabel text-right">Role</div>
                         <div class="col-xs-8">
-                            @if (ViewDataTyped.UserHasPersonManagePermissions)
+                            @if (ViewDataTyped.UserHasPermissionToManageThisPerson)
                             {
                                 @ViewDataTyped.Person.Role.GetDisplayNameAsUrl()
                             }
@@ -173,7 +170,7 @@
         <div class="col-md-6">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @if (ViewDataTyped.UserHasPersonManagePermissions && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Person.Role == Role.ProjectSteward)
+                    @if (ViewDataTyped.UserHasPermissionToManageThisPerson && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Person.Role == Role.ProjectSteward)
                     {
                         <span>
                             @ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditStewardshipAreas(ViewDataTyped.Person)),
@@ -238,7 +235,7 @@
         <div class="col-md-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPersonOrganizationPrimaryContactUrl, string.Format("Edit {0} for which {1} is a {2}", FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()), ViewDataTyped.UserHasPersonManagePermissions) @string.Format("Organizations for which {0} is a {1}", ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPersonOrganizationPrimaryContactUrl, string.Format("Edit {0} for which {1} is a {2}", FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()), ViewDataTyped.UserHasPermissionToManageThisPerson) @string.Format("Organizations for which {0} is a {1}", ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
                 </div>
                 <div class="panel-body">
                     @if (ViewDataTyped.Person.PrimaryContactOrganizations.Any())

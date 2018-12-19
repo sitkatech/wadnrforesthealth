@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.User
         public string Index { get; }
 
         public bool UserHasPersonViewPermissions { get; }
-        public bool UserHasPersonManagePermissions { get; }
+        public bool UserHasPermissionToManageThisPerson { get; }
         public bool UserHasViewEverythingPermissions { get; }
         public bool IsViewingSelf { get; }
         public Project.BasicProjectInfoGridSpec BasicProjectInfoGridSpec { get; }
@@ -48,7 +48,6 @@ namespace ProjectFirma.Web.Views.User
         
         public bool PersonIsMereContact { get; }
         public string EditContactUrl { get; }
-        public bool UserHasManageContactPermissions { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -70,10 +69,10 @@ namespace ProjectFirma.Web.Views.User
             Index = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
 
             UserHasPersonViewPermissions = new UserViewFeature().HasPermission(currentPerson, personToView).HasPermission;
-            UserHasPersonManagePermissions = new UserEditFeature().HasPermissionByPerson(currentPerson);
+            UserHasPermissionToManageThisPerson = new UserEditFeature().HasPermission(currentPerson,personToView).HasPermission;
             UserHasViewEverythingPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             IsViewingSelf = currentPerson != null && currentPerson.PersonID == personToView.PersonID;
-            EditRolesLink = UserHasPersonManagePermissions
+            EditRolesLink = UserHasPermissionToManageThisPerson
                 ? ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditRoles(personToView)),
                     $"Edit Roles for User - {personToView.FullNameFirstLast}",
                     true)
@@ -90,7 +89,6 @@ namespace ProjectFirma.Web.Views.User
 
             TenantHasStewardshipAreas = MultiTenantHelpers.GetProjectStewardshipAreaType() != null;
             EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
-            UserHasManageContactPermissions = new ContactManageFeature().HasPermissionByPerson(currentPerson);
         }
 
         public readonly HtmlString EditRolesLink;
