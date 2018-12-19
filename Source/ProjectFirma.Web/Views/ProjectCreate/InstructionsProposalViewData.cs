@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public readonly ViewPageContentViewData InstructionsViewPageContentViewData;
         public InstructionsProposalViewData(Person currentPerson, Models.FirmaPage firmaPage, bool isNewProjectCreate) : base(currentPerson, "Instructions", SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null)))
         {
-            PageTitle = "Propose Project";
+            PageTitle = Models.FieldDefinition.Application.GetFieldDefinitionLabel();
             InstructionsViewPageContentViewData = new ViewPageContentViewData(firmaPage, new FirmaPageManageFeature().HasPermission(currentPerson, firmaPage).HasPermission);
             IsNewProjectCreate = isNewProjectCreate;
         }
