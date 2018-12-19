@@ -12,39 +12,6 @@ namespace ProjectFirma.Web.Views.User
 {
     public class EditContactViewModel : FormViewModel, IValidatableObject
     {
-        /// <summary>
-        /// Needed by ModdelBinder
-        ///     </summary>
-        public EditContactViewModel()
-        {
-
-        }
-
-        public EditContactViewModel(Person person)
-        {
-            FirstName = person.FirstName;
-            MiddleName = person.MiddleName;
-            LastName = person.LastName;
-            Email = person.Email;
-            Address = person.PersonAddress;
-            Phone = person.Phone;
-            OrganizationID = person.OrganizationID;
-            StatewideVendorNumber = person.StatewideVendorNumber;
-            Notes = person.Notes;
-        }
-
-        public void UpdateModel(Person person)
-        {
-            person.FirstName = FirstName;
-            person.MiddleName = MiddleName;
-            person.LastName = LastName;
-            person.Email = Email;
-            person.PersonAddress = Address;
-            person.Phone = Phone;
-            person.OrganizationID = OrganizationID;
-            person.StatewideVendorNumber = StatewideVendorNumber;
-            person.Notes = Notes;
-        }
 
         [Required]
         [DisplayName("First Name")]
@@ -76,6 +43,44 @@ namespace ProjectFirma.Web.Views.User
         [DisplayName("Notes")]
         [StringLength(Person.FieldLengths.Notes)]
         public string Notes { get; set; }
+
+        /// <summary>
+        /// Needed by ModdelBinder
+        ///     </summary>
+        public EditContactViewModel()
+        {
+
+        }
+
+        public EditContactViewModel(Person person)
+        {
+            FirstName = person.FirstName;
+            MiddleName = person.MiddleName;
+            LastName = person.LastName;
+            Email = person.Email;
+            Address = person.PersonAddress;
+            Phone = person.Phone;
+            OrganizationID = person.OrganizationID;
+            StatewideVendorNumber = person.StatewideVendorNumber;
+            Notes = person.Notes;
+        }
+
+        public void UpdateModel(Person person)
+        {
+            person.FirstName = FirstName;
+            person.MiddleName = MiddleName;
+            person.LastName = LastName;
+            person.Email = Email;
+
+            if (!person.PersonGuid.HasValue) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
+            {
+                person.OrganizationID = OrganizationID;
+                person.PersonAddress = Address;
+                person.StatewideVendorNumber = StatewideVendorNumber;
+                person.Phone = Phone;
+                person.Notes = Notes;
+            }
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
