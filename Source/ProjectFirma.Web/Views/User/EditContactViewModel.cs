@@ -78,10 +78,14 @@ namespace ProjectFirma.Web.Views.User
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Phone.Length != 10 || //number of digits in an american phone number
-                !Phone.All(char.IsDigit)) // phone numbers must be digits
+            if (Phone != null)
             {
-                yield return new SitkaValidationResult<EditContactViewModel, string>("Phone number was invalid.", m=>m.Phone);
+                if (Phone.Length != 10 || //number of digits in an american phone number
+                    !Phone.All(char.IsDigit)) // phone numbers must be digits
+                {
+                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone number was invalid.",
+                        m => m.Phone);
+                }
             }
         }
     }
