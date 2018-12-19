@@ -190,6 +190,25 @@ namespace ProjectFirma.Web.Models
         }
     }
 
+    public partial class ProjectUpdateSectionContacts
+    {
+        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+        {
+            return projectUpdateBatch.AreContactsValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Contacts(project)) : null;
+        }
+
+        public override bool SectionIsUpdated(UpdateStatus updateStatus)
+        {
+            return updateStatus.IsContactsUpdated;
+        }
+    }
+
     public partial class ProjectUpdateSectionExpectedFunding
     {
         public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)

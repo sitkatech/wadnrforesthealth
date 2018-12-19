@@ -35,6 +35,7 @@ using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
+using ProjectFirma.Web.Views.Shared.ProjectPerson;
 
 namespace ProjectFirma.Web.Views.Project
 {
@@ -102,6 +103,9 @@ namespace ProjectFirma.Web.Views.Project
 
         public string EditContractorTimeActivitiesUrl { get; }
         public string EditTreatmentActivitiesUrl { get; }
+        public string EditProjectPeopleUrl { get; }
+        
+        public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
 
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
@@ -122,7 +126,7 @@ namespace ProjectFirma.Web.Views.Project
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes)
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData)
             : base(currentPerson, project)
         {
             PageTitle = project.DisplayName.ToEllipsifiedStringClean(110);
@@ -279,6 +283,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
             EditReportedExpendituresUrl = editReportedExpendituresUrl;
             GeospatialAreaTypes = geospatialAreaTypes;
+            ProjectPeopleDetailViewData = projectPeopleDetailViewData;
             EditExternalLinksUrl = editExternalLinksUrl;
             ImageGalleryViewData = imageGalleryViewData;
 
@@ -327,6 +332,9 @@ namespace ProjectFirma.Web.Views.Project
 
             EditTreatmentActivitiesUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditTreatmentActivities(project));
+
+            EditProjectPeopleUrl =
+                SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
         }
     }
 }
