@@ -2571,7 +2571,7 @@ namespace ProjectFirma.Web.Controllers
             var isExpectedFundingUpdated = DiffExpectedFundingImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             var isOrganizationsUpdated = DiffOrganizationsImpl(projectUpdateBatch.ProjectID).HasChanged;
-            var isContactsUpdated = false;//TODO: DiffContactsImpl(projectUpdateBatch.ProjectID).HasChanged;
+            var isContactsUpdated = DiffContactsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             return new UpdateStatus(isBasicsUpdated,
                 isPerformanceMeasuresUpdated,
@@ -2586,11 +2586,6 @@ namespace ProjectFirma.Web.Controllers
                 isExpectedFundingUpdated,
                 isOrganizationsUpdated,
                 isContactsUpdated);
-        }
-
-        private HtmlDiffContainer DiffContactsImpl(int projectID)
-        {
-            throw new NotImplementedException(); // todo: clone DiffOrganizationsImpl
         }
 
         private PartialViewResult ViewHtmlDiff(string htmlDiff, string diffTitle)
