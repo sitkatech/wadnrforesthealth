@@ -86,9 +86,15 @@ namespace ProjectFirma.Web.Views.User
                 if (phoneNumberToTest.Length != 10 || //number of digits in an american phone number
                     !phoneNumberToTest.All(char.IsDigit)) // phone numbers must be digits
                 {
-                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone number was invalid.",
+                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number was invalid.",
                         m => m.Phone);
                 }
+            }
+
+            if (Email != null && !FirmaHelpers.IsValidEmail(Email))
+            {
+                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address was invalid.",
+                    m => m.Email);
             }
         }
     }
