@@ -241,4 +241,21 @@ namespace ProjectFirma.Web.Models
             return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Organizations(project.ProjectID)) : null;
         }
     }
+    public partial class ProjectCreateSectionContacts
+    {
+        public override bool IsComplete(Project project)
+        {
+            if (project == null)
+            {
+                return false;
+            }
+            var validationResults = new ContactsViewModel(project, null).GetValidationResults().ToList();
+            return !validationResults.Any();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Contacts(project.ProjectID)) : null;
+        }
+    }
 }

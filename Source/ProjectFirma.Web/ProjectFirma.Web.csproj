@@ -442,6 +442,9 @@
     <Compile Include="Models\ProjectPersonRelationshipTypeSimple.cs" />
     <Compile Include="Models\ProjectPersonSimple.cs" />
     <Compile Include="Models\ProjectPersonUpdate.cs" />
+    <Compile Include="Views\ProjectCreate\Contacts.cs" />
+    <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
+    <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
     <Compile Include="Views\ProjectUpdate\Contacts.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />
@@ -663,6 +666,7 @@
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewModel.cs" />
     <Content Include="Views\ProjectUpdate\Contacts.cshtml" />
+    <Content Include="Views\ProjectCreate\Contacts.cshtml" />
     <None Include="Views\ProjectUpdate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectUpdate\GeospatialAreaViewData.cs" />
     <Compile Include="Views\ProjectUpdate\GeospatialAreaViewModel.cs" />
