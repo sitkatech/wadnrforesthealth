@@ -171,7 +171,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditBasicsFeature]
+        [UserEditAsAdminFeature]
         public PartialViewResult ActivateInactivatePerson(PersonPrimaryKey personPrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(personPrimaryKey.PrimaryKeyValue);
@@ -205,7 +205,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditBasicsFeature]
+        [UserEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult ActivateInactivatePerson(PersonPrimaryKey personPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
