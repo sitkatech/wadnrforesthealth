@@ -2545,7 +2545,8 @@ namespace ProjectFirma.Web.Controllers
 
             var allPeople = HttpRequestStorage.DatabaseEntities.People.ToList();
 
-            var editPersonsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All);
+            var editPersonsViewData =
+                new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
 
             var projectPersonsDetailViewData = new ProjectPeopleDetailViewData(projectUpdateBatch.ProjectPersonUpdates.Select(x => new ProjectPersonRelationship(x.ProjectUpdateBatch.Project, x.Person, x.ProjectPersonRelationshipType)).ToList(), projectUpdateBatch.ProjectUpdate.GetPrimaryContact());
             var viewData = new ContactsViewData(CurrentPerson, projectUpdateBatch, updateStatus, editPersonsViewData, organizationsValidationResult,projectPersonsDetailViewData);

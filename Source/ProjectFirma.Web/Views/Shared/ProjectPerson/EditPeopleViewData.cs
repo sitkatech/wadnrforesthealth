@@ -21,7 +21,10 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Linq;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectPerson
 {
@@ -30,8 +33,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
         public List<PersonSimple> AllPeople { get; }
         public List<ProjectPersonRelationshipTypeSimple> AllProjectPersonRelationshipTypes { get; }
         public ProjectPersonRelationshipTypeSimple PrimaryContactProjectPersonRelationshipType { get; }
+        public bool UserCanManageContacts { get; }
+        public string AddContactUrl { get; }
 
-        public EditPeopleViewData(IEnumerable<Person> allPeople, IEnumerable<ProjectPersonRelationshipType> allRelationshipTypes)
+        public EditPeopleViewData(IEnumerable<Person> allPeople, IEnumerable<ProjectPersonRelationshipType> allRelationshipTypes, Person currentPerson)
         {
             AllPeople = allPeople.Select(x => new PersonSimple(x)).ToList();
             AllProjectPersonRelationshipTypes = allRelationshipTypes.Except(new List<ProjectPersonRelationshipType>{
@@ -39,6 +44,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
             }).Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();
             PrimaryContactProjectPersonRelationshipType =
                 new ProjectPersonRelationshipTypeSimple(ProjectPersonRelationshipType.PrimaryContact);
+            UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
         }
     }
 }

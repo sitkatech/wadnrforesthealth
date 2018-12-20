@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Controllers
 
             var allRelationshipTypes = ProjectPersonRelationshipType.All;
 
-            var viewData = new EditPeopleViewData( allPeople, allRelationshipTypes);
+            var viewData = new EditPeopleViewData(allPeople, allRelationshipTypes, CurrentPerson);
             return RazorPartialView<EditPeople, EditPeopleViewData, EditPeopleViewModel>(viewData, viewModel);
         }
     }

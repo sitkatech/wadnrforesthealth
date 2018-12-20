@@ -1434,7 +1434,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
 
-            var editContactsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All);
+            var editContactsViewData = new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectContactsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectContactsSectionComplete;

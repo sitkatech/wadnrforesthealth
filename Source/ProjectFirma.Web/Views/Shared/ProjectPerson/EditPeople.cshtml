@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*@
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Models
 @using Newtonsoft.Json.Linq
 @inherits ProjectFirma.Web.Views.Shared.ProjectPerson.EditPeople
@@ -69,6 +70,14 @@ Source code is available upon request via <support@sitkatech.com>.
     <div class="row">
         <div class="col-md-12">
             <p>Select the @FieldDefinition.Contact.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Project.GetFieldDefinitionLabel(). The Primary Contact relationship is required, can have only one contact associated, and is marked with a required symbol (<sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>). Other relationship types can apply to any number of contacts and are not required.</p>
+            @if (ViewDataTyped.UserCanManageContacts)
+            {
+            <p>If you do not see the contact listed, you can <a href="@ViewDataTyped.AddContactUrl" target="_blank">Add a @FieldDefinition.Contact.GetFieldDefinitionLabel()</a></p>
+            }
+            else
+            {
+                <p>If you do not see the contact listed, you can use the Help Menu to request support.</p>
+            }
         </div>
     </div>
 
