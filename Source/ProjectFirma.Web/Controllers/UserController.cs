@@ -423,8 +423,9 @@ namespace ProjectFirma.Web.Controllers
                     Role.Unassigned.RoleID, DateTime.Now, true, false)
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            SetMessageForDisplay($"Successfully added {viewModel.FirstName} {viewModel.LastName}");
+            SetMessageForDisplay($"Successfully added {firmaPerson.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
 
@@ -459,7 +460,8 @@ namespace ProjectFirma.Web.Controllers
 
             viewModel.UpdateModel(person);
 
-            SetMessageForDisplay($"Successfully updated {person.FullNameFirstLast}");
+            SetMessageForDisplay($"Successfully updated {person.GetFullNameFirstLastAsUrl()}");
+
             return new ModalDialogFormJsonResult();
         }
     }

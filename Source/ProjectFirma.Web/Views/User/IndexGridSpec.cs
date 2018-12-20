@@ -44,11 +44,11 @@ namespace ProjectFirma.Web.Views.User
             Add("Email", a => a.Email, 200);
             Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => a.Organization.GetShortNameAsUrl(), 200);
             Add("Phone", a => a.Phone.ToPhoneNumberString(), 100);
-            Add("Username", a => a.LoginName?.ToString(), 200);
-            Add("Last Activity", a => a.LastActivityDate, 120);
-            Add("Role", a => a.Role.GetDisplayNameAsUrl(), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add("Active?", a => a.IsActive.ToYesNo(), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Receives Support Emails?", a => a.ReceiveSupportEmails.ToYesNo(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Username", a => a.IsFullUser() ? a.LoginName?.ToString() : "N/A", 200);
+            Add("Last Activity", a => a.IsFullUser() ? a.LastActivityDate : null, 120);
+            Add("Role", a => a.IsFullUser() ? a.Role.GetDisplayNameAsUrl() : new HtmlString("N/A"), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("Active?", a => a.IsFullUser() ? a.IsActive.ToYesNo() : "N/A", 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Receives Support Emails?", a => a.IsFullUser() ? a.ReceiveSupportEmails.ToYesNo(): "N/A", 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
             Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
             Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
