@@ -1082,6 +1082,7 @@
     <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="StartDate" Type="DateTime" Nullable="false" />
     <Property Name="EndDate" Type="DateTime" Nullable="false" />
+    <Property Name="TotalAward" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>

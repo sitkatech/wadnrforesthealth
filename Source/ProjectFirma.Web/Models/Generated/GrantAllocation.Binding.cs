@@ -30,12 +30,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, string grantNumber, DateTime startDate, DateTime endDate) : this()
+        public GrantAllocation(int grantAllocationID, string grantNumber, DateTime startDate, DateTime endDate, decimal? totalAward) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantNumber = grantNumber;
             this.StartDate = startDate;
             this.EndDate = endDate;
+            this.TotalAward = totalAward;
         }
 
         /// <summary>
@@ -89,6 +90,7 @@ namespace ProjectFirma.Web.Models
         public string GrantNumber { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public decimal? TotalAward { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 

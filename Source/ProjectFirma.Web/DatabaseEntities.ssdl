@@ -1097,6 +1097,7 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
     <Property Name="StartDate" Type="datetime" Nullable="false" />
     <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="TotalAward" Type="money" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>

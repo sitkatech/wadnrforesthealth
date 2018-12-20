@@ -5,10 +5,11 @@ CREATE TABLE dbo.GrantAllocation
 (
     -- Just a few fields to start -- very incomplete
     GrantAllocationID int not NULL identity(1,1) Constraint PK_GrantAllocation_GrantAllocationID primary key,
-	TenantID int not null constraint FK_GrantAllocation_Tenant_TenantID references dbo.Tenant(TenantID),
+    TenantID int not null constraint FK_GrantAllocation_Tenant_TenantID references dbo.Tenant(TenantID),
     GrantNumber varchar(30) null,
     StartDate DateTime not NULL,
-    EndDate DateTime not NULL
+    EndDate DateTime not NULL,
+    TotalAward money null
 )
 
 insert into FieldDefinition values
@@ -19,6 +20,10 @@ insert into FieldDefinitionData (TenantID, FieldDefinitionID, FieldDefinitionDat
 select TenantID, 276, Null, Null
 From dbo.Tenant
 GO
+
+insert into FirmaPageType (FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeDisplayName, FirmaPageRenderTypeID)
+values
+(55, 'FullGrantList', 'Full Grant List', 1)
 
 
 --rollback tran
