@@ -48,7 +48,7 @@
 
 @section RightOfPageTitle
 {
-    @if (ViewDataTyped.UserHasEditBasicsPermission && !ViewDataTyped.PersonIsMereContact)
+    @if (ViewDataTyped.UserHasAdminPermission && !ViewDataTyped.PersonIsMereContact)
     {
         @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} {1} User", "<span class='glyphicon glyphicon-edit blue''></span>", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), ViewDataTyped.ActivateInactivateUrl, string.Format("{0} this user?", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), 400, "Continue", "Cancel", null, null, null)
     }
@@ -86,7 +86,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Phone</div>
-                    <div class="col-xs-7">@ViewDataTyped.Person.Phone.ToPhoneNumberString()</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Phone</div>
                 </div>
                 @if (!ViewDataTyped.PersonIsMereContact)
                 {
@@ -132,13 +132,6 @@
                             <div class="col-xs-7">@ViewDataTyped.Person.AddedByPerson.FullNameFirstLast</div>
                         </div>
                     }
-                }
-
-                @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasEditBasicsPermission || ViewDataTyped.IsViewingSelf)
-                {
-                    <div class="alert" role="alert">
-                        This information can be <a target="_blank" class="alert-link" href="@ViewDataTyped.Person.GetKeystoneEditLink()">edited here</a>
-                    </div>
                 }
             </div>
         </div>
