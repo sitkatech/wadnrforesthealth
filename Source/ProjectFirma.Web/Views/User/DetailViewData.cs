@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Views.User
         
         public bool PersonIsMereContact { get; }
         public string EditContactUrl { get; }
+        public string ProjectsForWhichUserIsAContactGridTitle { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -89,6 +90,10 @@ namespace ProjectFirma.Web.Views.User
 
             TenantHasStewardshipAreas = MultiTenantHelpers.GetProjectStewardshipAreaType() != null;
             EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
+
+            ProjectsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
+                ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
+                : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
         }
 
         public readonly HtmlString EditRolesLink;

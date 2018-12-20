@@ -127,7 +127,7 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             var userNotificationGridSpec = new UserNotificationGridSpec();
             var userNotificationGridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserNotificationsGridJsonData(personPrimaryKey));
-            var basicProjectInfoGridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false)
+            var basicProjectInfoGridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false, person)
             {
                 ObjectNameSingular = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} where {person.FullNameFirstLast} is the {FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}",
                 ObjectNamePlural = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} where {person.FullNameFirstLast} is the {FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}",
@@ -152,8 +152,10 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
-            var gridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false);
-            var projectPersons = person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).ToList();
+            var gridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false, person);
+            var projectPersons = person.IsFullUser()
+                ? person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).ToList()
+                : person.ProjectPeople.Select(x => x.Project).Distinct().ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectPersons, gridSpec);
             return gridJsonNetJObjectResult;
         }

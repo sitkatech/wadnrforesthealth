@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class BasicProjectInfoGridSpec : GridSpec<Models.Project>
     {
-        public BasicProjectInfoGridSpec(Person currentPerson, bool allowTaggingFunctionality)
+        public BasicProjectInfoGridSpec(Person currentPerson, bool allowTaggingFunctionality, Person contactPerson = null)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasTagManagePermissions && allowTaggingFunctionality)
@@ -45,8 +45,14 @@ namespace ProjectFirma.Web.Views.Project
                 Add("ProjectID", x => x.ProjectID, 0);
             }
 
-            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30);
+            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, DhtmlxGridColumnFilterType.Html);
+            if (contactPerson != null)
+            {
+                Add(Models.FieldDefinition.ContactRelationshipType.ToGridHeaderString(),
+                    x => x.ProjectPeople.Single(y => y.PersonID == contactPerson.PersonID).ProjectPersonRelationshipType
+                        .ProjectPersonRelationshipTypeDisplayName, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            }
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
                 Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,

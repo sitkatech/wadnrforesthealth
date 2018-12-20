@@ -261,7 +261,7 @@
     <div class="col-md-12">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                @string.Format("{0} for which {1} is a {2}", FieldDefinition.Project.GetFieldDefinitionLabel(), ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
+                @ViewDataTyped.ProjectsForWhichUserIsAContactGridTitle
             </div>
             <div class="panel-body">
                 @Html.DhtmlxGrid(ViewDataTyped.BasicProjectInfoGridSpec, ViewDataTyped.BasicProjectInfoGridName, ViewDataTyped.BasicProjectInfoGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
