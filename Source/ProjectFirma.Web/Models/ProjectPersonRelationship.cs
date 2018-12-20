@@ -19,5 +19,9 @@
         {
             DisplayCssClass = displayCssClass;
         }
+
+        public ProjectPersonRelationship(ProjectPerson x) : this(x.Project, x.Person, x.ProjectPersonRelationshipType)
+        {
+        }
     }
 }

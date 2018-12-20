@@ -127,10 +127,10 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             var userNotificationGridSpec = new UserNotificationGridSpec();
             var userNotificationGridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserNotificationsGridJsonData(personPrimaryKey));
-            var basicProjectInfoGridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false, person)
+            var basicProjectInfoGridSpec = new Views.Project.ProjectInfoForUserDetailGridSpec(CurrentPerson, person)
             {
-                ObjectNameSingular = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} where {person.FullNameFirstLast} is the {FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}",
-                ObjectNamePlural = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} where {person.FullNameFirstLast} is the {FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}",
+                ObjectNameSingular = $"{FieldDefinition.Project.GetFieldDefinitionLabel()}",
+                ObjectNamePlural = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}",
                 SaveFiltersInCookie = true
             };
             const string basicProjectInfoGridName = "userProjectListGrid";
@@ -149,14 +149,14 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [UserViewFeature]
-        public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
+        public GridJsonNetJObjectResult<ProjectPersonRelationship> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
-            var gridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false, person);
+            var gridSpec = new Views.Project.ProjectInfoForUserDetailGridSpec(CurrentPerson, person);
             var projectPersons = person.IsFullUser()
-                ? person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).ToList()
-                : person.ProjectPeople.Select(x => x.Project).Distinct().ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectPersons, gridSpec);
+                ? person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).Select(x=> new ProjectPersonRelationship(x, person, null)).ToList()
+                : person.ProjectPeople.Select(x=>new ProjectPersonRelationship(x)).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectPersonRelationship>(projectPersons, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

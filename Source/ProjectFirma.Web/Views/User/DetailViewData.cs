@@ -24,6 +24,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.User
 {
@@ -37,7 +38,7 @@ namespace ProjectFirma.Web.Views.User
         public bool UserHasEditBasicsPermission { get; }
         public bool UserHasViewEverythingPermissions { get; }
         public bool IsViewingSelf { get; }
-        public Project.BasicProjectInfoGridSpec BasicProjectInfoGridSpec { get; }
+        public ProjectInfoForUserDetailGridSpec BasicProjectInfoGridSpec { get; }
         public string BasicProjectInfoGridName { get; }
         public string BasicProjectInfoGridDataUrl { get; }
         public UserNotificationGridSpec UserNotificationGridSpec { get; }
@@ -52,7 +53,7 @@ namespace ProjectFirma.Web.Views.User
 
         public DetailViewData(Person currentPerson,
             Person personToView,
-            Project.BasicProjectInfoGridSpec basicProjectInfoGridSpec,
+            ProjectInfoForUserDetailGridSpec basicProjectInfoGridSpec,
             string basicProjectInfoGridName,
             string basicProjectInfoGridDataUrl,
             UserNotificationGridSpec userNotificationGridSpec,
@@ -93,8 +94,8 @@ namespace ProjectFirma.Web.Views.User
             EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
 
             ProjectsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
-                ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
-                : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
+                ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
+                : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
         }
 
         public readonly HtmlString EditRolesLink;

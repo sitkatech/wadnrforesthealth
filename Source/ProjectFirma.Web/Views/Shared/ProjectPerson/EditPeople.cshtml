@@ -91,13 +91,13 @@ Source code is available upon request via <support@sitkatech.com>.
             <div class="col-md-12"><label ng-bind="AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName"></label><sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-md-push-8">
+            <div class="col-md-3 col-md-push-9">
                 <p class="smallExplanationText" ng-bind="AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeDescription"></p>
             </div>
-            <div class="col-md-8 col-md-pull-4">
+            <div class="col-md-9 col-md-pull-3">
                 <div class="row">
                     @*Selectpicker*@
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="padding: 0;">
                         <div class="input-group" style="width: 100%;">
                             <select class="selectpicker" id="todo{{AngularViewData.PrimaryContactProjectPersonRelationshipType.RelationshipTypeID}}" ng-model="selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[AngularViewData.PrimaryContactProjectPersonRelationshipType.ProjectPersonRelationshipTypeID], AngularViewData.PrimaryContactProjectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
                                 <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactProjectPersonRelationshipType)">Select one</option>
@@ -121,13 +121,13 @@ Source code is available upon request via <support@sitkatech.com>.
             <div class="col-md-12"><label ng-bind="projectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName"></label><sup ng-show="projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-md-push-8">
+            <div class="col-md-3 col-md-push-9">
                 <p class="smallExplanationText" ng-bind="projectPersonRelationshipType.ProjectPersonRelationshipTypeDescription"></p>
             </div>
-            <div class="col-md-8 col-md-pull-4">
+            <div class="col-md-9 col-md-pull-3">
                 <div class="row">
                     @*Selectpicker*@
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="padding: 0;">
                         <div class="input-group" style="width: 100%;">
                             <select class="selectpicker" id="todo{{projectPersonRelationshipType.ProjectPersonRelationshipTypeID}}" ng-model="selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-change="selectionChanged(selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID],projectPersonRelationshipType)" data-width="100%" data-live-search="true" data-size="8">
                                 <option value="" disabled selected ng-bind="dropdownDefaultOption(projectPersonRelationshipType)">Select one</option>
