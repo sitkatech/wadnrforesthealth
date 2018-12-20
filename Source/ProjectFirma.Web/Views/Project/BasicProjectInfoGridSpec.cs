@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Project
 
             Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, DhtmlxGridColumnFilterType.Html);
-            if (contactPerson != null)
+            if (contactPerson != null && !contactPerson.IsFullUser())
             {
                 Add(Models.FieldDefinition.ContactRelationshipType.ToGridHeaderString(),
                     x => x.ProjectPeople.Single(y => y.PersonID == contactPerson.PersonID).ProjectPersonRelationshipType

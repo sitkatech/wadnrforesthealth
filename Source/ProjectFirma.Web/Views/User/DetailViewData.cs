@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.User
         public string Index { get; }
 
         public bool UserHasPersonViewPermissions { get; }
-        public bool UserHasPermissionToManageThisPerson { get; }
+        public bool UserHasEditBasicsPermission { get; }
         public bool UserHasViewEverythingPermissions { get; }
         public bool IsViewingSelf { get; }
         public Project.BasicProjectInfoGridSpec BasicProjectInfoGridSpec { get; }
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Views.User
         public string UserNotificationGridDataUrl { get; }
         public string ActivateInactivateUrl { get; }
         public bool TenantHasStewardshipAreas { get; }
-        
+        public bool UserHasAdminPermission { get; }
         public bool PersonIsMereContact { get; }
         public string EditContactUrl { get; }
         public string ProjectsForWhichUserIsAContactGridTitle { get; }
@@ -70,10 +70,11 @@ namespace ProjectFirma.Web.Views.User
             Index = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
 
             UserHasPersonViewPermissions = new UserViewFeature().HasPermission(currentPerson, personToView).HasPermission;
-            UserHasPermissionToManageThisPerson = new UserEditFeature().HasPermission(currentPerson,personToView).HasPermission;
+            UserHasEditBasicsPermission = new UserEditBasicsFeature().HasPermission(currentPerson,personToView).HasPermission;
             UserHasViewEverythingPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             IsViewingSelf = currentPerson != null && currentPerson.PersonID == personToView.PersonID;
-            EditRolesLink = UserHasPermissionToManageThisPerson
+            UserHasAdminPermission = new UserEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            EditRolesLink = UserHasAdminPermission
                 ? ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditRoles(personToView)),
                     $"Edit Roles for User - {personToView.FullNameFirstLast}",
                     true)

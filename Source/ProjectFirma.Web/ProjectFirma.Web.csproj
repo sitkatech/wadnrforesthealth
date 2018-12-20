@@ -442,6 +442,7 @@
     <Compile Include="Models\ProjectPersonRelationshipTypeSimple.cs" />
     <Compile Include="Models\ProjectPersonSimple.cs" />
     <Compile Include="Models\ProjectPersonUpdate.cs" />
+    <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
@@ -1354,7 +1355,7 @@
     <Compile Include="Security\PerformanceMeasureManageFeature.cs" />
     <Compile Include="Security\PerformanceMeasureNoteManageFeature.cs" />
     <Compile Include="Security\Shared\AnonymousUnclassifiedFeature.cs" />
-    <Compile Include="Security\UserEditFeature.cs" />
+    <Compile Include="Security\UserEditBasicsFeature.cs" />
     <Compile Include="Security\GeospatialAreaManageFeature.cs" />
     <Compile Include="Security\GeospatialAreaViewFeature.cs" />
     <Compile Include="Views\ProjectAssessmentQuestion\EditAssessment.cs" />

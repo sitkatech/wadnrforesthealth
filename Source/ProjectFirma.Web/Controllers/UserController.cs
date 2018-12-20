@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public PartialViewResult EditRoles(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditRoles(PersonPrimaryKey personPrimaryKey, EditRolesViewModel viewModel)
         {
@@ -171,7 +171,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditBasicsFeature]
         public PartialViewResult ActivateInactivatePerson(PersonPrimaryKey personPrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(personPrimaryKey.PrimaryKeyValue);
@@ -205,7 +205,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditBasicsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult ActivateInactivatePerson(PersonPrimaryKey personPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -331,7 +331,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public PartialViewResult EditStewardshipAreas(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
@@ -340,7 +340,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditStewardshipAreas(PersonPrimaryKey personPrimaryKey, EditUserStewardshipAreasViewModel viewModel)
         {
@@ -441,7 +441,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditBasicsFeature]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
             {
             var person = personPrimaryKey.EntityObject;
@@ -450,7 +450,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditBasicsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, EditContactViewModel viewModel)
         {

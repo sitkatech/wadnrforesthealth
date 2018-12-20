@@ -36,6 +36,8 @@ namespace ProjectFirma.Web.Views.Organization
 {
     public class EditViewModel : FormViewModel, IValidatableObject
     {
+        public const int MaxLogoSizeInBytes = 1024 * 200;
+
         public int OrganizationID { get; set; }
 
         [Required]
@@ -66,9 +68,6 @@ namespace ProjectFirma.Web.Views.Organization
         [SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase LogoFileResourceData { get; set; }
 
-        [DisplayName("Keystone Organization Guid")]
-        public Guid? OrganizationGuid { get; set; }
-
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -86,14 +85,13 @@ namespace ProjectFirma.Web.Views.Organization
             OrganizationUrl = organization.OrganizationUrl;
 
             IsActive = organization.IsActive;
-            OrganizationGuid = organization.OrganizationGuid;
         }
 
         public void UpdateModel(Models.Organization organization, Person currentPerson)
         {
             organization.OrganizationName = OrganizationName;
             organization.OrganizationShortName = OrganizationShortName;
-            organization.OrganizationTypeID = OrganizationTypeID.Value;
+            organization.OrganizationTypeID = OrganizationTypeID.GetValueOrDefault(); // can never be null due to RequiredAttribute
             organization.IsActive = IsActive;
             organization.PrimaryContactPersonID = PrimaryContactPersonID;
             organization.OrganizationUrl = OrganizationUrl;
@@ -101,50 +99,16 @@ namespace ProjectFirma.Web.Views.Organization
             {
                 organization.LogoFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(LogoFileResourceData, currentPerson);    
             }
-
-            var isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(currentPerson);
-            if (isSitkaAdmin)
-            {
-                organization.OrganizationGuid = OrganizationGuid;
-            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var validationResults = new List<ValidationResult>();
-
             if (LogoFileResourceData != null && LogoFileResourceData.ContentLength > MaxLogoSizeInBytes)
             {
                 var errorMessage = $"Logo is too large - must be less than {FileUtility.FormatBytes(MaxLogoSizeInBytes)}. Your logo was {FileUtility.FormatBytes(LogoFileResourceData.ContentLength)}.";
-                validationResults.Add(new SitkaValidationResult<EditViewModel, HttpPostedFileBase>(errorMessage, x => x.LogoFileResourceData));
+                yield return new SitkaValidationResult<EditViewModel, HttpPostedFileBase>(errorMessage,
+                    x => x.LogoFileResourceData);
             }
-
-            var isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(HttpRequestStorage.Person);
-            if (OrganizationGuid.HasValue && isSitkaAdmin)
-            {
-                var organization = HttpRequestStorage.DatabaseEntities.Organizations.SingleOrDefault(x => x.OrganizationGuid == OrganizationGuid);
-                if (organization != null && organization.OrganizationID != OrganizationID)
-                {
-                    validationResults.Add(new SitkaValidationResult<EditViewModel, Guid?>("This Guid is already associated with an Organization", x => x.OrganizationGuid));
-                }
-                else
-                {
-                    try
-                    {
-                        var keystoneClient = new KeystoneDataClient();
-                        var keystoneOrganization = keystoneClient.GetOrganization(OrganizationGuid.Value);
-                    }
-                    catch (Exception)
-                    {
-                        validationResults.Add(new SitkaValidationResult<EditViewModel, Guid?>("Organization Guid not found in Keystone", x => x.OrganizationGuid));
-                    }
-                    
-                }
-            }
-
-            return validationResults;
         }
-
-        public const int MaxLogoSizeInBytes = 1024 * 200;
     }
 }

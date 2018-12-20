@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public GridJsonNetJObjectResult<IRole> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec();
@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public GridJsonNetJObjectResult<Person> PersonWithRoleGridJsonData(int roleID)
         {
             var role = Role.AllLookupDictionary[roleID];

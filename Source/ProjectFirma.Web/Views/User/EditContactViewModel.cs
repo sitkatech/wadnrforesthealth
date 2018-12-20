@@ -67,18 +67,18 @@ namespace ProjectFirma.Web.Views.User
 
         public void UpdateModel(Person person)
         {
-            person.FirstName = FirstName;
-            person.MiddleName = MiddleName;
-            person.LastName = LastName;
-            person.Email = Email;
+            person.OrganizationID = OrganizationID;
+            person.PersonAddress = Address;
+            person.StatewideVendorNumber = StatewideVendorNumber;
+            person.Phone = Phone;
+            person.Notes = Notes;
 
             if (!person.PersonGuid.HasValue) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
             {
-                person.OrganizationID = OrganizationID;
-                person.PersonAddress = Address;
-                person.StatewideVendorNumber = StatewideVendorNumber;
-                person.Phone = Phone;
-                person.Notes = Notes;
+                person.FirstName = FirstName;
+                person.MiddleName = MiddleName;
+                person.LastName = LastName;
+                person.Email = Email;
             }
         }
 
