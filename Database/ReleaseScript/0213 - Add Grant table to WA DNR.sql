@@ -4,14 +4,11 @@
 CREATE TABLE dbo.GrantAllocation
 (
     -- Just a few fields to start -- very incomplete
-    GrantAllocationID int not NULL,
-    GrantNumber varchar(30),
+    GrantAllocationID int not NULL identity(1,1) Constraint PK_GrantAllocation_GrantAllocationID primary key,
+	TenantID int not null constraint FK_GrantAllocation_Tenant_TenantID references dbo.Tenant(TenantID),
+    GrantNumber varchar(30) null,
     StartDate DateTime not NULL,
-    EndDate DateTime not NULL,
-    CONSTRAINT PK_GrantAllocation_GrantAllocationID PRIMARY KEY CLUSTERED 
-    (
-        GrantAllocationID ASC
-    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+    EndDate DateTime not NULL
 )
 
 insert into FieldDefinition values

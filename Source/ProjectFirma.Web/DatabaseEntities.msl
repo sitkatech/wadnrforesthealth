@@ -260,6 +260,7 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocation">
         <MappingFragment StoreEntitySet="GrantAllocation">
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="GrantNumber" ColumnName="GrantNumber" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />

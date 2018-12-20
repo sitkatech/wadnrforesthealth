@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[GrantAllocation]")]
-    public partial class GrantAllocation : IHavePrimaryKey, ICanDeleteFull
+    public partial class GrantAllocation : IHavePrimaryKey, IHaveATenantID
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         protected GrantAllocation()
         {
 
+            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -79,18 +80,19 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.GrantAllocations.Remove(this);
+            dbContext.AllGrantAllocations.Remove(this);
         }
 
         [Key]
         public int GrantAllocationID { get; set; }
+        public int TenantID { get; private set; }
         public string GrantNumber { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
-
+        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

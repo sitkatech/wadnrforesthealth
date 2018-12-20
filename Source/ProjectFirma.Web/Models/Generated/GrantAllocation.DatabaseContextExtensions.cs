@@ -4,7 +4,6 @@
 //  Source Table: [dbo].[GrantAllocation]
 using System.Collections.Generic;
 using System.Linq;
-using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -20,31 +19,30 @@ namespace ProjectFirma.Web.Models
             return grantAllocation;
         }
 
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, List<int> grantAllocationIDList)
+        public static void DeleteGrantAllocation(this List<int> grantAllocationIDList)
         {
             if(grantAllocationIDList.Any())
             {
-                grantAllocations.Where(x => grantAllocationIDList.Contains(x.GrantAllocationID)).Delete();
+                HttpRequestStorage.DatabaseEntities.AllGrantAllocations.RemoveRange(HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(x => grantAllocationIDList.Contains(x.GrantAllocationID)));
             }
         }
 
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, ICollection<GrantAllocation> grantAllocationsToDelete)
+        public static void DeleteGrantAllocation(this ICollection<GrantAllocation> grantAllocationsToDelete)
         {
             if(grantAllocationsToDelete.Any())
             {
-                var grantAllocationIDList = grantAllocationsToDelete.Select(x => x.GrantAllocationID).ToList();
-                grantAllocations.Where(x => grantAllocationIDList.Contains(x.GrantAllocationID)).Delete();
+                HttpRequestStorage.DatabaseEntities.AllGrantAllocations.RemoveRange(grantAllocationsToDelete);
             }
         }
 
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, int grantAllocationID)
+        public static void DeleteGrantAllocation(this int grantAllocationID)
         {
-            DeleteGrantAllocation(grantAllocations, new List<int> { grantAllocationID });
+            DeleteGrantAllocation(new List<int> { grantAllocationID });
         }
 
-        public static void DeleteGrantAllocation(this IQueryable<GrantAllocation> grantAllocations, GrantAllocation grantAllocationToDelete)
+        public static void DeleteGrantAllocation(this GrantAllocation grantAllocationToDelete)
         {
-            DeleteGrantAllocation(grantAllocations, new List<GrantAllocation> { grantAllocationToDelete });
+            DeleteGrantAllocation(new List<GrantAllocation> { grantAllocationToDelete });
         }
     }
 }
