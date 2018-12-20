@@ -70,6 +70,7 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<GeospatialArea> GeospatialAreas { get { return AllGeospatialAreas.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<GeospatialAreaType> AllGeospatialAreaTypes { get; set; }
         public virtual IQueryable<GeospatialAreaType> GeospatialAreaTypes { get { return AllGeospatialAreaTypes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<ImportExternalProjectStaging> AllImportExternalProjectStagings { get; set; }
         public virtual IQueryable<ImportExternalProjectStaging> ImportExternalProjectStagings { get { return AllImportExternalProjectStagings.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<MappedRegion> AllMappedRegions { get; set; }
@@ -353,6 +354,9 @@ namespace ProjectFirma.Web.Models
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
+
+                case "GrantAllocation":
+                    return GrantAllocations.GetGrantAllocation(primaryKey);
 
                 case "ImportExternalProjectStaging":
                     return ImportExternalProjectStagings.GetImportExternalProjectStaging(primaryKey);

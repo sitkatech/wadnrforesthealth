@@ -128,6 +128,9 @@
     <Compile Include="Models\Generated\GeospatialAreaTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GoogleChartType.Binding.cs" />
     <Compile Include="Models\Generated\GoogleChartTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocation.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocation.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStaging.Binding.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStaging.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStagingPrimaryKey.Binding.cs" />
@@ -1946,6 +1949,9 @@
     <Reference Include="XmlDiffPatch.View, Version=1.0.1493.40755, Culture=neutral">
       <HintPath>..\NuGetPackages\XMLDiffPatch.1.0.8.28\lib\net\XmlDiffPatch.View.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.8.20.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\NuGetPackages\Z.EntityFramework.Plus.EF6.1.8.20\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

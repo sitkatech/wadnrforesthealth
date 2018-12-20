@@ -22,6 +22,7 @@
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.GeospatialArea" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
+    <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.ImportExternalProjectStaging" />
     <EntitySet Name="MappedRegion" EntityType="ProjectFirma.Web.Models.MappedRegion" />
     <EntitySet Name="MonitoringProgram" EntityType="ProjectFirma.Web.Models.MonitoringProgram" />
@@ -1071,6 +1072,15 @@
     <NavigationProperty Name="GeospatialAreas" Relationship="ProjectFirma.Web.Models.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="GeospatialAreas" />
     <NavigationProperty Name="ProjectGeospatialAreaTypeNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="ProjectGeospatialAreaTypeNotes" />
     <NavigationProperty Name="ProjectGeospatialAreaTypeNoteUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="ProjectGeospatialAreaTypeNoteUpdates" />
+  </EntityType>
+  <EntityType Name="GrantAllocation">
+    <Key>
+      <PropertyRef Name="GrantAllocationID" />
+    </Key>
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>

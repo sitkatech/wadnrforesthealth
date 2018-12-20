@@ -22,6 +22,7 @@
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.Store.FundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.Store.GeospatialArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.Store.GeospatialAreaType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.Store.ImportExternalProjectStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MappedRegion" EntityType="ProjectFirma.Web.Models.Store.MappedRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MonitoringProgram" EntityType="ProjectFirma.Web.Models.Store.MonitoringProgram" store:Type="Tables" Schema="dbo" />
@@ -1086,6 +1087,15 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="GeospatialAreaTypeDefinition" Type="varchar(max)" />
     <Property Name="MapServiceUrl" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeospatialAreaLayerName" Type="varchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="GrantAllocation">
+    <Key>
+      <PropertyRef Name="GrantAllocationID" />
+    </Key>
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>
