@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Models
             {
                 if (Organization != null)
                 {
-                    return $"{FirstName} {LastName} - {Organization.DisplayName}";
+                    return $"{FirstName} {LastName} - {Organization.DisplayNameWithoutAbbreviation}";
                 }
                 else return FullNameFirstLast;
             }

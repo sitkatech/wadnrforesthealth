@@ -8,11 +8,4 @@ namespace ProjectFirma.Web.Models
         RelationshipType RelationshipType { get; set; }
 
     }
-
-    public interface IProjectPerson
-    {
-        Person Person { get; set; }
-        ProjectPersonRelationshipType ProjectPersonRelationshipType { get; }
-    }
-    
 }

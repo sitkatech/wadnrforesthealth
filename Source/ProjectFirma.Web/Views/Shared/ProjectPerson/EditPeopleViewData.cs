@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
 
         public EditPeopleViewData(IEnumerable<Person> allPeople, IEnumerable<ProjectPersonRelationshipType> allRelationshipTypes, Person currentPerson)
         {
-            AllPeople = allPeople.Select(x => new PersonSimple(x)).ToList();
+            AllPeople = allPeople.OrderBy(x=>x.LastName).Select(x => new PersonSimple(x)).ToList();
             AllProjectPersonRelationshipTypes = allRelationshipTypes.Except(new List<ProjectPersonRelationshipType>{
                 ProjectPersonRelationshipType.PrimaryContact
             }).Select(x => new ProjectPersonRelationshipTypeSimple(x)).ToList();

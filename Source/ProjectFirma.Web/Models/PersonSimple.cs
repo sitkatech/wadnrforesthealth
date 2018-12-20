@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
             PersonGuid = person.PersonGuid.GetValueOrDefault();
             FirstName = person.FirstName;
             LastName = person.LastName;
-            FullName = $"{FirstName} {LastName}";
+            FullName = person.FullNameFirstLastAndOrg;
             Email = person.Email;
             Phone = person.Phone;
             PasswordPdfK2SaltHash = person.PasswordPdfK2SaltHash;

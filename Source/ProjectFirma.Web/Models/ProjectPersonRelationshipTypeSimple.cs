@@ -21,7 +21,7 @@ namespace ProjectFirma.Web.Models
             ProjectPersonRelationshipTypeName = relationshipType.ProjectPersonRelationshipTypeName;
             ProjectPersonRelationshipTypeDisplayName = relationshipType.ProjectPersonRelationshipTypeDisplayName;
             IsRequired = relationshipType.IsRequired;
-            ProjectPersonRelationshipTypeDescription = relationshipType.FieldDefinition.GetFieldDefinitionDescription().ToString();
+            ProjectPersonRelationshipTypeDescription = relationshipType.FieldDefinition.GetFieldDefinitionDescription().ToHtmlString().Replace("<p>", "").Replace("</p>","");
         }
 
         public bool IsRequired { get; set; }
