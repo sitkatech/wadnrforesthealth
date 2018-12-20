@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Controllers
             person.FirstName = keystoneUserClaims.FirstName;
             person.LastName = keystoneUserClaims.LastName;
             person.Email = keystoneUserClaims.Email;
-            person.Phone = keystoneUserClaims.PrimaryPhone?.ToPhoneNumberString();
+            //person.Phone = keystoneUserClaims.PrimaryPhone?.ToPhoneNumberString();
             person.LoginName = keystoneUserClaims.LoginName;
 
             // handle the organization
