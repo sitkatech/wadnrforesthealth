@@ -433,7 +433,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewAddContact(EditContactViewModel viewModel, bool fullUpUser)
         {
-            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.AsEnumerable()
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x=>x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
             var viewData = new EditContactViewData(organizations, fullUpUser);
