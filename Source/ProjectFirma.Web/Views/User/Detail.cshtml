@@ -77,57 +77,61 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">Name</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.FullNameFirstLastAndMiddle</div>
+                    <div class="col-xs-5 fieldLabel text-right">Name</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.FullNameFirstLastAndMiddle</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">Email</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.Email</div>
+                    <div class="col-xs-5 fieldLabel text-right">Email</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Email</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">Phone</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.Phone.ToPhoneNumberString()</div>
+                    <div class="col-xs-5 fieldLabel text-right">Phone</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Phone.ToPhoneNumberString()</div>
                 </div>
                 @if (!ViewDataTyped.PersonIsMereContact)
                 {
                     <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.LoginName</div>
+                        <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
+                        <div class="col-xs-7">@ViewDataTyped.Person.LoginName</div>
                     </div>
                 }
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>
+                    <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Mailing Address</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.PersonAddress</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.StatewideVendorNumber</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Notes</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Notes</div>
                 </div>
                 @if (ViewDataTyped.UserHasPermissionToManageThisPerson)
                 {
                     if (!ViewDataTyped.PersonIsMereContact)
                     {
                         <div class="row">
-                            <div class="col-xs-4 fieldLabel text-right">Last Activity</div>
-                            <div class="col-xs-8">@ViewDataTyped.Person.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
+                            <div class="col-xs-5 fieldLabel text-right">Last Activity</div>
+                            <div class="col-xs-7">@ViewDataTyped.Person.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
                         </div>
                     }
                     <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Created Date</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.CreateDate.ToStringDateTimeNoLeadingZeros()</div>
+                        <div class="col-xs-5 fieldLabel text-right">Added On</div>
+                        <div class="col-xs-7">@ViewDataTyped.Person.CreateDate.ToStringDateTimeNoLeadingZeros()</div>
                     </div>
-                }
-                @if (ViewDataTyped.PersonIsMereContact)
-                {
-                    
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Mailing Address</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.PersonAddress</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.StatewideVendorNumber</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Notes</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.Notes</div>
-                    </div>
+                    if (ViewDataTyped.PersonIsMereContact)
+                    {
+                        <div class="row">
+                            <div class="col-xs-5 fieldLabel text-right">Added By</div>
+                            <div class="col-xs-7">@ViewDataTyped.Person.AddedByPerson.FullNameFirstLast</div>
+                        </div>
+                    }
                 }
 
                 @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPermissionToManageThisPerson || ViewDataTyped.IsViewingSelf)
