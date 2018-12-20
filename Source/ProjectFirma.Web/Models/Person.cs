@@ -55,7 +55,17 @@ namespace ProjectFirma.Web.Models
 
         public string FullNameFirstLast => $"{FirstName} {LastName}";
 
-        public string FullNameFirstLastAndOrg => $"{FirstName} {LastName} - {Organization.DisplayName}";
+        public string FullNameFirstLastAndOrg
+        {
+            get
+            {
+                if (Organization != null)
+                {
+                    return $"{FirstName} {LastName} - {Organization.DisplayName}";
+                }
+                else return FullNameFirstLast;
+            }
+        }
 
         public string FullNameFirstLastAndOrgShortName => $"{FirstName} {LastName} ({Organization.OrganizationShortNameIfAvailable})";
 
@@ -154,5 +164,10 @@ namespace ProjectFirma.Web.Models
         public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;       
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);
         public string FullNameFirstLastAndMiddle => $"{FirstName} {MiddleName} {LastName}";
+
+        public bool IsFullUser()
+        {
+            return PersonGuid.HasValue;
+        }
     }
 }
