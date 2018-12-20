@@ -32,15 +32,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
     public class EditOrganizationsViewData
     {
         public List<OrganizationSimple> AllOrganizations { get; }
-        public List<PersonSimple> AllPeople { get; }
         public List<RelationshipTypeSimple> AllRelationshipTypes { get; }
         public RelationshipTypeSimple PrimaryContactRelationshipTypeSimple { get; }
         public int? DefaultPrimaryContactPersonID { get; }
         public string DefaultPrimaryContactPersonName { get; }
 
-        public EditOrganizationsViewData(IEnumerable<Models.Organization> organizations, IEnumerable<Person> allPeople, List<RelationshipType> allRelationshipTypes, Person defaultPrimaryContactPerson)
+        public EditOrganizationsViewData(IEnumerable<Models.Organization> organizations, List<RelationshipType> allRelationshipTypes, Person defaultPrimaryContactPerson)
         {
-            AllPeople = allPeople.Select(x => new PersonSimple(x)).ToList();
             AllOrganizations = organizations.Where(x => x.OrganizationType.OrganizationTypeRelationshipTypes.Any()).Select(x => new OrganizationSimple(x)).ToList();
 
             var primaryContactRelationshipType = MultiTenantHelpers.GetIsPrimaryContactOrganizationRelationship();
