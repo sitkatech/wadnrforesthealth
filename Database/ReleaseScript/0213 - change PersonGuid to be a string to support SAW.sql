@@ -11,10 +11,18 @@ on dbo.Person(PersonUniqueIdentifier, TenantID)
 where PersonUniqueIdentifier is not null
 
 
-update dbo.Person 
-set PersonUniqueIdentifier = 'DP3TP7WZ2MM7W-1DZ8DP4Q-1DL2VV0ZF1-D1FV3ZT5VM'
-where PersonUniqueIdentifier = 'CD3DAB18-4242-4FE9-AB10-874CA43AAEE2'
+update dbo.Person set PersonUniqueIdentifier = 'DP3TP7WZ2MM7W-1DZ8DP4Q-1DL2VV0ZF1-D1FV3ZT5VM' where PersonUniqueIdentifier = 'CD3DAB18-4242-4FE9-AB10-874CA43AAEE2'
 
-update dbo.Person 
-set PersonUniqueIdentifier = 'DP4VW0PV4LL0W-1TW0LT5VV8-D1LW4VZ0FD-FF8FP8MQ1'
-where PersonUniqueIdentifier = '61E2A1D0-6A3F-499C-B72C-2160196006F0'
+update dbo.Person set PersonUniqueIdentifier = 'DP4VW0PV4LL0W-1TW0LT5VV8-D1LW4VZ0FD-FF8FP8MQ1' where PersonUniqueIdentifier = '61E2A1D0-6A3F-499C-B72C-2160196006F0'
+
+update dbo.Person set PersonUniqueIdentifier = 'atat490@dnr.wa.lcl' where PersonUniqueIdentifier = '25323F70-2B8B-4FF2-9810-484C1E14E4AA'
+
+update dbo.Person set PersonUniqueIdentifier = 'crff490@dnr.wa.lcl' where PersonUniqueIdentifier = 'E91958F5-5D3B-42EC-B385-6FC61D2FC2DE'
+
+update dbo.Person set PersonUniqueIdentifier = 'Jcoo490@dnr.wa.lcl' where PersonUniqueIdentifier = '3306F4B4-96A0-43A3-8F91-1ED6321865C1'
+
+update dbo.Person set PersonUniqueIdentifier = 'mdboles@dnr.wa.lcl' where PersonUniqueIdentifier = '8C3987BA-66D6-421F-9E5B-AEE9C49E25FE'
+
+update dbo.Person set PersonUniqueIdentifier = 'scha490@dnr.wa.lcl' where PersonUniqueIdentifier = '3E01762E-4B04-4507-81C3-427409279C0D'
+
+update dbo.Person set PersonUniqueIdentifier = 'jchs490@dnr.wa.lcl' where PersonUniqueIdentifier = '34A400E3-C4CC-435D-A0ED-3FDB6B024386'
