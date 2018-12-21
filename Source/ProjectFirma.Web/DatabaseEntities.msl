@@ -264,7 +264,7 @@
           <ScalarProperty Name="GrantNumber" ColumnName="GrantNumber" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-          <ScalarProperty Name="TotalAward" ColumnName="TotalAward" />
+          <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

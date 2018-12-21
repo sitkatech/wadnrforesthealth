@@ -5,9 +5,9 @@ CREATE TABLE dbo.[Grant]
     GrantID int not NULL identity(1,1) Constraint PK_Grant_GrantID primary key,
     TenantID int not null constraint FK_Grant_Tenant_TenantID references dbo.Tenant(TenantID),
     GrantNumber varchar(30) null,
-    StartDate DateTime not NULL,
-    EndDate DateTime not NULL,
-    TotalAward money null
+    StartDate DateTime NULL,
+    EndDate DateTime NULL,
+    AwardedFunds money null
 )
 
 insert into FieldDefinition values

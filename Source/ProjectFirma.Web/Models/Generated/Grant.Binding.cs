@@ -30,26 +30,15 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime startDate, DateTime endDate, decimal? totalAward) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, decimal? awardedFunds) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
             this.StartDate = startDate;
             this.EndDate = endDate;
-            this.TotalAward = totalAward;
+            this.AwardedFunds = awardedFunds;
         }
 
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public Grant(DateTime startDate, DateTime endDate) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-        }
 
 
         /// <summary>
@@ -57,7 +46,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Grant CreateNewBlank()
         {
-            return new Grant(default(DateTime), default(DateTime));
+            return new Grant();
         }
 
         /// <summary>
@@ -99,9 +88,9 @@ namespace ProjectFirma.Web.Models
         public int GrantID { get; set; }
         public int TenantID { get; private set; }
         public string GrantNumber { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public decimal? TotalAward { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public decimal? AwardedFunds { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 

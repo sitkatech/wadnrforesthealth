@@ -51,8 +51,6 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-
-
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
         {

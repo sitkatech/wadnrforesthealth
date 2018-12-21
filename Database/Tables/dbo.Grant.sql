@@ -6,9 +6,9 @@ CREATE TABLE [dbo].[Grant](
 	[GrantID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
 	[GrantNumber] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
-	[TotalAward] [money] NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[AwardedFunds] [money] NULL,
  CONSTRAINT [PK_Grant_GrantID] PRIMARY KEY CLUSTERED 
 (
 	[GrantID] ASC

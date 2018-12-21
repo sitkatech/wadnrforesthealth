@@ -37,10 +37,10 @@ namespace ProjectFirma.Web.Views.Grant
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
-            Add("Grant Number", x => x.GrantNumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Start Date", x => x.StartDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("End Date", x => x.EndDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Total Award", x => x.TotalAward.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Grant Number", x => x.GrantNumber, GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Start Date", x => x.StartDate.HasValue ? x.StartDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("End Date", x => x.EndDate.HasValue ? x.EndDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Awarded Funds", x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

@@ -56,3 +56,24 @@
     <h3>Grant Allocations</h3>
     @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationGridSpec, ViewDataTyped.GrantAllocationGridName, ViewDataTyped.GrantAllocationGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
 </div>
+
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function()
+    {
+        var grantGrid = Sitka.@ViewDataTyped.GrantGridName;
+        grantGrid.grid.attachEvent("onRowSelect", function (rowId)
+        {
+            var grantNumberColumnIndex = grantGrid.getColumnIndexByName("GrantNumber");
+            var currentSelectedGrantNumber = grantGrid.grid.cells(rowId, grantNumberColumnIndex).getValue();
+            var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
+            grantAllocationGrid.grid.filterBy(grantNumberColumnIndex, currentSelectedGrantNumber);
+            var grantNumberFilter = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndex);
+            grantNumberFilter.value = currentSelectedGrantNumber;
+        });
+        grantGrid.grid.attachEvent("onXLE", function() { grantGrid.grid.selectRow(0, true); });
+        grantGrid.grid.attachEvent("onFilterEnd", function() { grantGrid.grid.selectRow(0, true); });
+    });
+    // ]]>
+
+</script>

@@ -1100,9 +1100,9 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="GrantID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
-    <Property Name="StartDate" Type="datetime" Nullable="false" />
-    <Property Name="EndDate" Type="datetime" Nullable="false" />
-    <Property Name="TotalAward" Type="money" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="AwardedFunds" Type="money" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -2302,6 +2302,9 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="EnableAccomplishmentsDashboard" Type="bit" Nullable="false" />
     <Property Name="ProjectStewardshipAreaTypeID" Type="int" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
   <EntityType Name="TrainingVideo">
     <Key>
       <PropertyRef Name="TrainingVideoID" />
@@ -4399,4 +4402,45 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
   <Function Name="TrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpGrantAllocationsFlatFile' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpGrantAllocationsFlatFile">
+  <Property Name="AREA" Type="nvarchar" MaxLength="50" />
+  <Property Name="Region" Type="nvarchar" MaxLength="50" />
+  <Property Name="FH_FP_WD_LG" Type="nvarchar" MaxLength="50" />
+  <Property Name="A_B_C_D" Type="nvarchar" MaxLength="50" />
+  <Property Name="FED_APPROP" Type="nvarchar" MaxLength="50" />
+  <Property Name="CFDA" Type="float" />
+  <Property Name="Status" Type="nvarchar" MaxLength="100" />
+  <Property Name="Funding_Source_or_Grant_Number" Type="nvarchar" MaxLength="50" />
+  <Property Name="Start_Date" Type="datetime2" />
+  <Property Name="End_Date" Type="datetime2" />
+  <Property Name="Program_Index_PI" Type="nvarchar" MaxLength="50" />
+  <Property Name="Grant_Project_Name" Type="nvarchar" MaxLength="100" />
+  <Property Name="Total_Award" Type="nvarchar" MaxLength="50" />
+  <Property Name="13_15_BN_Spent" Type="nvarchar" MaxLength="50" />
+  <Property Name="15_17_BN_Spent" Type="nvarchar" MaxLength="50" />
+  <Property Name="Total_spent_as_of_6_30_17_per_270_BNs_13_15_15_17_" Type="nvarchar" MaxLength="50" />
+  <Property Name="17_19_BN_Spent_as_of_3_31_2018" Type="nvarchar" MaxLength="50" />
+  <Property Name="Spent_over_all_B_N" Type="nvarchar" MaxLength="50" />
+  <Property Name="Current_Balance" Type="nvarchar" MaxLength="50" />
+  <Property Name="Spent_to_date_X_check" Type="nvarchar" MaxLength="50" />
+  <Property Name="Set_Aside_for_Future_BN" Type="nvarchar" MaxLength="50" />
+  <Property Name="Current_Balance_minus_setaside_for_future_B_N" Type="nvarchar" MaxLength="50" />
+  <Property Name="Personnel" Type="nvarchar" MaxLength="50" />
+  <Property Name="Fringe_Benefits" Type="nvarchar" MaxLength="50" />
+  <Property Name="Travel" Type="nvarchar" MaxLength="50" />
+  <Property Name="Supplies" Type="nvarchar" MaxLength="50" />
+  <Property Name="Contractual" Type="nvarchar" MaxLength="50" />
+  <Property Name="Indirect" Type="nvarchar" MaxLength="50" />
+  <Property Name="Actual_To_Date" Type="nvarchar" MaxLength="50" />
+  <Property Name="Total_across" Type="nvarchar" MaxLength="50" />
+  <Property Name="Total" Type="nvarchar" MaxLength="50" />
+  <Property Name="Match_Committed" Type="nvarchar" MaxLength="50" />
+  <Property Name="Match_DNR" Type="nvarchar" MaxLength="50" />
+  <Property Name="Match_Other" Type="nvarchar" MaxLength="50" />
+  <Property Name="Match_Match" Type="nvarchar" MaxLength="50" />
+  <Property Name="Notes" Type="nvarchar" MaxLength="50" />
+</EntityType>-->
 </Schema>

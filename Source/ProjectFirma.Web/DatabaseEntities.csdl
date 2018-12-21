@@ -1085,9 +1085,9 @@
     <Property Name="GrantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" />
-    <Property Name="EndDate" Type="DateTime" Nullable="false" />
-    <Property Name="TotalAward" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="StartDate" Type="DateTime" />
+    <Property Name="EndDate" Type="DateTime" />
+    <Property Name="AwardedFunds" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
   </EntityType>
   <EntityType Name="GrantAllocation">

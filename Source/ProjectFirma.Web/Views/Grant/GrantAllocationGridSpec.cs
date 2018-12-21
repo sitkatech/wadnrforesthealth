@@ -28,17 +28,20 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Grant
 {
+
     public class GrantAllocationGridSpec : GridSpec<Models.GrantAllocation>
     {
+        public const int GrantNumberColumnWidth = 140;
+
         public GrantAllocationGridSpec(Person currentPerson)
         {
-            ObjectNameSingular = "Grant Allocation";
-            ObjectNamePlural = "Grant Allocations";
+            ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}"; ;
             SaveFiltersInCookie = true;
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
-            Add("Grant Number", x => x.Grant.GrantNumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Grant Number", x => x.Grant.GrantNumber, GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Start Date", x => x.StartDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("End Date", x => x.EndDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Allocation Amount", x => x.AllocationAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);

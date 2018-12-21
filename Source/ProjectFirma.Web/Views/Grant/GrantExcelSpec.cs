@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.Grant
             AddColumn("Grant Number", x => x.GrantNumber);
             AddColumn("Start Date", x => x.StartDate);
             AddColumn("End Date", x => x.EndDate);
-            AddColumn("Total Award", x => x.TotalAward);
+            AddColumn("Awarded Funds", x => x.AwardedFunds);
         }
     }
 }

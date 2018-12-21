@@ -151,7 +151,7 @@ namespace ProjectFirma.Web.Views
         private static LtInfoMenuItem BuildGrantMenuItem(Person currentPerson)
         {
             var grantsMenu = new LtInfoMenuItem("Grants");
-            grantsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantController>(c => c.Index()), currentPerson, "Full Grant List", "Group1"));
+            grantsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List", "Group1"));
 
             return grantsMenu;
         }
