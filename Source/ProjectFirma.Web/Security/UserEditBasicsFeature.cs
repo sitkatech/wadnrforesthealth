@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Security
                 return new PermissionCheckResult();
             }
 
-            if (contextModelObject.PersonGuid == null)
+            if (string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier))
             {
                 if (hasContactManagePermissions)
                 {

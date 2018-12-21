@@ -18,116 +18,49 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
+using LtInfo.Common;
+using LtInfo.Common.Email;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
-using Keystone.Common;
-using LtInfo.Common;
-using LtInfo.Common.Email;
-using Person = ProjectFirma.Web.Models.Person;
+using ProjectFirma.Web.Views.Account;
+using Saml;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class AccountController : RelyingPartyAccountController
+    public class AccountController : FirmaBaseController
     {
+        protected override bool IsCurrentUserAnonymous()
+        {
+            return HttpRequestStorage.Person.IsAnonymousUser;
+        }
+
         protected override string LoginUrl
         {
-            get { return SitkaRoute<AccountController>.BuildAbsoluteUrlHttpsFromExpression(c => c.LogOn()); }
+            get
+            {
+                return SitkaRoute<AccountController>.BuildAbsoluteUrlHttpsFromExpression(c => c.Login(null));
+            }
         }
 
         protected override ISitkaDbContext SitkaDbContext => HttpRequestStorage.DatabaseEntities;
 
-        protected override string HomeUrl
+        protected string HomeUrl
         {
             get { return SitkaRoute<HomeController>.BuildUrlFromExpression(c => c.Index()); }
         }
 
-        // also need to decide how to handle account verification status and also implement hash on db row to avoid unnecessary updates
-        protected override IKeystoneUser SyncLocalAccountStore(IKeystoneUserClaims keystoneUserClaims, IIdentity userIdentity)
-        {
-            SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - User '{0}', Authenticated = '{1}'",
-                userIdentity.Name,
-                userIdentity.IsAuthenticated);
-
-            var sendNewUserNotification = false;
-
-            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonGuid(keystoneUserClaims.UserGuid);
-
-            if (person == null)
-            {
-                // new user - provision with limited role
-                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", keystoneUserClaims.UserGuid);
-                person = new Person(keystoneUserClaims.FirstName, keystoneUserClaims.LastName, Role.Unassigned.RoleID,
-                    DateTime.Now, true, false)
-                {
-                    PersonGuid = keystoneUserClaims.UserGuid,
-                    Email = keystoneUserClaims.Email,
-                    LoginName = keystoneUserClaims.LoginName
-                };
-                HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
-                sendNewUserNotification = true;
-            }
-            else
-            {
-                // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - syncing local profile for User '{0}'", keystoneUserClaims.UserGuid);
-            }
-
-            person.FirstName = keystoneUserClaims.FirstName;
-            person.LastName = keystoneUserClaims.LastName;
-            person.Email = keystoneUserClaims.Email;
-            //person.Phone = keystoneUserClaims.PrimaryPhone?.ToPhoneNumberString();
-            person.LoginName = keystoneUserClaims.LoginName;
-
-            // handle the organization
-            // removed per WA DNR #1411
-            //if (keystoneUserClaims.OrganizationGuid.HasValue)
-            //{
-            //    // first look by guid, then by name; if not available, create it on the fly since it is a person org
-            //    var organization = (HttpRequestStorage.DatabaseEntities.Organizations.GetOrganizationByOrganizationGuid(keystoneUserClaims.OrganizationGuid.Value) ??
-            //                        HttpRequestStorage.DatabaseEntities.Organizations.GetOrganizationByOrganizationName(keystoneUserClaims.OrganizationName));
-
-            //    if (organization == null)
-            //    {
-            //        var defaultOrganizationType = HttpRequestStorage.DatabaseEntities.OrganizationTypes.GetDefaultOrganizationType();
-            //        organization = new Organization(keystoneUserClaims.OrganizationName, true, defaultOrganizationType);
-            //        HttpRequestStorage.DatabaseEntities.AllOrganizations.Add(organization);
-            //        sendNewOrganizationNotification = true;
-            //    }
-
-            //    organization.OrganizationName = keystoneUserClaims.OrganizationName;
-
-            //    if (!organization.OrganizationGuid.HasValue)
-            //    {
-            //        organization.OrganizationGuid = keystoneUserClaims.OrganizationGuid;
-            //    }
-            //    person.Organization = organization;
-            //    person.OrganizationID = organization.OrganizationID;
-            //}
-            //else
-            //{
-            //    var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-            //    person.OrganizationID = unknownOrganization.OrganizationID;
-            //    //Assign user to magic Unkown Organization ID
-            //}
-
-            person.UpdateDate = DateTime.Now;
-            HttpRequestStorage.Person = person;
-            HttpRequestStorage.DatabaseEntities.SaveChanges(person);
-
-            var ipAddress = Request.UserHostAddress;
-            var userAgent = Request.UserAgent;
-            if (sendNewUserNotification)
-            {
-                SendNewUserCreatedMessage(person, ipAddress, userAgent, keystoneUserClaims.LoginName);
-            }
-
-            return HttpRequestStorage.Person;
-        }
 
         [AnonymousUnclassifiedFeature]
         public ContentResult NotAuthorized()
@@ -135,12 +68,195 @@ namespace ProjectFirma.Web.Controllers
             return Content("Not Authorized");
         }
 
-        private static void SendNewUserCreatedMessage(Person person, string ipAddress, string userAgent, string loginName)
+        [AnonymousUnclassifiedFeature]
+        public ActionResult Login(string returnUrl)
         {
-            var subject = $"User added: {person.FullNameFirstLastAndOrg}";
+            var sawLoginUrl = FirmaWebConfiguration.SAWEndPoint;
+            var adfsLoginUrl = FirmaWebConfiguration.ADFSEndPoint;
+            var viewData = new LoginViewData(CurrentPerson, sawLoginUrl, adfsLoginUrl);
+            return RazorView<Login, LoginViewData>(viewData);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult SAWPost(string returnUrl)
+        {
+            var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
+            samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
+
+            if (samlResponse.IsValid())
+            {
+                var username = samlResponse.GetNameID();
+                var fullName = samlResponse.GetName();
+                var email = samlResponse.GetEmail();
+                var userName = samlResponse.GetUserName();
+
+                IdentitySignin(username, fullName, email, userName, null, AuthenticationMethod.SAW);
+            }
+            return new RedirectResult(HomeUrl);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ADFSPost(string returnUrl)
+        {
+            var samlResponse = new ADFSSamlResponse();
+            samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
+
+            samlResponse.Decrypt();
+            var firstName = samlResponse.GetFirstName();
+            var lastName = samlResponse.GetLastName();
+            var email = samlResponse.GetEmail();
+            var upn = samlResponse.GetUPN();
+            var groups = samlResponse.GetRoleGroups();
+            IdentitySignin(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.ADFS);
+            return new RedirectResult(HomeUrl);
+        }
+
+        private void IdentitySignin(string userId, string name, string email, string userName, string groups,
+            AuthenticationMethod authenticationMethod, string providerKey = null, bool isPersistent = false)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId),
+                new Claim(ClaimTypes.Name, name),
+                new Claim(ClaimTypes.WindowsAccountName, userName)
+            };
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                claims.Add(new Claim(ClaimTypes.Email, email));
+            }
+
+            if (!string.IsNullOrWhiteSpace(groups))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, groups));
+            }
+
+            var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+            // add to user here!
+            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                IsPersistent = isPersistent,
+                ExpiresUtc = DateTime.UtcNow.AddDays(7)
+            }, identity);
+
+            SyncLocalAccountStore(identity, authenticationMethod);
+        }
+
+        public void IdentitySignout()
+        {
+            HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie, DefaultAuthenticationTypes.ExternalCookie);
+        }
+
+        [AnonymousUnclassifiedFeature]
+        public ActionResult LogOff()
+        {
+            IdentitySignout();
+            var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
+            return Redirect(returnUrl);
+        }
+
+        private static Person SyncLocalAccountStore(IIdentity userIdentity, AuthenticationMethod authenticationMethod)
+        {
+            SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - User '{0}', Authenticated = '{1}'", userIdentity.Name, userIdentity.IsAuthenticated);
+            var saml2UserClaims = Saml2ClaimsHelpers.ParseOpenIDClaims(userIdentity);
+
+            var personUniqueIdentifier = saml2UserClaims.UniqueIdentifier;
+            var names = saml2UserClaims.DisplayName.Split(' ');
+            var firstName = "";
+            var lastName = "";
+            if (names.Length == 2)
+            {
+                firstName = names[0];
+                lastName = names[1];
+            }
+            else
+            {
+                firstName = saml2UserClaims.DisplayName;
+            }
+            var email = saml2UserClaims.Email;
+            var username = saml2UserClaims.Username;
+
+            var sendNewUserNotification = false;
+            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
+
+            if (person == null)
+            {
+                // new user - provision with limited role
+                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", personUniqueIdentifier);
+                var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
+                person = new Person(firstName, lastName, Role.Unassigned.RoleID,
+                    DateTime.Now, true, false)
+                {
+                    PersonUniqueIdentifier = personUniqueIdentifier,
+                    Email = email,
+                    LoginName = username,
+                    OrganizationID = unknownOrganization.OrganizationID
+                };
+                HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
+                sendNewUserNotification = true;
+            }
+            else
+            {
+                // existing user - sync values
+                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - syncing local profile for User '{0}'", personUniqueIdentifier);
+            }
+
+            person.FirstName = firstName;
+            person.LastName = lastName;
+            person.Email = email;
+            person.LoginName = username;
+            person.UpdateDate = DateTime.Now;
+
+            if (authenticationMethod == AuthenticationMethod.ADFS)
+            {
+                var roleGroups = saml2UserClaims.RoleGroups;
+                if (roleGroups.Any())
+                {
+                    person.RoleID = MapRoleFromClaims(roleGroups).RoleID;
+                }
+
+                person.OrganizationID = OrganizationModelExtensions.WadnrID;
+            }
+            HttpRequestStorage.Person = person;
+            HttpRequestStorage.DatabaseEntities.SaveChanges(person);
+
+            if (sendNewUserNotification)
+            {
+                SendNewUserCreatedMessage(person, username);
+            }
+            return HttpRequestStorage.Person;
+        }
+
+        private static Role MapRoleFromClaims(List<string> roleGroups)
+        {
+            if (roleGroups.Any(x => x.Contains(@"G-S-DNR_WF_ForestHealth_Admin")))
+            {
+                return Role.Admin;
+            }
+
+            if (roleGroups.Any(x => x.Contains(@"G-S-DNR_WF_ForestHealth_Review")))
+            {
+                return Role.ProjectSteward;
+            }
+
+            if (roleGroups.Any(x => x.Contains(@"G-S-DNR_WF_ForestHealth_Users")))
+            {
+                return Role.Normal;
+            }
+
+            return Role.Unassigned;
+        }
+
+
+        private static void SendNewUserCreatedMessage(Person person, string loginName)
+        {
+            var subject = $"User added: {person.FullNameFirstLast}";
             var message = $@"
 <div style='font-size: 12px; font-family: Arial'>
-    <strong>Project Firma User added:</strong> {person.FullNameFirstLast}<br />
+    <strong>WA DNR Forest Health Tracker User added:</strong> {person.FullNameFirstLast}<br />
     <strong>Added on:</strong> {DateTime.Now}<br />
     <strong>Email:</strong> {person.Email}<br />
     <strong>Phone:</strong> {person.Phone.ToPhoneNumberString()}<br />
@@ -155,8 +271,6 @@ namespace ProjectFirma.Web.Controllers
     <div style='font-size: 10px; color: gray'>
     OTHER DETAILS:<br />
     LOGIN: {loginName}<br />
-    IP ADDRESS: {ipAddress}<br />
-    USERAGENT: {userAgent}<br />
     <br />
     </div>
     <div>You received this email because you are set up as a point of contact for support - if that's not correct, let us know: {
@@ -164,72 +278,27 @@ namespace ProjectFirma.Web.Controllers
                 }.</div>
 </div>
 ";
-            
+
             var mailMessage = new MailMessage { From = new MailAddress(FirmaWebConfiguration.DoNotReplyEmail), Subject = subject, Body = message, IsBodyHtml = true };
             mailMessage.To.Add(FirmaWebConfiguration.SitkaSupportEmail);
 
             // Reply-To Header
-            mailMessage.ReplyToList.Add(person.Email);
+            mailMessage.ReplyToList.Add(person.Email ?? FirmaWebConfiguration.SitkaSupportEmail);
 
             // TO field
             var supportPersons = HttpRequestStorage.DatabaseEntities.People.GetPeopleWhoReceiveSupportEmails();
             foreach (var supportPerson in supportPersons)
             {
                 mailMessage.To.Add(supportPerson.Email);
-            }            
+            }
 
             SitkaSmtpClient.Send(mailMessage);
         }
 
-        private static void SendNewOrganizationCreatedMessage(Person person, string ipAddress, string userAgent, string loginName)
+        private enum AuthenticationMethod
         {
-            var organization = person.Organization;
-            var subject = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} added: {person.Organization.DisplayName}";
-
-            var message = $@"
-<div style='font-size: 12px; font-family: Arial'>
-    <strong>{FieldDefinition.Organization.GetFieldDefinitionLabel()} created:</strong> {organization.GetDisplayNameAsUrl()}<br />
-    <strong>Created on:</strong> {DateTime.Now}<br />
-    <strong>Created because:</strong> New user logged in<br />
-    <strong>New user:</strong> {person.FullNameFirstLast} ({person.Email})<br />
-    <br />
-    <p>
-        You may want to <a href=""{
-                    SitkaRoute<OrganizationController>.BuildAbsoluteUrlFromExpression(x => x.Detail(organization
-                        .OrganizationID))
-                }"">add detail for this {FieldDefinition.Organization.GetFieldDefinitionLabel()}</a> such as its abbreviation, {
-                    FieldDefinition.OrganizationType.GetFieldDefinitionLabel()
-                }, website, logo, etc. This will make its {FieldDefinition.Organization.GetFieldDefinitionLabel()} summary page display better.
-    </p>
-    <br />
-    <br />
-    <div style='font-size: 10px; color: gray'>
-    OTHER DETAILS:<br />
-    LOGIN: {loginName}<br />
-    IP ADDRESS: {ipAddress}<br />
-    USERAGENT: {userAgent}<br />
-    <br />
-    </div>
-    <div>You received this email because you are set up as a point of contact for support - if that's not correct, let us know: {
-                    FirmaWebConfiguration.SitkaSupportEmail
-                }</div>.
-</div>
-";
-            
-            var mailMessage = new MailMessage { From = new MailAddress(FirmaWebConfiguration.DoNotReplyEmail), Subject = subject, Body = message, IsBodyHtml = true };
-            mailMessage.To.Add(FirmaWebConfiguration.SitkaSupportEmail);
-
-            // Reply-To Header
-            mailMessage.ReplyToList.Add(person.Email);
-
-            // TO field
-            var supportPersons = HttpRequestStorage.DatabaseEntities.People.GetPeopleWhoReceiveSupportEmails();
-            foreach (var supportPerson in supportPersons)
-            {
-                mailMessage.To.Add(supportPerson.Email);
-            }            
-
-            SitkaSmtpClient.Send(mailMessage);
+            ADFS,
+            SAW
         }
     }
 }

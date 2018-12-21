@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[GrantAllocationID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
 	[GrantID] [int] NOT NULL,
+	[ProjectName] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[StartDate] [datetime] NOT NULL,
 	[EndDate] [datetime] NOT NULL,
 	[AllocationAmount] [money] NULL,

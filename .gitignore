@@ -8,14 +8,14 @@
 /Source/.vs/
 /Source/Corral.v12.suo
 /Source/NuGetPackages
-/Source/ProjectFirma.sln.DotSettings
-/Source/ProjectFirma.sln.DotSettings.user
+/Source/WADNRForestHealth.sln.DotSettings
+/Source/WADNRForestHealth.sln.DotSettings.user
 /Source/**/bin/
 /Source/**/obj/
 
 # /Source/LtInfo.Common/
-/Source/LtInfo.Common/Lorax.Common.csproj.user
-/Source/LtInfo.Common/Lorax.Common.csproj.DotSettings.user
+/Source/LtInfo.Common/LtInfo.Common.csproj.user
+/Source/LtInfo.Common/LtInfo.Common.csproj.DotSettings.user
 
 # /Source/LtInfo.Common/HealthMonitor/
 

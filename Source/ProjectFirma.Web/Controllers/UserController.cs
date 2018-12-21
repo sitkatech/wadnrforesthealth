@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -32,9 +31,7 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.KeystoneDataService;
 using ProjectFirma.Web.Views.Shared.UserStewardshipAreas;
-using Organization = ProjectFirma.Web.Models.Organization;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -231,106 +228,6 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [SitkaAdminFeature]
-        public PartialViewResult PullUserFromKeystone()
-        {
-            var viewModel = new PullUserFromKeystoneViewModel();
-
-            return ViewPullUserFromKeystone(viewModel);
-        }
-
-        [HttpPost]
-        [SitkaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult PullUserFromKeystone(PullUserFromKeystoneViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ViewPullUserFromKeystone(viewModel);
-            }
-
-            var keystoneClient = new KeystoneDataClient();
-
-            UserProfile keystoneUser = keystoneClient.GetUserProfileByUsername(FirmaWebConfiguration.KeystoneWebServiceApplicationGuid, viewModel.LoginName);
-            if (keystoneUser == null)
-            {
-                SetErrorForDisplay($"Person not added. The {FieldDefinition.Username.GetFieldDefinitionLabel()} was not found in Keystone");
-                return new ModalDialogFormJsonResult();    
-            }
-            
-            if (!keystoneUser.OrganizationGuid.HasValue)
-            {
-                SetErrorForDisplay($"Person not added. They have no {FieldDefinition.Organization.GetFieldDefinitionLabel()} in Keystone");
-            }
-
-            KeystoneDataService.Organization keystoneOrganization = null;
-            try
-            {
-                keystoneOrganization = keystoneClient.GetOrganization(keystoneUser.OrganizationGuid.Value);
-            }
-            catch (Exception)
-            {
-                SetErrorForDisplay($"Person not added. Could not find their {FieldDefinition.Organization.GetFieldDefinitionLabel()} in Keystone");
-            }
-
-            if (keystoneOrganization == null)
-            {
-                SetErrorForDisplay("Person not added. Could not find their Organization in Keystone");
-
-            }
-            else
-            {
-                var firmaOrganization =
-                    HttpRequestStorage.DatabaseEntities.Organizations.SingleOrDefault(
-                        x => x.OrganizationGuid == keystoneUser.OrganizationGuid);
-                if (firmaOrganization == null)
-                {
-                    var defaultOrganizationType = HttpRequestStorage.DatabaseEntities.OrganizationTypes.GetDefaultOrganizationType();
-                    firmaOrganization = new Organization(keystoneOrganization.FullName, true, defaultOrganizationType)
-                    {
-                        OrganizationGuid = keystoneOrganization.OrganizationGuid,
-                        OrganizationShortName = keystoneOrganization.ShortName,
-                        OrganizationUrl = keystoneOrganization.URL
-                    };
-                    HttpRequestStorage.DatabaseEntities.AllOrganizations.Add(firmaOrganization);
-                }
-
-                var firmaPerson =
-                    HttpRequestStorage.DatabaseEntities.People.SingleOrDefault(
-                        x => x.PersonGuid == keystoneUser.UserGuid);
-                if (firmaPerson != null)
-                {
-                    firmaPerson.OrganizationID = firmaOrganization.OrganizationID;
-                }
-                else
-                {
-                    firmaPerson = new Person(keystoneUser.FirstName, keystoneUser.LastName,
-                        Role.Unassigned, DateTime.Now, true, false)
-                    {
-                        PersonGuid = keystoneUser.UserGuid,
-                        Email = keystoneUser.Email,
-                        LoginName = keystoneUser.LoginName,
-                        Organization = firmaOrganization
-                    };
-                    HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
-                }
-
-                HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-                SetMessageForDisplay($"{firmaPerson.GetFullNameFirstLastAndOrgAsUrl()} successfully added. You may want to <a href=\"{firmaPerson.GetDetailUrl()}\">assign them a role</a>.");
-            }
-            return new ModalDialogFormJsonResult();
-
-            
-        }
-
-        private PartialViewResult ViewPullUserFromKeystone(PullUserFromKeystoneViewModel viewModel)
-        {
-            var viewData = new PullUserFromKeystoneViewData();
-            return RazorPartialView<PullUserFromKeystone, PullUserFromKeystoneViewData, PullUserFromKeystoneViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
         [UserEditAsAdminFeature]
         public PartialViewResult EditStewardshipAreas(PersonPrimaryKey personPrimaryKey)
         {
@@ -446,7 +343,7 @@ namespace ProjectFirma.Web.Controllers
             {
             var person = personPrimaryKey.EntityObject;
             var viewModel = new EditContactViewModel(person);
-            return ViewAddContact(viewModel, person.PersonGuid.HasValue);
+            return ViewAddContact(viewModel, !string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier));
         }
 
         [HttpPost]
@@ -457,7 +354,7 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewAddContact(viewModel, person.PersonGuid.HasValue);
+                return ViewAddContact(viewModel, !string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier));
             }
 
             viewModel.UpdateModel(person);

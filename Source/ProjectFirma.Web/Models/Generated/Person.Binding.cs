@@ -58,10 +58,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, Guid? personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress, int? addedByPersonID) : this()
+        public Person(int personID, string personUniqueIdentifier, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress, int? addedByPersonID) : this()
         {
             this.PersonID = personID;
-            this.PersonGuid = personGuid;
+            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -300,7 +300,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int PersonID { get; set; }
         public int TenantID { get; private set; }
-        public Guid? PersonGuid { get; set; }
+        public string PersonUniqueIdentifier { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -359,6 +359,7 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
+            public const int PersonUniqueIdentifier = 100;
             public const int FirstName = 100;
             public const int LastName = 100;
             public const int Email = 255;

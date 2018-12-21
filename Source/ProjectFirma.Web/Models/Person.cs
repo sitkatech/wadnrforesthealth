@@ -19,20 +19,17 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Common;
-using Keystone.Common;
-using LtInfo.Common;
 using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class Person : IAuditableEntity, IKeystoneUser
+    public partial class Person : IAuditableEntity
     {
-        private const int AnonymousPersonID = -999;
+        public const int AnonymousPersonID = -999;
 
         /// <summary>
         /// Needed for Keystone; basically <see cref="HttpRequestStorage.Person" /> is set to this fake
@@ -125,11 +122,6 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public void SetKeystoneUserClaims(IKeystoneUserClaims keystoneUserClaims)
-        {
-            Email = keystoneUserClaims.Email;
-        }
-
         public bool CanStewardProject(Project project)
         {
             return MultiTenantHelpers.GetProjectStewardshipAreaType()?.CanStewardProject(this, project) ?? true;
@@ -165,7 +157,7 @@ namespace ProjectFirma.Web.Models
 
         public bool IsFullUser()
         {
-            return PersonGuid.HasValue;
+            return !string.IsNullOrWhiteSpace(PersonUniqueIdentifier);
         }
     }
 }
