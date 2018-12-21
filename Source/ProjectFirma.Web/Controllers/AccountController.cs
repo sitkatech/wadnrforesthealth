@@ -283,7 +283,7 @@ namespace ProjectFirma.Web.Controllers
             mailMessage.To.Add(FirmaWebConfiguration.SitkaSupportEmail);
 
             // Reply-To Header
-            mailMessage.ReplyToList.Add(person.Email);
+            mailMessage.ReplyToList.Add(person.Email ?? FirmaWebConfiguration.SitkaSupportEmail);
 
             // TO field
             var supportPersons = HttpRequestStorage.DatabaseEntities.People.GetPeopleWhoReceiveSupportEmails();
