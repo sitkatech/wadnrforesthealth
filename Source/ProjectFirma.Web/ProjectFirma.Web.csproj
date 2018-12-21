@@ -129,9 +129,12 @@
     <Compile Include="Models\Generated\GeospatialAreaTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GoogleChartType.Binding.cs" />
     <Compile Include="Models\Generated\GoogleChartTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\Grant.Binding.cs" />
+    <Compile Include="Models\Generated\Grant.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocation.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocation.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStaging.Binding.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStaging.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStagingPrimaryKey.Binding.cs" />
@@ -454,7 +457,8 @@
     <Compile Include="Saml.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
-    <Compile Include="Views\Grant\GrantAllocationIndexGridSpec.cs" />
+    <Compile Include="Views\Grant\GrantGridSpec.cs" />
+    <Compile Include="Views\Grant\GrantAllocationGridSpec.cs" />
     <Compile Include="Views\Grant\GrantIndexViewData.cs" />
     <Compile Include="Views\Grant\GrantExcelSpec.cs" />
     <Compile Include="Views\Grant\GrantIndex.cs" />
