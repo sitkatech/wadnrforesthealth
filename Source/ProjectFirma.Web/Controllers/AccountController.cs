@@ -256,7 +256,7 @@ namespace ProjectFirma.Web.Controllers
             var subject = $"User added: {person.FullNameFirstLast}";
             var message = $@"
 <div style='font-size: 12px; font-family: Arial'>
-    <strong>Project Firma User added:</strong> {person.FullNameFirstLast}<br />
+    <strong>WA DNR Forest Health Tracker User added:</strong> {person.FullNameFirstLast}<br />
     <strong>Added on:</strong> {DateTime.Now}<br />
     <strong>Email:</strong> {person.Email}<br />
     <strong>Phone:</strong> {person.Phone.ToPhoneNumberString()}<br />
