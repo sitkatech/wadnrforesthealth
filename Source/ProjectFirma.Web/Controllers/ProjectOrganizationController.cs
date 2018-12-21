@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditOrganizations(EditOrganizationsViewModel viewModel, Project project)
         {
             var allOrganizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var allPeople = HttpRequestStorage.DatabaseEntities.People.ToList().OrderBy(p => p.FullNameFirstLastAndOrg).ToList();
+            var allPeople = HttpRequestStorage.DatabaseEntities.People.ToList().Where(x=>x.IsFullUser()).OrderBy(p => p.FullNameFirstLastAndOrg).ToList();
             if (!allPeople.Contains(CurrentPerson))
             {
                 allPeople.Add(CurrentPerson);
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Controllers
             var allRelationshipTypes = HttpRequestStorage.DatabaseEntities.RelationshipTypes.ToList();
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
 
-            var viewData = new EditOrganizationsViewData(allOrganizations, allPeople, allRelationshipTypes, defaultPrimaryContact);
+            var viewData = new EditOrganizationsViewData(allOrganizations, allRelationshipTypes, defaultPrimaryContact);
             return RazorPartialView<EditOrganizations, EditOrganizationsViewData, EditOrganizationsViewModel>(viewData, viewModel);
         }
     }

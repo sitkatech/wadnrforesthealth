@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.Account
 
         public LoginViewData(Person currentPerson, string sawLoginUrl, string adfsLoginUrl) : base(currentPerson, null)
         {
-            PageTitle = "Login";
+            PageTitle = "Log In";
             SAWLoginUrl = sawLoginUrl;
             ADFSLoginUrl = adfsLoginUrl;
         }

@@ -48,13 +48,13 @@
 
 @section RightOfPageTitle
 {
-    @if (ViewDataTyped.UserHasPersonManagePermissions && !ViewDataTyped.PersonIsMereContact)
+    @if (ViewDataTyped.UserHasAdminPermission && !ViewDataTyped.PersonIsMereContact)
     {
         @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} {1} User", "<span class='glyphicon glyphicon-edit blue''></span>", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), ViewDataTyped.ActivateInactivateUrl, string.Format("{0} this user?", ViewDataTyped.Person.IsActive ? "Inactivate" : "Activate"), 400, "Continue", "Cancel", null, null, null)
     }
 }
 
-@if (ViewDataTyped.UserHasPersonManagePermissions)
+@if (ViewDataTyped.UserHasEditBasicsPermission)
 {
     <div>
         <a class="btn backButton" href="@ViewDataTyped.Index">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Users</a>
@@ -63,7 +63,7 @@
 @if (ViewDataTyped.PersonIsMereContact)
 {
     <div class="alert alert-info">
-        @ViewDataTyped.Person.FullNameFirstLast is only a project contact and does not have an account in the system.
+        @ViewDataTyped.Person.FullNameFirstLast is a contact and does not have a user account in the system.
     </div>
 
 }
@@ -72,70 +72,71 @@
     <div class="col-md-6">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                @if (ViewDataTyped.PersonIsMereContact)
-                {
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, string.Format("Edit Contact"), 950, ViewDataTyped.UserHasManageContactPermissions)
-                }
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, string.Format("Edit Contact"), 950, ViewDataTyped.UserHasEditBasicsPermission)
                 Basics
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">Name</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.FullNameFirstLastAndMiddle</div>
+                    <div class="col-xs-5 fieldLabel text-right">Name</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.FullNameFirstLastAndMiddle</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">Email</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.Email</div>
+                    <div class="col-xs-5 fieldLabel text-right">Email</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Email</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">Phone</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.Phone.ToPhoneNumberString()</div>
+                    <div class="col-xs-5 fieldLabel text-right">Phone</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Phone</div>
                 </div>
                 @if (!ViewDataTyped.PersonIsMereContact)
                 {
                     <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.LoginName</div>
+                        <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
+                        <div class="col-xs-7">@ViewDataTyped.Person.LoginName</div>
                     </div>
                 }
                 <div class="row">
-                    <div class="col-xs-4 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
-                    <div class="col-xs-8">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>
+                    <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>
                 </div>
-                @if (ViewDataTyped.UserHasPersonManagePermissions)
+
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Mailing Address</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.PersonAddress</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.StatewideVendorNumber</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 fieldLabel text-right">Notes</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Notes</div>
+                </div>
+                @if (ViewDataTyped.UserHasEditBasicsPermission)
                 {
                     if (!ViewDataTyped.PersonIsMereContact)
                     {
                         <div class="row">
-                            <div class="col-xs-4 fieldLabel text-right">Last Activity</div>
-                            <div class="col-xs-8">@ViewDataTyped.Person.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
+                            <div class="col-xs-5 fieldLabel text-right">Last Activity</div>
+                            <div class="col-xs-7">@ViewDataTyped.Person.LastActivityDate.ToStringDateTimeNoLeadingZeros()</div>
                         </div>
                     }
                     <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Created Date</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.CreateDate.ToStringDateTimeNoLeadingZeros()</div>
+                        <div class="col-xs-5 fieldLabel text-right">Added On</div>
+                        <div class="col-xs-7">@ViewDataTyped.Person.CreateDate.ToStringDateTimeNoLeadingZeros()</div>
                     </div>
-                }
-                @if (ViewDataTyped.PersonIsMereContact)
-                {
-                    
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Mailing Address</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.PersonAddress</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.StatewideVendorNumber</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 fieldLabel text-right">Notes</div>
-                        <div class="col-xs-8">@ViewDataTyped.Person.Notes</div>
-                    </div>
+                    if (ViewDataTyped.PersonIsMereContact)
+                    {
+                        <div class="row">
+                            <div class="col-xs-5 fieldLabel text-right">Added By</div>
+                            <div class="col-xs-7">@ViewDataTyped.Person.AddedByPerson.FullNameFirstLast</div>
+                        </div>
+                    }
                 }
             </div>
         </div>
     </div>
-    @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasPersonManagePermissions || ViewDataTyped.IsViewingSelf)
+    @if (!ViewDataTyped.PersonIsMereContact && ViewDataTyped.UserHasAdminPermission || ViewDataTyped.IsViewingSelf)
     {
         <div class="col-md-6">
             <div class="panel panelFirma">
@@ -146,7 +147,7 @@
                     <div class="row">
                         <div class="col-xs-4 fieldLabel text-right">Role</div>
                         <div class="col-xs-8">
-                            @if (ViewDataTyped.UserHasPersonManagePermissions)
+                            @if (ViewDataTyped.UserHasEditBasicsPermission)
                             {
                                 @ViewDataTyped.Person.Role.GetDisplayNameAsUrl()
                             }
@@ -166,7 +167,7 @@
         <div class="col-md-6">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @if (ViewDataTyped.UserHasPersonManagePermissions && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Person.Role == Role.ProjectSteward)
+                    @if (ViewDataTyped.UserHasEditBasicsPermission && ViewDataTyped.TenantHasStewardshipAreas && ViewDataTyped.Person.Role == Role.ProjectSteward)
                     {
                         <span>
                             @ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditStewardshipAreas(ViewDataTyped.Person)),
@@ -231,7 +232,7 @@
         <div class="col-md-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPersonOrganizationPrimaryContactUrl, string.Format("Edit {0} for which {1} is a {2}", FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()), ViewDataTyped.UserHasPersonManagePermissions) @string.Format("Organizations for which {0} is a {1}", ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPersonOrganizationPrimaryContactUrl, string.Format("Edit {0} for which {1} is a {2}", FieldDefinition.Organization.GetFieldDefinitionLabelPluralized(), ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()), ViewDataTyped.UserHasAdminPermission) @string.Format("Organizations for which {0} is a {1}", ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
                 </div>
                 <div class="panel-body">
                     @if (ViewDataTyped.Person.PrimaryContactOrganizations.Any())
@@ -253,7 +254,7 @@
     <div class="col-md-12">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                @string.Format("{0} for which {1} is a {2}", FieldDefinition.Project.GetFieldDefinitionLabel(), ViewDataTyped.Person.FullNameFirstLast, FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel())
+                @ViewDataTyped.ProjectsForWhichUserIsAContactGridTitle
             </div>
             <div class="panel-body">
                 @Html.DhtmlxGrid(ViewDataTyped.BasicProjectInfoGridSpec, ViewDataTyped.BasicProjectInfoGridName, ViewDataTyped.BasicProjectInfoGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)

@@ -33,6 +33,8 @@ namespace ProjectFirma.Web.Views.Organization
 {
     public class EditViewModel : FormViewModel, IValidatableObject
     {
+        public const int MaxLogoSizeInBytes = 1024 * 200;
+
         public int OrganizationID { get; set; }
 
         [Required]
@@ -86,7 +88,7 @@ namespace ProjectFirma.Web.Views.Organization
         {
             organization.OrganizationName = OrganizationName;
             organization.OrganizationShortName = OrganizationShortName;
-            organization.OrganizationTypeID = OrganizationTypeID.Value;
+            organization.OrganizationTypeID = OrganizationTypeID.GetValueOrDefault(); // can never be null due to RequiredAttribute
             organization.IsActive = IsActive;
             organization.PrimaryContactPersonID = PrimaryContactPersonID;
             organization.OrganizationUrl = OrganizationUrl;
@@ -98,17 +100,12 @@ namespace ProjectFirma.Web.Views.Organization
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var validationResults = new List<ValidationResult>();
-
             if (LogoFileResourceData != null && LogoFileResourceData.ContentLength > MaxLogoSizeInBytes)
             {
                 var errorMessage = $"Logo is too large - must be less than {FileUtility.FormatBytes(MaxLogoSizeInBytes)}. Your logo was {FileUtility.FormatBytes(LogoFileResourceData.ContentLength)}.";
-                validationResults.Add(new SitkaValidationResult<EditViewModel, HttpPostedFileBase>(errorMessage, x => x.LogoFileResourceData));
+                yield return new SitkaValidationResult<EditViewModel, HttpPostedFileBase>(errorMessage,
+                    x => x.LogoFileResourceData);
             }
-
-            return validationResults;
         }
-
-        public const int MaxLogoSizeInBytes = 1024 * 200;
     }
 }

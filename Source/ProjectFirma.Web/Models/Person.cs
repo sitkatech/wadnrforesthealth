@@ -52,7 +52,17 @@ namespace ProjectFirma.Web.Models
 
         public string FullNameFirstLast => $"{FirstName} {LastName}";
 
-        public string FullNameFirstLastAndOrg => $"{FirstName} {LastName} - {Organization.DisplayName}";
+        public string FullNameFirstLastAndOrg
+        {
+            get
+            {
+                if (Organization != null)
+                {
+                    return $"{FirstName} {LastName} - {Organization.DisplayNameWithoutAbbreviation}";
+                }
+                else return FullNameFirstLast;
+            }
+        }
 
         public string FullNameFirstLastAndOrgShortName => $"{FirstName} {LastName} ({Organization.OrganizationShortNameIfAvailable})";
 
@@ -107,7 +117,7 @@ namespace ProjectFirma.Web.Models
                     // the presence of roles switches you from being IsAuthenticated or not
                     return new List<string>();
                 }
-                var roleNames = new List<string> { Role.RoleName };
+                var roleNames = new List<string> {Role.RoleName};
                 return roleNames;
             }
         }
@@ -141,8 +151,13 @@ namespace ProjectFirma.Web.Models
 
         public bool IsAnonymousOrUnassigned => IsAnonymousUser || Role == Role.Unassigned;
 
-        public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;
+        public bool CanViewProposals => MultiTenantHelpers.ShowApplicationsToThePublic() || !IsAnonymousOrUnassigned;       
         public bool CanViewPendingProjects => new PendingProjectsViewListFeature().HasPermissionByPerson(this);
         public string FullNameFirstLastAndMiddle => $"{FirstName} {MiddleName} {LastName}";
+
+        public bool IsFullUser()
+        {
+            return !string.IsNullOrWhiteSpace(PersonUniqueIdentifier);
+        }
     }
 }

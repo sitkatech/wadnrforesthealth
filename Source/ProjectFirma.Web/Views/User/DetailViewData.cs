@@ -24,6 +24,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.User
 {
@@ -34,10 +35,10 @@ namespace ProjectFirma.Web.Views.User
         public string Index { get; }
 
         public bool UserHasPersonViewPermissions { get; }
-        public bool UserHasPersonManagePermissions { get; }
+        public bool UserHasEditBasicsPermission { get; }
         public bool UserHasViewEverythingPermissions { get; }
         public bool IsViewingSelf { get; }
-        public Project.BasicProjectInfoGridSpec BasicProjectInfoGridSpec { get; }
+        public ProjectInfoForUserDetailGridSpec BasicProjectInfoGridSpec { get; }
         public string BasicProjectInfoGridName { get; }
         public string BasicProjectInfoGridDataUrl { get; }
         public UserNotificationGridSpec UserNotificationGridSpec { get; }
@@ -45,14 +46,14 @@ namespace ProjectFirma.Web.Views.User
         public string UserNotificationGridDataUrl { get; }
         public string ActivateInactivateUrl { get; }
         public bool TenantHasStewardshipAreas { get; }
-        
+        public bool UserHasAdminPermission { get; }
         public bool PersonIsMereContact { get; }
         public string EditContactUrl { get; }
-        public bool UserHasManageContactPermissions { get; }
+        public string ProjectsForWhichUserIsAContactGridTitle { get; }
 
         public DetailViewData(Person currentPerson,
             Person personToView,
-            Project.BasicProjectInfoGridSpec basicProjectInfoGridSpec,
+            ProjectInfoForUserDetailGridSpec basicProjectInfoGridSpec,
             string basicProjectInfoGridName,
             string basicProjectInfoGridDataUrl,
             UserNotificationGridSpec userNotificationGridSpec,
@@ -70,10 +71,11 @@ namespace ProjectFirma.Web.Views.User
             Index = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
 
             UserHasPersonViewPermissions = new UserViewFeature().HasPermission(currentPerson, personToView).HasPermission;
-            UserHasPersonManagePermissions = new UserEditFeature().HasPermissionByPerson(currentPerson);
+            UserHasEditBasicsPermission = new UserEditBasicsFeature().HasPermission(currentPerson,personToView).HasPermission;
             UserHasViewEverythingPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             IsViewingSelf = currentPerson != null && currentPerson.PersonID == personToView.PersonID;
-            EditRolesLink = UserHasPersonManagePermissions
+            UserHasAdminPermission = new UserEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            EditRolesLink = UserHasAdminPermission
                 ? ModalDialogFormHelper.MakeEditIconLink(SitkaRoute<UserController>.BuildUrlFromExpression(c => c.EditRoles(personToView)),
                     $"Edit Roles for User - {personToView.FullNameFirstLast}",
                     true)
@@ -90,7 +92,10 @@ namespace ProjectFirma.Web.Views.User
 
             TenantHasStewardshipAreas = MultiTenantHelpers.GetProjectStewardshipAreaType() != null;
             EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
-            UserHasManageContactPermissions = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+
+            ProjectsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
+                ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
+                : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
         }
 
         public readonly HtmlString EditRolesLink;

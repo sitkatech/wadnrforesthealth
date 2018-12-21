@@ -65,23 +65,3 @@ else
 {
     <p class="systemText">No organizations set for this project.</p>
 }
-
-<hr />
-<div class="row">
-    <div class="col-xs-3">
-        @Html.LabelWithSugarFor(FieldDefinition.ProjectPrimaryContact)
-    </div>
-
-    <div class="col-xs-9">
-        @if (ViewDataTyped.PrimaryContactPerson != null)
-        {
-            <span>
-                @ViewDataTyped.PrimaryContactPerson.FullNameFirstLast (<a href="mailto:@ViewDataTyped.PrimaryContactPerson.Email">@ViewDataTyped.PrimaryContactPerson.Email</a>)
-            </span>
-        }
-        else
-        {
-            <span>@ViewUtilities.NoneString</span>
-        }
-    </div>
-</div>

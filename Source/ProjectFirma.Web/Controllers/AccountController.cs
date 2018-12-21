@@ -21,13 +21,11 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using LtInfo.Common;
 using LtInfo.Common.Email;
@@ -93,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
                 var email = samlResponse.GetEmail();
                 var userName = samlResponse.GetUserName();
 
-                IdentitySignin(username, fullName, email, userName, null);
+                IdentitySignin(username, fullName, email, userName, null, AuthenticationMethod.SAW);
             }
             return new RedirectResult(HomeUrl);
         }
@@ -111,11 +109,12 @@ namespace ProjectFirma.Web.Controllers
             var email = samlResponse.GetEmail();
             var upn = samlResponse.GetUPN();
             var groups = samlResponse.GetRoleGroups();
-            IdentitySignin(upn, firstName + " " + lastName, email, upn, groups);
+            IdentitySignin(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.ADFS);
             return new RedirectResult(HomeUrl);
         }
 
-        public void IdentitySignin(string userId, string name, string email, string userName, string groups, string providerKey = null, bool isPersistent = false)
+        private void IdentitySignin(string userId, string name, string email, string userName, string groups,
+            AuthenticationMethod authenticationMethod, string providerKey = null, bool isPersistent = false)
         {
             var claims = new List<Claim>
             {
@@ -143,7 +142,7 @@ namespace ProjectFirma.Web.Controllers
                 ExpiresUtc = DateTime.UtcNow.AddDays(7)
             }, identity);
 
-            SyncLocalAccountStore(identity);
+            SyncLocalAccountStore(identity, authenticationMethod);
         }
 
         public void IdentitySignout()
@@ -159,7 +158,7 @@ namespace ProjectFirma.Web.Controllers
             return Redirect(returnUrl);
         }
 
-        public static Person SyncLocalAccountStore(IIdentity userIdentity)
+        private static Person SyncLocalAccountStore(IIdentity userIdentity, AuthenticationMethod authenticationMethod)
         {
             SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - User '{0}', Authenticated = '{1}'", userIdentity.Name, userIdentity.IsAuthenticated);
             var saml2UserClaims = Saml2ClaimsHelpers.ParseOpenIDClaims(userIdentity);
@@ -211,10 +210,15 @@ namespace ProjectFirma.Web.Controllers
             person.LoginName = username;
             person.UpdateDate = DateTime.Now;
 
-            var roleGroups = saml2UserClaims.RoleGroups;
-            if (roleGroups.Any())
+            if (authenticationMethod == AuthenticationMethod.ADFS)
             {
-                person.RoleID = MapRoleFromClaims(roleGroups).RoleID;
+                var roleGroups = saml2UserClaims.RoleGroups;
+                if (roleGroups.Any())
+                {
+                    person.RoleID = MapRoleFromClaims(roleGroups).RoleID;
+                }
+
+                person.OrganizationID = OrganizationModelExtensions.WadnrID;
             }
             HttpRequestStorage.Person = person;
             HttpRequestStorage.DatabaseEntities.SaveChanges(person);
@@ -290,24 +294,11 @@ namespace ProjectFirma.Web.Controllers
 
             SitkaSmtpClient.Send(mailMessage);
         }
-    }
 
-    public class ChallengeResult : HttpUnauthorizedResult
-    {
-        public ChallengeResult(string provider, string redirectUri)
+        private enum AuthenticationMethod
         {
-            LoginProvider = provider;
-            RedirectUri = redirectUri;
-        }
-
-        public string LoginProvider { get; set; }
-        public string RedirectUri { get; set; }
-
-        public override void ExecuteResult(ControllerContext context)
-        {
-            var properties = new AuthenticationProperties() { RedirectUri = RedirectUri };
-            context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+            ADFS,
+            SAW
         }
     }
-
 }

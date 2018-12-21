@@ -18,10 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
-@using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using LtInfo.Common
-@using LtInfo.Common.DhtmlWrappers
 @inherits ProjectFirma.Web.Views.Account.Login
 @section JavascriptAndStylesContent
 {
@@ -31,13 +28,15 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
+            <p></p>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-7">
-            <a href="@ViewDataTyped.SAWLoginUrl">SAW</a><br/>
-            <a href="@ViewDataTyped.ADFSLoginUrl">ADFS</a>
-
+        <div class="col-md-4">
+            <a href="@ViewDataTyped.SAWLoginUrl" class="btn btn-firma btn-lg">Log in with SAW</a>
+        </div>
+        <div class="col-md-4">
+            <a href="@ViewDataTyped.ADFSLoginUrl" class="btn btn-firma btn-lg">Log in with ADFS</a>
         </div>
     </div>
 </div>

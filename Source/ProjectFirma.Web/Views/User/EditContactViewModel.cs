@@ -6,44 +6,12 @@ using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using System.Text.RegularExpressions;
 
 namespace ProjectFirma.Web.Views.User
 {
     public class EditContactViewModel : FormViewModel, IValidatableObject
     {
-        /// <summary>
-        /// Needed by ModdelBinder
-        ///     </summary>
-        public EditContactViewModel()
-        {
-
-        }
-
-        public EditContactViewModel(Person person)
-        {
-            FirstName = person.FirstName;
-            MiddleName = person.MiddleName;
-            LastName = person.LastName;
-            Email = person.Email;
-            Address = person.PersonAddress;
-            Phone = person.Phone;
-            OrganizationID = person.OrganizationID;
-            StatewideVendorNumber = person.StatewideVendorNumber;
-            Notes = person.Notes;
-        }
-
-        public void UpdateModel(Person person)
-        {
-            person.FirstName = FirstName;
-            person.MiddleName = MiddleName;
-            person.LastName = LastName;
-            person.Email = Email;
-            person.PersonAddress = Address;
-            person.Phone = Phone;
-            person.OrganizationID = OrganizationID;
-            person.StatewideVendorNumber = StatewideVendorNumber;
-            person.Notes = Notes;
-        }
 
         [Required]
         [DisplayName("First Name")]
@@ -76,12 +44,62 @@ namespace ProjectFirma.Web.Views.User
         [StringLength(Person.FieldLengths.Notes)]
         public string Notes { get; set; }
 
+        /// <summary>
+        /// Needed by ModelBinder
+        ///     </summary>
+        public EditContactViewModel()
+        {
+
+        }
+
+        public EditContactViewModel(Person person)
+        {
+            FirstName = person.FirstName;
+            MiddleName = person.MiddleName;
+            LastName = person.LastName;
+            Email = person.Email;
+            Address = person.PersonAddress;
+            Phone = person.Phone;
+            OrganizationID = person.OrganizationID;
+            StatewideVendorNumber = person.StatewideVendorNumber;
+            Notes = person.Notes;
+        }
+
+        public void UpdateModel(Person person)
+        {
+            person.OrganizationID = OrganizationID;
+            person.PersonAddress = Address;
+            person.StatewideVendorNumber = StatewideVendorNumber;
+            person.Phone = Phone;
+            person.Notes = Notes;
+
+            if (string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier)) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
+            {
+                person.FirstName = FirstName;
+                person.MiddleName = MiddleName;
+                person.LastName = LastName;
+                person.Email = Email;
+            }
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Phone.Length != 10 || //number of digits in an american phone number
-                !Phone.All(char.IsDigit)) // phone numbers must be digits
+            if (Phone != null)
             {
-                yield return new SitkaValidationResult<EditContactViewModel, string>("Phone number was invalid.", m=>m.Phone);
+                Regex strip = new Regex(@"[()\-\s]"); // don't worry about whitespace characters or "phone-number" characters
+                var phoneNumberToTest = strip.Replace(Phone, "");
+                if (phoneNumberToTest.Length != 10 || //number of digits in an american phone number
+                    !phoneNumberToTest.All(char.IsDigit)) // phone numbers must be digits
+                {
+                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number was invalid.",
+                        m => m.Phone);
+                }
+            }
+
+            if (Email != null && !FirmaHelpers.IsValidEmail(Email))
+            {
+                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address was invalid.",
+                    m => m.Email);
             }
         }
     }

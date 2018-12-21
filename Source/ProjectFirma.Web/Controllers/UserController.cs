@@ -37,14 +37,14 @@ namespace ProjectFirma.Web.Controllers
 {
     public class UserController : FirmaBaseController
     {
-        [UserEditFeature]
+        [ContactManageFeature]
         public ViewResult Index()
         {
             var viewData = new IndexViewData(CurrentPerson);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [UserEditFeature]
+        [ContactManageFeature]
         public GridJsonNetJObjectResult<Person> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public PartialViewResult EditRoles(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditRoles(PersonPrimaryKey personPrimaryKey, EditRolesViewModel viewModel)
         {
@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [PersonDeleteFeature]
         public PartialViewResult Delete(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
@@ -97,7 +97,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var canDelete = !person.HasDependentObjects() && person != CurrentPerson;
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete {person.FullNameFirstLastAndOrg}?"
+                ? $"Are you sure you want to delete {person.FullNameFirstLast}?"
                 : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage("Person", SitkaRoute<UserController>.BuildLinkFromExpression(x => x.Detail(person), "here"));
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
@@ -105,7 +105,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [PersonDeleteFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult Delete(PersonPrimaryKey personPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -124,10 +124,10 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             var userNotificationGridSpec = new UserNotificationGridSpec();
             var userNotificationGridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserNotificationsGridJsonData(personPrimaryKey));
-            var basicProjectInfoGridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false)
+            var basicProjectInfoGridSpec = new Views.Project.ProjectInfoForUserDetailGridSpec(CurrentPerson, person)
             {
-                ObjectNameSingular = $"{FieldDefinition.Project.GetFieldDefinitionLabel()} where {person.FullNameFirstLast} is the {FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}",
-                ObjectNamePlural = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} where {person.FullNameFirstLast} is the {FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}",
+                ObjectNameSingular = $"{FieldDefinition.Project.GetFieldDefinitionLabel()}",
+                ObjectNamePlural = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}",
                 SaveFiltersInCookie = true
             };
             const string basicProjectInfoGridName = "userProjectListGrid";
@@ -146,12 +146,14 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [UserViewFeature]
-        public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
+        public GridJsonNetJObjectResult<ProjectPersonRelationship> ProjectsGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
-            var gridSpec = new Views.Project.BasicProjectInfoGridSpec(CurrentPerson, false);
-            var projectPersons = person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectPersons, gridSpec);
+            var gridSpec = new Views.Project.ProjectInfoForUserDetailGridSpec(CurrentPerson, person);
+            var projectPersons = person.IsFullUser()
+                ? person.GetPrimaryContactProjects(CurrentPerson).OrderBy(x => x.DisplayName).Select(x=> new ProjectPersonRelationship(x, person, null)).ToList()
+                : person.ProjectPeople.Select(x=>new ProjectPersonRelationship(x)).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectPersonRelationship>(projectPersons, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
@@ -166,7 +168,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public PartialViewResult ActivateInactivatePerson(PersonPrimaryKey personPrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(personPrimaryKey.PrimaryKeyValue);
@@ -200,7 +202,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult ActivateInactivatePerson(PersonPrimaryKey personPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -226,7 +228,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         public PartialViewResult EditStewardshipAreas(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
@@ -235,7 +237,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [UserEditFeature]
+        [UserEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditStewardshipAreas(PersonPrimaryKey personPrimaryKey, EditUserStewardshipAreasViewModel viewModel)
         {
@@ -297,12 +299,13 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditUserStewardshipAreas, EditUserStewardshipAreasViewData, EditUserStewardshipAreasViewModel>(viewData, viewModel);
         }
 
+
         [HttpGet]
         [ContactManageFeature]
         public PartialViewResult AddContact()
         {
             var viewModel = new EditContactViewModel();
-            return ViewAddContact(viewModel);
+            return ViewAddContact(viewModel, false);
         }
 
         [HttpPost]
@@ -312,52 +315,53 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewAddContact(viewModel);
+                return ViewAddContact(viewModel, false);
             }
 
             var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
                     Role.Unassigned.RoleID, DateTime.Now, true, false)
-            { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID };
+                { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            SetMessageForDisplay($"Successfully added {viewModel.FirstName} {viewModel.LastName}");
+            SetMessageForDisplay($"Successfully added {firmaPerson.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewAddContact(EditContactViewModel viewModel)
+        private PartialViewResult ViewAddContact(EditContactViewModel viewModel, bool fullUpUser)
         {
-            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.AsEnumerable()
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x=>x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
-            var viewData = new EditContactViewData(organizations);
+            var viewData = new EditContactViewData(organizations, fullUpUser);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
-        [ContactManageFeature]
+        [UserEditBasicsFeature]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
-        {
+            {
             var person = personPrimaryKey.EntityObject;
             var viewModel = new EditContactViewModel(person);
-            return ViewAddContact(viewModel);
+            return ViewAddContact(viewModel, !string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier));
         }
 
         [HttpPost]
-        [ContactManageFeature]
+        [UserEditBasicsFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey, EditContactViewModel viewModel)
         {
             var person = personPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewAddContact(viewModel);
+                return ViewAddContact(viewModel, !string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier));
             }
 
             viewModel.UpdateModel(person);
 
-            SetMessageForDisplay($"Successfully updated {person.FullNameFirstLast}");
+            SetMessageForDisplay($"Successfully updated {person.GetFullNameFirstLastAsUrl()}");
+
             return new ModalDialogFormJsonResult();
         }
     }
-
 }

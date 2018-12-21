@@ -47,7 +47,8 @@ namespace ProjectFirma.Web.Security
             {
                 return new PermissionCheckResult("The Person whose details you are requesting to see doesn't exist.");
             }
-            var userHasEditPermission = new UserEditFeature().HasPermissionByPerson(person);
+            var userHasEditPermission = new UserEditBasicsFeature().HasPermissionByPerson(person);
+            var userHasManagePermission = new ContactManageFeature().HasPermissionByPerson(person);
             var userViewingOwnPage = person.PersonID == contextModelObject.PersonID;
 
             #pragma warning disable 612
@@ -64,7 +65,7 @@ namespace ProjectFirma.Web.Security
                 return new PermissionCheckResult("You don\'t have permission to view this user.");
             }
 
-            if (userViewingOwnPage || userHasEditPermission)
+            if (userViewingOwnPage || userHasEditPermission || userHasManagePermission)
             {
                 return new PermissionCheckResult();
             }

@@ -140,6 +140,8 @@ namespace ProjectFirma.Web.Models
             // organizations
             ProjectOrganizationUpdate.CreateFromProject(projectUpdateBatch);
 
+            ProjectPersonUpdate.CreateFromProject(projectUpdateBatch);
+
             // Documents
             ProjectDocumentUpdate.CreateFromProject(projectUpdateBatch);
 
@@ -289,6 +291,12 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectOrganizationUpdates);
         }
 
+        public void DeleteProjectContactUpdates()
+        {
+            ProjectPersonUpdates.DeleteProjectPersonUpdate();
+            RefreshFromDatabase(ProjectPersonUpdates);
+        }
+
         public void DeleteAll()
         {
             DeleteProjectLocationStagingUpdates();
@@ -307,6 +315,7 @@ namespace ProjectFirma.Web.Models
             DeleteProjectGeospatialAreaUpdates();
             DeleteProjectOrganizationUpdates();
             DeleteProjectDocumentUpdates();
+            DeleteProjectContactUpdates();
             this.DeleteProjectUpdateBatch();
         }
 
@@ -454,6 +463,17 @@ namespace ProjectFirma.Web.Models
             return ValidateOrganizations().IsValid;
         }
 
+        public ContactsValidationResult ValidateContacts()
+        {
+            return new ContactsValidationResult(ProjectPersonUpdates.Select(x => new ProjectPersonSimple(x))
+                .ToList());
+        }
+
+        public bool AreContactsValid()
+        {
+            return ValidateContacts().IsValid;
+        }
+
         public LocationSimpleValidationResult ValidateProjectLocationSimple()
         {           
             var incomplete = ProjectUpdate.ProjectLocationPoint == null &&
@@ -494,7 +514,8 @@ namespace ProjectFirma.Web.Models
             CreateNewTransitionRecord(this, ProjectUpdateState.Returned, currentPerson, transitionDate);
         }
 
-        public void Approve( // TODO: Neutered per #1136; most likely will bring back when BOR project starts
+        public void Approve(
+            // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //IList<ProjectBudget> projectBudgets, 
             Person currentPerson, DateTime transitionDate,
             IList<ProjectExemptReportingYear> projectExemptReportingYears,
@@ -509,7 +530,8 @@ namespace ProjectFirma.Web.Models
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
             IList<ProjectCustomAttribute> allProjectCustomAttributes,
-            IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues)
+            IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
+            IList<ProjectPerson> allProjectPersons)
         {
             Check.Require(IsSubmitted, $"You cannot approve a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted!");
             CommitChangesToProject(projectExemptReportingYears,
@@ -528,7 +550,8 @@ namespace ProjectFirma.Web.Models
                 allProjectOrganizations,
                 allProjectDocuments,
                 allProjectCustomAttributes,
-                allProjectCustomAttributeValues);
+                allProjectCustomAttributeValues,
+                allProjectPersons);
             CreateNewTransitionRecord(this, ProjectUpdateState.Approved, currentPerson, transitionDate);
             PushTransitionRecordsToAuditLog();
         }
@@ -562,7 +585,8 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
                 IList<ProjectCustomAttribute> allProjectCustomAttributes,
-                IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues)
+                IList<ProjectCustomAttributeValue> allProjectCustomAttributeValues,
+                IList<ProjectPerson> allProjectPeople)
         {
             // basics
             ProjectUpdate.CommitChangesToProject(Project);
@@ -615,6 +639,9 @@ namespace ProjectFirma.Web.Models
 
             // Organizations
             ProjectOrganizationUpdate.CommitChangesToProject(this, allProjectOrganizations);
+
+            // Organizations
+            ProjectPersonUpdate.CommitChangesToProject(this, allProjectPeople);
 
             // Documents
             ProjectDocumentUpdate.CommitChangesToProject(this, allProjectDocuments);

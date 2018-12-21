@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         }
         public bool IsExpectedFundingSectionComplete { get; set; }
         public bool IsProjectOrganizationsSectionComplete { get; set; }
+        public bool IsProjectContactsSectionComplete { get; set; }
 
         public ProposalSectionsStatus(Models.Project project, List<GeospatialAreaType> geospatialAreaTypes)
         {

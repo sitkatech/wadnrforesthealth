@@ -23,9 +23,5 @@ namespace ProjectFirma.Web.Common
 
             return x509Certificate2;
         }
-        public static X509Certificate2 GetX509Certificate2FromFile(string certificateFileName)
-        {
-            return new X509Certificate2(certificateFileName, "password");
-        }
     }
 }

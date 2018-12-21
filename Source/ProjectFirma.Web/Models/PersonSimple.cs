@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models
             PersonGuid = personGuid;
             FirstName = firstName;
             LastName = lastName;
-            FullNameWithOrgShortName = $"{FirstName} {LastName} ({organizationShortNameIfAvailable})";
+            FullName = $"{FirstName} {LastName} ({organizationShortNameIfAvailable})";
             Email = email;
             Phone = phone;
             PasswordPdfK2SaltHash = passwordPdfK2SaltHash;
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Models
             PersonGuid = person.PersonUniqueIdentifier;
             FirstName = person.FirstName;
             LastName = person.LastName;
-            FullNameWithOrgShortName = $"{FirstName} {LastName} ({person.Organization.OrganizationShortNameIfAvailable})";
+            FullName = person.FullNameFirstLastAndOrg;
             Email = person.Email;
             Phone = person.Phone;
             PasswordPdfK2SaltHash = person.PasswordPdfK2SaltHash;
@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Models
         public string PersonGuid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string FullNameWithOrgShortName { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string PasswordPdfK2SaltHash { get; set; }
@@ -92,9 +92,5 @@ namespace ProjectFirma.Web.Models
         public bool IsActive { get; set; }
         public int? OrganizationID { get; set; }
         public Guid? WebServiceAccessToken { get; set; }
-        public string DisplayName
-        {
-            get { return string.Format("{0} {1}", FirstName, LastName); }
-        }
     }
 }

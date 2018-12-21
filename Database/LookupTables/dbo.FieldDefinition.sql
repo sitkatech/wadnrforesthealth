@@ -17,7 +17,7 @@ VALUES
 (22, N'PhotoCaption', N'Photo Caption', N'<p>A concise yet descriptive explanation of an uploaded photo. Photo captions are displayed in the lower right-hand corner of the image as it appears on the webpage.</p>'),
 (23, N'PhotoCredit', N'Photo Credit', N'<p>If needed, credit is given to the photographer or owner of an image on the website. Photo credits are displayed in the lower right-hand corner of the image as it appears on the webpage.</p>'),
 (24, N'PhotoTiming', N'Photo Timing', N'<p>The phase in a project timeline during which the photograph was taken. Photo timing can be before, during or after project implementation.&nbsp;</p>'),
-(25, N'OrganizationPrimaryContact', N'Primary Contact', N'<p>An individual at the listed organization responsible for reporting accomplishments and expenditures achieved by the project or program, and who should be contacted when there are questions related to any project associated to the organization.</p>'),
+(25, N'OrganizationPrimaryContact', N'Organization Primary Contact', N'<p>An individual at the listed organization responsible for reporting accomplishments and expenditures achieved by the project or program, and who should be contacted when there are questions related to any project associated to the organization.</p>'),
 (26, N'TaxonomyBranch', N'Taxonomy Branch', N'<p>The second level record in the hierarchical project taxonomy system.</p>'),
 (28, N'CompletionDate', N'Completion Date', N'<p>The year implementation of the project was completed or is anticipated to be completed. Projects are considered &quot;complete&quot; when all activities have been performed, including post-implementation activities such as monitoring vegetation establishment, and all&nbsp;reporting requirements have been satisfied. &nbsp;For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
 (29, N'ProjectDescription', N'Project Description', N'<p>A concise/brief description for the project that includes the following: general locations of project, project area size, purpose and need of the project, and expected goals. &nbsp;Please not that project descriptions will be capped at 100 words.</p>'),
@@ -90,4 +90,10 @@ VALUES
 (266, N'NormalUser', N'Normal User', N'Users with this role can propose new Projects, update existing Projects where their organization is the Lead Implementer, and view almost every page within the Project Tracker.'),
 (267, N'ProjectStewardshipArea', N'Project Stewardship Area', 'Indicates which attribute of a project is used to determine if a Project Steward is permitted to edit that project.'),
 (268, N'ProjectInternalNote', N'Internal Note', N'<p>Any important information about a project that should only be visible to Administrators.</p>'),
-(269, N'StatewideVendorNumber', 'Statewide Vendor Number', 'A number assigned by the State to vendors.')
+(269, N'StatewideVendorNumber', 'Statewide Vendor Number', 'A number assigned by the State to vendors.'),
+(270, N'Contact', 'Contact', 'A person who is associated with a project who may or may not have an account in the system.'),
+(271, N'ContactRelationshipType', 'Contact Relationship Type', N'<p>A categorization of a relationship between an organization and a contact, e.g. Landowner, Contractor.</p>'),
+(272, N'Contractor', 'Contractor', 'Placeholder definition for Contractor.'),
+(273, N'Landowner', 'Landowner', 'Placeholder definition for Landowner.'),
+(274, N'Partner', 'Partner', 'Placeholder definition for Partner.'),
+(275, N'PrimaryContact', 'Primary Contact', 'Placeholder definition for Primary Contact.')

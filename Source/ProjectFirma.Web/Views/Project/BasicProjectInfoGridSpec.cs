@@ -45,8 +45,9 @@ namespace ProjectFirma.Web.Views.Project
                 Add("ProjectID", x => x.ProjectID, 0);
             }
 
-            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30);
+            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, DhtmlxGridColumnFilterType.Html);
+            
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
                 Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
@@ -69,6 +70,37 @@ namespace ProjectFirma.Web.Views.Project
             {
                 Add("Tags", x => new HtmlString(!x.ProjectTags.Any() ? string.Empty : string.Join(", ", x.ProjectTags.Select(pt => pt.Tag.DisplayNameAsUrl))), 100, DhtmlxGridColumnFilterType.Html);    
             }            
+        }
+    }
+    public class ProjectInfoForUserDetailGridSpec : GridSpec<Models.ProjectPersonRelationship>
+    {
+        public ProjectInfoForUserDetailGridSpec(Person currentPerson, Person contactPerson = null)
+        {
+            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.Project.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.Project.GetDetailUrl(), x.Project.ProjectName), 300, DhtmlxGridColumnFilterType.Html);
+            if (contactPerson != null && !contactPerson.IsFullUser())
+            {
+                Add(Models.FieldDefinition.ContactRelationshipType.ToGridHeaderString(),
+                    x => x.ProjectPersonRelationshipType.ProjectPersonRelationshipTypeDisplayName, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            }
+            if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
+            {
+                Add(Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.ToGridHeaderString(), x => x.Project.GetCanStewardProjectsOrganization().GetShortNameAsUrl(), 150,
+                    DhtmlxGridColumnFilterType.Html);
+            }
+            Add(Models.FieldDefinition.IsPrimaryContactOrganization.ToGridHeaderString(), x => x.Project.GetPrimaryContactOrganization().GetShortNameAsUrl(), 150, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.Project.ProjectStage.ProjectStageDisplayName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.PlannedDate.ToGridHeaderString(), x => x.Project.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ApprovalStartDate.ToGridHeaderString(), x => x.Project.GetApprovalStartDateFormatted(), 115, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.Project.GetCompletionDateFormatted(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.Project.EstimatedTotalCost, 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.SecuredFunding.ToGridHeaderString(), x => x.Project.GetSecuredFunding(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.UnfundedNeed.ToGridHeaderString(), x => x.Project.UnfundedNeed(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
+            {
+                Add($"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", a => a.Project.GetProjectGeospatialAreaNamesAsHyperlinks(geospatialAreaType), 350, DhtmlxGridColumnFilterType.Html);
+            }
+            Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.Project.ProjectDescription, 300);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public OrganizationsViewModel(ProjectUpdateBatch projectUpdateBatch)
         {
             ProjectOrganizationSimples = projectUpdateBatch.ProjectOrganizationUpdates.Select(x=>new ProjectOrganizationSimple(x)).ToList();
-            PrimaryContactPersonID = projectUpdateBatch.ProjectUpdate.PrimaryContactPersonID;
             Comments = projectUpdateBatch.OrganizationsComment;
         }
 
@@ -33,8 +32,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             List<ProjectOrganizationUpdate> currentProjectOrganizationUpdates,
             IList<ProjectOrganizationUpdate> allProjectOrganizationUpdates)
         {
-            projectUpdateBatch.ProjectUpdate.PrimaryContactPersonID = PrimaryContactPersonID;
-
             var projectOrganizationUpdatesUpdated = new List<ProjectOrganizationUpdate>();
 
             if (ProjectOrganizationSimples != null)

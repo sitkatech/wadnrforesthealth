@@ -61,6 +61,7 @@ namespace ProjectFirma.Web.Models
             "ProjectUpdate",
             "ProjectUpdateBatch",
             "ProjectUpdateHistory",
+            "ProjectPerson",
             "SupportRequestLog",
             "ProjectBudgetUpdate",
             "ProjectFundingSourceRequestUpdate",

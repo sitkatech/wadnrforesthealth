@@ -6,5 +6,6 @@ namespace ProjectFirma.Web.Models
         Organization Organization { get; set; }
 
         RelationshipType RelationshipType { get; set; }
+
     }
 }

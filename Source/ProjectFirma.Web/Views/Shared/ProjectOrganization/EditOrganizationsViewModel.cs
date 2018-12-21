@@ -31,8 +31,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
 {
     public class EditOrganizationsViewModel : FormViewModel, IValidatableObject
     {
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectPrimaryContact)]
-        public int? PrimaryContactPersonID { get; set; }
         public List<ProjectOrganizationSimple> ProjectOrganizationSimples { get; set; }
 
         /// <summary>
@@ -44,9 +42,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
 
         public EditOrganizationsViewModel(Models.Project project, List<Models.ProjectOrganization> projectOrganizations,
             Person currentPerson)
-        {           
-            PrimaryContactPersonID = project.PrimaryContactPersonID;
-            
+        {
             ProjectOrganizationSimples = projectOrganizations.Select(x => new ProjectOrganizationSimple(x)).ToList();
 
             // If the current person belongs to a primary contact organization, and the current project has no primary contact organization set, prepopulate.
@@ -64,8 +60,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
 
         public void UpdateModel(Models.Project project, ICollection<Models.ProjectOrganization> allProjectOrganizations)
         {
-            project.PrimaryContactPersonID = PrimaryContactPersonID;
-
             var projectOrganizationsUpdated = ProjectOrganizationSimples.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.OrganizationID)).Select(x =>
                 new Models.ProjectOrganization(project.ProjectID, x.OrganizationID, x.RelationshipTypeID)).ToList();
 

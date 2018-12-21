@@ -118,7 +118,7 @@ namespace ProjectFirma.Web.Controllers
                 .OrderBy(x => x.OrganizationTypeName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationTypeID.ToString(CultureInfo.InvariantCulture),
                     x => x.OrganizationTypeName);
-            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
+            var activePeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople().Where(x => x.IsFullUser()).ToList();
             if (currentPrimaryContactPerson != null && !activePeople.Contains(currentPrimaryContactPerson))
             {
                 activePeople.Add(currentPrimaryContactPerson);
