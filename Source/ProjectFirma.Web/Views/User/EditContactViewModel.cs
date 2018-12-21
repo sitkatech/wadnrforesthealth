@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Views.User
         public string Notes { get; set; }
 
         /// <summary>
-        /// Needed by ModdelBinder
+        /// Needed by ModelBinder
         ///     </summary>
         public EditContactViewModel()
         {
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.User
             person.Phone = Phone;
             person.Notes = Notes;
 
-            if (!person.PersonGuid.HasValue) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
+            if (string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier)) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
             {
                 person.FirstName = FirstName;
                 person.MiddleName = MiddleName;

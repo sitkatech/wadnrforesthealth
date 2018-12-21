@@ -94,10 +94,5 @@ namespace ProjectFirma.Web.Models
         {
             return person.ReceiveSupportEmails;
         }
-
-        public static string GetKeystoneEditLink(this Person person)
-        {
-            return $"{FirmaWebConfiguration.KeystoneUserProfileUrl}{person.PersonGuid}";
-        }
     }
 }

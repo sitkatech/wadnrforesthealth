@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Security
                     $"You don't have permission to delete {contextModelObject.FullNameFirstLast}");
             }
 
-            if (contextModelObject.PersonGuid != null)
+            if (!string.IsNullOrWhiteSpace(contextModelObject.PersonUniqueIdentifier))
             {
                 return new PermissionCheckResult($"{contextModelObject.FullNameFirstLast} cannot be deleted because they are a user with an account.");
             }

@@ -5,7 +5,7 @@ GO
 CREATE TABLE [dbo].[Person](
 	[PersonID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
-	[PersonGuid] [uniqueidentifier] NULL,
+	[PersonUniqueIdentifier] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FirstName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[LastName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Email] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -48,12 +48,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [AK_Person_Email_TenantID] ON [dbo].[Person]
 WHERE ([Email] IS NOT NULL)
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [AK_Person_PersonGuid_TenantID] ON [dbo].[Person]
+SET ANSI_PADDING ON
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [AK_Person_PersonUniqueIdentifier_TenantID] ON [dbo].[Person]
 (
-	[PersonGuid] ASC,
+	[PersonUniqueIdentifier] ASC,
 	[TenantID] ASC
 )
-WHERE ([PersonGuid] IS NOT NULL)
+WHERE ([PersonUniqueIdentifier] IS NOT NULL)
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Organization_OrganizationID] FOREIGN KEY([OrganizationID])

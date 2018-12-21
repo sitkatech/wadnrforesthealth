@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using DHTMLX.Export.Excel;
 using LtInfo.Common;
@@ -171,6 +172,11 @@ namespace ProjectFirma.Web.Common
 
         public static List<MethodInfo> FindControllerActions(Type controller)
         {
+            bool IsActionResult(MethodInfo m)
+            {
+                return m.ReturnType == typeof(ActionResult) || m.ReturnType.IsSubclassOf(typeof(ActionResult)) || m.ReturnType == typeof(Task<ActionResult>);
+            }
+
             // Abstract can't be directly routed
             if (controller.IsAbstract)
             {
@@ -178,7 +184,7 @@ namespace ProjectFirma.Web.Common
             }
             var methods = controller.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
             // All Asp.net MVC controller actions need return type ActionResult
-            return methods.Where(m => m.ReturnType == typeof(ActionResult) || m.ReturnType.IsSubclassOf(typeof(ActionResult))).ToList();
+            return methods.Where(IsActionResult).ToList();
         }
 
         public static List<MethodInfo> GetAllControllerActionMethods(Type controllerTypeInTheAssemblyToSearchForOtherControllers)

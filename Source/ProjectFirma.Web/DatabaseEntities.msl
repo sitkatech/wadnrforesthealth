@@ -535,7 +535,7 @@
         <MappingFragment StoreEntitySet="Person">
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="TenantID" ColumnName="TenantID" />
-          <ScalarProperty Name="PersonGuid" ColumnName="PersonGuid" />
+          <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Email" ColumnName="Email" />

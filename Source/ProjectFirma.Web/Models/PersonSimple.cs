@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonSimple(int personID, Guid personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, Guid? webServiceAccessToken, string organizationShortNameIfAvailable)
+        public PersonSimple(int personID, string personGuid, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int organizationID, Guid? webServiceAccessToken, string organizationShortNameIfAvailable)
             : this()
         {
             PersonID = personID;
@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Models
             : this()
         {
             PersonID = person.PersonID;
-            PersonGuid = person.PersonGuid.GetValueOrDefault();
+            PersonGuid = person.PersonUniqueIdentifier;
             FirstName = person.FirstName;
             LastName = person.LastName;
             FullName = person.FullNameFirstLastAndOrg;
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Models
         }
 
         public int PersonID { get; set; }
-        public Guid PersonGuid { get; set; }
+        public string PersonGuid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }

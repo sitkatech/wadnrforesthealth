@@ -30,11 +30,9 @@ using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
-using ProjectFirma.Web.KeystoneDataService;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Organization;
-using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
 using Detail = ProjectFirma.Web.Views.Organization.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Organization.DetailViewData;
@@ -317,68 +315,6 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new ProjectFundingSourceExpendituresForOrganizationGridSpec(organization);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectFundingSourceExpenditure>(projectFundingSourceExpendituresToShow, gridSpec);
             return gridJsonNetJObjectResult;
-        }
-
-        [HttpGet]
-        [SitkaAdminFeature]
-        public PartialViewResult PullOrganizationFromKeystone()
-        {
-            var viewModel = new PullOrganizationFromKeystoneViewModel();
-
-            return ViewPullOrganizationFromKeystone(viewModel);
-        }
-
-        [HttpPost]
-        [SitkaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult PullOrganizationFromKeystone(PullOrganizationFromKeystoneViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ViewPullOrganizationFromKeystone(viewModel);
-            }
-
-            var keystoneClient = new KeystoneDataClient();
-
-            var organizationGuid = viewModel.OrganizationGuid.Value;
-            KeystoneDataService.Organization keystoneOrganization;
-            try
-            {
-                keystoneOrganization = keystoneClient.GetOrganization(organizationGuid);
-            }
-            catch (Exception)
-            {
-                SetErrorForDisplay("Organization not added. Guid not found in Keystone or unable to connect to Keystone");
-                return new ModalDialogFormJsonResult();
-            }
-
-            var firmaOrganization = HttpRequestStorage.DatabaseEntities.Organizations.SingleOrDefault(x => x.OrganizationGuid == organizationGuid);
-            if (firmaOrganization != null)
-            {
-                SetErrorForDisplay("Organization not added - it already exists in ProjectFirma");
-                return new ModalDialogFormJsonResult();
-            }
-
-            var defaultOrganizationType = HttpRequestStorage.DatabaseEntities.OrganizationTypes.GetDefaultOrganizationType();
-            firmaOrganization = new Organization(keystoneOrganization.FullName, true, defaultOrganizationType)
-            {
-                OrganizationGuid = keystoneOrganization.OrganizationGuid,
-                OrganizationShortName = keystoneOrganization.ShortName,
-                OrganizationUrl = keystoneOrganization.URL
-            };
-            HttpRequestStorage.DatabaseEntities.AllOrganizations.Add(firmaOrganization);
-
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-            SetMessageForDisplay($"Organization {firmaOrganization.GetDisplayNameAsUrl()} successfully added.");
-
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewPullOrganizationFromKeystone(PullOrganizationFromKeystoneViewModel viewModel)
-        {
-            var viewData = new PullOrganizationFromKeystoneViewData();
-            return RazorPartialView<PullOrganizationFromKeystone, PullOrganizationFromKeystoneViewData, PullOrganizationFromKeystoneViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
