@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[GrantAllocation]
+//  Source Table: [dbo].[Grant]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,63 +15,49 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    [Table("[dbo].[GrantAllocation]")]
-    public partial class GrantAllocation : IHavePrimaryKey, IHaveATenantID
+    [Table("[dbo].[Grant]")]
+    public partial class Grant : IHavePrimaryKey, IHaveATenantID
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected GrantAllocation()
+        protected Grant()
         {
-
+            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, DateTime startDate, DateTime endDate, decimal? allocationAmount) : this()
+        public Grant(int grantID, string grantNumber, DateTime startDate, DateTime endDate, decimal? totalAward) : this()
         {
-            this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
+            this.GrantNumber = grantNumber;
             this.StartDate = startDate;
             this.EndDate = endDate;
-            this.AllocationAmount = allocationAmount;
+            this.TotalAward = totalAward;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantID, DateTime startDate, DateTime endDate) : this()
+        public Grant(DateTime startDate, DateTime endDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.GrantID = grantID;
             this.StartDate = startDate;
             this.EndDate = endDate;
         }
 
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
-        /// </summary>
-        public GrantAllocation(Grant grant, DateTime startDate, DateTime endDate) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.GrantAllocations.Add(this);
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocation CreateNewBlank(Grant grant)
+        public static Grant CreateNewBlank()
         {
-            return new GrantAllocation(grant, default(DateTime), default(DateTime));
+            return new Grant(default(DateTime), default(DateTime));
         }
 
         /// <summary>
@@ -80,13 +66,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantAllocations.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name};
 
 
         /// <summary>
@@ -94,26 +80,37 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
-            dbContext.AllGrantAllocations.Remove(this);
+            DeleteChildren(dbContext);
+            dbContext.AllGrants.Remove(this);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
-        public int GrantAllocationID { get; set; }
-        public int TenantID { get; private set; }
         public int GrantID { get; set; }
+        public int TenantID { get; private set; }
+        public string GrantNumber { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public decimal? AllocationAmount { get; set; }
+        public decimal? TotalAward { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
+        public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
+        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
-        public virtual Grant Grant { get; set; }
 
         public static class FieldLengths
         {
-
+            public const int GrantNumber = 30;
         }
     }
 }

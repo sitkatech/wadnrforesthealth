@@ -22,6 +22,7 @@
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.GeospatialArea" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
+    <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.ImportExternalProjectStaging" />
     <EntitySet Name="MappedRegion" EntityType="ProjectFirma.Web.Models.MappedRegion" />
@@ -280,6 +281,10 @@
     <AssociationSet Name="FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="ProjectGeospatialAreaTypeNoteUpdates" EntitySet="ProjectGeospatialAreaTypeNoteUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID">
       <End Role="CreatePerson" EntitySet="Person" />
@@ -1073,16 +1078,29 @@
     <NavigationProperty Name="ProjectGeospatialAreaTypeNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="ProjectGeospatialAreaTypeNotes" />
     <NavigationProperty Name="ProjectGeospatialAreaTypeNoteUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="ProjectGeospatialAreaTypeNoteUpdates" />
   </EntityType>
+  <EntityType Name="Grant">
+    <Key>
+      <PropertyRef Name="GrantID" />
+    </Key>
+    <Property Name="GrantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" />
+    <Property Name="TotalAward" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
+  </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
       <PropertyRef Name="GrantAllocationID" />
     </Key>
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
-    <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="GrantID" Type="Int32" Nullable="false" />
     <Property Name="StartDate" Type="DateTime" Nullable="false" />
     <Property Name="EndDate" Type="DateTime" Nullable="false" />
-    <Property Name="TotalAward" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>
@@ -2929,6 +2947,18 @@
       </Principal>
       <Dependent Role="ProjectGeospatialAreaTypeNoteUpdates">
         <PropertyRef Name="GeospatialAreaTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

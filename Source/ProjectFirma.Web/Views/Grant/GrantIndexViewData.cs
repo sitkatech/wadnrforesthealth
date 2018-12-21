@@ -30,9 +30,12 @@ namespace ProjectFirma.Web.Views.Grant
 {
     public class GrantIndexViewData : FirmaViewData
     {
-        public readonly GrantAllocationIndexGridSpec GrantAllocationIndexGridSpec;
-        // TODO - need grid for parent too
-        //public readonly GrantParentIndexGridSpec GridSpec;
+        public readonly GrantGridSpec GrantGridSpec;
+        public readonly string GrantGridName;
+        public readonly string GrantGridDataUrl;
+
+
+        public readonly GrantAllocationGridSpec GrantAllocationGridSpec;
         public readonly string GrantAllocationGridName;
         public readonly string GrantAllocationGridDataUrl;
 
@@ -40,10 +43,13 @@ namespace ProjectFirma.Web.Views.Grant
         {
             PageTitle = $"Full Grant List";
 
-            GrantAllocationIndexGridSpec = new GrantAllocationIndexGridSpec(currentPerson);
-           
+            GrantGridSpec = new GrantGridSpec(currentPerson);
+            GrantGridName = "grantsGridName";
+            GrantGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantGridJsonData());
+
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);           
             GrantAllocationGridName = "grantAllocationsGridName";
-            GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationIndexGridJsonData());
+            GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonData());
         }
     }
 }

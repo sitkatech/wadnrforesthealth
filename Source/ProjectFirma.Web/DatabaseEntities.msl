@@ -256,15 +256,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocation">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocation">
-        <MappingFragment StoreEntitySet="GrantAllocation">
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+    <EntitySetMapping Name="Grant">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Grant">
+        <MappingFragment StoreEntitySet="Grant">
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="GrantNumber" ColumnName="GrantNumber" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="TotalAward" ColumnName="TotalAward" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocation">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocation">
+        <MappingFragment StoreEntitySet="GrantAllocation">
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.Views;
@@ -28,15 +27,15 @@ using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class GrantAllocationIndexGridSpec : GridSpec<Models.GrantAllocation>
+    public class GrantGridSpec : GridSpec<Models.Grant>
     {
-        public GrantAllocationIndexGridSpec(Person currentPerson)
+        public GrantGridSpec(Models.Person currentPerson)
         {
-            ObjectNameSingular = "Grant Allocation";
-            ObjectNamePlural = "Grant Allocations";
+            ObjectNameSingular = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
 
-            CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationIndexExcelDownload());
+            CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
             Add("Grant Number", x => x.GrantNumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Start Date", x => x.StartDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);

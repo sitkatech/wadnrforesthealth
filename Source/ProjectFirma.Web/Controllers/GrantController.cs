@@ -41,38 +41,70 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<GrantIndex, GrantIndexViewData>(viewData);
         }
 
+
         [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationIndexGridJsonData()
+        public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
         {
-            var gridSpec = new GrantAllocationIndexGridSpec(CurrentPerson);
+            var gridSpec = new GrantGridSpec(CurrentPerson);
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Grant>(grants, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+
+
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
+        {
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
         [GrantsViewFullListFeature]
-        public ExcelResult GrantAllocationIndexExcelDownload()
+        public ExcelResult GrantsExcelDownload()
         {
-            return GrantAllocationsExcelDownloadImpl(HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList(),
-                                                     FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized());
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var workbookTitle = FieldDefinition.Grant.GetFieldDefinitionLabelPluralized();
+            return GrantsExcelDownloadImpl(grants, grantAllocations, workbookTitle);
         }
 
-        private ExcelResult GrantAllocationsExcelDownloadImpl(List<GrantAllocation> grantAllocations, string workbookTitle)
+        private ExcelResult GrantsExcelDownloadImpl(List<Grant> grants, List<GrantAllocation> grantAllocations, string workbookTitle)
         {
+            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
+
+            // Grants
+            var grantSpec = new GrantExcelSpec();
+            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}", grantSpec, grants);
+            workSheets.Add(wsGrants);
+
+            // Grant Allocations
             var grantAllocationsSpec = new GrantAllocationExcelSpec();
             var wsGrantAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", grantAllocationsSpec, grantAllocations);
-
-            // ReSharper disable once UseObjectOrCollectionInitializer
-            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
             workSheets.Add(wsGrantAllocations);
 
-            // TODO: Add more worksheets here for other objects, like 
-
+            // Overall excel file
             var wbm = new ExcelWorkbookMaker(workSheets);
             var excelWorkbook = wbm.ToXLWorkbook();
 
             return new ExcelResult(excelWorkbook, workbookTitle);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

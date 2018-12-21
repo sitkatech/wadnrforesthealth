@@ -28,6 +28,18 @@ namespace ProjectFirma.Web.Views.Grant
         public GrantAllocationExcelSpec()
         {
             // TODO: We likely need FieldDefinition labels here. 
+            AddColumn("Grant Number", x => x.Grant.GrantNumber);
+            AddColumn("Start Date", x => x.StartDate);
+            AddColumn("End Date", x => x.EndDate);
+            AddColumn("Allocation Amount", x => x.AllocationAmount);
+        }
+    }
+
+    public class GrantExcelSpec : ExcelWorksheetSpec<Models.Grant>
+    {
+        public GrantExcelSpec()
+        {
+            // TODO: We likely need FieldDefinition labels here. 
             AddColumn("Grant Number", x => x.GrantNumber);
             AddColumn("Start Date", x => x.StartDate);
             AddColumn("End Date", x => x.EndDate);

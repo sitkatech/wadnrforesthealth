@@ -24,7 +24,7 @@ using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View Full {0} List", FieldDefinitionEnum.GrantAllocation)]
+    [SecurityFeatureDescription("View Full Grant List")]
     // Admin for now, until someone tells us differently
     //public class GrantsViewFullListFeature : FirmaAdminFeature
     public class GrantsViewFullListFeature : AnonymousUnclassifiedFeature
