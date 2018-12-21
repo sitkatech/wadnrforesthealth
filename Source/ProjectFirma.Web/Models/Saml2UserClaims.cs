@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ProjectFirma.Web.Models
 {
@@ -15,5 +16,6 @@ namespace ProjectFirma.Web.Models
         public string Email { get; set; }
 
         public string Username { get; set; }
+        public List<string> RoleGroups { get; set; }
     }
 }

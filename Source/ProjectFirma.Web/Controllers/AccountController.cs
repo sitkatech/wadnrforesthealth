@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -35,11 +36,12 @@ using Microsoft.Owin.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
+using ProjectFirma.Web.Views.Account;
 using Saml;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class AccountController : SitkaController
+    public class AccountController : FirmaBaseController
     {
         protected override bool IsCurrentUserAnonymous()
         {
@@ -71,15 +73,17 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         public ActionResult Login(string returnUrl)
         {
-            // Request a redirect to the external login provider
-            return new ChallengeResult("wadnr", Url.Action("SAWPost", "Account", new { ReturnUrl = returnUrl }));
+            var sawLoginUrl = FirmaWebConfiguration.SAWEndPoint;
+            var adfsLoginUrl = FirmaWebConfiguration.ADFSEndPoint;
+            var viewData = new LoginViewData(CurrentPerson, sawLoginUrl, adfsLoginUrl);
+            return RazorView<Login, LoginViewData>(viewData);
         }
 
         [AllowAnonymous]
         [HttpPost]
         public ActionResult SAWPost(string returnUrl)
         {
-            var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.SamlIDPCertificateSerialNumber));
+            var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
             samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
 
             if (samlResponse.IsValid())
@@ -89,20 +93,45 @@ namespace ProjectFirma.Web.Controllers
                 var email = samlResponse.GetEmail();
                 var userName = samlResponse.GetUserName();
 
-                IdentitySignin(username, fullName, email, userName);
+                IdentitySignin(username, fullName, email, userName, null);
             }
             return new RedirectResult(HomeUrl);
         }
 
-        public void IdentitySignin(string userId, string name, string email, string userName, string providerKey = null, bool isPersistent = false)
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ADFSPost(string returnUrl)
+        {
+            var samlResponse = new ADFSSamlResponse();
+            samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
+
+            samlResponse.Decrypt();
+            var firstName = samlResponse.GetFirstName();
+            var lastName = samlResponse.GetLastName();
+            var email = samlResponse.GetEmail();
+            var upn = samlResponse.GetUPN();
+            var groups = samlResponse.GetRoleGroups();
+            IdentitySignin(upn, firstName + " " + lastName, email, upn, groups);
+            return new RedirectResult(HomeUrl);
+        }
+
+        public void IdentitySignin(string userId, string name, string email, string userName, string groups, string providerKey = null, bool isPersistent = false)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim(ClaimTypes.Name, name),
-                new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.WindowsAccountName, userName)
             };
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                claims.Add(new Claim(ClaimTypes.Email, email));
+            }
+
+            if (!string.IsNullOrWhiteSpace(groups))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, groups));
+            }
 
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -181,6 +210,12 @@ namespace ProjectFirma.Web.Controllers
             person.Email = email;
             person.LoginName = username;
             person.UpdateDate = DateTime.Now;
+
+            var roleGroups = saml2UserClaims.RoleGroups;
+            if (roleGroups.Any())
+            {
+                person.RoleID = MapRoleFromClaims(roleGroups).RoleID;
+            }
             HttpRequestStorage.Person = person;
             HttpRequestStorage.DatabaseEntities.SaveChanges(person);
 
@@ -189,6 +224,26 @@ namespace ProjectFirma.Web.Controllers
                 SendNewUserCreatedMessage(person, username);
             }
             return HttpRequestStorage.Person;
+        }
+
+        private static Role MapRoleFromClaims(List<string> roleGroups)
+        {
+            if (roleGroups.Any(x => x.Contains(@"G-S-DNR_WF_ForestHealth_Admin")))
+            {
+                return Role.Admin;
+            }
+
+            if (roleGroups.Any(x => x.Contains(@"G-S-DNR_WF_ForestHealth_Review")))
+            {
+                return Role.ProjectSteward;
+            }
+
+            if (roleGroups.Any(x => x.Contains(@"G-S-DNR_WF_ForestHealth_Users")))
+            {
+                return Role.Normal;
+            }
+
+            return Role.Unassigned;
         }
 
 

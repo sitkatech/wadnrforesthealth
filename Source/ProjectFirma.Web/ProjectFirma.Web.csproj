@@ -446,11 +446,14 @@
     <Compile Include="Models\TreatmentActivity.cs" />
     <Compile Include="Models\TreatmentActivitySimple.cs" />
     <Compile Include="Models\TreatmentTypeSimple.cs" />
+    <Compile Include="ADFSSamlResponse.cs" />
     <Compile Include="Saml.cs" />
     <Compile Include="Security\ContactManageFeature.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
     <Compile Include="Startup.Auth.cs" />
     <Compile Include="UnitTestCommon\TestGeospatialAreaType.cs" />
+    <Compile Include="Views\Account\Login.cs" />
+    <Compile Include="Views\Account\LoginViewData.cs" />
     <Compile Include="Views\Home\TrainingVideo.cs" />
     <Compile Include="Views\Home\TrainingVideoViewData.cs" />
     <Compile Include="Views\PerformanceMeasure\TechnicalAssistanceParameters.cs" />
@@ -522,6 +525,7 @@
     <Content Include="Scripts\jquery-1.11.0.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
     <Content Include="Scripts\jquery-1.11.0.min.map" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Views\ProjectCreate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewModel.cs" />
     <Compile Include="Views\ProjectCustomAttributeType\Detail.cs" />

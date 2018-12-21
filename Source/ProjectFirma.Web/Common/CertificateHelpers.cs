@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.Common
             var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadOnly);
             var certificateCollection =
-                store.Certificates.Find(X509FindType.FindBySerialNumber, certificateSerialNumber, true);
+                store.Certificates.Find(X509FindType.FindByThumbprint, certificateSerialNumber, false);
             if (certificateCollection.Count == 1)
             {
                 x509Certificate2 = certificateCollection[0];
@@ -22,6 +22,10 @@ namespace ProjectFirma.Web.Common
             }
 
             return x509Certificate2;
+        }
+        public static X509Certificate2 GetX509Certificate2FromFile(string certificateFileName)
+        {
+            return new X509Certificate2(certificateFileName, "password");
         }
     }
 }

@@ -170,8 +170,17 @@ namespace ProjectFirma.Web.Common
                 // core claims always supplied
                 saml2UserClaims.UniqueIdentifier = GetStringClaimValue(claimsDictionary, ClaimTypes.NameIdentifier);
                 saml2UserClaims.DisplayName = GetStringClaimValue(claimsDictionary, ClaimTypes.Name);
-                saml2UserClaims.Email = GetStringClaimValue(claimsDictionary, ClaimTypes.Email);
+                saml2UserClaims.Email = GetStringOptionalClaimValue(claimsDictionary, ClaimTypes.Email);
                 saml2UserClaims.Username = GetStringClaimValue(claimsDictionary, ClaimTypes.WindowsAccountName);
+                var roleGroups = GetStringOptionalClaimValue(claimsDictionary, ClaimTypes.Role);
+                if (!string.IsNullOrWhiteSpace(roleGroups))
+                {
+                    saml2UserClaims.RoleGroups = roleGroups.Split(',').ToList();
+                }
+                else
+                {
+                    saml2UserClaims.RoleGroups = new List<string>();
+                }
             }
             else
             {

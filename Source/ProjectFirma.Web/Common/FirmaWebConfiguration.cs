@@ -44,12 +44,12 @@ namespace ProjectFirma.Web.Common
 
         public static readonly FirmaEnvironment FirmaEnvironment = FirmaEnvironment.MakeFirmaEnvironment(SitkaConfiguration.GetRequiredAppSetting("FirmaEnvironment"));
 
-        public static readonly string CanonicalHostName = CanonicalHostNames.FirstOrDefault();
-        public static readonly string Saml2EntityID = SitkaConfiguration.GetRequiredAppSetting("Saml2EntityID");
-        public static readonly string Saml2EndPoint = SitkaConfiguration.GetRequiredAppSetting("Saml2EndPoint");
+        public static readonly string SAWEndPoint = SitkaConfiguration.GetRequiredAppSetting("SAWEndPoint");
+        public static readonly string Saml2IDPCertificateThumbPrint = SitkaConfiguration.GetRequiredAppSetting("SamlIDPCertificateThumbPrint");
+        public static readonly string ADFSEndPoint = SitkaConfiguration.GetRequiredAppSetting("ADFSEndPoint");
 
+        public static readonly string CanonicalHostName = CanonicalHostNames.FirstOrDefault();
         public static List<string> CanonicalHostNames => Tenant.All.OrderBy(x => x.TenantID).Select(x => FirmaEnvironment.GetCanonicalHostNameForEnvironment(x)).ToList();
-        public static string SamlIDPCertificateSerialNumber = SitkaConfiguration.GetRequiredAppSetting("SamlIDPCertificateSerialNumber");
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
         {
