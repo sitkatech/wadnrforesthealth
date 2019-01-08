@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
@@ -81,6 +81,7 @@ namespace ProjectFirma.Web.Models
             this.ReviewedByPersonID = reviewedByPersonID;
             this.DefaultBoundingBox = defaultBoundingBox;
             this.NoExpendituresToReportExplanation = noExpendituresToReportExplanation;
+            this.FocusAreaID = focusAreaID;
         }
 
         /// <summary>
@@ -312,6 +313,7 @@ namespace ProjectFirma.Web.Models
         public int? ReviewedByPersonID { get; set; }
         public DbGeometry DefaultBoundingBox { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
+        public int? FocusAreaID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -349,6 +351,7 @@ namespace ProjectFirma.Web.Models
         public virtual Person ProposingPerson { get; set; }
         public virtual Person ReviewedByPerson { get; set; }
         public ProjectApprovalStatus ProjectApprovalStatus { get { return ProjectApprovalStatus.AllLookupDictionary[ProjectApprovalStatusID]; } }
+        public virtual FocusArea FocusArea { get; set; }
 
         public static class FieldLengths
         {

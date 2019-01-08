@@ -64,6 +64,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<FirmaPageImage> FirmaPageImages { get { return AllFirmaPageImages.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<FirmaPage> AllFirmaPages { get; set; }
         public virtual IQueryable<FirmaPage> FirmaPages { get { return AllFirmaPages.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<FocusArea> AllFocusAreas { get; set; }
+        public virtual IQueryable<FocusArea> FocusAreas { get { return AllFocusAreas.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<FundingSource> AllFundingSources { get; set; }
         public virtual IQueryable<FundingSource> FundingSources { get { return AllFundingSources.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<GeospatialArea> AllGeospatialAreas { get; set; }
@@ -339,6 +341,14 @@ namespace ProjectFirma.Web.Models
                     var firmaPageType = FirmaPageType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(firmaPageType, "FirmaPageType", primaryKey);
                     return firmaPageType;
+
+                case "FocusArea":
+                    return FocusAreas.GetFocusArea(primaryKey);
+
+                case "FocusAreaStatus":
+                    var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
+                    return focusAreaStatus;
 
                 case "FundingSource":
                     return FundingSources.GetFundingSource(primaryKey);
