@@ -21,7 +21,7 @@ update dbo.Person set PersonUniqueIdentifier = 'crff490@dnr.wa.lcl' where Person
 
 update dbo.Person set PersonUniqueIdentifier = 'Jcoo490@dnr.wa.lcl' where PersonUniqueIdentifier = '3306F4B4-96A0-43A3-8F91-1ED6321865C1'
 
-update dbo.Person set PersonUniqueIdentifier = 'mdboles@dnr.wa.lcl' where PersonUniqueIdentifier = '8C3987BA-66D6-421F-9E5B-AEE9C49E25FE'
+update dbo.Person set PersonUniqueIdentifier = 'mbols490@dnr.wa.lcl' where PersonUniqueIdentifier = '8C3987BA-66D6-421F-9E5B-AEE9C49E25FE'
 
 update dbo.Person set PersonUniqueIdentifier = 'scha490@dnr.wa.lcl' where PersonUniqueIdentifier = '3E01762E-4B04-4507-81C3-427409279C0D'
 

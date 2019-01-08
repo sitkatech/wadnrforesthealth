@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -515,6 +515,8 @@
     <Compile Include="Models\ProjectCustomAttributeUpdate.cs" />
     <Compile Include="Models\ProjectCustomAttributeUpdateValue.cs" />
     <Compile Include="ScheduledJobs\ProjectUpdateNotificationHelper.cs" />
+    <Content Include="Content\img\SAW-logo.jpg" />
+    <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <None Include="Views\ProjectCreate\GeospatialArea.cshtml" />

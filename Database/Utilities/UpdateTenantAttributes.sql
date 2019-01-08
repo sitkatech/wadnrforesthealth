@@ -10,6 +10,24 @@ begin
 	if (@@error != 0) goto failed
 end
 
+-- update SAW logins for Sitka folks since SAW prod and SAW test have different sets of users
+update dbo.Person
+set PersonUniqueIdentifier = 'DP3TP7WZ2MM7W-1DZ8DP4Q-1DL2VV0ZF1-D1FV3ZT5VM'
+where Email = 'ray@sitkatech.com'
+
+update dbo.Person
+set PersonUniqueIdentifier = 'DP4VW0PV4LL0W-1TW0LT5VV8-D1LW4VZ0FD-FF8FP8MQ1'
+where Email = 'liz.christeleit@sitkatech.com'
+
+update dbo.Person
+set PersonUniqueIdentifier = 'C9E033A2-E53D-4A29-A368-037BF0518E38'
+where Email = 'brian.grass@sitkatech.com'
+
+update dbo.Person
+set PersonUniqueIdentifier = 'F96C4B4F-BFE1-4FC6-8F1E-2CB1B0B19913'
+where Email = 'dal.marsters@sitkatech.com'
+
+
 goto goodbye
 
 failed:

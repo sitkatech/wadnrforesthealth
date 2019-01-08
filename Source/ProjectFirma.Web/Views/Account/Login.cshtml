@@ -32,11 +32,41 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <a href="@ViewDataTyped.SAWLoginUrl" class="btn btn-firma btn-lg">Log in with SAW</a>
+        <div class="col-xs-12 col-sm-6 text-center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <img src="../../Content/img/wadnr-logo.jpg" class="img-responsive" alt="WA DNR Logo" style="height: 80px;"/>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9 text-left">
+                            <h4>Log in with WA DNR Account</h4>
+                            <p class="text-muted">Use you Active Directory credentials to log into the Forest Heatlh Tracker. Only state employees have Active Directory accounts. If you are a member of the public, log in with SecureAccess Washington.</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <a href="@ViewDataTyped.ADFSLoginUrl" class="btn btn-firma btn-lg">Log In with WA Account</a>
+                    </div>
+                </div>
+            </div>            
         </div>
-        <div class="col-md-4">
-            <a href="@ViewDataTyped.ADFSLoginUrl" class="btn btn-firma btn-lg">Log in with ADFS</a>
+        <div class="col-xs-12 col-sm-6 text-center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <img src="../../Content/img/SAW-logo.jpg" class="img-responsive" alt="SecureAccess WA Logo" style="height: 80px;" />
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9 text-left">
+                            <h4>Log in with SecureAccess Washington</h4>
+                            <p class="text-muted">Use a SecureAccess Washington (SAW) account to log into the Forest Heatlh Tracker. SAW is a central login that lets you access the online services of multiple state agencies. Don't have an account? <a href="@ViewDataTyped.SAWLoginUrl">Sign up here</a>.</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <a href="@ViewDataTyped.SAWLoginUrl" class="btn btn-firma btn-lg">Log In with SecureAccess WA</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
