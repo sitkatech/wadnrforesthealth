@@ -448,6 +448,7 @@
     <Compile Include="Common\CertificateHelpers.cs" />
     <Compile Include="Controllers\ProjectPersonController.cs" />
     <Compile Include="Models\IProjectPerson.cs" />
+    <Compile Include="Models\FocusAreaModelExtensions.cs" />
     <Compile Include="Models\ProjectPerson.cs" />
     <Compile Include="Models\ProjectPersonRelationship.cs" />
     <Compile Include="Models\ProjectPersonRelationshipTypeSimple.cs" />
@@ -469,6 +470,7 @@
     <Compile Include="Views\FocusArea\Index.cs" />
     <Compile Include="Views\FocusArea\IndexGridSpec.cs" />
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
+    <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />

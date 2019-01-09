@@ -31,6 +31,10 @@ update dbo.Person
 set PersonUniqueIdentifier = 'DP4MT6TV3ZT7M-3QT5ZL6DM-DD7WV4ZZ8D-1FZ3DD4VZ4', RoleID = 8
 where Email = 'tom.kamin@sitkatech.com'
 
+update dbo.Person
+set PersonUniqueIdentifier = 'DP4MT6TZ6FZ7D-1QW0VV7DV5-D1LW4VZ0FD-DT7QT3LT1P', RoleID = 8
+where Email = 'ian.stavros@sitkatech.com'
+
 
 goto goodbye
 
