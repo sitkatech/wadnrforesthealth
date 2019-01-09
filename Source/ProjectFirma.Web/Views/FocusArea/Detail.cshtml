@@ -1,0 +1,388 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="Detail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Security
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.ModalDialog
+@using MoreLinq
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Views.PerformanceMeasure
+@inherits ProjectFirma.Web.Views.FocusArea.Detail
+
+@section JavascriptAndStylesContent
+{
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ MapJavascriptIncludes.RenderPartialView(Html); }
+    <script src="@Url.Content("~/Content/leaflet/leaflet.legend/leaflet-legend.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/leaflet/leaflet.legend/leaflet-legend.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+
+    jQuery(function () {
+        jQuery("#overviewTab").on("shown.bs.tab", function () {
+            var gridName1 = @(ViewDataTyped.ProjectFocusAreaGridName.ToJS().ToHTMLFormattedString());
+            Sitka[gridName1].resizeGridWidths();
+            var gridName2 = @(ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridName.ToJS().ToHTMLFormattedString());
+            Sitka[gridName2].resizeGridWidths();
+            _.forOwn(window.GoogleCharts.chartWrappers,
+                function (chartWrapper) {
+                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
+                        chartWrapper.getChart().clearChart();
+                        chartWrapper.draw();
+                    }
+                });
+        });
+        jQuery("#accomplishmentsTab").on("shown.bs.tab", function () {
+            var gridName1 = @(ViewDataTyped.ProjectFocusAreaGridName.ToJS().ToHTMLFormattedString());
+            Sitka[gridName1].resizeGridWidths();
+            var gridName2 = @(ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridName.ToJS().ToHTMLFormattedString());
+            Sitka[gridName2].resizeGridWidths();
+            _.forOwn(window.GoogleCharts.chartWrappers,
+                function (chartWrapper) {
+                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
+                        chartWrapper.getChart().clearChart();
+                        chartWrapper.draw();
+                    }
+                });
+        });
+        jQuery("#expendituresTab").on("shown.bs.tab", function() {
+            var gridName1 = @(ViewDataTyped.ProjectFocusAreaGridName.ToJS().ToHTMLFormattedString());
+            Sitka[gridName1].resizeGridWidths();
+            var gridName2 = @(ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridName.ToJS().ToHTMLFormattedString());
+            Sitka[gridName2].resizeGridWidths();
+            _.forOwn(window.GoogleCharts.chartWrappers,
+                function (chartWrapper) {
+                    if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
+                        chartWrapper.getChart().clearChart();
+                        chartWrapper.draw();
+                    }
+                });
+        });
+    });
+    </script>
+}
+
+<div>
+    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized()</a>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <ul class="nav nav-tabs" id="focusAreaDetailsTabs" style="border-bottom: none;">
+            <li class="active">
+                <a href="#focusAreaOverview" aria-controls="focusAreaOverview" role="tab" data-toggle="tab" id="overviewTab">Overview</a>
+            </li>
+            <li>
+                <a href="#expenditures" aria-controls="fundingAndProjects" role="tab" data-toggle="tab" id="expendituresTab">Expenditures</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="focusAreaOverview">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditFocusAreaUrl, string.Format("Edit {0} - {1}", FieldDefinition.FocusArea.GetFieldDefinitionLabel(), ViewDataTyped.FocusArea.DisplayName), ViewDataTyped.UserHasFocusAreaManagePermissions) Basics
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    @if (ViewDataTyped.FocusArea.LogoFileResource != null)
+                                    {
+                                        <div class="col-xs-1">
+                                            <div style="text-align: center;">
+                                                <img src="@ViewDataTyped.FocusArea.LogoFileResource.FileResourceUrl" style="max-width: 100px; max-height: 200px; margin-left: auto; margin-right: auto;" />
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="@ViewDataTyped.FocusArea.LogoFileResource != null ? col-xs-11 : col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
+                                            <div class="col-xs-6">@ViewDataTyped.FocusArea.FocusAreaName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Short Name")</div>
+                                            <div class="col-xs-6">@ViewDataTyped.FocusArea.FocusAreahortName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaType)</div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.FocusAreaType != null ? ViewDataTyped.FocusArea.FocusAreaType.FocusAreaTypeName : string.Empty)</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaPrimaryContact)</div>
+                                            <div class="col-xs-6">@(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, ViewDataTyped.FocusArea.PrimaryContactPerson).HasPermission ? ViewDataTyped.FocusArea.PrimaryContactPersonWithOrgAsUrl : ViewDataTyped.FocusArea.PrimaryContactPersonAsStringAndOrgAsUrl)</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Home Page")</div>
+                                            <div class="col-xs-6">
+                                                <a class="wrapLongString" href="@ViewDataTyped.FocusArea.FocusAreaUrl">@ViewDataTyped.FocusArea.FocusAreaUrl</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @Html.LabelWithSugarFor(FieldDefinition.FundingSource, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
+                                <a href="@ViewDataTyped.ManageFundingSourcesUrl">@FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized()</a>
+
+                                <span class="pull-right">
+                                    @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewFundingSourceUrl, string.Format("Create a new {0}", FieldDefinition.FundingSource.GetFieldDefinitionLabel()), new List<string>(), ViewDataTyped.CanCreateNewFundingSource)
+                                </span>
+                            </div>
+                            <div class="panel-body">
+                                @if (ViewDataTyped.FocusArea.FundingSources.Any())
+                                {
+                                    <ul>
+                                        @foreach (var fundingSource in ViewDataTyped.FocusArea.FundingSources.OrderBy(x => x.FundingSourceName))
+                                        {
+                                            <li>
+                                                @fundingSource.DisplayNameAsUrl
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <p class="systemText">No @FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized() set for this @FieldDefinition.FocusArea.GetFieldDefinitionLabel().</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized() and Boundary
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="pull-right">
+                                            @if (ViewDataTyped.UserHasFocusAreaManagePermissions)
+                                            {
+                                                <a href="@ViewDataTyped.EditBoundaryUrl" title="Edit FocusArea Boundary" class="btn btn-firma">
+                                                    @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit blue")
+                                                    Edit Boundary
+                                                </a>
+                                                if (ViewDataTyped.FocusArea.FocusAreaBoundary != null)
+                                                {
+                                                    @ModalDialogFormHelper.MakeDeleteLink(string.Format("{0} Delete Boundary", BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash")), ViewDataTyped.DeleteFocusAreaBoundaryUrl, new List<string> { "btn", "btn-firma" }, ViewDataTyped.UserHasFocusAreaManagePermissions)
+                                                }
+                                            }
+                                        </div>
+                                        @if (ViewDataTyped.HasSpatialData)
+                                        {
+                                            <p>
+                                                The map displays the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() boundary, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() that have spatial data.
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="systemText">No spatial data associated with this @FieldDefinition.FocusArea.GetFieldDefinitionLabel().</p>
+                                        }
+                                    </div>
+                                    <div class="col-xs-12">
+                                        @if (ViewDataTyped.HasSpatialData)
+                                        {
+                                            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 600px; margin: 5px 0 5px 0">
+                                            </div>
+                                            <span class="alert" style="font-size: 12px">To zoom, hold down Shift and drag a rectangle.</span>
+                                            <script type="text/javascript">
+                                                jQuery(document).ready(function() {
+                                                    var mapInitJson =
+                                                        @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
+                                                    var map = new ProjectFirmaMaps.Map(mapInitJson);
+
+                                                    jQuery("#overviewTab").on("shown.bs.tab", function() {
+                                                        map.map.invalidateSize();
+                                                    });
+
+                                                });
+                                            </script>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @FieldDefinition.Project.GetFieldDefinitionLabelPluralized()
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                    @ViewDataTyped.FocusArea.FocusAreaName is:
+                                </p>
+                                <ul>
+                                    @if (ViewDataTyped.TenantHasCanStewardProjectsFocusAreaRelationship)
+                                    {
+                                        <li>
+                                            the <strong>@FieldDefinition.ProjectsStewardFocusAreaRelationshipToProject.GetFieldDefinitionLabel()</strong> for
+                                            <strong>@ViewDataTyped.NumberOfStewardedProjects</strong>
+                                            @(ViewDataTyped.NumberOfStewardedProjects == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
+                                        </li>
+                                    }
+                                    <li>
+                                        the <strong>Lead Implementer</strong> for
+                                        <strong>@ViewDataTyped.NumberOfLeadImplementedProjects</strong>
+                                        @(ViewDataTyped.NumberOfLeadImplementedProjects == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
+                                    </li>
+                                    <li>
+                                        a contributor to
+                                        <strong>@ViewDataTyped.NumberOfProjectsContributedTo</strong>
+                                        @(ViewDataTyped.NumberOfProjectsContributedTo == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
+                                    </li>
+                                </ul>
+                                @Html.DhtmlxGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectFocusAreaGridName, ViewDataTyped.ProjectFocusAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="expenditures">
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-xs-12">
+                        <p>@FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() associated with this @FieldDefinition.FocusArea.GetFieldDefinitionLabel() are presented in several ways:</p>
+                        <ul>
+                            <li>The <strong>Expenditures Provided Directly by this @FieldDefinition.FocusArea.GetFieldDefinitionLabel()</strong> chart shows all @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() that originate with @FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized() owned by this @FieldDefinition.FocusArea.GetFieldDefinitionLabel()</li>
+                            <li>
+                                The <strong>Expenditures Received from other @FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized()</strong> chart shows @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() received from other
+                                @FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized() for all @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() where this @FieldDefinition.FocusArea.GetFieldDefinitionLabel() is the
+                                @FieldDefinition.Project.GetFieldDefinitionLabel() @ViewDataTyped.ProjectStewardOrLeadImplementorFieldDefinitionName
+                            </li>
+                            <li>The <strong>@FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()</strong> table at the bottom of the page provides a list of all @FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() for which this @FieldDefinition.FocusArea.GetFieldDefinitionLabel() provided or received funding, and the annual expenditure amounts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                Provided Directly by this @FieldDefinition.FocusArea.GetFieldDefinitionLabel()
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    @if (ViewDataTyped.ExpendituresDirectlyFromFocusAreaViewGoogleChartViewData.HasData)
+                                    {
+                                        ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ExpendituresDirectlyFromFocusAreaViewGoogleChartViewData);
+                                    }
+                                    else
+                                    {
+                                        <p class="systemText">No expenditure data available</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                Received from Other @FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized()
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    @if (ViewDataTyped.ExpendituresReceivedFromOtherFocusAreaViewGoogleChartViewData.HasData)
+                                    {
+                                        ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ExpendituresReceivedFromOtherFocusAreaViewGoogleChartViewData);
+                                    }
+                                    else
+                                    {
+                                        <p class="systemText">No expenditure data available.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
+                            </div>
+                            <div class="panel-body">
+                                @Html.DhtmlxGrid(ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridSpec, ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridName, ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*TODO Neutered Per WA DNR #1446. May decide to bring it back later
+        <div role="tabpanel" class="tab-pane" id="accomplishments">
+            @if (ViewDataTyped.PerformanceMeasureChartViewDatas.Any())
+            {
+                <p>
+                    The reported @MultiTenantHelpers.GetPerformanceMeasureName() results within this @FieldDefinition.FocusArea.GetFieldDefinitionLabel() are charted here. Results are included for every @FieldDefinition.Project.GetFieldDefinitionLabel() that is assigned to this @FieldDefinition.FocusArea.GetFieldDefinitionLabel(). To see the full results for a @MultiTenantHelpers.GetPerformanceMeasureName(), click the @MultiTenantHelpers.GetPerformanceMeasureName() name in the chart title.
+                </p>
+                foreach (var batch in ViewDataTyped.PerformanceMeasureChartViewDatas.Batch(2))
+                {
+                    <div class="row">
+                        @foreach (var performanceMeasureChartViewData in batch)
+                        {
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="panel panelFirma">
+                                    <div class="panel-body">
+                                        <div style="margin: auto;">
+                                            @{ PerformanceMeasureChart.RenderPartialView(Html, performanceMeasureChartViewData); }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="systemText">
+                            There are no @FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized() to report for this @FieldDefinition.FocusArea.GetFieldDefinitionLabel().
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>*@
+        </div>
+    </div>
+</div>

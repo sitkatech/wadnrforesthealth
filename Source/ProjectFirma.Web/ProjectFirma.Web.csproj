@@ -461,6 +461,8 @@
     <Compile Include="Startup.Auth.cs" />
     <Compile Include="Views\Account\Login.cs" />
     <Compile Include="Views\Account\LoginViewData.cs" />
+    <Compile Include="Views\FocusArea\Detail.cs" />
+    <Compile Include="Views\FocusArea\DetailViewData.cs" />
     <Compile Include="Views\FocusArea\Edit.cs" />
     <Compile Include="Views\FocusArea\EditViewData.cs" />
     <Compile Include="Views\FocusArea\EditViewModel.cs" />
@@ -522,6 +524,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\FocusArea\Index.cshtml" />
     <Content Include="Views\FocusArea\Edit.cshtml" />
+    <None Include="Views\FocusArea\Detail.cshtml" />
     <None Include="Views\ProjectCreate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewModel.cs" />
     <Compile Include="Views\ProjectCustomAttributeType\Detail.cs" />
