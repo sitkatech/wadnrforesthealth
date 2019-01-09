@@ -33,8 +33,9 @@ namespace ProjectFirma.Web.Views.FocusArea
         public readonly string ProjectFocusAreaGridName;
         public readonly bool UserHasFocusAreaManagePermissions;
         public readonly string EditFocusAreaUrl;
-        public readonly string EditBoundaryUrl;
-        public readonly string DeleteFocusAreaBoundaryUrl;
+
+        //public readonly string EditBoundaryUrl;
+        //public readonly string DeleteFocusAreaBoundaryUrl;
 
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
 

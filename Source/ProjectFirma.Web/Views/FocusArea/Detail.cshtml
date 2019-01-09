@@ -157,7 +157,7 @@
                                         @(ViewDataTyped.NumberOfProjectsContributedTo == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
                                     </li>
                                 </ul>
-                                @*@Html.DhtmlxGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectFocusAreaGridName, ViewDataTyped.ProjectFocusAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)*@
+                                @Html.DhtmlxGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectFocusAreaGridName, string.Empty, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>
                     </div>
