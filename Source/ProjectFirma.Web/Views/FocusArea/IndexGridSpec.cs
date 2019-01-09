@@ -31,6 +31,7 @@ namespace ProjectFirma.Web.Views.FocusArea
         public IndexGridSpec(Person person)
         {
             Add("Focus Area", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FocusAreaName), 300, DhtmlxGridColumnFilterType.Html);
+            Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, DhtmlxGridColumnFilterType.Text);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
         }
     }
