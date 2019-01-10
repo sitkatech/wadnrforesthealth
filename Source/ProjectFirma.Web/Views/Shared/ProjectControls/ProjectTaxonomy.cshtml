@@ -38,30 +38,39 @@ Source code is available upon request via <support@sitkatech.com>.
 </style>
 
 <div id="taxonomyBasicsPanel">
-@{
+    @{
 
-    if (ViewDataTyped.TaxonomyLeaf != null)
-    {
-        <div class="row taxonomyRow">
-            <div class="col-sm-3 taxonomyBasicsPanelLabel">
-                @Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
+        if (ViewDataTyped.TaxonomyLeaf != null)
+        {
+            <div class="row taxonomyRow">
+                <div class="col-sm-3 taxonomyBasicsPanelLabel">
+                    @Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
+                </div>
+                <div class="col-sm-9">
+                    <span class="taxonomyLink@(ViewDataTyped.IsTaxonomyLeaf ? " selected" : string.Empty)">@(ViewDataTyped.IsTaxonomyLeaf ? new HtmlString(ViewDataTyped.TaxonomyLeaf.DisplayName) : ViewDataTyped.TaxonomyLeaf.GetDisplayNameAsUrl())</span>
+                </div>
             </div>
-            <div class="col-sm-9">
-                <span class="taxonomyLink@(ViewDataTyped.IsTaxonomyLeaf ? " selected" : string.Empty)">@(ViewDataTyped.IsTaxonomyLeaf ? new HtmlString(ViewDataTyped.TaxonomyLeaf.DisplayName) : ViewDataTyped.TaxonomyLeaf.GetDisplayNameAsUrl())</span>
-            </div>
-        </div>
-    }
+        }
 
-    if (ViewDataTyped.Project != null)
-    {
-        <div class="row taxonomyRow">
-            <div class="col-sm-3 taxonomyBasicsPanelLabel">
-                @Html.LabelWithSugarFor(FieldDefinition.Project, string.Format("{0}", FieldDefinition.ProjectName.GetFieldDefinitionLabel()))
+        if (ViewDataTyped.Project != null)
+        {
+            <div class="row taxonomyRow">
+                <div class="col-sm-3 taxonomyBasicsPanelLabel">
+                    @Html.LabelWithSugarFor(FieldDefinition.Project, string.Format("{0}", FieldDefinition.ProjectName.GetFieldDefinitionLabel()))
+                </div>
+                <div class="col-sm-9">
+                    <span class="taxonomyLink selected">@ViewDataTyped.Project.DisplayName</span>
+                </div>
             </div>
-            <div class="col-sm-9">
-                <span class="taxonomyLink selected">@ViewDataTyped.Project.DisplayName</span>
+
+            <div class="row taxonomyRow">
+                <div class="col-sm-3 taxonomyBasicsPanelLabel">
+                    Focus Area
+                </div>
+                <div class="col-sm-9">
+                    <span class="taxonomyLink selected">@ViewDataTyped.Project.FocusArea.DisplayName</span>
+                </div>
             </div>
-        </div>
+        }
     }
-}
 </div>
