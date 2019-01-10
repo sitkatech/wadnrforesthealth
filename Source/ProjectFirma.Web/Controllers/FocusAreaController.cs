@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.AllFocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"FocusArea {focusArea.DisplayName} successfully created.");
+            SetMessageForDisplay($"FocusArea {focusArea.FocusAreaName} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }

@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
             DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
-            FocusAreas = focusAreas.OrderBy(x => x.DisplayName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            FocusAreas = focusAreas.OrderBy(x => x.FocusAreaName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);
         }
     }
 }

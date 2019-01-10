@@ -96,4 +96,5 @@ VALUES
 (272, N'Contractor', 'Contractor', 'Placeholder definition for Contractor.'),
 (273, N'Landowner', 'Landowner', 'Placeholder definition for Landowner.'),
 (274, N'Partner', 'Partner', 'Placeholder definition for Partner.'),
-(275, N'PrimaryContact', 'Primary Contact', 'Placeholder definition for Primary Contact.')
+(275, N'PrimaryContact', 'Primary Contact', 'Placeholder definition for Primary Contact.'),
+(276, 'FocusArea', 'Focus Area', 'Placeholder definition for Focus Area')

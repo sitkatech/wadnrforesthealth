@@ -9,7 +9,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class FocusArea : IAuditableEntity
     {
-        public string DisplayName => FocusAreaName;
 
         public List<Project> GetAssociatedProjects(Person person)
         {
@@ -20,7 +19,7 @@ namespace ProjectFirma.Web.Models
 
         public HtmlString GetDisplayNameAsUrl()
         {
-            return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
+            return UrlTemplate.MakeHrefString(GetDetailUrl(), FocusAreaName);
         }
 
         public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));

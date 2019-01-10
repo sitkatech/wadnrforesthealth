@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             bool hasSpatialData) : base(currentPerson)
         {
             FocusArea = focusArea;
-            PageTitle = focusArea.DisplayName;
+            PageTitle = focusArea.FocusAreaName;
             ProjectFocusAreaGridName = "ProjectFocusAreaGrid";
             ProjectFocusAreaGridDataUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.DetailProjectFocusAreaGridJsonData(focusArea));
 
@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Views.FocusArea
                 new ProjectsIncludingLeadImplementingGridSpec(CurrentPerson, false)
                 {
                     ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}",
-                    ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with {focusArea.DisplayName}",
+                    ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with {focusArea.FocusAreaName}",
                     SaveFiltersInCookie = true
                 };
 

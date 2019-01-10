@@ -81,7 +81,7 @@
                     <div class="col-md-6">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditFocusAreaUrl, string.Format("Edit {0} - {1}", "Focus Area", ViewDataTyped.FocusArea.DisplayName), ViewDataTyped.UserHasFocusAreaManagePermissions) Basics
+                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditFocusAreaUrl, string.Format("Edit {0} - {1}", "Focus Area", ViewDataTyped.FocusArea.FocusAreaName), ViewDataTyped.UserHasFocusAreaManagePermissions) Basics
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -89,10 +89,6 @@
                                         <div class="row">
                                             <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
                                             <div class="col-xs-6">@ViewDataTyped.FocusArea.FocusAreaName</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Display Name")</div>
-                                            <div class="col-xs-6">@ViewDataTyped.FocusArea.DisplayName</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-6 fieldLabel text-right">@Html.Label("Status")</div>
