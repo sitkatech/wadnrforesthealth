@@ -81,6 +81,16 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [FocusAreaViewFeature]
+        public GridJsonNetJObjectResult<Project> DetailProjectFocusAreaGridJsonData(FocusAreaPrimaryKey focusAreaPrimaryKey)
+        {
+            var focusArea = focusAreaPrimaryKey.EntityObject;
+            var gridSpec = new ProjectsIncludingLeadImplementingGridSpec(CurrentPerson, false);
+            var projects = focusArea.Projects.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [FocusAreaViewFeature]
         public ViewResult Index()
         {
             var layerGeoJsons = new List<LayerGeoJson>();

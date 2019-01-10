@@ -87,6 +87,7 @@ namespace ProjectFirma.Web.Controllers
             var primaryContactPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
+            var focusAreas = HttpRequestStorage.DatabaseEntities.AllFocusAreas.ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 taxonomyLeafDisplayName,
                 ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
@@ -94,7 +95,8 @@ namespace ProjectFirma.Web.Controllers
                 defaultPrimaryContact,
                 totalExpenditures,
                 taxonomyLeafs,
-                projectCustomAttributeTypes
+                projectCustomAttributeTypes,
+                focusAreas
             );
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
         }

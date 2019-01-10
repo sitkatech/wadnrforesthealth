@@ -34,6 +34,7 @@ namespace ProjectFirma.Web.Views.FocusArea
         public readonly bool UserHasFocusAreaManagePermissions;
         public readonly string EditFocusAreaUrl;
 
+        public readonly string ProjectFocusAreaGridDataUrl;
         //public readonly string EditBoundaryUrl;
         //public readonly string DeleteFocusAreaBoundaryUrl;
 
@@ -58,7 +59,10 @@ namespace ProjectFirma.Web.Views.FocusArea
         {
             FocusArea = focusArea;
             PageTitle = focusArea.DisplayName;
-            ProjectFocusAreaGridName = "Project Focus Area Grid";
+            ProjectFocusAreaGridName = "ProjectFocusAreaGrid";
+            ProjectFocusAreaGridDataUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.DetailProjectFocusAreaGridJsonData(focusArea));
+
+
             //EntityName = $"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()}";
             UserHasFocusAreaManagePermissions = new FocusAreaManageFeature().HasPermissionByPerson(CurrentPerson);
 
@@ -70,7 +74,7 @@ namespace ProjectFirma.Web.Views.FocusArea
                     //c => c.DeleteFocusAreaBoundary(focusArea));
 
             ProjectsIncludingLeadImplementingGridSpec =
-                new ProjectsIncludingLeadImplementingGridSpec(focusArea, CurrentPerson, false)
+                new ProjectsIncludingLeadImplementingGridSpec(CurrentPerson, false)
                 {
                     ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}",
                     ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with {focusArea.DisplayName}",
@@ -82,6 +86,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
             MapInitJson = mapInitJson;
             HasSpatialData = hasSpatialData;
+
 
         }
     }

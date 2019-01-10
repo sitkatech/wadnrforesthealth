@@ -36,6 +36,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public IEnumerable<SelectListItem> ProjectStages { get; }
         public IEnumerable<SelectListItem> Organizations { get; }
         public IEnumerable<SelectListItem> PrimaryContactPeople { get; }
+        public IEnumerable<SelectListItem> FocusAreas { get; }
         public Person DefaultPrimaryContactPerson { get; }
         public EditProjectType EditProjectType { get; }
         public string TaxonomyLeafDisplayName { get; }
@@ -43,6 +44,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public string DefaultPrimaryContactPersonName { get; }
         public bool HasThreeTierTaxonomy { get; }
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
+
 
         public EditProjectViewData(EditProjectType editProjectType,
             string taxonomyLeafDisplayName,
@@ -52,7 +54,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             Person defaultPrimaryContactPerson,
             decimal? totalExpenditures,
             List<Models.TaxonomyLeaf> taxonomyLeafs,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes,
+            IEnumerable<Models.FocusArea> focusAreas)
         {
             EditProjectType = editProjectType;
             TaxonomyLeafDisplayName = taxonomyLeafDisplayName;
@@ -70,6 +73,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
             DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
+            FocusAreas = focusAreas.OrderBy(x => x.DisplayName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
         }
     }
 }

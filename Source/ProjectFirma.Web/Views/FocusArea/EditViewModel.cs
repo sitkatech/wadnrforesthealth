@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Models;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ using System.Data.Entity.Spatial;
 
 namespace ProjectFirma.Web.Views.FocusArea
 {
-    public class EditViewModel : FormViewModel
+    public class EditViewModel : FormViewModel, IValidatableObject
     {
 
         public int FocusAreaID { get; set; }
@@ -63,6 +64,12 @@ namespace ProjectFirma.Web.Views.FocusArea
             focusArea.FocusAreaStatusID = FocusAreaStatusID;
             focusArea.FocusAreaLocation = FocusAreaLocation;
 
+        }
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var validationResults = new List<ValidationResult>();
+
+                return validationResults;
         }
     }
 }

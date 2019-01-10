@@ -29,6 +29,21 @@ namespace ProjectFirma.Web.Models
 {
     public partial class TaxonomyLeaf : IAuditableEntity, ITaxonomyTier, IHaveASortOrder
     {
+        public const int ProjectTypeIDForestHealth = 2170;
+        public const int ProjectTypeIDFuelsReduction = 2220;
+
+        public static List<int> GetAllProjectTypeIDsWhereFocusAreaRequired()
+        {
+            List<int> requiredProjectTypeIDs = new List<int>()
+            {
+                ProjectTypeIDForestHealth,
+                ProjectTypeIDFuelsReduction
+            };
+
+            return requiredProjectTypeIDs;
+        }
+
+
         public int? SortOrder
         {
             get => TaxonomyLeafSortOrder;

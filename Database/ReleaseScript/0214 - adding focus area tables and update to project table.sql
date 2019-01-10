@@ -21,3 +21,6 @@ insert into dbo.FirmaPageType(FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeD
 values (55, 'FocusAreasList', 'Focus Areas List', 1)
 
 insert into dbo.FirmaPage(FirmaPageTypeID, TenantID) values(55, 10)
+
+
+--Alter table dbo.Project add constraint CK_Project_FocusAreaIDRequiredForProjectTypeFHAndFR check (TaxonomyLeafID not in(2170,2220) or FocusAreaID is not null)
