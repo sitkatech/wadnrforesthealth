@@ -32,11 +32,12 @@ namespace ProjectFirma.Web.Views.FocusArea
         public readonly Models.FocusArea FocusArea;
         public readonly string ProjectFocusAreaGridName;
         public readonly bool UserHasFocusAreaManagePermissions;
-        public readonly string EditFocusAreaUrl;
+
 
         public readonly string ProjectFocusAreaGridDataUrl;
-        //public readonly string EditBoundaryUrl;
-        //public readonly string DeleteFocusAreaBoundaryUrl;
+        public readonly string EditFocusAreaUrl;
+        public readonly string EditLocationUrl;
+        public readonly string DeleteFocusAreaLocationUrl;
 
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
 
@@ -67,11 +68,11 @@ namespace ProjectFirma.Web.Views.FocusArea
             UserHasFocusAreaManagePermissions = new FocusAreaManageFeature().HasPermissionByPerson(CurrentPerson);
 
             EditFocusAreaUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Edit(focusArea));
-            //EditBoundaryUrl =
-                //SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.EditBoundary(focusArea));
-            //DeleteFocusAreaBoundaryUrl =
-                //SitkaRoute<FocusAreaController>.BuildUrlFromExpression(
-                    //c => c.DeleteFocusAreaBoundary(focusArea));
+            EditLocationUrl =
+                SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.EditLocation(focusArea));
+            DeleteFocusAreaLocationUrl =
+                SitkaRoute<FocusAreaController>.BuildUrlFromExpression(
+                    c => c.DeleteFocusAreaLocation(focusArea));
 
             ProjectsIncludingLeadImplementingGridSpec =
                 new ProjectsIncludingLeadImplementingGridSpec(CurrentPerson, false)

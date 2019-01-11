@@ -23,6 +23,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected FocusArea()
         {
+            this.FocusAreaLocationStagings = new HashSet<FocusAreaLocationStaging>();
             this.Projects = new HashSet<Project>();
             this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
@@ -75,13 +76,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Projects.Any();
+            return FocusAreaLocationStagings.Any() || Projects.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(Project).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(FocusAreaLocationStaging).Name, typeof(Project).Name};
 
 
         /// <summary>
@@ -98,6 +99,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
+            foreach(var x in FocusAreaLocationStagings.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in Projects.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -113,6 +119,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FocusAreaID; } set { FocusAreaID = value; } }
 
+        public virtual ICollection<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public FocusAreaStatus FocusAreaStatus { get { return FocusAreaStatus.AllLookupDictionary[FocusAreaStatusID]; } }

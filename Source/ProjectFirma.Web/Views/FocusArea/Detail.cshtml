@@ -94,10 +94,6 @@
                                             <div class="col-xs-6 fieldLabel text-right">@Html.Label("Status")</div>
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.FocusAreaStatus != null ? ViewDataTyped.FocusArea.FocusAreaStatus.FocusAreaStatusDisplayName : string.Empty)</div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Location")</div>
-                                            <div class="col-xs-6">@ViewDataTyped.FocusArea.FocusAreaLocation</div>
-                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -117,9 +113,57 @@
                     <div class="col-md-12">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
-                                @FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized() and Boundary
+                                Focus Area and @FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()
                             </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="pull-right">
+                                            @if (ViewDataTyped.UserHasFocusAreaManagePermissions)
+                                            {
+                                                <a href="@ViewDataTyped.EditLocationUrl" title="Edit Focus Area Location" class="btn btn-firma">
+                                                    @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit blue")
+                                                    Edit Location
+                                                </a>
+                                                if (ViewDataTyped.FocusArea.FocusAreaLocation != null)
+                                                {
+                                                    @ModalDialogFormHelper.MakeDeleteLink(string.Format("{0} Delete Location", BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash")), ViewDataTyped.DeleteFocusAreaLocationUrl, new List<string> { "btn", "btn-firma" }, ViewDataTyped.UserHasFocusAreaManagePermissions)
+                                                }
+                                            }
+                                        </div>
+                                        @if (ViewDataTyped.HasSpatialData)
+                                        {
+                                            <p>
+                                                The map displays the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() location, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() that have spatial data.
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="systemText">No spatial data associated with this @FieldDefinition.FocusArea.GetFieldDefinitionLabel().</p>
+                                        }
+                                    </div>
+                                    <div class="col-xs-12">
+                                        @if (ViewDataTyped.HasSpatialData)
+                                        {
+                                            <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 600px; margin: 5px 0 5px 0">
+                                            </div>
+                                            <span class="alert" style="font-size: 12px">To zoom, hold down Shift and drag a rectangle.</span>
+                                            <script type="text/javascript">
+                                                jQuery(document).ready(function() {
+                                                    var mapInitJson =
+                                                        @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
+                                                    var map = new ProjectFirmaMaps.Map(mapInitJson);
 
+                                                    jQuery("#overviewTab").on("shown.bs.tab", function() {
+                                                        map.map.invalidateSize();
+                                                    });
+
+                                                });
+                                            </script>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

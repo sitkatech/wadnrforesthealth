@@ -47,15 +47,19 @@ namespace ProjectFirma.Web.Models
             return focusArea == null ? "" : SummaryUrlTemplate.ParameterReplace(focusArea.FocusAreaID);
         }
 
-        public static List<LayerGeoJson> GetBoundaryLayerGeoJson(this IEnumerable<FocusArea> focusAreas)
+        public static List<Project> GetAllAssociatedProjects(this FocusArea focusArea)
         {
-            return new List<LayerGeoJson>();
+            return focusArea.Projects.ToList();
         }
-
 
         public static List<Project> GetAllActiveProjects(this FocusArea focusArea, Person person)
         {
-            return focusArea.GetAllActiveProjects(person);
+            return focusArea.GetAllAssociatedProjects().GetActiveProjects();
+        }
+
+        public static List<Project> GetProposalsVisibleToUser(this FocusArea focusArea, Person person)
+        {
+            return focusArea.GetAllAssociatedProjects().GetProposalsVisibleToUser(person);
         }
 
 
