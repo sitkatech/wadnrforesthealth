@@ -42,9 +42,6 @@ namespace ProjectFirma.Web.Views.FocusArea
         [DisplayName("Status")]
         public int FocusAreaStatusID { get; set; }
 
-        [DisplayName("Location")]
-        public DbGeometry FocusAreaLocation { get; set; }
-
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -62,8 +59,6 @@ namespace ProjectFirma.Web.Views.FocusArea
         {
             focusArea.FocusAreaName = FocusAreaName;
             focusArea.FocusAreaStatusID = FocusAreaStatusID;
-            focusArea.FocusAreaLocation = FocusAreaLocation;
-
         }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

@@ -90,9 +90,7 @@ namespace ProjectFirma.Web.Controllers
         [FocusAreaViewFeature]
         public ViewResult Index()
         {
-            var layerGeoJsons = new List<LayerGeoJson>();
-            
-            var mapInitJson = new MapInitJson("focusAreaIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
+            var mapInitJson = GetMapInitJson(out var hasSpatialData);
 
             var firmaPage = Models.FirmaPage.GetFirmaPageByPageType(FirmaPageType.FocusAreasList);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
@@ -271,6 +269,36 @@ namespace ProjectFirma.Web.Controllers
             var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
 
             return new MapInitJson($"focusArea_{focusArea.FocusAreaID}_Map", 10, layers, boundingBox);
+        }
+
+        private static MapInitJson GetMapInitJson(out bool hasSpatialData)
+        {
+            hasSpatialData = false;
+
+            var layers = new List<LayerGeoJson>();
+            var focusAreas = HttpRequestStorage.DatabaseEntities.AllFocusAreas.ToList();
+            var locationFeatures = new List<Feature>();
+
+            foreach (var focusArea in focusAreas)
+            {
+                if (focusArea.FocusAreaLocation != null)
+                {
+                    hasSpatialData = true;
+                    locationFeatures.AddRange(focusArea.FocusAreaLocationToFeature());
+                }
+            }
+
+            if (locationFeatures.Any())
+            {
+                layers.Add(new LayerGeoJson("Focus Area Location",
+                    new FeatureCollection(locationFeatures), "blue", 1,
+                    LayerInitialVisibility.Show));
+            }
+
+
+            var boundingBox = BoundingBox.MakeBoundingBoxFromLayerGeoJsonList(layers);
+
+            return new MapInitJson("focusAreaIndex", 10, layers, boundingBox);
         }
     }
 }

@@ -136,7 +136,12 @@
                                             <p>
                                                 The map displays the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() location, and the locations of any active @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() that have spatial data.
                                             </p>
+                                            if (ViewDataTyped.FocusArea.FocusAreaLocation == null)
+                                            {
+                                                <p style="font-weight: bold"> The Focus Area, @ViewDataTyped.FocusArea.FocusAreaName, does not have a location set. </p>
+                                            }
                                         }
+
                                         else
                                         {
                                             <p class="systemText">No spatial data associated with this @FieldDefinition.FocusArea.GetFieldDefinitionLabel().</p>

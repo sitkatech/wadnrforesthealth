@@ -51,5 +51,10 @@ namespace ProjectFirma.Web.Models
             //feature.Properties.Add(OrganizationType.OrganizationTypeName, OrganizationName);
             return new FeatureCollection(new List<Feature> { feature });
         }
+        public List<Feature> FocusAreaLocationToFeature()
+        {
+            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(FocusAreaLocation);
+            return new List<Feature> { feature };
+        }
     }
 }

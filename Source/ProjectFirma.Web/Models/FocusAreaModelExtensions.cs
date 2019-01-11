@@ -63,6 +63,5 @@ namespace ProjectFirma.Web.Models
         }
 
 
-
     }
 }
