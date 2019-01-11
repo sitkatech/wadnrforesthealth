@@ -4,6 +4,13 @@
 @using ProjectFirma.Web.Views.Organization
 
 @inherits ApproveUploadGis
+<style>
+    .selectedOrganizationBoundaryInformation {
+        max-height: 200px;
+        overflow: auto;
+    }
+</style>
+
 
 @if (Html.ValidationSummary().ToString().IsEmpty())
 {
@@ -20,7 +27,7 @@
             <li>Switch between Feature Groups using the map control in the upper-right corner.</li>
             <li>Select a polygon feature to represent the @(FieldDefinition.Organization.GetFieldDefinitionLabel()) boundary.</li>
         </ul>
-        <div id="@ViewDataTyped.MapInitJson.MapDivID" class="organizationBoundaryMap"></div>
+        <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 400px; margin-bottom: 25px"></div>
     </div>
     <div class="col-xs-12">
         <div class="well" style="display: none;">

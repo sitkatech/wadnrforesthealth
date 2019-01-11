@@ -69,6 +69,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
 
+        public int? FocusAreaID { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -90,6 +92,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
+            FocusAreaID = project.FocusAreaID;
             ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
 
@@ -103,6 +106,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.PlannedDate = PlannedDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
+            project.FocusAreaID = FocusAreaID;
 
             ProjectCustomAttributes?.UpdateModel(project, currentPerson);
         }
@@ -149,6 +153,14 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                                    "Making this change can potentially affect that update in process.<br />" +
                                    $"Please delete the update if you want to change this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}'s stage.";
                 yield return new SitkaValidationResult<EditProjectViewModel, int>(errorMessage, m => m.ProjectStageID);
+            }
+
+            var projectTypeIDsWhereFocusAreaRequired = Models.TaxonomyLeaf.GetAllProjectTypeIDsWhereFocusAreaRequired();
+
+            if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(TaxonomyLeafID.Value))
+            {
+                var errorMessage = $"The Focus Area is required for your selected product type";
+                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
             }
         }
     }

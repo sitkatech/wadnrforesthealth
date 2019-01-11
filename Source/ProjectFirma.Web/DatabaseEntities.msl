@@ -218,6 +218,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FocusArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FocusArea">
+        <MappingFragment StoreEntitySet="FocusArea">
+          <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="FocusAreaName" ColumnName="FocusAreaName" />
+          <ScalarProperty Name="FocusAreaStatusID" ColumnName="FocusAreaStatusID" />
+          <ScalarProperty Name="FocusAreaLocation" ColumnName="FocusAreaLocation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FocusAreaLocationStaging">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FocusAreaLocationStaging">
+        <MappingFragment StoreEntitySet="FocusAreaLocationStaging">
+          <ScalarProperty Name="FocusAreaLocationStaggingID" ColumnName="FocusAreaLocationStaggingID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
+          <ScalarProperty Name="FeatureClassName" ColumnName="FeatureClassName" />
+          <ScalarProperty Name="GeoJson" ColumnName="GeoJson" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FundingSource">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FundingSource">
         <MappingFragment StoreEntitySet="FundingSource">
@@ -616,6 +638,7 @@
           <ScalarProperty Name="ReviewedByPersonID" ColumnName="ReviewedByPersonID" />
           <ScalarProperty Name="DefaultBoundingBox" ColumnName="DefaultBoundingBox" />
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
+          <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -198,4 +198,9 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Index());
     }
+
+    public partial class FirmaPageTypeFocusAreasList
+    {
+        public override string GetViewUrl() => SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
+    }
 }
