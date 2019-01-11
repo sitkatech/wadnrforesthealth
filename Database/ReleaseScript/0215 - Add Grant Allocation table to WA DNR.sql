@@ -8,7 +8,8 @@ CREATE TABLE dbo.GrantAllocation
 	ProjectName nvarchar(100) NULL,
     StartDate DateTime not NULL,
     EndDate DateTime not NULL,
-    AllocationAmount money null
+    AllocationAmount money null,
+	CostType int null -- This should be a foreign key to CostType lookup table
 )
 
 insert into FieldDefinition values
