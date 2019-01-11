@@ -7,7 +7,11 @@ CREATE TABLE dbo.[Grant]
     GrantNumber varchar(30) null,
     StartDate DateTime NULL,
     EndDate DateTime NULL,
-    AwardedFunds money null
+	ProgramIndex int NULL,
+	ProjectCode varchar(100) NULL,
+	ConditionsAndRequirements varchar(max) NULL,
+	ComplianceNotes varchar(max) NULL,
+    AwardedFunds money null -- This should be AwardAmount according to Liz's data model
 )
 
 insert into FieldDefinition values
