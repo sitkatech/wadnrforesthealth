@@ -19,6 +19,8 @@
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaHomePageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.Store.FirmaPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.Store.FundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.Store.GeospatialArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.Store.GeospatialAreaType" store:Type="Tables" Schema="dbo" />
@@ -192,6 +194,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_FirmaPageImage_FirmaPage_FirmaPageID" Association="ProjectFirma.Web.Models.Store.FK_FirmaPageImage_FirmaPage_FirmaPageID">
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
     </AssociationSet>
     <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_FundingSource_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -392,6 +398,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_Project_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Project_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
@@ -1038,6 +1048,26 @@ warning 6035: The relationship 'FK_FirmaPageImage_FirmaPage_FirmaPageID_TenantID
     <Property Name="FirmaPageID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="FocusArea">
+    <Key>
+      <PropertyRef Name="FocusAreaID" />
+    </Key>
+    <Property Name="FocusAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="int" Nullable="false" />
+    <Property Name="FocusAreaName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="FocusAreaStatusID" Type="int" Nullable="false" />
+    <Property Name="FocusAreaLocation" Type="geometry" />
+  </EntityType>
+  <EntityType Name="FocusAreaLocationStaging">
+    <Key>
+      <PropertyRef Name="FocusAreaLocationStaggingID" />
+    </Key>
+    <Property Name="FocusAreaLocationStaggingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="int" Nullable="false" />
+    <Property Name="FocusAreaID" Type="int" Nullable="false" />
+    <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_ContractorTimeActivity_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectBudget_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -1102,6 +1132,10 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
+    <Property Name="ProgramIndex" Type="int" />
+    <Property Name="ProjectCode" Type="varchar" MaxLength="100" />
+    <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
+    <Property Name="ComplianceNotes" Type="varchar(max)" />
     <Property Name="AwardedFunds" Type="money" />
   </EntityType>
   <EntityType Name="GrantAllocation">
@@ -1115,6 +1149,7 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="StartDate" Type="datetime" Nullable="false" />
     <Property Name="EndDate" Type="datetime" Nullable="false" />
     <Property Name="AllocationAmount" Type="money" />
+    <Property Name="CostType" Type="int" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>
@@ -1571,6 +1606,7 @@ warning 6035: The relationship 'FK_TreatmentActivity_Project_ProjectID_TenantID'
     <Property Name="ReviewedByPersonID" Type="int" />
     <Property Name="DefaultBoundingBox" Type="geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
+    <Property Name="FocusAreaID" Type="int" />
   </EntityType>
   <EntityType Name="ProjectAssessmentQuestion">
     <Key>
@@ -2575,6 +2611,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="1" />
+    <End Role="FocusAreaLocationStagings" Type="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="FocusAreaLocationStagings">
+        <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FundingSource_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
     <End Role="FundingSources" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="*" />
@@ -3172,6 +3220,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="PersonStewardTaxonomyBranches">
         <PropertyRef Name="TaxonomyBranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
+    <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="FocusAreaID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

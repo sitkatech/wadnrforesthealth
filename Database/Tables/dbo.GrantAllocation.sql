@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[StartDate] [datetime] NOT NULL,
 	[EndDate] [datetime] NOT NULL,
 	[AllocationAmount] [money] NULL,
+	[CostType] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC

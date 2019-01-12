@@ -1,4 +1,3 @@
-
 CREATE TABLE dbo.[Grant]
 (
     -- Just a few fields to start -- very incomplete
@@ -13,18 +12,10 @@ CREATE TABLE dbo.[Grant]
 	ComplianceNotes varchar(max) NULL,
     AwardedFunds money null -- This should be AwardAmount according to Liz's data model
 )
+go
+insert into dbo.FieldDefinition values
+(277, N'Grant', 'Grant', 'Placeholder definition for Grant.')
 
-insert into FieldDefinition values
-(276, N'Grant', 'Grant', 'Placeholder definition for Grant.')
-GO
-
-insert into FieldDefinitionData (TenantID, FieldDefinitionID, FieldDefinitionDataValue, FieldDefinitionLabel)
-select t.TenantID, 276, Null, Null
+insert into dbo.FieldDefinitionData (TenantID, FieldDefinitionID, FieldDefinitionDataValue, FieldDefinitionLabel)
+select t.TenantID, 277, Null, Null
 From dbo.Tenant as t
-GO
-
-insert into FirmaPageType (FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeDisplayName, FirmaPageRenderTypeID)
-values
-(55, 'FullGrantList', 'Full Grant List', 1)
-
-

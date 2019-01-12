@@ -30,12 +30,16 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, decimal? awardedFunds) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
             this.StartDate = startDate;
             this.EndDate = endDate;
+            this.ProgramIndex = programIndex;
+            this.ProjectCode = projectCode;
+            this.ConditionsAndRequirements = conditionsAndRequirements;
+            this.ComplianceNotes = complianceNotes;
             this.AwardedFunds = awardedFunds;
         }
 
@@ -90,6 +94,10 @@ namespace ProjectFirma.Web.Models
         public string GrantNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public int? ProgramIndex { get; set; }
+        public string ProjectCode { get; set; }
+        public string ConditionsAndRequirements { get; set; }
+        public string ComplianceNotes { get; set; }
         public decimal? AwardedFunds { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
@@ -100,6 +108,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int GrantNumber = 30;
+            public const int ProjectCode = 100;
         }
     }
 }

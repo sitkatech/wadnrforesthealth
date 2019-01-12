@@ -13,16 +13,12 @@ CREATE TABLE dbo.GrantAllocation
 )
 
 insert into FieldDefinition values
-(277, N'GrantAllocation', 'Grant Allocation', 'Placeholder definition for Grant Allocation.')
+(278, N'GrantAllocation', 'Grant Allocation', 'Placeholder definition for Grant Allocation.')
 GO
 
 insert into FieldDefinitionData (TenantID, FieldDefinitionID, FieldDefinitionDataValue, FieldDefinitionLabel)
-select TenantID, 277, Null, Null
+select TenantID, 278, Null, Null
 From dbo.Tenant
 GO
-
-insert into FirmaPageType (FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeDisplayName, FirmaPageRenderTypeID)
-values
-(56, 'FullGrantAllocationList', 'Full Grant Allocation List', 1)
 
 

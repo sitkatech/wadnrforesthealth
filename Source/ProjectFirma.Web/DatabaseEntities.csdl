@@ -19,6 +19,8 @@
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.FirmaHomePageImage" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
+    <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
+    <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.GeospatialArea" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
@@ -225,6 +227,14 @@
     <AssociationSet Name="FK_FirmaPageImage_FirmaPage_FirmaPageID" Association="ProjectFirma.Web.Models.FK_FirmaPageImage_FirmaPage_FirmaPageID">
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
     <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -1027,6 +1037,29 @@
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FileResource_FileResourceID" FromRole="FirmaPageImages" ToRole="FileResource" />
     <NavigationProperty Name="FirmaPage" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FirmaPage_FirmaPageID" FromRole="FirmaPageImages" ToRole="FirmaPage" />
   </EntityType>
+  <EntityType Name="FocusArea">
+    <Key>
+      <PropertyRef Name="FocusAreaID" />
+    </Key>
+    <Property Name="FocusAreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="FocusAreaName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="FocusAreaStatusID" Type="Int32" Nullable="false" />
+    <Property Name="FocusAreaLocation" Type="Geometry" />
+    <NavigationProperty Name="FocusAreaLocationStagings" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="FocusAreaLocationStagings" />
+    <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="Projects" />
+  </EntityType>
+  <EntityType Name="FocusAreaLocationStaging">
+    <Key>
+      <PropertyRef Name="FocusAreaLocationStaggingID" />
+    </Key>
+    <Property Name="FocusAreaLocationStaggingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
+    <Property Name="FeatureClassName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
+  </EntityType>
   <EntityType Name="FundingSource">
     <Key>
       <PropertyRef Name="FundingSourceID" />
@@ -1087,6 +1120,10 @@
     <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="StartDate" Type="DateTime" />
     <Property Name="EndDate" Type="DateTime" />
+    <Property Name="ProgramIndex" Type="Int32" />
+    <Property Name="ProjectCode" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ConditionsAndRequirements" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ComplianceNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="AwardedFunds" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
   </EntityType>
@@ -1101,6 +1138,7 @@
     <Property Name="StartDate" Type="DateTime" Nullable="false" />
     <Property Name="EndDate" Type="DateTime" Nullable="false" />
     <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CostType" Type="Int32" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
@@ -1553,7 +1591,9 @@
     <Property Name="ReviewedByPersonID" Type="Int32" />
     <Property Name="DefaultBoundingBox" Type="Geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="FocusAreaID" Type="Int32" />
     <NavigationProperty Name="ContractorTimeActivities" Relationship="ProjectFirma.Web.Models.FK_ContractorTimeActivity_Project_ProjectID" FromRole="Project" ToRole="ContractorTimeActivities" />
+    <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
     <NavigationProperty Name="PerformanceMeasureExpecteds" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureExpected_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureExpecteds" />
@@ -2780,6 +2820,30 @@
       </Principal>
       <Dependent Role="FirmaPageImages">
         <PropertyRef Name="FirmaPageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="1" />
+    <End Role="FocusAreaLocationStagings" Type="ProjectFirma.Web.Models.FocusAreaLocationStaging" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="FocusAreaLocationStagings">
+        <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="0..1" />
+    <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="FocusAreaID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

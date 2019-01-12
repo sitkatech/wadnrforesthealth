@@ -28,6 +28,7 @@ CREATE TABLE [dbo].[Project](
 	[ReviewedByPersonID] [int] NULL,
 	[DefaultBoundingBox] [geometry] NULL,
 	[NoExpendituresToReportExplanation] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[FocusAreaID] [int] NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC
@@ -44,6 +45,11 @@ CREATE TABLE [dbo].[Project](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_FocusArea_FocusAreaID] FOREIGN KEY([FocusAreaID])
+REFERENCES [dbo].[FocusArea] ([FocusAreaID])
+GO
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_FocusArea_FocusAreaID]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_PersonID] FOREIGN KEY([PrimaryContactPersonID])
 REFERENCES [dbo].[Person] ([PersonID])
