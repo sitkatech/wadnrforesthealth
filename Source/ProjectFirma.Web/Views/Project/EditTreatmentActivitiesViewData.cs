@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -28,35 +29,20 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class EditTreatmentActivitiesViewData : FirmaViewData
     {
-        public List<TreatmentTypeSimple> AllTreatmentTypes { get; }
+        public IEnumerable<SelectListItem> TreatmentActivityStatus { get; }
+
         public int ProjectID { get; }
-        public ViewDataForAngularClass ViewDataForAngular { get; }
         public string ProjectUrl { get; }
 
-        public EditTreatmentActivitiesViewData(Models.Project project, List<TreatmentTypeSimple> allTreatmentTypes, Person currentPerson) : base(currentPerson)
+        public EditTreatmentActivitiesViewData(Models.Project project, Person currentPerson) : base(currentPerson)
         {
-            AllTreatmentTypes = allTreatmentTypes;
             ProjectID = project.ProjectID;
-            ViewDataForAngular = new ViewDataForAngularClass(AllTreatmentTypes, ProjectID);
             ProjectUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(ProjectID));
 
             EntityName = Models.FieldDefinition.Project.GetFieldDefinitionLabel();
             PageTitle = $"Edit {project.DisplayName} Treatments";
-        }
 
-        public class ViewDataForAngularClass
-        {
-            public List<TreatmentTypeSimple> AllTreatmentTypes { get; }
-            public int ProjectID { get; }
-            public List<FundingSourceSimple> AllFundingSources { get; }
-
-            public ViewDataForAngularClass(List<TreatmentTypeSimple> allTreatmentTypes, int projectID)
-            {
-                // todo: pull this out to the controller
-                AllFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-                AllTreatmentTypes = allTreatmentTypes;
-                ProjectID = projectID;
-            }
+            //TreatmentActivityStatus = treatmentActivityStatus;
         }
     }
 }

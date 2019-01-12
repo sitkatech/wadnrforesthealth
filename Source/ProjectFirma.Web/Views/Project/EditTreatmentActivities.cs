@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Views.Project
 {
-    public abstract class EditTreatmentActivities : LtInfo.Common.Mvc.TypedWebViewPage<EditTreatmentActivitiesViewData, EditTreatmentActivitiesViewModel>
+    public abstract class EditTreatmentActivities : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditTreatmentActivitiesViewData, EditTreatmentActivitiesViewModel>
     {
     }
 }

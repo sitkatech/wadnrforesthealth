@@ -84,6 +84,10 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectNotificationGridName { get; }
         public string ProjectNotificationGridDataUrl { get; }
 
+        public TreatmentActivityGridSpec TreatmentActivityGridSpec { get; }
+        public string TreatmentActivityGridName { get; }
+        public string TreatmentActivityGridDataUrl { get; }
+
         public string EditProjectGeospatialAreaFormID { get; }
         public string EditProjectBoundingBoxFormID { get; }
         public string ProjectStewardCannotEditUrl { get; }
@@ -126,7 +130,9 @@ namespace ProjectFirma.Web.Views.Project
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData)
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
+            TreatmentActivityGridSpec treatmentActivityGridSpec, string treatmentActivityGridDataUrl
+            )
             : base(currentPerson, project)
         {
             PageTitle = project.DisplayName.ToEllipsifiedStringClean(110);
@@ -335,6 +341,10 @@ namespace ProjectFirma.Web.Views.Project
 
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
+
+            TreatmentActivityGridSpec = treatmentActivityGridSpec;
+            TreatmentActivityGridName = "treatmentActivityGrid";
+            TreatmentActivityGridDataUrl = treatmentActivityGridDataUrl;
         }
     }
 }

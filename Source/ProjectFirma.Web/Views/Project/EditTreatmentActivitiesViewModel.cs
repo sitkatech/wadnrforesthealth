@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,7 +33,29 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class EditTreatmentActivitiesViewModel : FormViewModel, IValidatableObject
     {
-        public List<TreatmentActivitySimple> TreatmentActivities { get; set; }
+ 
+        public int ProjectID { get; set; }
+        public int TreatmentActivityID { get; set; }
+        public int? TreatmentActivityContactID { get; set; }
+        public DateTime TreatmentActivityStartDate { get; set; }
+        public DateTime? TreatmentActivityEndDate { get; set; }
+        public string TreatmentActivityProgramIndex { get; set; }
+        public string TreatmentActivityProjectCode { get; set; }
+        public int TreatmentActivityStatusID { get; set; }
+        public string TreatmentActivityNotes { get; set; }
+        public decimal TreatmentActivityFootprintAcres { get; set; }
+        public decimal TreatmentActivityChippingAcres { get; set; }
+        public decimal TreatmentActivityPruningAcres { get; set; }
+        public decimal TreatmentActivityThinningAcres { get; set; }
+        public decimal TreatmentActivityMasticationAcres { get; set; }
+        public decimal TreatmentActivityGrazingAcres { get; set; }
+        public decimal TreatmentActivityLopAndScatterAcres { get; set; }
+        public decimal TreatmentActivityBiomassRemovalAcres { get; set; }
+        public decimal TreatmentActivityHandPileAcres { get; set; }
+        public decimal TreatmentActivityBroadcastBurnAcres { get; set; }
+        public decimal TreatmentActivityHandPileBurnAcres { get; set; }
+        public decimal TreatmentActivityMachinePileBurnAcres { get; set; }
+        public decimal TreatmentActivityOtherTreatmentAcres { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -42,49 +65,38 @@ namespace ProjectFirma.Web.Views.Project
         }
 
         public EditTreatmentActivitiesViewModel(Models.Project project,
-            List<TreatmentActivitySimple> treatmentActivities)
+            TreatmentActivity treatmentActivity)
         {
-            TreatmentActivities = treatmentActivities;
+            ProjectID = project.ProjectID;
+            TreatmentActivityID = TreatmentActivityID;
+            TreatmentActivityContactID = treatmentActivity.TreatmentActivityContactID;
+            TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
+            TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
+            TreatmentActivityProgramIndex = treatmentActivity.TreatmentActivityProgramIndex;
+            TreatmentActivityProjectCode = treatmentActivity.TreatmentActivityProjectCode;
+            TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
+            TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
+            TreatmentActivityFootprintAcres = treatmentActivity.TreatmentActivityFootprintAcres;
+            TreatmentActivityChippingAcres = treatmentActivity.TreatmentActivityChippingAcres;
+            TreatmentActivityPruningAcres = treatmentActivity.TreatmentActivityPruningAcres;
+            TreatmentActivityThinningAcres = treatmentActivity.TreatmentActivityThinningAcres;
+            TreatmentActivityMasticationAcres = treatmentActivity.TreatmentActivityMasticationAcres;
+            TreatmentActivityGrazingAcres = treatmentActivity.TreatmentActivityGrazingAcres;
+            TreatmentActivityLopAndScatterAcres = treatmentActivity.TreatmentActivityLopAndScatterAcres;
+            TreatmentActivityBiomassRemovalAcres = treatmentActivity.TreatmentActivityBiomassRemovalAcres;
+            TreatmentActivityHandPileAcres = treatmentActivity.TreatmentActivityHandPileAcres;
+            TreatmentActivityBroadcastBurnAcres = treatmentActivity.TreatmentActivityBroadcastBurnAcres;
+            TreatmentActivityHandPileBurnAcres = treatmentActivity.TreatmentActivityHandPileBurnAcres;
+            TreatmentActivityMachinePileBurnAcres = treatmentActivity.TreatmentActivityMachinePileBurnAcres;
+            TreatmentActivityOtherTreatmentAcres = treatmentActivity.TreatmentActivityOtherTreatmentAcres;
+
         }
 
-        public void UpdateModel(List<TreatmentActivity> currentTreatmentActivitys,
-            IList<TreatmentActivity> allTreatmentActivitys, Models.Project project)
-        {
-            var treatmentActivitysUpdated = new List<TreatmentActivity>();
-            if (TreatmentActivities != null)
-            {
-                treatmentActivitysUpdated = TreatmentActivities.Select(x => x.ToTreatmentActivity()).ToList();
-            }
 
-            project.TreatmentActivities.AddAll(treatmentActivitysUpdated.Where(x =>
-                x.TreatmentActivityID == ModelObjectHelpers.NotYetAssignedID));
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-            currentTreatmentActivitys.Merge(treatmentActivitysUpdated,
-                allTreatmentActivitys,
-                (x, y) => x.TreatmentActivityID == y.TreatmentActivityID,
-                (x, y) =>
-                {
-                    x.TreatmentActivityEndDate = y.TreatmentActivityEndDate;
-                    x.TreatmentActivityNotes = y.TreatmentActivityNotes;
-                    x.TreatmentActivityStartDate = y.TreatmentActivityStartDate;
-
-                    x.TreatmentActivityFootprintAcres = y.TreatmentActivityFootprintAcres;
-                    x.TreatmentActivityBrushControlAcres = y.TreatmentActivityBrushControlAcres;
-                    x.TreatmentActivityThinningAcres = y.TreatmentActivityThinningAcres;
-                    x.TreatmentActivityPruningAcres = y.TreatmentActivityPruningAcres;
-                    x.TreatmentActivitySlashAcres = y.TreatmentActivitySlashAcres;
-                    x.TreatmentActivityPrescribedBurnAcres = y.TreatmentActivityPrescribedBurnAcres;
-                    x.TreatmentActivityAllocatedAmount = y.TreatmentActivityAllocatedAmount;
-                    x.TreatmentActivityTotalCost = y.TreatmentActivityTotalCost;
-                    x.TreatmentActivityGrantCost = y.TreatmentActivityGrantCost;
-                });
-        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (TreatmentActivities?.Any(x =>
-                x.TreatmentActivityEndDate != null && x.TreatmentActivityEndDate.Value < x.TreatmentActivityStartDate) ?? false)
+            if (TreatmentActivityEndDate != null && TreatmentActivityEndDate.Value < TreatmentActivityStartDate)
             {
                 yield return new ValidationResult("End Date cannot be before Start Date");
             }
