@@ -9,7 +9,7 @@ CREATE TABLE dbo.GrantAllocation
     StartDate DateTime not NULL,
     EndDate DateTime not NULL,
     AllocationAmount money null,
-	CostType int null -- This should be a foreign key to CostType lookup table
+	CostTypeID int null -- This should be a foreign key to CostType lookup table
 )
 
 insert into FieldDefinition values
