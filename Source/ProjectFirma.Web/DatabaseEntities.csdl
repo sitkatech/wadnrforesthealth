@@ -10,6 +10,7 @@
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
     <EntitySet Name="ContractorTimeActivity" EntityType="ProjectFirma.Web.Models.ContractorTimeActivity" />
     <EntitySet Name="CostParameterSet" EntityType="ProjectFirma.Web.Models.CostParameterSet" />
+    <EntitySet Name="CostType" EntityType="ProjectFirma.Web.Models.CostType" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
@@ -111,6 +112,7 @@
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.TenantAttribute" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
+    <EntitySet Name="TreatmentType" EntityType="ProjectFirma.Web.Models.TreatmentType" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.vGeoServerGeospatialArea" />
     <AssociationSet Name="FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID" Association="ProjectFirma.Web.Models.FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID">
       <End Role="AssessmentGoal" EntitySet="AssessmentGoal" />
@@ -155,6 +157,10 @@
     <AssociationSet Name="FK_ContractorTimeActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ContractorTimeActivity_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ContractorTimeActivities" EntitySet="ContractorTimeActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID">
+      <End Role="CostType" EntitySet="CostType" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
@@ -920,6 +926,14 @@
     <Property Name="Comment" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <Property Name="CreateDate" Type="DateTime" Nullable="false" />
   </EntityType>
+  <EntityType Name="CostType">
+    <Key>
+      <PropertyRef Name="CostTypeID" />
+    </Key>
+    <Property Name="CostTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CostTypeDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="CostType" ToRole="GrantAllocations" />
+  </EntityType>
   <EntityType Name="County">
     <Key>
       <PropertyRef Name="CountyID" />
@@ -1138,7 +1152,8 @@
     <Property Name="StartDate" Type="DateTime" Nullable="false" />
     <Property Name="EndDate" Type="DateTime" Nullable="false" />
     <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="CostType" Type="Int32" />
+    <Property Name="CostTypeID" Type="Int32" />
+    <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="GrantAllocations" ToRole="CostType" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
@@ -2457,6 +2472,14 @@
     <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="TreatmentActivities" ToRole="FundingSource" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
   </EntityType>
+  <EntityType Name="TreatmentType">
+    <Key>
+      <PropertyRef Name="TreatmentTypeID" />
+    </Key>
+    <Property Name="TreatmentTypeID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentTypeDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
   <EntityType Name="vGeoServerGeospatialArea">
     <Key>
       <PropertyRef Name="GeospatialAreaID" />
@@ -2604,6 +2627,18 @@
       </Principal>
       <Dependent Role="ContractorTimeActivities">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_CostType_CostTypeID">
+    <End Role="CostType" Type="ProjectFirma.Web.Models.CostType" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostType">
+        <PropertyRef Name="CostTypeID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="CostTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

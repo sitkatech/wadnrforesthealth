@@ -10,6 +10,7 @@
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.Store.ClassificationSystem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ContractorTimeActivity" EntityType="ProjectFirma.Web.Models.Store.ContractorTimeActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CostParameterSet" EntityType="ProjectFirma.Web.Models.Store.CostParameterSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CostType" EntityType="ProjectFirma.Web.Models.Store.CostType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
@@ -111,6 +112,7 @@
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.Store.TenantAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TreatmentType" EntityType="ProjectFirma.Web.Models.Store.TreatmentType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerGeospatialArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerGeospatialArea">
       <DefiningQuery>SELECT 
 [vGeoServerGeospatialArea].[GeospatialAreaID] AS [GeospatialAreaID], 
@@ -206,6 +208,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.Store.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="GeospatialAreas" EntitySet="GeospatialArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_CostType_CostTypeID">
+      <End Role="CostType" EntitySet="CostType" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -932,6 +938,13 @@ warning 6035: The relationship 'FK_Classification_ClassificationSystem_Classific
     <Property Name="Comment" Type="varchar" MaxLength="2000" />
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="CostType">
+    <Key>
+      <PropertyRef Name="CostTypeID" />
+    </Key>
+    <Property Name="CostTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CostTypeDescription" Type="varchar" Nullable="false" MaxLength="255" />
+  </EntityType>
   <EntityType Name="County">
     <Key>
       <PropertyRef Name="CountyID" />
@@ -1149,7 +1162,7 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="StartDate" Type="datetime" Nullable="false" />
     <Property Name="EndDate" Type="datetime" Nullable="false" />
     <Property Name="AllocationAmount" Type="money" />
-    <Property Name="CostType" Type="int" />
+    <Property Name="CostTypeID" Type="int" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>
@@ -2374,6 +2387,14 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
   </EntityType>
+  <EntityType Name="TreatmentType">
+    <Key>
+      <PropertyRef Name="TreatmentTypeID" />
+    </Key>
+    <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
+    <Property Name="TreatmentTypeName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="TreatmentTypeDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -2644,6 +2665,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="GeospatialAreas">
         <PropertyRef Name="GeospatialAreaTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_CostType_CostTypeID">
+    <End Role="CostType" Type="ProjectFirma.Web.Models.Store.CostType" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostType">
+        <PropertyRef Name="CostTypeID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="CostTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

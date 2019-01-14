@@ -118,6 +118,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CostType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CostType">
+        <MappingFragment StoreEntitySet="CostType">
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="CostTypeDescription" ColumnName="CostTypeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="County">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.County">
         <MappingFragment StoreEntitySet="County">
@@ -304,7 +312,7 @@
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
-          <ScalarProperty Name="CostType" ColumnName="CostType" />
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1426,6 +1434,15 @@
           <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
           <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TreatmentType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentType">
+        <MappingFragment StoreEntitySet="TreatmentType">
+          <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
+          <ScalarProperty Name="TreatmentTypeName" ColumnName="TreatmentTypeName" />
+          <ScalarProperty Name="TreatmentTypeDisplayName" ColumnName="TreatmentTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

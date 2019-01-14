@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[TreatmentType]
+//  Source Table: [dbo].[CostType]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,46 +15,44 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    [Table("[dbo].[TreatmentType]")]
-    public partial class TreatmentType : IHavePrimaryKey, ICanDeleteFull
+    [Table("[dbo].[CostType]")]
+    public partial class CostType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected TreatmentType()
+        protected CostType()
         {
-
+            this.GrantAllocations = new HashSet<GrantAllocation>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentType(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : this()
+        public CostType(int costTypeID, string costTypeDescription) : this()
         {
-            this.TreatmentTypeID = treatmentTypeID;
-            this.TreatmentTypeName = treatmentTypeName;
-            this.TreatmentTypeDisplayName = treatmentTypeDisplayName;
+            this.CostTypeID = costTypeID;
+            this.CostTypeDescription = costTypeDescription;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentType(string treatmentTypeName, string treatmentTypeDisplayName) : this()
+        public CostType(string costTypeDescription) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.TreatmentTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.CostTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.TreatmentTypeName = treatmentTypeName;
-            this.TreatmentTypeDisplayName = treatmentTypeDisplayName;
+            this.CostTypeDescription = costTypeDescription;
         }
 
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static TreatmentType CreateNewBlank()
+        public static CostType CreateNewBlank()
         {
-            return new TreatmentType(default(string), default(string));
+            return new CostType(default(string));
         }
 
         /// <summary>
@@ -63,13 +61,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantAllocations.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TreatmentType).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(CostType).Name, typeof(GrantAllocation).Name};
 
 
         /// <summary>
@@ -77,23 +75,32 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
-            dbContext.TreatmentTypes.Remove(this);
+            DeleteChildren(dbContext);
+            dbContext.CostTypes.Remove(this);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
-        public int TreatmentTypeID { get; set; }
-        public string TreatmentTypeName { get; set; }
-        public string TreatmentTypeDisplayName { get; set; }
+        public int CostTypeID { get; set; }
+        public string CostTypeDescription { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return TreatmentTypeID; } set { TreatmentTypeID = value; } }
+        public int PrimaryKey { get { return CostTypeID; } set { CostTypeID = value; } }
 
-
+        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
 
         public static class FieldLengths
         {
-            public const int TreatmentTypeName = 50;
-            public const int TreatmentTypeDisplayName = 50;
+            public const int CostTypeDescription = 255;
         }
     }
 }
