@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentActivitys.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditTreatmentActivityViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,9 +18,26 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.Project
+using ProjectFirma.Web.Models;
+using System.Collections.Generic;
+using System.Web.Mvc;
+
+namespace ProjectFirma.Web.Views.TreatmentActivity
 {
-    public abstract class EditTreatmentActivity : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditTreatmentActivityViewData, EditTreatmentActivityViewModel>
+    public class EditTreatmentActivityViewData : FirmaViewData
     {
+        public IEnumerable<SelectListItem> TreatmentActivityStatus { get; }
+
+        public IEnumerable<SelectListItem> TreatmentActivityContact { get; }
+
+        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContact, Person currentPerson) : base(currentPerson)
+        {
+
+
+            PageTitle = "Edit Treatment Activity";
+
+            TreatmentActivityStatus = treatmentActivityStatus;
+            TreatmentActivityContact = treatmentActivityContact;
+        }
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\TreatmentActivityController.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
@@ -496,7 +497,7 @@
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewModel.cs" />
-    <Compile Include="Views\Project\TreatmentActivityGridSpec.cs" />
+    <Compile Include="Views\TreatmentActivity\TreatmentActivityGridSpec.cs" />
     <Compile Include="Views\Shared\ProjectPerson\EditPeople.cs" />
     <Compile Include="Views\Shared\ProjectPerson\EditPeopleViewData.cs" />
     <Compile Include="Views\Shared\ProjectPerson\EditPeopleViewModel.cs" />
@@ -575,11 +576,11 @@
     <Compile Include="Common\FirmaHelpersTest.cs" />
     <Compile Include="Views\ProjectUpdate\ProjectUpdateViewData.cs" />
     <Compile Include="Views\Project\EditContractorTimeActivitiesViewData.cs" />
-    <Compile Include="Views\Project\EditTreatmentActivity.cs" />
+    <Compile Include="Views\TreatmentActivity\EditTreatmentActivity.cs" />
     <Compile Include="Views\Project\EditContractorTimeActivities.cs" />
     <Compile Include="Common\JsonExtensions.cs" />
-    <Compile Include="Views\Project\EditTreatmentActivityViewData.cs" />
-    <Compile Include="Views\Project\EditTreatmentActivityViewModel.cs" />
+    <Compile Include="Views\TreatmentActivity\EditTreatmentActivityViewData.cs" />
+    <Compile Include="Views\TreatmentActivity\EditTreatmentActivityViewModel.cs" />
     <Compile Include="Views\Project\EditContractorTimeActivitiesViewModel.cs" />
     <Compile Include="Views\Results\ConfigureAccomplishmentsDashboard.cs" />
     <Compile Include="Views\ProjectCreate\ValidateImportExternalProjectDataViewModel.cs" />
@@ -1783,7 +1784,7 @@
     <Compile Include="Views\ProjectCreate\GeospatialArea.cs" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewData.cs" />
     <Content Include="Views\Project\EditContractorTimeActivities.cshtml" />
-    <Content Include="Views\Project\EditTreatmentActivity.cshtml" />
+    <Content Include="Views\TreatmentActivity\EditTreatmentActivity.cshtml" />
     <Content Include="Views\User\EditContact.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\EditPeople.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPeopleDetail.cshtml" />

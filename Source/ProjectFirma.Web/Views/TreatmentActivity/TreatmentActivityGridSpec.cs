@@ -27,7 +27,7 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 
 
-namespace ProjectFirma.Web.Views.Project
+namespace ProjectFirma.Web.Views.TreatmentActivity
 {
     public class TreatmentActivityGridSpec : GridSpec<Models.TreatmentActivity>
     {
@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.Project
             Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTreatmentActivityUrl(), new FirmaAdminFeature().HasPermissionByPerson(currentPerson), true), 30, DhtmlxGridColumnFilterType.None);
             Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl())), 30, DhtmlxGridColumnFilterType.None);
 
-            Add("Contact", a => a.GetContactText(), 100, DhtmlxGridColumnFilterType.Html);
+            Add("Contact", a => a.GetContactText(), 125, DhtmlxGridColumnFilterType.Html);
             Add("Status", a => a.GetStatusDisplayName(), 75, DhtmlxGridColumnFilterType.Text);
             Add("Start Date", a => a.TreatmentActivityStartDate, 125, DhtmlxGridColumnFormatType.Date);
             Add("End Date", a => a.TreatmentActivityEndDate, 125, DhtmlxGridColumnFormatType.Date);

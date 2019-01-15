@@ -19,20 +19,13 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web.Mvc;
-using ApprovalUtilities.Utilities;
-using LtInfo.Common;
-using LtInfo.Common.Models;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Project
+namespace ProjectFirma.Web.Views.TreatmentActivity
 {
     public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject
     {
@@ -90,7 +83,7 @@ namespace ProjectFirma.Web.Views.Project
         {
         }
 
-        public EditTreatmentActivityViewModel(TreatmentActivity treatmentActivity)
+        public EditTreatmentActivityViewModel(Models.TreatmentActivity treatmentActivity)
         {
             TreatmentActivityID = treatmentActivity.TreatmentActivityID;
             TreatmentActivityContactID = treatmentActivity.TreatmentActivityContactID;
@@ -126,7 +119,7 @@ namespace ProjectFirma.Web.Views.Project
             }
         }
 
-        public void UpdateModel(TreatmentActivity treatmentActivity, Models.Project project)
+        public void UpdateModel(Models.TreatmentActivity treatmentActivity, Models.Project project)
         {
             treatmentActivity.ProjectID = project.ProjectID;
             treatmentActivity.TreatmentActivityID = TreatmentActivityID;

@@ -36,6 +36,7 @@ using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
+using ProjectFirma.Web.Views.TreatmentActivity;
 
 namespace ProjectFirma.Web.Views.Project
 {
@@ -337,7 +338,7 @@ namespace ProjectFirma.Web.Views.Project
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
             EditTreatmentActivityUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));
+                SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));
 
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));

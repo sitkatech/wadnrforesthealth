@@ -72,12 +72,12 @@ namespace ProjectFirma.Web.Models
 
         public static string GetDeleteTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)
         {
-            return SitkaRoute<ProjectController>.BuildUrlFromExpression(pc => pc.DeleteTreatmentActivity(treatmentActivity));
+            return SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(pc => pc.DeleteTreatmentActivity(treatmentActivity));
         }
 
         public static string GetEditTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)
         {
-            return SitkaRoute<ProjectController>.BuildUrlFromExpression(pc => pc.EditTreatmentActivity(treatmentActivity.PrimaryKey));
+            return SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(pc => pc.EditTreatmentActivity(treatmentActivity.PrimaryKey));
         }
 
 
