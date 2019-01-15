@@ -32,7 +32,7 @@
             <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityContactID)
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-7">
                 @Html.DropDownListFor(m => m.TreatmentActivityContactID, ViewDataTyped.TreatmentActivityContact, new { @class = "form-control", style = "width:100%" })
                 @Html.ValidationMessageFor(m => m.TreatmentActivityContactID)
             </div>
@@ -41,7 +41,7 @@
             <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
                 @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
             </div>
@@ -66,9 +66,6 @@
         </div>
     </div>
 
-
-
-
     <div class="form-row">
         <div class="form-group col-md-12">
             <div class="col-sm-3 control-label">
@@ -80,10 +77,8 @@
                 @Html.ValidationMessageFor(m => m.TreatmentActivityFootprintAcres)
             </div>
         </div>
-        
-
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityChippingAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -94,7 +89,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityPruningAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -104,7 +99,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityThinningAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -114,7 +109,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityMasticationAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -124,7 +119,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityGrazingAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -134,7 +129,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityLopAndScatterAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -144,12 +139,8 @@
             </div>
         </div>
 
-
-
-
-
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityBiomassRemovalAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -159,7 +150,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityHandPileAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -169,7 +160,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityBroadcastBurnAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -179,7 +170,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityHandPileBurnAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -189,7 +180,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityMachinePileBurnAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -199,7 +190,7 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-5 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityOtherTreatmentAcres)
             </div>
             <div class="input-group col-sm-6">
@@ -211,7 +202,7 @@
     </div>
     <div class="form-horizontal">
         <div class="form-group">
-            <div class="col-sm-3 control-label">
+            <div class="col-sm-2 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityNotes)
             </div>
             <div class="col-sm-9">
