@@ -36,6 +36,7 @@ using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
+using ProjectFirma.Web.Views.TreatmentActivity;
 
 namespace ProjectFirma.Web.Views.Project
 {
@@ -84,6 +85,10 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectNotificationGridName { get; }
         public string ProjectNotificationGridDataUrl { get; }
 
+        public TreatmentActivityProjectDetailGridSpec TreatmentActivityProjectDetailGridSpec { get; }
+        public string TreatmentActivityGridName { get; }
+        public string TreatmentActivityGridDataUrl { get; }
+
         public string EditProjectGeospatialAreaFormID { get; }
         public string EditProjectBoundingBoxFormID { get; }
         public string ProjectStewardCannotEditUrl { get; }
@@ -102,7 +107,7 @@ namespace ProjectFirma.Web.Views.Project
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
         public string EditContractorTimeActivitiesUrl { get; }
-        public string EditTreatmentActivitiesUrl { get; }
+        public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
         public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
@@ -126,7 +131,9 @@ namespace ProjectFirma.Web.Views.Project
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData)
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
+            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl
+            )
             : base(currentPerson, project)
         {
             PageTitle = project.DisplayName.ToEllipsifiedStringClean(110);
@@ -330,11 +337,15 @@ namespace ProjectFirma.Web.Views.Project
             EditContractorTimeActivitiesUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
-            EditTreatmentActivitiesUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditTreatmentActivities(project));
+            EditTreatmentActivityUrl =
+                SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));
 
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
+
+            TreatmentActivityProjectDetailGridSpec = treatmentActivityProjectDetailGridSpec;
+            TreatmentActivityGridName = "treatmentActivityGrid";
+            TreatmentActivityGridDataUrl = treatmentActivityGridDataUrl;
         }
     }
 }

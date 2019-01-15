@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.AllFocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"FocusArea {focusArea.FocusAreaName} successfully created.");
+            SetMessageForDisplay($"Focus Area {focusArea.FocusAreaName} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -222,7 +222,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteFocusArea(FocusArea focusArea, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"FocusArea \"{focusArea.FocusAreaName}\" has been deleted";
+            var confirmMessage = $"Focus Area \"{focusArea.FocusAreaName}\" has been deleted";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }

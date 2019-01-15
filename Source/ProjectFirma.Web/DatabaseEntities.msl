@@ -1383,18 +1383,25 @@
           <ScalarProperty Name="TreatmentActivityID" ColumnName="TreatmentActivityID" />
           <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-          <ScalarProperty Name="TreatmentActivityFootprintAcres" ColumnName="TreatmentActivityFootprintAcres" />
-          <ScalarProperty Name="TreatmentActivityBrushControlAcres" ColumnName="TreatmentActivityBrushControlAcres" />
-          <ScalarProperty Name="TreatmentActivityThinningAcres" ColumnName="TreatmentActivityThinningAcres" />
-          <ScalarProperty Name="TreatmentActivityPruningAcres" ColumnName="TreatmentActivityPruningAcres" />
-          <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
-          <ScalarProperty Name="TreatmentActivityPrescribedBurnAcres" ColumnName="TreatmentActivityPrescribedBurnAcres" />
-          <ScalarProperty Name="TreatmentActivityAllocatedAmount" ColumnName="TreatmentActivityAllocatedAmount" />
-          <ScalarProperty Name="TreatmentActivityTotalCost" ColumnName="TreatmentActivityTotalCost" />
-          <ScalarProperty Name="TreatmentActivityGrantCost" ColumnName="TreatmentActivityGrantCost" />
           <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
           <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
+          <ScalarProperty Name="TreatmentActivityProgramIndex" ColumnName="TreatmentActivityProgramIndex" />
+          <ScalarProperty Name="TreatmentActivityProjectCode" ColumnName="TreatmentActivityProjectCode" />
+          <ScalarProperty Name="TreatmentActivityStatusID" ColumnName="TreatmentActivityStatusID" />
+          <ScalarProperty Name="TreatmentActivityContactID" ColumnName="TreatmentActivityContactID" />
+          <ScalarProperty Name="TreatmentActivityFootprintAcres" ColumnName="TreatmentActivityFootprintAcres" />
+          <ScalarProperty Name="TreatmentActivityChippingAcres" ColumnName="TreatmentActivityChippingAcres" />
+          <ScalarProperty Name="TreatmentActivityPruningAcres" ColumnName="TreatmentActivityPruningAcres" />
+          <ScalarProperty Name="TreatmentActivityThinningAcres" ColumnName="TreatmentActivityThinningAcres" />
+          <ScalarProperty Name="TreatmentActivityMasticationAcres" ColumnName="TreatmentActivityMasticationAcres" />
+          <ScalarProperty Name="TreatmentActivityGrazingAcres" ColumnName="TreatmentActivityGrazingAcres" />
+          <ScalarProperty Name="TreatmentActivityLopAndScatterAcres" ColumnName="TreatmentActivityLopAndScatterAcres" />
+          <ScalarProperty Name="TreatmentActivityBiomassRemovalAcres" ColumnName="TreatmentActivityBiomassRemovalAcres" />
+          <ScalarProperty Name="TreatmentActivityHandPileAcres" ColumnName="TreatmentActivityHandPileAcres" />
+          <ScalarProperty Name="TreatmentActivityBroadcastBurnAcres" ColumnName="TreatmentActivityBroadcastBurnAcres" />
+          <ScalarProperty Name="TreatmentActivityHandPileBurnAcres" ColumnName="TreatmentActivityHandPileBurnAcres" />
+          <ScalarProperty Name="TreatmentActivityMachinePileBurnAcres" ColumnName="TreatmentActivityMachinePileBurnAcres" />
+          <ScalarProperty Name="TreatmentActivityOtherTreatmentAcres" ColumnName="TreatmentActivityOtherTreatmentAcres" />
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
         </MappingFragment>
       </EntityTypeMapping>

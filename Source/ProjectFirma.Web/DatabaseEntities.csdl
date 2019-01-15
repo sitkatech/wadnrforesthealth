@@ -262,10 +262,6 @@
       <End Role="FundingSource" EntitySet="FundingSource" />
       <End Role="ProjectFundingSourceRequestUpdates" EntitySet="ProjectFundingSourceRequestUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
-    </AssociationSet>
     <AssociationSet Name="FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="GeospatialAreas" EntitySet="GeospatialArea" />
@@ -565,6 +561,10 @@
     <AssociationSet Name="FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="TenantAttributesWhereYouAreThePrimaryContactPerson" EntitySet="TenantAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
+      <End Role="TreatmentActivityContact" EntitySet="Person" />
+      <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
@@ -1073,7 +1073,6 @@
     <NavigationProperty Name="ProjectFundingSourceExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceExpenditureUpdates" />
     <NavigationProperty Name="ProjectFundingSourceRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequests" />
     <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
-    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="GeospatialArea">
     <Key>
@@ -1492,6 +1491,7 @@
     <NavigationProperty Name="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="SupportRequestLogsWhereYouAreTheRequestPerson" Relationship="ProjectFirma.Web.Models.FK_SupportRequestLog_Person_RequestPersonID_PersonID" FromRole="RequestPerson" ToRole="SupportRequestLogsWhereYouAreTheRequestPerson" />
     <NavigationProperty Name="TenantAttributesWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="TenantAttributesWhereYouAreThePrimaryContactPerson" />
+    <NavigationProperty Name="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" FromRole="TreatmentActivityContact" ToRole="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" />
   </EntityType>
   <EntityType Name="PersonStewardGeospatialArea">
     <Key>
@@ -2405,20 +2405,27 @@
     <Property Name="TreatmentActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentActivityFootprintAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityBrushControlAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityThinningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityPruningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivitySlashAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityPrescribedBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityAllocatedAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="TreatmentActivityTotalCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="TreatmentActivityGrantCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="TreatmentActivityStartDate" Type="DateTime" Nullable="false" />
+    <Property Name="TreatmentActivityStartDate" Type="DateTime" />
     <Property Name="TreatmentActivityEndDate" Type="DateTime" />
+    <Property Name="TreatmentActivityProgramIndex" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentActivityProjectCode" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="TreatmentActivityStatusID" Type="Int32" Nullable="false" />
+    <Property Name="TreatmentActivityContactID" Type="Int32" />
+    <Property Name="TreatmentActivityFootprintAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityChippingAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityPruningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityThinningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityMasticationAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityGrazingAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityHandPileAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="TreatmentActivityOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="TreatmentActivities" ToRole="FundingSource" />
+    <NavigationProperty Name="TreatmentActivityContact" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" FromRole="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" ToRole="TreatmentActivityContact" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
   </EntityType>
   <EntityType Name="vGeoServerGeospatialArea">
@@ -2891,18 +2898,6 @@
         <PropertyRef Name="FundingSourceID" />
       </Principal>
       <Dependent Role="ProjectFundingSourceRequestUpdates">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
         <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>
@@ -3804,6 +3799,18 @@
       </Principal>
       <Dependent Role="TenantAttributesWhereYouAreThePrimaryContactPerson">
         <PropertyRef Name="PrimaryContactPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
+    <End Role="TreatmentActivityContact" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreatmentActivityContact">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact">
+        <PropertyRef Name="TreatmentActivityContactID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

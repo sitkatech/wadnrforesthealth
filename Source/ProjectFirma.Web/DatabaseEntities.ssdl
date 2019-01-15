@@ -793,9 +793,9 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="TenantAttributesWhereYouAreThePrimaryContactPerson" EntitySet="TenantAttribute" />
     </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
+      <End Role="TreatmentActivityContact" EntitySet="Person" />
+      <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_TreatmentActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -1070,7 +1070,6 @@ warning 6035: The relationship 'FK_ProjectFundingSourceExpenditure_FundingSource
 warning 6035: The relationship 'FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TreatmentActivity_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="FundingSource">
     <Key>
@@ -1541,7 +1540,6 @@ warning 6035: The relationship 'FK_ProjectPerson_Project_ProjectID_TenantID' has
 warning 6035: The relationship 'FK_ProjectTag_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_ProjectUpdateBatch_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 warning 6035: The relationship 'FK_SnapshotProject_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TreatmentActivity_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="Project">
     <Key>
@@ -2323,18 +2321,25 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="TreatmentActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" Nullable="false" />
-    <Property Name="TreatmentActivityFootprintAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityBrushControlAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityThinningAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityPruningAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityPrescribedBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityAllocatedAmount" Type="money" Nullable="false" />
-    <Property Name="TreatmentActivityTotalCost" Type="money" Nullable="false" />
-    <Property Name="TreatmentActivityGrantCost" Type="money" Nullable="false" />
-    <Property Name="TreatmentActivityStartDate" Type="datetime" Nullable="false" />
+    <Property Name="TreatmentActivityStartDate" Type="datetime" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
+    <Property Name="TreatmentActivityProgramIndex" Type="varchar" MaxLength="100" />
+    <Property Name="TreatmentActivityProjectCode" Type="varchar" MaxLength="100" />
+    <Property Name="TreatmentActivityStatusID" Type="int" Nullable="false" />
+    <Property Name="TreatmentActivityContactID" Type="int" />
+    <Property Name="TreatmentActivityFootprintAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityChippingAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityPruningAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityThinningAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityMasticationAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityGrazingAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityLopAndScatterAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityBiomassRemovalAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityHandPileAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityBroadcastBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityHandPileBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityMachinePileBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="TreatmentActivityOtherTreatmentAcres" Type="decimal" Nullable="false" />
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
   </EntityType>
   <!--Errors Found During Generation:
@@ -4374,15 +4379,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TreatmentActivity_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
+  <Association Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
+    <End Role="TreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
+      <Principal Role="TreatmentActivityContact">
+        <PropertyRef Name="PersonID" />
       </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="FundingSourceID" />
+      <Dependent Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact">
+        <PropertyRef Name="TreatmentActivityContactID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

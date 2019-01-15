@@ -1,0 +1,215 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="EditTreatmentActivity.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.HtmlHelperExtensions
+@using Newtonsoft.Json
+@using ProjectFirma.Web.Models
+@using Newtonsoft.Json.Linq
+@inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityContactID)
+            </div>
+            <div class="col-sm-7">
+                @Html.DropDownListFor(m => m.TreatmentActivityContactID, ViewDataTyped.TreatmentActivityContact, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityContactID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
+            </div>
+            <div class="col-sm-4">
+                @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityStartDate)
+            </div>
+            <div class="col-sm-9">
+                @Html.EditorFor(m => m.TreatmentActivityStartDate, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityStartDate)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityEndDate)
+            </div>
+            <div class="col-sm-9">
+                @Html.EditorFor(m => m.TreatmentActivityEndDate, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityEndDate)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityFootprintAcres)
+            </div>
+            <div class="input-group col-sm-3">
+                @Html.TextBoxFor(m => m.TreatmentActivityFootprintAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityFootprintAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityChippingAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityChippingAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityChippingAcres)
+
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityPruningAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityPruningAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityPruningAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityThinningAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityThinningAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityThinningAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityMasticationAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityMasticationAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityMasticationAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityGrazingAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityGrazingAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityGrazingAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityLopAndScatterAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityLopAndScatterAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityLopAndScatterAcres)
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityBiomassRemovalAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityBiomassRemovalAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityBiomassRemovalAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityHandPileAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityHandPileAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityHandPileAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityBroadcastBurnAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityBroadcastBurnAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityBroadcastBurnAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityHandPileBurnAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityHandPileBurnAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityHandPileBurnAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityMachinePileBurnAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityMachinePileBurnAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityMachinePileBurnAcres)
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="col-sm-5 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityOtherTreatmentAcres)
+            </div>
+            <div class="input-group col-sm-6">
+                @Html.TextBoxFor(m => m.TreatmentActivityOtherTreatmentAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivityOtherTreatmentAcres)
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityNotes)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextAreaFor(m => m.TreatmentActivityNotes, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityNotes)
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.TreatmentActivityID)
+}

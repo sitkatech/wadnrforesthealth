@@ -41,11 +41,14 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
+using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
+using ProjectFirma.Web.Views.TreatmentActivity;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
@@ -178,6 +181,9 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
 
+            var treamentActivityGridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
+            var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
+
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
             var viewData = new DetailViewData(CurrentPerson,
                 project,
@@ -214,7 +220,9 @@ namespace ProjectFirma.Web.Controllers
                 projectOrganizationsDetailViewData,
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID,
-                projectCustomAttributeTypes, geospatialAreaTypes, projectPeopleDetailViewData);
+                projectCustomAttributeTypes, geospatialAreaTypes, projectPeopleDetailViewData,
+                treamentActivityGridSpec, treatmentActivityGridDataUrl
+                );
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
@@ -554,6 +562,8 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<AuditLog>(auditLogs, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+        
 
         [AnonymousUnclassifiedFeature]
         public ActionResult Search(string searchCriteria)
@@ -902,47 +912,6 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return RazorView<EditContractorTimeActivities, EditContractorTimeActivitiesViewData, EditContractorTimeActivitiesViewModel>(viewData, viewModel);
         }
 
-        [HttpGet]
-        [ProjectEditAsAdminFeature]
-        public ViewResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var treatmentActivities = project.TreatmentActivities.ToList();
-            var treatmentActivitySimples = treatmentActivities.Select(x => new TreatmentActivitySimple(x));
-            var viewModel = new EditTreatmentActivitiesViewModel(project, treatmentActivitySimples.ToList());
-            return ViewEditTreatmentActivities(project, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey, EditTreatmentActivitiesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var currentTreatmentActivities = project.TreatmentActivities.ToList();
-            if (!ModelState.IsValid)
-            {
-                return ViewEditTreatmentActivities(project, viewModel);
-            }
-            return UpdateTreatmentActivities(viewModel, currentTreatmentActivities, project);
-        }
-
-        private static ActionResult UpdateTreatmentActivities(
-            EditTreatmentActivitiesViewModel viewModel,
-            List<TreatmentActivity> currentTreatmentActivities, Project project)
-        {
-            HttpRequestStorage.DatabaseEntities.TreatmentActivities.Load();
-            var allTreatmentActivities = HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.Local;
-
-            viewModel.UpdateModel(currentTreatmentActivities, allTreatmentActivities, project);
-            return new RedirectResult( SitkaRoute<ProjectController>.BuildUrlFromExpression(x=>x.Detail(project)) + "#activities");
-        }
-
-        private ViewResult ViewEditTreatmentActivities(Project project, EditTreatmentActivitiesViewModel viewModel)
-        {
-            var allTreatmentTypes = TreatmentType.All.Select(x=>new TreatmentTypeSimple(x)).ToList();
-            var viewData = new EditTreatmentActivitiesViewData(project, allTreatmentTypes, CurrentPerson);
-            return RazorView<EditTreatmentActivities, EditTreatmentActivitiesViewData, EditTreatmentActivitiesViewModel>(viewData, viewModel);
-        }
+       
     }
 }
