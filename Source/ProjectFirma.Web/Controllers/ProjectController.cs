@@ -181,7 +181,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
 
-            var treamentActivityGridSpec = new TreatmentActivityGridSpec(CurrentPerson);
+            var treamentActivityGridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);

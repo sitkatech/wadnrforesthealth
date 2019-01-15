@@ -497,7 +497,10 @@
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewModel.cs" />
-    <Compile Include="Views\TreatmentActivity\TreatmentActivityGridSpec.cs" />
+    <Compile Include="Views\TreatmentActivity\Index.cs" />
+    <Compile Include="Views\TreatmentActivity\IndexViewData.cs" />
+    <Compile Include="Views\TreatmentActivity\TreatmentActivityIndexGridSpec.cs" />
+    <Compile Include="Views\TreatmentActivity\TreatmentActivityProjectDetailGridSpec.cs" />
     <Compile Include="Views\Shared\ProjectPerson\EditPeople.cs" />
     <Compile Include="Views\Shared\ProjectPerson\EditPeopleViewData.cs" />
     <Compile Include="Views\Shared\ProjectPerson\EditPeopleViewModel.cs" />
@@ -1788,6 +1791,7 @@
     <Content Include="Views\User\EditContact.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\EditPeople.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPeopleDetail.cshtml" />
+    <Content Include="Views\TreatmentActivity\Index.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

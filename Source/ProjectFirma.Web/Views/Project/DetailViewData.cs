@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectNotificationGridName { get; }
         public string ProjectNotificationGridDataUrl { get; }
 
-        public TreatmentActivityGridSpec TreatmentActivityGridSpec { get; }
+        public TreatmentActivityProjectDetailGridSpec TreatmentActivityProjectDetailGridSpec { get; }
         public string TreatmentActivityGridName { get; }
         public string TreatmentActivityGridDataUrl { get; }
 
@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            TreatmentActivityGridSpec treatmentActivityGridSpec, string treatmentActivityGridDataUrl
+            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl
             )
             : base(currentPerson, project)
         {
@@ -343,7 +343,7 @@ namespace ProjectFirma.Web.Views.Project
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
 
-            TreatmentActivityGridSpec = treatmentActivityGridSpec;
+            TreatmentActivityProjectDetailGridSpec = treatmentActivityProjectDetailGridSpec;
             TreatmentActivityGridName = "treatmentActivityGrid";
             TreatmentActivityGridDataUrl = treatmentActivityGridDataUrl;
         }

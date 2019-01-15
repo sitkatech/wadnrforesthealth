@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
@@ -28,6 +30,7 @@ namespace ProjectFirma.Web.Models
 {
     public static class TreatmentActivityModelExtensions
     {
+        private static readonly int RegionGeoSpatialAreaTypeID = 10;
         public static string GetStatusDisplayName(this Models.TreatmentActivity treatmentActivity)
         {
             return treatmentActivity.TreatmentActivityStatus.TreatmentActivityStatusDisplayName;
@@ -49,11 +52,35 @@ namespace ProjectFirma.Web.Models
             return treatmentActivity.TreatmentActivityContact.FullNameLastFirst ?? "Contact Not Set";
         }
 
+        public static string GetProjectRegions(this Models.TreatmentActivity treatmentActivity)
+        {
+            
+            var result = treatmentActivity.Project.GetProjectGeospatialAreas()
+                .Where(x => x.GeospatialAreaTypeID.Equals(RegionGeoSpatialAreaTypeID)).OrderBy(x => x.GeospatialAreaName).Select(x => x.GeospatialAreaName).Distinct();
+
+            return string.Join(",",result);
+        }
+
         public static string GetContactUrl(this Models.TreatmentActivity treatmentActivity)
         {
             return SitkaRoute<UserController>.BuildUrlFromExpression(uc => uc.Detail(treatmentActivity.TreatmentActivityContactID));
         }
 
+        public static string GetProjectDetailUrl(this Models.TreatmentActivity treatmentActivity)
+        {
+            return SitkaRoute<ProjectController>.BuildUrlFromExpression(pc => pc.Detail(treatmentActivity.ProjectID));
+        }
+        public static string GetProjectFocusAreaUrl(this Models.TreatmentActivity treatmentActivity)
+        {
+            var result = string.Empty;
+            if (treatmentActivity.Project.FocusAreaID != null)
+            {
+                result = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.Detail(treatmentActivity.Project.FocusAreaID));
+            }
+
+            return result;
+        }
+        
         public static HtmlString GetContactText(this Models.TreatmentActivity treatmentActivity)
         {
             HtmlString returnValue = new HtmlString(string.Empty);
@@ -65,6 +92,22 @@ namespace ProjectFirma.Web.Models
             {
                 returnValue = UrlTemplate.MakeHrefString(treatmentActivity.GetContactUrl(),
                     treatmentActivity.GetContactName());
+            }
+
+            return returnValue;
+        }
+
+        public static HtmlString GetFocusAreaText(this Models.TreatmentActivity treatmentActivity)
+        {
+            HtmlString returnValue = new HtmlString(string.Empty);
+            if (treatmentActivity.Project.FocusAreaID == null)
+            {
+                returnValue = "Focus Area Not Set".ToHTMLFormattedString();
+            }
+            else
+            {
+                returnValue = UrlTemplate.MakeHrefString(treatmentActivity.GetProjectFocusAreaUrl(),
+                    treatmentActivity.GetProjectFocusAreaName());
             }
 
             return returnValue;

@@ -5,6 +5,7 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.TreatmentActivity;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -117,12 +118,29 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [FirmaAdminFeature]
+        public ViewResult Index()
+        {
+            var viewData = new IndexViewData(CurrentPerson);
+            return RazorView<Index, IndexViewData>(viewData);
+        }
+
         [FirmaAdminFeature]
         public GridJsonNetJObjectResult<TreatmentActivity> TreatmentActivityGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
-            var gridSpec = new TreatmentActivityGridSpec(CurrentPerson);
+            var gridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
             var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities
                 .GetTreatmentActivitiesForProject(projectPrimaryKey.EntityObject).OrderBy(x => x.TreatmentActivityStartDate).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentActivity>(treatmentActivities, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [FirmaAdminFeature]
+        public GridJsonNetJObjectResult<TreatmentActivity> IndexGridJsonData()
+        {
+            var gridSpec = new TreatmentActivityIndexGridSpec(CurrentPerson);
+            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities.OrderBy(x => x.TreatmentActivityStartDate).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentActivity>(treatmentActivities, gridSpec);
             return gridJsonNetJObjectResult;
         }
