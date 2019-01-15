@@ -122,6 +122,7 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CostType">
         <MappingFragment StoreEntitySet="CostType">
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
           <ScalarProperty Name="CostTypeDescription" ColumnName="CostTypeDescription" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -1434,15 +1435,6 @@
           <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
           <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TreatmentType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentType">
-        <MappingFragment StoreEntitySet="TreatmentType">
-          <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
-          <ScalarProperty Name="TreatmentTypeName" ColumnName="TreatmentTypeName" />
-          <ScalarProperty Name="TreatmentTypeDisplayName" ColumnName="TreatmentTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

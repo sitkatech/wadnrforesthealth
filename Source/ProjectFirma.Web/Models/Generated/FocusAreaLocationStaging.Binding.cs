@@ -15,6 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[FocusAreaLocationStaging] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[FocusAreaLocationStaging]")]
     public partial class FocusAreaLocationStaging : IHavePrimaryKey, IHaveATenantID
     {

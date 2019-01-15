@@ -46,7 +46,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<ContractorTimeActivity> ContractorTimeActivities { get { return AllContractorTimeActivities.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<CostParameterSet> AllCostParameterSets { get; set; }
         public virtual IQueryable<CostParameterSet> CostParameterSets { get { return AllCostParameterSets.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
-        public virtual DbSet<CostType> CostTypes { get; set; }
+        public virtual DbSet<CostType> AllCostTypes { get; set; }
+        public virtual IQueryable<CostType> CostTypes { get { return AllCostTypes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<County> AllCounties { get; set; }
         public virtual IQueryable<County> Counties { get { return AllCounties.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<CustomPageImage> AllCustomPageImages { get; set; }
@@ -249,7 +250,6 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<TrainingVideo> TrainingVideos { get { return AllTrainingVideos.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<TreatmentActivity> AllTreatmentActivities { get; set; }
         public virtual IQueryable<TreatmentActivity> TreatmentActivities { get { return AllTreatmentActivities.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
-        public virtual DbSet<TreatmentType> TreatmentTypes { get; set; }
         public virtual DbSet<vGeoServerGeospatialArea> vGeoServerGeospatialAreas { get; set; }
 
         public object LoadType(Type type, int primaryKey)
@@ -765,7 +765,9 @@ namespace ProjectFirma.Web.Models
                     return TreatmentActivities.GetTreatmentActivity(primaryKey);
 
                 case "TreatmentType":
-                    return TreatmentTypes.GetTreatmentType(primaryKey);
+                    var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(treatmentType, "TreatmentType", primaryKey);
+                    return treatmentType;
                 default:
                     throw new NotImplementedException(string.Format("No loader for type \"{0}\"", type.FullName));
             }

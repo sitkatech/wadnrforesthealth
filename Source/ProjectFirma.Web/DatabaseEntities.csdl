@@ -112,7 +112,6 @@
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.TenantAttribute" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
-    <EntitySet Name="TreatmentType" EntityType="ProjectFirma.Web.Models.TreatmentType" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.vGeoServerGeospatialArea" />
     <AssociationSet Name="FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID" Association="ProjectFirma.Web.Models.FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID">
       <End Role="AssessmentGoal" EntitySet="AssessmentGoal" />
@@ -931,6 +930,7 @@
       <PropertyRef Name="CostTypeID" />
     </Key>
     <Property Name="CostTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="CostTypeDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="CostType" ToRole="GrantAllocations" />
   </EntityType>
@@ -2471,14 +2471,6 @@
     <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_FundingSource_FundingSourceID" FromRole="TreatmentActivities" ToRole="FundingSource" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
-  </EntityType>
-  <EntityType Name="TreatmentType">
-    <Key>
-      <PropertyRef Name="TreatmentTypeID" />
-    </Key>
-    <Property Name="TreatmentTypeID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="TreatmentTypeDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="vGeoServerGeospatialArea">
     <Key>

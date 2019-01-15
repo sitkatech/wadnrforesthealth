@@ -112,7 +112,6 @@
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.Store.TenantAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TreatmentType" EntityType="ProjectFirma.Web.Models.Store.TreatmentType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerGeospatialArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerGeospatialArea">
       <DefiningQuery>SELECT 
 [vGeoServerGeospatialArea].[GeospatialAreaID] AS [GeospatialAreaID], 
@@ -943,6 +942,7 @@ warning 6035: The relationship 'FK_Classification_ClassificationSystem_Classific
       <PropertyRef Name="CostTypeID" />
     </Key>
     <Property Name="CostTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="CostTypeDescription" Type="varchar" Nullable="false" MaxLength="255" />
   </EntityType>
   <EntityType Name="County">
@@ -2386,14 +2386,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
     <Property Name="TreatmentActivityStartDate" Type="datetime" Nullable="false" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
-  </EntityType>
-  <EntityType Name="TreatmentType">
-    <Key>
-      <PropertyRef Name="TreatmentTypeID" />
-    </Key>
-    <Property Name="TreatmentTypeID" Type="int" Nullable="false" />
-    <Property Name="TreatmentTypeName" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="TreatmentTypeDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

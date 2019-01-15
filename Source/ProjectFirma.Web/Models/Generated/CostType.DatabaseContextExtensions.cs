@@ -4,7 +4,6 @@
 //  Source Table: [dbo].[CostType]
 using System.Collections.Generic;
 using System.Linq;
-using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -20,31 +19,30 @@ namespace ProjectFirma.Web.Models
             return costType;
         }
 
-        public static void DeleteCostType(this IQueryable<CostType> costTypes, List<int> costTypeIDList)
+        public static void DeleteCostType(this List<int> costTypeIDList)
         {
             if(costTypeIDList.Any())
             {
-                costTypes.Where(x => costTypeIDList.Contains(x.CostTypeID)).Delete();
+                HttpRequestStorage.DatabaseEntities.AllCostTypes.RemoveRange(HttpRequestStorage.DatabaseEntities.CostTypes.Where(x => costTypeIDList.Contains(x.CostTypeID)));
             }
         }
 
-        public static void DeleteCostType(this IQueryable<CostType> costTypes, ICollection<CostType> costTypesToDelete)
+        public static void DeleteCostType(this ICollection<CostType> costTypesToDelete)
         {
             if(costTypesToDelete.Any())
             {
-                var costTypeIDList = costTypesToDelete.Select(x => x.CostTypeID).ToList();
-                costTypes.Where(x => costTypeIDList.Contains(x.CostTypeID)).Delete();
+                HttpRequestStorage.DatabaseEntities.AllCostTypes.RemoveRange(costTypesToDelete);
             }
         }
 
-        public static void DeleteCostType(this IQueryable<CostType> costTypes, int costTypeID)
+        public static void DeleteCostType(this int costTypeID)
         {
-            DeleteCostType(costTypes, new List<int> { costTypeID });
+            DeleteCostType(new List<int> { costTypeID });
         }
 
-        public static void DeleteCostType(this IQueryable<CostType> costTypes, CostType costTypeToDelete)
+        public static void DeleteCostType(this CostType costTypeToDelete)
         {
-            DeleteCostType(costTypes, new List<CostType> { costTypeToDelete });
+            DeleteCostType(new List<CostType> { costTypeToDelete });
         }
     }
 }

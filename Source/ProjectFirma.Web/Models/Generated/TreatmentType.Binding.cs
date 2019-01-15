@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[TreatmentType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,85 +16,114 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    [Table("[dbo].[TreatmentType]")]
-    public partial class TreatmentType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class TreatmentType : IHavePrimaryKey
     {
-        /// <summary>
-        /// Default Constructor; only used by EF
-        /// </summary>
-        protected TreatmentType()
-        {
+        public static readonly TreatmentTypeTreatmentOne TreatmentOne = TreatmentTypeTreatmentOne.Instance;
+        public static readonly TreatmentTypeTreatmentEleven TreatmentEleven = TreatmentTypeTreatmentEleven.Instance;
 
+        public static readonly List<TreatmentType> All;
+        public static readonly ReadOnlyDictionary<int, TreatmentType> AllLookupDictionary;
+
+        /// <summary>
+        /// Static type constructor to coordinate static initialization order
+        /// </summary>
+        static TreatmentType()
+        {
+            All = new List<TreatmentType> { TreatmentOne, TreatmentEleven };
+            AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentType>(All.ToDictionary(x => x.TreatmentTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public TreatmentType(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : this()
+        protected TreatmentType(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName)
         {
-            this.TreatmentTypeID = treatmentTypeID;
-            this.TreatmentTypeName = treatmentTypeName;
-            this.TreatmentTypeDisplayName = treatmentTypeDisplayName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public TreatmentType(string treatmentTypeName, string treatmentTypeDisplayName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.TreatmentTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.TreatmentTypeName = treatmentTypeName;
-            this.TreatmentTypeDisplayName = treatmentTypeDisplayName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static TreatmentType CreateNewBlank()
-        {
-            return new TreatmentType(default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return false;
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TreatmentType).Name};
-
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            
-            dbContext.TreatmentTypes.Remove(this);
+            TreatmentTypeID = treatmentTypeID;
+            TreatmentTypeName = treatmentTypeName;
+            TreatmentTypeDisplayName = treatmentTypeDisplayName;
         }
 
         [Key]
-        public int TreatmentTypeID { get; set; }
-        public string TreatmentTypeName { get; set; }
-        public string TreatmentTypeDisplayName { get; set; }
+        public int TreatmentTypeID { get; private set; }
+        public string TreatmentTypeName { get; private set; }
+        public string TreatmentTypeDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return TreatmentTypeID; } set { TreatmentTypeID = value; } }
+        public int PrimaryKey { get { return TreatmentTypeID; } }
 
-
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(TreatmentType other)
         {
-            public const int TreatmentTypeName = 50;
-            public const int TreatmentTypeDisplayName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.TreatmentTypeID == TreatmentTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TreatmentType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return TreatmentTypeID;
+        }
+
+        public static bool operator ==(TreatmentType left, TreatmentType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(TreatmentType left, TreatmentType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public TreatmentTypeEnum ToEnum { get { return (TreatmentTypeEnum)GetHashCode(); } }
+
+        public static TreatmentType ToType(int enumValue)
+        {
+            return ToType((TreatmentTypeEnum)enumValue);
+        }
+
+        public static TreatmentType ToType(TreatmentTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case TreatmentTypeEnum.TreatmentEleven:
+                    return TreatmentEleven;
+                case TreatmentTypeEnum.TreatmentOne:
+                    return TreatmentOne;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum TreatmentTypeEnum
+    {
+        TreatmentOne = 1,
+        TreatmentEleven = 2
+    }
+
+    public partial class TreatmentTypeTreatmentOne : TreatmentType
+    {
+        private TreatmentTypeTreatmentOne(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeTreatmentOne Instance = new TreatmentTypeTreatmentOne(1, @"TreatmentOne", @"Treatment #1");
+    }
+
+    public partial class TreatmentTypeTreatmentEleven : TreatmentType
+    {
+        private TreatmentTypeTreatmentEleven(int treatmentTypeID, string treatmentTypeName, string treatmentTypeDisplayName) : base(treatmentTypeID, treatmentTypeName, treatmentTypeDisplayName) {}
+        public static readonly TreatmentTypeTreatmentEleven Instance = new TreatmentTypeTreatmentEleven(2, @"TreatmentEleven", @"Treatment XI");
     }
 }
