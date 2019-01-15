@@ -99,4 +99,5 @@ VALUES
 (275, N'PrimaryContact', 'Primary Contact', 'Placeholder definition for Primary Contact.'),
 (276, N'FocusArea', 'Focus Area', 'Placeholder definition for Focus Area'),
 (277, N'Grant', 'Grant', 'Placeholder definition for Grant'),
-(278, N'GrantAllocation', 'Grant Allocation', 'Placeholder definition for Grant Allocation.')
+(278, N'GrantAllocation', 'Grant Allocation', 'Placeholder definition for Grant Allocation.'),
+(279, N'CostType', 'CostType', 'Placeholder definition for CostType.')

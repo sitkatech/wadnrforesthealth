@@ -5,12 +5,13 @@ CREATE TABLE dbo.CostType
 	CostTypeDescription varchar(255) not null
 )
 GO
-go
+
+
 insert into dbo.FieldDefinition values
-(278, N'CostType', 'CostType', 'Placeholder definition for CostType.')
+(279, N'CostType', 'CostType', 'Placeholder definition for CostType.')
 
 insert into dbo.FieldDefinitionData (TenantID, FieldDefinitionID, FieldDefinitionDataValue, FieldDefinitionLabel)
-select t.TenantID, 278, Null, Null
+select t.TenantID, 279, Null, Null
 From dbo.Tenant as t
 
 INSERT INTO dbo.CostType (CostTypeDescription) VALUES
@@ -20,3 +21,4 @@ INSERT INTO dbo.CostType (CostTypeDescription) VALUES
 	('Travel'),
 	('Contracts'),
 	('Agreements')
+
