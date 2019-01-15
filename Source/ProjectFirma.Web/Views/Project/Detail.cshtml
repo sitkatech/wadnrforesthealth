@@ -349,12 +349,12 @@
                 <h2 class="sectionHeader">Activities</h2>
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
-                        <h3>
+                        <h3 data-toc-skip="true">
                             Activities
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="row">
+                        @*<div class="row">
                             <div class="col-sm-6">
                                 <h4>Contractor Time</h4>
                             </div>
@@ -424,7 +424,7 @@
                         {
                             <p class="systemText">No Contractor Time identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
-                        <hr />
+                        <hr />*@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h4>Treatments</h4>
@@ -432,7 +432,7 @@
                             <div class="col-sm-6 text-right">
                                 @if (ViewDataTyped.UserHasEditProjectPermissions)
                                 {
-                                    @ModalDialogFormHelper.ModalDialogFormLink("<span class=\"glyphicon glyphicon-edit\"></span> Add Treatment", ViewDataTyped.EditTreatmentActivitiesUrl,"Add Treatment",new List<string>{ "btn","btn-sm","btn-firma"}, ViewDataTyped.UserHasEditProjectPermissions)
+                                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add Treatment", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.EditTreatmentActivityUrl,"Add Treatment",new List<string>{ "btn","btn-sm","btn-firma"}, ViewDataTyped.UserHasEditProjectPermissions)
                                 }
                             </div>
                         </div>

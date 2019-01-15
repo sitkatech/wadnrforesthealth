@@ -106,7 +106,7 @@ namespace ProjectFirma.Web.Views.Project
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
         public string EditContractorTimeActivitiesUrl { get; }
-        public string EditTreatmentActivitiesUrl { get; }
+        public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
         public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
@@ -336,8 +336,8 @@ namespace ProjectFirma.Web.Views.Project
             EditContractorTimeActivitiesUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
-            EditTreatmentActivitiesUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditTreatmentActivities(project));
+            EditTreatmentActivityUrl =
+                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));
 
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));

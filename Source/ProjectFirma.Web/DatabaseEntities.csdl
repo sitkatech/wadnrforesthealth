@@ -2405,7 +2405,7 @@
     <Property Name="TreatmentActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="Int32" Nullable="false" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentActivityStartDate" Type="DateTime" Nullable="false" />
+    <Property Name="TreatmentActivityStartDate" Type="DateTime" />
     <Property Name="TreatmentActivityEndDate" Type="DateTime" />
     <Property Name="TreatmentActivityProgramIndex" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="TreatmentActivityProjectCode" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentActivitiesViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditTreatmentActivityViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -27,22 +27,20 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Project
 {
-    public class EditTreatmentActivitiesViewData : FirmaViewData
+    public class EditTreatmentActivityViewData : FirmaViewData
     {
         public IEnumerable<SelectListItem> TreatmentActivityStatus { get; }
 
-        public int ProjectID { get; }
-        public string ProjectUrl { get; }
+        public IEnumerable<SelectListItem> TreatmentActivityContact { get; }
 
-        public EditTreatmentActivitiesViewData(Models.Project project, Person currentPerson) : base(currentPerson)
+        public EditTreatmentActivityViewData(Models.Project project, IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContact, Person currentPerson) : base(currentPerson)
         {
-            ProjectID = project.ProjectID;
-            ProjectUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(ProjectID));
 
-            EntityName = Models.FieldDefinition.Project.GetFieldDefinitionLabel();
-            PageTitle = $"Edit {project.DisplayName} Treatments";
 
-            //TreatmentActivityStatus = treatmentActivityStatus;
+            PageTitle = "Edit Treatment Activity";
+
+            TreatmentActivityStatus = treatmentActivityStatus;
+            TreatmentActivityContact = treatmentActivityContact;
         }
     }
 }

@@ -13,7 +13,7 @@ Create Table dbo.TreatmentActivity(
 	TreatmentActivityID int not null identity(1,1) constraint PK_TreatmentActivity_TreatmentActivityID primary key,
 	TenantID int not null constraint FK_TreatmentActivity_Tenant_TenantID foreign key references dbo.Tenant(TenantID),
 	ProjectID int not null constraint FK_TreatmentActivity_Project_ProjectID foreign key references dbo.Project(ProjectID),
-	TreatmentActivityStartDate datetime not null,
+	TreatmentActivityStartDate datetime null,
 	TreatmentActivityEndDate datetime null,
 	TreatmentActivityProgramIndex varchar(100) null,
 	TreatmentActivityProjectCode varchar(100) null,

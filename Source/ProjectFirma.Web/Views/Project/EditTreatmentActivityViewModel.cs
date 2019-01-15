@@ -21,8 +21,11 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
 using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using LtInfo.Common.Models;
@@ -31,44 +34,65 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Project
 {
-    public class EditTreatmentActivitiesViewModel : FormViewModel, IValidatableObject
+    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject
     {
  
         public int ProjectID { get; set; }
         public int TreatmentActivityID { get; set; }
+        [Required]
+        [DisplayName("Contact")]
         public int? TreatmentActivityContactID { get; set; }
-        public DateTime TreatmentActivityStartDate { get; set; }
+        
+        [DisplayName("Start Date")]
+        public DateTime? TreatmentActivityStartDate { get; set; }
+        [DisplayName("End Date")]
         public DateTime? TreatmentActivityEndDate { get; set; }
+        [DisplayName("Program Index")]
         public string TreatmentActivityProgramIndex { get; set; }
+        [DisplayName("Project Code")]
         public string TreatmentActivityProjectCode { get; set; }
+        [Required]
+        [DisplayName("Status")]
         public int TreatmentActivityStatusID { get; set; }
+        [DisplayName("Notes")]
         public string TreatmentActivityNotes { get; set; }
+        [DisplayName("Total Footprint")]
         public decimal TreatmentActivityFootprintAcres { get; set; }
+        [DisplayName("Chipping")]
         public decimal TreatmentActivityChippingAcres { get; set; }
+        [DisplayName("Pruning")]
         public decimal TreatmentActivityPruningAcres { get; set; }
+        [DisplayName("Thinning")]
         public decimal TreatmentActivityThinningAcres { get; set; }
+        [DisplayName("Mastication")]
         public decimal TreatmentActivityMasticationAcres { get; set; }
+        [DisplayName("Grazing")]
         public decimal TreatmentActivityGrazingAcres { get; set; }
+        [DisplayName("Lop and Scatter")]
         public decimal TreatmentActivityLopAndScatterAcres { get; set; }
+        [DisplayName("Biomass Removal")]
         public decimal TreatmentActivityBiomassRemovalAcres { get; set; }
+        [DisplayName("Hand Pile")]
         public decimal TreatmentActivityHandPileAcres { get; set; }
+        [DisplayName("Broadcast Burn")]
         public decimal TreatmentActivityBroadcastBurnAcres { get; set; }
+        [DisplayName("Hand Pile Burn")]
         public decimal TreatmentActivityHandPileBurnAcres { get; set; }
+        [DisplayName("Machine Pile Burn")]
         public decimal TreatmentActivityMachinePileBurnAcres { get; set; }
+        [DisplayName("Other Treatment")]
         public decimal TreatmentActivityOtherTreatmentAcres { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditTreatmentActivitiesViewModel()
+        public EditTreatmentActivityViewModel()
         {
         }
 
-        public EditTreatmentActivitiesViewModel(Models.Project project,
-            TreatmentActivity treatmentActivity)
+        public EditTreatmentActivityViewModel(TreatmentActivity treatmentActivity)
         {
-            ProjectID = project.ProjectID;
-            TreatmentActivityID = TreatmentActivityID;
+            TreatmentActivityID = treatmentActivity.TreatmentActivityID;
             TreatmentActivityContactID = treatmentActivity.TreatmentActivityContactID;
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
@@ -100,6 +124,34 @@ namespace ProjectFirma.Web.Views.Project
             {
                 yield return new ValidationResult("End Date cannot be before Start Date");
             }
+        }
+
+        public void UpdateModel(TreatmentActivity treatmentActivity, Models.Project project)
+        {
+            treatmentActivity.ProjectID = project.ProjectID;
+            treatmentActivity.TreatmentActivityID = TreatmentActivityID;
+            treatmentActivity.TreatmentActivityContactID = TreatmentActivityContactID;
+            treatmentActivity.TreatmentActivityStartDate = TreatmentActivityStartDate;
+            treatmentActivity.TreatmentActivityEndDate = TreatmentActivityEndDate;
+            treatmentActivity.TreatmentActivityProgramIndex = TreatmentActivityProgramIndex;
+            treatmentActivity.TreatmentActivityProjectCode = TreatmentActivityProjectCode;
+            treatmentActivity.TreatmentActivityStatusID = TreatmentActivityStatusID;
+            treatmentActivity.TreatmentActivityNotes = TreatmentActivityNotes;
+            treatmentActivity.TreatmentActivityFootprintAcres = TreatmentActivityFootprintAcres;
+            treatmentActivity.TreatmentActivityChippingAcres = TreatmentActivityChippingAcres;
+            treatmentActivity.TreatmentActivityPruningAcres = TreatmentActivityPruningAcres;
+            treatmentActivity.TreatmentActivityThinningAcres = TreatmentActivityThinningAcres;
+            treatmentActivity.TreatmentActivityMasticationAcres = TreatmentActivityMasticationAcres;
+            treatmentActivity.TreatmentActivityGrazingAcres = TreatmentActivityGrazingAcres;
+            treatmentActivity.TreatmentActivityLopAndScatterAcres = TreatmentActivityLopAndScatterAcres;
+            treatmentActivity.TreatmentActivityBiomassRemovalAcres = TreatmentActivityBiomassRemovalAcres;
+            treatmentActivity.TreatmentActivityHandPileAcres = TreatmentActivityHandPileAcres;
+            treatmentActivity.TreatmentActivityBroadcastBurnAcres = TreatmentActivityBroadcastBurnAcres;
+            treatmentActivity.TreatmentActivityHandPileBurnAcres = TreatmentActivityHandPileBurnAcres;
+            treatmentActivity.TreatmentActivityMachinePileBurnAcres = TreatmentActivityMachinePileBurnAcres;
+            treatmentActivity.TreatmentActivityOtherTreatmentAcres = TreatmentActivityOtherTreatmentAcres;
+
+            //HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
     }
 }

@@ -19,6 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Web;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+
 namespace ProjectFirma.Web.Models
 {
     public static class TreatmentActivityModelExtensions
@@ -26,6 +31,53 @@ namespace ProjectFirma.Web.Models
         public static string GetStatusDisplayName(this Models.TreatmentActivity treatmentActivity)
         {
             return treatmentActivity.TreatmentActivityStatus.TreatmentActivityStatusDisplayName;
+        }
+
+        public static string GetProjectName(this Models.TreatmentActivity treatmentActivity)
+        {
+            return treatmentActivity.Project.ProjectName;
+        }
+
+        public static string GetProjectFocusAreaName(this Models.TreatmentActivity treatmentActivity)
+        {
+            
+            return treatmentActivity.Project.FocusArea?.FocusAreaName ?? "Focus Area Not Set";
+        }
+
+        public static string GetContactName(this Models.TreatmentActivity treatmentActivity)
+        {
+            return treatmentActivity.TreatmentActivityContact.FullNameLastFirst ?? "Contact Not Set";
+        }
+
+        public static string GetContactUrl(this Models.TreatmentActivity treatmentActivity)
+        {
+            return SitkaRoute<UserController>.BuildUrlFromExpression(uc => uc.Detail(treatmentActivity.TreatmentActivityContactID));
+        }
+
+        public static HtmlString GetContactText(this Models.TreatmentActivity treatmentActivity)
+        {
+            HtmlString returnValue = new HtmlString(string.Empty);
+            if (treatmentActivity.TreatmentActivityContactID == null)
+            {
+                returnValue = "Contact Not Set".ToHTMLFormattedString();
+            }
+            else
+            {
+                returnValue = UrlTemplate.MakeHrefString(treatmentActivity.GetContactUrl(),
+                    treatmentActivity.GetContactName());
+            }
+
+            return returnValue;
+        }
+
+        public static string GetDeleteTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)
+        {
+            return SitkaRoute<ProjectController>.BuildUrlFromExpression(pc => pc.DeleteTreatmentActivity(treatmentActivity));
+        }
+
+        public static string GetEditTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)
+        {
+            return SitkaRoute<ProjectController>.BuildUrlFromExpression(pc => pc.EditTreatmentActivity(treatmentActivity.PrimaryKey));
         }
 
 

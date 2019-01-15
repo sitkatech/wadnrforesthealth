@@ -41,6 +41,8 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
+using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
@@ -178,7 +180,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
 
-            var treamentActivityGridSpec = new TreatmentActivityGridSpec();
+            var treamentActivityGridSpec = new TreatmentActivityGridSpec(CurrentPerson);
             var treatmentActivityGridDataUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
@@ -560,15 +562,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [FirmaAdminFeature]
-        public GridJsonNetJObjectResult<TreatmentActivity> TreatmentActivityGridJsonData(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var gridSpec = new TreatmentActivityGridSpec();
-            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities
-                .GetTreatmentActivitiesForProject(projectPrimaryKey.EntityObject).OrderBy(x => x.TreatmentActivityStartDate).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentActivity>(treatmentActivities, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
+        
 
         [AnonymousUnclassifiedFeature]
         public ActionResult Search(string searchCriteria)
@@ -918,45 +912,118 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
         }
 
         [HttpGet]
-        [ProjectEditAsAdminFeature]
-        public ViewResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey)
+        [FirmaAdminFeature]
+        public PartialViewResult EditTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey)
         {
-            var project = projectPrimaryKey.EntityObject;
-            var treatmentActivity = project.TreatmentActivities.ToList().FirstOrDefault();
-            var viewModel = new EditTreatmentActivitiesViewModel(project, treatmentActivity);
-            return ViewEditTreatmentActivities(project, viewModel);
+            var treatmentActivity = treatmentActivityPrimaryKey.EntityObject;
+
+            var viewModel = new EditTreatmentActivityViewModel(treatmentActivity);
+            return ViewEditTreatmentActivity(treatmentActivity, viewModel);
+        }
+
+        [HttpPost]
+        [FirmaAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey, EditTreatmentActivityViewModel viewModel)
+        {
+            var treatmentActivity = treatmentActivityPrimaryKey.EntityObject;
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEditTreatmentActivity(treatmentActivity, viewModel);
+            }
+            return UpdateTreatmentActivity(viewModel, treatmentActivity);
+        }
+
+        private static ActionResult UpdateTreatmentActivity(
+            EditTreatmentActivityViewModel viewModel, TreatmentActivity treatmentActivity)
+        {
+            viewModel.UpdateModel(treatmentActivity, treatmentActivity.Project);
+            
+            return new ModalDialogFormJsonResult();
+
+        }
+
+        private PartialViewResult ViewEditTreatmentActivity(TreatmentActivity treatmentActivity, EditTreatmentActivityViewModel viewModel)
+        {
+            
+            var treatmentActivityStatusAsSelectListItems =
+                TreatmentActivityStatus.All.ToSelectListWithEmptyFirstRow(v => v.TreatmentActivityStatusID.ToString(),
+                    m => m.TreatmentActivityStatusDisplayName);
+
+            var contactsAsSelectListItems =
+                treatmentActivity.Project.ProjectPeople.ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
+                    d => d.Person.FullNameFirstLastAndOrg);
+
+            var viewData = new EditTreatmentActivityViewData(treatmentActivity.Project, treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems, CurrentPerson);
+            return RazorPartialView<EditTreatmentActivity, EditTreatmentActivityViewData, EditTreatmentActivityViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public PartialViewResult NewTreatmentActivity(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var treatmentActivity = TreatmentActivity.CreateNewBlank(projectPrimaryKey.EntityObject, TreatmentActivityStatus.Planned);
+
+            var viewModel = new EditTreatmentActivityViewModel(treatmentActivity);
+            return ViewEditTreatmentActivity(treatmentActivity, viewModel);
         }
 
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditTreatmentActivities(ProjectPrimaryKey projectPrimaryKey, EditTreatmentActivitiesViewModel viewModel)
+        public ActionResult NewTreatmentActivity(ProjectPrimaryKey projectPrimaryKey, EditTreatmentActivityViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentTreatmentActivities = project.TreatmentActivities.ToList();
+            var treatmentActivity = TreatmentActivity.CreateNewBlank(project, TreatmentActivityStatus.Planned);
+
             if (!ModelState.IsValid)
             {
-                return ViewEditTreatmentActivities(project, viewModel);
+                return ViewEditTreatmentActivity(treatmentActivity, viewModel);
             }
-            return UpdateTreatmentActivities(viewModel, currentTreatmentActivities, project);
+            return UpdateTreatmentActivity(viewModel, treatmentActivity);
         }
 
-        private static ActionResult UpdateTreatmentActivities(
-            EditTreatmentActivitiesViewModel viewModel,
-            List<TreatmentActivity> currentTreatmentActivities, Project project)
+        [HttpGet]
+        [FirmaAdminFeature]
+        public PartialViewResult DeleteTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey)
         {
-            HttpRequestStorage.DatabaseEntities.TreatmentActivities.Load();
-            var allTreatmentActivities = HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.Local;
-
-            //viewModel.UpdateModel(currentTreatmentActivities, allTreatmentActivities, project);
-            return new RedirectResult( SitkaRoute<ProjectController>.BuildUrlFromExpression(x=>x.Detail(project)) + "#activities");
+            var viewModel = new ConfirmDialogFormViewModel(treatmentActivityPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteTreatmentActivity(treatmentActivityPrimaryKey.EntityObject, viewModel);
         }
 
-        private PartialViewResult ViewEditTreatmentActivities(Project project, EditTreatmentActivitiesViewModel viewModel)
+        private PartialViewResult ViewDeleteTreatmentActivity(TreatmentActivity treatmentActivity, ConfirmDialogFormViewModel viewModel)
         {
+            var confirmMessage = $"Are you sure you want to delete this treatment activity?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
 
-            var viewData = new EditTreatmentActivitiesViewData(project, CurrentPerson);
-            return RazorPartialView<EditTreatmentActivities, EditTreatmentActivitiesViewData, EditTreatmentActivitiesViewModel>(viewData, viewModel);
+        [HttpPost]
+        [FirmaAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var treatmentActivity = treatmentActivityPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteTreatmentActivity(treatmentActivity, viewModel);
+            }
+
+            var message = "This treatment activity was successfully deleted.";
+            treatmentActivity.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [FirmaAdminFeature]
+        public GridJsonNetJObjectResult<TreatmentActivity> TreatmentActivityGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var gridSpec = new TreatmentActivityGridSpec(CurrentPerson);
+            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities
+                .GetTreatmentActivitiesForProject(projectPrimaryKey.EntityObject).OrderBy(x => x.TreatmentActivityStartDate).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentActivity>(treatmentActivities, gridSpec);
+            return gridJsonNetJObjectResult;
         }
     }
 }

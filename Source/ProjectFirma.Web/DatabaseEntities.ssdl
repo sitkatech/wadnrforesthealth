@@ -2321,7 +2321,7 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="TreatmentActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="TreatmentActivityStartDate" Type="datetime" Nullable="false" />
+    <Property Name="TreatmentActivityStartDate" Type="datetime" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
     <Property Name="TreatmentActivityProgramIndex" Type="varchar" MaxLength="100" />
     <Property Name="TreatmentActivityProjectCode" Type="varchar" MaxLength="100" />
