@@ -693,6 +693,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="Tag" EntitySet="Tag" />
       <End Role="ProjectTags" EntitySet="ProjectTag" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="ProjectUpdatesWhereYouAreThePrimaryContactPerson" EntitySet="ProjectUpdate" />
@@ -2002,6 +2006,7 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="int" />
+    <Property Name="FocusAreaID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -4076,6 +4081,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="ProjectTags">
         <PropertyRef Name="TagID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
+    <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="ProjectUpdates">
+        <PropertyRef Name="FocusAreaID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

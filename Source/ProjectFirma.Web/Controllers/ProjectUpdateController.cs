@@ -272,7 +272,8 @@ namespace ProjectFirma.Web.Controllers
 
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, inflationRate, updateStatus, basicsValidationResult, projectCustomAttributeTypes);
+            var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, inflationRate, updateStatus, basicsValidationResult, projectCustomAttributeTypes, focusAreas);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -1712,6 +1713,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var originalHtml = GeneratePartialViewForProjectBasics(project);            
             projectUpdate.CommitChangesToProject(project);
+            project.FocusArea = projectUpdate.FocusArea;
             var updatedHtml = GeneratePartialViewForProjectBasics(project);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);

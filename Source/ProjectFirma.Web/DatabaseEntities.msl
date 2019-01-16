@@ -1095,6 +1095,7 @@
           <ScalarProperty Name="PlannedDate" ColumnName="PlannedDate" />
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
+          <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -16,6 +16,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
 	[PrimaryContactPersonID] [int] NULL,
+	[FocusAreaID] [int] NULL,
  CONSTRAINT [PK_ProjectUpdate_ProjectUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateID] ASC
@@ -31,6 +32,11 @@ CREATE TABLE [dbo].[ProjectUpdate](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[ProjectUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectUpdate_FocusArea_FocusAreaID] FOREIGN KEY([FocusAreaID])
+REFERENCES [dbo].[FocusArea] ([FocusAreaID])
+GO
+ALTER TABLE [dbo].[ProjectUpdate] CHECK CONSTRAINT [FK_ProjectUpdate_FocusArea_FocusAreaID]
 GO
 ALTER TABLE [dbo].[ProjectUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID] FOREIGN KEY([PrimaryContactPersonID])
 REFERENCES [dbo].[Person] ([PersonID])

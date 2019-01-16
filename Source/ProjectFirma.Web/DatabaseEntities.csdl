@@ -234,6 +234,10 @@
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="FundingSources" EntitySet="FundingSource" />
@@ -1042,6 +1046,7 @@
     <Property Name="FocusAreaLocation" Type="Geometry" />
     <NavigationProperty Name="FocusAreaLocationStagings" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="FocusAreaLocationStagings" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="Projects" />
+    <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="ProjectUpdates" />
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
     <Key>
@@ -2080,6 +2085,8 @@
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
+    <Property Name="FocusAreaID" Type="Int32" />
+    <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
@@ -2814,6 +2821,18 @@
         <PropertyRef Name="FocusAreaID" />
       </Principal>
       <Dependent Role="Projects">
+        <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="0..1" />
+    <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.ProjectUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="ProjectUpdates">
         <PropertyRef Name="FocusAreaID" />
       </Dependent>
     </ReferentialConstraint>
