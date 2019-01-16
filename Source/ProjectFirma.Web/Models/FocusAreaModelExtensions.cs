@@ -19,15 +19,12 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using GeoJSON.Net.Feature;
-using ProjectFirma.Web.Controllers;
-using LtInfo.Common;
-using LtInfo.Common.DesignByContract;
-using LtInfo.Common.GeoJson;
-using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -74,7 +71,7 @@ namespace ProjectFirma.Web.Models
 
         public static bool CanFocusAreaBeDeleted(this FocusArea focusArea)
         {
-            return !focusArea.HasDependentObjects();
+            return !focusArea.Projects.Any();
         }
 
     }

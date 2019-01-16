@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.FocusArea
         public IndexGridSpec(Person person)
         {
             
-            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FirmaAdminFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted()), 30, DhtmlxGridColumnFilterType.None);
+            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted()), 30, DhtmlxGridColumnFilterType.None);
             Add("Focus Area", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FocusAreaName), 270, DhtmlxGridColumnFilterType.Html);
             Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, DhtmlxGridColumnFilterType.Text);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
