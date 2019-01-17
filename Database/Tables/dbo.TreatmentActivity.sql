@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[TreatmentActivityID] [int] IDENTITY(1,1) NOT NULL,
 	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[TreatmentActivityStartDate] [datetime] NOT NULL,
+	[TreatmentActivityStartDate] [datetime] NULL,
 	[TreatmentActivityEndDate] [datetime] NULL,
 	[TreatmentActivityProgramIndex] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TreatmentActivityProjectCode] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,

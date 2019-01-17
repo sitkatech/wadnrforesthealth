@@ -76,6 +76,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<GeospatialArea> GeospatialAreas { get { return AllGeospatialAreas.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<GeospatialAreaType> AllGeospatialAreaTypes { get; set; }
         public virtual IQueryable<GeospatialAreaType> GeospatialAreaTypes { get { return AllGeospatialAreaTypes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<GrantAllocationProjectCode> AllGrantAllocationProjectCodes { get; set; }
+        public virtual IQueryable<GrantAllocationProjectCode> GrantAllocationProjectCodes { get { return AllGrantAllocationProjectCodes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<GrantAllocation> AllGrantAllocations { get; set; }
         public virtual IQueryable<GrantAllocation> GrantAllocations { get { return AllGrantAllocations.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<Grant> AllGrants { get; set; }
@@ -140,6 +142,8 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<ProjectBudgetUpdate> ProjectBudgetUpdates { get { return AllProjectBudgetUpdates.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectClassification> AllProjectClassifications { get; set; }
         public virtual IQueryable<ProjectClassification> ProjectClassifications { get { return AllProjectClassifications.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<ProjectCode> AllProjectCodes { get; set; }
+        public virtual IQueryable<ProjectCode> ProjectCodes { get { return AllProjectCodes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectCustomAttribute> AllProjectCustomAttributes { get; set; }
         public virtual IQueryable<ProjectCustomAttribute> ProjectCustomAttributes { get { return AllProjectCustomAttributes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectCustomAttributeType> AllProjectCustomAttributeTypes { get; set; }
@@ -246,6 +250,7 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<TechnicalAssistanceParameter> TechnicalAssistanceParameters { get { return AllTechnicalAssistanceParameters.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<TenantAttribute> AllTenantAttributes { get; set; }
         public virtual IQueryable<TenantAttribute> TenantAttributes { get { return AllTenantAttributes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<tmpChildrenGrantsInGrantsTab> tmpChildrenGrantsInGrantsTabs { get; set; }
         public virtual DbSet<TrainingVideo> AllTrainingVideos { get; set; }
         public virtual IQueryable<TrainingVideo> TrainingVideos { get { return AllTrainingVideos.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<TreatmentActivity> AllTreatmentActivities { get; set; }
@@ -378,6 +383,9 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
 
+                case "GrantAllocationProjectCode":
+                    return GrantAllocationProjectCodes.GetGrantAllocationProjectCode(primaryKey);
+
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);
 
@@ -503,6 +511,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectClassification":
                     return ProjectClassifications.GetProjectClassification(primaryKey);
+
+                case "ProjectCode":
+                    return ProjectCodes.GetProjectCode(primaryKey);
 
                 case "ProjectColorByType":
                     var projectColorByType = ProjectColorByType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -757,6 +768,9 @@ namespace ProjectFirma.Web.Models
                     var tenant = Tenant.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(tenant, "Tenant", primaryKey);
                     return tenant;
+
+                case "tmpChildrenGrantsInGrantsTab":
+                    return tmpChildrenGrantsInGrantsTabs.GettmpChildrenGrantsInGrantsTab(primaryKey);
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);

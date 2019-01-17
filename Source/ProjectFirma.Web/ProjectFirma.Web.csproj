@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controllers\TreatmentActivityController.cs" />    <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
+    <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
     <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
@@ -145,6 +145,9 @@
     <Compile Include="Models\Generated\GrantAllocation.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocation.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProjectCode.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProjectCode.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProjectCodePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStaging.Binding.cs" />
     <Compile Include="Models\Generated\ImportExternalProjectStaging.DatabaseContextExtensions.cs" />
@@ -250,6 +253,9 @@
     <Compile Include="Models\Generated\ProjectClassification.Binding.cs" />
     <Compile Include="Models\Generated\ProjectClassification.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectClassificationPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectCode.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectCode.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectCodePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectColorByType.Binding.cs" />
     <Compile Include="Models\Generated\ProjectColorByTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectCostType.Binding.cs" />
@@ -445,6 +451,9 @@
     <Compile Include="Models\Generated\TenantAttribute.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\TenantAttributePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TenantPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\tmpChildrenGrantsInGrantsTab.Binding.cs" />
+    <Compile Include="Models\Generated\tmpChildrenGrantsInGrantsTab.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\tmpChildrenGrantsInGrantsTabPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TrainingVideo.Binding.cs" />
     <Compile Include="Models\Generated\TrainingVideo.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\TrainingVideoPrimaryKey.Binding.cs" />
@@ -456,6 +465,7 @@
     <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vGeoServerGeospatialArea.Binding.cs" />
+    <Compile Include="Controllers\TreatmentActivityController.cs" />    <Compile Include="Models\Generated\AccomplishmentsDashboardFundingDisplayType.Binding.cs" />
     <Compile Include="Models\TreatmentActivity.DatabaseContextExtensions.cs" />
     <Compile Include="Models\FocusAreaLocationStaging.cs" />
     <Compile Include="Controllers\FocusAreaController.cs" />

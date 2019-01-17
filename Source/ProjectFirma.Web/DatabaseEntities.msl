@@ -314,6 +314,18 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
+          <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationProjectCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProjectCode">
+        <MappingFragment StoreEntitySet="GrantAllocationProjectCode">
+          <ScalarProperty Name="GrantAllocationProjectCodeID" ColumnName="GrantAllocationProjectCodeID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -726,6 +738,15 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="ClassificationID" ColumnName="ClassificationID" />
           <ScalarProperty Name="ProjectClassificationNotes" ColumnName="ProjectClassificationNotes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCode">
+        <MappingFragment StoreEntitySet="ProjectCode">
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+          <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+          <ScalarProperty Name="ProjectCode1" ColumnName="ProjectCode" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1401,6 +1422,33 @@
           <ScalarProperty Name="ShowLeadImplementerLogoOnFactSheet" ColumnName="ShowLeadImplementerLogoOnFactSheet" />
           <ScalarProperty Name="EnableAccomplishmentsDashboard" ColumnName="EnableAccomplishmentsDashboard" />
           <ScalarProperty Name="ProjectStewardshipAreaTypeID" ColumnName="ProjectStewardshipAreaTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tmpChildrenGrantsInGrantsTab">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpChildrenGrantsInGrantsTab">
+        <MappingFragment StoreEntitySet="tmpChildrenGrantsInGrantsTab">
+          <ScalarProperty Name="ChildGrantID" ColumnName="ChildGrantID" />
+          <ScalarProperty Name="Parent_Child__SITKA_" ColumnName="Parent Child (SITKA)" />
+          <ScalarProperty Name="Grant__" ColumnName="Grant #" />
+          <ScalarProperty Name="CFDA__" ColumnName="CFDA #" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Program_Manager" ColumnName="Program Manager" />
+          <ScalarProperty Name="Prog_Index" ColumnName="Prog Index" />
+          <ScalarProperty Name="Project_Codes" ColumnName="Project Codes" />
+          <ScalarProperty Name="Funding_increase" ColumnName="Funding increase" />
+          <ScalarProperty Name="Federal_Fund_Code" ColumnName="Federal Fund Code" />
+          <ScalarProperty Name="Funds_Awarded" ColumnName="Funds Awarded" />
+          <ScalarProperty Name="Matching_Funds" ColumnName="Matching Funds" />
+          <ScalarProperty Name="Grant_Total" ColumnName="Grant Total" />
+          <ScalarProperty Name="DNR_Match_Amount" ColumnName="DNR Match Amount" />
+          <ScalarProperty Name="Non_DNR_Other_Match" ColumnName="Non-DNR Other Match" />
+          <ScalarProperty Name="Landowner_Match" ColumnName="Landowner Match" />
+          <ScalarProperty Name="Match_PI___Alpha_Code" ColumnName="Match PI &amp; Alpha Code" />
+          <ScalarProperty Name="Expend_Method" ColumnName="Expend Method" />
+          <ScalarProperty Name="Start_Date" ColumnName="Start Date" />
+          <ScalarProperty Name="End_Date" ColumnName="End Date" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

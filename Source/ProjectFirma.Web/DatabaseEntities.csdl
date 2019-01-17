@@ -27,6 +27,7 @@
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
+    <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.GrantAllocationProjectCode" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.ImportExternalProjectStaging" />
     <EntitySet Name="MappedRegion" EntityType="ProjectFirma.Web.Models.MappedRegion" />
     <EntitySet Name="MonitoringProgram" EntityType="ProjectFirma.Web.Models.MonitoringProgram" />
@@ -58,6 +59,7 @@
     <EntitySet Name="ProjectBudget" EntityType="ProjectFirma.Web.Models.ProjectBudget" />
     <EntitySet Name="ProjectBudgetUpdate" EntityType="ProjectFirma.Web.Models.ProjectBudgetUpdate" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
+    <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
@@ -110,6 +112,7 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
     <EntitySet Name="TechnicalAssistanceParameter" EntityType="ProjectFirma.Web.Models.TechnicalAssistanceParameter" />
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.TenantAttribute" />
+    <EntitySet Name="tmpChildrenGrantsInGrantsTab" EntityType="ProjectFirma.Web.Models.tmpChildrenGrantsInGrantsTab" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.vGeoServerGeospatialArea" />
@@ -1152,8 +1155,19 @@
     <Property Name="EndDate" Type="DateTime" Nullable="false" />
     <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="CostTypeID" Type="Int32" />
+    <Property Name="ProgramIndex" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProgramManagerPersonID" Type="Int32" />
     <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="GrantAllocations" ToRole="CostType" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
+  </EntityType>
+  <EntityType Name="GrantAllocationProjectCode">
+    <Key>
+      <PropertyRef Name="GrantAllocationProjectCodeID" />
+    </Key>
+    <Property Name="GrantAllocationProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>
@@ -1690,6 +1704,14 @@
     <Property Name="ProjectClassificationNotes" Type="String" MaxLength="600" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Classification" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Classification_ClassificationID" FromRole="ProjectClassifications" ToRole="Classification" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="ProjectClassifications" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectCode">
+    <Key>
+      <PropertyRef Name="ProjectCodeID" />
+    </Key>
+    <Property Name="ProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCode1" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -2437,6 +2459,32 @@
     <NavigationProperty Name="TenantSquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_TenantAttribute_FileResource_TenantSquareLogoFileResourceID_FileResourceID" FromRole="TenantAttributesWhereYouAreTheTenantSquareLogoFileResource" ToRole="TenantSquareLogoFileResource" />
     <NavigationProperty Name="TenantStyleSheetFileResource" Relationship="ProjectFirma.Web.Models.FK_TenantAttribute_FileResource_TenantStyleSheetFileResourceID_FileResourceID" FromRole="TenantAttributesWhereYouAreTheTenantStyleSheetFileResource" ToRole="TenantStyleSheetFileResource" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="TenantAttributesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
+  </EntityType>
+  <EntityType Name="tmpChildrenGrantsInGrantsTab">
+    <Key>
+      <PropertyRef Name="ChildGrantID" />
+    </Key>
+    <Property Name="ChildGrantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Parent_Child__SITKA_" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Grant__" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="CFDA__" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Program_Manager" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Prog_Index" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Project_Codes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Funding_increase" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Federal_Fund_Code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Funds_Awarded" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Matching_Funds" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Grant_Total" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DNR_Match_Amount" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Non_DNR_Other_Match" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Landowner_Match" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Match_PI___Alpha_Code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Expend_Method" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Start_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="End_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>

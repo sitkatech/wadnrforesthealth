@@ -27,6 +27,7 @@
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.Store.GeospatialAreaType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.Store.ImportExternalProjectStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MappedRegion" EntityType="ProjectFirma.Web.Models.Store.MappedRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MonitoringProgram" EntityType="ProjectFirma.Web.Models.Store.MonitoringProgram" store:Type="Tables" Schema="dbo" />
@@ -58,6 +59,7 @@
     <EntitySet Name="ProjectBudget" EntityType="ProjectFirma.Web.Models.Store.ProjectBudget" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectBudgetUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectBudgetUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeUpdate" store:Type="Tables" Schema="dbo" />
@@ -110,6 +112,7 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TechnicalAssistanceParameter" EntityType="ProjectFirma.Web.Models.Store.TechnicalAssistanceParameter" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.Store.TenantAttribute" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tmpChildrenGrantsInGrantsTab" EntityType="ProjectFirma.Web.Models.Store.tmpChildrenGrantsInGrantsTab" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerGeospatialArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerGeospatialArea">
@@ -1162,6 +1165,17 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="EndDate" Type="datetime" Nullable="false" />
     <Property Name="AllocationAmount" Type="money" />
     <Property Name="CostTypeID" Type="int" />
+    <Property Name="ProgramIndex" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProgramManagerPersonID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantAllocationProjectCode">
+    <Key>
+      <PropertyRef Name="GrantAllocationProjectCodeID" />
+    </Key>
+    <Property Name="GrantAllocationProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ImportExternalProjectStaging">
     <Key>
@@ -1662,6 +1676,14 @@ warning 6035: The relationship 'FK_SnapshotProject_Project_ProjectID_TenantID' h
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ClassificationID" Type="int" Nullable="false" />
     <Property Name="ProjectClassificationNotes" Type="varchar" MaxLength="600" />
+  </EntityType>
+  <EntityType Name="ProjectCode">
+    <Key>
+      <PropertyRef Name="ProjectCodeID" />
+    </Key>
+    <Property Name="ProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TenantID" Type="int" Nullable="false" />
+    <Property Name="ProjectCode" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
@@ -2349,6 +2371,32 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
     <Property Name="ShowLeadImplementerLogoOnFactSheet" Type="bit" Nullable="false" />
     <Property Name="EnableAccomplishmentsDashboard" Type="bit" Nullable="false" />
     <Property Name="ProjectStewardshipAreaTypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="tmpChildrenGrantsInGrantsTab">
+    <Key>
+      <PropertyRef Name="ChildGrantID" />
+    </Key>
+    <Property Name="ChildGrantID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Parent Child (SITKA)" Type="varchar" MaxLength="50" />
+    <Property Name="Grant #" Type="varchar" MaxLength="50" />
+    <Property Name="CFDA #" Type="varchar" MaxLength="50" />
+    <Property Name="Title" Type="varchar" MaxLength="50" />
+    <Property Name="Program Manager" Type="varchar" MaxLength="50" />
+    <Property Name="Prog Index" Type="varchar" MaxLength="50" />
+    <Property Name="Project Codes" Type="varchar" MaxLength="50" />
+    <Property Name="Funding increase" Type="varchar" MaxLength="50" />
+    <Property Name="Federal Fund Code" Type="varchar" MaxLength="50" />
+    <Property Name="Funds Awarded" Type="varchar" MaxLength="50" />
+    <Property Name="Matching Funds" Type="varchar" MaxLength="50" />
+    <Property Name="Grant Total" Type="varchar" MaxLength="50" />
+    <Property Name="DNR Match Amount" Type="varchar" MaxLength="50" />
+    <Property Name="Non-DNR Other Match" Type="varchar" MaxLength="50" />
+    <Property Name="Landowner Match" Type="varchar" MaxLength="50" />
+    <Property Name="Match PI &amp; Alpha Code" Type="varchar" MaxLength="50" />
+    <Property Name="Expend Method" Type="varchar" MaxLength="50" />
+    <Property Name="Start Date" Type="varchar" MaxLength="50" />
+    <Property Name="End Date" Type="varchar" MaxLength="50" />
+    <Property Name="Notes" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
