@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FocusAreaLocationStaging](
 	[FocusAreaLocationStaggingID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[FocusAreaID] [int] NOT NULL,
 	[FeatureClassName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[GeoJson] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -19,8 +18,3 @@ ALTER TABLE [dbo].[FocusAreaLocationStaging]  WITH CHECK ADD  CONSTRAINT [FK_Foc
 REFERENCES [dbo].[FocusArea] ([FocusAreaID])
 GO
 ALTER TABLE [dbo].[FocusAreaLocationStaging] CHECK CONSTRAINT [FK_FocusAreaLocationStaging_FocusArea_FocusAreaID]
-GO
-ALTER TABLE [dbo].[FocusAreaLocationStaging]  WITH CHECK ADD  CONSTRAINT [FK_FocusAreaLocationStaging_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[FocusAreaLocationStaging] CHECK CONSTRAINT [FK_FocusAreaLocationStaging_Tenant_TenantID]

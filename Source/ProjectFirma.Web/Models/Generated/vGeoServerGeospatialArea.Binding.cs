@@ -25,13 +25,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public vGeoServerGeospatialArea(int geospatialAreaID, int primaryKey, string geospatialAreaName, int tenantID, string tenantName, string geospatialAreaTypeName) : this()
+        public vGeoServerGeospatialArea(int geospatialAreaID, int primaryKey, string geospatialAreaName, string geospatialAreaTypeName) : this()
         {
             this.GeospatialAreaID = geospatialAreaID;
             this.PrimaryKey = primaryKey;
             this.GeospatialAreaName = geospatialAreaName;
-            this.TenantID = tenantID;
-            this.TenantName = tenantName;
             this.GeospatialAreaTypeName = geospatialAreaTypeName;
         }
 
@@ -43,8 +41,6 @@ namespace ProjectFirma.Web.Models
             this.GeospatialAreaID = vGeoServerGeospatialArea.GeospatialAreaID;
             this.PrimaryKey = vGeoServerGeospatialArea.PrimaryKey;
             this.GeospatialAreaName = vGeoServerGeospatialArea.GeospatialAreaName;
-            this.TenantID = vGeoServerGeospatialArea.TenantID;
-            this.TenantName = vGeoServerGeospatialArea.TenantName;
             this.GeospatialAreaTypeName = vGeoServerGeospatialArea.GeospatialAreaTypeName;
             CallAfterConstructor(vGeoServerGeospatialArea);
         }
@@ -54,8 +50,6 @@ namespace ProjectFirma.Web.Models
         public int GeospatialAreaID { get; set; }
         public int PrimaryKey { get; set; }
         public string GeospatialAreaName { get; set; }
-        public int TenantID { get; set; }
-        public string TenantName { get; set; }
         public string GeospatialAreaTypeName { get; set; }
     }
 }

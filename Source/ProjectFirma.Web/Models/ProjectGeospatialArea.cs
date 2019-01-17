@@ -29,8 +29,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var project = HttpRequestStorage.DatabaseEntities.AllProjects.Find(ProjectID);
-                var geospatialArea = HttpRequestStorage.DatabaseEntities.AllGeospatialAreas.Find(GeospatialAreaID);
+                var project = HttpRequestStorage.DatabaseEntities.Projects.Find(ProjectID);
+                var geospatialArea = HttpRequestStorage.DatabaseEntities.GeospatialAreas.Find(GeospatialAreaID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var geospatialAreaName = geospatialArea != null ? geospatialArea.AuditDescriptionString : ViewUtilities.NotFoundString;
                 return $"{FieldDefinition.Project.GetFieldDefinitionLabel()}: {projectName}, Geospatial Area: {geospatialAreaName}";

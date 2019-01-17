@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[TaxonomyLeaf]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return taxonomyLeaf;
         }
 
-        public static void DeleteTaxonomyLeaf(this List<int> taxonomyLeafIDList)
+        public static void DeleteTaxonomyLeaf(this IQueryable<TaxonomyLeaf> taxonomyLeafs, List<int> taxonomyLeafIDList)
         {
             if(taxonomyLeafIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTaxonomyLeafs.RemoveRange(HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.Where(x => taxonomyLeafIDList.Contains(x.TaxonomyLeafID)));
+                taxonomyLeafs.Where(x => taxonomyLeafIDList.Contains(x.TaxonomyLeafID)).Delete();
             }
         }
 
-        public static void DeleteTaxonomyLeaf(this ICollection<TaxonomyLeaf> taxonomyLeafsToDelete)
+        public static void DeleteTaxonomyLeaf(this IQueryable<TaxonomyLeaf> taxonomyLeafs, ICollection<TaxonomyLeaf> taxonomyLeafsToDelete)
         {
             if(taxonomyLeafsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTaxonomyLeafs.RemoveRange(taxonomyLeafsToDelete);
+                var taxonomyLeafIDList = taxonomyLeafsToDelete.Select(x => x.TaxonomyLeafID).ToList();
+                taxonomyLeafs.Where(x => taxonomyLeafIDList.Contains(x.TaxonomyLeafID)).Delete();
             }
         }
 
-        public static void DeleteTaxonomyLeaf(this int taxonomyLeafID)
+        public static void DeleteTaxonomyLeaf(this IQueryable<TaxonomyLeaf> taxonomyLeafs, int taxonomyLeafID)
         {
-            DeleteTaxonomyLeaf(new List<int> { taxonomyLeafID });
+            DeleteTaxonomyLeaf(taxonomyLeafs, new List<int> { taxonomyLeafID });
         }
 
-        public static void DeleteTaxonomyLeaf(this TaxonomyLeaf taxonomyLeafToDelete)
+        public static void DeleteTaxonomyLeaf(this IQueryable<TaxonomyLeaf> taxonomyLeafs, TaxonomyLeaf taxonomyLeafToDelete)
         {
-            DeleteTaxonomyLeaf(new List<TaxonomyLeaf> { taxonomyLeafToDelete });
+            DeleteTaxonomyLeaf(taxonomyLeafs, new List<TaxonomyLeaf> { taxonomyLeafToDelete });
         }
     }
 }

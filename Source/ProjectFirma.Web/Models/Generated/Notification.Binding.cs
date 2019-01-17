@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[Notification] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[Notification]")]
-    public partial class Notification : IHavePrimaryKey, IHaveATenantID
+    public partial class Notification : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected Notification()
         {
             this.NotificationProjects = new HashSet<NotificationProject>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllNotifications.Remove(this);
+            dbContext.Notifications.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -111,7 +110,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int NotificationID { get; set; }
-        public int TenantID { get; private set; }
         public int NotificationTypeID { get; set; }
         public int PersonID { get; set; }
         public DateTime NotificationDate { get; set; }
@@ -119,7 +117,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return NotificationID; } set { NotificationID = value; } }
 
         public virtual ICollection<NotificationProject> NotificationProjects { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public NotificationType NotificationType { get { return NotificationType.AllLookupDictionary[NotificationTypeID]; } }
         public virtual Person Person { get; set; }
 

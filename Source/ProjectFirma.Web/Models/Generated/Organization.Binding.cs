@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[Organization] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[Organization]")]
-    public partial class Organization : IHavePrimaryKey, IHaveATenantID
+    public partial class Organization : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,13 +25,11 @@ namespace ProjectFirma.Web.Models
         protected Organization()
         {
             this.FundingSources = new HashSet<FundingSource>();
-            this.MonitoringProgramPartners = new HashSet<MonitoringProgramPartner>();
             this.OrganizationBoundaryStagings = new HashSet<OrganizationBoundaryStaging>();
             this.People = new HashSet<Person>();
             this.PersonStewardOrganizations = new HashSet<PersonStewardOrganization>();
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectOrganizationUpdates = new HashSet<ProjectOrganizationUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -92,13 +90,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FundingSources.Any() || MonitoringProgramPartners.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
+            return FundingSources.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(FundingSource).Name, typeof(MonitoringProgramPartner).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(FundingSource).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
 
 
         /// <summary>
@@ -107,7 +105,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllOrganizations.Remove(this);
+            dbContext.Organizations.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -116,11 +114,6 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in FundingSources.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in MonitoringProgramPartners.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -153,7 +146,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int OrganizationID { get; set; }
-        public int TenantID { get; private set; }
         public Guid? OrganizationGuid { get; set; }
         public string OrganizationName { get; set; }
         public string OrganizationShortName { get; set; }
@@ -167,13 +159,11 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return OrganizationID; } set { OrganizationID = value; } }
 
         public virtual ICollection<FundingSource> FundingSources { get; set; }
-        public virtual ICollection<MonitoringProgramPartner> MonitoringProgramPartners { get; set; }
         public virtual ICollection<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
         public virtual ICollection<Person> People { get; set; }
         public virtual ICollection<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Person PrimaryContactPerson { get; set; }
         public virtual FileResource LogoFileResource { get; set; }
         public virtual OrganizationType OrganizationType { get; set; }

@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteGeospatialArea(geospatialArea, viewModel);
             }
-            geospatialArea.DeleteGeospatialArea();
+            geospatialArea.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var tag = new Tag(string.Empty);
             viewModel.UpdateModel(tag, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllTags.Add(tag);
+            HttpRequestStorage.DatabaseEntities.Tags.Add(tag);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"Tag {tag.DisplayNameAsUrl} successfully created.");
             return new ModalDialogFormJsonResult();
@@ -151,8 +151,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteTag(tag, viewModel);
             }
-            tag.ProjectTags.DeleteProjectTag();
-            tag.DeleteTag();
+            tag.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 
@@ -179,7 +178,7 @@ namespace ProjectFirma.Web.Controllers
             var existingTag = HttpRequestStorage.DatabaseEntities.Tags.GetTag(viewModel.TagName);
             if (existingTag != null)
             {
-                existingTag.ProjectTags.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList().DeleteProjectTag();
+                HttpRequestStorage.DatabaseEntities.ProjectTags.DeleteProjectTag(existingTag.ProjectTags.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList());
             }
             return new ModalDialogFormJsonResult();
         }
@@ -236,7 +235,7 @@ namespace ProjectFirma.Web.Controllers
             if (existingTag == null)
             {
                 existingTag = new Tag(viewModel.TagName);
-                HttpRequestStorage.DatabaseEntities.AllTags.Add(existingTag);
+                HttpRequestStorage.DatabaseEntities.Tags.Add(existingTag);
             }
 
             var newProjectTags =
@@ -244,7 +243,7 @@ namespace ProjectFirma.Web.Controllers
                     .ToList();
 
             HttpRequestStorage.DatabaseEntities.ProjectTags.Load();
-            var allProjectTags = HttpRequestStorage.DatabaseEntities.AllProjectTags.Local;
+            var allProjectTags = HttpRequestStorage.DatabaseEntities.ProjectTags.Local;
             existingTag.ProjectTags.MergeNew(newProjectTags, (x, y) => x.ProjectID == y.ProjectID && x.TagID == y.TagID, allProjectTags);
             return existingTag;
         }

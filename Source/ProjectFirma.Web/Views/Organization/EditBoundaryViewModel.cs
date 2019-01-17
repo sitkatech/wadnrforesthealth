@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Views.Organization
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 FileResourceData.SaveAs(gdbFile.FullName);
-                HttpRequestStorage.DatabaseEntities.AllOrganizationBoundaryStagings.RemoveRange(organization.OrganizationBoundaryStagings.ToList());
+                HttpRequestStorage.DatabaseEntities.OrganizationBoundaryStagings.RemoveRange(organization.OrganizationBoundaryStagings.ToList());
                 organization.OrganizationBoundaryStagings.Clear();
                 OrganizationBoundaryStaging.CreateOrganizationBoundaryStagingStagingListFromGdb(gdbFile, organization);
             }

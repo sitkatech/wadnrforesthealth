@@ -43,15 +43,5 @@ Source code is available upon request via <support@sitkatech.com>.
             </label>
             <div class="radioExplanationText">This will create a new @FieldDefinition.Project.GetFieldDefinitionLabel() record for an existing @FieldDefinition.Project.GetFieldDefinitionLabel(). You will be asked to select the @FieldDefinition.Project.GetFieldDefinitionLabel() stage (e.g. Planned, Implementation, or Complete). An administrator will review the @FieldDefinition.Project.GetFieldDefinitionLabel() before it becomes publicly visible.</div>
         </div>
-        @if (ViewDataTyped.TenantAttribute.ProjectExternalDataSourceEnabled)
-        {
-            <div class="radio">
-                <label>
-                    @Html.RadioButtonFor(m => m.CreateType, ProjectTypeSelectionViewModel.ProjectCreateType.ImportExternal)
-                    <strong>Import @FieldDefinition.Project.GetFieldDefinitionLabel() from an external data source (Proof of Concept)</strong>
-                </label>
-                <div class="radioExplanationText">This will import a @FieldDefinition.Project.GetFieldDefinitionLabel() from another @FieldDefinition.Project.GetFieldDefinitionLabel() tracking system using a URL for the external system API.</div>
-            </div>
-        }
     </div>
 }

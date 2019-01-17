@@ -22,6 +22,6 @@ namespace LtInfo.Common.Models
 {
     public interface IHaveATenantID
     {
-        int TenantID { get; }
+        int TenantID { get; set; }
     }
 }

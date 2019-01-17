@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ProjectExternalLink] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ProjectExternalLink]")]
-    public partial class ProjectExternalLink : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectExternalLink : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectExternalLink()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -95,19 +94,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectExternalLinks.Remove(this);
+            dbContext.ProjectExternalLinks.Remove(this);
         }
 
         [Key]
         public int ProjectExternalLinkID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public string ExternalLinkLabel { get; set; }
         public string ExternalLinkUrl { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectExternalLinkID; } set { ProjectExternalLinkID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
 
         public static class FieldLengths

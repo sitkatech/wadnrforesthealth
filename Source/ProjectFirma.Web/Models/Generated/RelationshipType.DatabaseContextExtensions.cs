@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[RelationshipType]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return relationshipType;
         }
 
-        public static void DeleteRelationshipType(this List<int> relationshipTypeIDList)
+        public static void DeleteRelationshipType(this IQueryable<RelationshipType> relationshipTypes, List<int> relationshipTypeIDList)
         {
             if(relationshipTypeIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllRelationshipTypes.RemoveRange(HttpRequestStorage.DatabaseEntities.RelationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID)));
+                relationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID)).Delete();
             }
         }
 
-        public static void DeleteRelationshipType(this ICollection<RelationshipType> relationshipTypesToDelete)
+        public static void DeleteRelationshipType(this IQueryable<RelationshipType> relationshipTypes, ICollection<RelationshipType> relationshipTypesToDelete)
         {
             if(relationshipTypesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllRelationshipTypes.RemoveRange(relationshipTypesToDelete);
+                var relationshipTypeIDList = relationshipTypesToDelete.Select(x => x.RelationshipTypeID).ToList();
+                relationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID)).Delete();
             }
         }
 
-        public static void DeleteRelationshipType(this int relationshipTypeID)
+        public static void DeleteRelationshipType(this IQueryable<RelationshipType> relationshipTypes, int relationshipTypeID)
         {
-            DeleteRelationshipType(new List<int> { relationshipTypeID });
+            DeleteRelationshipType(relationshipTypes, new List<int> { relationshipTypeID });
         }
 
-        public static void DeleteRelationshipType(this RelationshipType relationshipTypeToDelete)
+        public static void DeleteRelationshipType(this IQueryable<RelationshipType> relationshipTypes, RelationshipType relationshipTypeToDelete)
         {
-            DeleteRelationshipType(new List<RelationshipType> { relationshipTypeToDelete });
+            DeleteRelationshipType(relationshipTypes, new List<RelationshipType> { relationshipTypeToDelete });
         }
     }
 }

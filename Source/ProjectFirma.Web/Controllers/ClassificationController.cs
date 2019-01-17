@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Controllers
             
             var classification = new Classification(string.Empty, "#BBBBBB", viewModel.DisplayName, classificationSystem.ClassificationSystemID);
             viewModel.UpdateModel(classification, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllClassifications.Add(classification);
+            HttpRequestStorage.DatabaseEntities.Classifications.Add(classification);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay(
@@ -149,7 +149,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteClassification(classification, viewModel);
             }
-            classification.DeleteClassification();
+            classification.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

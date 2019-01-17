@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[AuditLog] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[AuditLog]")]
-    public partial class AuditLog : IHavePrimaryKey, IHaveATenantID
+    public partial class AuditLog : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected AuditLog()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -110,12 +109,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllAuditLogs.Remove(this);
+            dbContext.AuditLogs.Remove(this);
         }
 
         [Key]
         public int AuditLogID { get; set; }
-        public int TenantID { get; private set; }
         public int PersonID { get; set; }
         public DateTime AuditLogDate { get; set; }
         public int AuditLogEventTypeID { get; set; }
@@ -129,7 +127,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return AuditLogID; } set { AuditLogID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Person Person { get; set; }
         public AuditLogEventType AuditLogEventType { get { return AuditLogEventType.AllLookupDictionary[AuditLogEventTypeID]; } }
 

@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var organizationType = new OrganizationType(viewModel.OrganizationTypeName, viewModel.OrganizationTypeAbbreviation, viewModel.LegendColor, viewModel.ShowOnProjectMaps ?? false, viewModel.IsDefaultOrganizationType ?? false, viewModel.IsFundingType ?? false);
             viewModel.UpdateModel(organizationType, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllOrganizationTypes.Add(organizationType);
+            HttpRequestStorage.DatabaseEntities.OrganizationTypes.Add(organizationType);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay(
@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteOrganizationType(organizationType, viewModel);
             }
-            organizationType.DeleteOrganizationType();
+            organizationType.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 
@@ -186,11 +186,11 @@ namespace ProjectFirma.Web.Controllers
                 return ViewNewRelationshipType(viewModel);
             }
             var relationshipType = new RelationshipType(viewModel.RelationshipTypeName, false, false, false, false, false);
-            HttpRequestStorage.DatabaseEntities.AllRelationshipTypes.Add(relationshipType);
+            HttpRequestStorage.DatabaseEntities.RelationshipTypes.Add(relationshipType);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             HttpRequestStorage.DatabaseEntities.OrganizationTypeRelationshipTypes.Load();
-            var organizationTypeRelationshipTypes = HttpRequestStorage.DatabaseEntities.AllOrganizationTypeRelationshipTypes.Local;
+            var organizationTypeRelationshipTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypeRelationshipTypes.Local;
 
             viewModel.UpdateModel(relationshipType, organizationTypeRelationshipTypes);
             
@@ -220,7 +220,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.OrganizationTypeRelationshipTypes.Load();
-            var organizationTypeRelationshipTypes = HttpRequestStorage.DatabaseEntities.AllOrganizationTypeRelationshipTypes.Local;
+            var organizationTypeRelationshipTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypeRelationshipTypes.Local;
 
             viewModel.UpdateModel(relationshipType, organizationTypeRelationshipTypes);
             return new ModalDialogFormJsonResult();
@@ -269,8 +269,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteRelationshipType(relationshipType, viewModel);
             }
 
-            relationshipType.OrganizationTypeRelationshipTypes.DeleteOrganizationTypeRelationshipType();
-            relationshipType.DeleteRelationshipType();
+            relationshipType.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

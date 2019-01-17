@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[StateProvince] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[StateProvince]")]
-    public partial class StateProvince : IHavePrimaryKey, IHaveATenantID
+    public partial class StateProvince : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected StateProvince()
         {
             this.Counties = new HashSet<County>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllStateProvinces.Remove(this);
+            dbContext.StateProvinces.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -99,7 +98,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int StateProvinceID { get; set; }
-        public int TenantID { get; private set; }
         public string StateProvinceName { get; set; }
         public string StateProvinceAbbreviation { get; set; }
         public DbGeometry StateProvinceFeature { get; set; }
@@ -108,7 +106,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return StateProvinceID; } set { StateProvinceID = value; } }
 
         public virtual ICollection<County> Counties { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

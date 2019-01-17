@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ProjectImage] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ProjectImage]")]
-    public partial class ProjectImage : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectImage : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectImage()
         {
             this.ProjectImageUpdates = new HashSet<ProjectImageUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -109,7 +108,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllProjectImages.Remove(this);
+            dbContext.ProjectImages.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -125,7 +124,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectImageID { get; set; }
-        public int TenantID { get; private set; }
         public int FileResourceID { get; set; }
         public int ProjectID { get; set; }
         public int ProjectImageTimingID { get; set; }
@@ -137,7 +135,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProjectImageID; } set { ProjectImageID = value; } }
 
         public virtual ICollection<ProjectImageUpdate> ProjectImageUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual FileResource FileResource { get; set; }
         public virtual Project Project { get; set; }
         public ProjectImageTiming ProjectImageTiming { get { return ProjectImageTiming.AllLookupDictionary[ProjectImageTimingID]; } }

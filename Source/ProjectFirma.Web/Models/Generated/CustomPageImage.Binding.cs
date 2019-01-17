@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[CustomPageImage] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[CustomPageImage]")]
-    public partial class CustomPageImage : IHavePrimaryKey, IHaveATenantID
+    public partial class CustomPageImage : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected CustomPageImage()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,18 +93,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllCustomPageImages.Remove(this);
+            dbContext.CustomPageImages.Remove(this);
         }
 
         [Key]
         public int CustomPageImageID { get; set; }
-        public int TenantID { get; private set; }
         public int CustomPageID { get; set; }
         public int FileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return CustomPageImageID; } set { CustomPageImageID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual CustomPage CustomPage { get; set; }
         public virtual FileResource FileResource { get; set; }
 

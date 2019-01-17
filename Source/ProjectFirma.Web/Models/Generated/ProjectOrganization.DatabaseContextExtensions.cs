@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectOrganization]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectOrganization;
         }
 
-        public static void DeleteProjectOrganization(this List<int> projectOrganizationIDList)
+        public static void DeleteProjectOrganization(this IQueryable<ProjectOrganization> projectOrganizations, List<int> projectOrganizationIDList)
         {
             if(projectOrganizationIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectOrganizations.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Where(x => projectOrganizationIDList.Contains(x.ProjectOrganizationID)));
+                projectOrganizations.Where(x => projectOrganizationIDList.Contains(x.ProjectOrganizationID)).Delete();
             }
         }
 
-        public static void DeleteProjectOrganization(this ICollection<ProjectOrganization> projectOrganizationsToDelete)
+        public static void DeleteProjectOrganization(this IQueryable<ProjectOrganization> projectOrganizations, ICollection<ProjectOrganization> projectOrganizationsToDelete)
         {
             if(projectOrganizationsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectOrganizations.RemoveRange(projectOrganizationsToDelete);
+                var projectOrganizationIDList = projectOrganizationsToDelete.Select(x => x.ProjectOrganizationID).ToList();
+                projectOrganizations.Where(x => projectOrganizationIDList.Contains(x.ProjectOrganizationID)).Delete();
             }
         }
 
-        public static void DeleteProjectOrganization(this int projectOrganizationID)
+        public static void DeleteProjectOrganization(this IQueryable<ProjectOrganization> projectOrganizations, int projectOrganizationID)
         {
-            DeleteProjectOrganization(new List<int> { projectOrganizationID });
+            DeleteProjectOrganization(projectOrganizations, new List<int> { projectOrganizationID });
         }
 
-        public static void DeleteProjectOrganization(this ProjectOrganization projectOrganizationToDelete)
+        public static void DeleteProjectOrganization(this IQueryable<ProjectOrganization> projectOrganizations, ProjectOrganization projectOrganizationToDelete)
         {
-            DeleteProjectOrganization(new List<ProjectOrganization> { projectOrganizationToDelete });
+            DeleteProjectOrganization(projectOrganizations, new List<ProjectOrganization> { projectOrganizationToDelete });
         }
     }
 }

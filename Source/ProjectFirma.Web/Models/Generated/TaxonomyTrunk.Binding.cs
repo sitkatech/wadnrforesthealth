@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[TaxonomyTrunk] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[TaxonomyTrunk]")]
-    public partial class TaxonomyTrunk : IHavePrimaryKey, IHaveATenantID
+    public partial class TaxonomyTrunk : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected TaxonomyTrunk()
         {
             this.TaxonomyBranches = new HashSet<TaxonomyBranch>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllTaxonomyTrunks.Remove(this);
+            dbContext.TaxonomyTrunks.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -98,7 +97,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int TaxonomyTrunkID { get; set; }
-        public int TenantID { get; private set; }
         public string TaxonomyTrunkName { get; set; }
         public string TaxonomyTrunkDescription { get; set; }
         [NotMapped]
@@ -114,7 +112,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return TaxonomyTrunkID; } set { TaxonomyTrunkID = value; } }
 
         public virtual ICollection<TaxonomyBranch> TaxonomyBranches { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

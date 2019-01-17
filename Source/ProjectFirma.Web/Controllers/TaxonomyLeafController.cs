@@ -139,7 +139,7 @@ namespace ProjectFirma.Web.Controllers
 
             var taxonomyLeaf = new TaxonomyLeaf(viewModel.TaxonomyBranchID, string.Empty);
             viewModel.UpdateModel(taxonomyLeaf, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllTaxonomyLeafs.Add(taxonomyLeaf);
+            HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.Add(taxonomyLeaf);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
@@ -244,7 +244,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteTaxonomyLeaf(taxonomyLeaf, viewModel);
             }
 
-            taxonomyLeaf.DeleteTaxonomyLeaf();
+            taxonomyLeaf.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

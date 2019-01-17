@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[NotificationProject] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[NotificationProject]")]
-    public partial class NotificationProject : IHavePrimaryKey, IHaveATenantID
+    public partial class NotificationProject : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected NotificationProject()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,18 +93,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllNotificationProjects.Remove(this);
+            dbContext.NotificationProjects.Remove(this);
         }
 
         [Key]
         public int NotificationProjectID { get; set; }
-        public int TenantID { get; private set; }
         public int NotificationID { get; set; }
         public int ProjectID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return NotificationProjectID; } set { NotificationProjectID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Notification Notification { get; set; }
         public virtual Project Project { get; set; }
 

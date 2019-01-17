@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[TaxonomyLeaf] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[TaxonomyLeaf]")]
-    public partial class TaxonomyLeaf : IHavePrimaryKey, IHaveATenantID
+    public partial class TaxonomyLeaf : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Models
         {
             this.Projects = new HashSet<Project>();
             this.TaxonomyLeafPerformanceMeasures = new HashSet<TaxonomyLeafPerformanceMeasure>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllTaxonomyLeafs.Remove(this);
+            dbContext.TaxonomyLeafs.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -118,7 +117,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int TaxonomyLeafID { get; set; }
-        public int TenantID { get; private set; }
         public int TaxonomyBranchID { get; set; }
         public string TaxonomyLeafName { get; set; }
         public string TaxonomyLeafDescription { get; set; }
@@ -136,7 +134,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<TaxonomyLeafPerformanceMeasure> TaxonomyLeafPerformanceMeasures { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual TaxonomyBranch TaxonomyBranch { get; set; }
 
         public static class FieldLengths

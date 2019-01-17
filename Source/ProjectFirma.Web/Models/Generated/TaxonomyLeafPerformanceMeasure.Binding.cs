@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[TaxonomyLeafPerformanceMeasure] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[TaxonomyLeafPerformanceMeasure]")]
-    public partial class TaxonomyLeafPerformanceMeasure : IHavePrimaryKey, IHaveATenantID
+    public partial class TaxonomyLeafPerformanceMeasure : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected TaxonomyLeafPerformanceMeasure()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -97,19 +96,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllTaxonomyLeafPerformanceMeasures.Remove(this);
+            dbContext.TaxonomyLeafPerformanceMeasures.Remove(this);
         }
 
         [Key]
         public int TaxonomyLeafPerformanceMeasureID { get; set; }
-        public int TenantID { get; private set; }
         public int TaxonomyLeafID { get; set; }
         public int PerformanceMeasureID { get; set; }
         public bool IsPrimaryTaxonomyLeaf { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TaxonomyLeafPerformanceMeasureID; } set { TaxonomyLeafPerformanceMeasureID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual TaxonomyLeaf TaxonomyLeaf { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
 

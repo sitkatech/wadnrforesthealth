@@ -73,11 +73,11 @@ namespace ProjectFirma.Web.Models
 
             UpdateProjectCustomAttributesImpl(existingProjectCustomAttributes,
                 customAttributesToUpdate,
-                HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributes.Local);
+                HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.Local);
             UpdateProjectCustomAttributeValuesImpl(
                 existingProjectCustomAttributeValues,
                 customAttributeValuesToUpdate,
-                HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeValues.Local);
+                HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.Local);
         }
 
         public void UpdateModel(ProjectUpdate projectUpdate, Person currentPerson)
@@ -116,10 +116,10 @@ namespace ProjectFirma.Web.Models
 
             UpdateProjectCustomAttributesImpl(existingProjectCustomAttributes,
                 customAttributesToUpdate,
-                HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeUpdates.Local);
+                HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.Local);
             UpdateProjectCustomAttributeValuesImpl(existingProjectCustomAttributeValues,
                 customAttributeValuesToUpdate,
-                HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeUpdateValues.Local);
+                HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.Local);
         }
 
         private static void UpdateProjectCustomAttributesImpl<TProjectCustomAttribute>(

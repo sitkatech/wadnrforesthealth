@@ -21,8 +21,6 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
@@ -37,9 +35,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
         public bool IsGeospatialAreaSectionComplete { get; set; }
         public bool IsClassificationsComplete { get; set; }
-        public bool IsAssessmentComplete { get; set; }
         public bool IsNotesSectionComplete { get; set; }
-        public bool AreAllSectionsValid => IsBasicsSectionComplete && IsPerformanceMeasureSectionComplete && IsClassificationsComplete && IsAssessmentComplete && IsProjectLocationSimpleSectionComplete && IsProjectLocationDetailedSectionComplete && IsGeospatialAreaSectionComplete && IsNotesSectionComplete && IsExpectedFundingSectionComplete;
+
         public static bool AreAllSectionsValidForProject(Models.Project project)
         {
             return Models.Project.GetApplicableProposalWizardSections(project, false).All(x => x.IsComplete);
@@ -90,8 +87,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             var classificationValidationResults = new EditProposalClassificationsViewModel(proposalClassificationSimples).GetValidationResults();
             IsClassificationsComplete = !classificationValidationResults.Any();
 
-            IsAssessmentComplete = ProjectCreateController.GetProjectAssessmentQuestionSimples(project).All(simple => simple.Answer.HasValue);
-
             IsNotesSectionComplete = IsBasicsSectionComplete; //there is no validation required on Notes
         }
 
@@ -100,7 +95,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsBasicsSectionComplete = false;
             IsPerformanceMeasureSectionComplete = false;
             IsClassificationsComplete = false;
-            IsAssessmentComplete = false;
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
             IsGeospatialAreaSectionComplete = false;

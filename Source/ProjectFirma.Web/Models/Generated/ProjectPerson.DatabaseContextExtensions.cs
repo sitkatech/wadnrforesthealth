@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectPerson]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectPerson;
         }
 
-        public static void DeleteProjectPerson(this List<int> projectPersonIDList)
+        public static void DeleteProjectPerson(this IQueryable<ProjectPerson> projectPeople, List<int> projectPersonIDList)
         {
             if(projectPersonIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectPeople.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectPeople.Where(x => projectPersonIDList.Contains(x.ProjectPersonID)));
+                projectPeople.Where(x => projectPersonIDList.Contains(x.ProjectPersonID)).Delete();
             }
         }
 
-        public static void DeleteProjectPerson(this ICollection<ProjectPerson> projectPeopleToDelete)
+        public static void DeleteProjectPerson(this IQueryable<ProjectPerson> projectPeople, ICollection<ProjectPerson> projectPeopleToDelete)
         {
             if(projectPeopleToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectPeople.RemoveRange(projectPeopleToDelete);
+                var projectPersonIDList = projectPeopleToDelete.Select(x => x.ProjectPersonID).ToList();
+                projectPeople.Where(x => projectPersonIDList.Contains(x.ProjectPersonID)).Delete();
             }
         }
 
-        public static void DeleteProjectPerson(this int projectPersonID)
+        public static void DeleteProjectPerson(this IQueryable<ProjectPerson> projectPeople, int projectPersonID)
         {
-            DeleteProjectPerson(new List<int> { projectPersonID });
+            DeleteProjectPerson(projectPeople, new List<int> { projectPersonID });
         }
 
-        public static void DeleteProjectPerson(this ProjectPerson projectPersonToDelete)
+        public static void DeleteProjectPerson(this IQueryable<ProjectPerson> projectPeople, ProjectPerson projectPersonToDelete)
         {
-            DeleteProjectPerson(new List<ProjectPerson> { projectPersonToDelete });
+            DeleteProjectPerson(projectPeople, new List<ProjectPerson> { projectPersonToDelete });
         }
     }
 }

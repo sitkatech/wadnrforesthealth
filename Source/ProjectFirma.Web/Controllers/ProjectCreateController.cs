@@ -83,8 +83,7 @@ namespace ProjectFirma.Web.Controllers
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
         public PartialViewResult ProjectTypeSelection()
         {
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
-            var viewData = new ProjectTypeSelectionViewData(tenantAttribute);
+            var viewData = new ProjectTypeSelectionViewData();
             var viewModel = new ProjectTypeSelectionViewModel();
             return RazorPartialView<ProjectTypeSelection, ProjectTypeSelectionViewData, ProjectTypeSelectionViewModel>(viewData, viewModel);
         }
@@ -94,8 +93,7 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult ProjectTypeSelection(ProjectTypeSelectionViewModel viewModel)
         {
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
-            var viewData = new ProjectTypeSelectionViewData(tenantAttribute);
+            var viewData = new ProjectTypeSelectionViewData();
 
             if (!ModelState.IsValid)
             {
@@ -110,9 +108,6 @@ namespace ProjectFirma.Web.Controllers
                 case ProjectTypeSelectionViewModel.ProjectCreateType.Existing:
                     return new ModalDialogFormJsonResult(
                         SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null)));
-                case ProjectTypeSelectionViewModel.ProjectCreateType.ImportExternal:
-                    return new ModalDialogFormJsonResult(
-                        SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.ImportExternal()));
                 default:
                     throw new ArgumentException();
             }
@@ -186,32 +181,6 @@ namespace ProjectFirma.Web.Controllers
             return CreateAndEditBasicsPostImpl(viewModel);
         }
 
-        [HttpGet]
-        [ProjectCreateNewFeature]
-        public ViewResult CreateBasicsFromExternalImport(ImportExternalProjectStagingPrimaryKey importExternalProjectStagingPrimaryKey)
-        {
-            var importExternalProjectStaging = importExternalProjectStagingPrimaryKey.EntityObject;
-            var viewModel = new BasicsViewModel
-            {
-                ImportExternalProjectStagingID = importExternalProjectStaging.ImportExternalProjectStagingID,
-                ProjectName = importExternalProjectStaging.ProjectName,
-                ProjectDescription = importExternalProjectStaging.Description,
-                PlannedDate = importExternalProjectStaging.PlannedDate,
-                ApprovalStartDate = importExternalProjectStaging.ApprovalStartDate,
-                CompletionDate = importExternalProjectStaging.EndDate,
-            };
-            return ViewCreateAndEditBasics(viewModel, true);
-        }
-
-        [HttpPost]
-        [ProjectCreateNewFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult CreateBasicsFromExternalImport(ImportExternalProjectStagingPrimaryKey importExternalProjectStagingPrimaryKey,
-            BasicsViewModel viewModel)
-        {
-            return CreateAndEditBasicsPostImpl(viewModel);
-        }
-
         private ActionResult CreateAndEditBasicsPostImpl(BasicsViewModel viewModel)
         {
             var project = new Project(viewModel.TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID,
@@ -281,7 +250,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (!ModelObjectHelpers.IsRealPrimaryKeyValue(project.PrimaryKey))
             {
-                HttpRequestStorage.DatabaseEntities.AllProjects.Add(project);
+                HttpRequestStorage.DatabaseEntities.Projects.Add(project);
             }
 
             viewModel.UpdateModel(project, CurrentPerson);
@@ -289,15 +258,23 @@ namespace ProjectFirma.Web.Controllers
             if (project.ProjectStage == ProjectStage.Application)
             {
                 DeletePerformanceMeasureActuals(project);
-                project.GetPerformanceMeasuresExemptReportingYears().DeleteProjectExemptReportingYear();
-                project.ProjectFundingSourceExpenditures.DeleteProjectFundingSourceExpenditure();
-                project.GetExpendituresExemptReportingYears().DeleteProjectExemptReportingYear();
+                foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears)
+                {
+                    projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
+                foreach (var projectFundingSourceExpenditure in project.ProjectFundingSourceExpenditures)
+                {
+                    projectFundingSourceExpenditure.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
             }
 
             if (project.ProjectStage == ProjectStage.Planned)
             {
                 DeletePerformanceMeasureActuals(project);
-                project.GetPerformanceMeasuresExemptReportingYears().DeleteProjectExemptReportingYear();
+                foreach (var projectExemptReportingYear in project.ProjectExemptReportingYears.Where(x => x.ProjectExemptReportingType == ProjectExemptReportingType.PerformanceMeasures))
+                {
+                    projectExemptReportingYear.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
             }
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -313,7 +290,7 @@ namespace ProjectFirma.Web.Controllers
                 ProjectID = project.ProjectID,
                 AuditDescription = $"Project: created {project.DisplayName}"
             };
-            HttpRequestStorage.DatabaseEntities.AllAuditLogs.Add(auditLog);
+            HttpRequestStorage.DatabaseEntities.AuditLogs.Add(auditLog);
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} successfully saved.");
 
             return GoToNextSection(viewModel, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName);
@@ -353,10 +330,10 @@ namespace ProjectFirma.Web.Controllers
             var performanceMeasureExpecteds = project.PerformanceMeasureExpecteds.ToList();
 
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Load();
-            var allPerformanceMeasureExpecteds = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpecteds.Local;
+            var allPerformanceMeasureExpecteds = HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Local;
 
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Load();
-            var allPerformanceMeasureExpectedSubcategoryOptions = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpectedSubcategoryOptions.Local;
+            var allPerformanceMeasureExpectedSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Local;
 
             viewModel.UpdateModel(performanceMeasureExpecteds, allPerformanceMeasureExpecteds, allPerformanceMeasureExpectedSubcategoryOptions, project);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -409,9 +386,9 @@ namespace ProjectFirma.Web.Controllers
             }
             var performanceMeasureActuals = project.PerformanceMeasureActuals.ToList();
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Load();
-            var allPerformanceMeasureActuals = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActuals.Local;
+            var allPerformanceMeasureActuals = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Local;
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Load();
-            var performanceMeasureActualSubcategoryOptions = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualSubcategoryOptions.Local;
+            var performanceMeasureActualSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Local;
             viewModel.UpdateModel(performanceMeasureActuals, allPerformanceMeasureActuals, performanceMeasureActualSubcategoryOptions, project);
 
             return GoToNextSection(viewModel, project, ProjectCreateSection.ReportedPerformanceMeasures.ProjectCreateSectionDisplayName);
@@ -482,7 +459,7 @@ namespace ProjectFirma.Web.Controllers
             }
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
             var projectFundingSourceRequests = project.ProjectFundingSourceRequests.ToList();
-            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequests.Local;
+            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Local;
             viewModel.UpdateModel(project, projectFundingSourceRequests, allProjectFundingSourceRequests);
             SetMessageForDisplay("Expected Funding successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName);
@@ -532,7 +509,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewExpenditures(project, calendarYearRange, viewModel);
             }
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceExpenditures.Local;
+            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Local;
             viewModel.UpdateModel(project, projectFundingSourceExpenditureUpdates, allProjectFundingSourceExpenditures);            
 
             return GoToNextSection(viewModel, project, ProjectCreateSection.ReportedExpenditures.ProjectCreateSectionDisplayName);
@@ -617,57 +594,6 @@ namespace ProjectFirma.Web.Controllers
 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.Classification.GetFieldDefinitionLabelPluralized()} successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.Classifications.ProjectCreateSectionDisplayName);
-        }
-
-        [HttpGet]
-        [ProjectCreateFeature]
-        public ViewResult EditAssessment(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;            
-            var projectAssessmentQuestionSimples = GetProjectAssessmentQuestionSimples(project);
-            var viewModel = new EditAssessmentViewModel(projectAssessmentQuestionSimples);
-            return ViewEditAssessment(project, viewModel);
-        }
-
-        public static List<ProjectAssessmentQuestionSimple> GetProjectAssessmentQuestionSimples(Project project)
-        {           
-            var allQuestionsAsSimples =
-                HttpRequestStorage.DatabaseEntities.AssessmentQuestions.Where(x => !x.ArchiveDate.HasValue).ToList().Select(x => new ProjectAssessmentQuestionSimple(x, project)).ToList();
-
-            var answeredQuestions = project.ProjectAssessmentQuestions.ToList();
-
-            foreach (var question in allQuestionsAsSimples)
-            {
-                var matchedQuestionOrNull = answeredQuestions.SingleOrDefault(answeredQuestion => answeredQuestion.AssessmentQuestionID == question.AssessmentQuestionID);                
-                question.Answer = matchedQuestionOrNull?.Answer;
-            }
-            return allQuestionsAsSimples;
-        }
-
-
-        [HttpPost]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        [ProjectCreateFeature]
-        public ActionResult EditAssessment(ProjectPrimaryKey projectPrimaryKey, EditAssessmentViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditAssessment(project, viewModel);
-            }
-
-            viewModel.UpdateModel(project);
-            SetMessageForDisplay("Assessment successfully saved.");
-            return GoToNextSection(viewModel, project, ProjectCreateSection.Assessment.ProjectCreateSectionDisplayName);
-        }
-
-        private ViewResult ViewEditAssessment(Project project, EditAssessmentViewModel viewModel)
-        {
-            var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            proposalSectionsStatus.IsAssessmentComplete = ModelState.IsValid && proposalSectionsStatus.IsAssessmentComplete;
-            var assessmentGoals = HttpRequestStorage.DatabaseEntities.AssessmentGoals.ToList();
-            var viewData = new EditAssessmentViewData(CurrentPerson, project, assessmentGoals, ProjectCreateSection.Assessment.ProjectCreateSectionDisplayName, proposalSectionsStatus);
-            return RazorView<EditAssessment, EditAssessmentViewData, EditAssessmentViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
@@ -800,7 +726,10 @@ namespace ProjectFirma.Web.Controllers
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 httpPostedFileBase.SaveAs(gdbFile.FullName);
-                project.ProjectLocationStagings.ToList().DeleteProjectLocationStaging();
+                foreach (var projectLocationStaging in project.ProjectLocationStagings)
+                {
+                    projectLocationStaging.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
                 project.ProjectLocationStagings.Clear();
                 ProjectLocationStaging.CreateProjectLocationStagingListFromGdb(gdbFile, project, CurrentPerson);
             }
@@ -856,7 +785,10 @@ namespace ProjectFirma.Web.Controllers
         private static void SaveDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
             var projectLocations = project.ProjectLocations.ToList();
-            projectLocations.DeleteProjectLocation();
+            foreach (var projectLocation in projectLocations)
+            {
+                projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
             project.ProjectLocations.Clear();
             if (viewModel.WktAndAnnotations != null)
             {
@@ -916,7 +848,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEditGeospatialArea(project, viewModel, geospatialAreaType);
             }
             var currentProjectGeospatialAreas = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
-            var allProjectGeospatialAreas = HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreas.Local;
+            var allProjectGeospatialAreas = HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreas.Local;
             viewModel.UpdateModel(project, currentProjectGeospatialAreas, allProjectGeospatialAreas);
             var projectGeospatialAreaTypeNote = project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
             if (!string.IsNullOrWhiteSpace(viewModel.ProjectGeospatialAreaNotes))
@@ -979,7 +911,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var projectNote = ProjectNote.CreateNewBlank(project);
             viewModel.UpdateModel(projectNote, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllProjectNotes.Add(projectNote);
+            HttpRequestStorage.DatabaseEntities.ProjectNotes.Add(projectNote);
             return new ModalDialogFormJsonResult();
         }
 
@@ -1043,7 +975,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteNote(projectNote, viewModel);
             }
-            projectNote.DeleteProjectNote();
+            projectNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 
@@ -1135,7 +1067,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteDocument(projectDocument, viewModel);
             }
-            projectDocument.DeleteProjectDocument();
+            projectDocument.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 
@@ -1265,7 +1197,7 @@ namespace ProjectFirma.Web.Controllers
                 ProjectID = project.ProjectID,
                 AuditDescription = $"{FieldDefinition.Application.GetFieldDefinitionLabel()} {project.DisplayName} approved."
             };
-            HttpRequestStorage.DatabaseEntities.AllAuditLogs.Add(auditLog);
+            HttpRequestStorage.DatabaseEntities.AuditLogs.Add(auditLog);
         }
 
         private PartialViewResult ViewApprove(ConfirmDialogFormViewModel viewModel)
@@ -1361,8 +1293,10 @@ namespace ProjectFirma.Web.Controllers
 
         private void DeletePerformanceMeasureActuals(Project project)
         {
-            project.PerformanceMeasureActuals.SelectMany(x => x.PerformanceMeasureActualSubcategoryOptions.Select(y => y.PerformanceMeasureActualSubcategoryOptionID)).ToList().DeletePerformanceMeasureActualSubcategoryOption();
-            project.PerformanceMeasureActuals.DeletePerformanceMeasureActual();
+            foreach (var performanceMeasureActual in project.PerformanceMeasureActuals)
+            {
+                performanceMeasureActual.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
             project.PerformanceMeasureActualYearsExemptionExplanation = null;
         }
 
@@ -1407,7 +1341,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
-            var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.AllProjectOrganizations.Local;
+            var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
 
             viewModel.UpdateModel(project, allProjectOrganizations);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -1455,106 +1389,13 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
-            var allProjectContacts = HttpRequestStorage.DatabaseEntities.AllProjectPeople.Local;
+            var allProjectContacts = HttpRequestStorage.DatabaseEntities.ProjectPeople.Local;
 
             viewModel.UpdateModel(project, allProjectContacts);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.Contact.GetFieldDefinitionLabelPluralized()} successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.Contacts.ProjectCreateSectionDisplayName);
-        }
-
-        [HttpGet]
-        [ProjectCreateNewFeature]
-        public ActionResult ImportExternal()
-        {
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
-            if (!tenantAttribute.ProjectExternalDataSourceEnabled)
-            {
-                return new HttpNotFoundResult();
-            }
-
-            var viewModel = new ImportExternalViewModel();
-            return ViewImportExternal(viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateNewFeature]
-        public ActionResult ImportExternal(ImportExternalViewModel viewModel)
-        {
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
-            if (!tenantAttribute.ProjectExternalDataSourceEnabled)
-            {
-                return new HttpNotFoundResult();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return ViewImportExternal(viewModel);
-            }
-
-            var projectExternalImportDataSimple = JsonConvert.DeserializeObject<ProjectExternalImportDataSimple>(viewModel.ProjectExternalImportRawData);
-            var importExternalProjectStaging = projectExternalImportDataSimple.PopulateNewImportExternalProjectStaging();
-            HttpRequestStorage.DatabaseEntities.AllImportExternalProjectStagings.Add(importExternalProjectStaging);
-
-            // Save to materialize project and get an ID
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-            return Redirect(SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.CreateBasicsFromExternalImport(importExternalProjectStaging)));
-        }
-
-        private ViewResult ViewImportExternal(ImportExternalViewModel viewModel)
-        {
-            var viewData = new ImportExternalViewData(CurrentPerson, FirmaPage.GetFirmaPageByPageType(FirmaPageType.ProjectCreateImportExternal));
-            return RazorView<ImportExternal, ImportExternalViewData, ImportExternalViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [ProjectCreateNewFeature]
-        public ContentResult ValidateImportExternalProjectData()
-        {
-            return Content("Use POST.");
-        }
-
-        [HttpPost]
-        [ProjectCreateNewFeature]
-        public ActionResult ValidateImportExternalProjectData(ValidateImportExternalProjectDataViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new HttpStatusCodeResult(400);
-            }
-
-            ProjectExternalImportDataSimple simple;
-            try
-            {
-                var webRequest = (HttpWebRequest) WebRequest.Create(viewModel.RequestUri);
-                webRequest.Method = "GET";
-
-                var webResponse = (HttpWebResponse) webRequest.GetResponse();
-                Check.Assert(webResponse.StatusCode == HttpStatusCode.OK,
-                    $"Request to {FieldDefinition.Project.GetFieldDefinitionLabel()} External Import Data Uri {viewModel.RequestUri} should resolve 200.");
-
-                var responseStream = webResponse.GetResponseStream();
-
-                Check.RequireNotNull(responseStream, "Some exception");
-                // ReSharper disable once AssignNullToNotNullAttribute
-                var responseReader = new StreamReader(responseStream);
-                var data = responseReader.ReadToEnd();
-
-                // We need to massage because the data they gave us is lame-o
-                data = Regex.Unescape(data);                // TODO remove: This should probably be resolved upstream so it's not stupid to decode this
-                data = data.Trim();                         // TODO remove:
-                data = data.Substring(1, data.Length - 2);  // TODO remove: Also need to strip off leading and trailing quotes
-
-                simple = JsonConvert.DeserializeObject<ProjectExternalImportDataSimple>(data);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(400);
-            }
-            
-            return Content(JsonConvert.SerializeObject(simple, Formatting.Indented));
         }
     }
 }

@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[FocusAreaLocationStaging]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return focusAreaLocationStaging;
         }
 
-        public static void DeleteFocusAreaLocationStaging(this List<int> focusAreaLocationStaggingIDList)
+        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, List<int> focusAreaLocationStaggingIDList)
         {
             if(focusAreaLocationStaggingIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllFocusAreaLocationStagings.RemoveRange(HttpRequestStorage.DatabaseEntities.FocusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)));
+                focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)).Delete();
             }
         }
 
-        public static void DeleteFocusAreaLocationStaging(this ICollection<FocusAreaLocationStaging> focusAreaLocationStagingsToDelete)
+        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, ICollection<FocusAreaLocationStaging> focusAreaLocationStagingsToDelete)
         {
             if(focusAreaLocationStagingsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllFocusAreaLocationStagings.RemoveRange(focusAreaLocationStagingsToDelete);
+                var focusAreaLocationStaggingIDList = focusAreaLocationStagingsToDelete.Select(x => x.FocusAreaLocationStaggingID).ToList();
+                focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)).Delete();
             }
         }
 
-        public static void DeleteFocusAreaLocationStaging(this int focusAreaLocationStaggingID)
+        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, int focusAreaLocationStaggingID)
         {
-            DeleteFocusAreaLocationStaging(new List<int> { focusAreaLocationStaggingID });
+            DeleteFocusAreaLocationStaging(focusAreaLocationStagings, new List<int> { focusAreaLocationStaggingID });
         }
 
-        public static void DeleteFocusAreaLocationStaging(this FocusAreaLocationStaging focusAreaLocationStagingToDelete)
+        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, FocusAreaLocationStaging focusAreaLocationStagingToDelete)
         {
-            DeleteFocusAreaLocationStaging(new List<FocusAreaLocationStaging> { focusAreaLocationStagingToDelete });
+            DeleteFocusAreaLocationStaging(focusAreaLocationStagings, new List<FocusAreaLocationStaging> { focusAreaLocationStagingToDelete });
         }
     }
 }

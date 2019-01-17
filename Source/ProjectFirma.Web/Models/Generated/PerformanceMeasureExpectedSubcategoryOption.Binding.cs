@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[PerformanceMeasureExpectedSubcategoryOption] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[PerformanceMeasureExpectedSubcategoryOption]")]
-    public partial class PerformanceMeasureExpectedSubcategoryOption : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureExpectedSubcategoryOption : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected PerformanceMeasureExpectedSubcategoryOption()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -104,12 +103,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllPerformanceMeasureExpectedSubcategoryOptions.Remove(this);
+            dbContext.PerformanceMeasureExpectedSubcategoryOptions.Remove(this);
         }
 
         [Key]
         public int PerformanceMeasureExpectedSubcategoryOptionID { get; set; }
-        public int TenantID { get; private set; }
         public int PerformanceMeasureExpectedID { get; set; }
         public int PerformanceMeasureSubcategoryOptionID { get; set; }
         public int PerformanceMeasureID { get; set; }
@@ -117,7 +115,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return PerformanceMeasureExpectedSubcategoryOptionID; } set { PerformanceMeasureExpectedSubcategoryOptionID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual PerformanceMeasureExpected PerformanceMeasureExpected { get; set; }
         public virtual PerformanceMeasureSubcategoryOption PerformanceMeasureSubcategoryOption { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }

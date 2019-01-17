@@ -75,7 +75,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls
 
             // Act
             var currentProjectGeospatialAreas = project.ProjectGeospatialAreas.ToList();
-            viewModel.UpdateModel(project, currentProjectGeospatialAreas, HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreas.Local);
+            viewModel.UpdateModel(project, currentProjectGeospatialAreas, HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreas.Local);
 
             // Assert
             Assert.That(currentProjectGeospatialAreas.Select(x => x.GeospatialAreaID), Is.EquivalentTo(geospatialAreasSelected.Select(x => x.GeospatialAreaID)));

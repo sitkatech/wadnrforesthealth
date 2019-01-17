@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ClassificationSystem] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ClassificationSystem]")]
-    public partial class ClassificationSystem : IHavePrimaryKey, IHaveATenantID
+    public partial class ClassificationSystem : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ClassificationSystem()
         {
             this.Classifications = new HashSet<Classification>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllClassificationSystems.Remove(this);
+            dbContext.ClassificationSystems.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -96,7 +95,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ClassificationSystemID { get; set; }
-        public int TenantID { get; private set; }
         public string ClassificationSystemName { get; set; }
         public string ClassificationSystemDefinition { get; set; }
         [NotMapped]
@@ -116,7 +114,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ClassificationSystemID; } set { ClassificationSystemID = value; } }
 
         public virtual ICollection<Classification> Classifications { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

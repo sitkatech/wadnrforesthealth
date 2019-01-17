@@ -20,7 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using LtInfo.Common;
-using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Common
 {
@@ -30,8 +29,6 @@ namespace ProjectFirma.Web.Common
     public abstract class FirmaEnvironment
     {
         public abstract bool IsUnitTestWebServiceTokenOkInThisEnvironment { get; }
-
-        public abstract string GetCanonicalHostNameForEnvironment(Tenant tenant);
 
         public abstract FirmaEnvironmentType FirmaEnvironmentType { get; }
 
@@ -57,11 +54,6 @@ namespace ProjectFirma.Web.Common
             // OK in local because this is where we run unit tests
             public override bool IsUnitTestWebServiceTokenOkInThisEnvironment => true;
 
-            public override string GetCanonicalHostNameForEnvironment(Tenant tenant)
-            {
-                return tenant.CanonicalHostNameLocal;
-            }
-
             public override FirmaEnvironmentType FirmaEnvironmentType => FirmaEnvironmentType.Local;
         }
 
@@ -71,11 +63,6 @@ namespace ProjectFirma.Web.Common
             // Definitely not OK in Prod, no unit testing here would be a security hole
             public override bool IsUnitTestWebServiceTokenOkInThisEnvironment => false;
 
-            public override string GetCanonicalHostNameForEnvironment(Tenant tenant)
-            {
-                return tenant.CanonicalHostNameProd;
-            }
-
             public override FirmaEnvironmentType FirmaEnvironmentType => FirmaEnvironmentType.Prod;
         }
 
@@ -83,11 +70,6 @@ namespace ProjectFirma.Web.Common
         {
             // Not OK in QA, no unit testing here
             public override bool IsUnitTestWebServiceTokenOkInThisEnvironment => true;
-
-            public override string GetCanonicalHostNameForEnvironment(Tenant tenant)
-            {
-                return tenant.CanonicalHostNameQa;
-            }
 
             public override FirmaEnvironmentType FirmaEnvironmentType => FirmaEnvironmentType.Qa;
         }

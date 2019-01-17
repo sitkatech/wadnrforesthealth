@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var organization = new Organization(String.Empty, true, ModelObjectHelpers.NotYetAssignedID);
             viewModel.UpdateModel(organization, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllOrganizations.Add(organization);
+            HttpRequestStorage.DatabaseEntities.Organizations.Add(organization);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"Organization {organization.DisplayName} successfully created.");
 
@@ -363,7 +363,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(organization);
-            HttpRequestStorage.DatabaseEntities.AllOrganizationBoundaryStagings.RemoveRange(organization
+            HttpRequestStorage.DatabaseEntities.OrganizationBoundaryStagings.RemoveRange(organization
                 .OrganizationBoundaryStagings);
 
             SetMessageForDisplay($"Organization Boundary for {organization.GetDisplayNameAsUrl()} successfully updated.");

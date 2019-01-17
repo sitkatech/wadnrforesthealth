@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[GeospatialArea] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[GeospatialArea]")]
-    public partial class GeospatialArea : IHavePrimaryKey, IHaveATenantID
+    public partial class GeospatialArea : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -27,7 +27,6 @@ namespace ProjectFirma.Web.Models
             this.PersonStewardGeospatialAreas = new HashSet<PersonStewardGeospatialArea>();
             this.ProjectGeospatialAreas = new HashSet<ProjectGeospatialArea>();
             this.ProjectGeospatialAreaUpdates = new HashSet<ProjectGeospatialAreaUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllGeospatialAreas.Remove(this);
+            dbContext.GeospatialAreas.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -121,7 +120,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int GeospatialAreaID { get; set; }
-        public int TenantID { get; private set; }
         public string GeospatialAreaName { get; set; }
         public DbGeometry GeospatialAreaFeature { get; set; }
         public int GeospatialAreaTypeID { get; set; }
@@ -131,7 +129,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<PersonStewardGeospatialArea> PersonStewardGeospatialAreas { get; set; }
         public virtual ICollection<ProjectGeospatialArea> ProjectGeospatialAreas { get; set; }
         public virtual ICollection<ProjectGeospatialAreaUpdate> ProjectGeospatialAreaUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual GeospatialAreaType GeospatialAreaType { get; set; }
 
         public static class FieldLengths

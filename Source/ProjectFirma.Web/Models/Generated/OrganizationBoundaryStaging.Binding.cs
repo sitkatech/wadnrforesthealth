@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[OrganizationBoundaryStaging] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[OrganizationBoundaryStaging]")]
-    public partial class OrganizationBoundaryStaging : IHavePrimaryKey, IHaveATenantID
+    public partial class OrganizationBoundaryStaging : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected OrganizationBoundaryStaging()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -95,19 +94,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllOrganizationBoundaryStagings.Remove(this);
+            dbContext.OrganizationBoundaryStagings.Remove(this);
         }
 
         [Key]
         public int OrganizationBoundaryStagingID { get; set; }
-        public int TenantID { get; private set; }
         public int OrganizationID { get; set; }
         public string FeatureClassName { get; set; }
         public string GeoJson { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return OrganizationBoundaryStagingID; } set { OrganizationBoundaryStagingID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Organization Organization { get; set; }
 
         public static class FieldLengths

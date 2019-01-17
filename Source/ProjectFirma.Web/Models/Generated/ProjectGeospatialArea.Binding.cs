@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ProjectGeospatialArea] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ProjectGeospatialArea]")]
-    public partial class ProjectGeospatialArea : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectGeospatialArea : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectGeospatialArea()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,18 +93,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectGeospatialAreas.Remove(this);
+            dbContext.ProjectGeospatialAreas.Remove(this);
         }
 
         [Key]
         public int ProjectGeospatialAreaID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int GeospatialAreaID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectGeospatialAreaID; } set { ProjectGeospatialAreaID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual GeospatialArea GeospatialArea { get; set; }
 

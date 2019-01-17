@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var taxonomyTrunk = TestTaxonomyTrunk.Create(dbContext);
                 var taxonomyBranch = new TaxonomyBranch(taxonomyTrunk,
                     MakeTestName("Test Taxonomy Tier Two Name", TaxonomyBranch.FieldLengths.TaxonomyBranchName));
-                dbContext.AllTaxonomyBranches.Add(taxonomyBranch);
+                dbContext.TaxonomyBranches.Add(taxonomyBranch);
                 return taxonomyBranch;
             }
         }

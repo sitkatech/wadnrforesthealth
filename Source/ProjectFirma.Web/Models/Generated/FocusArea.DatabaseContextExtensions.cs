@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[FocusArea]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return focusArea;
         }
 
-        public static void DeleteFocusArea(this List<int> focusAreaIDList)
+        public static void DeleteFocusArea(this IQueryable<FocusArea> focusAreas, List<int> focusAreaIDList)
         {
             if(focusAreaIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllFocusAreas.RemoveRange(HttpRequestStorage.DatabaseEntities.FocusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID)));
+                focusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID)).Delete();
             }
         }
 
-        public static void DeleteFocusArea(this ICollection<FocusArea> focusAreasToDelete)
+        public static void DeleteFocusArea(this IQueryable<FocusArea> focusAreas, ICollection<FocusArea> focusAreasToDelete)
         {
             if(focusAreasToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllFocusAreas.RemoveRange(focusAreasToDelete);
+                var focusAreaIDList = focusAreasToDelete.Select(x => x.FocusAreaID).ToList();
+                focusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID)).Delete();
             }
         }
 
-        public static void DeleteFocusArea(this int focusAreaID)
+        public static void DeleteFocusArea(this IQueryable<FocusArea> focusAreas, int focusAreaID)
         {
-            DeleteFocusArea(new List<int> { focusAreaID });
+            DeleteFocusArea(focusAreas, new List<int> { focusAreaID });
         }
 
-        public static void DeleteFocusArea(this FocusArea focusAreaToDelete)
+        public static void DeleteFocusArea(this IQueryable<FocusArea> focusAreas, FocusArea focusAreaToDelete)
         {
-            DeleteFocusArea(new List<FocusArea> { focusAreaToDelete });
+            DeleteFocusArea(focusAreas, new List<FocusArea> { focusAreaToDelete });
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ProjectLocationUpdate] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ProjectLocationUpdate]")]
-    public partial class ProjectLocationUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectLocationUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectLocationUpdate()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,19 +92,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectLocationUpdates.Remove(this);
+            dbContext.ProjectLocationUpdates.Remove(this);
         }
 
         [Key]
         public int ProjectLocationUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectUpdateBatchID { get; set; }
         public DbGeometry ProjectLocationUpdateGeometry { get; set; }
         public string Annotation { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationUpdateID; } set { ProjectLocationUpdateID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
 
         public static class FieldLengths

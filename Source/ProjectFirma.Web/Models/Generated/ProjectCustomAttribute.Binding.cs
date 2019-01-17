@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ProjectCustomAttribute] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ProjectCustomAttribute]")]
-    public partial class ProjectCustomAttribute : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectCustomAttribute : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectCustomAttribute()
         {
             this.ProjectCustomAttributeValues = new HashSet<ProjectCustomAttributeValue>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllProjectCustomAttributes.Remove(this);
+            dbContext.ProjectCustomAttributes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -110,14 +109,12 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectCustomAttributeID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int ProjectCustomAttributeTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCustomAttributeID; } set { ProjectCustomAttributeID = value; } }
 
         public virtual ICollection<ProjectCustomAttributeValue> ProjectCustomAttributeValues { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual ProjectCustomAttributeType ProjectCustomAttributeType { get; set; }
 

@@ -90,7 +90,7 @@ namespace ProjectFirma.Web.Controllers
             var primaryContactPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var focusAreas = HttpRequestStorage.DatabaseEntities.AllFocusAreas.ToList();
+            var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 taxonomyLeafDisplayName,
                 ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
@@ -868,50 +868,5 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
                 return File(content, "application/pdf", fileName);
             }
         }
-
-        [HttpGet]
-        [ProjectEditAsAdminFeature]
-        public ViewResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var contractorTimeActivities = project.ContractorTimeActivities.ToList();
-            var contractorTimeActivitySimples = contractorTimeActivities.Select(x => new ContractorTimeActivitySimple(x));
-            var viewModel = new EditContractorTimeActivitiesViewModel(project, contractorTimeActivitySimples.ToList());
-            return ViewEditContractorTimeActivities(project, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditContractorTimeActivities(ProjectPrimaryKey projectPrimaryKey, EditContractorTimeActivitiesViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var currentContractorTimeActivities = project.ContractorTimeActivities.ToList();
-            if (!ModelState.IsValid)
-            {
-                return ViewEditContractorTimeActivities(project, viewModel);
-            }
-            return UpdateContractorTimeActivities(viewModel, currentContractorTimeActivities, project);
-        }
-
-        private static ActionResult UpdateContractorTimeActivities(
-            EditContractorTimeActivitiesViewModel viewModel,
-            List<ContractorTimeActivity> currentContractorTimeActivities, Project project)
-        {
-            HttpRequestStorage.DatabaseEntities.ContractorTimeActivities.Load();
-            var allContractorTimeActivities = HttpRequestStorage.DatabaseEntities.AllContractorTimeActivities.Local;
-
-            viewModel.UpdateModel(currentContractorTimeActivities, allContractorTimeActivities, project);
-            return new RedirectResult(SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(project)) + "#activities");
-        }
-
-        private ViewResult ViewEditContractorTimeActivities(Project project, EditContractorTimeActivitiesViewModel viewModel)
-        {
-            var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditContractorTimeActivitiesViewData(project, allFundingSources, CurrentPerson);
-            return RazorView<EditContractorTimeActivities, EditContractorTimeActivitiesViewData, EditContractorTimeActivitiesViewModel>(viewData, viewModel);
-        }
-
-       
     }
 }

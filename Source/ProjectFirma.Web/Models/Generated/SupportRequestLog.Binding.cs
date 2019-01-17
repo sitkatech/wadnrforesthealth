@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[SupportRequestLog] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[SupportRequestLog]")]
-    public partial class SupportRequestLog : IHavePrimaryKey, IHaveATenantID
+    public partial class SupportRequestLog : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected SupportRequestLog()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -102,12 +101,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllSupportRequestLogs.Remove(this);
+            dbContext.SupportRequestLogs.Remove(this);
         }
 
         [Key]
         public int SupportRequestLogID { get; set; }
-        public int TenantID { get; private set; }
         public DateTime RequestDate { get; set; }
         public string RequestPersonName { get; set; }
         public string RequestPersonEmail { get; set; }
@@ -119,7 +117,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return SupportRequestLogID; } set { SupportRequestLogID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Person RequestPerson { get; set; }
         public SupportRequestType SupportRequestType { get { return SupportRequestType.AllLookupDictionary[SupportRequestTypeID]; } }
 

@@ -19,15 +19,15 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class EditRolesViewModel : FormViewModel, IValidatableObject
+    public class EditRolesViewModel : FormViewModel
     {
         [Required]
         public int PersonID { get; set; }
@@ -74,30 +74,11 @@ namespace ProjectFirma.Web.Views.User
             }
 
             if (downgradingFromSteward)
-            {
-                person.PersonStewardGeospatialAreas.DeletePersonStewardGeospatialArea();
-                person.PersonStewardTaxonomyBranches.DeletePersonStewardTaxonomyBranch();
-                person.PersonStewardOrganizations.DeletePersonStewardOrganization();
+            {                
+                HttpRequestStorage.DatabaseEntities.PersonStewardGeospatialAreas.DeletePersonStewardGeospatialArea(person.PersonStewardGeospatialAreas);
+                HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.DeletePersonStewardTaxonomyBranch(person.PersonStewardTaxonomyBranches);
+                HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.DeletePersonStewardOrganization(person.PersonStewardOrganizations);
             }
-        }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-            // NJP 10/24 It's unclear to me that this is still a legal validation rule, but I need confirmation from a BA/PO before I remove the code.
-            //var person = HttpRequestStorage.DatabaseEntities.People.GetPerson(PersonID);
-            //if (RoleID == Models.Role.ProjectSteward.RoleID)
-            //{
-            //    if (!person.Organization.OrganizationType.OrganizationTypeRelationshipTypes.Any(x =>
-            //        x.RelationshipType.CanStewardProjects))
-            //    {
-            //        yield return new SitkaValidationResult<EditRolesViewModel, int?>(
-            //            $"Cannot assign role {Models.Role.ProjectSteward.RoleDisplayName} to a person " +
-            //            $"whose {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} cannot " +
-            //            $"steward {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}.",
-            //            m => m.RoleID);
-            //    }
-            //}
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[ProjectDocumentUpdate] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[ProjectDocumentUpdate]")]
-    public partial class ProjectDocumentUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectDocumentUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectDocumentUpdate()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -98,12 +97,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectDocumentUpdates.Remove(this);
+            dbContext.ProjectDocumentUpdates.Remove(this);
         }
 
         [Key]
         public int ProjectDocumentUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectUpdateBatchID { get; set; }
         public int FileResourceID { get; set; }
         public string DisplayName { get; set; }
@@ -111,7 +109,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectDocumentUpdateID; } set { ProjectDocumentUpdateID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public virtual FileResource FileResource { get; set; }
 

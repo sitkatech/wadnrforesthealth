@@ -29,32 +29,25 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFundingSourcesList FundingSourcesList = FirmaPageTypeFundingSourcesList.Instance;
         public static readonly FirmaPageTypeOrganizationsList OrganizationsList = FirmaPageTypeOrganizationsList.Instance;
         public static readonly FirmaPageTypeMyProjects MyProjects = FirmaPageTypeMyProjects.Instance;
-        public static readonly FirmaPageTypeProjectResults ProjectResults = FirmaPageTypeProjectResults.Instance;
         public static readonly FirmaPageTypeProjectMap ProjectMap = FirmaPageTypeProjectMap.Instance;
         public static readonly FirmaPageTypeHomeMapInfo HomeMapInfo = FirmaPageTypeHomeMapInfo.Instance;
         public static readonly FirmaPageTypeHomeAdditionalInfo HomeAdditionalInfo = FirmaPageTypeHomeAdditionalInfo.Instance;
         public static readonly FirmaPageTypeFeaturedProjectList FeaturedProjectList = FirmaPageTypeFeaturedProjectList.Instance;
-        public static readonly FirmaPageTypeCostParameterSet CostParameterSet = FirmaPageTypeCostParameterSet.Instance;
         public static readonly FirmaPageTypeFullProjectListSimple FullProjectListSimple = FirmaPageTypeFullProjectListSimple.Instance;
         public static readonly FirmaPageTypeTaxonomy Taxonomy = FirmaPageTypeTaxonomy.Instance;
         public static readonly FirmaPageTypeTagList TagList = FirmaPageTypeTagList.Instance;
-        public static readonly FirmaPageTypeSpendingByPerformanceMeasureByProject SpendingByPerformanceMeasureByProject = FirmaPageTypeSpendingByPerformanceMeasureByProject.Instance;
         public static readonly FirmaPageTypeProposals Proposals = FirmaPageTypeProposals.Instance;
         public static readonly FirmaPageTypeManageUpdateNotifications ManageUpdateNotifications = FirmaPageTypeManageUpdateNotifications.Instance;
-        public static readonly FirmaPageTypeMonitoringProgramsList MonitoringProgramsList = FirmaPageTypeMonitoringProgramsList.Instance;
         public static readonly FirmaPageTypeProposeProjectInstructions ProposeProjectInstructions = FirmaPageTypeProposeProjectInstructions.Instance;
         public static readonly FirmaPageTypeProjectStewardOrganizationList ProjectStewardOrganizationList = FirmaPageTypeProjectStewardOrganizationList.Instance;
         public static readonly FirmaPageTypeEnterHistoricProjectInstructions EnterHistoricProjectInstructions = FirmaPageTypeEnterHistoricProjectInstructions.Instance;
         public static readonly FirmaPageTypePendingProjects PendingProjects = FirmaPageTypePendingProjects.Instance;
         public static readonly FirmaPageTypeTraining Training = FirmaPageTypeTraining.Instance;
-        public static readonly FirmaPageTypeProjectCreateImportExternal ProjectCreateImportExternal = FirmaPageTypeProjectCreateImportExternal.Instance;
         public static readonly FirmaPageTypeCustomFooter CustomFooter = FirmaPageTypeCustomFooter.Instance;
         public static readonly FirmaPageTypeManageProjectCustomAttributeTypeInstructions ManageProjectCustomAttributeTypeInstructions = FirmaPageTypeManageProjectCustomAttributeTypeInstructions.Instance;
         public static readonly FirmaPageTypeManageProjectCustomAttributeTypesList ManageProjectCustomAttributeTypesList = FirmaPageTypeManageProjectCustomAttributeTypesList.Instance;
         public static readonly FirmaPageTypeFactSheetCustomText FactSheetCustomText = FirmaPageTypeFactSheetCustomText.Instance;
         public static readonly FirmaPageTypeFocusAreasList FocusAreasList = FirmaPageTypeFocusAreasList.Instance;
-        public static readonly FirmaPageTypeFullGrantList FullGrantList = FirmaPageTypeFullGrantList.Instance;
-        public static readonly FirmaPageTypeFullGrantAllocationList FullGrantAllocationList = FirmaPageTypeFullGrantAllocationList.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -64,7 +57,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectResults, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, CostParameterSet, FullProjectListSimple, Taxonomy, TagList, SpendingByPerformanceMeasureByProject, Proposals, ManageUpdateNotifications, MonitoringProgramsList, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, ProjectCreateImportExternal, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -136,8 +129,6 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case FirmaPageTypeEnum.CostParameterSet:
-                    return CostParameterSet;
                 case FirmaPageTypeEnum.CustomFooter:
                     return CustomFooter;
                 case FirmaPageTypeEnum.DemoScript:
@@ -150,10 +141,6 @@ namespace ProjectFirma.Web.Models
                     return FeaturedProjectList;
                 case FirmaPageTypeEnum.FocusAreasList:
                     return FocusAreasList;
-                case FirmaPageTypeEnum.FullGrantAllocationList:
-                    return FullGrantAllocationList;
-                case FirmaPageTypeEnum.FullGrantList:
-                    return FullGrantList;
                 case FirmaPageTypeEnum.FullProjectList:
                     return FullProjectList;
                 case FirmaPageTypeEnum.FullProjectListSimple:
@@ -174,8 +161,6 @@ namespace ProjectFirma.Web.Models
                     return ManageProjectCustomAttributeTypesList;
                 case FirmaPageTypeEnum.ManageUpdateNotifications:
                     return ManageUpdateNotifications;
-                case FirmaPageTypeEnum.MonitoringProgramsList:
-                    return MonitoringProgramsList;
                 case FirmaPageTypeEnum.MyProjects:
                     return MyProjects;
                 case FirmaPageTypeEnum.OrganizationsList:
@@ -184,20 +169,14 @@ namespace ProjectFirma.Web.Models
                     return PendingProjects;
                 case FirmaPageTypeEnum.PerformanceMeasuresList:
                     return PerformanceMeasuresList;
-                case FirmaPageTypeEnum.ProjectCreateImportExternal:
-                    return ProjectCreateImportExternal;
                 case FirmaPageTypeEnum.ProjectMap:
                     return ProjectMap;
-                case FirmaPageTypeEnum.ProjectResults:
-                    return ProjectResults;
                 case FirmaPageTypeEnum.ProjectStewardOrganizationList:
                     return ProjectStewardOrganizationList;
                 case FirmaPageTypeEnum.Proposals:
                     return Proposals;
                 case FirmaPageTypeEnum.ProposeProjectInstructions:
                     return ProposeProjectInstructions;
-                case FirmaPageTypeEnum.SpendingByPerformanceMeasureByProject:
-                    return SpendingByPerformanceMeasureByProject;
                 case FirmaPageTypeEnum.TagList:
                     return TagList;
                 case FirmaPageTypeEnum.Taxonomy:
@@ -229,32 +208,25 @@ namespace ProjectFirma.Web.Models
         FundingSourcesList = 15,
         OrganizationsList = 16,
         MyProjects = 18,
-        ProjectResults = 20,
         ProjectMap = 22,
         HomeMapInfo = 24,
         HomeAdditionalInfo = 25,
         FeaturedProjectList = 26,
-        CostParameterSet = 31,
         FullProjectListSimple = 33,
         Taxonomy = 34,
         TagList = 36,
-        SpendingByPerformanceMeasureByProject = 37,
         Proposals = 38,
         ManageUpdateNotifications = 41,
-        MonitoringProgramsList = 44,
         ProposeProjectInstructions = 45,
         ProjectStewardOrganizationList = 46,
         EnterHistoricProjectInstructions = 47,
         PendingProjects = 48,
         Training = 49,
-        ProjectCreateImportExternal = 50,
         CustomFooter = 51,
         ManageProjectCustomAttributeTypeInstructions = 52,
         ManageProjectCustomAttributeTypesList = 53,
         FactSheetCustomText = 54,
-        FocusAreasList = 55,
-        FullGrantList = 56,
-        FullGrantAllocationList = 57
+        FocusAreasList = 55
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -323,12 +295,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeMyProjects Instance = new FirmaPageTypeMyProjects(18, @"MyProjects", @"My Projects", 1);
     }
 
-    public partial class FirmaPageTypeProjectResults : FirmaPageType
-    {
-        private FirmaPageTypeProjectResults(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeProjectResults Instance = new FirmaPageTypeProjectResults(20, @"ProjectResults", @"Project Results by Organization", 1);
-    }
-
     public partial class FirmaPageTypeProjectMap : FirmaPageType
     {
         private FirmaPageTypeProjectMap(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
@@ -353,12 +319,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFeaturedProjectList Instance = new FirmaPageTypeFeaturedProjectList(26, @"FeaturedProjectList", @"Featured Project List", 1);
     }
 
-    public partial class FirmaPageTypeCostParameterSet : FirmaPageType
-    {
-        private FirmaPageTypeCostParameterSet(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeCostParameterSet Instance = new FirmaPageTypeCostParameterSet(31, @"CostParameterSet", @"Cost Parameter Set", 1);
-    }
-
     public partial class FirmaPageTypeFullProjectListSimple : FirmaPageType
     {
         private FirmaPageTypeFullProjectListSimple(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
@@ -377,12 +337,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeTagList Instance = new FirmaPageTypeTagList(36, @"TagList", @"Tag List", 1);
     }
 
-    public partial class FirmaPageTypeSpendingByPerformanceMeasureByProject : FirmaPageType
-    {
-        private FirmaPageTypeSpendingByPerformanceMeasureByProject(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeSpendingByPerformanceMeasureByProject Instance = new FirmaPageTypeSpendingByPerformanceMeasureByProject(37, @"SpendingByPerformanceMeasureByProject", @"Spending by Performance Measure by Project", 1);
-    }
-
     public partial class FirmaPageTypeProposals : FirmaPageType
     {
         private FirmaPageTypeProposals(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
@@ -393,12 +347,6 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeManageUpdateNotifications(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeManageUpdateNotifications Instance = new FirmaPageTypeManageUpdateNotifications(41, @"ManageUpdateNotifications", @"Manage Project Update Notifications", 1);
-    }
-
-    public partial class FirmaPageTypeMonitoringProgramsList : FirmaPageType
-    {
-        private FirmaPageTypeMonitoringProgramsList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeMonitoringProgramsList Instance = new FirmaPageTypeMonitoringProgramsList(44, @"MonitoringProgramsList", @"Monitoring Programs", 1);
     }
 
     public partial class FirmaPageTypeProposeProjectInstructions : FirmaPageType
@@ -431,12 +379,6 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeTraining Instance = new FirmaPageTypeTraining(49, @"Training", @"Training", 2);
     }
 
-    public partial class FirmaPageTypeProjectCreateImportExternal : FirmaPageType
-    {
-        private FirmaPageTypeProjectCreateImportExternal(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeProjectCreateImportExternal Instance = new FirmaPageTypeProjectCreateImportExternal(50, @"ProjectCreateImportExternal", @"ProjectCreateImportExternal", 1);
-    }
-
     public partial class FirmaPageTypeCustomFooter : FirmaPageType
     {
         private FirmaPageTypeCustomFooter(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
@@ -465,17 +407,5 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeFocusAreasList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeFocusAreasList Instance = new FirmaPageTypeFocusAreasList(55, @"FocusAreasList", @"Focus Areas List", 1);
-    }
-
-    public partial class FirmaPageTypeFullGrantList : FirmaPageType
-    {
-        private FirmaPageTypeFullGrantList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeFullGrantList Instance = new FirmaPageTypeFullGrantList(56, @"FullGrantList", @"Full Grant List", 1);
-    }
-
-    public partial class FirmaPageTypeFullGrantAllocationList : FirmaPageType
-    {
-        private FirmaPageTypeFullGrantAllocationList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeFullGrantAllocationList Instance = new FirmaPageTypeFullGrantAllocationList(57, @"FullGrantAllocationList", @"Full Grant Allocation List", 1);
     }
 }

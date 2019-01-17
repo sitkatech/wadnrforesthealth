@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Models
 {
     // Table [dbo].[TrainingVideo] is multi-tenant, so is attributed as IHaveATenantID
     [Table("[dbo].[TrainingVideo]")]
-    public partial class TrainingVideo : IHavePrimaryKey, IHaveATenantID
+    public partial class TrainingVideo : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected TrainingVideo()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -83,12 +82,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllTrainingVideos.Remove(this);
+            dbContext.TrainingVideos.Remove(this);
         }
 
         [Key]
         public int TrainingVideoID { get; set; }
-        public int TenantID { get; private set; }
         public string VideoName { get; set; }
         public string VideoDescription { get; set; }
         public DateTime VideoUploadDate { get; set; }
@@ -96,7 +94,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return TrainingVideoID; } set { TrainingVideoID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
+
 
         public static class FieldLengths
         {

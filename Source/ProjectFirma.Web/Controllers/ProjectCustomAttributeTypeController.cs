@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeType = new ProjectCustomAttributeType(String.Empty, ProjectCustomAttributeDataType.String, false);
             viewModel.UpdateModel(projectCustomAttributeType, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeTypes.Add(projectCustomAttributeType);
+            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.Add(projectCustomAttributeType);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"{FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabel()} {projectCustomAttributeType.ProjectCustomAttributeTypeName} succesfully created.");
 
