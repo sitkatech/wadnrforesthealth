@@ -18,15 +18,10 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System.Collections.Generic;
-using ProjectFirma.Web.Models;
-
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Manage Focus Area")]
-    public class FocusAreaManageFeature : FirmaFeature
+    public class FocusAreaManageFeature : FirmaAdminFeature
     {
-        public FocusAreaManageFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward }) { }
     }
 }
