@@ -19,19 +19,21 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using LtInfo.Common;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using GeoJSON.Net.Feature;
+using ProjectFirma.Web.Controllers;
+using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
+using LtInfo.Common.GeoJson;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
     public static class FocusAreaModelExtensions
     {
-        public static readonly UrlTemplate<int> SummaryUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
-
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.DeleteFocusArea(UrlTemplate.Parameter1Int)));
 
 
         public static HtmlString GetDisplayNameAsUrl(this FocusArea focusArea)
@@ -44,6 +46,7 @@ namespace ProjectFirma.Web.Models
             return focusArea != null ? focusArea.FocusAreaName.ToHTMLFormattedString() : new HtmlString("<em>Not identified</em>");
         }
 
+        public static readonly UrlTemplate<int> SummaryUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
         public static string GetDetailUrl(this FocusArea focusArea)
         {
             return focusArea == null ? "" : SummaryUrlTemplate.ParameterReplace(focusArea.FocusAreaID);
@@ -64,15 +67,6 @@ namespace ProjectFirma.Web.Models
             return focusArea.GetAllAssociatedProjects().GetProposalsVisibleToUser(person);
         }
 
-        public static string GetDeleteFocusAreaUrl(this FocusArea focusArea)
-        {
-            return SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Delete(focusArea.PrimaryKey));
-        }
-
-        public static bool CanFocusAreaBeDeleted(this FocusArea focusArea)
-        {
-            return !focusArea.Projects.Any();
-        }
 
     }
 }

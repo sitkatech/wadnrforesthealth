@@ -49,9 +49,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
-        public int? FocusAreaID { get; set; }
-
         [DisplayName("Reviewer Comments")]
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
         public string Comments { get; set; }
@@ -72,7 +69,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             PlannedDate = projectUpdate.PlannedDate;
             ApprovalStartDate = projectUpdate.ApprovalStartDate;
             CompletionDate = projectUpdate.CompletionDate;
-            FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
             ProjectCustomAttributes = new ProjectCustomAttributes(projectUpdate);
         }
@@ -84,7 +80,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.PlannedDate = PlannedDate;
             projectUpdate.ApprovalStartDate = ApprovalStartDate;
             projectUpdate.CompletionDate = CompletionDate;
-            projectUpdate.FocusAreaID = FocusAreaID;
             ProjectCustomAttributes?.UpdateModel(projectUpdate, currentPerson);
         }
 

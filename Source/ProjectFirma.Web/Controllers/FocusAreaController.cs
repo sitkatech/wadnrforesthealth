@@ -21,28 +21,11 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [FocusAreaManageFeature]
-        public PartialViewResult Delete(FocusAreaPrimaryKey focusAreaPrimaryKey)
+        public PartialViewResult DeleteFocusArea(FocusAreaPrimaryKey focusAreaPrimaryKey)
         {
             var focusArea = focusAreaPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(focusArea.FocusAreaID);
             return ViewDeleteFocusArea(focusArea, viewModel);
-        }
-
-        [HttpPost]
-        [FocusAreaManageFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Delete(FocusAreaPrimaryKey focusAreaPrimaryKey,
-            ConfirmDialogFormViewModel viewModel)
-        {
-            var focusArea = focusAreaPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewDeleteFocusArea(focusArea, viewModel);
-            }
-
-            focusArea.DeleteFull(HttpRequestStorage.DatabaseEntities);
-
-            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
@@ -66,7 +49,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Focus Area <a href=\"{SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.Detail(focusArea.PrimaryKey))}\">{focusArea.FocusAreaName}</a> successfully created.");
+            SetMessageForDisplay($"Focus Area {focusArea.FocusAreaName} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -239,10 +222,9 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteFocusArea(FocusArea focusArea, ConfirmDialogFormViewModel viewModel)
         {
-            var growlMessage = $"Are you sure you want to delete Focus Area \"{focusArea.FocusAreaName}\"";
-            var viewData = new ConfirmDialogFormViewData(growlMessage, true);
+            var confirmMessage = $"Focus Area \"{focusArea.FocusAreaName}\" has been deleted";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-
         }
         private PartialViewResult ViewEdit(EditViewModel viewModel)
         {

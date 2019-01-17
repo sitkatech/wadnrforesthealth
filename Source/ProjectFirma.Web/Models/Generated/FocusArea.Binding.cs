@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         {
             this.FocusAreaLocationStagings = new HashSet<FocusAreaLocationStaging>();
             this.Projects = new HashSet<Project>();
-            this.ProjectUpdates = new HashSet<ProjectUpdate>();
         }
 
         /// <summary>
@@ -76,13 +75,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FocusAreaLocationStagings.Any() || Projects.Any() || ProjectUpdates.Any();
+            return FocusAreaLocationStagings.Any() || Projects.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(FocusAreaLocationStaging).Name, typeof(Project).Name, typeof(ProjectUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(FocusAreaLocationStaging).Name, typeof(Project).Name};
 
 
         /// <summary>
@@ -108,11 +107,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in ProjectUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -125,7 +119,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
-        public virtual ICollection<ProjectUpdate> ProjectUpdates { get; set; }
         public FocusAreaStatus FocusAreaStatus { get { return FocusAreaStatus.AllLookupDictionary[FocusAreaStatusID]; } }
 
         public static class FieldLengths

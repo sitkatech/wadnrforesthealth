@@ -131,22 +131,6 @@ Source code is available upon request via <support@sitkatech.com>.
             }
         </div>
     </div>
-    <div class="row form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(m => m.FocusAreaID)
-        </div>
-        <div class="col-sm-8" style="padding-left: 10px;">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                @Html.ValidationMessageFor(m => m.FocusAreaID)
-            }
-            else
-            {
-                @ViewDataTyped.ProjectUpdate.FocusArea.FocusAreaName
-            }
-        </div>
-    </div>
     <div class="row form-group-condensed">
         <div class="col-sm-4 control-label">
             @Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf)
