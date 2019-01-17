@@ -92,7 +92,6 @@
     <EntitySet Name="TaxonomyLeaf" EntityType="ProjectFirma.Web.Models.Store.TaxonomyLeaf" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyLeafPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.TaxonomyLeafPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tmpChildrenGrantsInGrantsTab" EntityType="ProjectFirma.Web.Models.Store.tmpChildrenGrantsInGrantsTab" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerGeospatialArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerGeospatialArea">
@@ -1699,32 +1698,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ThemeColor" Type="varchar" MaxLength="20" />
     <Property Name="TaxonomyTrunkCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyTrunkSortOrder" Type="int" />
-  </EntityType>
-  <EntityType Name="tmpChildrenGrantsInGrantsTab">
-    <Key>
-      <PropertyRef Name="ChildGrantID" />
-    </Key>
-    <Property Name="ChildGrantID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="Parent Child (SITKA)" Type="varchar" MaxLength="50" />
-    <Property Name="Grant #" Type="varchar" MaxLength="50" />
-    <Property Name="CFDA #" Type="varchar" MaxLength="50" />
-    <Property Name="Title" Type="varchar" MaxLength="50" />
-    <Property Name="Program Manager" Type="varchar" MaxLength="50" />
-    <Property Name="Prog Index" Type="varchar" MaxLength="50" />
-    <Property Name="Project Codes" Type="varchar" MaxLength="50" />
-    <Property Name="Funding increase" Type="varchar" MaxLength="50" />
-    <Property Name="Federal Fund Code" Type="varchar" MaxLength="50" />
-    <Property Name="Funds Awarded" Type="varchar" MaxLength="50" />
-    <Property Name="Matching Funds" Type="varchar" MaxLength="50" />
-    <Property Name="Grant Total" Type="varchar" MaxLength="50" />
-    <Property Name="DNR Match Amount" Type="varchar" MaxLength="50" />
-    <Property Name="Non-DNR Other Match" Type="varchar" MaxLength="50" />
-    <Property Name="Landowner Match" Type="varchar" MaxLength="50" />
-    <Property Name="Match PI &amp; Alpha Code" Type="varchar" MaxLength="50" />
-    <Property Name="Expend Method" Type="varchar" MaxLength="50" />
-    <Property Name="Start Date" Type="varchar" MaxLength="50" />
-    <Property Name="End Date" Type="varchar" MaxLength="50" />
-    <Property Name="Notes" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

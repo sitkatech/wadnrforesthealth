@@ -92,7 +92,6 @@
     <EntitySet Name="TaxonomyLeaf" EntityType="ProjectFirma.Web.Models.TaxonomyLeaf" />
     <EntitySet Name="TaxonomyLeafPerformanceMeasure" EntityType="ProjectFirma.Web.Models.TaxonomyLeafPerformanceMeasure" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
-    <EntitySet Name="tmpChildrenGrantsInGrantsTab" EntityType="ProjectFirma.Web.Models.tmpChildrenGrantsInGrantsTab" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.vGeoServerGeospatialArea" />
@@ -1965,32 +1964,6 @@
     <Property Name="TaxonomyTrunkCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="TaxonomyTrunkSortOrder" Type="Int32" />
     <NavigationProperty Name="TaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" FromRole="TaxonomyTrunk" ToRole="TaxonomyBranches" />
-  </EntityType>
-  <EntityType Name="tmpChildrenGrantsInGrantsTab">
-    <Key>
-      <PropertyRef Name="ChildGrantID" />
-    </Key>
-    <Property Name="ChildGrantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Parent_Child__SITKA_" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Grant__" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="CFDA__" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Title" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Program_Manager" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Prog_Index" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Project_Codes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Funding_increase" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Federal_Fund_Code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Funds_Awarded" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Matching_Funds" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Grant_Total" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="DNR_Match_Amount" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Non_DNR_Other_Match" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Landowner_Match" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Match_PI___Alpha_Code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Expend_Method" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Start_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="End_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="Notes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>

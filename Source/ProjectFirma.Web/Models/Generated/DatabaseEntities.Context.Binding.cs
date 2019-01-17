@@ -119,7 +119,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TaxonomyLeafPerformanceMeasure> TaxonomyLeafPerformanceMeasures { get; set; }
         public virtual DbSet<TaxonomyLeaf> TaxonomyLeafs { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
-        public virtual DbSet<tmpChildrenGrantsInGrantsTab> tmpChildrenGrantsInGrantsTabs { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
         public virtual DbSet<vGeoServerGeospatialArea> vGeoServerGeospatialAreas { get; set; }
@@ -560,9 +559,6 @@ namespace ProjectFirma.Web.Models
 
                 case "TaxonomyTrunk":
                     return TaxonomyTrunks.GetTaxonomyTrunk(primaryKey);
-
-                case "tmpChildrenGrantsInGrantsTab":
-                    return tmpChildrenGrantsInGrantsTabs.GettmpChildrenGrantsInGrantsTab(primaryKey);
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);
