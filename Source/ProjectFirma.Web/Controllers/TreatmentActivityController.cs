@@ -8,6 +8,7 @@ using ProjectFirma.Web.Views.TreatmentActivity;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -54,8 +55,8 @@ namespace ProjectFirma.Web.Controllers
                     m => m.TreatmentActivityStatusDisplayName);
 
             var contactsAsSelectListItems =
-                treatmentActivity.Project.ProjectPeople.ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
-                    d => d.Person.FullNameFirstLastAndOrg);
+                treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
+                    d => d.FullNameFirstLastAndOrg);
 
             var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems, CurrentPerson);
             return RazorPartialView<EditTreatmentActivity, EditTreatmentActivityViewData, EditTreatmentActivityViewModel>(viewData, viewModel);

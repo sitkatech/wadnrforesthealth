@@ -25,46 +25,83 @@
 @using Newtonsoft.Json.Linq
 @inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
 
+<script type="text/javascript">
+    // <![CDATA[    
+
+    jQuery(document).ready(function ()
+    {
+        jQuery(".selectpicker").selectpicker("refresh");
+    });
+    // ]]>
+</script>
+<script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+
 @using (Html.BeginForm())
 {
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatmentActivityContactID)
+    if (ViewDataTyped.TreatmentActivityContact.Count() <= 1)
+    {
+        <p>
+            There are no Project Contacts for this Project. You will need to add the Contact to the Project before adding a Treatment.
+        </p>
+    }
+    
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentActivityContactID)
+                </div>
+                <div class="col-sm-7">
+                    @Html.DropDownListFor(m => m.TreatmentActivityContactID, ViewDataTyped.TreatmentActivityContact, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
+                    @Html.ValidationMessageFor(m => m.TreatmentActivityContactID)
+                </div>
             </div>
-            <div class="col-sm-7">
-                @Html.DropDownListFor(m => m.TreatmentActivityContactID, ViewDataTyped.TreatmentActivityContact, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.TreatmentActivityContactID)
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentActivityProgramIndex)
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.TreatmentActivityProgramIndex, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.TreatmentActivityProgramIndex)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentActivityProjectCode)
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.TreatmentActivityProjectCode, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.TreatmentActivityProjectCode)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
+                </div>
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentActivityStartDate)
+                </div>
+                <div class="col-sm-9">
+                    @Html.EditorFor(m => m.TreatmentActivityStartDate, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.TreatmentActivityStartDate)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.TreatmentActivityEndDate)
+                </div>
+                <div class="col-sm-9">
+                    @Html.EditorFor(m => m.TreatmentActivityEndDate, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.TreatmentActivityEndDate)
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
-            </div>
-            <div class="col-sm-4">
-                @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatmentActivityStartDate)
-            </div>
-            <div class="col-sm-9">
-                @Html.EditorFor(m => m.TreatmentActivityStartDate, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.TreatmentActivityStartDate)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.TreatmentActivityEndDate)
-            </div>
-            <div class="col-sm-9">
-                @Html.EditorFor(m => m.TreatmentActivityEndDate, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.TreatmentActivityEndDate)
-            </div>
-        </div>
-    </div>
 
     <div class="form-row">
         <div class="form-group col-md-12">

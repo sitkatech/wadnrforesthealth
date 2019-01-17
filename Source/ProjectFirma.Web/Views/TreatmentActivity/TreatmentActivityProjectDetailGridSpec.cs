@@ -40,6 +40,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
             Add("Contact", a => a.GetContactText(), 125, DhtmlxGridColumnFilterType.Html);
             Add("Status", a => a.GetStatusDisplayName(), 75, DhtmlxGridColumnFilterType.Text);
+            Add("Program Index", a => a.TreatmentActivityProgramIndex, 75, DhtmlxGridColumnFilterType.Text);
+            Add("Project Code", a => a.TreatmentActivityProjectCode, 75, DhtmlxGridColumnFilterType.Text);
             Add("Start Date", a => a.TreatmentActivityStartDate, 125, DhtmlxGridColumnFormatType.Date);
             Add("End Date", a => a.TreatmentActivityEndDate, 125, DhtmlxGridColumnFormatType.Date);
             Add("Footprint Acres", a => a.TreatmentActivityFootprintAcres, 75, DhtmlxGridColumnFormatType.Decimal);
@@ -55,6 +57,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             Add("Hand Pile Burn Acres", a => a.TreatmentActivityHandPileBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal);
             Add("Machine Burn Acres", a => a.TreatmentActivityMachinePileBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal);
             Add("Other Acres", a => a.TreatmentActivityOtherTreatmentAcres, 75, DhtmlxGridColumnFormatType.Decimal);
+            Add("Notes", a => a.TreatmentActivityNotes, 200, DhtmlxGridColumnFilterType.Text);
 
         }
     }
