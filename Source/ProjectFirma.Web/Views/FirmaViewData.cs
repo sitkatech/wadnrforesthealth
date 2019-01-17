@@ -140,10 +140,12 @@ namespace ProjectFirma.Web.Views
             MultiTenantHelpers.GetClassificationSystems().ForEach(x =>
             {
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramInfoController>(c => c.ClassificationSystem(x.ClassificationSystemID)), currentPerson, x.ClassificationSystemNamePluralized, "Group1"));
-            });            
-            
+            });
 
-            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList())
+
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<RegionController>(c => c.Index()), currentPerson, "Regions", "Group2"));
+
+            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.Where(x => x.GeospatialAreaTypeID != 10).ToList())
             {
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GeospatialAreaController>(c => c.Index(geospatialAreaType)), currentPerson, $"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", "Group2"));
             }
