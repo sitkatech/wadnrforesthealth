@@ -349,12 +349,12 @@
                 <h2 class="sectionHeader">Activities</h2>
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
-                        <h3>
+                        <h3 data-toc-skip="true">
                             Activities
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="row">
+                        @*<div class="row">
                             <div class="col-sm-6">
                                 <h4>Contractor Time</h4>
                             </div>
@@ -424,7 +424,7 @@
                         {
                             <p class="systemText">No Contractor Time identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
-                        <hr />
+                        <hr />*@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h4>Treatments</h4>
@@ -432,7 +432,7 @@
                             <div class="col-sm-6 text-right">
                                 @if (ViewDataTyped.UserHasEditProjectPermissions)
                                 {
-                                    <a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditTreatmentActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add Treatment", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.EditTreatmentActivityUrl,"Add Treatment",new List<string>{ "btn","btn-sm","btn-firma"}, ViewDataTyped.UserHasEditProjectPermissions)
                                 }
                             </div>
                         </div>
@@ -441,56 +441,8 @@
 
                         @if (ViewDataTyped.Project.TreatmentActivities.Any())
                         {
-                            var treatmentActivities = ViewDataTyped.Project.TreatmentActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
-
-
-                            <div style="overflow: auto;">
-                                <table class="table table-striped table-condensed table-hover">
-                                    @foreach (var fundingSource in treatmentActivities)
-                                    {
-                                        <tr>
-                                            <th colspan="12">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
-                                        </tr>
-                                        <tr>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th style="width:auto;" class="text-right">Footprint Acres</th>
-                                            <th style="width:auto;" class="text-right">Brush Control Acres</th>
-                                            <th style="width:auto;" class="text-right">Thinning Acres</th>
-                                            <th style="width:auto;" class="text-right">Pruning Acres</th>
-                                            <th style="width:auto;" class="text-right">Slash Acres</th>
-                                            <th style="width:auto;" class="text-right">Prescribed Burn Acres</th>
-                                            <th style="width:auto;" class="text-right">Allocated Amount</th>
-                                            <th style="width:auto;" class="text-right">Total Cost</th>
-                                            <th style="width:auto;" class="text-right">Grant Cost</th>
-                                        </tr>
-                                        foreach (var treatmentActivity in fundingSource.OrderBy(x => x.TreatmentActivityStartDate))
-                                        {
-                                            <tr>
-                                                <td>@treatmentActivity.TreatmentActivityStartDate.ToShortDateString()</td>
-                                                <td>
-                                                    @if (treatmentActivity.TreatmentActivityEndDate != null)
-                                                    {
-                                                        <text>@treatmentActivity.TreatmentActivityEndDate.Value.ToShortDateString()</text>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p class="systemText">N/A</p>
-                                                    }
-                                                </td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityFootprintAcres</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityBrushControlAcres</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityThinningAcres</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityPruningAcres</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivitySlashAcres</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityPrescribedBurnAcres</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityAllocatedAmount.ToStringCurrency()</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityTotalCost.ToStringCurrency()</td>
-                                                <td class="text-right">@treatmentActivity.TreatmentActivityGrantCost.ToStringCurrency()</td>
-                                            </tr>
-                                        }
-                                    }
-                                </table>
+                            <div class="panel-body">
+                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentActivityProjectDetailGridSpec, ViewDataTyped.TreatmentActivityGridName, ViewDataTyped.TreatmentActivityGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         }
                         else

@@ -38,7 +38,12 @@ namespace ProjectFirma.Web.Models
 
         public static HtmlString GetDisplayNameAsUrl(this FocusArea focusArea)
         {          
-            return focusArea != null ? UrlTemplate.MakeHrefString(focusArea.GetDetailUrl(), focusArea.FocusAreaName) : new HtmlString(null);
+            return focusArea != null ? UrlTemplate.MakeHrefString(focusArea.GetDetailUrl(), focusArea.FocusAreaName) : new HtmlString("<em>Not identified</em>");
+        }
+
+        public static HtmlString GetDisplayName(this FocusArea focusArea)
+        {
+            return focusArea != null ? focusArea.FocusAreaName.ToHTMLFormattedString() : new HtmlString("<em>Not identified</em>");
         }
 
         public static readonly UrlTemplate<int> SummaryUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));

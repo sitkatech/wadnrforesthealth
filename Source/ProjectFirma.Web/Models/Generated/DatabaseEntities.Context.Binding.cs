@@ -764,6 +764,11 @@ namespace ProjectFirma.Web.Models
                 case "TreatmentActivity":
                     return TreatmentActivities.GetTreatmentActivity(primaryKey);
 
+                case "TreatmentActivityStatus":
+                    var treatmentActivityStatus = TreatmentActivityStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(treatmentActivityStatus, "TreatmentActivityStatus", primaryKey);
+                    return treatmentActivityStatus;
+
                 case "TreatmentType":
                     var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(treatmentType, "TreatmentType", primaryKey);
