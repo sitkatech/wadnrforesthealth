@@ -26,10 +26,9 @@
 @inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
 
 <script type="text/javascript">
-    // <![CDATA[    
+    // <![CDATA[
 
-    jQuery(document).ready(function ()
-    {
+    jQuery(document).ready(function () {
         jQuery(".selectpicker").selectpicker("refresh");
     });
     // ]]>
@@ -37,75 +36,77 @@
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 
+@if (ViewDataTyped.TreatmentActivityContact.Count() <= 1)
+{
+    <p>
+        There are no Project Contacts for this Project. You will need to add the Contact to the Project before adding a Treatment.
+    </p>
+}
+
+@Html.ValidationSummary()
+
 @using (Html.BeginForm())
 {
-    if (ViewDataTyped.TreatmentActivityContact.Count() <= 1)
-    {
-        <p>
-            There are no Project Contacts for this Project. You will need to add the Contact to the Project before adding a Treatment.
-        </p>
-    }
-    
-        <div class="form-horizontal">
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TreatmentActivityContactID)
-                </div>
-                <div class="col-sm-7">
-                    @Html.DropDownListFor(m => m.TreatmentActivityContactID, ViewDataTyped.TreatmentActivityContact, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
-                    @Html.ValidationMessageFor(m => m.TreatmentActivityContactID)
-                </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityContactID)
             </div>
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TreatmentActivityProgramIndex)
-                </div>
-                <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.TreatmentActivityProgramIndex, new { @class = "form-control", style = "width:100%" })
-                    @Html.ValidationMessageFor(m => m.TreatmentActivityProgramIndex)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TreatmentActivityProjectCode)
-                </div>
-                <div class="col-sm-9">
-                    @Html.TextBoxFor(m => m.TreatmentActivityProjectCode, new { @class = "form-control", style = "width:100%" })
-                    @Html.ValidationMessageFor(m => m.TreatmentActivityProjectCode)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
-                </div>
-                <div class="col-sm-4">
-                    @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
-                    @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TreatmentActivityStartDate)
-                </div>
-                <div class="col-sm-9">
-                    @Html.EditorFor(m => m.TreatmentActivityStartDate, new { @class = "form-control", style = "width:100%" })
-                    @Html.ValidationMessageFor(m => m.TreatmentActivityStartDate)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TreatmentActivityEndDate)
-                </div>
-                <div class="col-sm-9">
-                    @Html.EditorFor(m => m.TreatmentActivityEndDate, new { @class = "form-control", style = "width:100%" })
-                    @Html.ValidationMessageFor(m => m.TreatmentActivityEndDate)
-                </div>
+            <div class="col-sm-7">
+                @Html.DropDownListFor(m => m.TreatmentActivityContactID, ViewDataTyped.TreatmentActivityContact, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityContactID)
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityProgramIndex)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.TreatmentActivityProgramIndex, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityProgramIndex)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityProjectCode)
+            </div>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.TreatmentActivityProjectCode, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityProjectCode)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
+            </div>
+            <div class="col-sm-4">
+                @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityStartDate)
+            </div>
+            <div class="col-sm-9">
+                @Html.EditorFor(m => m.TreatmentActivityStartDate, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityStartDate)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivityEndDate)
+            </div>
+            <div class="col-sm-9">
+                @Html.EditorFor(m => m.TreatmentActivityEndDate, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TreatmentActivityEndDate)
+            </div>
+        </div>
+    </div>
 
     <div class="form-row">
-        <div class="form-group col-md-12">
-            <div class="col-sm-3 control-label">
+        <div class="form-group col-md-10 col-md-offset-2">
+            <div class="col-sm-4 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityFootprintAcres)
             </div>
             <div class="input-group col-sm-3">
@@ -115,10 +116,10 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityChippingAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityChippingAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityChippingAcres)
@@ -126,50 +127,50 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityPruningAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityPruningAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityPruningAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityThinningAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityThinningAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityThinningAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityMasticationAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityMasticationAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityMasticationAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityGrazingAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityGrazingAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityGrazingAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityLopAndScatterAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityLopAndScatterAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityLopAndScatterAcres)
@@ -177,60 +178,60 @@
         </div>
 
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityBiomassRemovalAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityBiomassRemovalAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityBiomassRemovalAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityHandPileAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityHandPileAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityHandPileAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityBroadcastBurnAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityBroadcastBurnAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityBroadcastBurnAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityHandPileBurnAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityHandPileBurnAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityHandPileBurnAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityMachinePileBurnAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityMachinePileBurnAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityMachinePileBurnAcres)
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div class="col-sm-5 control-label">
+            <div class="col-sm-5 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityOtherTreatmentAcres)
             </div>
-            <div class="input-group col-sm-6">
+            <div class="input-group col-sm-4">
                 @Html.TextBoxFor(m => m.TreatmentActivityOtherTreatmentAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityOtherTreatmentAcres)
