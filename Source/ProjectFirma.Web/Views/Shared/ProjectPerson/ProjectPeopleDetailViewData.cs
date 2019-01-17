@@ -37,5 +37,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectPerson
             CurrentPerson = currentPerson;
             SetRelationshipTypes = AllProjectPeople.Select(x=>x.ProjectPersonRelationshipType).Distinct().ToList();
         }
+
     }
 }

@@ -18,6 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.GeoJson;
@@ -56,7 +57,10 @@ namespace ProjectFirma.Web.Models
             {
                 return false;
             }
-            var project = projects.SingleOrDefault(x => x.ProjectID != (currentProjectID ?? 0) && string.Equals(x.ProjectName.Trim(), projectName.Trim(), StringComparison.InvariantCultureIgnoreCase));
+
+            var project = projects.SingleOrDefault(x =>
+                x.ProjectID != (currentProjectID ?? 0) && string.Equals(x.ProjectName.Trim(), projectName.Trim(),
+                    StringComparison.InvariantCultureIgnoreCase));
             return project == null;
         }
 
@@ -112,12 +116,16 @@ namespace ProjectFirma.Web.Models
 
         public decimal? GetSecuredFunding()
         {
-            return ProjectFundingSourceRequests.Any() ? (decimal?)ProjectFundingSourceRequests.Sum(x => x.SecuredAmount.GetValueOrDefault()) : null;
+            return ProjectFundingSourceRequests.Any()
+                ? (decimal?) ProjectFundingSourceRequests.Sum(x => x.SecuredAmount.GetValueOrDefault())
+                : null;
         }
 
         public decimal? GetUnsecuredFunding()
         {
-            return ProjectFundingSourceRequests.Any() ? (decimal?)ProjectFundingSourceRequests.Sum(x => x.UnsecuredAmount.GetValueOrDefault()) : null;
+            return ProjectFundingSourceRequests.Any()
+                ? (decimal?) ProjectFundingSourceRequests.Sum(x => x.UnsecuredAmount.GetValueOrDefault())
+                : null;
         }
 
         public decimal? GetNoFundingSourceIdentifiedAmount()
@@ -137,14 +145,20 @@ namespace ProjectFirma.Web.Models
 
         public decimal? TotalExpenditures
         {
-            get { return ProjectFundingSourceExpenditures.Any() ? ProjectFundingSourceExpenditures.Sum(x => x.ExpenditureAmount) : (decimal?)null; }
+            get
+            {
+                return ProjectFundingSourceExpenditures.Any()
+                    ? ProjectFundingSourceExpenditures.Sum(x => x.ExpenditureAmount)
+                    : (decimal?) null;
+            }
         }
 
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
         public bool HasProjectLocationDetail => DetailedLocationToGeoJsonFeatureCollection().Features.Any();
-        
+
         private bool _hasCheckedProjectUpdateHistories;
         private List<ProjectUpdateHistory> _projectUpdateHistories;
+
         public List<ProjectUpdateHistory> ProjectUpdateHistories
         {
             get
@@ -153,6 +167,7 @@ namespace ProjectFirma.Web.Models
                 {
                     return _projectUpdateHistories;
                 }
+
                 ProjectUpdateHistories = ProjectUpdateBatches.SelectMany(x => x.ProjectUpdateHistories).ToList();
                 return _projectUpdateHistories;
             }
@@ -170,7 +185,8 @@ namespace ProjectFirma.Web.Models
 
         public ProjectUpdateBatch GetLatestApprovedUpdateBatch()
         {
-            var projectUpdateBatches = ProjectUpdateBatches.Where(x => x.ProjectUpdateState == ProjectUpdateState.Approved).ToList();
+            var projectUpdateBatches = ProjectUpdateBatches
+                .Where(x => x.ProjectUpdateState == ProjectUpdateState.Approved).ToList();
 
             return projectUpdateBatches.Any() ? projectUpdateBatches.MaxBy(x => x.LastUpdateDate) : null;
         }
@@ -212,7 +228,9 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public bool IsUpdatableViaProjectUpdateProcess => !IsPendingProject() && (ProjectStage.RequiresReportedExpenditures() || ProjectStage.RequiresPerformanceMeasureActuals());
+        public bool IsUpdatableViaProjectUpdateProcess => !IsPendingProject() &&
+                                                          (ProjectStage.RequiresReportedExpenditures() ||
+                                                           ProjectStage.RequiresPerformanceMeasureActuals());
 
         public ProjectUpdateState GetLatestUpdateState()
         {
@@ -227,12 +245,14 @@ namespace ProjectFirma.Web.Models
 
         public DateTime? GetLatestUpdateSubmittalDate()
         {
-            var notNullSubmittalDates = ProjectUpdateBatches.Select(x => x.LatestSubmittalDate).Where(x => x.HasValue).ToList();
+            var notNullSubmittalDates =
+                ProjectUpdateBatches.Select(x => x.LatestSubmittalDate).Where(x => x.HasValue).ToList();
             return notNullSubmittalDates.Any() ? notNullSubmittalDates.Max() : null;
         }
 
         private string _projectLocationStateProvince;
         private bool _hasSetProjectLocationStateProvince;
+
         public string ProjectLocationStateProvince
         {
             get
@@ -241,6 +261,7 @@ namespace ProjectFirma.Web.Models
                 {
                     return _projectLocationStateProvince;
                 }
+
                 SetProjectLocationStateProvince(HttpRequestStorage.DatabaseEntities.StateProvinces.ToList());
                 return _projectLocationStateProvince;
             }
@@ -255,8 +276,11 @@ namespace ProjectFirma.Web.Models
         {
             if (HasProjectLocationPoint)
             {
-                var stateProvince = stateProvinces.FirstOrDefault(x => x.StateProvinceFeatureForAnalysis.Intersects(ProjectLocationPoint));
-                ProjectLocationStateProvince = stateProvince != null ? stateProvince.StateProvinceAbbreviation : ViewUtilities.NaString;
+                var stateProvince = stateProvinces.FirstOrDefault(x =>
+                    x.StateProvinceFeatureForAnalysis.Intersects(ProjectLocationPoint));
+                ProjectLocationStateProvince = stateProvince != null
+                    ? stateProvince.StateProvinceAbbreviation
+                    : ViewUtilities.NaString;
             }
             else
             {
@@ -266,8 +290,13 @@ namespace ProjectFirma.Web.Models
 
         public GeospatialAreaValidationResult ValidateProjectGeospatialArea(GeospatialAreaType geospatialAreaType)
         {
-            var projectGeospatialAreaTypeNoteUpdate = ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
-            var incomplete = ProjectGeospatialAreas.All(x => x.GeospatialArea.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID) && projectGeospatialAreaTypeNoteUpdate == null;
+            var projectGeospatialAreaTypeNoteUpdate =
+                ProjectGeospatialAreaTypeNotes.SingleOrDefault(x =>
+                    x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
+            var incomplete =
+                ProjectGeospatialAreas.All(x =>
+                    x.GeospatialArea.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID) &&
+                projectGeospatialAreaTypeNoteUpdate == null;
             return new GeospatialAreaValidationResult(incomplete, geospatialAreaType);
         }
 
@@ -278,15 +307,21 @@ namespace ProjectFirma.Web.Models
 
         public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
         {
-            var projectGeospatialAreas = ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
+            var projectGeospatialAreas = ProjectGeospatialAreas.Where(x =>
+                x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
             return new HtmlString(projectGeospatialAreas.Any()
-                ? string.Join(", ", projectGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName).Select(x => x.GeospatialArea.GetDisplayNameAsUrl()))
+                ? string.Join(", ",
+                    projectGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName)
+                        .Select(x => x.GeospatialArea.GetDisplayNameAsUrl()))
                 : ViewUtilities.NaString);
         }
 
         public bool IsMyProject(Person person)
         {
-            return !person.IsAnonymousUser && (IsPersonThePrimaryContact(person) || person.Organization.IsMyProject(this) || person.PersonStewardOrganizations.Any(x=>x.Organization.IsMyProject(this)));
+            return !person.IsAnonymousUser && (IsPersonThePrimaryContact(person) ||
+                                               person.Organization.IsMyProject(this) ||
+                                               person.PersonStewardOrganizations.Any(x =>
+                                                   x.Organization.IsMyProject(this)));
         }
 
         public bool IsPersonThePrimaryContact(Person person)
@@ -295,6 +330,7 @@ namespace ProjectFirma.Web.Models
             {
                 return false;
             }
+
             var primaryContactPerson = GetPrimaryContact();
             return person.PersonID == primaryContactPerson?.PersonID;
         }
@@ -315,10 +351,12 @@ namespace ProjectFirma.Web.Models
                     .PerformanceMeasureDataSourceTypeID);
             if (technicalAssistanceValue != null)
             {
-                reportedPerformanceMeasures.AddRange(technicalAssistanceValue.GetReportedPerformanceMeasureValues(this));
+                reportedPerformanceMeasures.AddRange(technicalAssistanceValue
+                    .GetReportedPerformanceMeasureValues(this));
             }
 
-            return reportedPerformanceMeasures.OrderByDescending(pma => pma.CalendarYear).ThenBy(pma => pma.PerformanceMeasureID).ToList();
+            return reportedPerformanceMeasures.OrderByDescending(pma => pma.CalendarYear)
+                .ThenBy(pma => pma.PerformanceMeasureID).ToList();
         }
 
         public List<PerformanceMeasureReportedValue> GetNonVirtualPerformanceMeasureReportedValues()
@@ -326,7 +364,8 @@ namespace ProjectFirma.Web.Models
             var performanceMeasureReportedValues = PerformanceMeasureActuals.Select(x => x.PerformanceMeasure)
                 .Distinct(new HavePrimaryKeyComparer<PerformanceMeasure>())
                 .SelectMany(x => x.GetReportedPerformanceMeasureValues(this)).ToList();
-            return performanceMeasureReportedValues.OrderByDescending(pma => pma.CalendarYear).ThenBy(pma => pma.PerformanceMeasureID).ToList();
+            return performanceMeasureReportedValues.OrderByDescending(pma => pma.CalendarYear)
+                .ThenBy(pma => pma.PerformanceMeasureID).ToList();
         }
 
         public FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties)
@@ -335,8 +374,10 @@ namespace ProjectFirma.Web.Models
 
             if (ProjectLocationSimpleType == ProjectLocationSimpleType.PointOnMap && HasProjectLocationPoint)
             {
-                featureCollection.Features.Add(MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true));
+                featureCollection.Features.Add(
+                    MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true));
             }
+
             return featureCollection;
         }
 
@@ -365,30 +406,40 @@ namespace ProjectFirma.Web.Models
             return ProjectLocations.ToGeoJsonFeatureCollection();
         }
 
-        public static FeatureCollection MappedPointsToGeoJsonFeatureCollection(List<Project> projects, bool addProjectProperties, bool useDetailedCustomPopup)
+        public static FeatureCollection MappedPointsToGeoJsonFeatureCollection(List<Project> projects,
+            bool addProjectProperties, bool useDetailedCustomPopup)
         {
             var featureCollection = new FeatureCollection();
-            var filteredProjectList = projects.Where(x1 => x1.HasProjectLocationPoint).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
-            featureCollection.Features.AddRange(filteredProjectList.Select(project => project.MakePointFeatureWithRelevantProperties(project.ProjectLocationPoint, addProjectProperties, useDetailedCustomPopup)).ToList());
+            var filteredProjectList = projects.Where(x1 => x1.HasProjectLocationPoint)
+                .Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
+            featureCollection.Features.AddRange(filteredProjectList.Select(project =>
+                project.MakePointFeatureWithRelevantProperties(project.ProjectLocationPoint, addProjectProperties,
+                    useDetailedCustomPopup)).ToList());
             return featureCollection;
         }
 
-        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint, bool addProjectProperties, bool useDetailedCustomPopup)
+        public Feature MakePointFeatureWithRelevantProperties(DbGeometry projectLocationPoint,
+            bool addProjectProperties, bool useDetailedCustomPopup)
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(projectLocationPoint);
-            feature.Properties.Add("TaxonomyTrunkID", TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture));
+            feature.Properties.Add("TaxonomyTrunkID",
+                TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture));
             feature.Properties.Add("ProjectStageID", ProjectStageID.ToString(CultureInfo.InvariantCulture));
             feature.Properties.Add("Info", DisplayName);
             if (addProjectProperties)
             {
                 feature.Properties.Add("ProjectID", ProjectID.ToString(CultureInfo.InvariantCulture));
-                feature.Properties.Add("TaxonomyBranchID", TaxonomyLeaf.TaxonomyBranchID.ToString(CultureInfo.InvariantCulture));
+                feature.Properties.Add("TaxonomyBranchID",
+                    TaxonomyLeaf.TaxonomyBranchID.ToString(CultureInfo.InvariantCulture));
                 feature.Properties.Add("TaxonomyLeafID", TaxonomyLeafID.ToString(CultureInfo.InvariantCulture));
-                feature.Properties.Add("ClassificationID", string.Join(",", ProjectClassifications.Select(x => x.ClassificationID)));
+                feature.Properties.Add("ClassificationID",
+                    string.Join(",", ProjectClassifications.Select(x => x.ClassificationID)));
                 var associatedOrganizations = this.GetAssociatedOrganizations();
                 foreach (var type in associatedOrganizations.Select(x => x.RelationshipType).Distinct())
                 {
-                    feature.Properties.Add($"{type.RelationshipTypeName}ID", associatedOrganizations.Where(y => y.RelationshipType == type).Select(z => z.Organization.OrganizationID));
+                    feature.Properties.Add($"{type.RelationshipTypeName}ID",
+                        associatedOrganizations.Where(y => y.RelationshipType == type)
+                            .Select(z => z.Organization.OrganizationID));
                 }
 
                 if (useDetailedCustomPopup)
@@ -399,10 +450,10 @@ namespace ProjectFirma.Web.Models
                 {
                     feature.Properties.Add("PopupUrl", this.GetProjectSimpleMapPopupUrl());
                 }
-                
             }
+
             return feature;
-        }        
+        }
 
         public string Duration
         {
@@ -428,9 +479,12 @@ namespace ProjectFirma.Web.Models
                 // get the list of funders so we can exclude any that have other project associations
                 var fundingOrganizations = this.GetFundingOrganizations().Select(x => x.Organization.OrganizationID);
                 // Don't use GetAssociatedOrganizations because we don't care about funders for this list.
-                var associatedOrganizations = ProjectOrganizations.Where(x=>x.RelationshipType.ShowOnFactSheet && !fundingOrganizations.Contains(x.OrganizationID)).ToList();
-                associatedOrganizations.RemoveAll(x=>x.OrganizationID == GetPrimaryContactOrganization()?.OrganizationID);
-                var organizationNames = associatedOrganizations.OrderByDescending(x => x.RelationshipType.IsPrimaryContact)
+                var associatedOrganizations = ProjectOrganizations.Where(x =>
+                    x.RelationshipType.ShowOnFactSheet && !fundingOrganizations.Contains(x.OrganizationID)).ToList();
+                associatedOrganizations.RemoveAll(x =>
+                    x.OrganizationID == GetPrimaryContactOrganization()?.OrganizationID);
+                var organizationNames = associatedOrganizations
+                    .OrderByDescending(x => x.RelationshipType.IsPrimaryContact)
                     .ThenByDescending(x => x.RelationshipType.CanStewardProjects)
                     .ThenBy(x => x.Organization.OrganizationName).Select(x => x.Organization.OrganizationName)
                     .Distinct().ToList();
@@ -442,14 +496,17 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                return string.Join(", ", this.GetFundingOrganizations().OrderBy(x => x.Organization.OrganizationName).Select(x => x.Organization.OrganizationName));
+                return string.Join(", ",
+                    this.GetFundingOrganizations().OrderBy(x => x.Organization.OrganizationName)
+                        .Select(x => x.Organization.OrganizationName));
             }
         }
 
         public string AssocatedOrganizationNames(Organization organization)
         {
             var projectOrganizationAssocationNames = new List<string>();
-            this.GetAssociatedOrganizations().Where(x => x.Organization == organization).ForEach(x => projectOrganizationAssocationNames.Add(x.RelationshipType.RelationshipTypeName));
+            this.GetAssociatedOrganizations().Where(x => x.Organization == organization).ForEach(x =>
+                projectOrganizationAssocationNames.Add(x.RelationshipType.RelationshipTypeName));
             return string.Join(", ", projectOrganizationAssocationNames);
         }
 
@@ -460,14 +517,17 @@ namespace ProjectFirma.Web.Models
 
         private DateTime _lastUpdateDate;
         private bool _hasCheckedLastUpdateDate;
+
         public DateTime LastUpdateDate
         {
             get
             {
                 if (!_hasCheckedLastUpdateDate)
                 {
-                    LastUpdateDate = HttpRequestStorage.DatabaseEntities.AuditLogs.GetAuditLogEntriesForProject(this).Max(x => x.AuditLogDate);
+                    LastUpdateDate = HttpRequestStorage.DatabaseEntities.AuditLogs.GetAuditLogEntriesForProject(this)
+                        .Max(x => x.AuditLogDate);
                 }
+
                 return _lastUpdateDate;
             }
             set
@@ -477,14 +537,21 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public double? ProjectLocationPointLatitude => HasProjectLocationPoint ? ProjectLocationPoint.YCoordinate : null;
+        public double? ProjectLocationPointLatitude =>
+            HasProjectLocationPoint ? ProjectLocationPoint.YCoordinate : null;
 
-        public double? ProjectLocationPointLongitude => HasProjectLocationPoint ? ProjectLocationPoint.XCoordinate : null;
+        public double? ProjectLocationPointLongitude =>
+            HasProjectLocationPoint ? ProjectLocationPoint.XCoordinate : null;
 
         public FancyTreeNode ToFancyTreeNode()
         {
             var fancyTreeNode = new FancyTreeNode(
-                $"{UrlTemplate.MakeHrefString(this.GetFactSheetUrl(), ProjectName, ProjectName)}", FancyTreeNodeKey.ToString(), false) { ThemeColor = TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk.ThemeColor, MapUrl = null };
+                $"{UrlTemplate.MakeHrefString(this.GetFactSheetUrl(), ProjectName, ProjectName)}",
+                FancyTreeNodeKey.ToString(), false)
+            {
+                ThemeColor = TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk.ThemeColor,
+                MapUrl = null
+            };
             return fancyTreeNode;
         }
 
@@ -496,7 +563,9 @@ namespace ProjectFirma.Web.Models
         {
             var projectImageFileResourceIDsToDelete = projectImages.Select(x => x.FileResourceID).ToList();
             var projectImageIDsToDelete = projectImages.Select(x => x.ProjectImageID).ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectImageUpdates.Where(x => x.ProjectImageID.HasValue && projectImageIDsToDelete.Contains(x.ProjectImageID.Value)).ToList().DeleteProjectImageUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectImageUpdates
+                .Where(x => x.ProjectImageID.HasValue && projectImageIDsToDelete.Contains(x.ProjectImageID.Value))
+                .ToList().DeleteProjectImageUpdate();
             projectImages.DeleteProjectImage();
             projectImageFileResourceIDsToDelete.DeleteFileResource();
         }
@@ -527,7 +596,8 @@ namespace ProjectFirma.Web.Models
                 .GroupBy(x => x.FundingSource, new HavePrimaryKeyComparer<FundingSource>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.ExpenditureAmount));
 
-            var groupingFundingSources = expendituresDictionary.Keys.GroupBy(x => x.Organization.OrganizationType, new HavePrimaryKeyComparer<OrganizationType>());
+            var groupingFundingSources = expendituresDictionary.Keys.GroupBy(x => x.Organization.OrganizationType,
+                new HavePrimaryKeyComparer<OrganizationType>());
             foreach (var groupingFundingSource in groupingFundingSources)
             {
                 var sectorColor = ColorTranslator.FromHtml(groupingFundingSource.Key.LegendColor);
@@ -541,9 +611,11 @@ namespace ProjectFirma.Web.Models
                         var color = ColorTranslator.ToHtml(new HslColor(sectorColorHsl.Hue, sectorColorHsl.Saturation,
                             luminosity));
 
-                        googlePieChartSlices.Add(new GooglePieChartSlice(fundingSource.FixedLengthDisplayName, Convert.ToDouble(expendituresDictionary[fundingSource]), sortOrder++, color));
+                        googlePieChartSlices.Add(new GooglePieChartSlice(fundingSource.FixedLengthDisplayName,
+                            Convert.ToDouble(expendituresDictionary[fundingSource]), sortOrder++, color));
                     });
             }
+
             return googlePieChartSlices;
         }
 
@@ -559,31 +631,40 @@ namespace ProjectFirma.Web.Models
                 .GroupBy(x => x.FundingSource, new HavePrimaryKeyComparer<FundingSource>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.UnsecuredAmount));
 
-            var securedColorHsl = new { hue = 96.0, sat = 60.0 };
-            var unsecuredColorHsl = new { hue = 33.3, sat = 240.0 };
+            var securedColorHsl = new {hue = 96.0, sat = 60.0};
+            var unsecuredColorHsl = new {hue = 33.3, sat = 240.0};
 
-            securedAmountsDictionary.OrderBy(x => x.Key.FundingSourceName).ForEach((fundingSourceDictionaryItem, index) =>
-            {
-                var fundingSource = fundingSourceDictionaryItem.Key;
-                var fundingAmount = fundingSourceDictionaryItem.Value;
+            securedAmountsDictionary.OrderBy(x => x.Key.FundingSourceName).ForEach(
+                (fundingSourceDictionaryItem, index) =>
+                {
+                    var fundingSource = fundingSourceDictionaryItem.Key;
+                    var fundingAmount = fundingSourceDictionaryItem.Value;
 
-                var luminosity = 100.0 * (securedAmountsDictionary.Count - index - 1) / securedAmountsDictionary.Count + 120;
-                var color = ColorTranslator.ToHtml(new HslColor(securedColorHsl.hue, securedColorHsl.sat, luminosity));
+                    var luminosity = 100.0 * (securedAmountsDictionary.Count - index - 1) /
+                                     securedAmountsDictionary.Count + 120;
+                    var color = ColorTranslator.ToHtml(new HslColor(securedColorHsl.hue, securedColorHsl.sat,
+                        luminosity));
 
-                googlePieChartSlices.Add(new GooglePieChartSlice("Secured Funding: " + fundingSource.FixedLengthDisplayName, Convert.ToDouble(fundingAmount), sortOrder++, color));
+                    googlePieChartSlices.Add(new GooglePieChartSlice(
+                        "Secured Funding: " + fundingSource.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
+                        sortOrder++, color));
+                });
 
-            });
+            unsecuredAmountsDictionary.OrderBy(x => x.Key.FundingSourceName).ForEach(
+                (fundingSourceDictionaryItem, index) =>
+                {
+                    var fundingSource = fundingSourceDictionaryItem.Key;
+                    var fundingAmount = fundingSourceDictionaryItem.Value;
 
-            unsecuredAmountsDictionary.OrderBy(x => x.Key.FundingSourceName).ForEach((fundingSourceDictionaryItem, index) =>
-            {
-                var fundingSource = fundingSourceDictionaryItem.Key;
-                var fundingAmount = fundingSourceDictionaryItem.Value;
+                    var luminosity = 100.0 * (unsecuredAmountsDictionary.Count - index - 1) /
+                                     unsecuredAmountsDictionary.Count + 120;
+                    var color = ColorTranslator.ToHtml(new HslColor(unsecuredColorHsl.hue, unsecuredColorHsl.sat,
+                        luminosity));
 
-                var luminosity = 100.0 * (unsecuredAmountsDictionary.Count - index - 1) / unsecuredAmountsDictionary.Count + 120;
-                var color = ColorTranslator.ToHtml(new HslColor(unsecuredColorHsl.hue, unsecuredColorHsl.sat, luminosity));
-
-                googlePieChartSlices.Add(new GooglePieChartSlice("Targeted Funding: " + fundingSource.FixedLengthDisplayName, Convert.ToDouble(fundingAmount), sortOrder++, color));
-            });
+                    googlePieChartSlices.Add(new GooglePieChartSlice(
+                        "Targeted Funding: " + fundingSource.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
+                        sortOrder++, color));
+                });
 
             return googlePieChartSlices;
         }
@@ -591,12 +672,15 @@ namespace ProjectFirma.Web.Models
         public List<GooglePieChartSlice> GetRequestAmountGooglePieChartSlices()
         {
             var requestAmountsDictionary = GetFundingSourceRequestGooglePieChartSlices();
-            var noFundingSourceIdentifiedAmount = Convert.ToDouble(EstimatedTotalCost ?? 0) - requestAmountsDictionary.Sum(x => x.Value);
+            var noFundingSourceIdentifiedAmount =
+                Convert.ToDouble(EstimatedTotalCost ?? 0) - requestAmountsDictionary.Sum(x => x.Value);
             if (noFundingSourceIdentifiedAmount > 0)
             {
                 var sortOrder = requestAmountsDictionary.Any() ? requestAmountsDictionary.Max(x => x.SortOrder) + 1 : 0;
-                requestAmountsDictionary.Add(new GooglePieChartSlice("No Funding Source Identified", noFundingSourceIdentifiedAmount, sortOrder, "#dbdbdb"));
+                requestAmountsDictionary.Add(new GooglePieChartSlice("No Funding Source Identified",
+                    noFundingSourceIdentifiedAmount, sortOrder, "#dbdbdb"));
             }
+
             return requestAmountsDictionary;
         }
 
@@ -653,17 +737,20 @@ namespace ProjectFirma.Web.Models
 
         public static List<ProjectSectionSimple> GetApplicableProposalWizardSections(Project project, bool ignoreStatus)
         {
-            return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus)).OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
+            return ProjectWorkflowSectionGrouping.All.SelectMany(x => x.GetProjectCreateSections(project, ignoreStatus))
+                .OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
         }
 
         public string GetPlannedDate()
         {
             return PlannedDate?.ToShortDateString();
         }
+
         public string GetCompletionDateFormatted()
         {
             return CompletionDate?.ToShortDateString();
         }
+
         public string GetApprovalStartDateFormatted()
         {
             return ApprovalStartDate?.ToShortDateString();
