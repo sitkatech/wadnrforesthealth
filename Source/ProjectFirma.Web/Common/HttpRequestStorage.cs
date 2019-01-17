@@ -251,7 +251,7 @@ namespace ProjectFirma.Web.Common
             }
 
             // calls to the account provisioning service from keystone are authenticated calls, but not by forms auth tickets.  they come in with the user identity of the
-            // application pool that keystone runs under and have an authentication type of "Kerberos". these particular invokations need to be treated the same way as the
+            // application pool that keystone runs under and have an authentication type of "Kerberos". these particular invocations need to be treated the same way as the
             // unauthenticated calls over basic bindings - that is they do not map to a MM user and should be considered "anonymous".
 
             //These are OpenID AuthenticationTypes, WIF ones include "Keberos" and "Federation"
@@ -260,6 +260,10 @@ namespace ProjectFirma.Web.Common
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
                 var user = getUserByGuid(saml2UserClaims.UniqueIdentifier);
+                if (user == null)
+                {
+                    throw new Saml2ClaimNotFoundException($"User not found for GUID {saml2UserClaims.UniqueIdentifier} ({saml2UserClaims.DisplayName})");
+                }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)
                 {
