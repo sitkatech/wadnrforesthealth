@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectUpdate]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectUpdate;
         }
 
-        public static void DeleteProjectUpdate(this List<int> projectUpdateIDList)
+        public static void DeleteProjectUpdate(this IQueryable<ProjectUpdate> projectUpdates, List<int> projectUpdateIDList)
         {
             if(projectUpdateIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectUpdates.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID)));
+                projectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectUpdate(this ICollection<ProjectUpdate> projectUpdatesToDelete)
+        public static void DeleteProjectUpdate(this IQueryable<ProjectUpdate> projectUpdates, ICollection<ProjectUpdate> projectUpdatesToDelete)
         {
             if(projectUpdatesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectUpdates.RemoveRange(projectUpdatesToDelete);
+                var projectUpdateIDList = projectUpdatesToDelete.Select(x => x.ProjectUpdateID).ToList();
+                projectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectUpdate(this int projectUpdateID)
+        public static void DeleteProjectUpdate(this IQueryable<ProjectUpdate> projectUpdates, int projectUpdateID)
         {
-            DeleteProjectUpdate(new List<int> { projectUpdateID });
+            DeleteProjectUpdate(projectUpdates, new List<int> { projectUpdateID });
         }
 
-        public static void DeleteProjectUpdate(this ProjectUpdate projectUpdateToDelete)
+        public static void DeleteProjectUpdate(this IQueryable<ProjectUpdate> projectUpdates, ProjectUpdate projectUpdateToDelete)
         {
-            DeleteProjectUpdate(new List<ProjectUpdate> { projectUpdateToDelete });
+            DeleteProjectUpdate(projectUpdates, new List<ProjectUpdate> { projectUpdateToDelete });
         }
     }
 }

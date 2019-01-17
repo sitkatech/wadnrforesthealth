@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectLocationStaging](
 	[ProjectLocationStagingID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[PersonID] [int] NOT NULL,
 	[FeatureClassName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -29,22 +28,7 @@ REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[ProjectLocationStaging] CHECK CONSTRAINT [FK_ProjectLocationStaging_Person_PersonID]
 GO
-ALTER TABLE [dbo].[ProjectLocationStaging]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStaging_Person_PersonID_TenantID] FOREIGN KEY([PersonID], [TenantID])
-REFERENCES [dbo].[Person] ([PersonID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectLocationStaging] CHECK CONSTRAINT [FK_ProjectLocationStaging_Person_PersonID_TenantID]
-GO
 ALTER TABLE [dbo].[ProjectLocationStaging]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStaging_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectLocationStaging] CHECK CONSTRAINT [FK_ProjectLocationStaging_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[ProjectLocationStaging]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStaging_Project_ProjectID_TenantID] FOREIGN KEY([ProjectID], [TenantID])
-REFERENCES [dbo].[Project] ([ProjectID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectLocationStaging] CHECK CONSTRAINT [FK_ProjectLocationStaging_Project_ProjectID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectLocationStaging]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStaging_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectLocationStaging] CHECK CONSTRAINT [FK_ProjectLocationStaging_Tenant_TenantID]

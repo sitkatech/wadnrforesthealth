@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[FocusAreaLocationStaging]")]
-    public partial class FocusAreaLocationStaging : IHavePrimaryKey, IHaveATenantID
+    public partial class FocusAreaLocationStaging : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected FocusAreaLocationStaging()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,19 +93,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllFocusAreaLocationStagings.Remove(this);
+            dbContext.FocusAreaLocationStagings.Remove(this);
         }
 
         [Key]
         public int FocusAreaLocationStaggingID { get; set; }
-        public int TenantID { get; private set; }
         public int FocusAreaID { get; set; }
         public string FeatureClassName { get; set; }
         public string GeoJson { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return FocusAreaLocationStaggingID; } set { FocusAreaLocationStaggingID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual FocusArea FocusArea { get; set; }
 
         public static class FieldLengths

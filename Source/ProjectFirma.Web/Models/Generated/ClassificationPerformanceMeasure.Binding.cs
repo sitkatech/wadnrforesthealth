@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ClassificationPerformanceMeasure]")]
-    public partial class ClassificationPerformanceMeasure : IHavePrimaryKey, IHaveATenantID
+    public partial class ClassificationPerformanceMeasure : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ClassificationPerformanceMeasure()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -96,19 +95,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllClassificationPerformanceMeasures.Remove(this);
+            dbContext.ClassificationPerformanceMeasures.Remove(this);
         }
 
         [Key]
         public int ClassificationPerformanceMeasureID { get; set; }
-        public int TenantID { get; private set; }
         public int ClassificationID { get; set; }
         public int PerformanceMeasureID { get; set; }
         public bool IsPrimaryChart { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ClassificationPerformanceMeasureID; } set { ClassificationPerformanceMeasureID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Classification Classification { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
 

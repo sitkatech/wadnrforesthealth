@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectOrganization]")]
-    public partial class ProjectOrganization : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectOrganization : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectOrganization()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -98,19 +97,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectOrganizations.Remove(this);
+            dbContext.ProjectOrganizations.Remove(this);
         }
 
         [Key]
         public int ProjectOrganizationID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int OrganizationID { get; set; }
         public int RelationshipTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectOrganizationID; } set { ProjectOrganizationID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual RelationshipType RelationshipType { get; set; }

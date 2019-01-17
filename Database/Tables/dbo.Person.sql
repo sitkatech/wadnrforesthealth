@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Person](
 	[PersonID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[PersonUniqueIdentifier] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FirstName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[LastName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -28,46 +27,14 @@ CREATE TABLE [dbo].[Person](
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_Person_PersonID_TenantID] UNIQUE NONCLUSTERED 
-(
-	[PersonID] ASC,
-	[TenantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-GO
-SET ANSI_PADDING ON
-
-GO
-CREATE UNIQUE NONCLUSTERED INDEX [AK_Person_Email_TenantID] ON [dbo].[Person]
-(
-	[Email] ASC,
-	[TenantID] ASC
-)
-WHERE ([Email] IS NOT NULL)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-SET ANSI_PADDING ON
-
-GO
-CREATE UNIQUE NONCLUSTERED INDEX [AK_Person_PersonUniqueIdentifier_TenantID] ON [dbo].[Person]
-(
-	[PersonUniqueIdentifier] ASC,
-	[TenantID] ASC
-)
-WHERE ([PersonUniqueIdentifier] IS NOT NULL)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])
 GO
 ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Organization_OrganizationID]
-GO
-ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Organization_OrganizationID_TenantID] FOREIGN KEY([OrganizationID], [TenantID])
-REFERENCES [dbo].[Organization] ([OrganizationID], [TenantID])
-GO
-ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Organization_OrganizationID_TenantID]
 GO
 ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Person_AddedByPersonID_PersonID] FOREIGN KEY([AddedByPersonID])
 REFERENCES [dbo].[Person] ([PersonID])
@@ -78,8 +45,3 @@ ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Role_RoleID] F
 REFERENCES [dbo].[Role] ([RoleID])
 GO
 ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Role_RoleID]
-GO
-ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Tenant_TenantID]

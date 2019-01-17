@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PerformanceMeasureActualUpdate]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureActualUpdate;
         }
 
-        public static void DeletePerformanceMeasureActualUpdate(this List<int> performanceMeasureActualUpdateIDList)
+        public static void DeletePerformanceMeasureActualUpdate(this IQueryable<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates, List<int> performanceMeasureActualUpdateIDList)
         {
             if(performanceMeasureActualUpdateIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualUpdates.RemoveRange(HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID)));
+                performanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureActualUpdate(this ICollection<PerformanceMeasureActualUpdate> performanceMeasureActualUpdatesToDelete)
+        public static void DeletePerformanceMeasureActualUpdate(this IQueryable<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates, ICollection<PerformanceMeasureActualUpdate> performanceMeasureActualUpdatesToDelete)
         {
             if(performanceMeasureActualUpdatesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualUpdates.RemoveRange(performanceMeasureActualUpdatesToDelete);
+                var performanceMeasureActualUpdateIDList = performanceMeasureActualUpdatesToDelete.Select(x => x.PerformanceMeasureActualUpdateID).ToList();
+                performanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureActualUpdate(this int performanceMeasureActualUpdateID)
+        public static void DeletePerformanceMeasureActualUpdate(this IQueryable<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates, int performanceMeasureActualUpdateID)
         {
-            DeletePerformanceMeasureActualUpdate(new List<int> { performanceMeasureActualUpdateID });
+            DeletePerformanceMeasureActualUpdate(performanceMeasureActualUpdates, new List<int> { performanceMeasureActualUpdateID });
         }
 
-        public static void DeletePerformanceMeasureActualUpdate(this PerformanceMeasureActualUpdate performanceMeasureActualUpdateToDelete)
+        public static void DeletePerformanceMeasureActualUpdate(this IQueryable<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates, PerformanceMeasureActualUpdate performanceMeasureActualUpdateToDelete)
         {
-            DeletePerformanceMeasureActualUpdate(new List<PerformanceMeasureActualUpdate> { performanceMeasureActualUpdateToDelete });
+            DeletePerformanceMeasureActualUpdate(performanceMeasureActualUpdates, new List<PerformanceMeasureActualUpdate> { performanceMeasureActualUpdateToDelete });
         }
     }
 }

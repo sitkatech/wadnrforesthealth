@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PersonStewardGeospatialArea]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return personStewardGeospatialArea;
         }
 
-        public static void DeletePersonStewardGeospatialArea(this List<int> personStewardGeospatialAreaIDList)
+        public static void DeletePersonStewardGeospatialArea(this IQueryable<PersonStewardGeospatialArea> personStewardGeospatialAreas, List<int> personStewardGeospatialAreaIDList)
         {
             if(personStewardGeospatialAreaIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPersonStewardGeospatialAreas.RemoveRange(HttpRequestStorage.DatabaseEntities.PersonStewardGeospatialAreas.Where(x => personStewardGeospatialAreaIDList.Contains(x.PersonStewardGeospatialAreaID)));
+                personStewardGeospatialAreas.Where(x => personStewardGeospatialAreaIDList.Contains(x.PersonStewardGeospatialAreaID)).Delete();
             }
         }
 
-        public static void DeletePersonStewardGeospatialArea(this ICollection<PersonStewardGeospatialArea> personStewardGeospatialAreasToDelete)
+        public static void DeletePersonStewardGeospatialArea(this IQueryable<PersonStewardGeospatialArea> personStewardGeospatialAreas, ICollection<PersonStewardGeospatialArea> personStewardGeospatialAreasToDelete)
         {
             if(personStewardGeospatialAreasToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPersonStewardGeospatialAreas.RemoveRange(personStewardGeospatialAreasToDelete);
+                var personStewardGeospatialAreaIDList = personStewardGeospatialAreasToDelete.Select(x => x.PersonStewardGeospatialAreaID).ToList();
+                personStewardGeospatialAreas.Where(x => personStewardGeospatialAreaIDList.Contains(x.PersonStewardGeospatialAreaID)).Delete();
             }
         }
 
-        public static void DeletePersonStewardGeospatialArea(this int personStewardGeospatialAreaID)
+        public static void DeletePersonStewardGeospatialArea(this IQueryable<PersonStewardGeospatialArea> personStewardGeospatialAreas, int personStewardGeospatialAreaID)
         {
-            DeletePersonStewardGeospatialArea(new List<int> { personStewardGeospatialAreaID });
+            DeletePersonStewardGeospatialArea(personStewardGeospatialAreas, new List<int> { personStewardGeospatialAreaID });
         }
 
-        public static void DeletePersonStewardGeospatialArea(this PersonStewardGeospatialArea personStewardGeospatialAreaToDelete)
+        public static void DeletePersonStewardGeospatialArea(this IQueryable<PersonStewardGeospatialArea> personStewardGeospatialAreas, PersonStewardGeospatialArea personStewardGeospatialAreaToDelete)
         {
-            DeletePersonStewardGeospatialArea(new List<PersonStewardGeospatialArea> { personStewardGeospatialAreaToDelete });
+            DeletePersonStewardGeospatialArea(personStewardGeospatialAreas, new List<PersonStewardGeospatialArea> { personStewardGeospatialAreaToDelete });
         }
     }
 }

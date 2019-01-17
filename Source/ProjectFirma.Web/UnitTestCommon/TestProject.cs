@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                     // TODO: Verify that this is correct or use the correct value
                     ProjectApprovalStatus.Approved);
 
-                dbContext.AllProjects.Add(project);
+                dbContext.Projects.Add(project);
                 return project;
             }
 

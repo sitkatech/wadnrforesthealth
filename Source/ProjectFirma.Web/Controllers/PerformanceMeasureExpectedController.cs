@@ -59,9 +59,9 @@ namespace ProjectFirma.Web.Controllers
         private static ActionResult UpdatePerformanceMeasureExpecteds(EditPerformanceMeasureExpectedViewModel viewModel, List<PerformanceMeasureExpected> currentPerformanceMeasureExpecteds, Project project)
         {
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Load();
-            var allPerformanceMeasureExpecteds = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpecteds.Local;
+            var allPerformanceMeasureExpecteds = HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Local;
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Load();
-            var allPerformanceMeasureExpectedSubcategoryOptions = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpectedSubcategoryOptions.Local;
+            var allPerformanceMeasureExpectedSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Local;
             viewModel.UpdateModel(currentPerformanceMeasureExpecteds, allPerformanceMeasureExpecteds, allPerformanceMeasureExpectedSubcategoryOptions, project);
             return new ModalDialogFormJsonResult();
         }

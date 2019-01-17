@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Controllers
             List<ProjectFundingSourceRequest> currentProjectFundingSourceRequests, Project project)
         {
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
-            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequests.Local;
+            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Local;
             viewModel.UpdateModel(currentProjectFundingSourceRequests, allProjectFundingSourceRequests, project);
 
             

@@ -4,9 +4,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TreatmentActivity](
 	[TreatmentActivityID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[TreatmentActivityStartDate] [datetime] NOT NULL,
+	[TreatmentActivityStartDate] [datetime] NULL,
 	[TreatmentActivityEndDate] [datetime] NULL,
 	[TreatmentActivityProgramIndex] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TreatmentActivityProjectCode] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -42,11 +41,6 @@ ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentA
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_Tenant_TenantID]
 GO
 ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_TreatmentActivityStatus_TreamentActivityStatusID] FOREIGN KEY([TreatmentActivityStatusID])
 REFERENCES [dbo].[TreatmentActivityStatus] ([TreatmentActivityStatusID])

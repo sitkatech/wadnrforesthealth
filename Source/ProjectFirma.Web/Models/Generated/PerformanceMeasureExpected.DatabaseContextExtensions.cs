@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PerformanceMeasureExpected]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureExpected;
         }
 
-        public static void DeletePerformanceMeasureExpected(this List<int> performanceMeasureExpectedIDList)
+        public static void DeletePerformanceMeasureExpected(this IQueryable<PerformanceMeasureExpected> performanceMeasureExpecteds, List<int> performanceMeasureExpectedIDList)
         {
             if(performanceMeasureExpectedIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpecteds.RemoveRange(HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID)));
+                performanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureExpected(this ICollection<PerformanceMeasureExpected> performanceMeasureExpectedsToDelete)
+        public static void DeletePerformanceMeasureExpected(this IQueryable<PerformanceMeasureExpected> performanceMeasureExpecteds, ICollection<PerformanceMeasureExpected> performanceMeasureExpectedsToDelete)
         {
             if(performanceMeasureExpectedsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpecteds.RemoveRange(performanceMeasureExpectedsToDelete);
+                var performanceMeasureExpectedIDList = performanceMeasureExpectedsToDelete.Select(x => x.PerformanceMeasureExpectedID).ToList();
+                performanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureExpected(this int performanceMeasureExpectedID)
+        public static void DeletePerformanceMeasureExpected(this IQueryable<PerformanceMeasureExpected> performanceMeasureExpecteds, int performanceMeasureExpectedID)
         {
-            DeletePerformanceMeasureExpected(new List<int> { performanceMeasureExpectedID });
+            DeletePerformanceMeasureExpected(performanceMeasureExpecteds, new List<int> { performanceMeasureExpectedID });
         }
 
-        public static void DeletePerformanceMeasureExpected(this PerformanceMeasureExpected performanceMeasureExpectedToDelete)
+        public static void DeletePerformanceMeasureExpected(this IQueryable<PerformanceMeasureExpected> performanceMeasureExpecteds, PerformanceMeasureExpected performanceMeasureExpectedToDelete)
         {
-            DeletePerformanceMeasureExpected(new List<PerformanceMeasureExpected> { performanceMeasureExpectedToDelete });
+            DeletePerformanceMeasureExpected(performanceMeasureExpecteds, new List<PerformanceMeasureExpected> { performanceMeasureExpectedToDelete });
         }
     }
 }

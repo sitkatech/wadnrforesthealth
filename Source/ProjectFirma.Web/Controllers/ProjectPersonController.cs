@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
-            var projectPeople = HttpRequestStorage.DatabaseEntities.AllProjectPeople.Local;
+            var projectPeople = HttpRequestStorage.DatabaseEntities.ProjectPeople.Local;
 
             viewModel.UpdateModel(project, projectPeople);
             HttpRequestStorage.DatabaseEntities.SaveChanges();

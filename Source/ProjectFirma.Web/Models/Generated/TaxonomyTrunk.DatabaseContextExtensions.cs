@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[TaxonomyTrunk]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return taxonomyTrunk;
         }
 
-        public static void DeleteTaxonomyTrunk(this List<int> taxonomyTrunkIDList)
+        public static void DeleteTaxonomyTrunk(this IQueryable<TaxonomyTrunk> taxonomyTrunks, List<int> taxonomyTrunkIDList)
         {
             if(taxonomyTrunkIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTaxonomyTrunks.RemoveRange(HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID)));
+                taxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID)).Delete();
             }
         }
 
-        public static void DeleteTaxonomyTrunk(this ICollection<TaxonomyTrunk> taxonomyTrunksToDelete)
+        public static void DeleteTaxonomyTrunk(this IQueryable<TaxonomyTrunk> taxonomyTrunks, ICollection<TaxonomyTrunk> taxonomyTrunksToDelete)
         {
             if(taxonomyTrunksToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTaxonomyTrunks.RemoveRange(taxonomyTrunksToDelete);
+                var taxonomyTrunkIDList = taxonomyTrunksToDelete.Select(x => x.TaxonomyTrunkID).ToList();
+                taxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID)).Delete();
             }
         }
 
-        public static void DeleteTaxonomyTrunk(this int taxonomyTrunkID)
+        public static void DeleteTaxonomyTrunk(this IQueryable<TaxonomyTrunk> taxonomyTrunks, int taxonomyTrunkID)
         {
-            DeleteTaxonomyTrunk(new List<int> { taxonomyTrunkID });
+            DeleteTaxonomyTrunk(taxonomyTrunks, new List<int> { taxonomyTrunkID });
         }
 
-        public static void DeleteTaxonomyTrunk(this TaxonomyTrunk taxonomyTrunkToDelete)
+        public static void DeleteTaxonomyTrunk(this IQueryable<TaxonomyTrunk> taxonomyTrunks, TaxonomyTrunk taxonomyTrunkToDelete)
         {
-            DeleteTaxonomyTrunk(new List<TaxonomyTrunk> { taxonomyTrunkToDelete });
+            DeleteTaxonomyTrunk(taxonomyTrunks, new List<TaxonomyTrunk> { taxonomyTrunkToDelete });
         }
     }
 }

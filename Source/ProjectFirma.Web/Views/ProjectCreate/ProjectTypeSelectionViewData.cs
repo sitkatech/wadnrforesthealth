@@ -19,17 +19,12 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using ProjectFirma.Web.Models;
-
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ProjectTypeSelectionViewData : FirmaUserControlViewData
     {
-        public ProjectTypeSelectionViewData(TenantAttribute tenantAttribute)
+        public ProjectTypeSelectionViewData()
         {
-            TenantAttribute = tenantAttribute;
         }
-
-        public TenantAttribute TenantAttribute { get; set; }
     }
 }

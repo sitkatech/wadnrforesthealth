@@ -10,11 +10,8 @@ select
 	ga.GeospatialAreaName,
 	ga.GeospatialAreaFeature,
 	ga.GeospatialAreaFeature as Ogr_Geometry,
-	t.TenantID,
-	t.TenantName,
 	gat.GeospatialAreaTypeName
 	
 from
 	dbo.GeospatialArea ga
 	join dbo.GeospatialAreaType gat on ga.GeospatialAreaTypeID = gat.GeospatialAreaTypeID
-	join dbo.Tenant t on ga.TenantID = t.TenantID

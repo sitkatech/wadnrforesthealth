@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectDocumentUpdate](
 	[ProjectDocumentUpdateID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
 	[FileResourceID] [int] NOT NULL,
 	[DisplayName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -31,22 +30,7 @@ REFERENCES [dbo].[FileResource] ([FileResourceID])
 GO
 ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_FileResource_FileResourceID]
 GO
-ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocumentUpdate_FileResource_FileResourceID_TenantID] FOREIGN KEY([FileResourceID], [TenantID])
-REFERENCES [dbo].[FileResource] ([FileResourceID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_FileResource_FileResourceID_TenantID]
-GO
 ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID] FOREIGN KEY([ProjectUpdateBatchID])
 REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID])
 GO
 ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID]
-GO
-ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID] FOREIGN KEY([ProjectUpdateBatchID], [TenantID])
-REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectDocumentUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectDocumentUpdate_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectDocumentUpdate] CHECK CONSTRAINT [FK_ProjectDocumentUpdate_Tenant_TenantID]

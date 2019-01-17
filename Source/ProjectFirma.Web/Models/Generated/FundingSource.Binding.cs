@@ -16,21 +16,17 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[FundingSource]")]
-    public partial class FundingSource : IHavePrimaryKey, IHaveATenantID
+    public partial class FundingSource : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
         protected FundingSource()
         {
-            this.ContractorTimeActivities = new HashSet<ContractorTimeActivity>();
-            this.ProjectBudgets = new HashSet<ProjectBudget>();
-            this.ProjectBudgetUpdates = new HashSet<ProjectBudgetUpdate>();
             this.ProjectFundingSourceExpenditures = new HashSet<ProjectFundingSourceExpenditure>();
             this.ProjectFundingSourceExpenditureUpdates = new HashSet<ProjectFundingSourceExpenditureUpdate>();
             this.ProjectFundingSourceRequests = new HashSet<ProjectFundingSourceRequest>();
             this.ProjectFundingSourceRequestUpdates = new HashSet<ProjectFundingSourceRequestUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -87,13 +83,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ContractorTimeActivities.Any() || ProjectBudgets.Any() || ProjectBudgetUpdates.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceExpenditureUpdates.Any() || ProjectFundingSourceRequests.Any() || ProjectFundingSourceRequestUpdates.Any();
+            return ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceExpenditureUpdates.Any() || ProjectFundingSourceRequests.Any() || ProjectFundingSourceRequestUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundingSource).Name, typeof(ContractorTimeActivity).Name, typeof(ProjectBudget).Name, typeof(ProjectBudgetUpdate).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceExpenditureUpdate).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectFundingSourceRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FundingSource).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceExpenditureUpdate).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectFundingSourceRequestUpdate).Name};
 
 
         /// <summary>
@@ -102,28 +98,13 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllFundingSources.Remove(this);
+            dbContext.FundingSources.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
-
-            foreach(var x in ContractorTimeActivities.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectBudgets.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectBudgetUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
 
             foreach(var x in ProjectFundingSourceExpenditures.ToList())
             {
@@ -148,7 +129,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int FundingSourceID { get; set; }
-        public int TenantID { get; private set; }
         public int OrganizationID { get; set; }
         public string FundingSourceName { get; set; }
         public bool IsActive { get; set; }
@@ -157,14 +137,10 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FundingSourceID; } set { FundingSourceID = value; } }
 
-        public virtual ICollection<ContractorTimeActivity> ContractorTimeActivities { get; set; }
-        public virtual ICollection<ProjectBudget> ProjectBudgets { get; set; }
-        public virtual ICollection<ProjectBudgetUpdate> ProjectBudgetUpdates { get; set; }
         public virtual ICollection<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
         public virtual ICollection<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
         public virtual ICollection<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
         public virtual ICollection<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Organization Organization { get; set; }
 
         public static class FieldLengths

@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectExemptReportingYearUpdate]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectExemptReportingYearUpdate;
         }
 
-        public static void DeleteProjectExemptReportingYearUpdate(this List<int> projectExemptReportingYearUpdateIDList)
+        public static void DeleteProjectExemptReportingYearUpdate(this IQueryable<ProjectExemptReportingYearUpdate> projectExemptReportingYearUpdates, List<int> projectExemptReportingYearUpdateIDList)
         {
             if(projectExemptReportingYearUpdateIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectExemptReportingYearUpdates.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.Where(x => projectExemptReportingYearUpdateIDList.Contains(x.ProjectExemptReportingYearUpdateID)));
+                projectExemptReportingYearUpdates.Where(x => projectExemptReportingYearUpdateIDList.Contains(x.ProjectExemptReportingYearUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectExemptReportingYearUpdate(this ICollection<ProjectExemptReportingYearUpdate> projectExemptReportingYearUpdatesToDelete)
+        public static void DeleteProjectExemptReportingYearUpdate(this IQueryable<ProjectExemptReportingYearUpdate> projectExemptReportingYearUpdates, ICollection<ProjectExemptReportingYearUpdate> projectExemptReportingYearUpdatesToDelete)
         {
             if(projectExemptReportingYearUpdatesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectExemptReportingYearUpdates.RemoveRange(projectExemptReportingYearUpdatesToDelete);
+                var projectExemptReportingYearUpdateIDList = projectExemptReportingYearUpdatesToDelete.Select(x => x.ProjectExemptReportingYearUpdateID).ToList();
+                projectExemptReportingYearUpdates.Where(x => projectExemptReportingYearUpdateIDList.Contains(x.ProjectExemptReportingYearUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectExemptReportingYearUpdate(this int projectExemptReportingYearUpdateID)
+        public static void DeleteProjectExemptReportingYearUpdate(this IQueryable<ProjectExemptReportingYearUpdate> projectExemptReportingYearUpdates, int projectExemptReportingYearUpdateID)
         {
-            DeleteProjectExemptReportingYearUpdate(new List<int> { projectExemptReportingYearUpdateID });
+            DeleteProjectExemptReportingYearUpdate(projectExemptReportingYearUpdates, new List<int> { projectExemptReportingYearUpdateID });
         }
 
-        public static void DeleteProjectExemptReportingYearUpdate(this ProjectExemptReportingYearUpdate projectExemptReportingYearUpdateToDelete)
+        public static void DeleteProjectExemptReportingYearUpdate(this IQueryable<ProjectExemptReportingYearUpdate> projectExemptReportingYearUpdates, ProjectExemptReportingYearUpdate projectExemptReportingYearUpdateToDelete)
         {
-            DeleteProjectExemptReportingYearUpdate(new List<ProjectExemptReportingYearUpdate> { projectExemptReportingYearUpdateToDelete });
+            DeleteProjectExemptReportingYearUpdate(projectExemptReportingYearUpdates, new List<ProjectExemptReportingYearUpdate> { projectExemptReportingYearUpdateToDelete });
         }
     }
 }

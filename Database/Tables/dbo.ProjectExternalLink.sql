@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectExternalLink](
 	[ProjectExternalLinkID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[ExternalLinkLabel] [varchar](300) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ExternalLinkUrl] [varchar](300) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -19,13 +18,3 @@ ALTER TABLE [dbo].[ProjectExternalLink]  WITH CHECK ADD  CONSTRAINT [FK_ProjectE
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectExternalLink] CHECK CONSTRAINT [FK_ProjectExternalLink_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[ProjectExternalLink]  WITH CHECK ADD  CONSTRAINT [FK_ProjectExternalLink_Project_ProjectID_TenantID] FOREIGN KEY([ProjectID], [TenantID])
-REFERENCES [dbo].[Project] ([ProjectID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectExternalLink] CHECK CONSTRAINT [FK_ProjectExternalLink_Project_ProjectID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectExternalLink]  WITH CHECK ADD  CONSTRAINT [FK_ProjectExternalLink_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectExternalLink] CHECK CONSTRAINT [FK_ProjectExternalLink_Tenant_TenantID]

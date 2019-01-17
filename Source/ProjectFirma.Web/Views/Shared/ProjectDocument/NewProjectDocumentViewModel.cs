@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         public void UpdateModel(Models.Project project, Person currentPerson)
         {
             var fileResource = FileResource.CreateNewFromHttpPostedFile(File, currentPerson);
-            HttpRequestStorage.DatabaseEntities.AllFileResources.Add(fileResource);
+            HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
             var projectDocument = new Models.ProjectDocument(project.ProjectID, fileResource.FileResourceID, DisplayName)
             {
                 Description = Description
@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch, Person currentPerson)
         {
             var fileResource = FileResource.CreateNewFromHttpPostedFile(File, currentPerson);
-            HttpRequestStorage.DatabaseEntities.AllFileResources.Add(fileResource);
+            HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
             var projectDocument = new ProjectDocumentUpdate(projectUpdateBatch.ProjectID, fileResource.FileResourceID, DisplayName)
             {
                 Description = Description

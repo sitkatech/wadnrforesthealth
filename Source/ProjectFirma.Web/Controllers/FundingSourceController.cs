@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
                 true);
 
             viewModel.UpdateModel(fundingSource, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllFundingSources.Add(fundingSource);
+            HttpRequestStorage.DatabaseEntities.FundingSources.Add(fundingSource);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"{FieldDefinition.FundingSource.GetFieldDefinitionLabel()} {fundingSource.DisplayName} successfully created.");
 
@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteFundingSource(fundingSource, viewModel);
             }
-            fundingSource.DeleteFundingSource();
+            fundingSource.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay($"{FieldDefinition.FundingSource.GetFieldDefinitionLabel()} {name} successfully deleted.");
             return new ModalDialogFormJsonResult();
         }

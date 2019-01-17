@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
-using System.Linq;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Models;
@@ -106,7 +105,6 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
-        public string EditContractorTimeActivitiesUrl { get; }
         public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
@@ -333,9 +331,6 @@ namespace ProjectFirma.Web.Views.Project
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
                 new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
-
-            EditContractorTimeActivitiesUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
             EditTreatmentActivityUrl =
                 SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));

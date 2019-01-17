@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
             if (fieldDefinitionData == null)
             {
                 fieldDefinitionData = new FieldDefinitionData(fieldDefinitionPrimaryKey.EntityObject);
-                HttpRequestStorage.DatabaseEntities.AllFieldDefinitionDatas.Add(fieldDefinitionData);
+                HttpRequestStorage.DatabaseEntities.FieldDefinitionDatas.Add(fieldDefinitionData);
             }
 
             viewModel.UpdateModel(fieldDefinitionData);

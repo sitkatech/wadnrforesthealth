@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PersonStewardOrganization]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return personStewardOrganization;
         }
 
-        public static void DeletePersonStewardOrganization(this List<int> personStewardOrganizationIDList)
+        public static void DeletePersonStewardOrganization(this IQueryable<PersonStewardOrganization> personStewardOrganizations, List<int> personStewardOrganizationIDList)
         {
             if(personStewardOrganizationIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPersonStewardOrganizations.RemoveRange(HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.Where(x => personStewardOrganizationIDList.Contains(x.PersonStewardOrganizationID)));
+                personStewardOrganizations.Where(x => personStewardOrganizationIDList.Contains(x.PersonStewardOrganizationID)).Delete();
             }
         }
 
-        public static void DeletePersonStewardOrganization(this ICollection<PersonStewardOrganization> personStewardOrganizationsToDelete)
+        public static void DeletePersonStewardOrganization(this IQueryable<PersonStewardOrganization> personStewardOrganizations, ICollection<PersonStewardOrganization> personStewardOrganizationsToDelete)
         {
             if(personStewardOrganizationsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPersonStewardOrganizations.RemoveRange(personStewardOrganizationsToDelete);
+                var personStewardOrganizationIDList = personStewardOrganizationsToDelete.Select(x => x.PersonStewardOrganizationID).ToList();
+                personStewardOrganizations.Where(x => personStewardOrganizationIDList.Contains(x.PersonStewardOrganizationID)).Delete();
             }
         }
 
-        public static void DeletePersonStewardOrganization(this int personStewardOrganizationID)
+        public static void DeletePersonStewardOrganization(this IQueryable<PersonStewardOrganization> personStewardOrganizations, int personStewardOrganizationID)
         {
-            DeletePersonStewardOrganization(new List<int> { personStewardOrganizationID });
+            DeletePersonStewardOrganization(personStewardOrganizations, new List<int> { personStewardOrganizationID });
         }
 
-        public static void DeletePersonStewardOrganization(this PersonStewardOrganization personStewardOrganizationToDelete)
+        public static void DeletePersonStewardOrganization(this IQueryable<PersonStewardOrganization> personStewardOrganizations, PersonStewardOrganization personStewardOrganizationToDelete)
         {
-            DeletePersonStewardOrganization(new List<PersonStewardOrganization> { personStewardOrganizationToDelete });
+            DeletePersonStewardOrganization(personStewardOrganizations, new List<PersonStewardOrganization> { personStewardOrganizationToDelete });
         }
     }
 }
