@@ -650,10 +650,12 @@ namespace ProjectFirma.Web.Models
         {
             return PlannedDate?.ToShortDateString();
         }
+
         public string GetCompletionDateFormatted()
         {
             return CompletionDate?.ToShortDateString();
         }
+        
         public string GetApprovalStartDateFormatted()
         {
             return ApprovalStartDate?.ToShortDateString();
