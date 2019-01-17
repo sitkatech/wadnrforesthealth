@@ -22,17 +22,6 @@ namespace ProjectFirma.Web.Models
 
         public string AuditDescriptionString => FocusAreaName;
 
-        public HtmlString GetDisplayNameAsUrl()
-        {
-            return UrlTemplate.MakeHrefString(GetDetailUrl(), FocusAreaName);
-        }
-
-        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
-
-        public string GetDetailUrl()
-        {
-            return DetailUrlTemplate.ParameterReplace(FocusAreaID);
-        }
 
         public DbGeometry DbGeometry
         {

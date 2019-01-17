@@ -21,20 +21,17 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.FocusArea
+namespace ProjectFirma.Web.Views.Region
 {
-    public class IndexGridSpec : GridSpec<Models.FocusArea>
+    public class IndexGridSpec : GridSpec<Models.Region>
     {
         public IndexGridSpec(Person person)
         {
-            
-            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteFocusAreaUrl(), new FocusAreaManageFeature().HasPermissionByPerson(person), x.CanFocusAreaBeDeleted()), 30, DhtmlxGridColumnFilterType.None);
-            Add("Focus Area", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FocusAreaName), 270, DhtmlxGridColumnFilterType.Html);
-            Add("Status", a => a.FocusAreaStatus.FocusAreaStatusDisplayName, 75, DhtmlxGridColumnFilterType.Text);
+            Add("Region", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.RegionName), 300, DhtmlxGridColumnFilterType.Html);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
         }
     }
