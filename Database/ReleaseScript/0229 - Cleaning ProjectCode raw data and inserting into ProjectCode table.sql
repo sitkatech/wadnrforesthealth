@@ -42,8 +42,8 @@ FROM dbo.tmpChildrenGrantsInGrantsTab)
  insert into @separatedProjectCodes (abbrev)
 	select * from dbo.fnSplitString (@AllProjectCodes, ',')
  
-insert into dbo.ProjectCode(TenantID, ProjectCodeAbbrev)
-	select distinct 10, REPLACE(LTRIM(RTRIM(abbrev)), '"', '') from @separatedProjectCodes
+insert into dbo.ProjectCode(ProjectCodeAbbrev)
+	select distinct REPLACE(LTRIM(RTRIM(abbrev)), '"', '') from @separatedProjectCodes
 	where LTRIM(RTRIM(abbrev)) not in ('', '---')
 	order by REPLACE(LTRIM(RTRIM(abbrev)), '"', '')
 select * from dbo.ProjectCode

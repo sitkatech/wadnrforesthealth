@@ -4,16 +4,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectCode](
 	[ProjectCodeID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
-	[ProjectCode] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[ProjectCodeAbbrev] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_ProjectCode_ProjectCodeID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectCodeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
-GO
-ALTER TABLE [dbo].[ProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_ProjectCode_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectCode] CHECK CONSTRAINT [FK_ProjectCode_Tenant_TenantID]

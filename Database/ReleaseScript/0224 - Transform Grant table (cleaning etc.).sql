@@ -33,9 +33,8 @@ where Grant_Number = '16-DG-11062765-731'
 
 --select * from tmpGrantsFlatFile
 
-insert into dbo.[Grant] (TenantID, GrantNumber, StartDate, EndDate, AwardedFunds)
+insert into dbo.[Grant] (GrantNumber, StartDate, EndDate, AwardedFunds)
 select 
-    (select TenantID from Tenant) as TenantID,
 	gt.Grant_Number, 
 	gt.Start_Date,
 	gt.End_Date,

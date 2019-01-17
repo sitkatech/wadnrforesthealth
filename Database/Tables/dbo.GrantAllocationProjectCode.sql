@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[GrantAllocationProjectCode](
 	[GrantAllocationProjectCodeID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[ProjectCodeID] [int] NOT NULL,
  CONSTRAINT [PK_GrantAllocationProjectCode_GrantAllocationProjectCodeID] PRIMARY KEY CLUSTERED 
@@ -20,16 +19,11 @@ CREATE TABLE [dbo].[GrantAllocationProjectCode](
 
 GO
 ALTER TABLE [dbo].[GrantAllocationProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
-REFERENCES [dbo].[Tenant] ([TenantID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
 ALTER TABLE [dbo].[GrantAllocationProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID]
 GO
 ALTER TABLE [dbo].[GrantAllocationProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID] FOREIGN KEY([ProjectCodeID])
-REFERENCES [dbo].[Tenant] ([TenantID])
+REFERENCES [dbo].[ProjectCode] ([ProjectCodeID])
 GO
 ALTER TABLE [dbo].[GrantAllocationProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID]
-GO
-ALTER TABLE [dbo].[GrantAllocationProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProjectCode_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[GrantAllocationProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProjectCode_Tenant_TenantID]
