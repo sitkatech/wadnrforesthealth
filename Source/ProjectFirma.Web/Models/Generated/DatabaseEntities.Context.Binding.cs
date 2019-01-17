@@ -198,6 +198,7 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<ProjectPerson> ProjectPeople { get { return AllProjectPeople.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectPersonUpdate> AllProjectPersonUpdates { get; set; }
         public virtual IQueryable<ProjectPersonUpdate> ProjectPersonUpdates { get { return AllProjectPersonUpdates.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<ProjectRegion> ProjectRegions { get; set; }
         public virtual DbSet<Project> AllProjects { get; set; }
         public virtual IQueryable<Project> Projects { get { return AllProjects.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectTag> AllProjectTags { get; set; }
@@ -210,6 +211,7 @@ namespace ProjectFirma.Web.Models
         public virtual IQueryable<ProjectUpdateHistory> ProjectUpdateHistories { get { return AllProjectUpdateHistories.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<ProjectUpdate> AllProjectUpdates { get; set; }
         public virtual IQueryable<ProjectUpdate> ProjectUpdates { get { return AllProjectUpdates.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
+        public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<RelationshipType> AllRelationshipTypes { get; set; }
         public virtual IQueryable<RelationshipType> RelationshipTypes { get { return AllRelationshipTypes.Where(x => x.TenantID == HttpRequestStorage.Tenant.TenantID); } }
         public virtual DbSet<SnapshotOrganizationTypeExpenditure> AllSnapshotOrganizationTypeExpenditures { get; set; }
@@ -630,6 +632,9 @@ namespace ProjectFirma.Web.Models
                 case "ProjectPersonUpdate":
                     return ProjectPersonUpdates.GetProjectPersonUpdate(primaryKey);
 
+                case "ProjectRegion":
+                    return ProjectRegions.GetProjectRegion(primaryKey);
+
                 case "Project":
                     return Projects.GetProject(primaryKey);
 
@@ -672,6 +677,9 @@ namespace ProjectFirma.Web.Models
                     var projectWorkflowSectionGrouping = ProjectWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectWorkflowSectionGrouping, "ProjectWorkflowSectionGrouping", primaryKey);
                     return projectWorkflowSectionGrouping;
+
+                case "Region":
+                    return Regions.GetRegion(primaryKey);
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);
