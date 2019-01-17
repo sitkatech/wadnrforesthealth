@@ -5,6 +5,7 @@ CREATE TABLE dbo.GrantAllocation
     GrantAllocationID int not NULL identity(1,1) Constraint PK_GrantAllocation_GrantAllocationID primary key,
     TenantID int not null constraint FK_GrantAllocation_Tenant_TenantID references dbo.Tenant(TenantID),
 	GrantID int not null constraint FK_GrantAllocation_Grant_GrantID references dbo.[Grant](GrantID),
+	ProgramIndex nvarchar(100) NULL,
 	ProjectName nvarchar(100) NULL,
     StartDate DateTime not NULL,
     EndDate DateTime not NULL,
