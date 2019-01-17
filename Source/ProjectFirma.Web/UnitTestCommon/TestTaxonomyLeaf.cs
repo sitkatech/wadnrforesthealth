@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var taxonomyBranch = TestTaxonomyBranch.Create(dbContext);
                 var taxonomyLeaf = new TaxonomyLeaf(taxonomyBranch, MakeTestName("Test Taxonomy Tier One", TaxonomyLeaf.FieldLengths.TaxonomyLeafName));
                 var newTaxonomyLeaf = taxonomyLeaf;
-                dbContext.AllTaxonomyLeafs.Add(newTaxonomyLeaf);
+                dbContext.TaxonomyLeafs.Add(newTaxonomyLeaf);
                 return newTaxonomyLeaf;
             }
         }

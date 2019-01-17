@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ClassificationSystem]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return classificationSystem;
         }
 
-        public static void DeleteClassificationSystem(this List<int> classificationSystemIDList)
+        public static void DeleteClassificationSystem(this IQueryable<ClassificationSystem> classificationSystems, List<int> classificationSystemIDList)
         {
             if(classificationSystemIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllClassificationSystems.RemoveRange(HttpRequestStorage.DatabaseEntities.ClassificationSystems.Where(x => classificationSystemIDList.Contains(x.ClassificationSystemID)));
+                classificationSystems.Where(x => classificationSystemIDList.Contains(x.ClassificationSystemID)).Delete();
             }
         }
 
-        public static void DeleteClassificationSystem(this ICollection<ClassificationSystem> classificationSystemsToDelete)
+        public static void DeleteClassificationSystem(this IQueryable<ClassificationSystem> classificationSystems, ICollection<ClassificationSystem> classificationSystemsToDelete)
         {
             if(classificationSystemsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllClassificationSystems.RemoveRange(classificationSystemsToDelete);
+                var classificationSystemIDList = classificationSystemsToDelete.Select(x => x.ClassificationSystemID).ToList();
+                classificationSystems.Where(x => classificationSystemIDList.Contains(x.ClassificationSystemID)).Delete();
             }
         }
 
-        public static void DeleteClassificationSystem(this int classificationSystemID)
+        public static void DeleteClassificationSystem(this IQueryable<ClassificationSystem> classificationSystems, int classificationSystemID)
         {
-            DeleteClassificationSystem(new List<int> { classificationSystemID });
+            DeleteClassificationSystem(classificationSystems, new List<int> { classificationSystemID });
         }
 
-        public static void DeleteClassificationSystem(this ClassificationSystem classificationSystemToDelete)
+        public static void DeleteClassificationSystem(this IQueryable<ClassificationSystem> classificationSystems, ClassificationSystem classificationSystemToDelete)
         {
-            DeleteClassificationSystem(new List<ClassificationSystem> { classificationSystemToDelete });
+            DeleteClassificationSystem(classificationSystems, new List<ClassificationSystem> { classificationSystemToDelete });
         }
     }
 }

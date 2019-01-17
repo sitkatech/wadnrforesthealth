@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static TaxonomyTrunk Create(DatabaseEntities dbContext)
             {
                 var taxonomyTrunk = new TaxonomyTrunk(MakeTestName("Taxonomy Tier Three", TaxonomyTrunk.FieldLengths.TaxonomyTrunkName));
-                dbContext.AllTaxonomyTrunks.Add(taxonomyTrunk);
+                dbContext.TaxonomyTrunks.Add(taxonomyTrunk);
                 return taxonomyTrunk;
             }
         }

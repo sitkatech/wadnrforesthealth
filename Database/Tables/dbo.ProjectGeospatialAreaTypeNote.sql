@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectGeospatialAreaTypeNote](
 	[ProjectGeospatialAreaTypeNoteID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[GeospatialAreaTypeID] [int] NOT NULL,
 	[Notes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -25,22 +24,7 @@ REFERENCES [dbo].[GeospatialAreaType] ([GeospatialAreaTypeID])
 GO
 ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote] CHECK CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID]
 GO
-ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID_TenantID] FOREIGN KEY([GeospatialAreaTypeID], [TenantID])
-REFERENCES [dbo].[GeospatialAreaType] ([GeospatialAreaTypeID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote] CHECK CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID_TenantID]
-GO
 ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote] CHECK CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_Project_ProjectID_TenantID] FOREIGN KEY([ProjectID], [TenantID])
-REFERENCES [dbo].[Project] ([ProjectID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote] CHECK CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_Project_ProjectID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectGeospatialAreaTypeNote] CHECK CONSTRAINT [FK_ProjectGeospatialAreaTypeNote_Tenant_TenantID]

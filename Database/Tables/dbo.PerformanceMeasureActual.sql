@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[PerformanceMeasureActual](
 	[PerformanceMeasureActualID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[PerformanceMeasureID] [int] NOT NULL,
 	[CalendarYear] [int] NOT NULL,
@@ -17,11 +16,6 @@ CREATE TABLE [dbo].[PerformanceMeasureActual](
 (
 	[PerformanceMeasureActualID] ASC,
 	[PerformanceMeasureID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_PerformanceMeasureActual_PerformanceMeasureActualID_TenantID] UNIQUE NONCLUSTERED 
-(
-	[PerformanceMeasureActualID] ASC,
-	[TenantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -31,22 +25,7 @@ REFERENCES [dbo].[PerformanceMeasure] ([PerformanceMeasureID])
 GO
 ALTER TABLE [dbo].[PerformanceMeasureActual] CHECK CONSTRAINT [FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID]
 GO
-ALTER TABLE [dbo].[PerformanceMeasureActual]  WITH CHECK ADD  CONSTRAINT [FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID_TenantID] FOREIGN KEY([PerformanceMeasureID], [TenantID])
-REFERENCES [dbo].[PerformanceMeasure] ([PerformanceMeasureID], [TenantID])
-GO
-ALTER TABLE [dbo].[PerformanceMeasureActual] CHECK CONSTRAINT [FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID_TenantID]
-GO
 ALTER TABLE [dbo].[PerformanceMeasureActual]  WITH CHECK ADD  CONSTRAINT [FK_PerformanceMeasureActual_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[PerformanceMeasureActual] CHECK CONSTRAINT [FK_PerformanceMeasureActual_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[PerformanceMeasureActual]  WITH CHECK ADD  CONSTRAINT [FK_PerformanceMeasureActual_Project_ProjectID_TenantID] FOREIGN KEY([ProjectID], [TenantID])
-REFERENCES [dbo].[Project] ([ProjectID], [TenantID])
-GO
-ALTER TABLE [dbo].[PerformanceMeasureActual] CHECK CONSTRAINT [FK_PerformanceMeasureActual_Project_ProjectID_TenantID]
-GO
-ALTER TABLE [dbo].[PerformanceMeasureActual]  WITH CHECK ADD  CONSTRAINT [FK_PerformanceMeasureActual_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[PerformanceMeasureActual] CHECK CONSTRAINT [FK_PerformanceMeasureActual_Tenant_TenantID]

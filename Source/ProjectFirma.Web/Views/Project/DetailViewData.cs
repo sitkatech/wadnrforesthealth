@@ -18,8 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using LtInfo.Common;
-using ProjectFirma.Web.Common;
+using System.Collections.Generic;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
@@ -105,7 +104,6 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
-        public string EditContractorTimeActivitiesUrl { get; }
         public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
@@ -332,9 +330,6 @@ namespace ProjectFirma.Web.Views.Project
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
                 new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
-
-            EditContractorTimeActivitiesUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
             EditTreatmentActivityUrl =
                 SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));

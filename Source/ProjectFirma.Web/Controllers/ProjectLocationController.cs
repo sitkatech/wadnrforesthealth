@@ -51,7 +51,6 @@ namespace ProjectFirma.Web.Controllers
         {
             var layerGeoJsons = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide);
             var mapInitJson = new MapInitJson($"project_{project.ProjectID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) {AllowFullScreen = false, DisablePopups = true};
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
             var mapPostUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationFormID(project.ProjectID);
             var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
@@ -156,7 +155,10 @@ namespace ProjectFirma.Web.Controllers
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 httpPostedFileBase.SaveAs(gdbFile.FullName);
-                project.ProjectLocationStagings.ToList().DeleteProjectLocationStaging();
+                foreach (var projectLocationStaging in project.ProjectLocationStagings)
+                {
+                    projectLocationStaging.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
                 project.ProjectLocationStagings.Clear();
                 ProjectLocationStaging.CreateProjectLocationStagingListFromGdb(gdbFile, project, CurrentPerson);
             }
@@ -211,8 +213,10 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
-            var projectLocations = project.ProjectLocations.ToList();
-            projectLocations.DeleteProjectLocation();
+            foreach (var projectLocation in project.ProjectLocations)
+            {
+                projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
             project.ProjectLocations.Clear();
             if (viewModel.WktAndAnnotations != null)
             {

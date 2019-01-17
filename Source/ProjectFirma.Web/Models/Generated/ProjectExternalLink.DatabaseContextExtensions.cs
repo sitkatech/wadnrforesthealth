@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectExternalLink]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectExternalLink;
         }
 
-        public static void DeleteProjectExternalLink(this List<int> projectExternalLinkIDList)
+        public static void DeleteProjectExternalLink(this IQueryable<ProjectExternalLink> projectExternalLinks, List<int> projectExternalLinkIDList)
         {
             if(projectExternalLinkIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectExternalLinks.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID)));
+                projectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID)).Delete();
             }
         }
 
-        public static void DeleteProjectExternalLink(this ICollection<ProjectExternalLink> projectExternalLinksToDelete)
+        public static void DeleteProjectExternalLink(this IQueryable<ProjectExternalLink> projectExternalLinks, ICollection<ProjectExternalLink> projectExternalLinksToDelete)
         {
             if(projectExternalLinksToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectExternalLinks.RemoveRange(projectExternalLinksToDelete);
+                var projectExternalLinkIDList = projectExternalLinksToDelete.Select(x => x.ProjectExternalLinkID).ToList();
+                projectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID)).Delete();
             }
         }
 
-        public static void DeleteProjectExternalLink(this int projectExternalLinkID)
+        public static void DeleteProjectExternalLink(this IQueryable<ProjectExternalLink> projectExternalLinks, int projectExternalLinkID)
         {
-            DeleteProjectExternalLink(new List<int> { projectExternalLinkID });
+            DeleteProjectExternalLink(projectExternalLinks, new List<int> { projectExternalLinkID });
         }
 
-        public static void DeleteProjectExternalLink(this ProjectExternalLink projectExternalLinkToDelete)
+        public static void DeleteProjectExternalLink(this IQueryable<ProjectExternalLink> projectExternalLinks, ProjectExternalLink projectExternalLinkToDelete)
         {
-            DeleteProjectExternalLink(new List<ProjectExternalLink> { projectExternalLinkToDelete });
+            DeleteProjectExternalLink(projectExternalLinks, new List<ProjectExternalLink> { projectExternalLinkToDelete });
         }
     }
 }

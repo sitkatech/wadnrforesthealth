@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectGeospatialAreaTypeNote]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectGeospatialAreaTypeNote;
         }
 
-        public static void DeleteProjectGeospatialAreaTypeNote(this List<int> projectGeospatialAreaTypeNoteIDList)
+        public static void DeleteProjectGeospatialAreaTypeNote(this IQueryable<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotes, List<int> projectGeospatialAreaTypeNoteIDList)
         {
             if(projectGeospatialAreaTypeNoteIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreaTypeNotes.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreaTypeNotes.Where(x => projectGeospatialAreaTypeNoteIDList.Contains(x.ProjectGeospatialAreaTypeNoteID)));
+                projectGeospatialAreaTypeNotes.Where(x => projectGeospatialAreaTypeNoteIDList.Contains(x.ProjectGeospatialAreaTypeNoteID)).Delete();
             }
         }
 
-        public static void DeleteProjectGeospatialAreaTypeNote(this ICollection<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotesToDelete)
+        public static void DeleteProjectGeospatialAreaTypeNote(this IQueryable<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotes, ICollection<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotesToDelete)
         {
             if(projectGeospatialAreaTypeNotesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreaTypeNotes.RemoveRange(projectGeospatialAreaTypeNotesToDelete);
+                var projectGeospatialAreaTypeNoteIDList = projectGeospatialAreaTypeNotesToDelete.Select(x => x.ProjectGeospatialAreaTypeNoteID).ToList();
+                projectGeospatialAreaTypeNotes.Where(x => projectGeospatialAreaTypeNoteIDList.Contains(x.ProjectGeospatialAreaTypeNoteID)).Delete();
             }
         }
 
-        public static void DeleteProjectGeospatialAreaTypeNote(this int projectGeospatialAreaTypeNoteID)
+        public static void DeleteProjectGeospatialAreaTypeNote(this IQueryable<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotes, int projectGeospatialAreaTypeNoteID)
         {
-            DeleteProjectGeospatialAreaTypeNote(new List<int> { projectGeospatialAreaTypeNoteID });
+            DeleteProjectGeospatialAreaTypeNote(projectGeospatialAreaTypeNotes, new List<int> { projectGeospatialAreaTypeNoteID });
         }
 
-        public static void DeleteProjectGeospatialAreaTypeNote(this ProjectGeospatialAreaTypeNote projectGeospatialAreaTypeNoteToDelete)
+        public static void DeleteProjectGeospatialAreaTypeNote(this IQueryable<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotes, ProjectGeospatialAreaTypeNote projectGeospatialAreaTypeNoteToDelete)
         {
-            DeleteProjectGeospatialAreaTypeNote(new List<ProjectGeospatialAreaTypeNote> { projectGeospatialAreaTypeNoteToDelete });
+            DeleteProjectGeospatialAreaTypeNote(projectGeospatialAreaTypeNotes, new List<ProjectGeospatialAreaTypeNote> { projectGeospatialAreaTypeNoteToDelete });
         }
     }
 }

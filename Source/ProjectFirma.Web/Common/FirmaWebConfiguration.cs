@@ -19,11 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Configuration;
 using LtInfo.Common;
-using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Common
 {
@@ -48,22 +45,11 @@ namespace ProjectFirma.Web.Common
         public static readonly string Saml2IDPCertificateThumbPrint = SitkaConfiguration.GetRequiredAppSetting("SamlIDPCertificateThumbPrint");
         public static readonly string ADFSEndPoint = SitkaConfiguration.GetRequiredAppSetting("ADFSEndPoint");
 
-        public static readonly string CanonicalHostName = CanonicalHostNames.FirstOrDefault();
-        public static List<string> CanonicalHostNames => Tenant.All.OrderBy(x => x.TenantID).Select(x => FirmaEnvironment.GetCanonicalHostNameForEnvironment(x)).ToList();
+        public static readonly string CanonicalHostName = SitkaConfiguration.GetRequiredAppSetting("CanonicalHostName");
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
         {
-            //First search for perfect match
-            var canonicalHostNames = CanonicalHostNames;
-            var result = canonicalHostNames.FirstOrDefault(h => string.Equals(h, hostName, StringComparison.InvariantCultureIgnoreCase));
-
-            if (!string.IsNullOrWhiteSpace(result) || !useApproximateMatch)
-            {
-                return result;
-            }
-
-            //Use the domain name  (laketahoeinfo.org -->  should use www.laketahoeinfo.org for the match)
-            return canonicalHostNames.FirstOrDefault(h => h.EndsWith(hostName, StringComparison.InvariantCultureIgnoreCase)) ?? CanonicalHostName;
+            return CanonicalHostName;
         }
     }
 }

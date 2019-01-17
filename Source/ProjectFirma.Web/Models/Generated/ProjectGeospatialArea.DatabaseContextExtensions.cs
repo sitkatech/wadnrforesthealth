@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectGeospatialArea]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectGeospatialArea;
         }
 
-        public static void DeleteProjectGeospatialArea(this List<int> projectGeospatialAreaIDList)
+        public static void DeleteProjectGeospatialArea(this IQueryable<ProjectGeospatialArea> projectGeospatialAreas, List<int> projectGeospatialAreaIDList)
         {
             if(projectGeospatialAreaIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreas.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreas.Where(x => projectGeospatialAreaIDList.Contains(x.ProjectGeospatialAreaID)));
+                projectGeospatialAreas.Where(x => projectGeospatialAreaIDList.Contains(x.ProjectGeospatialAreaID)).Delete();
             }
         }
 
-        public static void DeleteProjectGeospatialArea(this ICollection<ProjectGeospatialArea> projectGeospatialAreasToDelete)
+        public static void DeleteProjectGeospatialArea(this IQueryable<ProjectGeospatialArea> projectGeospatialAreas, ICollection<ProjectGeospatialArea> projectGeospatialAreasToDelete)
         {
             if(projectGeospatialAreasToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreas.RemoveRange(projectGeospatialAreasToDelete);
+                var projectGeospatialAreaIDList = projectGeospatialAreasToDelete.Select(x => x.ProjectGeospatialAreaID).ToList();
+                projectGeospatialAreas.Where(x => projectGeospatialAreaIDList.Contains(x.ProjectGeospatialAreaID)).Delete();
             }
         }
 
-        public static void DeleteProjectGeospatialArea(this int projectGeospatialAreaID)
+        public static void DeleteProjectGeospatialArea(this IQueryable<ProjectGeospatialArea> projectGeospatialAreas, int projectGeospatialAreaID)
         {
-            DeleteProjectGeospatialArea(new List<int> { projectGeospatialAreaID });
+            DeleteProjectGeospatialArea(projectGeospatialAreas, new List<int> { projectGeospatialAreaID });
         }
 
-        public static void DeleteProjectGeospatialArea(this ProjectGeospatialArea projectGeospatialAreaToDelete)
+        public static void DeleteProjectGeospatialArea(this IQueryable<ProjectGeospatialArea> projectGeospatialAreas, ProjectGeospatialArea projectGeospatialAreaToDelete)
         {
-            DeleteProjectGeospatialArea(new List<ProjectGeospatialArea> { projectGeospatialAreaToDelete });
+            DeleteProjectGeospatialArea(projectGeospatialAreas, new List<ProjectGeospatialArea> { projectGeospatialAreaToDelete });
         }
     }
 }

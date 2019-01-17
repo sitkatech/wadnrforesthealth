@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 string testFundingSourceName = TestFramework.MakeTestName("Test Funding Source");
                 var fundingSource = new FundingSource(organization, testFundingSourceName, true);
 
-                dbContext.AllFundingSources.Add(fundingSource);
+                dbContext.FundingSources.Add(fundingSource);
                 return fundingSource;
             }
 

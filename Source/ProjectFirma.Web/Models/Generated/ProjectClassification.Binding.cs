@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectClassification]")]
-    public partial class ProjectClassification : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectClassification : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectClassification()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,19 +93,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectClassifications.Remove(this);
+            dbContext.ProjectClassifications.Remove(this);
         }
 
         [Key]
         public int ProjectClassificationID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int ClassificationID { get; set; }
         public string ProjectClassificationNotes { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectClassificationID; } set { ProjectClassificationID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual Classification Classification { get; set; }
 

@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectExemptReportingYearUpdate]")]
-    public partial class ProjectExemptReportingYearUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectExemptReportingYearUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectExemptReportingYearUpdate()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,19 +93,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectExemptReportingYearUpdates.Remove(this);
+            dbContext.ProjectExemptReportingYearUpdates.Remove(this);
         }
 
         [Key]
         public int ProjectExemptReportingYearUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectUpdateBatchID { get; set; }
         public int CalendarYear { get; set; }
         public int ProjectExemptReportingTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectExemptReportingYearUpdateID; } set { ProjectExemptReportingYearUpdateID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public ProjectExemptReportingType ProjectExemptReportingType { get { return ProjectExemptReportingType.AllLookupDictionary[ProjectExemptReportingTypeID]; } }
 

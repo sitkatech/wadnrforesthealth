@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var projectNote = ProjectNote.CreateNewBlank(project);
                 projectNote.Note = MakeTestProjectNoteString();
                 projectNote.CreateDate = DateTime.Now;
-                dbContext.AllProjectNotes.Add(projectNote);
+                dbContext.ProjectNotes.Add(projectNote);
                 return projectNote;
             }
 

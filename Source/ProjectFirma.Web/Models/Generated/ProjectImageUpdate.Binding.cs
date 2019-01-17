@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectImageUpdate]")]
-    public partial class ProjectImageUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectImageUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectImageUpdate()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -105,12 +104,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectImageUpdates.Remove(this);
+            dbContext.ProjectImageUpdates.Remove(this);
         }
 
         [Key]
         public int ProjectImageUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int? FileResourceID { get; set; }
         public int ProjectUpdateBatchID { get; set; }
         public int ProjectImageTimingID { get; set; }
@@ -122,7 +120,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectImageUpdateID; } set { ProjectImageUpdateID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual FileResource FileResource { get; set; }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public ProjectImageTiming ProjectImageTiming { get { return ProjectImageTiming.AllLookupDictionary[ProjectImageTimingID]; } }

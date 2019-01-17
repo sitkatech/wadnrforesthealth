@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[FieldDefinitionData]")]
-    public partial class FieldDefinitionData : IHavePrimaryKey, IHaveATenantID
+    public partial class FieldDefinitionData : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected FieldDefinitionData()
         {
             this.FieldDefinitionDataImages = new HashSet<FieldDefinitionDataImage>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -88,7 +87,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllFieldDefinitionDatas.Remove(this);
+            dbContext.FieldDefinitionDatas.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -104,7 +103,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int FieldDefinitionDataID { get; set; }
-        public int TenantID { get; private set; }
         public int FieldDefinitionID { get; set; }
         public string FieldDefinitionDataValue { get; set; }
         [NotMapped]
@@ -118,7 +116,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return FieldDefinitionDataID; } set { FieldDefinitionDataID = value; } }
 
         public virtual ICollection<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public FieldDefinition FieldDefinition { get { return FieldDefinition.AllLookupDictionary[FieldDefinitionID]; } }
 
         public static class FieldLengths

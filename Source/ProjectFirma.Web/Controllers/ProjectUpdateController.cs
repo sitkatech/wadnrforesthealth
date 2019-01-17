@@ -253,7 +253,7 @@ namespace ProjectFirma.Web.Controllers
             }
             if (!ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdate.ProjectUpdateID))
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectUpdates.Add(projectUpdate);
+                HttpRequestStorage.DatabaseEntities.ProjectUpdates.Add(projectUpdate);
             }
             viewModel.UpdateModel(projectUpdate, CurrentPerson);
             if (projectUpdateBatch.IsSubmitted)
@@ -267,12 +267,11 @@ namespace ProjectFirma.Web.Controllers
         private ViewResult ViewBasics(ProjectUpdate projectUpdate, BasicsViewModel viewModel)
         {
             var basicsValidationResult = projectUpdate.ProjectUpdateBatch.ValidateProjectBasics();
-            var inflationRate = HttpRequestStorage.DatabaseEntities.CostParameterSets.Latest().InflationRate;
             var updateStatus = GetUpdateStatus(projectUpdate.ProjectUpdateBatch); // note, the way the diff for the basics section is built, it will actually "commit" the updated values to the project, so it needs to be done last, or we need to change the current approach
 
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, inflationRate, updateStatus, basicsValidationResult, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, projectCustomAttributeTypes);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -361,9 +360,9 @@ namespace ProjectFirma.Web.Controllers
             }
             var currentPerformanceMeasureActualUpdates = projectUpdateBatch.PerformanceMeasureActualUpdates.ToList();
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.Load();
-            var allPerformanceMeasureActualUpdates = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualUpdates.Local;
+            var allPerformanceMeasureActualUpdates = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.Local;
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.Load();
-            var allPerformanceMeasureActualSubcategoryOptionUpdates = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualSubcategoryOptionUpdates.Local;
+            var allPerformanceMeasureActualSubcategoryOptionUpdates = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.Local;
             viewModel.UpdateModel(currentPerformanceMeasureActualUpdates, allPerformanceMeasureActualUpdates, allPerformanceMeasureActualSubcategoryOptionUpdates, projectUpdateBatch);
             if (projectUpdateBatch.IsSubmitted)
             {
@@ -494,7 +493,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewExpenditures(projectUpdateBatch, calendarYearRange, viewModel);
             }
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceExpenditureUpdates.Local;
+            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.Local;
             viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceExpenditureUpdates, allProjectFundingSourceExpenditures);
             if (projectUpdateBatch.IsSubmitted)
             {
@@ -597,7 +596,7 @@ namespace ProjectFirma.Web.Controllers
             }
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Load();
             var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
-            var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequestUpdates.Local;
+            var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Local;
             viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding, projectUpdateBatch.ProjectUpdate);
             if (projectUpdateBatch.IsSubmitted)
             {
@@ -951,7 +950,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 httpPostedFileBase.SaveAs(gdbFile.FullName);
-                projectUpdateBatch.ProjectLocationStagingUpdates.ToList().DeleteProjectLocationStagingUpdate();
+                HttpRequestStorage.DatabaseEntities.ProjectLocationStagingUpdates.DeleteProjectLocationStagingUpdate(projectUpdateBatch.ProjectLocationStagingUpdates);
                 projectUpdateBatch.ProjectLocationStagingUpdates.Clear();
                 ProjectLocationStagingUpdate.CreateProjectLocationStagingUpdateListFromGdb(gdbFile, projectUpdateBatch, CurrentPerson);
             }
@@ -1009,7 +1008,7 @@ namespace ProjectFirma.Web.Controllers
         private static void SaveProjectLocationUpdates(ProjectLocationDetailViewModel viewModel, ProjectUpdateBatch projectUpdateBatch)
         {
             var projectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates.ToList();
-            projectLocationUpdates.DeleteProjectLocationUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdates);
             projectUpdateBatch.ProjectLocationUpdates.Clear();
             if (viewModel.WktAndAnnotations != null)
             {
@@ -1054,7 +1053,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewGeospatialArea(project, projectUpdateBatch, viewModel, geospatialAreaType);
             }
             var currentProjectUpdateGeospatialAreas = projectUpdateBatch.ProjectGeospatialAreaUpdates.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
-            var allProjectUpdateGeospatialAreas = HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreaUpdates.Local;
+            var allProjectUpdateGeospatialAreas = HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreaUpdates.Local;
             viewModel.UpdateModelBatch(projectUpdateBatch, currentProjectUpdateGeospatialAreas, allProjectUpdateGeospatialAreas);
             var projectGeospatialAreaTypeNoteUpdate = projectUpdateBatch.ProjectGeospatialAreaTypeNoteUpdates.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
             if (!string.IsNullOrWhiteSpace(viewModel.ProjectGeospatialAreaNotes))
@@ -1227,7 +1226,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var currentProjectExternalLinkUpdates = projectUpdateBatch.ProjectExternalLinkUpdates.ToList();
             HttpRequestStorage.DatabaseEntities.ProjectExternalLinkUpdates.Load();
-            var allProjectExternalLinkUpdates = HttpRequestStorage.DatabaseEntities.AllProjectExternalLinkUpdates.Local;
+            var allProjectExternalLinkUpdates = HttpRequestStorage.DatabaseEntities.ProjectExternalLinkUpdates.Local;
             viewModel.UpdateModel(currentProjectExternalLinkUpdates, allProjectExternalLinkUpdates);
 
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
@@ -1305,40 +1304,40 @@ namespace ProjectFirma.Web.Controllers
             WriteHtmlDiffLogs(projectPrimaryKey, projectUpdateBatch);
 
             HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Load();
-            var allProjectExemptReportingYears = HttpRequestStorage.DatabaseEntities.AllProjectExemptReportingYears.Local;
+            var allProjectExemptReportingYears = HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Local;
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceExpenditures.Local;
+            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Local;
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
-            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequests.Local;
+            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Local;
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //HttpRequestStorage.DatabaseEntities.ProjectBudgets.Load();
-            //var allProjectBudgets = HttpRequestStorage.DatabaseEntities.AllProjectBudgets.Local;
+            //var allProjectBudgets = HttpRequestStorage.DatabaseEntities.ProjectBudgets.Local;
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Load();
-            var allPerformanceMeasureActuals = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActuals.Local;
+            var allPerformanceMeasureActuals = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActuals.Local;
             HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Load();
-            var allPerformanceMeasureActualSubcategoryOptions = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualSubcategoryOptions.Local;
+            var allPerformanceMeasureActualSubcategoryOptions = HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Local;
             HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Load();
-            var allProjectExternalLinks = HttpRequestStorage.DatabaseEntities.AllProjectExternalLinks.Local;
+            var allProjectExternalLinks = HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Local;
             HttpRequestStorage.DatabaseEntities.ProjectNotes.Load();
-            var allProjectNotes = HttpRequestStorage.DatabaseEntities.AllProjectNotes.Local;
+            var allProjectNotes = HttpRequestStorage.DatabaseEntities.ProjectNotes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectImages.Load();
-            var allProjectImages = HttpRequestStorage.DatabaseEntities.AllProjectImages.Local;
+            var allProjectImages = HttpRequestStorage.DatabaseEntities.ProjectImages.Local;
             HttpRequestStorage.DatabaseEntities.ProjectLocations.Load();
-            var allProjectLocations = HttpRequestStorage.DatabaseEntities.AllProjectLocations.Local;
+            var allProjectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations.Local;
             HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreas.Load();
-            var allProjectGeospatialAreas = HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreas.Local;
+            var allProjectGeospatialAreas = HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreas.Local;
             HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreaTypeNotes.Load();
-            var allProjectGeospatialAreaTypeNotes = HttpRequestStorage.DatabaseEntities.AllProjectGeospatialAreaTypeNotes.Local;
+            var allProjectGeospatialAreaTypeNotes = HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreaTypeNotes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
-            var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.AllProjectOrganizations.Local;
+            var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
             HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();
-            var allProjectPeople = HttpRequestStorage.DatabaseEntities.AllProjectPeople.Local;
+            var allProjectPeople = HttpRequestStorage.DatabaseEntities.ProjectPeople.Local;
             HttpRequestStorage.DatabaseEntities.ProjectDocuments.Load();
-            var allProjectDocuments = HttpRequestStorage.DatabaseEntities.AllProjectDocuments.Local;
+            var allProjectDocuments = HttpRequestStorage.DatabaseEntities.ProjectDocuments.Local;
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.Load();
-            var allProjectCustomAttributes = HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributes.Local;
+            var allProjectCustomAttributes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.Load();
-            var allProjectCustomAttributeValues = HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeValues.Local;
+            var allProjectCustomAttributeValues = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.Local;
 
             projectUpdateBatch.Approve(CurrentPerson,
                 DateTime.Now,
@@ -2459,7 +2458,7 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.Load();
             var projectOrganizationUpdates = projectUpdateBatch.ProjectOrganizationUpdates.ToList();
-            var allProjectOrganizationUpdates = HttpRequestStorage.DatabaseEntities.AllProjectOrganizationUpdates.Local;
+            var allProjectOrganizationUpdates = HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.Local;
 
             viewModel.UpdateModel(projectUpdateBatch,projectOrganizationUpdates, allProjectOrganizationUpdates);
             if (projectUpdateBatch.IsSubmitted)
@@ -2524,7 +2523,7 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.Load();
             var projectPersonUpdates = projectUpdateBatch.ProjectPersonUpdates.ToList();
-            var allProjectPersonUpdates = HttpRequestStorage.DatabaseEntities.AllProjectPersonUpdates.Local;
+            var allProjectPersonUpdates = HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.Local;
 
             viewModel.UpdateModel(projectUpdateBatch,projectPersonUpdates, allProjectPersonUpdates);
             if (projectUpdateBatch.IsSubmitted)
@@ -2873,11 +2872,11 @@ namespace ProjectFirma.Web.Controllers
 
         private static string EmailContentPreview(string introContent)
         {
-            var tenantAttribute = HttpRequestStorage.Tenant.GetTenantAttribute();
+            var tenantAttribute = HttpRequestStorage.DatabaseEntities.SystemAttributes.Single();
 
             var emailContentPreview = new ProjectUpdateNotificationHelper(
                 tenantAttribute.PrimaryContactPerson.Email, introContent, "",
-                tenantAttribute.TenantSquareLogoFileResource,
+                tenantAttribute.SquareLogoFileResource,
                 MultiTenantHelpers.GetToolDisplayName()).GetEmailContentPreview();
 
             return emailContentPreview;

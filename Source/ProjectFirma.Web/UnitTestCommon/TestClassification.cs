@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Classification Create(DatabaseEntities dbContext)
             {
                 var classification = Create();
-                dbContext.AllClassifications.Add(classification);
+                dbContext.Classifications.Add(classification);
                 return classification;
             }
         }

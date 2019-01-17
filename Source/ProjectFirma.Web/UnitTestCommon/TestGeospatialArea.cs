@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static GeospatialArea Create(DatabaseEntities dbContext)
             {
                 var geospatialArea = Create();
-                dbContext.AllGeospatialAreas.Add(geospatialArea);
+                dbContext.GeospatialAreas.Add(geospatialArea);
                 return geospatialArea;
             }
 

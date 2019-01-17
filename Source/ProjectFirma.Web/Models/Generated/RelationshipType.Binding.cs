@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[RelationshipType]")]
-    public partial class RelationshipType : IHavePrimaryKey, IHaveATenantID
+    public partial class RelationshipType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Models
             this.OrganizationTypeRelationshipTypes = new HashSet<OrganizationTypeRelationshipType>();
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectOrganizationUpdates = new HashSet<ProjectOrganizationUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllRelationshipTypes.Remove(this);
+            dbContext.RelationshipTypes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -116,7 +115,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int RelationshipTypeID { get; set; }
-        public int TenantID { get; private set; }
         public string RelationshipTypeName { get; set; }
         public bool CanStewardProjects { get; set; }
         public bool IsPrimaryContact { get; set; }
@@ -130,7 +128,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<OrganizationTypeRelationshipType> OrganizationTypeRelationshipTypes { get; set; }
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

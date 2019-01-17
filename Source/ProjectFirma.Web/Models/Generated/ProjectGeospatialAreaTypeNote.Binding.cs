@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectGeospatialAreaTypeNote]")]
-    public partial class ProjectGeospatialAreaTypeNote : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectGeospatialAreaTypeNote : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectGeospatialAreaTypeNote()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -96,19 +95,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectGeospatialAreaTypeNotes.Remove(this);
+            dbContext.ProjectGeospatialAreaTypeNotes.Remove(this);
         }
 
         [Key]
         public int ProjectGeospatialAreaTypeNoteID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int GeospatialAreaTypeID { get; set; }
         public string Notes { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectGeospatialAreaTypeNoteID; } set { ProjectGeospatialAreaTypeNoteID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual GeospatialAreaType GeospatialAreaType { get; set; }
 

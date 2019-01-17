@@ -132,7 +132,7 @@ namespace ProjectFirma.Web.Controllers
 
             var taxonomyTrunk = new TaxonomyTrunk(string.Empty);
             viewModel.UpdateModel(taxonomyTrunk, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllTaxonomyTrunks.Add(taxonomyTrunk);
+            HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.Add(taxonomyTrunk);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay(
@@ -209,7 +209,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteTaxonomyTrunk(taxonomyTrunk, viewModel);
             }
 
-            taxonomyTrunk.DeleteTaxonomyTrunk();
+            taxonomyTrunk.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

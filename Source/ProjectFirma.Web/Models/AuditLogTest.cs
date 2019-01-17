@@ -103,7 +103,7 @@ namespace ProjectFirma.Web.Models
             var objectContext = dbContext.GetObjectContext();
             var testProject = TestFramework.TestProject.Insert(dbContext);
             // Act
-            testProject.DeleteProject();
+            testProject.DeleteFull(dbContext);
 
             var changeTracker = dbContext.ChangeTracker;
             changeTracker.DetectChanges();
@@ -153,7 +153,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testFundingSource.DeleteFundingSource();
+            testFundingSource.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this FundingSource name as deleted
             Check.Assert(
@@ -192,7 +192,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testTaxonomyLeaf.DeleteTaxonomyLeaf();
+            testTaxonomyLeaf.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this TaxonomyLeafName as deleted
             Check.Assert(
@@ -234,7 +234,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testProject.DeleteProject();
+            testProject.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Project name as deleted
             Check.Assert(
@@ -276,7 +276,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testTaxonomyTrunk.DeleteTaxonomyTrunk();
+            testTaxonomyTrunk.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this TaxonomyTrunk name as deleted
             Check.Assert(
@@ -318,7 +318,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testOrganization.DeleteOrganization();
+            testOrganization.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Organization name as deleted
             Check.Assert(
@@ -360,7 +360,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testTaxonomyBranch.DeleteTaxonomyBranch();
+            testTaxonomyBranch.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this TaxonomyBranch name as deleted
             Check.Assert(
@@ -402,7 +402,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testProjectNote.DeleteProjectNote();
+            testProjectNote.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this ProjectNote name as deleted
             Check.Assert(
@@ -452,7 +452,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testProjectGeospatialArea.DeleteProjectGeospatialArea();
+            testProjectGeospatialArea.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this ProjectGeospatialArea name as deleted
             Check.Assert(
@@ -495,7 +495,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testGeospatialArea.DeleteGeospatialArea();
+            testGeospatialArea.DeleteFull(HttpRequestStorage.DatabaseEntities);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this GeospatialArea name as deleted
             Check.Assert(
@@ -539,7 +539,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testClassification.DeleteClassification();
+            testClassification.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Classification name as deleted
             Check.Assert(

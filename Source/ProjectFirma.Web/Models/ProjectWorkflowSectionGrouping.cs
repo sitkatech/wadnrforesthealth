@@ -171,13 +171,7 @@ namespace ProjectFirma.Web.Models
     {
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
-            var projectCreateSections = ProjectCreateSections.Except(new List<ProjectCreateSection> { ProjectCreateSection.Assessment }).ToList();
-            if (HttpRequestStorage.DatabaseEntities.AssessmentQuestions.Any())
-            {
-                projectCreateSections.Add(ProjectCreateSection.Assessment);
-            }
-
-            return GetProjectCreateSectionsImpl(project, projectCreateSections, ignoreStatus);
+            return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
         }
 
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,

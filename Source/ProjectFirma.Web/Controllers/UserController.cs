@@ -114,7 +114,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDelete(person, viewModel);
             }
-            person.DeletePerson();
+            person.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 
@@ -252,15 +252,15 @@ namespace ProjectFirma.Web.Controllers
             {
                 case ProjectStewardshipAreaTypeEnum.ProjectStewardingOrganizations:
                     HttpRequestStorage.DatabaseEntities.Organizations.Load();
-                    viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.AllPersonStewardOrganizations.Local);
+                    viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.PersonStewardOrganizations.Local);
                     break;
                 case ProjectStewardshipAreaTypeEnum.TaxonomyBranches:
                     HttpRequestStorage.DatabaseEntities.TaxonomyBranches.Load();
-                    viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.AllPersonStewardTaxonomyBranches.Local);
+                    viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.Local);
                     break;
                 case ProjectStewardshipAreaTypeEnum.GeospatialAreas:
                     HttpRequestStorage.DatabaseEntities.GeospatialAreas.Load();
-                    viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.AllPersonStewardGeospatialAreas.Local);
+                    viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.PersonStewardGeospatialAreas.Local);
                     break;
                 default:
                     throw new InvalidOperationException(
@@ -321,7 +321,7 @@ namespace ProjectFirma.Web.Controllers
             var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
                     Role.Unassigned.RoleID, DateTime.Now, true, false)
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
-            HttpRequestStorage.DatabaseEntities.AllPeople.Add(firmaPerson);
+            HttpRequestStorage.DatabaseEntities.People.Add(firmaPerson);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             SetMessageForDisplay($"Successfully added {firmaPerson.GetFullNameFirstLastAsUrl()}");

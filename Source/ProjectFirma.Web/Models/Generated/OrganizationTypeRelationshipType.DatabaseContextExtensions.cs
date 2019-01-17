@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[OrganizationTypeRelationshipType]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return organizationTypeRelationshipType;
         }
 
-        public static void DeleteOrganizationTypeRelationshipType(this List<int> organizationTypeRelationshipTypeIDList)
+        public static void DeleteOrganizationTypeRelationshipType(this IQueryable<OrganizationTypeRelationshipType> organizationTypeRelationshipTypes, List<int> organizationTypeRelationshipTypeIDList)
         {
             if(organizationTypeRelationshipTypeIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllOrganizationTypeRelationshipTypes.RemoveRange(HttpRequestStorage.DatabaseEntities.OrganizationTypeRelationshipTypes.Where(x => organizationTypeRelationshipTypeIDList.Contains(x.OrganizationTypeRelationshipTypeID)));
+                organizationTypeRelationshipTypes.Where(x => organizationTypeRelationshipTypeIDList.Contains(x.OrganizationTypeRelationshipTypeID)).Delete();
             }
         }
 
-        public static void DeleteOrganizationTypeRelationshipType(this ICollection<OrganizationTypeRelationshipType> organizationTypeRelationshipTypesToDelete)
+        public static void DeleteOrganizationTypeRelationshipType(this IQueryable<OrganizationTypeRelationshipType> organizationTypeRelationshipTypes, ICollection<OrganizationTypeRelationshipType> organizationTypeRelationshipTypesToDelete)
         {
             if(organizationTypeRelationshipTypesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllOrganizationTypeRelationshipTypes.RemoveRange(organizationTypeRelationshipTypesToDelete);
+                var organizationTypeRelationshipTypeIDList = organizationTypeRelationshipTypesToDelete.Select(x => x.OrganizationTypeRelationshipTypeID).ToList();
+                organizationTypeRelationshipTypes.Where(x => organizationTypeRelationshipTypeIDList.Contains(x.OrganizationTypeRelationshipTypeID)).Delete();
             }
         }
 
-        public static void DeleteOrganizationTypeRelationshipType(this int organizationTypeRelationshipTypeID)
+        public static void DeleteOrganizationTypeRelationshipType(this IQueryable<OrganizationTypeRelationshipType> organizationTypeRelationshipTypes, int organizationTypeRelationshipTypeID)
         {
-            DeleteOrganizationTypeRelationshipType(new List<int> { organizationTypeRelationshipTypeID });
+            DeleteOrganizationTypeRelationshipType(organizationTypeRelationshipTypes, new List<int> { organizationTypeRelationshipTypeID });
         }
 
-        public static void DeleteOrganizationTypeRelationshipType(this OrganizationTypeRelationshipType organizationTypeRelationshipTypeToDelete)
+        public static void DeleteOrganizationTypeRelationshipType(this IQueryable<OrganizationTypeRelationshipType> organizationTypeRelationshipTypes, OrganizationTypeRelationshipType organizationTypeRelationshipTypeToDelete)
         {
-            DeleteOrganizationTypeRelationshipType(new List<OrganizationTypeRelationshipType> { organizationTypeRelationshipTypeToDelete });
+            DeleteOrganizationTypeRelationshipType(organizationTypeRelationshipTypes, new List<OrganizationTypeRelationshipType> { organizationTypeRelationshipTypeToDelete });
         }
     }
 }

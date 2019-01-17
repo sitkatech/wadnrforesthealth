@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectImageUpdate]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectImageUpdate;
         }
 
-        public static void DeleteProjectImageUpdate(this List<int> projectImageUpdateIDList)
+        public static void DeleteProjectImageUpdate(this IQueryable<ProjectImageUpdate> projectImageUpdates, List<int> projectImageUpdateIDList)
         {
             if(projectImageUpdateIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectImageUpdates.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectImageUpdates.Where(x => projectImageUpdateIDList.Contains(x.ProjectImageUpdateID)));
+                projectImageUpdates.Where(x => projectImageUpdateIDList.Contains(x.ProjectImageUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectImageUpdate(this ICollection<ProjectImageUpdate> projectImageUpdatesToDelete)
+        public static void DeleteProjectImageUpdate(this IQueryable<ProjectImageUpdate> projectImageUpdates, ICollection<ProjectImageUpdate> projectImageUpdatesToDelete)
         {
             if(projectImageUpdatesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectImageUpdates.RemoveRange(projectImageUpdatesToDelete);
+                var projectImageUpdateIDList = projectImageUpdatesToDelete.Select(x => x.ProjectImageUpdateID).ToList();
+                projectImageUpdates.Where(x => projectImageUpdateIDList.Contains(x.ProjectImageUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectImageUpdate(this int projectImageUpdateID)
+        public static void DeleteProjectImageUpdate(this IQueryable<ProjectImageUpdate> projectImageUpdates, int projectImageUpdateID)
         {
-            DeleteProjectImageUpdate(new List<int> { projectImageUpdateID });
+            DeleteProjectImageUpdate(projectImageUpdates, new List<int> { projectImageUpdateID });
         }
 
-        public static void DeleteProjectImageUpdate(this ProjectImageUpdate projectImageUpdateToDelete)
+        public static void DeleteProjectImageUpdate(this IQueryable<ProjectImageUpdate> projectImageUpdates, ProjectImageUpdate projectImageUpdateToDelete)
         {
-            DeleteProjectImageUpdate(new List<ProjectImageUpdate> { projectImageUpdateToDelete });
+            DeleteProjectImageUpdate(projectImageUpdates, new List<ProjectImageUpdate> { projectImageUpdateToDelete });
         }
     }
 }

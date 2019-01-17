@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var taxonomyBranch = new TaxonomyBranch(viewModel.TaxonomyTrunkID, string.Empty);
             viewModel.UpdateModel(taxonomyBranch, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllTaxonomyBranches.Add(taxonomyBranch);
+            HttpRequestStorage.DatabaseEntities.TaxonomyBranches.Add(taxonomyBranch);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay(string.Format("New {0} {1} successfully created!", FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabel(), taxonomyBranch.GetDisplayNameAsUrl()));
@@ -194,7 +194,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteTaxonomyBranch(taxonomyBranch, viewModel);
             }
-            taxonomyBranch.DeleteTaxonomyBranch();
+            taxonomyBranch.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

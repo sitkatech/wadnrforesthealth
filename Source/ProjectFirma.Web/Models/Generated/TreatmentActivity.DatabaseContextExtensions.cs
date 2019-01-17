@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[TreatmentActivity]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return treatmentActivity;
         }
 
-        public static void DeleteTreatmentActivity(this List<int> treatmentActivityIDList)
+        public static void DeleteTreatmentActivity(this IQueryable<TreatmentActivity> treatmentActivities, List<int> treatmentActivityIDList)
         {
             if(treatmentActivityIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.RemoveRange(HttpRequestStorage.DatabaseEntities.TreatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID)));
+                treatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID)).Delete();
             }
         }
 
-        public static void DeleteTreatmentActivity(this ICollection<TreatmentActivity> treatmentActivitiesToDelete)
+        public static void DeleteTreatmentActivity(this IQueryable<TreatmentActivity> treatmentActivities, ICollection<TreatmentActivity> treatmentActivitiesToDelete)
         {
             if(treatmentActivitiesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTreatmentActivities.RemoveRange(treatmentActivitiesToDelete);
+                var treatmentActivityIDList = treatmentActivitiesToDelete.Select(x => x.TreatmentActivityID).ToList();
+                treatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID)).Delete();
             }
         }
 
-        public static void DeleteTreatmentActivity(this int treatmentActivityID)
+        public static void DeleteTreatmentActivity(this IQueryable<TreatmentActivity> treatmentActivities, int treatmentActivityID)
         {
-            DeleteTreatmentActivity(new List<int> { treatmentActivityID });
+            DeleteTreatmentActivity(treatmentActivities, new List<int> { treatmentActivityID });
         }
 
-        public static void DeleteTreatmentActivity(this TreatmentActivity treatmentActivityToDelete)
+        public static void DeleteTreatmentActivity(this IQueryable<TreatmentActivity> treatmentActivities, TreatmentActivity treatmentActivityToDelete)
         {
-            DeleteTreatmentActivity(new List<TreatmentActivity> { treatmentActivityToDelete });
+            DeleteTreatmentActivity(treatmentActivities, new List<TreatmentActivity> { treatmentActivityToDelete });
         }
     }
 }
