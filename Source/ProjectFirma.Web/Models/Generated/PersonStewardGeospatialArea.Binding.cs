@@ -15,7 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[PersonStewardGeospatialArea] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[PersonStewardGeospatialArea] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PersonStewardGeospatialArea]")]
     public partial class PersonStewardGeospatialArea : IHavePrimaryKey, ICanDeleteFull
     {

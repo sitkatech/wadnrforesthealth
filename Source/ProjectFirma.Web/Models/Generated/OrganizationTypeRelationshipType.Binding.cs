@@ -15,7 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[OrganizationTypeRelationshipType] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[OrganizationTypeRelationshipType] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[OrganizationTypeRelationshipType]")]
     public partial class OrganizationTypeRelationshipType : IHavePrimaryKey, ICanDeleteFull
     {

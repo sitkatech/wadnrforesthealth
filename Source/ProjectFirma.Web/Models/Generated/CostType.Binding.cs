@@ -15,9 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[CostType] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[CostType] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[CostType]")]
-    public partial class CostType : IHavePrimaryKey, IHaveATenantID
+    public partial class CostType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected CostType()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllCostTypes.Remove(this);
+            dbContext.CostTypes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -94,13 +93,11 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int CostTypeID { get; set; }
-        public int TenantID { get; private set; }
         public string CostTypeDescription { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return CostTypeID; } set { CostTypeID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

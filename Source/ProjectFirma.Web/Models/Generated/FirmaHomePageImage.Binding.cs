@@ -15,7 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[FirmaHomePageImage] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[FirmaHomePageImage] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FirmaHomePageImage]")]
     public partial class FirmaHomePageImage : IHavePrimaryKey, ICanDeleteFull
     {

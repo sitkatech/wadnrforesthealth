@@ -15,9 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[Grant] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[Grant] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Grant]")]
-    public partial class Grant : IHavePrimaryKey, IHaveATenantID
+    public partial class Grant : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected Grant()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -75,7 +74,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllGrants.Remove(this);
+            dbContext.Grants.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -91,7 +90,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int GrantID { get; set; }
-        public int TenantID { get; private set; }
         public string GrantNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
@@ -104,7 +102,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

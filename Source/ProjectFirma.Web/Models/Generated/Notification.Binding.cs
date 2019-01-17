@@ -15,7 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[Notification] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[Notification] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Notification]")]
     public partial class Notification : IHavePrimaryKey, ICanDeleteFull
     {

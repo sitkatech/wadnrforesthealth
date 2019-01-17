@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[GrantAllocationProjectCode]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return grantAllocationProjectCode;
         }
 
-        public static void DeleteGrantAllocationProjectCode(this List<int> grantAllocationProjectCodeIDList)
+        public static void DeleteGrantAllocationProjectCode(this IQueryable<GrantAllocationProjectCode> grantAllocationProjectCodes, List<int> grantAllocationProjectCodeIDList)
         {
             if(grantAllocationProjectCodeIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllGrantAllocationProjectCodes.RemoveRange(HttpRequestStorage.DatabaseEntities.GrantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID)));
+                grantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID)).Delete();
             }
         }
 
-        public static void DeleteGrantAllocationProjectCode(this ICollection<GrantAllocationProjectCode> grantAllocationProjectCodesToDelete)
+        public static void DeleteGrantAllocationProjectCode(this IQueryable<GrantAllocationProjectCode> grantAllocationProjectCodes, ICollection<GrantAllocationProjectCode> grantAllocationProjectCodesToDelete)
         {
             if(grantAllocationProjectCodesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllGrantAllocationProjectCodes.RemoveRange(grantAllocationProjectCodesToDelete);
+                var grantAllocationProjectCodeIDList = grantAllocationProjectCodesToDelete.Select(x => x.GrantAllocationProjectCodeID).ToList();
+                grantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID)).Delete();
             }
         }
 
-        public static void DeleteGrantAllocationProjectCode(this int grantAllocationProjectCodeID)
+        public static void DeleteGrantAllocationProjectCode(this IQueryable<GrantAllocationProjectCode> grantAllocationProjectCodes, int grantAllocationProjectCodeID)
         {
-            DeleteGrantAllocationProjectCode(new List<int> { grantAllocationProjectCodeID });
+            DeleteGrantAllocationProjectCode(grantAllocationProjectCodes, new List<int> { grantAllocationProjectCodeID });
         }
 
-        public static void DeleteGrantAllocationProjectCode(this GrantAllocationProjectCode grantAllocationProjectCodeToDelete)
+        public static void DeleteGrantAllocationProjectCode(this IQueryable<GrantAllocationProjectCode> grantAllocationProjectCodes, GrantAllocationProjectCode grantAllocationProjectCodeToDelete)
         {
-            DeleteGrantAllocationProjectCode(new List<GrantAllocationProjectCode> { grantAllocationProjectCodeToDelete });
+            DeleteGrantAllocationProjectCode(grantAllocationProjectCodes, new List<GrantAllocationProjectCode> { grantAllocationProjectCodeToDelete });
         }
     }
 }

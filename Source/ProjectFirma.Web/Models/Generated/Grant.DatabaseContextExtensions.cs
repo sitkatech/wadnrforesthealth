@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[Grant]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return grant;
         }
 
-        public static void DeleteGrant(this List<int> grantIDList)
+        public static void DeleteGrant(this IQueryable<Grant> grants, List<int> grantIDList)
         {
             if(grantIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllGrants.RemoveRange(HttpRequestStorage.DatabaseEntities.Grants.Where(x => grantIDList.Contains(x.GrantID)));
+                grants.Where(x => grantIDList.Contains(x.GrantID)).Delete();
             }
         }
 
-        public static void DeleteGrant(this ICollection<Grant> grantsToDelete)
+        public static void DeleteGrant(this IQueryable<Grant> grants, ICollection<Grant> grantsToDelete)
         {
             if(grantsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllGrants.RemoveRange(grantsToDelete);
+                var grantIDList = grantsToDelete.Select(x => x.GrantID).ToList();
+                grants.Where(x => grantIDList.Contains(x.GrantID)).Delete();
             }
         }
 
-        public static void DeleteGrant(this int grantID)
+        public static void DeleteGrant(this IQueryable<Grant> grants, int grantID)
         {
-            DeleteGrant(new List<int> { grantID });
+            DeleteGrant(grants, new List<int> { grantID });
         }
 
-        public static void DeleteGrant(this Grant grantToDelete)
+        public static void DeleteGrant(this IQueryable<Grant> grants, Grant grantToDelete)
         {
-            DeleteGrant(new List<Grant> { grantToDelete });
+            DeleteGrant(grants, new List<Grant> { grantToDelete });
         }
     }
 }

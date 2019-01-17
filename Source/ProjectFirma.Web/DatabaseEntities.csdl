@@ -5,6 +5,7 @@
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
+    <EntitySet Name="CostType" EntityType="ProjectFirma.Web.Models.CostType" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
@@ -19,6 +20,9 @@
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.GeospatialArea" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.GeospatialAreaType" />
+    <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
+    <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
+    <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.GrantAllocationProjectCode" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -41,6 +45,7 @@
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
+    <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.ProjectCustomAttribute" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeType" />
     <EntitySet Name="ProjectCustomAttributeUpdate" EntityType="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" />
@@ -87,6 +92,7 @@
     <EntitySet Name="TaxonomyLeaf" EntityType="ProjectFirma.Web.Models.TaxonomyLeaf" />
     <EntitySet Name="TaxonomyLeafPerformanceMeasure" EntityType="ProjectFirma.Web.Models.TaxonomyLeafPerformanceMeasure" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
+    <EntitySet Name="tmpChildrenGrantsInGrantsTab" EntityType="ProjectFirma.Web.Models.tmpChildrenGrantsInGrantsTab" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.vGeoServerGeospatialArea" />
@@ -113,6 +119,10 @@
     <AssociationSet Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
       <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID">
+      <End Role="CostType" EntitySet="CostType" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
@@ -229,6 +239,18 @@
     <AssociationSet Name="FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="ProjectGeospatialAreaTypeNoteUpdates" EntitySet="ProjectGeospatialAreaTypeNoteUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationProjectCodes" EntitySet="GrantAllocationProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="GrantAllocationProjectCodes" EntitySet="GrantAllocationProjectCode" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -714,6 +736,14 @@
     <Property Name="ClassificationSystemListPageContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Classifications" Relationship="ProjectFirma.Web.Models.FK_Classification_ClassificationSystem_ClassificationSystemID" FromRole="ClassificationSystem" ToRole="Classifications" />
   </EntityType>
+  <EntityType Name="CostType">
+    <Key>
+      <PropertyRef Name="CostTypeID" />
+    </Key>
+    <Property Name="CostTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CostTypeDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="CostType" ToRole="GrantAllocations" />
+  </EntityType>
   <EntityType Name="County">
     <Key>
       <PropertyRef Name="CountyID" />
@@ -884,6 +914,48 @@
     <NavigationProperty Name="GeospatialAreas" Relationship="ProjectFirma.Web.Models.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="GeospatialAreas" />
     <NavigationProperty Name="ProjectGeospatialAreaTypeNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="ProjectGeospatialAreaTypeNotes" />
     <NavigationProperty Name="ProjectGeospatialAreaTypeNoteUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID" FromRole="GeospatialAreaType" ToRole="ProjectGeospatialAreaTypeNoteUpdates" />
+  </EntityType>
+  <EntityType Name="Grant">
+    <Key>
+      <PropertyRef Name="GrantID" />
+    </Key>
+    <Property Name="GrantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantNumber" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" />
+    <Property Name="EndDate" Type="DateTime" />
+    <Property Name="ProgramIndex" Type="Int32" />
+    <Property Name="ProjectCode" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ConditionsAndRequirements" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ComplianceNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="AwardedFunds" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
+  </EntityType>
+  <EntityType Name="GrantAllocation">
+    <Key>
+      <PropertyRef Name="GrantAllocationID" />
+    </Key>
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" />
+    <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CostTypeID" Type="Int32" />
+    <Property Name="ProgramIndex" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProgramManagerPersonID" Type="Int32" />
+    <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="GrantAllocations" ToRole="CostType" />
+    <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
+    <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProjectCodes" />
+  </EntityType>
+  <EntityType Name="GrantAllocationProjectCode">
+    <Key>
+      <PropertyRef Name="GrantAllocationProjectCodeID" />
+    </Key>
+    <Property Name="GrantAllocationProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProjectCodes" ToRole="GrantAllocation" />
+    <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" FromRole="GrantAllocationProjectCodes" ToRole="ProjectCode" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -1272,6 +1344,14 @@
     <Property Name="ProjectClassificationNotes" Type="String" MaxLength="600" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Classification" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Classification_ClassificationID" FromRole="ProjectClassifications" ToRole="Classification" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectClassification_Project_ProjectID" FromRole="ProjectClassifications" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectCode">
+    <Key>
+      <PropertyRef Name="ProjectCodeID" />
+    </Key>
+    <Property Name="ProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectCodeAbbrev" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProjectCodes" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -1886,6 +1966,32 @@
     <Property Name="TaxonomyTrunkSortOrder" Type="Int32" />
     <NavigationProperty Name="TaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" FromRole="TaxonomyTrunk" ToRole="TaxonomyBranches" />
   </EntityType>
+  <EntityType Name="tmpChildrenGrantsInGrantsTab">
+    <Key>
+      <PropertyRef Name="ChildGrantID" />
+    </Key>
+    <Property Name="ChildGrantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Parent_Child__SITKA_" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Grant__" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="CFDA__" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Program_Manager" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Prog_Index" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Project_Codes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Funding_increase" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Federal_Fund_Code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Funds_Awarded" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Matching_Funds" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Grant_Total" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DNR_Match_Amount" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Non_DNR_Other_Match" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Landowner_Match" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Match_PI___Alpha_Code" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Expend_Method" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Start_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="End_Date" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Notes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>
       <PropertyRef Name="TrainingVideoID" />
@@ -2008,6 +2114,18 @@
       </Principal>
       <Dependent Role="ClassificationPerformanceMeasures">
         <PropertyRef Name="PerformanceMeasureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_CostType_CostTypeID">
+    <End Role="CostType" Type="ProjectFirma.Web.Models.CostType" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostType">
+        <PropertyRef Name="CostTypeID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="CostTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2356,6 +2474,42 @@
       </Principal>
       <Dependent Role="ProjectGeospatialAreaTypeNoteUpdates">
         <PropertyRef Name="GeospatialAreaTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationProjectCodes" Type="ProjectFirma.Web.Models.GrantAllocationProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProjectCodes">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.ProjectCode" Multiplicity="1" />
+    <End Role="GrantAllocationProjectCodes" Type="ProjectFirma.Web.Models.GrantAllocationProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProjectCodes">
+        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

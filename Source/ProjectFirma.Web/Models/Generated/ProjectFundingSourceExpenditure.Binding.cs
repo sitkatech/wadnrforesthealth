@@ -15,7 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectFundingSourceExpenditure] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[ProjectFundingSourceExpenditure] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectFundingSourceExpenditure]")]
     public partial class ProjectFundingSourceExpenditure : IHavePrimaryKey, ICanDeleteFull
     {

@@ -15,37 +15,36 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectCode] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[ProjectCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectCode]")]
-    public partial class ProjectCode : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectCode : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
         protected ProjectCode()
         {
-
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
+            this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(int projectCodeID, string projectCode) : this()
+        public ProjectCode(int projectCodeID, string projectCodeAbbrev) : this()
         {
             this.ProjectCodeID = projectCodeID;
-            this.ProjectCode = projectCode;
+            this.ProjectCodeAbbrev = projectCodeAbbrev;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(string projectCode) : this()
+        public ProjectCode(string projectCodeAbbrev) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ProjectCode = projectCode;
+            this.ProjectCodeAbbrev = projectCodeAbbrev;
         }
 
 
@@ -63,13 +62,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantAllocationProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(GrantAllocationProjectCode).Name};
 
 
         /// <summary>
@@ -77,22 +76,32 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
-            dbContext.AllProjectCodes.Remove(this);
+            DeleteChildren(dbContext);
+            dbContext.ProjectCodes.Remove(this);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantAllocationProjectCodes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
         public int ProjectCodeID { get; set; }
-        public int TenantID { get; private set; }
-        public string ProjectCode { get; set; }
+        public string ProjectCodeAbbrev { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
+        public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
 
         public static class FieldLengths
         {
-            public const int ProjectCode = 100;
+            public const int ProjectCodeAbbrev = 100;
         }
     }
 }

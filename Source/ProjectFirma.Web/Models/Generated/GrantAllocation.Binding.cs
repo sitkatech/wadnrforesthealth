@@ -15,17 +15,16 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GrantAllocation] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[GrantAllocation] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantAllocation]")]
-    public partial class GrantAllocation : IHavePrimaryKey, IHaveATenantID
+    public partial class GrantAllocation : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
         protected GrantAllocation()
         {
-
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
+            this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
         }
 
         /// <summary>
@@ -85,13 +84,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantAllocationProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(GrantAllocationProjectCode).Name};
 
 
         /// <summary>
@@ -99,13 +98,23 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
-            dbContext.AllGrantAllocations.Remove(this);
+            DeleteChildren(dbContext);
+            dbContext.GrantAllocations.Remove(this);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantAllocationProjectCodes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
         public int GrantAllocationID { get; set; }
-        public int TenantID { get; private set; }
         public int GrantID { get; set; }
         public string ProjectName { get; set; }
         public DateTime StartDate { get; set; }
@@ -117,7 +126,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
+        public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual CostType CostType { get; set; }
 

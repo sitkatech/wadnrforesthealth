@@ -15,9 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GrantAllocationProjectCode] is multi-tenant, so is attributed as IHaveATenantID
+    // Table [dbo].[GrantAllocationProjectCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GrantAllocationProjectCode]")]
-    public partial class GrantAllocationProjectCode : IHavePrimaryKey, IHaveATenantID
+    public partial class GrantAllocationProjectCode : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected GrantAllocationProjectCode()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -53,18 +52,22 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationProjectCode(Tenant grantAllocation, Tenant projectCode) : this()
+        public GrantAllocationProjectCode(GrantAllocation grantAllocation, ProjectCode projectCode) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.GrantAllocationID = grantAllocation.TenantID;
-            this.ProjectCodeID = projectCode.TenantID;
+            this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            this.GrantAllocation = grantAllocation;
+            grantAllocation.GrantAllocationProjectCodes.Add(this);
+            this.ProjectCodeID = projectCode.ProjectCodeID;
+            this.ProjectCode = projectCode;
+            projectCode.GrantAllocationProjectCodes.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationProjectCode CreateNewBlank(Tenant grantAllocation, Tenant projectCode)
+        public static GrantAllocationProjectCode CreateNewBlank(GrantAllocation grantAllocation, ProjectCode projectCode)
         {
             return new GrantAllocationProjectCode(grantAllocation, projectCode);
         }
@@ -90,20 +93,18 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllGrantAllocationProjectCodes.Remove(this);
+            dbContext.GrantAllocationProjectCodes.Remove(this);
         }
 
         [Key]
         public int GrantAllocationProjectCodeID { get; set; }
-        public int TenantID { get; private set; }
         public int GrantAllocationID { get; set; }
         public int ProjectCodeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationProjectCodeID; } set { GrantAllocationProjectCodeID = value; } }
 
-        public Tenant GrantAllocation { get { return Tenant.AllLookupDictionary[GrantAllocationID]; } }
-        public Tenant ProjectCode { get { return Tenant.AllLookupDictionary[ProjectCodeID]; } }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
+        public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual ProjectCode ProjectCode { get; set; }
 
         public static class FieldLengths
         {

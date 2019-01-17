@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectCode]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectCode;
         }
 
-        public static void DeleteProjectCode(this List<int> projectCodeIDList)
+        public static void DeleteProjectCode(this IQueryable<ProjectCode> projectCodes, List<int> projectCodeIDList)
         {
             if(projectCodeIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectCodes.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectCodes.Where(x => projectCodeIDList.Contains(x.ProjectCodeID)));
+                projectCodes.Where(x => projectCodeIDList.Contains(x.ProjectCodeID)).Delete();
             }
         }
 
-        public static void DeleteProjectCode(this ICollection<ProjectCode> projectCodesToDelete)
+        public static void DeleteProjectCode(this IQueryable<ProjectCode> projectCodes, ICollection<ProjectCode> projectCodesToDelete)
         {
             if(projectCodesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectCodes.RemoveRange(projectCodesToDelete);
+                var projectCodeIDList = projectCodesToDelete.Select(x => x.ProjectCodeID).ToList();
+                projectCodes.Where(x => projectCodeIDList.Contains(x.ProjectCodeID)).Delete();
             }
         }
 
-        public static void DeleteProjectCode(this int projectCodeID)
+        public static void DeleteProjectCode(this IQueryable<ProjectCode> projectCodes, int projectCodeID)
         {
-            DeleteProjectCode(new List<int> { projectCodeID });
+            DeleteProjectCode(projectCodes, new List<int> { projectCodeID });
         }
 
-        public static void DeleteProjectCode(this ProjectCode projectCodeToDelete)
+        public static void DeleteProjectCode(this IQueryable<ProjectCode> projectCodes, ProjectCode projectCodeToDelete)
         {
-            DeleteProjectCode(new List<ProjectCode> { projectCodeToDelete });
+            DeleteProjectCode(projectCodes, new List<ProjectCode> { projectCodeToDelete });
         }
     }
 }
