@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[FocusArea]")]
-    public partial class FocusArea : IHavePrimaryKey, IHaveATenantID
+    public partial class FocusArea : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Models
             this.FocusAreaLocationStagings = new HashSet<FocusAreaLocationStaging>();
             this.Projects = new HashSet<Project>();
             this.ProjectUpdates = new HashSet<ProjectUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllFocusAreas.Remove(this);
+            dbContext.FocusAreas.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -118,7 +117,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int FocusAreaID { get; set; }
-        public int TenantID { get; private set; }
         public string FocusAreaName { get; set; }
         public int FocusAreaStatusID { get; set; }
         public DbGeometry FocusAreaLocation { get; set; }
@@ -128,7 +126,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectUpdate> ProjectUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public FocusAreaStatus FocusAreaStatus { get { return FocusAreaStatus.AllLookupDictionary[FocusAreaStatusID]; } }
 
         public static class FieldLengths

@@ -75,7 +75,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             var currentProjectExemptYears = projectUpdateBatch.GetExpendituresExemptReportingYears();
             HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.Load();
-            var allProjectExemptYears = HttpRequestStorage.DatabaseEntities.AllProjectExemptReportingYearUpdates.Local;
+            var allProjectExemptYears = HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.Local;
             var projectExemptReportingYears = new List<ProjectExemptReportingYearUpdate>();
             if (ProjectExemptReportingYears != null)
             {

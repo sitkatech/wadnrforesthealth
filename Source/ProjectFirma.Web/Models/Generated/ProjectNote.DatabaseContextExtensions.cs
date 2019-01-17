@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectNote]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectNote;
         }
 
-        public static void DeleteProjectNote(this List<int> projectNoteIDList)
+        public static void DeleteProjectNote(this IQueryable<ProjectNote> projectNotes, List<int> projectNoteIDList)
         {
             if(projectNoteIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectNotes.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectNotes.Where(x => projectNoteIDList.Contains(x.ProjectNoteID)));
+                projectNotes.Where(x => projectNoteIDList.Contains(x.ProjectNoteID)).Delete();
             }
         }
 
-        public static void DeleteProjectNote(this ICollection<ProjectNote> projectNotesToDelete)
+        public static void DeleteProjectNote(this IQueryable<ProjectNote> projectNotes, ICollection<ProjectNote> projectNotesToDelete)
         {
             if(projectNotesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectNotes.RemoveRange(projectNotesToDelete);
+                var projectNoteIDList = projectNotesToDelete.Select(x => x.ProjectNoteID).ToList();
+                projectNotes.Where(x => projectNoteIDList.Contains(x.ProjectNoteID)).Delete();
             }
         }
 
-        public static void DeleteProjectNote(this int projectNoteID)
+        public static void DeleteProjectNote(this IQueryable<ProjectNote> projectNotes, int projectNoteID)
         {
-            DeleteProjectNote(new List<int> { projectNoteID });
+            DeleteProjectNote(projectNotes, new List<int> { projectNoteID });
         }
 
-        public static void DeleteProjectNote(this ProjectNote projectNoteToDelete)
+        public static void DeleteProjectNote(this IQueryable<ProjectNote> projectNotes, ProjectNote projectNoteToDelete)
         {
-            DeleteProjectNote(new List<ProjectNote> { projectNoteToDelete });
+            DeleteProjectNote(projectNotes, new List<ProjectNote> { projectNoteToDelete });
         }
     }
 }

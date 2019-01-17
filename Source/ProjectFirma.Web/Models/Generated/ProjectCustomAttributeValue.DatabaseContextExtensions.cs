@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectCustomAttributeValue]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectCustomAttributeValue;
         }
 
-        public static void DeleteProjectCustomAttributeValue(this List<int> projectCustomAttributeValueIDList)
+        public static void DeleteProjectCustomAttributeValue(this IQueryable<ProjectCustomAttributeValue> projectCustomAttributeValues, List<int> projectCustomAttributeValueIDList)
         {
             if(projectCustomAttributeValueIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeValues.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID)));
+                projectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID)).Delete();
             }
         }
 
-        public static void DeleteProjectCustomAttributeValue(this ICollection<ProjectCustomAttributeValue> projectCustomAttributeValuesToDelete)
+        public static void DeleteProjectCustomAttributeValue(this IQueryable<ProjectCustomAttributeValue> projectCustomAttributeValues, ICollection<ProjectCustomAttributeValue> projectCustomAttributeValuesToDelete)
         {
             if(projectCustomAttributeValuesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectCustomAttributeValues.RemoveRange(projectCustomAttributeValuesToDelete);
+                var projectCustomAttributeValueIDList = projectCustomAttributeValuesToDelete.Select(x => x.ProjectCustomAttributeValueID).ToList();
+                projectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID)).Delete();
             }
         }
 
-        public static void DeleteProjectCustomAttributeValue(this int projectCustomAttributeValueID)
+        public static void DeleteProjectCustomAttributeValue(this IQueryable<ProjectCustomAttributeValue> projectCustomAttributeValues, int projectCustomAttributeValueID)
         {
-            DeleteProjectCustomAttributeValue(new List<int> { projectCustomAttributeValueID });
+            DeleteProjectCustomAttributeValue(projectCustomAttributeValues, new List<int> { projectCustomAttributeValueID });
         }
 
-        public static void DeleteProjectCustomAttributeValue(this ProjectCustomAttributeValue projectCustomAttributeValueToDelete)
+        public static void DeleteProjectCustomAttributeValue(this IQueryable<ProjectCustomAttributeValue> projectCustomAttributeValues, ProjectCustomAttributeValue projectCustomAttributeValueToDelete)
         {
-            DeleteProjectCustomAttributeValue(new List<ProjectCustomAttributeValue> { projectCustomAttributeValueToDelete });
+            DeleteProjectCustomAttributeValue(projectCustomAttributeValues, new List<ProjectCustomAttributeValue> { projectCustomAttributeValueToDelete });
         }
     }
 }

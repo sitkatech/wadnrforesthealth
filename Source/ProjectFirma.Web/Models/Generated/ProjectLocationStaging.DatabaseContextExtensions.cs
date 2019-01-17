@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectLocationStaging]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectLocationStaging;
         }
 
-        public static void DeleteProjectLocationStaging(this List<int> projectLocationStagingIDList)
+        public static void DeleteProjectLocationStaging(this IQueryable<ProjectLocationStaging> projectLocationStagings, List<int> projectLocationStagingIDList)
         {
             if(projectLocationStagingIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectLocationStagings.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID)));
+                projectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID)).Delete();
             }
         }
 
-        public static void DeleteProjectLocationStaging(this ICollection<ProjectLocationStaging> projectLocationStagingsToDelete)
+        public static void DeleteProjectLocationStaging(this IQueryable<ProjectLocationStaging> projectLocationStagings, ICollection<ProjectLocationStaging> projectLocationStagingsToDelete)
         {
             if(projectLocationStagingsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectLocationStagings.RemoveRange(projectLocationStagingsToDelete);
+                var projectLocationStagingIDList = projectLocationStagingsToDelete.Select(x => x.ProjectLocationStagingID).ToList();
+                projectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID)).Delete();
             }
         }
 
-        public static void DeleteProjectLocationStaging(this int projectLocationStagingID)
+        public static void DeleteProjectLocationStaging(this IQueryable<ProjectLocationStaging> projectLocationStagings, int projectLocationStagingID)
         {
-            DeleteProjectLocationStaging(new List<int> { projectLocationStagingID });
+            DeleteProjectLocationStaging(projectLocationStagings, new List<int> { projectLocationStagingID });
         }
 
-        public static void DeleteProjectLocationStaging(this ProjectLocationStaging projectLocationStagingToDelete)
+        public static void DeleteProjectLocationStaging(this IQueryable<ProjectLocationStaging> projectLocationStagings, ProjectLocationStaging projectLocationStagingToDelete)
         {
-            DeleteProjectLocationStaging(new List<ProjectLocationStaging> { projectLocationStagingToDelete });
+            DeleteProjectLocationStaging(projectLocationStagings, new List<ProjectLocationStaging> { projectLocationStagingToDelete });
         }
     }
 }

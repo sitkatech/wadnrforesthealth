@@ -43,15 +43,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public Models.ProjectUpdate ProjectUpdate { get; }
         public SectionCommentsViewData SectionCommentsViewData { get; }
 
-        public decimal InflationRate { get; }
-        public decimal? CapitalCostInYearOfExpenditure { get; }
-        public decimal? TotalOperatingCostInYearOfExpenditure { get; }
-        public int? StartYearForTotalOperatingCostCalculation { get; }
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; private set; }
 
 
         public BasicsViewData(Person currentPerson, Models.ProjectUpdate projectUpdate,
-            IEnumerable<ProjectStage> projectStages, decimal inflationRate, UpdateStatus updateStatus,
+            IEnumerable<ProjectStage> projectStages, UpdateStatus updateStatus,
             BasicsValidationResult basicsValidationResult,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, IEnumerable<Models.FocusArea> focusAreas)
             : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, basicsValidationResult.GetWarningMessages(), ProjectUpdateSection.Basics.ProjectUpdateSectionDisplayName)
@@ -68,10 +64,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffBasics(Project));
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdate.ProjectUpdateBatch.BasicsComment, projectUpdate.ProjectUpdateBatch.IsReturned);            
                         
-            InflationRate = inflationRate;
-            CapitalCostInYearOfExpenditure = Models.CostParameterSet.CalculateCapitalCostInYearOfExpenditure(projectUpdate);
-            TotalOperatingCostInYearOfExpenditure = Models.CostParameterSet.CalculateTotalRemainingOperatingCost(projectUpdate);
-            StartYearForTotalOperatingCostCalculation = Models.CostParameterSet.StartYearForTotalCostCalculations(projectUpdate);
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
         }
     }

@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectTag]")]
-    public partial class ProjectTag : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectTag : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectTag()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,18 +92,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectTags.Remove(this);
+            dbContext.ProjectTags.Remove(this);
         }
 
         [Key]
         public int ProjectTagID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int TagID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectTagID; } set { ProjectTagID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual Tag Tag { get; set; }
 

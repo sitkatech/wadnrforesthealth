@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectLocationStagingUpdate](
 	[ProjectLocationStagingUpdateID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
 	[PersonID] [int] NOT NULL,
 	[FeatureClassName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -29,22 +28,7 @@ REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[ProjectLocationStagingUpdate] CHECK CONSTRAINT [FK_ProjectLocationStagingUpdate_Person_PersonID]
 GO
-ALTER TABLE [dbo].[ProjectLocationStagingUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStagingUpdate_Person_PersonID_TenantID] FOREIGN KEY([PersonID], [TenantID])
-REFERENCES [dbo].[Person] ([PersonID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectLocationStagingUpdate] CHECK CONSTRAINT [FK_ProjectLocationStagingUpdate_Person_PersonID_TenantID]
-GO
 ALTER TABLE [dbo].[ProjectLocationStagingUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID] FOREIGN KEY([ProjectUpdateBatchID])
 REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID])
 GO
 ALTER TABLE [dbo].[ProjectLocationStagingUpdate] CHECK CONSTRAINT [FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID]
-GO
-ALTER TABLE [dbo].[ProjectLocationStagingUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID] FOREIGN KEY([ProjectUpdateBatchID], [TenantID])
-REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectLocationStagingUpdate] CHECK CONSTRAINT [FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectLocationStagingUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectLocationStagingUpdate_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectLocationStagingUpdate] CHECK CONSTRAINT [FK_ProjectLocationStagingUpdate_Tenant_TenantID]

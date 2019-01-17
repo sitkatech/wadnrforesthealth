@@ -307,17 +307,6 @@ namespace ProjectFirma.Web.Models
         public List<PerformanceMeasureReportedValue> GetReportedPerformanceMeasures()
         {
             var reportedPerformanceMeasures = GetNonVirtualPerformanceMeasureReportedValues();
-
-            // Idaho's special PM.
-            // There Might Be A Better Way To Do This™
-            var technicalAssistanceValue = HttpRequestStorage.DatabaseEntities.PerformanceMeasures.SingleOrDefault(x =>
-                x.PerformanceMeasureDataSourceTypeID == PerformanceMeasureDataSourceType.TechnicalAssistanceValue
-                    .PerformanceMeasureDataSourceTypeID);
-            if (technicalAssistanceValue != null)
-            {
-                reportedPerformanceMeasures.AddRange(technicalAssistanceValue.GetReportedPerformanceMeasureValues(this));
-            }
-
             return reportedPerformanceMeasures.OrderByDescending(pma => pma.CalendarYear).ThenBy(pma => pma.PerformanceMeasureID).ToList();
         }
 
@@ -338,11 +327,6 @@ namespace ProjectFirma.Web.Models
                 featureCollection.Features.Add(MakePointFeatureWithRelevantProperties(ProjectLocationPoint, addProjectProperties, true));
             }
             return featureCollection;
-        }
-
-        public IEnumerable<IQuestionAnswer> GetQuestionAnswers()
-        {
-            return ProjectAssessmentQuestions;
         }
 
         public IEnumerable<IProjectLocation> GetProjectLocationDetails()
@@ -496,9 +480,15 @@ namespace ProjectFirma.Web.Models
         {
             var projectImageFileResourceIDsToDelete = projectImages.Select(x => x.FileResourceID).ToList();
             var projectImageIDsToDelete = projectImages.Select(x => x.ProjectImageID).ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectImageUpdates.Where(x => x.ProjectImageID.HasValue && projectImageIDsToDelete.Contains(x.ProjectImageID.Value)).ToList().DeleteProjectImageUpdate();
-            projectImages.DeleteProjectImage();
-            projectImageFileResourceIDsToDelete.DeleteFileResource();
+            foreach (var projectImageUpdate in HttpRequestStorage.DatabaseEntities.ProjectImageUpdates.Where(x => x.ProjectImageID.HasValue && projectImageIDsToDelete.Contains(x.ProjectImageID.Value)).ToList())
+            {
+                projectImageUpdate.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
+            foreach (var projectImage in projectImages)
+            {
+                projectImage.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
+            HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(projectImageFileResourceIDsToDelete);
         }
 
         public IEnumerable<Person> GetProjectStewards()
@@ -667,16 +657,6 @@ namespace ProjectFirma.Web.Models
         public string GetApprovalStartDateFormatted()
         {
             return ApprovalStartDate?.ToShortDateString();
-        }
-
-        public decimal GetTotalStaffTimeHours()
-        {
-            return ContractorTimeActivities.Sum(x => x.ContractorTimeActivityHours);
-        }
-
-        public decimal GetTotalStaffTimeAmount()
-        {
-            return ContractorTimeActivities.Sum(x => x.TotalAmount);
         }
 
         public int? GetImplementationStartYear()

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var projectInternalNote = ProjectInternalNote.CreateNewBlank(project);
             viewModel.UpdateModel(projectInternalNote, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.AllProjectInternalNotes.Add(projectInternalNote);
+            HttpRequestStorage.DatabaseEntities.ProjectInternalNotes.Add(projectInternalNote);
             return new ModalDialogFormJsonResult();
         }
 
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteProjectInternalNote(projectInternalNote, viewModel);
             }
-            projectInternalNote.DeleteProjectInternalNote();
+            projectInternalNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
     }

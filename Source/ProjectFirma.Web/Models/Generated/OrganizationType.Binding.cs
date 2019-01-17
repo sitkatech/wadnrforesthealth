@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[OrganizationType]")]
-    public partial class OrganizationType : IHavePrimaryKey, IHaveATenantID
+    public partial class OrganizationType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,8 +25,6 @@ namespace ProjectFirma.Web.Models
         {
             this.Organizations = new HashSet<Organization>();
             this.OrganizationTypeRelationshipTypes = new HashSet<OrganizationTypeRelationshipType>();
-            this.SnapshotOrganizationTypeExpenditures = new HashSet<SnapshotOrganizationTypeExpenditure>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -74,13 +72,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Organizations.Any() || OrganizationTypeRelationshipTypes.Any() || SnapshotOrganizationTypeExpenditures.Any();
+            return Organizations.Any() || OrganizationTypeRelationshipTypes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(OrganizationType).Name, typeof(Organization).Name, typeof(OrganizationTypeRelationshipType).Name, typeof(SnapshotOrganizationTypeExpenditure).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(OrganizationType).Name, typeof(Organization).Name, typeof(OrganizationTypeRelationshipType).Name};
 
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllOrganizationTypes.Remove(this);
+            dbContext.OrganizationTypes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -106,16 +104,10 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in SnapshotOrganizationTypeExpenditures.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
         public int OrganizationTypeID { get; set; }
-        public int TenantID { get; private set; }
         public string OrganizationTypeName { get; set; }
         public string OrganizationTypeAbbreviation { get; set; }
         public string LegendColor { get; set; }
@@ -127,8 +119,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<Organization> Organizations { get; set; }
         public virtual ICollection<OrganizationTypeRelationshipType> OrganizationTypeRelationshipTypes { get; set; }
-        public virtual ICollection<SnapshotOrganizationTypeExpenditure> SnapshotOrganizationTypeExpenditures { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

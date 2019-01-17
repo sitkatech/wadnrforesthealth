@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[OrganizationBoundaryStaging]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return organizationBoundaryStaging;
         }
 
-        public static void DeleteOrganizationBoundaryStaging(this List<int> organizationBoundaryStagingIDList)
+        public static void DeleteOrganizationBoundaryStaging(this IQueryable<OrganizationBoundaryStaging> organizationBoundaryStagings, List<int> organizationBoundaryStagingIDList)
         {
             if(organizationBoundaryStagingIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllOrganizationBoundaryStagings.RemoveRange(HttpRequestStorage.DatabaseEntities.OrganizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID)));
+                organizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID)).Delete();
             }
         }
 
-        public static void DeleteOrganizationBoundaryStaging(this ICollection<OrganizationBoundaryStaging> organizationBoundaryStagingsToDelete)
+        public static void DeleteOrganizationBoundaryStaging(this IQueryable<OrganizationBoundaryStaging> organizationBoundaryStagings, ICollection<OrganizationBoundaryStaging> organizationBoundaryStagingsToDelete)
         {
             if(organizationBoundaryStagingsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllOrganizationBoundaryStagings.RemoveRange(organizationBoundaryStagingsToDelete);
+                var organizationBoundaryStagingIDList = organizationBoundaryStagingsToDelete.Select(x => x.OrganizationBoundaryStagingID).ToList();
+                organizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID)).Delete();
             }
         }
 
-        public static void DeleteOrganizationBoundaryStaging(this int organizationBoundaryStagingID)
+        public static void DeleteOrganizationBoundaryStaging(this IQueryable<OrganizationBoundaryStaging> organizationBoundaryStagings, int organizationBoundaryStagingID)
         {
-            DeleteOrganizationBoundaryStaging(new List<int> { organizationBoundaryStagingID });
+            DeleteOrganizationBoundaryStaging(organizationBoundaryStagings, new List<int> { organizationBoundaryStagingID });
         }
 
-        public static void DeleteOrganizationBoundaryStaging(this OrganizationBoundaryStaging organizationBoundaryStagingToDelete)
+        public static void DeleteOrganizationBoundaryStaging(this IQueryable<OrganizationBoundaryStaging> organizationBoundaryStagings, OrganizationBoundaryStaging organizationBoundaryStagingToDelete)
         {
-            DeleteOrganizationBoundaryStaging(new List<OrganizationBoundaryStaging> { organizationBoundaryStagingToDelete });
+            DeleteOrganizationBoundaryStaging(organizationBoundaryStagings, new List<OrganizationBoundaryStaging> { organizationBoundaryStagingToDelete });
         }
     }
 }

@@ -20,32 +20,31 @@ namespace ProjectFirma.Web.Models
             return region;
         }
 
-        public static void DeleteRegion(this List<int> regionIDList)
+        public static void DeleteRegion(this IQueryable<Region> regions, List<int> regionIDList)
         {
             if(regionIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.Regions.RemoveRange(HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDList.Contains(x.RegionID)));
+                regions.Where(x => regionIDList.Contains(x.RegionID)).Delete();
             }
         }
 
-        public static void DeleteRegion(this ICollection<Region> regionsToDelete)
+        public static void DeleteRegion(this IQueryable<Region> regions, ICollection<Region> regionsToDelete)
         {
             if(regionsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.Regions.RemoveRange(regionsToDelete);
+                var regionIDList = regionsToDelete.Select(x => x.RegionID).ToList();
+                regions.Where(x => regionIDList.Contains(x.RegionID)).Delete();
             }
         }
 
-        public static void DeleteRegion(this int regionID)
+        public static void DeleteRegion(this IQueryable<Region> regions, int regionID)
         {
-            DeleteRegion(new List<int> { regionID });
+            DeleteRegion(regions, new List<int> { regionID });
         }
 
-        public static void DeleteRegion(this Region regionToDelete)
+        public static void DeleteRegion(this IQueryable<Region> regions, Region regionToDelete)
         {
-            DeleteRegion(new List<Region> { regionToDelete });
+            DeleteRegion(regions, new List<Region> { regionToDelete });
         }
     }
-
-
 }

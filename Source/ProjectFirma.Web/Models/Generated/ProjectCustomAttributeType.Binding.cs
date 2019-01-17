@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectCustomAttributeType]")]
-    public partial class ProjectCustomAttributeType : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectCustomAttributeType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         {
             this.ProjectCustomAttributes = new HashSet<ProjectCustomAttribute>();
             this.ProjectCustomAttributeUpdates = new HashSet<ProjectCustomAttributeUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -96,7 +95,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllProjectCustomAttributeTypes.Remove(this);
+            dbContext.ProjectCustomAttributeTypes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -117,7 +116,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectCustomAttributeTypeID { get; set; }
-        public int TenantID { get; private set; }
         public string ProjectCustomAttributeTypeName { get; set; }
         public int ProjectCustomAttributeDataTypeID { get; set; }
         public int? MeasurementUnitTypeID { get; set; }
@@ -129,7 +127,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual ICollection<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public ProjectCustomAttributeDataType ProjectCustomAttributeDataType { get { return ProjectCustomAttributeDataType.AllLookupDictionary[ProjectCustomAttributeDataTypeID]; } }
         public MeasurementUnitType MeasurementUnitType { get { return MeasurementUnitTypeID.HasValue ? MeasurementUnitType.AllLookupDictionary[MeasurementUnitTypeID.Value] : null; } }
 

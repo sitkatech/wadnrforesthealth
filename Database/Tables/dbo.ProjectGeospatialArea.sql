@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectGeospatialArea](
 	[ProjectGeospatialAreaID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[GeospatialAreaID] [int] NOT NULL,
  CONSTRAINT [PK_ProjectGeospatialArea_ProjectGeospatialAreaID] PRIMARY KEY CLUSTERED 
@@ -24,22 +23,7 @@ REFERENCES [dbo].[GeospatialArea] ([GeospatialAreaID])
 GO
 ALTER TABLE [dbo].[ProjectGeospatialArea] CHECK CONSTRAINT [FK_ProjectGeospatialArea_GeospatialArea_GeospatialAreaID]
 GO
-ALTER TABLE [dbo].[ProjectGeospatialArea]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialArea_GeospatialArea_GeospatialAreaID_TenantID] FOREIGN KEY([GeospatialAreaID], [TenantID])
-REFERENCES [dbo].[GeospatialArea] ([GeospatialAreaID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectGeospatialArea] CHECK CONSTRAINT [FK_ProjectGeospatialArea_GeospatialArea_GeospatialAreaID_TenantID]
-GO
 ALTER TABLE [dbo].[ProjectGeospatialArea]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialArea_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectGeospatialArea] CHECK CONSTRAINT [FK_ProjectGeospatialArea_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[ProjectGeospatialArea]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialArea_Project_ProjectID_TenantID] FOREIGN KEY([ProjectID], [TenantID])
-REFERENCES [dbo].[Project] ([ProjectID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectGeospatialArea] CHECK CONSTRAINT [FK_ProjectGeospatialArea_Project_ProjectID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectGeospatialArea]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGeospatialArea_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectGeospatialArea] CHECK CONSTRAINT [FK_ProjectGeospatialArea_Tenant_TenantID]

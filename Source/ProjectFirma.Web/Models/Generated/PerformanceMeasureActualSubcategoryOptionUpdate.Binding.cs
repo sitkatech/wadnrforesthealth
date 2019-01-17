@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[PerformanceMeasureActualSubcategoryOptionUpdate]")]
-    public partial class PerformanceMeasureActualSubcategoryOptionUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureActualSubcategoryOptionUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected PerformanceMeasureActualSubcategoryOptionUpdate()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -103,12 +102,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllPerformanceMeasureActualSubcategoryOptionUpdates.Remove(this);
+            dbContext.PerformanceMeasureActualSubcategoryOptionUpdates.Remove(this);
         }
 
         [Key]
         public int PerformanceMeasureActualSubcategoryOptionUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int PerformanceMeasureActualUpdateID { get; set; }
         public int PerformanceMeasureSubcategoryOptionID { get; set; }
         public int PerformanceMeasureID { get; set; }
@@ -116,7 +114,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return PerformanceMeasureActualSubcategoryOptionUpdateID; } set { PerformanceMeasureActualSubcategoryOptionUpdateID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual PerformanceMeasureActualUpdate PerformanceMeasureActualUpdate { get; set; }
         public virtual PerformanceMeasureSubcategoryOption PerformanceMeasureSubcategoryOption { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }

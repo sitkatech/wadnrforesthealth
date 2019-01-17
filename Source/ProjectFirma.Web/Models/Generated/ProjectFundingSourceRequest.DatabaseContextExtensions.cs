@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectFundingSourceRequest]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectFundingSourceRequest;
         }
 
-        public static void DeleteProjectFundingSourceRequest(this List<int> projectFundingSourceRequestIDList)
+        public static void DeleteProjectFundingSourceRequest(this IQueryable<ProjectFundingSourceRequest> projectFundingSourceRequests, List<int> projectFundingSourceRequestIDList)
         {
             if(projectFundingSourceRequestIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequests.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID)));
+                projectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID)).Delete();
             }
         }
 
-        public static void DeleteProjectFundingSourceRequest(this ICollection<ProjectFundingSourceRequest> projectFundingSourceRequestsToDelete)
+        public static void DeleteProjectFundingSourceRequest(this IQueryable<ProjectFundingSourceRequest> projectFundingSourceRequests, ICollection<ProjectFundingSourceRequest> projectFundingSourceRequestsToDelete)
         {
             if(projectFundingSourceRequestsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequests.RemoveRange(projectFundingSourceRequestsToDelete);
+                var projectFundingSourceRequestIDList = projectFundingSourceRequestsToDelete.Select(x => x.ProjectFundingSourceRequestID).ToList();
+                projectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID)).Delete();
             }
         }
 
-        public static void DeleteProjectFundingSourceRequest(this int projectFundingSourceRequestID)
+        public static void DeleteProjectFundingSourceRequest(this IQueryable<ProjectFundingSourceRequest> projectFundingSourceRequests, int projectFundingSourceRequestID)
         {
-            DeleteProjectFundingSourceRequest(new List<int> { projectFundingSourceRequestID });
+            DeleteProjectFundingSourceRequest(projectFundingSourceRequests, new List<int> { projectFundingSourceRequestID });
         }
 
-        public static void DeleteProjectFundingSourceRequest(this ProjectFundingSourceRequest projectFundingSourceRequestToDelete)
+        public static void DeleteProjectFundingSourceRequest(this IQueryable<ProjectFundingSourceRequest> projectFundingSourceRequests, ProjectFundingSourceRequest projectFundingSourceRequestToDelete)
         {
-            DeleteProjectFundingSourceRequest(new List<ProjectFundingSourceRequest> { projectFundingSourceRequestToDelete });
+            DeleteProjectFundingSourceRequest(projectFundingSourceRequests, new List<ProjectFundingSourceRequest> { projectFundingSourceRequestToDelete });
         }
     }
 }

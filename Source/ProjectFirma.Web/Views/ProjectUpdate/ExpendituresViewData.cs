@@ -34,9 +34,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public readonly string RequestFundingSourceUrl;
         public readonly ViewDataForAngularClass ViewDataForAngular;
         public readonly SectionCommentsViewData SectionCommentsViewData;
-        public readonly decimal? TotalOperatingCostInYearOfExpenditure;
-        public readonly decimal InflationRate;
-        public readonly int? StartYearForTotalOperatingCostCalculation;
 
         public ExpendituresViewData(Person currentPerson, ProjectUpdateBatch projectUpdateBatch, ViewDataForAngularClass viewDataForAngularClass, ProjectExpendituresDetailViewData projectExpendituresDetailViewData, UpdateStatus updateStatus, List<string> expendituresValidationErrors)
             : base(currentPerson, projectUpdateBatch, updateStatus, expendituresValidationErrors, ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName)
@@ -47,9 +44,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             RequestFundingSourceUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.ExpendituresComment, projectUpdateBatch.IsReturned);
-            TotalOperatingCostInYearOfExpenditure = Models.CostParameterSet.CalculateTotalRemainingOperatingCost(ProjectUpdateBatch.ProjectUpdate);
-            InflationRate = Models.CostParameterSet.GetLatestInflationRate();
-            StartYearForTotalOperatingCostCalculation = Models.CostParameterSet.StartYearForTotalCostCalculations(projectUpdateBatch.ProjectUpdate);
         }
 
         public class ViewDataForAngularClass

@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectDocument]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectDocument;
         }
 
-        public static void DeleteProjectDocument(this List<int> projectDocumentIDList)
+        public static void DeleteProjectDocument(this IQueryable<ProjectDocument> projectDocuments, List<int> projectDocumentIDList)
         {
             if(projectDocumentIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectDocuments.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectDocuments.Where(x => projectDocumentIDList.Contains(x.ProjectDocumentID)));
+                projectDocuments.Where(x => projectDocumentIDList.Contains(x.ProjectDocumentID)).Delete();
             }
         }
 
-        public static void DeleteProjectDocument(this ICollection<ProjectDocument> projectDocumentsToDelete)
+        public static void DeleteProjectDocument(this IQueryable<ProjectDocument> projectDocuments, ICollection<ProjectDocument> projectDocumentsToDelete)
         {
             if(projectDocumentsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectDocuments.RemoveRange(projectDocumentsToDelete);
+                var projectDocumentIDList = projectDocumentsToDelete.Select(x => x.ProjectDocumentID).ToList();
+                projectDocuments.Where(x => projectDocumentIDList.Contains(x.ProjectDocumentID)).Delete();
             }
         }
 
-        public static void DeleteProjectDocument(this int projectDocumentID)
+        public static void DeleteProjectDocument(this IQueryable<ProjectDocument> projectDocuments, int projectDocumentID)
         {
-            DeleteProjectDocument(new List<int> { projectDocumentID });
+            DeleteProjectDocument(projectDocuments, new List<int> { projectDocumentID });
         }
 
-        public static void DeleteProjectDocument(this ProjectDocument projectDocumentToDelete)
+        public static void DeleteProjectDocument(this IQueryable<ProjectDocument> projectDocuments, ProjectDocument projectDocumentToDelete)
         {
-            DeleteProjectDocument(new List<ProjectDocument> { projectDocumentToDelete });
+            DeleteProjectDocument(projectDocuments, new List<ProjectDocument> { projectDocumentToDelete });
         }
     }
 }

@@ -96,11 +96,6 @@ namespace ProjectFirma.Web.Models
             set => ProjectUpdateBatch.ProjectCustomAttributeUpdates = (ICollection<ProjectCustomAttributeUpdate>) value;
         }
 
-        public IEnumerable<IQuestionAnswer> GetQuestionAnswers()
-        {
-            return null;
-        }
-
         public IEnumerable<IProjectLocation> GetProjectLocationDetails()
         {
             return ProjectUpdateBatch.ProjectLocationUpdates.ToList();
@@ -135,13 +130,13 @@ namespace ProjectFirma.Web.Models
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var projectUpdate = new ProjectUpdate(projectUpdateBatch);
-            HttpRequestStorage.DatabaseEntities.AllProjectUpdates.Add(projectUpdate);
+            HttpRequestStorage.DatabaseEntities.ProjectUpdates.Add(projectUpdate);
         }
 
         public static void CommitToProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var projectUpdate = new ProjectUpdate(projectUpdateBatch);
-            HttpRequestStorage.DatabaseEntities.AllProjectUpdates.Add(projectUpdate);
+            HttpRequestStorage.DatabaseEntities.ProjectUpdates.Add(projectUpdate);
         }
 
         public Person GetPrimaryContact() => PrimaryContactPerson ?? GetPrimaryContactOrganization()?.PrimaryContactPerson;

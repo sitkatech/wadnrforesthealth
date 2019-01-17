@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDelete(projectDocumentUpdate, viewModel);
             }
             projectDocumentUpdate.ProjectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
-            projectDocumentUpdate.DeleteProjectDocumentUpdate();
+            projectDocumentUpdate.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
     }

@@ -127,7 +127,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteRegion(region, viewModel);
             }
-            region.DeleteRegion();
+            region.DeleteFull(HttpRequestStorage.DatabaseEntities);
             return new ModalDialogFormJsonResult();
         }
 

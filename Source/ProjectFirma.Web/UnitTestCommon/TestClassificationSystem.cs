@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static ClassificationSystem Create(DatabaseEntities dbContext)
             {
                 var classificationSystem = Create();
-                dbContext.AllClassificationSystems.Add(classificationSystem);
+                dbContext.ClassificationSystems.Add(classificationSystem);
                 return classificationSystem;
             }
         }

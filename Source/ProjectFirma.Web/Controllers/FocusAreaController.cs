@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteFocusArea(focusArea, viewModel);
             }
 
-            focusArea.DeleteFocusArea();
+            focusArea.DeleteFull(HttpRequestStorage.DatabaseEntities);
 
             return new ModalDialogFormJsonResult();
         }
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var focusArea = new FocusArea(string.Empty, ModelObjectHelpers.NotYetAssignedID);
             viewModel.UpdateModel(focusArea);
-            HttpRequestStorage.DatabaseEntities.AllFocusAreas.Add(focusArea);
+            HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"Focus Area <a href=\"{SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.Detail(focusArea.PrimaryKey))}\">{focusArea.FocusAreaName}</a> successfully created.");
 
@@ -183,7 +183,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(focusArea);
-            HttpRequestStorage.DatabaseEntities.AllFocusAreaLocationStagings.RemoveRange(focusArea
+            HttpRequestStorage.DatabaseEntities.FocusAreaLocationStagings.RemoveRange(focusArea
                 .FocusAreaLocationStagings);
 
             SetMessageForDisplay($"Focus Area Location for {focusArea.GetDisplayNameAsUrl()} successfully updated.");
@@ -294,7 +294,7 @@ namespace ProjectFirma.Web.Controllers
             hasSpatialData = false;
 
             var layers = new List<LayerGeoJson>();
-            var focusAreas = HttpRequestStorage.DatabaseEntities.AllFocusAreas.ToList();
+            var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var locationFeatures = new List<Feature>();
 
             foreach (var focusArea in focusAreas)

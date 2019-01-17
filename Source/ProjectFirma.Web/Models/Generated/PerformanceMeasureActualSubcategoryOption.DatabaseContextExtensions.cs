@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PerformanceMeasureActualSubcategoryOption]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureActualSubcategoryOption;
         }
 
-        public static void DeletePerformanceMeasureActualSubcategoryOption(this List<int> performanceMeasureActualSubcategoryOptionIDList)
+        public static void DeletePerformanceMeasureActualSubcategoryOption(this IQueryable<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions, List<int> performanceMeasureActualSubcategoryOptionIDList)
         {
             if(performanceMeasureActualSubcategoryOptionIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualSubcategoryOptions.RemoveRange(HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID)));
+                performanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureActualSubcategoryOption(this ICollection<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptionsToDelete)
+        public static void DeletePerformanceMeasureActualSubcategoryOption(this IQueryable<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions, ICollection<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptionsToDelete)
         {
             if(performanceMeasureActualSubcategoryOptionsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureActualSubcategoryOptions.RemoveRange(performanceMeasureActualSubcategoryOptionsToDelete);
+                var performanceMeasureActualSubcategoryOptionIDList = performanceMeasureActualSubcategoryOptionsToDelete.Select(x => x.PerformanceMeasureActualSubcategoryOptionID).ToList();
+                performanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureActualSubcategoryOption(this int performanceMeasureActualSubcategoryOptionID)
+        public static void DeletePerformanceMeasureActualSubcategoryOption(this IQueryable<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions, int performanceMeasureActualSubcategoryOptionID)
         {
-            DeletePerformanceMeasureActualSubcategoryOption(new List<int> { performanceMeasureActualSubcategoryOptionID });
+            DeletePerformanceMeasureActualSubcategoryOption(performanceMeasureActualSubcategoryOptions, new List<int> { performanceMeasureActualSubcategoryOptionID });
         }
 
-        public static void DeletePerformanceMeasureActualSubcategoryOption(this PerformanceMeasureActualSubcategoryOption performanceMeasureActualSubcategoryOptionToDelete)
+        public static void DeletePerformanceMeasureActualSubcategoryOption(this IQueryable<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions, PerformanceMeasureActualSubcategoryOption performanceMeasureActualSubcategoryOptionToDelete)
         {
-            DeletePerformanceMeasureActualSubcategoryOption(new List<PerformanceMeasureActualSubcategoryOption> { performanceMeasureActualSubcategoryOptionToDelete });
+            DeletePerformanceMeasureActualSubcategoryOption(performanceMeasureActualSubcategoryOptions, new List<PerformanceMeasureActualSubcategoryOption> { performanceMeasureActualSubcategoryOptionToDelete });
         }
     }
 }

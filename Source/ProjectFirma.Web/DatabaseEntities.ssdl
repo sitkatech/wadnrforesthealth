@@ -1,15 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ProjectFirma.Web.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
-    <EntitySet Name="AssessmentGoal" EntityType="ProjectFirma.Web.Models.Store.AssessmentGoal" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AssessmentQuestion" EntityType="ProjectFirma.Web.Models.Store.AssessmentQuestion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AssessmentSubGoal" EntityType="ProjectFirma.Web.Models.Store.AssessmentSubGoal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Store.Classification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ClassificationPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.Store.ClassificationSystem" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ContractorTimeActivity" EntityType="ProjectFirma.Web.Models.Store.ContractorTimeActivity" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CostParameterSet" EntityType="ProjectFirma.Web.Models.Store.CostParameterSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
@@ -24,11 +19,6 @@
     <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.Store.FundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialArea" EntityType="ProjectFirma.Web.Models.Store.GeospatialArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.Store.GeospatialAreaType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ImportExternalProjectStaging" EntityType="ProjectFirma.Web.Models.Store.ImportExternalProjectStaging" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="MappedRegion" EntityType="ProjectFirma.Web.Models.Store.MappedRegion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="MonitoringProgram" EntityType="ProjectFirma.Web.Models.Store.MonitoringProgram" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="MonitoringProgramDocument" EntityType="ProjectFirma.Web.Models.Store.MonitoringProgramDocument" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="MonitoringProgramPartner" EntityType="ProjectFirma.Web.Models.Store.MonitoringProgramPartner" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -42,7 +32,6 @@
     <EntitySet Name="PerformanceMeasureActualUpdate" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureActualUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureExpected" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureExpected" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureExpectedSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureExpectedSubcategoryOption" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PerformanceMeasureMonitoringProgram" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureMonitoringProgram" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureNote" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureSubcategory" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategoryOption" store:Type="Tables" Schema="dbo" />
@@ -51,9 +40,6 @@
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectAssessmentQuestion" EntityType="ProjectFirma.Web.Models.Store.ProjectAssessmentQuestion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectBudget" EntityType="ProjectFirma.Web.Models.Store.ProjectBudget" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectBudgetUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectBudgetUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttribute" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.Store.ProjectCustomAttributeType" store:Type="Tables" Schema="dbo" />
@@ -95,20 +81,14 @@
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateHistory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Region" EntityType="ProjectFirma.Web.Models.Store.Region" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.Store.RelationshipType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Snapshot" EntityType="ProjectFirma.Web.Models.Store.Snapshot" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SnapshotOrganizationTypeExpenditure" EntityType="ProjectFirma.Web.Models.Store.SnapshotOrganizationTypeExpenditure" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SnapshotPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasure" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SnapshotPerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasureSubcategoryOption" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SnapshotProject" EntityType="ProjectFirma.Web.Models.Store.SnapshotProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.Store.StateProvince" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.Store.SupportRequestLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SystemAttribute" EntityType="ProjectFirma.Web.Models.Store.SystemAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Store.Tag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyLeaf" EntityType="ProjectFirma.Web.Models.Store.TaxonomyLeaf" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyLeafPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.TaxonomyLeafPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TechnicalAssistanceParameter" EntityType="ProjectFirma.Web.Models.Store.TechnicalAssistanceParameter" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TenantAttribute" EntityType="ProjectFirma.Web.Models.Store.TenantAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vGeoServerGeospatialArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerGeospatialArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerGeospatialArea">
@@ -118,19 +98,9 @@
 [vGeoServerGeospatialArea].[GeospatialAreaName] AS [GeospatialAreaName], 
 [vGeoServerGeospatialArea].[GeospatialAreaFeature] AS [GeospatialAreaFeature], 
 [vGeoServerGeospatialArea].[Ogr_Geometry] AS [Ogr_Geometry], 
-[vGeoServerGeospatialArea].[TenantID] AS [TenantID], 
-[vGeoServerGeospatialArea].[TenantName] AS [TenantName], 
 [vGeoServerGeospatialArea].[GeospatialAreaTypeName] AS [GeospatialAreaTypeName]
 FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK_AssessmentQuestion_AssessmentSubGoal_AssessmentSubGoalID" Association="ProjectFirma.Web.Models.Store.FK_AssessmentQuestion_AssessmentSubGoal_AssessmentSubGoalID">
-      <End Role="AssessmentSubGoal" EntitySet="AssessmentSubGoal" />
-      <End Role="AssessmentQuestions" EntitySet="AssessmentQuestion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID" Association="ProjectFirma.Web.Models.Store.FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID">
-      <End Role="AssessmentGoal" EntitySet="AssessmentGoal" />
-      <End Role="AssessmentSubGoals" EntitySet="AssessmentSubGoal" />
-    </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AuditLogs" EntitySet="AuditLog" />
@@ -150,14 +120,6 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
       <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ContractorTimeActivity_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ContractorTimeActivity_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ContractorTimeActivities" EntitySet="ContractorTimeActivity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ContractorTimeActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ContractorTimeActivity_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ContractorTimeActivities" EntitySet="ContractorTimeActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.Store.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
@@ -206,26 +168,6 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.Store.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="GeospatialAreas" EntitySet="GeospatialArea" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID">
-      <End Role="CreatePerson" EntitySet="Person" />
-      <End Role="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" EntitySet="ImportExternalProjectStaging" />
-    </AssociationSet>
-    <AssociationSet Name="FK_MonitoringProgramDocument_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_MonitoringProgramDocument_FileResource_FileResourceID">
-      <End Role="FileResource" EntitySet="FileResource" />
-      <End Role="MonitoringProgramDocuments" EntitySet="MonitoringProgramDocument" />
-    </AssociationSet>
-    <AssociationSet Name="FK_MonitoringProgramDocument_MonitoringProgram_MonitoringProgramID" Association="ProjectFirma.Web.Models.Store.FK_MonitoringProgramDocument_MonitoringProgram_MonitoringProgramID">
-      <End Role="MonitoringProgram" EntitySet="MonitoringProgram" />
-      <End Role="MonitoringProgramDocuments" EntitySet="MonitoringProgramDocument" />
-    </AssociationSet>
-    <AssociationSet Name="FK_MonitoringProgramPartner_MonitoringProgram_MonitoringProgramID" Association="ProjectFirma.Web.Models.Store.FK_MonitoringProgramPartner_MonitoringProgram_MonitoringProgramID">
-      <End Role="MonitoringProgram" EntitySet="MonitoringProgram" />
-      <End Role="MonitoringProgramPartners" EntitySet="MonitoringProgramPartner" />
-    </AssociationSet>
-    <AssociationSet Name="FK_MonitoringProgramPartner_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_MonitoringProgramPartner_Organization_OrganizationID">
-      <End Role="Organization" EntitySet="Organization" />
-      <End Role="MonitoringProgramPartners" EntitySet="MonitoringProgramPartner" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -335,14 +277,6 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="PerformanceMeasureSubcategoryOption" EntitySet="PerformanceMeasureSubcategoryOption" />
       <End Role="PerformanceMeasureExpectedSubcategoryOptions" EntitySet="PerformanceMeasureExpectedSubcategoryOption" />
     </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureMonitoringProgram_MonitoringProgram_MonitoringProgramID" Association="ProjectFirma.Web.Models.Store.FK_PerformanceMeasureMonitoringProgram_MonitoringProgram_MonitoringProgramID">
-      <End Role="MonitoringProgram" EntitySet="MonitoringProgram" />
-      <End Role="PerformanceMeasureMonitoringPrograms" EntitySet="PerformanceMeasureMonitoringProgram" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PerformanceMeasureMonitoringProgram_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_PerformanceMeasureMonitoringProgram_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="PerformanceMeasureMonitoringPrograms" EntitySet="PerformanceMeasureMonitoringProgram" />
-    </AssociationSet>
     <AssociationSet Name="FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
       <End Role="PerformanceMeasureNotes" EntitySet="PerformanceMeasureNote" />
@@ -414,30 +348,6 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_Project_TaxonomyLeaf_TaxonomyLeafID" Association="ProjectFirma.Web.Models.Store.FK_Project_TaxonomyLeaf_TaxonomyLeafID">
       <End Role="TaxonomyLeaf" EntitySet="TaxonomyLeaf" />
       <End Role="Projects" EntitySet="Project" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectAssessmentQuestion_AssessmentQuestion_AssessmentQuestionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectAssessmentQuestion_AssessmentQuestion_AssessmentQuestionID">
-      <End Role="AssessmentQuestion" EntitySet="AssessmentQuestion" />
-      <End Role="ProjectAssessmentQuestions" EntitySet="ProjectAssessmentQuestion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectAssessmentQuestion_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectAssessmentQuestion_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectAssessmentQuestions" EntitySet="ProjectAssessmentQuestion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectBudget_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectBudget_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectBudgets" EntitySet="ProjectBudget" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectBudget_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectBudget_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectBudgets" EntitySet="ProjectBudget" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectBudgetUpdate_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectBudgetUpdate_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectBudgetUpdates" EntitySet="ProjectBudgetUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectBudgetUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectBudgetUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectBudgetUpdates" EntitySet="ProjectBudgetUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectClassification_Classification_ClassificationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectClassification_Classification_ClassificationID">
       <End Role="Classification" EntitySet="Classification" />
@@ -731,49 +641,21 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectUpdateHistories" EntitySet="ProjectUpdateHistory" />
     </AssociationSet>
-    <AssociationSet Name="FK_SnapshotOrganizationTypeExpenditure_OrganizationType_OrganizationTypeID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotOrganizationTypeExpenditure_OrganizationType_OrganizationTypeID">
-      <End Role="OrganizationType" EntitySet="OrganizationType" />
-      <End Role="SnapshotOrganizationTypeExpenditures" EntitySet="SnapshotOrganizationTypeExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotOrganizationTypeExpenditure_Snapshot_SnapshotID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotOrganizationTypeExpenditure_Snapshot_SnapshotID">
-      <End Role="Snapshot" EntitySet="Snapshot" />
-      <End Role="SnapshotOrganizationTypeExpenditures" EntitySet="SnapshotOrganizationTypeExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="SnapshotPerformanceMeasures" EntitySet="SnapshotPerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotPerformanceMeasure_Snapshot_SnapshotID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotPerformanceMeasure_Snapshot_SnapshotID">
-      <End Role="Snapshot" EntitySet="Snapshot" />
-      <End Role="SnapshotPerformanceMeasures" EntitySet="SnapshotPerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="SnapshotPerformanceMeasureSubcategoryOptions" EntitySet="SnapshotPerformanceMeasureSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-      <End Role="PerformanceMeasureSubcategory" EntitySet="PerformanceMeasureSubcategory" />
-      <End Role="SnapshotPerformanceMeasureSubcategoryOptions" EntitySet="SnapshotPerformanceMeasureSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-      <End Role="PerformanceMeasureSubcategoryOption" EntitySet="PerformanceMeasureSubcategoryOption" />
-      <End Role="SnapshotPerformanceMeasureSubcategoryOptions" EntitySet="SnapshotPerformanceMeasureSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotPerformanceMeasureSubcategoryOption_SnapshotPerformanceMeasure_SnapshotPerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotPerformanceMeasureSubcategoryOption_SnapshotPerformanceMeasure_SnapshotPerformanceMeasureID">
-      <End Role="SnapshotPerformanceMeasure" EntitySet="SnapshotPerformanceMeasure" />
-      <End Role="SnapshotPerformanceMeasureSubcategoryOptions" EntitySet="SnapshotPerformanceMeasureSubcategoryOption" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotProject_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotProject_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="SnapshotProjects" EntitySet="SnapshotProject" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SnapshotProject_Snapshot_SnapshotID" Association="ProjectFirma.Web.Models.Store.FK_SnapshotProject_Snapshot_SnapshotID">
-      <End Role="Snapshot" EntitySet="Snapshot" />
-      <End Role="SnapshotProjects" EntitySet="SnapshotProject" />
-    </AssociationSet>
     <AssociationSet Name="FK_SupportRequestLog_Person_RequestPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_SupportRequestLog_Person_RequestPersonID_PersonID">
       <End Role="RequestPerson" EntitySet="Person" />
       <End Role="SupportRequestLogsWhereYouAreTheRequestPerson" EntitySet="SupportRequestLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID">
+      <End Role="BannerLogoFileResource" EntitySet="FileResource" />
+      <End Role="SystemAttributesWhereYouAreTheBannerLogoFileResource" EntitySet="SystemAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID">
+      <End Role="SquareLogoFileResource" EntitySet="FileResource" />
+      <End Role="SystemAttributesWhereYouAreTheSquareLogoFileResource" EntitySet="SystemAttribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID">
+      <End Role="PrimaryContactPerson" EntitySet="Person" />
+      <End Role="SystemAttributesWhereYouAreThePrimaryContactPerson" EntitySet="SystemAttribute" />
     </AssociationSet>
     <AssociationSet Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" Association="ProjectFirma.Web.Models.Store.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
@@ -791,22 +673,6 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="TaxonomyLeaf" EntitySet="TaxonomyLeaf" />
       <End Role="TaxonomyLeafPerformanceMeasures" EntitySet="TaxonomyLeafPerformanceMeasure" />
     </AssociationSet>
-    <AssociationSet Name="FK_TenantAttribute_FileResource_TenantBannerLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_TenantAttribute_FileResource_TenantBannerLogoFileResourceID_FileResourceID">
-      <End Role="TenantBannerLogoFileResource" EntitySet="FileResource" />
-      <End Role="TenantAttributesWhereYouAreTheTenantBannerLogoFileResource" EntitySet="TenantAttribute" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TenantAttribute_FileResource_TenantSquareLogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_TenantAttribute_FileResource_TenantSquareLogoFileResourceID_FileResourceID">
-      <End Role="TenantSquareLogoFileResource" EntitySet="FileResource" />
-      <End Role="TenantAttributesWhereYouAreTheTenantSquareLogoFileResource" EntitySet="TenantAttribute" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TenantAttribute_FileResource_TenantStyleSheetFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_TenantAttribute_FileResource_TenantStyleSheetFileResourceID_FileResourceID">
-      <End Role="TenantStyleSheetFileResource" EntitySet="FileResource" />
-      <End Role="TenantAttributesWhereYouAreTheTenantStyleSheetFileResource" EntitySet="TenantAttribute" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID">
-      <End Role="PrimaryContactPerson" EntitySet="Person" />
-      <End Role="TenantAttributesWhereYouAreThePrimaryContactPerson" EntitySet="TenantAttribute" />
-    </AssociationSet>
     <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
       <End Role="TreatmentActivityContact" EntitySet="Person" />
       <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
@@ -816,52 +682,11 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
-  <EntityType Name="AssessmentGoal">
-    <Key>
-      <PropertyRef Name="AssessmentGoalID" />
-    </Key>
-    <Property Name="AssessmentGoalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="AssessmentGoalNumber" Type="int" Nullable="false" />
-    <Property Name="AssessmentGoalTitle" Type="varchar" MaxLength="100" />
-    <Property Name="AssessmentGoalDescription" Type="varchar" MaxLength="300" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ProjectAssessmentQuestion_AssessmentQuestion_AssessmentQuestionID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
-  <EntityType Name="AssessmentQuestion">
-    <Key>
-      <PropertyRef Name="AssessmentQuestionID" />
-    </Key>
-    <Property Name="AssessmentQuestionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="AssessmentSubGoalID" Type="int" Nullable="false" />
-    <Property Name="AssessmentQuestionText" Type="varchar" Nullable="false" MaxLength="300" />
-    <Property Name="ArchiveDate" Type="date" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_AssessmentQuestion_AssessmentSubGoal_AssessmentSubGoalID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
-  <EntityType Name="AssessmentSubGoal">
-    <Key>
-      <PropertyRef Name="AssessmentSubGoalID" />
-    </Key>
-    <Property Name="AssessmentSubGoalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="AssessmentGoalID" Type="int" Nullable="false" />
-    <Property Name="AssessmentSubGoalNumber" Type="int" Nullable="false" />
-    <Property Name="AssessmentSubGoalTitle" Type="varchar" MaxLength="100" />
-    <Property Name="AssessmentSubGoalDescription" Type="varchar" MaxLength="300" />
-  </EntityType>
   <EntityType Name="AuditLog">
     <Key>
       <PropertyRef Name="AuditLogID" />
     </Key>
     <Property Name="AuditLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="AuditLogDate" Type="datetime" Nullable="false" />
     <Property Name="AuditLogEventTypeID" Type="int" Nullable="false" />
@@ -873,16 +698,11 @@ warning 6035: The relationship 'FK_AssessmentQuestion_AssessmentSubGoal_Assessme
     <Property Name="AuditDescription" Type="varchar(max)" />
     <Property Name="ProjectID" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ClassificationPerformanceMeasure_Classification_ClassificationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectClassification_Classification_ClassificationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="Classification">
     <Key>
       <PropertyRef Name="ClassificationID" />
     </Key>
     <Property Name="ClassificationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ClassificationDescription" Type="varchar" Nullable="false" MaxLength="300" />
     <Property Name="ThemeColor" Type="varchar" Nullable="false" MaxLength="7" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="50" />
@@ -896,69 +716,33 @@ warning 6035: The relationship 'FK_ProjectClassification_Classification_Classifi
       <PropertyRef Name="ClassificationPerformanceMeasureID" />
     </Key>
     <Property Name="ClassificationPerformanceMeasureID" Type="int" Nullable="false" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ClassificationID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="IsPrimaryChart" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Classification_ClassificationSystem_ClassificationSystemID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="ClassificationSystem">
     <Key>
       <PropertyRef Name="ClassificationSystemID" />
     </Key>
     <Property Name="ClassificationSystemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ClassificationSystemName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="ClassificationSystemDefinition" Type="varchar(max)" />
     <Property Name="ClassificationSystemListPageContent" Type="varchar(max)" />
-  </EntityType>
-  <EntityType Name="ContractorTimeActivity">
-    <Key>
-      <PropertyRef Name="ContractorTimeActivityID" />
-    </Key>
-    <Property Name="ContractorTimeActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" Nullable="false" />
-    <Property Name="ContractorTimeActivityAcreage" Type="decimal" Nullable="false" />
-    <Property Name="ContractorTimeActivityHours" Type="decimal" Nullable="false" />
-    <Property Name="ContractorTimeActivityRate" Type="money" Nullable="false" />
-    <Property Name="ContractorTimeActivityStartDate" Type="datetime" Nullable="false" />
-    <Property Name="ContractorTimeActivityEndDate" Type="datetime" />
-    <Property Name="ContractorTimeActivityNotes" Type="varchar(max)" />
-  </EntityType>
-  <EntityType Name="CostParameterSet">
-    <Key>
-      <PropertyRef Name="CostParameterSetID" />
-    </Key>
-    <Property Name="CostParameterSetID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="InflationRate" Type="decimal" Nullable="false" Precision="9" Scale="6" />
-    <Property Name="CurrentYearForPVCalculations" Type="int" Nullable="false" />
-    <Property Name="Comment" Type="varchar" MaxLength="2000" />
-    <Property Name="CreateDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="County">
     <Key>
       <PropertyRef Name="CountyID" />
     </Key>
     <Property Name="CountyID" Type="int" Nullable="false" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="CountyName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
     <Property Name="CountyFeature" Type="geometry" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_CustomPageImage_CustomPage_CustomPageID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="CustomPage">
     <Key>
       <PropertyRef Name="CustomPageID" />
     </Key>
     <Property Name="CustomPageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="CustomPageDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="CustomPageVanityUrl" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="CustomPageDisplayTypeID" Type="int" Nullable="false" />
@@ -969,19 +753,14 @@ warning 6035: The relationship 'FK_CustomPageImage_CustomPage_CustomPageID_Tenan
       <PropertyRef Name="CustomPageImageID" />
     </Key>
     <Property Name="CustomPageImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="CustomPageID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="FieldDefinitionData">
     <Key>
       <PropertyRef Name="FieldDefinitionDataID" />
     </Key>
     <Property Name="FieldDefinitionDataID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FieldDefinitionID" Type="int" Nullable="false" />
     <Property Name="FieldDefinitionDataValue" Type="varchar(max)" />
     <Property Name="FieldDefinitionLabel" Type="varchar" MaxLength="300" />
@@ -991,32 +770,14 @@ warning 6035: The relationship 'FK_FieldDefinitionDataImage_FieldDefinitionData_
       <PropertyRef Name="FieldDefinitionDataImageID" />
     </Key>
     <Property Name="FieldDefinitionDataImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FieldDefinitionDataID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Classification_FileResource_KeyImageFileResourceID_TenantID_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_CustomPageImage_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_FieldDefinitionDataImage_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_FirmaHomePageImage_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_FirmaPageImage_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_MonitoringProgramDocument_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_Organization_FileResource_LogoFileResourceID_TenantID_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectDocument_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectDocumentUpdate_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectImage_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectImageUpdate_FileResource_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TenantAttribute_FileResource_TenantBannerLogoFileResourceID_TenantID_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TenantAttribute_FileResource_TenantSquareLogoFileResourceID_TenantID_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TenantAttribute_FileResource_TenantStyleSheetFileResourceID_TenantID_FileResourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="FileResource">
     <Key>
       <PropertyRef Name="FileResourceID" />
     </Key>
     <Property Name="FileResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FileResourceMimeTypeID" Type="int" Nullable="false" />
     <Property Name="OriginalBaseFilename" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="OriginalFileExtension" Type="varchar" Nullable="false" MaxLength="255" />
@@ -1030,20 +791,15 @@ warning 6035: The relationship 'FK_TenantAttribute_FileResource_TenantStyleSheet
       <PropertyRef Name="FirmaHomePageImageID" />
     </Key>
     <Property Name="FirmaHomePageImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="Caption" Type="varchar" Nullable="false" MaxLength="300" />
     <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_FirmaPageImage_FirmaPage_FirmaPageID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="FirmaPage">
     <Key>
       <PropertyRef Name="FirmaPageID" />
     </Key>
     <Property Name="FirmaPageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FirmaPageTypeID" Type="int" Nullable="false" />
     <Property Name="FirmaPageContent" Type="varchar(max)" />
   </EntityType>
@@ -1052,7 +808,6 @@ warning 6035: The relationship 'FK_FirmaPageImage_FirmaPage_FirmaPageID_TenantID
       <PropertyRef Name="FirmaPageImageID" />
     </Key>
     <Property Name="FirmaPageImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FirmaPageID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
@@ -1061,7 +816,6 @@ warning 6035: The relationship 'FK_FirmaPageImage_FirmaPage_FirmaPageID_TenantID
       <PropertyRef Name="FocusAreaID" />
     </Key>
     <Property Name="FocusAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FocusAreaName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="FocusAreaStatusID" Type="int" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="geometry" />
@@ -1071,58 +825,35 @@ warning 6035: The relationship 'FK_FirmaPageImage_FirmaPage_FirmaPageID_TenantID
       <PropertyRef Name="FocusAreaLocationStaggingID" />
     </Key>
     <Property Name="FocusAreaLocationStaggingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ContractorTimeActivity_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectBudget_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectBudgetUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="FundingSource">
     <Key>
       <PropertyRef Name="FundingSourceID" />
     </Key>
     <Property Name="FundingSourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="FundingSourceName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="FundingSourceDescription" Type="varchar" MaxLength="500" />
     <Property Name="FundingSourceAmount" Type="money" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_PersonStewardGeospatialArea_GeospatialAreaID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialArea_GeospatialArea_GeospatialAreaID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialAreaUpdate_GeospatialArea_GeospatialAreaID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="GeospatialArea">
     <Key>
       <PropertyRef Name="GeospatialAreaID" />
     </Key>
     <Property Name="GeospatialAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="GeospatialAreaFeature" Type="geometry" />
     <Property Name="GeospatialAreaTypeID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNote_GeospatialAreaType_GeospatialAreaTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_GeospatialAreaType_GeospatialAreaTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="GeospatialAreaType">
     <Key>
       <PropertyRef Name="GeospatialAreaTypeID" />
     </Key>
     <Property Name="GeospatialAreaTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaTypeName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="GeospatialAreaTypeNamePluralized" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="GeospatialAreaIntroContent" Type="varchar(max)" />
@@ -1130,75 +861,11 @@ warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_Geospatia
     <Property Name="MapServiceUrl" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeospatialAreaLayerName" Type="varchar" Nullable="false" MaxLength="255" />
   </EntityType>
-  <EntityType Name="ImportExternalProjectStaging">
-    <Key>
-      <PropertyRef Name="ImportExternalProjectStagingID" />
-    </Key>
-    <Property Name="ImportExternalProjectStagingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="CreatePersonID" Type="int" Nullable="false" />
-    <Property Name="CreateDate" Type="datetime" Nullable="false" />
-    <Property Name="ProjectName" Type="varchar" MaxLength="140" />
-    <Property Name="Description" Type="varchar" MaxLength="4000" />
-    <Property Name="PlannedDate" Type="datetime" />
-    <Property Name="ApprovalStartDate" Type="datetime" />
-    <Property Name="EndDate" Type="datetime" />
-    <Property Name="EstimatedCost" Type="float" />
-  </EntityType>
-  <EntityType Name="MappedRegion">
-    <Key>
-      <PropertyRef Name="MappedRegionID" />
-    </Key>
-    <Property Name="MappedRegionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="255" />
-    <Property Name="RegionDisplayName" Type="varchar" Nullable="false" MaxLength="255" />
-    <Property Name="RegionFeature" Type="geometry" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_MonitoringProgramDocument_MonitoringProgram_MonitoringProgramID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_MonitoringProgramPartner_MonitoringProgram_MonitoringProgramID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureMonitoringProgram_MonitoringProgram_MonitoringProgramID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
-  <EntityType Name="MonitoringProgram">
-    <Key>
-      <PropertyRef Name="MonitoringProgramID" />
-    </Key>
-    <Property Name="MonitoringProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="MonitoringProgramName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="MonitoringApproach" Type="varchar" MaxLength="1000" />
-    <Property Name="MonitoringProgramUrl" Type="varchar" MaxLength="200" />
-  </EntityType>
-  <EntityType Name="MonitoringProgramDocument">
-    <Key>
-      <PropertyRef Name="MonitoringProgramDocumentID" />
-    </Key>
-    <Property Name="MonitoringProgramDocumentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="FileResourceID" Type="int" Nullable="false" />
-    <Property Name="MonitoringProgramID" Type="int" Nullable="false" />
-    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="UploadDate" Type="date" Nullable="false" />
-  </EntityType>
-  <EntityType Name="MonitoringProgramPartner">
-    <Key>
-      <PropertyRef Name="MonitoringProgramPartnerID" />
-    </Key>
-    <Property Name="MonitoringProgramPartnerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="MonitoringProgramID" Type="int" Nullable="false" />
-    <Property Name="OrganizationID" Type="int" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_NotificationProject_Notification_NotificationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="Notification">
     <Key>
       <PropertyRef Name="NotificationID" />
     </Key>
     <Property Name="NotificationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="NotificationTypeID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="NotificationDate" Type="datetime" Nullable="false" />
@@ -1208,25 +875,14 @@ warning 6035: The relationship 'FK_NotificationProject_Notification_Notification
       <PropertyRef Name="NotificationProjectID" />
     </Key>
     <Property Name="NotificationProjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="NotificationID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_FundingSource_Organization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_MonitoringProgramPartner_Organization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_OrganizationBoundaryStaging_Organization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_Person_Organization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PersonStewardOrganization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectOrganization_Organization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectOrganizationUpdate_Organization_OrganizationID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="Organization">
     <Key>
       <PropertyRef Name="OrganizationID" />
     </Key>
     <Property Name="OrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="OrganizationGuid" Type="uniqueidentifier" />
     <Property Name="OrganizationName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="OrganizationShortName" Type="varchar" MaxLength="50" />
@@ -1242,22 +898,15 @@ warning 6035: The relationship 'FK_ProjectOrganizationUpdate_Organization_Organi
       <PropertyRef Name="OrganizationBoundaryStagingID" />
     </Key>
     <Property Name="OrganizationBoundaryStagingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Organization_OrganizationType_OrganizationTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_OrganizationTypeRelationshipType_OrganizationType_OrganizationTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotOrganizationTypeExpenditure_OrganizationType_OrganizationTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="OrganizationType">
     <Key>
       <PropertyRef Name="OrganizationTypeID" />
     </Key>
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="OrganizationTypeName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="OrganizationTypeAbbreviation" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="LegendColor" Type="varchar" Nullable="false" MaxLength="10" />
@@ -1270,31 +919,14 @@ warning 6035: The relationship 'FK_SnapshotOrganizationTypeExpenditure_Organizat
       <PropertyRef Name="OrganizationTypeRelationshipTypeID" />
     </Key>
     <Property Name="OrganizationTypeRelationshipTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
     <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActual_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualUpdate_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureExpected_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureMonitoringProgram_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureSubcategory_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TaxonomyLeafPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="PerformanceMeasure">
     <Key>
       <PropertyRef Name="PerformanceMeasureID" />
     </Key>
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="CriticalDefinitions" Type="varchar(max)" />
     <Property Name="ProjectReporting" Type="varchar(max)" />
     <Property Name="PerformanceMeasureDisplayName" Type="varchar" Nullable="false" MaxLength="200" />
@@ -1312,14 +944,12 @@ warning 6035: The relationship 'FK_TaxonomyLeafPerformanceMeasure_PerformanceMea
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID_PerformanceMeasureID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureActual_PerformanceMeasureActualID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="PerformanceMeasureActual">
     <Key>
       <PropertyRef Name="PerformanceMeasureActualID" />
     </Key>
     <Property Name="PerformanceMeasureActualID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
@@ -1330,7 +960,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="PerformanceMeasureActualSubcategoryOptionID" />
     </Key>
     <Property Name="PerformanceMeasureActualSubcategoryOptionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureActualID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryOptionID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
@@ -1341,7 +970,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="PerformanceMeasureActualSubcategoryOptionUpdateID" />
     </Key>
     <Property Name="PerformanceMeasureActualSubcategoryOptionUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureActualUpdateID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryOptionID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
@@ -1349,14 +977,12 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID_PerformanceMe' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureActualUpdate_PerformanceMeasureActualUpdateID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="PerformanceMeasureActualUpdate">
     <Key>
       <PropertyRef Name="PerformanceMeasureActualUpdateID" />
     </Key>
     <Property Name="PerformanceMeasureActualUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
@@ -1364,14 +990,12 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOptionUpda
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID_PerformanceMeasureID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureExpected_PerformanceMeasureExpectedID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="PerformanceMeasureExpected">
     <Key>
       <PropertyRef Name="PerformanceMeasureExpectedID" />
     </Key>
     <Property Name="PerformanceMeasureExpectedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="ExpectedValue" Type="float" />
@@ -1381,27 +1005,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_P
       <PropertyRef Name="PerformanceMeasureExpectedSubcategoryOptionID" />
     </Key>
     <Property Name="PerformanceMeasureExpectedSubcategoryOptionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureExpectedID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryOptionID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PerformanceMeasureMonitoringProgram">
-    <Key>
-      <PropertyRef Name="PerformanceMeasureMonitoringProgramID" />
-    </Key>
-    <Property Name="PerformanceMeasureMonitoringProgramID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
-    <Property Name="MonitoringProgramID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PerformanceMeasureNote">
     <Key>
       <PropertyRef Name="PerformanceMeasureNoteID" />
     </Key>
     <Property Name="PerformanceMeasureNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="Note" Type="varchar" Nullable="false" />
     <Property Name="CreatePersonID" Type="int" />
@@ -1411,18 +1024,12 @@ warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_P
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID_PerformanceMeasureID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="PerformanceMeasureSubcategory">
     <Key>
       <PropertyRef Name="PerformanceMeasureSubcategoryID" />
     </Key>
     <Property Name="PerformanceMeasureSubcategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryDisplayName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="ChartConfigurationJson" Type="varchar(max)" />
@@ -1430,56 +1037,22 @@ warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_P
   </EntityType>
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID_Performan' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOptionUpdate_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID_Ten' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureExpectedSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID_TenantI' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID_TenantI' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
 -->
   <EntityType Name="PerformanceMeasureSubcategoryOption">
     <Key>
       <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
     </Key>
     <Property Name="PerformanceMeasureSubcategoryOptionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureSubcategoryOptionName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="SortOrder" Type="int" />
     <Property Name="ShowOnFactSheet" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_AuditLog_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_FileResource_Person_CreatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ImportExternalProjectStaging_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_Notification_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_Organization_Person_PrimaryContactPersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureNote_Person_CreatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureNote_Person_UpdatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PersonStewardGeospatialArea_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PersonStewardOrganization_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PersonStewardTaxonomyBranch_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_Project_Person_PrimaryContactPersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectInternalNote_Person_CreatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectInternalNote_Person_UpdatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectLocationStaging_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectLocationStagingUpdate_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectNote_Person_CreatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectNote_Person_UpdatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectNoteUpdate_Person_CreatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectNoteUpdate_Person_UpdatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectPerson_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectPersonUpdate_Person_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectUpdate_Person_PrimaryContactPersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectUpdateBatch_Person_LastUpdatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectUpdateHistory_Person_UpdatePersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SupportRequestLog_Person_RequestPersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID_TenantID_PersonID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="Person">
     <Key>
       <PropertyRef Name="PersonID" />
     </Key>
     <Property Name="PersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PersonUniqueIdentifier" Type="varchar" MaxLength="100" />
     <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
@@ -1506,7 +1079,6 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
       <PropertyRef Name="PersonStewardGeospatialAreaID" />
     </Key>
     <Property Name="PersonStewardGeospatialAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaID" Type="int" Nullable="false" />
   </EntityType>
@@ -1515,7 +1087,6 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
       <PropertyRef Name="PersonStewardOrganizationID" />
     </Key>
     <Property Name="PersonStewardOrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
   </EntityType>
@@ -1524,43 +1095,14 @@ warning 6035: The relationship 'FK_TenantAttribute_Person_PrimaryContactPersonID
       <PropertyRef Name="PersonStewardTaxonomyBranchID" />
     </Key>
     <Property Name="PersonStewardTaxonomyBranchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ContractorTimeActivity_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_NotificationProject_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureActual_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_PerformanceMeasureExpected_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectAssessmentQuestion_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectBudget_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectClassification_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectCustomAttribute_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectDocument_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectExemptReportingYear_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectExternalLink_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceExpenditure_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceRequest_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialArea_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNote_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectImage_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectInternalNote_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectLocation_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectLocationStaging_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectNote_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectOrganization_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectPerson_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectTag_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectUpdateBatch_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotProject_Project_ProjectID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="Project">
     <Key>
       <PropertyRef Name="ProjectID" />
     </Key>
     <Property Name="ProjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="TaxonomyLeafID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
@@ -1586,72 +1128,28 @@ warning 6035: The relationship 'FK_SnapshotProject_Project_ProjectID_TenantID' h
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
     <Property Name="FocusAreaID" Type="int" />
   </EntityType>
-  <EntityType Name="ProjectAssessmentQuestion">
-    <Key>
-      <PropertyRef Name="ProjectAssessmentQuestionID" />
-    </Key>
-    <Property Name="ProjectAssessmentQuestionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="AssessmentQuestionID" Type="int" Nullable="false" />
-    <Property Name="Answer" Type="bit" />
-  </EntityType>
-  <EntityType Name="ProjectBudget">
-    <Key>
-      <PropertyRef Name="ProjectBudgetID" />
-    </Key>
-    <Property Name="ProjectBudgetID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" Nullable="false" />
-    <Property Name="ProjectCostTypeID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="BudgetedAmount" Type="money" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectBudgetUpdate">
-    <Key>
-      <PropertyRef Name="ProjectBudgetUpdateID" />
-    </Key>
-    <Property Name="ProjectBudgetUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" Nullable="false" />
-    <Property Name="ProjectCostTypeID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="BudgetedAmount" Type="money" />
-  </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
       <PropertyRef Name="ProjectClassificationID" />
     </Key>
     <Property Name="ProjectClassificationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ClassificationID" Type="int" Nullable="false" />
     <Property Name="ProjectClassificationNotes" Type="varchar" MaxLength="600" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ProjectCustomAttributeValue_ProjectCustomAttribute_ProjectCustomAttributeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="ProjectCustomAttribute">
     <Key>
       <PropertyRef Name="ProjectCustomAttributeID" />
     </Key>
     <Property Name="ProjectCustomAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="ProjectCustomAttributeType">
     <Key>
       <PropertyRef Name="ProjectCustomAttributeTypeID" />
     </Key>
     <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectCustomAttributeTypeName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="ProjectCustomAttributeDataTypeID" Type="int" Nullable="false" />
     <Property Name="MeasurementUnitTypeID" Type="int" />
@@ -1659,15 +1157,11 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdate_ProjectCustomAtt
     <Property Name="ProjectCustomAttributeTypeDescription" Type="varchar" MaxLength="200" />
     <Property Name="ProjectCustomAttributeTypeOptionsSchema" Type="varchar(max)" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCustomAttributeUpdate_ProjectCustomAttributeUpdateID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="ProjectCustomAttributeUpdate">
     <Key>
       <PropertyRef Name="ProjectCustomAttributeUpdateID" />
     </Key>
     <Property Name="ProjectCustomAttributeUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectCustomAttributeTypeID" Type="int" Nullable="false" />
   </EntityType>
@@ -1676,7 +1170,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectCustomAttributeUpdateValueID" />
     </Key>
     <Property Name="ProjectCustomAttributeUpdateValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectCustomAttributeUpdateID" Type="int" Nullable="false" />
     <Property Name="AttributeValue" Type="varchar" Nullable="false" MaxLength="1000" />
   </EntityType>
@@ -1685,7 +1178,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectCustomAttributeValueID" />
     </Key>
     <Property Name="ProjectCustomAttributeValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectCustomAttributeID" Type="int" Nullable="false" />
     <Property Name="AttributeValue" Type="varchar" Nullable="false" MaxLength="1000" />
   </EntityType>
@@ -1694,7 +1186,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectDocumentID" />
     </Key>
     <Property Name="ProjectDocumentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
@@ -1705,7 +1196,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectDocumentUpdateID" />
     </Key>
     <Property Name="ProjectDocumentUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="200" />
@@ -1716,7 +1206,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectExemptReportingYearID" />
     </Key>
     <Property Name="ProjectExemptReportingYearID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ProjectExemptReportingTypeID" Type="int" Nullable="false" />
@@ -1726,7 +1215,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectExemptReportingYearUpdateID" />
     </Key>
     <Property Name="ProjectExemptReportingYearUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ProjectExemptReportingTypeID" Type="int" Nullable="false" />
@@ -1736,7 +1224,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectExternalLinkID" />
     </Key>
     <Property Name="ProjectExternalLinkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ExternalLinkLabel" Type="varchar" Nullable="false" MaxLength="300" />
     <Property Name="ExternalLinkUrl" Type="varchar" Nullable="false" MaxLength="300" />
@@ -1746,7 +1233,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectExternalLinkUpdateID" />
     </Key>
     <Property Name="ProjectExternalLinkUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ExternalLinkLabel" Type="varchar" Nullable="false" MaxLength="300" />
     <Property Name="ExternalLinkUrl" Type="varchar" Nullable="false" MaxLength="300" />
@@ -1756,7 +1242,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectFundingSourceExpenditureID" />
     </Key>
     <Property Name="ProjectFundingSourceExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
@@ -1767,7 +1252,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectFundingSourceExpenditureUpdateID" />
     </Key>
     <Property Name="ProjectFundingSourceExpenditureUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
@@ -1778,7 +1262,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectFundingSourceRequestID" />
     </Key>
     <Property Name="ProjectFundingSourceRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="SecuredAmount" Type="money" />
@@ -1789,7 +1272,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectFundingSourceRequestUpdateID" />
     </Key>
     <Property Name="ProjectFundingSourceRequestUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="SecuredAmount" Type="money" />
@@ -1800,7 +1282,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectGeospatialAreaID" />
     </Key>
     <Property Name="ProjectGeospatialAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaID" Type="int" Nullable="false" />
   </EntityType>
@@ -1809,7 +1290,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectGeospatialAreaTypeNoteID" />
     </Key>
     <Property Name="ProjectGeospatialAreaTypeNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaTypeID" Type="int" Nullable="false" />
     <Property Name="Notes" Type="varchar" Nullable="false" MaxLength="4000" />
@@ -1819,7 +1299,6 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectGeospatialAreaTypeNoteUpdateID" />
     </Key>
     <Property Name="ProjectGeospatialAreaTypeNoteUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaTypeID" Type="int" Nullable="false" />
     <Property Name="Notes" Type="varchar" Nullable="false" MaxLength="4000" />
@@ -1829,19 +1308,14 @@ warning 6035: The relationship 'FK_ProjectCustomAttributeUpdateValue_ProjectCust
       <PropertyRef Name="ProjectGeospatialAreaUpdateID" />
     </Key>
     <Property Name="ProjectGeospatialAreaUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="GeospatialAreaID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="ProjectImage">
     <Key>
       <PropertyRef Name="ProjectImageID" />
     </Key>
     <Property Name="ProjectImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectImageTimingID" Type="int" Nullable="false" />
@@ -1855,7 +1329,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectImageUpdateID" />
     </Key>
     <Property Name="ProjectImageUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectImageTimingID" Type="int" Nullable="false" />
@@ -1870,7 +1343,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectInternalNoteID" />
     </Key>
     <Property Name="ProjectInternalNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="Note" Type="varchar" Nullable="false" />
     <Property Name="CreatePersonID" Type="int" />
@@ -1883,7 +1355,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectLocationID" />
     </Key>
     <Property Name="ProjectLocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationGeometry" Type="geometry" Nullable="false" />
     <Property Name="Annotation" Type="varchar" MaxLength="255" />
@@ -1893,7 +1364,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectLocationStagingID" />
     </Key>
     <Property Name="ProjectLocationStagingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
@@ -1906,7 +1376,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectLocationStagingUpdateID" />
     </Key>
     <Property Name="ProjectLocationStagingUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
@@ -1919,7 +1388,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectLocationUpdateID" />
     </Key>
     <Property Name="ProjectLocationUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationUpdateGeometry" Type="geometry" Nullable="false" />
     <Property Name="Annotation" Type="varchar" MaxLength="255" />
@@ -1929,7 +1397,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectNoteID" />
     </Key>
     <Property Name="ProjectNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="Note" Type="varchar" Nullable="false" />
     <Property Name="CreatePersonID" Type="int" />
@@ -1942,7 +1409,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectNoteUpdateID" />
     </Key>
     <Property Name="ProjectNoteUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="Note" Type="varchar" Nullable="false" />
     <Property Name="CreatePersonID" Type="int" />
@@ -1955,7 +1421,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectOrganizationID" />
     </Key>
     <Property Name="ProjectOrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
@@ -1965,7 +1430,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectOrganizationUpdateID" />
     </Key>
     <Property Name="ProjectOrganizationUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="RelationshipTypeID" Type="int" Nullable="false" />
@@ -1975,7 +1439,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectPersonID" />
     </Key>
     <Property Name="ProjectPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="ProjectPersonRelationshipTypeID" Type="int" Nullable="false" />
@@ -1985,7 +1448,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectPersonUpdateID" />
     </Key>
     <Property Name="ProjectPersonUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="ProjectPersonRelationshipTypeID" Type="int" Nullable="false" />
@@ -2003,7 +1465,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectTagID" />
     </Key>
     <Property Name="ProjectTagID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="TagID" Type="int" Nullable="false" />
   </EntityType>
@@ -2012,7 +1473,6 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
       <PropertyRef Name="ProjectUpdateID" />
     </Key>
     <Property Name="ProjectUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
@@ -2026,32 +1486,11 @@ warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectImage_ProjectImageI
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="FocusAreaID" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectBudgetUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectCustomAttributeUpdate_ProjectUpdate_ProjectUpdateID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialAreaTypeNoteUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectGeospatialAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectNoteUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectOrganizationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="ProjectUpdateBatch">
     <Key>
       <PropertyRef Name="ProjectUpdateBatchID" />
     </Key>
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="LastUpdateDate" Type="datetime" Nullable="false" />
     <Property Name="PerformanceMeasureActualYearsExemptionExplanation" Type="varchar" MaxLength="4000" />
@@ -2083,7 +1522,6 @@ warning 6035: The relationship 'FK_ProjectUpdateHistory_ProjectUpdateBatch_Proje
       <PropertyRef Name="ProjectUpdateConfigurationID" />
     </Key>
     <Property Name="ProjectUpdateConfigurationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateKickOffDate" Type="datetime" />
     <Property Name="ProjectUpdateCloseOutDate" Type="datetime" />
     <Property Name="ProjectUpdateReminderInterval" Type="int" />
@@ -2099,7 +1537,6 @@ warning 6035: The relationship 'FK_ProjectUpdateHistory_ProjectUpdateBatch_Proje
       <PropertyRef Name="ProjectUpdateHistoryID" />
     </Key>
     <Property Name="ProjectUpdateHistoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectUpdateStateID" Type="int" Nullable="false" />
     <Property Name="UpdatePersonID" Type="int" Nullable="false" />
@@ -2113,17 +1550,11 @@ warning 6035: The relationship 'FK_ProjectUpdateHistory_ProjectUpdateBatch_Proje
     <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="RegionLocation" Type="geometry" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_OrganizationTypeRelationshipType_RelationshipType_RelationshipTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectOrganization_RelationshipType_RelationshipTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="RelationshipType">
     <Key>
       <PropertyRef Name="RelationshipTypeID" />
     </Key>
     <Property Name="RelationshipTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="RelationshipTypeName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="CanStewardProjects" Type="bit" Nullable="false" />
     <Property Name="IsPrimaryContact" Type="bit" Nullable="false" />
@@ -2132,77 +1563,11 @@ warning 6035: The relationship 'FK_ProjectOrganizationUpdate_RelationshipType_Re
     <Property Name="ReportInAccomplishmentsDashboard" Type="bit" Nullable="false" />
     <Property Name="ShowOnFactSheet" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_SnapshotOrganizationTypeExpenditure_Snapshot_SnapshotID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasure_Snapshot_SnapshotID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotProject_Snapshot_SnapshotID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
-  <EntityType Name="Snapshot">
-    <Key>
-      <PropertyRef Name="SnapshotID" />
-    </Key>
-    <Property Name="SnapshotID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="SnapshotDate" Type="date" Nullable="false" />
-    <Property Name="SnapshotNote" Type="varchar" MaxLength="200" />
-    <Property Name="ProjectCount" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SnapshotOrganizationTypeExpenditure">
-    <Key>
-      <PropertyRef Name="SnapshotOrganizationTypeExpenditureID" />
-    </Key>
-    <Property Name="SnapshotOrganizationTypeExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="SnapshotID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
-    <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_SnapshotPerformanceMeasure_SnapshotPerformanceMeasureID_PerformanceMeasureID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_SnapshotPerformanceMeasureSubcategoryOption_SnapshotPerformanceMeasure_SnapshotPerformanceMeasureID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
-  <EntityType Name="SnapshotPerformanceMeasure">
-    <Key>
-      <PropertyRef Name="SnapshotPerformanceMeasureID" />
-    </Key>
-    <Property Name="SnapshotPerformanceMeasureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="SnapshotID" Type="int" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
-    <Property Name="CalendarYear" Type="int" Nullable="false" />
-    <Property Name="ActualValue" Type="float" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SnapshotPerformanceMeasureSubcategoryOption">
-    <Key>
-      <PropertyRef Name="SnapshotPerformanceMeasureSubcategoryOptionID" />
-    </Key>
-    <Property Name="SnapshotPerformanceMeasureSubcategoryOptionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="SnapshotPerformanceMeasureID" Type="int" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryOptionID" Type="int" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
-    <Property Name="PerformanceMeasureSubcategoryID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SnapshotProject">
-    <Key>
-      <PropertyRef Name="SnapshotProjectID" />
-    </Key>
-    <Property Name="SnapshotProjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="SnapshotID" Type="int" Nullable="false" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="SnapshotProjectTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_County_StateProvince_StateProvinceID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="StateProvince">
     <Key>
       <PropertyRef Name="StateProvinceID" />
     </Key>
     <Property Name="StateProvinceID" Type="int" Nullable="false" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="StateProvinceName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="StateProvinceAbbreviation" Type="char" Nullable="false" MaxLength="2" />
     <Property Name="StateProvinceFeature" Type="geometry" />
@@ -2213,7 +1578,6 @@ warning 6035: The relationship 'FK_County_StateProvince_StateProvinceID_TenantID
       <PropertyRef Name="SupportRequestLogID" />
     </Key>
     <Property Name="SupportRequestLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="RequestDate" Type="datetime" Nullable="false" />
     <Property Name="RequestPersonName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="RequestPersonEmail" Type="varchar" Nullable="false" MaxLength="256" />
@@ -2223,28 +1587,39 @@ warning 6035: The relationship 'FK_County_StateProvince_StateProvinceID_TenantID
     <Property Name="RequestPersonOrganization" Type="varchar" MaxLength="500" />
     <Property Name="RequestPersonPhone" Type="varchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_ProjectTag_Tag_TagID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
+  <EntityType Name="SystemAttribute">
+    <Key>
+      <PropertyRef Name="SystemAttributeID" />
+    </Key>
+    <Property Name="SystemAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DefaultBoundingBox" Type="geometry" Nullable="false" />
+    <Property Name="MinimumYear" Type="int" Nullable="false" />
+    <Property Name="PrimaryContactPersonID" Type="int" />
+    <Property Name="SquareLogoFileResourceID" Type="int" />
+    <Property Name="BannerLogoFileResourceID" Type="int" />
+    <Property Name="RecaptchaPublicKey" Type="varchar" MaxLength="100" />
+    <Property Name="RecaptchaPrivateKey" Type="varchar" MaxLength="100" />
+    <Property Name="ShowApplicationsToThePublic" Type="bit" Nullable="false" />
+    <Property Name="TaxonomyLevelID" Type="int" Nullable="false" />
+    <Property Name="AssociatePerfomanceMeasureTaxonomyLevelID" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ShowLeadImplementerLogoOnFactSheet" Type="bit" Nullable="false" />
+    <Property Name="EnableAccomplishmentsDashboard" Type="bit" Nullable="false" />
+    <Property Name="ProjectStewardshipAreaTypeID" Type="int" />
+  </EntityType>
   <EntityType Name="Tag">
     <Key>
       <PropertyRef Name="TagID" />
     </Key>
     <Property Name="TagID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="TagName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="TagDescription" Type="varchar" MaxLength="1000" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_PersonStewardTaxonomyBranch_TaxonomyBranchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TaxonomyLeaf_TaxonomyBranch_TaxonomyBranchID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="TaxonomyBranch">
     <Key>
       <PropertyRef Name="TaxonomyBranchID" />
     </Key>
     <Property Name="TaxonomyBranchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="TaxonomyTrunkID" Type="int" Nullable="false" />
     <Property Name="TaxonomyBranchName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="TaxonomyBranchDescription" Type="varchar(max)" />
@@ -2252,16 +1627,11 @@ warning 6035: The relationship 'FK_TaxonomyLeaf_TaxonomyBranch_TaxonomyBranchID_
     <Property Name="TaxonomyBranchCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyBranchSortOrder" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Project_TaxonomyLeaf_TaxonomyLeafID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-warning 6035: The relationship 'FK_TaxonomyLeafPerformanceMeasure_TaxonomyLeaf_TaxonomyLeafID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="TaxonomyLeaf">
     <Key>
       <PropertyRef Name="TaxonomyLeafID" />
     </Key>
     <Property Name="TaxonomyLeafID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
     <Property Name="TaxonomyLeafName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="TaxonomyLeafDescription" Type="varchar(max)" />
@@ -2274,72 +1644,26 @@ warning 6035: The relationship 'FK_TaxonomyLeafPerformanceMeasure_TaxonomyLeaf_T
       <PropertyRef Name="TaxonomyLeafPerformanceMeasureID" />
     </Key>
     <Property Name="TaxonomyLeafPerformanceMeasureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="TaxonomyLeafID" Type="int" Nullable="false" />
     <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
     <Property Name="IsPrimaryTaxonomyLeaf" Type="bit" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_TenantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="TaxonomyTrunk">
     <Key>
       <PropertyRef Name="TaxonomyTrunkID" />
     </Key>
     <Property Name="TaxonomyTrunkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="TaxonomyTrunkName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="TaxonomyTrunkDescription" Type="varchar(max)" />
     <Property Name="ThemeColor" Type="varchar" MaxLength="20" />
     <Property Name="TaxonomyTrunkCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyTrunkSortOrder" Type="int" />
   </EntityType>
-  <EntityType Name="TechnicalAssistanceParameter">
-    <Key>
-      <PropertyRef Name="TechnicalAssistanceParameterID" />
-    </Key>
-    <Property Name="TechnicalAssistanceParameterID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="Year" Type="int" Nullable="false" />
-    <Property Name="EngineeringHourlyCost" Type="money" />
-    <Property Name="OtherAssistanceHourlyCost" Type="money" />
-  </EntityType>
-  <EntityType Name="TenantAttribute">
-    <Key>
-      <PropertyRef Name="TenantAttributeID" />
-    </Key>
-    <Property Name="TenantAttributeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="DefaultBoundingBox" Type="geometry" Nullable="false" />
-    <Property Name="MinimumYear" Type="int" Nullable="false" />
-    <Property Name="PrimaryContactPersonID" Type="int" />
-    <Property Name="TenantSquareLogoFileResourceID" Type="int" />
-    <Property Name="TenantBannerLogoFileResourceID" Type="int" />
-    <Property Name="TenantStyleSheetFileResourceID" Type="int" />
-    <Property Name="TenantDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="ToolDisplayName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="RecaptchaPublicKey" Type="varchar" MaxLength="100" />
-    <Property Name="RecaptchaPrivateKey" Type="varchar" MaxLength="100" />
-    <Property Name="ShowApplicationsToThePublic" Type="bit" Nullable="false" />
-    <Property Name="TaxonomyLevelID" Type="int" Nullable="false" />
-    <Property Name="AssociatePerfomanceMeasureTaxonomyLevelID" Type="int" Nullable="false" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
-    <Property Name="ProjectExternalDataSourceEnabled" Type="bit" Nullable="false" />
-    <Property Name="AccomplishmentsDashboardFundingDisplayTypeID" Type="int" Nullable="false" />
-    <Property Name="AccomplishmentsDashboardAccomplishmentsButtonText" Type="varchar(max)" />
-    <Property Name="AccomplishmentsDashboardExpendituresButtonText" Type="varchar(max)" />
-    <Property Name="AccomplishmentsDashboardOrganizationsButtonText" Type="varchar(max)" />
-    <Property Name="AccomplishmentsDashboardIncludeReportingOrganizationType" Type="bit" Nullable="false" />
-    <Property Name="ShowLeadImplementerLogoOnFactSheet" Type="bit" Nullable="false" />
-    <Property Name="EnableAccomplishmentsDashboard" Type="bit" Nullable="false" />
-    <Property Name="ProjectStewardshipAreaTypeID" Type="int" />
-  </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>
       <PropertyRef Name="TrainingVideoID" />
     </Key>
     <Property Name="TrainingVideoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="VideoName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="VideoDescription" Type="varchar" MaxLength="500" />
     <Property Name="VideoUploadDate" Type="datetime" Nullable="false" />
@@ -2350,7 +1674,6 @@ warning 6035: The relationship 'FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID_
       <PropertyRef Name="TreatmentActivityID" />
     </Key>
     <Property Name="TreatmentActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="TreatmentActivityStartDate" Type="datetime" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
@@ -2381,8 +1704,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       <PropertyRef Name="GeospatialAreaID" />
       <PropertyRef Name="PrimaryKey" />
       <PropertyRef Name="GeospatialAreaName" />
-      <PropertyRef Name="TenantID" />
-      <PropertyRef Name="TenantName" />
       <PropertyRef Name="GeospatialAreaTypeName" />
     </Key>
     <Property Name="GeospatialAreaID" Type="int" Nullable="false" />
@@ -2390,34 +1711,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
     <Property Name="GeospatialAreaName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="GeospatialAreaFeature" Type="geometry" />
     <Property Name="Ogr_Geometry" Type="geometry" />
-    <Property Name="TenantID" Type="int" Nullable="false" />
-    <Property Name="TenantName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="GeospatialAreaTypeName" Type="varchar" Nullable="false" MaxLength="200" />
   </EntityType>
-  <Association Name="FK_AssessmentQuestion_AssessmentSubGoal_AssessmentSubGoalID">
-    <End Role="AssessmentSubGoal" Type="ProjectFirma.Web.Models.Store.AssessmentSubGoal" Multiplicity="1" />
-    <End Role="AssessmentQuestions" Type="ProjectFirma.Web.Models.Store.AssessmentQuestion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AssessmentSubGoal">
-        <PropertyRef Name="AssessmentSubGoalID" />
-      </Principal>
-      <Dependent Role="AssessmentQuestions">
-        <PropertyRef Name="AssessmentSubGoalID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AssessmentSubGoal_AssessmentGoal_AssessmentGoalID">
-    <End Role="AssessmentGoal" Type="ProjectFirma.Web.Models.Store.AssessmentGoal" Multiplicity="1" />
-    <End Role="AssessmentSubGoals" Type="ProjectFirma.Web.Models.Store.AssessmentSubGoal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AssessmentGoal">
-        <PropertyRef Name="AssessmentGoalID" />
-      </Principal>
-      <Dependent Role="AssessmentSubGoals">
-        <PropertyRef Name="AssessmentGoalID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AuditLog_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="AuditLogs" Type="ProjectFirma.Web.Models.Store.AuditLog" Multiplicity="*" />
@@ -2475,30 +1770,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="ClassificationPerformanceMeasures">
         <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ContractorTimeActivity_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
-    <End Role="ContractorTimeActivities" Type="ProjectFirma.Web.Models.Store.ContractorTimeActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ContractorTimeActivities">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ContractorTimeActivity_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ContractorTimeActivities" Type="ProjectFirma.Web.Models.Store.ContractorTimeActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ContractorTimeActivities">
-        <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2643,66 +1914,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="GeospatialAreas">
         <PropertyRef Name="GeospatialAreaTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ImportExternalProjectStaging_Person_CreatePersonID_PersonID">
-    <End Role="CreatePerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="ImportExternalProjectStagingsWhereYouAreTheCreatePerson" Type="ProjectFirma.Web.Models.Store.ImportExternalProjectStaging" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CreatePerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="ImportExternalProjectStagingsWhereYouAreTheCreatePerson">
-        <PropertyRef Name="CreatePersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MonitoringProgramDocument_FileResource_FileResourceID">
-    <End Role="FileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="1" />
-    <End Role="MonitoringProgramDocuments" Type="ProjectFirma.Web.Models.Store.MonitoringProgramDocument" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="MonitoringProgramDocuments">
-        <PropertyRef Name="FileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MonitoringProgramDocument_MonitoringProgram_MonitoringProgramID">
-    <End Role="MonitoringProgram" Type="ProjectFirma.Web.Models.Store.MonitoringProgram" Multiplicity="1" />
-    <End Role="MonitoringProgramDocuments" Type="ProjectFirma.Web.Models.Store.MonitoringProgramDocument" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MonitoringProgram">
-        <PropertyRef Name="MonitoringProgramID" />
-      </Principal>
-      <Dependent Role="MonitoringProgramDocuments">
-        <PropertyRef Name="MonitoringProgramID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MonitoringProgramPartner_MonitoringProgram_MonitoringProgramID">
-    <End Role="MonitoringProgram" Type="ProjectFirma.Web.Models.Store.MonitoringProgram" Multiplicity="1" />
-    <End Role="MonitoringProgramPartners" Type="ProjectFirma.Web.Models.Store.MonitoringProgramPartner" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MonitoringProgram">
-        <PropertyRef Name="MonitoringProgramID" />
-      </Principal>
-      <Dependent Role="MonitoringProgramPartners">
-        <PropertyRef Name="MonitoringProgramID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MonitoringProgramPartner_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
-    <End Role="MonitoringProgramPartners" Type="ProjectFirma.Web.Models.Store.MonitoringProgramPartner" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organization">
-        <PropertyRef Name="OrganizationID" />
-      </Principal>
-      <Dependent Role="MonitoringProgramPartners">
-        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3030,30 +2241,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PerformanceMeasureMonitoringProgram_MonitoringProgram_MonitoringProgramID">
-    <End Role="MonitoringProgram" Type="ProjectFirma.Web.Models.Store.MonitoringProgram" Multiplicity="1" />
-    <End Role="PerformanceMeasureMonitoringPrograms" Type="ProjectFirma.Web.Models.Store.PerformanceMeasureMonitoringProgram" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MonitoringProgram">
-        <PropertyRef Name="MonitoringProgramID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureMonitoringPrograms">
-        <PropertyRef Name="MonitoringProgramID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PerformanceMeasureMonitoringProgram_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.Store.PerformanceMeasure" Multiplicity="1" />
-    <End Role="PerformanceMeasureMonitoringPrograms" Type="ProjectFirma.Web.Models.Store.PerformanceMeasureMonitoringProgram" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="PerformanceMeasureMonitoringPrograms">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PerformanceMeasureNote_PerformanceMeasure_PerformanceMeasureID">
     <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.Store.PerformanceMeasure" Multiplicity="1" />
     <End Role="PerformanceMeasureNotes" Type="ProjectFirma.Web.Models.Store.PerformanceMeasureNote" Multiplicity="*" />
@@ -3267,78 +2454,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="Projects">
         <PropertyRef Name="TaxonomyLeafID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectAssessmentQuestion_AssessmentQuestion_AssessmentQuestionID">
-    <End Role="AssessmentQuestion" Type="ProjectFirma.Web.Models.Store.AssessmentQuestion" Multiplicity="1" />
-    <End Role="ProjectAssessmentQuestions" Type="ProjectFirma.Web.Models.Store.ProjectAssessmentQuestion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AssessmentQuestion">
-        <PropertyRef Name="AssessmentQuestionID" />
-      </Principal>
-      <Dependent Role="ProjectAssessmentQuestions">
-        <PropertyRef Name="AssessmentQuestionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectAssessmentQuestion_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectAssessmentQuestions" Type="ProjectFirma.Web.Models.Store.ProjectAssessmentQuestion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectAssessmentQuestions">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectBudget_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
-    <End Role="ProjectBudgets" Type="ProjectFirma.Web.Models.Store.ProjectBudget" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectBudgets">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectBudget_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectBudgets" Type="ProjectFirma.Web.Models.Store.ProjectBudget" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="ProjectBudgets">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectBudgetUpdate_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
-    <End Role="ProjectBudgetUpdates" Type="ProjectFirma.Web.Models.Store.ProjectBudgetUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectBudgetUpdates">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectBudgetUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
-    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectBudgetUpdates" Type="ProjectFirma.Web.Models.Store.ProjectBudgetUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectUpdateBatch">
-        <PropertyRef Name="ProjectUpdateBatchID" />
-      </Principal>
-      <Dependent Role="ProjectBudgetUpdates">
-        <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4218,126 +3333,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SnapshotOrganizationTypeExpenditure_OrganizationType_OrganizationTypeID">
-    <End Role="OrganizationType" Type="ProjectFirma.Web.Models.Store.OrganizationType" Multiplicity="1" />
-    <End Role="SnapshotOrganizationTypeExpenditures" Type="ProjectFirma.Web.Models.Store.SnapshotOrganizationTypeExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="OrganizationType">
-        <PropertyRef Name="OrganizationTypeID" />
-      </Principal>
-      <Dependent Role="SnapshotOrganizationTypeExpenditures">
-        <PropertyRef Name="OrganizationTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotOrganizationTypeExpenditure_Snapshot_SnapshotID">
-    <End Role="Snapshot" Type="ProjectFirma.Web.Models.Store.Snapshot" Multiplicity="1" />
-    <End Role="SnapshotOrganizationTypeExpenditures" Type="ProjectFirma.Web.Models.Store.SnapshotOrganizationTypeExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Snapshot">
-        <PropertyRef Name="SnapshotID" />
-      </Principal>
-      <Dependent Role="SnapshotOrganizationTypeExpenditures">
-        <PropertyRef Name="SnapshotID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.Store.PerformanceMeasure" Multiplicity="1" />
-    <End Role="SnapshotPerformanceMeasures" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="SnapshotPerformanceMeasures">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotPerformanceMeasure_Snapshot_SnapshotID">
-    <End Role="Snapshot" Type="ProjectFirma.Web.Models.Store.Snapshot" Multiplicity="1" />
-    <End Role="SnapshotPerformanceMeasures" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Snapshot">
-        <PropertyRef Name="SnapshotID" />
-      </Principal>
-      <Dependent Role="SnapshotPerformanceMeasures">
-        <PropertyRef Name="SnapshotID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.Store.PerformanceMeasure" Multiplicity="1" />
-    <End Role="SnapshotPerformanceMeasureSubcategoryOptions" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasureSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="SnapshotPerformanceMeasureSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategory_PerformanceMeasureSubcategoryID">
-    <End Role="PerformanceMeasureSubcategory" Type="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategory" Multiplicity="1" />
-    <End Role="SnapshotPerformanceMeasureSubcategoryOptions" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasureSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategory">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Principal>
-      <Dependent Role="SnapshotPerformanceMeasureSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotPerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOption_PerformanceMeasureSubcategoryOptionID">
-    <End Role="PerformanceMeasureSubcategoryOption" Type="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategoryOption" Multiplicity="1" />
-    <End Role="SnapshotPerformanceMeasureSubcategoryOptions" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasureSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasureSubcategoryOption">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Principal>
-      <Dependent Role="SnapshotPerformanceMeasureSubcategoryOptions">
-        <PropertyRef Name="PerformanceMeasureSubcategoryOptionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotPerformanceMeasureSubcategoryOption_SnapshotPerformanceMeasure_SnapshotPerformanceMeasureID">
-    <End Role="SnapshotPerformanceMeasure" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasure" Multiplicity="1" />
-    <End Role="SnapshotPerformanceMeasureSubcategoryOptions" Type="ProjectFirma.Web.Models.Store.SnapshotPerformanceMeasureSubcategoryOption" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SnapshotPerformanceMeasure">
-        <PropertyRef Name="SnapshotPerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="SnapshotPerformanceMeasureSubcategoryOptions">
-        <PropertyRef Name="SnapshotPerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotProject_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="SnapshotProjects" Type="ProjectFirma.Web.Models.Store.SnapshotProject" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="SnapshotProjects">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SnapshotProject_Snapshot_SnapshotID">
-    <End Role="Snapshot" Type="ProjectFirma.Web.Models.Store.Snapshot" Multiplicity="1" />
-    <End Role="SnapshotProjects" Type="ProjectFirma.Web.Models.Store.SnapshotProject" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Snapshot">
-        <PropertyRef Name="SnapshotID" />
-      </Principal>
-      <Dependent Role="SnapshotProjects">
-        <PropertyRef Name="SnapshotID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SupportRequestLog_Person_RequestPersonID_PersonID">
     <End Role="RequestPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
     <End Role="SupportRequestLogsWhereYouAreTheRequestPerson" Type="ProjectFirma.Web.Models.Store.SupportRequestLog" Multiplicity="*" />
@@ -4347,6 +3342,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="SupportRequestLogsWhereYouAreTheRequestPerson">
         <PropertyRef Name="RequestPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID">
+    <End Role="BannerLogoFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="SystemAttributesWhereYouAreTheBannerLogoFileResource" Type="ProjectFirma.Web.Models.Store.SystemAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BannerLogoFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="SystemAttributesWhereYouAreTheBannerLogoFileResource">
+        <PropertyRef Name="BannerLogoFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID">
+    <End Role="SquareLogoFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="SystemAttributesWhereYouAreTheSquareLogoFileResource" Type="ProjectFirma.Web.Models.Store.SystemAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SquareLogoFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="SystemAttributesWhereYouAreTheSquareLogoFileResource">
+        <PropertyRef Name="SquareLogoFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID">
+    <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="SystemAttributesWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.SystemAttribute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PrimaryContactPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="SystemAttributesWhereYouAreThePrimaryContactPerson">
+        <PropertyRef Name="PrimaryContactPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4398,54 +3429,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TenantAttribute_FileResource_TenantBannerLogoFileResourceID_FileResourceID">
-    <End Role="TenantBannerLogoFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="TenantAttributesWhereYouAreTheTenantBannerLogoFileResource" Type="ProjectFirma.Web.Models.Store.TenantAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TenantBannerLogoFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="TenantAttributesWhereYouAreTheTenantBannerLogoFileResource">
-        <PropertyRef Name="TenantBannerLogoFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TenantAttribute_FileResource_TenantSquareLogoFileResourceID_FileResourceID">
-    <End Role="TenantSquareLogoFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="TenantAttributesWhereYouAreTheTenantSquareLogoFileResource" Type="ProjectFirma.Web.Models.Store.TenantAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TenantSquareLogoFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="TenantAttributesWhereYouAreTheTenantSquareLogoFileResource">
-        <PropertyRef Name="TenantSquareLogoFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TenantAttribute_FileResource_TenantStyleSheetFileResourceID_FileResourceID">
-    <End Role="TenantStyleSheetFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
-    <End Role="TenantAttributesWhereYouAreTheTenantStyleSheetFileResource" Type="ProjectFirma.Web.Models.Store.TenantAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TenantStyleSheetFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="TenantAttributesWhereYouAreTheTenantStyleSheetFileResource">
-        <PropertyRef Name="TenantStyleSheetFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TenantAttribute_Person_PrimaryContactPersonID_PersonID">
-    <End Role="PrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="TenantAttributesWhereYouAreThePrimaryContactPerson" Type="ProjectFirma.Web.Models.Store.TenantAttribute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PrimaryContactPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="TenantAttributesWhereYouAreThePrimaryContactPerson">
-        <PropertyRef Name="PrimaryContactPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
     <End Role="TreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
     <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
@@ -4472,13 +3455,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
   </Association>
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
-  </Function>
-  <Function Name="pTenantCopy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="TenantIDFrom" Type="int" Mode="In" />
-    <Parameter Name="TenantIDTo" Type="int" Mode="In" />
-    <Parameter Name="TenantName" Type="varchar" Mode="In" />
-    <Parameter Name="ToolDisplayName" Type="varchar" Mode="In" />
-    <Parameter Name="createDate" Type="datetime" Mode="In" />
   </Function>
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />

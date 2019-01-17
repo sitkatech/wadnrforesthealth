@@ -111,24 +111,6 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectCreateSectionAssessment
-    {
-        public override bool IsComplete(Project project)
-        {
-            if (project == null)
-            {
-                return false;
-            }
-            var assessmentValidationResults = new EditAssessmentViewModel(project.ProjectAssessmentQuestions.Select(x => new ProjectAssessmentQuestionSimple(x)).ToList()).GetValidationResults();
-            return !assessmentValidationResults.Any();
-        }
-
-        public override string GetSectionUrl(Project project)
-        {
-            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditAssessment(project.ProjectID)) : null;
-        }
-    }
-
     public partial class ProjectCreateSectionClassifications
     {
         public override bool IsComplete(Project project)

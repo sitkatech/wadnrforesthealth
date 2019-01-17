@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 FileResourceData.SaveAs(gdbFile.FullName);
-                HttpRequestStorage.DatabaseEntities.AllFocusAreaLocationStagings.RemoveRange(focusArea.FocusAreaLocationStagings.ToList());
+                HttpRequestStorage.DatabaseEntities.FocusAreaLocationStagings.RemoveRange(focusArea.FocusAreaLocationStagings.ToList());
                 focusArea.FocusAreaLocationStagings.Clear();
                 FocusAreaLocationStaging.CreateFocusAreaLocationStagingListFromGdb(gdbFile, focusArea);
             }

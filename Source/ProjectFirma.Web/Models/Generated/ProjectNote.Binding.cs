@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[ProjectNote]")]
-    public partial class ProjectNote : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectNote : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectNote()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -97,12 +96,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectNotes.Remove(this);
+            dbContext.ProjectNotes.Remove(this);
         }
 
         [Key]
         public int ProjectNoteID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public string Note { get; set; }
         public int? CreatePersonID { get; set; }
@@ -112,7 +110,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectNoteID; } set { ProjectNoteID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual Person CreatePerson { get; set; }
         public virtual Person UpdatePerson { get; set; }

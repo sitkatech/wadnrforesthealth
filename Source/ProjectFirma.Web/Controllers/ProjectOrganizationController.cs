@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
-            var projectOrganizations = HttpRequestStorage.DatabaseEntities.AllProjectOrganizations.Local;
+            var projectOrganizations = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
 
             viewModel.UpdateModel(project, projectOrganizations);
             HttpRequestStorage.DatabaseEntities.SaveChanges();

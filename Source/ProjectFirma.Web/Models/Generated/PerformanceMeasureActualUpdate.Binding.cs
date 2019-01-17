@@ -16,7 +16,7 @@ using ProjectFirma.Web.Common;
 namespace ProjectFirma.Web.Models
 {
     [Table("[dbo].[PerformanceMeasureActualUpdate]")]
-    public partial class PerformanceMeasureActualUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureActualUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         protected PerformanceMeasureActualUpdate()
         {
             this.PerformanceMeasureActualSubcategoryOptionUpdates = new HashSet<PerformanceMeasureActualSubcategoryOptionUpdate>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllPerformanceMeasureActualUpdates.Remove(this);
+            dbContext.PerformanceMeasureActualUpdates.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -113,7 +112,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int PerformanceMeasureActualUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectUpdateBatchID { get; set; }
         public int PerformanceMeasureID { get; set; }
         public int CalendarYear { get; set; }
@@ -122,7 +120,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return PerformanceMeasureActualUpdateID; } set { PerformanceMeasureActualUpdateID = value; } }
 
         public virtual ICollection<PerformanceMeasureActualSubcategoryOptionUpdate> PerformanceMeasureActualSubcategoryOptionUpdates { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
 
