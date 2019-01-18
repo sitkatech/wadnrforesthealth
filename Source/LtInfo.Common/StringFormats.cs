@@ -164,34 +164,42 @@ namespace LtInfo.Common
         {
             return value.ToString("$#,##0.00");
         }
+
         public static string ToStringCurrencyFull(this decimal? value)
         {
             return value.HasValue ? value.Value.ToStringCurrencyFull() : String.Empty;
         }
+
         public static string ToStringCurrency(this decimal? value)
         {
             return value.HasValue ? value.Value.ToStringCurrency() : String.Empty;
         }
+
         public static string ToStringCurrency(this int? value)
         {
             return value.HasValue ? value.Value.ToStringCurrency() : String.Empty;
         }
+
         public static string ToStringCurrency(this double? value)
         {
             return value.HasValue ? value.Value.ToStringCurrency() : String.Empty;
         }
+
         public static string ToStringCurrency(this double value)
         {
             return value.ToString("C");
         }
+
         public static string ToStringCurrency(this decimal value)
         {
             return value.ToString("C");
         }
+
         public static string ToStringCurrency(this int value)
         {
             return value.ToString("C");
         }
+
         public static decimal? ParseNullableDecimalFromCurrencyString(string currencyString)
         {
             if (String.IsNullOrEmpty(currencyString))
@@ -205,19 +213,23 @@ namespace LtInfo.Common
             }
             return currencyValue;
         }
+
         public static string ToStringCdataEnclosed(this string value)
         {
             return String.Format(@"<![CDATA[{0}]]>", value);
         }
+
         public static string ToStringForRss(this DateTime value)
         {
             var ts = TimeZone.CurrentTimeZone.GetUtcOffset(value);
             return value.Subtract(ts).ToString("ddd, dd MMM yyyy HH':'mm':'ss 'GMT'").ToStringCdataEnclosed();
         }
+
         public static string ToStringCurrencyEdit(this decimal value)
         {
             return value.ToString("f00");
         }
+
         public static string ToStringDate(this DateTime dateTime, bool twoDigitYear)
         {
             return ToStringDate((DateTime?)dateTime, twoDigitYear);
@@ -227,6 +239,7 @@ namespace LtInfo.Common
         {
             return dateTime.ToString("MM/dd/yyyy");
         }
+
         public static string ToStringDate(this DateTime? dateTime)
         {
             return ToStringDate(dateTime, false);

@@ -97,4 +97,9 @@ VALUES
 (273, N'Landowner', 'Landowner', 'Placeholder definition for Landowner.'),
 (274, N'Partner', 'Partner', 'Placeholder definition for Partner.'),
 (275, N'PrimaryContact', 'Primary Contact', 'Placeholder definition for Primary Contact.'),
-(276, 'FocusArea', 'Focus Area', 'Placeholder definition for Focus Area')
+(276, N'FocusArea', 'Focus Area', 'Placeholder definition for Focus Area'),
+(277, N'Grant', 'Grant', 'Placeholder definition for Grant'),
+(278, N'GrantAllocation', 'Grant Allocation', 'Placeholder definition for Grant Allocation.'),
+(279, N'CostType', 'CostType', 'Placeholder definition for CostType.'),
+(280, N'ProjectCode', 'Project Code', 'Placeholder definition for Project Code.'),
+(281, N'GrantAllocationProjectCode', 'Grant Allocation Project Code', 'Placeholder definition for Grant Allocation Project Code.')

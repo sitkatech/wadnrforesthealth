@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
+        public virtual DbSet<CostType> CostTypes { get; set; }
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
@@ -46,6 +47,9 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FundingSource> FundingSources { get; set; }
         public virtual DbSet<GeospatialArea> GeospatialAreas { get; set; }
         public virtual DbSet<GeospatialAreaType> GeospatialAreaTypes { get; set; }
+        public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
+        public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<Grant> Grants { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -67,6 +71,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
+        public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
         public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual DbSet<ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; set; }
         public virtual DbSet<ProjectCustomAttributeUpdate> ProjectCustomAttributeUpdates { get; set; }
@@ -144,6 +149,9 @@ namespace ProjectFirma.Web.Models
                 case "ClassificationSystem":
                     return ClassificationSystems.GetClassificationSystem(primaryKey);
 
+                case "CostType":
+                    return CostTypes.GetCostType(primaryKey);
+
                 case "County":
                     return Counties.GetCounty(primaryKey);
 
@@ -220,6 +228,15 @@ namespace ProjectFirma.Web.Models
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
+
+                case "GrantAllocationProjectCode":
+                    return GrantAllocationProjectCodes.GetGrantAllocationProjectCode(primaryKey);
+
+                case "GrantAllocation":
+                    return GrantAllocations.GetGrantAllocation(primaryKey);
+
+                case "Grant":
+                    return Grants.GetGrant(primaryKey);
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -313,6 +330,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectClassification":
                     return ProjectClassifications.GetProjectClassification(primaryKey);
+
+                case "ProjectCode":
+                    return ProjectCodes.GetProjectCode(primaryKey);
 
                 case "ProjectColorByType":
                     var projectColorByType = ProjectColorByType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
