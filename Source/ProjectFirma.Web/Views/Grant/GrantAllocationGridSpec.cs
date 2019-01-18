@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add("Start Date", x => x.StartDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("End Date", x => x.EndDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Allocation Amount", x => x.AllocationAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Project Codes", x => x.ProjectCodesString, 90, DhtmlxGridColumnFilterType.Text);
         }
     }
 }
