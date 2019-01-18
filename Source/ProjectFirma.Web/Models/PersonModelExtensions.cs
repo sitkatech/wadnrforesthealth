@@ -36,6 +36,11 @@ namespace ProjectFirma.Web.Models
             return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameFirstLast);
         }
 
+        public static HtmlString GetFullNameLastFirstAsUrl(this Person person)
+        {
+            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameLastFirst);
+        }
+
         public static HtmlString GetFullNameFirstLastAndOrgAsUrl(this Person person)
         {
             var userUrl = person.GetFullNameFirstLastAsUrl();

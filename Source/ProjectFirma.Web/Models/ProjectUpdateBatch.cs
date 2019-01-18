@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Models
         {
             var areAllProjectGeospatialAreasValid = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList().All(IsProjectGeospatialAreaValid);
             return AreProjectBasicsValid && AreExpendituresValid() &&
-                   ArePerformanceMeasuresValid() &&
+                  // ArePerformanceMeasuresValid() &&
                    IsProjectLocationSimpleValid() &&
                    areAllProjectGeospatialAreasValid;
         }
