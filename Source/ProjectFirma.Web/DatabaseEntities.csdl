@@ -939,6 +939,7 @@
     <Property Name="ConditionsAndRequirements" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ComplianceNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="AwardedFunds" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CFDANumber" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
   </EntityType>
   <EntityType Name="GrantAllocation">

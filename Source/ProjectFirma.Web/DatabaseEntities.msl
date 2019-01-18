@@ -218,6 +218,7 @@
           <ScalarProperty Name="ConditionsAndRequirements" ColumnName="ConditionsAndRequirements" />
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
           <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
+          <ScalarProperty Name="CFDANumber" ColumnName="CFDANumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

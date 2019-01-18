@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Grant](
 	[ConditionsAndRequirements] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ComplianceNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AwardedFunds] [money] NULL,
+	[CFDANumber] [varchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Grant_GrantID] PRIMARY KEY CLUSTERED 
 (
 	[GrantID] ASC
