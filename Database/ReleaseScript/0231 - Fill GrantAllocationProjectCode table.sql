@@ -6,7 +6,7 @@ from
 	select x.GrantAllocationID, x.[Project Codes], x.CleanProjectCode
 	from
 	(
-		select GA.GrantAllocationID, TCG.[Project Codes], trim(x.splitdata) as CleanProjectCode
+		select GA.GrantAllocationID, TCG.[Project Codes], ltrim(rtrim(x.splitdata)) as CleanProjectCode
 		from GrantAllocation ga
 		join [Grant] g on ga.GrantID = g.GrantID
 		join dbo.tmpChildrenGrantsInGrantsTab tcg on ga.ProjectName = tcg.Title and g.GrantNumber = tcg.[Grant #] and ga.AllocationAmount =isnull(cast(REPLACE(tcg.[Funds Awarded], '"','') as money),0)
