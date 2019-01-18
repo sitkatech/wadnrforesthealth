@@ -33,6 +33,15 @@ namespace ProjectFirma.Web.Controllers
 {
     public class GrantController : FirmaBaseController
     {
+
+        [GrantsViewFeature]
+        public ViewResult Detail(int grantID)
+        {
+            var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == grantID);
+            var viewData = new DetailViewData(CurrentPerson, grant);
+            return RazorView<Detail, DetailViewData>(viewData);
+        }
+
         [GrantsViewFullListFeature]
         public ViewResult Index()
         {
