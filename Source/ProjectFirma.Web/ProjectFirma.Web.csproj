@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ProjectRegionController.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\AuditLog.Binding.cs" />
@@ -315,6 +316,9 @@
     <Compile Include="Models\Generated\ProjectRegion.Binding.cs" />
     <Compile Include="Models\Generated\ProjectRegion.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectRegionPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectRegionUpdate.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectRegionUpdate.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectRegionUpdatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectStage.Binding.cs" />
     <Compile Include="Models\Generated\ProjectStagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectStewardshipAreaType.Binding.cs" />
@@ -439,6 +443,10 @@
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
+    <Compile Include="Views\ProjectRegion\EditProjectRegions.cs" />
+    <Compile Include="Views\ProjectRegion\EditProjectRegionsViewData.cs" />
+    <Compile Include="Views\ProjectRegion\EditProjectRegionsViewModel.cs" />
+    <Compile Include="Views\ProjectRegion\EditProjectRegionsViewModelTest.cs" />
     <Compile Include="Views\ProjectUpdate\Contacts.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />
@@ -660,8 +668,10 @@
     <Compile Include="Views\ProjectUpdate\ExpectedFundingValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewModel.cs" />
+    <Content Include="Views\ProjectRegion\EditProjectRegionController.js" />
     <Content Include="Views\ProjectUpdate\Contacts.cshtml" />
     <Content Include="Views\ProjectCreate\Contacts.cshtml" />
+    <Content Include="Views\ProjectRegion\EditProjectRegions.cshtml" />
     <None Include="Views\ProjectUpdate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectUpdate\GeospatialAreaViewData.cs" />
     <Compile Include="Views\ProjectUpdate\GeospatialAreaViewModel.cs" />

@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel);
             }
-            var focusArea = new FocusArea(string.Empty, ModelObjectHelpers.NotYetAssignedID);
+            var focusArea = new FocusArea(string.Empty, ModelObjectHelpers.NotYetAssignedID, ModelObjectHelpers.NotYetAssignedID);
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -247,9 +247,12 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEdit(EditViewModel viewModel)
         {
             var focusAreaStatusAsSelectListItems =
-                FocusAreaStatus.All.ToSelectListWithEmptyFirstRow(v => v.FocusAreaStatusID.ToString(), m => m.FocusAreaStatusDisplayName);
+                FocusAreaStatus.All.ToSelectListWithEmptyFirstRow(k => k.FocusAreaStatusID.ToString(), v => v.FocusAreaStatusDisplayName);
+            var regions =
+                HttpRequestStorage.DatabaseEntities.Regions.ToSelectListWithEmptyFirstRow(k => k.RegionID.ToString(),
+                    v => v.RegionName);
             var isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
-            var viewData = new EditViewData(focusAreaStatusAsSelectListItems, isSitkaAdmin);
+            var viewData = new EditViewData(focusAreaStatusAsSelectListItems, regions, isSitkaAdmin);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 

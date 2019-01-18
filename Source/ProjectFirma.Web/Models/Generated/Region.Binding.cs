@@ -23,7 +23,9 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Region()
         {
+            this.FocusAreas = new HashSet<FocusArea>();
             this.ProjectRegions = new HashSet<ProjectRegion>();
+            this.ProjectRegionUpdates = new HashSet<ProjectRegionUpdate>();
         }
 
         /// <summary>
@@ -62,13 +64,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectRegions.Any();
+            return FocusAreas.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(ProjectRegion).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(FocusArea).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -85,7 +87,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
+            foreach(var x in FocusAreas.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectRegions.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in ProjectRegionUpdates.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -98,11 +110,13 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return RegionID; } set { RegionID = value; } }
 
+        public virtual ICollection<FocusArea> FocusAreas { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
+        public virtual ICollection<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
 
         public static class FieldLengths
         {
-            public const int RegionName = 200;
+            public const int RegionName = 100;
         }
     }
 }

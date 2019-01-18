@@ -86,6 +86,10 @@
                                             <div class="col-xs-2 fieldLabel">@Html.Label("Status")</div>
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.FocusAreaStatus != null ? ViewDataTyped.FocusArea.FocusAreaStatus.FocusAreaStatusDisplayName : string.Empty)</div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-xs-2 fieldLabel">@Html.Label("Region")</div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.Region != null ? ViewDataTyped.FocusArea.Region.RegionName : string.Empty)</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

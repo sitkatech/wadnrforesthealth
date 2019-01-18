@@ -3,8 +3,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Region](
-	[RegionID] [int] IDENTITY(1,1) NOT NULL,
-	[RegionName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[RegionID] [int] NOT NULL,
+	[RegionName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[RegionLocation] [geometry] NULL,
  CONSTRAINT [PK_Region_RegionID] PRIMARY KEY CLUSTERED 
 (

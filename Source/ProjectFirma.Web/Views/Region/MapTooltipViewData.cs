@@ -11,9 +11,9 @@ namespace ProjectFirma.Web.Views.Region
         public readonly Models.Region Region;
         public readonly HtmlString RegionDetailLink;
 
-        public MapTooltipViewData(Person currentPerson, Models.Region geospatialArea) : base(currentPerson)
+        public MapTooltipViewData(Person currentPerson, Models.Region region) : base(currentPerson)
         {
-            Region = geospatialArea;
+            Region = region;
             RegionDetailLink = SitkaRoute<RegionController>
                 .BuildLinkFromExpression(c => c.Detail(Region), Region.RegionName).ToHTMLFormattedString();
         }

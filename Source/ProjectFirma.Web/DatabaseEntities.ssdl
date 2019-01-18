@@ -74,6 +74,7 @@
     <EntitySet Name="ProjectPerson" EntityType="ProjectFirma.Web.Models.Store.ProjectPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPersonUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.Store.ProjectRegion" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.Store.ProjectTag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" store:Type="Tables" Schema="dbo" />
@@ -156,6 +157,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_FirmaPageImage_FirmaPage_FirmaPageID" Association="ProjectFirma.Web.Models.Store.FK_FirmaPageImage_FirmaPage_FirmaPageID">
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FocusArea_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_FocusArea_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="FocusAreas" EntitySet="FocusArea" />
     </AssociationSet>
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
@@ -605,6 +610,14 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="Region" EntitySet="Region" />
       <End Role="ProjectRegions" EntitySet="ProjectRegion" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegionUpdate_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegionUpdate_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectTag_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTag_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectTags" EntitySet="ProjectTag" />
@@ -819,6 +832,7 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="FocusAreaName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="FocusAreaStatusID" Type="int" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="geometry" />
+    <Property Name="RegionID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
     <Key>
@@ -1460,6 +1474,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="RegionID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ProjectRegionUpdate">
+    <Key>
+      <PropertyRef Name="ProjectRegionUpdateID" />
+    </Key>
+    <Property Name="ProjectRegionUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
+    <Property Name="RegionID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ProjectTag">
     <Key>
       <PropertyRef Name="ProjectTagID" />
@@ -1546,8 +1568,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Key>
       <PropertyRef Name="RegionID" />
     </Key>
-    <Property Name="RegionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="RegionLocation" Type="geometry" />
   </EntityType>
   <EntityType Name="RelationshipType">
@@ -1878,6 +1900,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="FirmaPageImages">
         <PropertyRef Name="FirmaPageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FocusArea_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="1" />
+    <End Role="FocusAreas" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="FocusAreas">
+        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3221,6 +3255,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
         <PropertyRef Name="RegionID" />
       </Principal>
       <Dependent Role="ProjectRegions">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectRegionUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegionUpdate_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="1" />
+    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="ProjectRegionUpdates">
         <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>

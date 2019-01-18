@@ -150,6 +150,7 @@
           <ScalarProperty Name="FocusAreaName" ColumnName="FocusAreaName" />
           <ScalarProperty Name="FocusAreaStatusID" ColumnName="FocusAreaStatusID" />
           <ScalarProperty Name="FocusAreaLocation" ColumnName="FocusAreaLocation" />
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -833,6 +834,15 @@
         <MappingFragment StoreEntitySet="ProjectRegion">
           <ScalarProperty Name="ProjectRegionID" ColumnName="ProjectRegionID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectRegionUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectRegionUpdate">
+        <MappingFragment StoreEntitySet="ProjectRegionUpdate">
+          <ScalarProperty Name="ProjectRegionUpdateID" ColumnName="ProjectRegionUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
         </MappingFragment>
       </EntityTypeMapping>
