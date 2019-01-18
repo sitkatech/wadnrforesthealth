@@ -24,7 +24,7 @@ set PersonUniqueIdentifier = 'C9E033A2-E53D-4A29-A368-037BF0518E38'
 where Email = 'brian.grass@sitkatech.com'
 
 update dbo.Person
-set PersonUniqueIdentifier = 'F96C4B4F-BFE1-4FC6-8F1E-2CB1B0B19913'
+set PersonUniqueIdentifier = 'DP4LM5FL0TM6F-4PQ8VL4PQ-DD7WV4ZZ8D-9VL7MQ6QL'
 where Email = 'dal.marsters@sitkatech.com'
 
 update dbo.Person
