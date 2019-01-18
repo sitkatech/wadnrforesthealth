@@ -1,7 +1,6 @@
 IF EXISTS(SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.fnSplitString'))
     drop function dbo.fnSplitString
 go
-
 CREATE FUNCTION [dbo].fnSplitString
 (
    @string NVARCHAR(MAX),
@@ -47,5 +46,3 @@ insert into dbo.ProjectCode(ProjectCodeAbbrev)
 	where LTRIM(RTRIM(abbrev)) not in ('', '---')
 	order by REPLACE(LTRIM(RTRIM(abbrev)), '"', '')
 select * from dbo.ProjectCode
-
-drop function dbo.fnSplitString

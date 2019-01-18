@@ -679,7 +679,14 @@
       <End Role="TaxonomyLeaf" EntitySet="TaxonomyLeaf" />
       <End Role="TaxonomyLeafPerformanceMeasures" EntitySet="TaxonomyLeafPerformanceMeasure" />
     </AssociationSet>
+    <FunctionImport Name="fnSplitString" ReturnType="Collection(ProjectFirma.Web.Models.fnSplitString_Result)" IsComposable="true">
+      <Parameter Name="string" Type="String" />
+      <Parameter Name="delimiter" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="fnSplitString_Result">
+    <Property Name="splitdata" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </ComplexType>
   <EntityType Name="AuditLog">
     <Key>
       <PropertyRef Name="AuditLogID" />
