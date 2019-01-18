@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -398,6 +398,8 @@
     <Compile Include="Models\Generated\vGeoServerGeospatialArea.Binding.cs" />
     <Compile Include="Common\ICanDeleteFull.cs" />
     <Compile Include="Controllers\TreatmentActivityController.cs" />
+    <Compile Include="Models\Grant.cs" />
+    <Compile Include="Models\GrantModelExtensions.cs" />
     <Compile Include="Models\TreatmentActivity.DatabaseContextExtensions.cs" />
     <Compile Include="Models\FocusAreaLocationStaging.cs" />
     <Compile Include="Controllers\FocusAreaController.cs" />
@@ -414,12 +416,15 @@
     <Compile Include="Models\ProjectPersonSimple.cs" />
     <Compile Include="Models\ProjectPersonUpdate.cs" />
     <Compile Include="Models\TreatmentActivityModelExtensions.cs" />
+    <Compile Include="Security\GrantsViewFeature.cs" />
     <Compile Include="Security\GrantsViewFullListFeature.cs" />
     <Compile Include="Saml.cs" />
     <Compile Include="Security\FocusAreaViewFeature.cs" />
     <Compile Include="Security\FocusAreaManageFeature.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
+    <Compile Include="Views\Grant\Detail.cs" />
+    <Compile Include="Views\Grant\DetailViewData.cs" />
     <Compile Include="Views\Grant\GrantGridSpec.cs" />
     <Compile Include="Views\Grant\GrantAllocationGridSpec.cs" />
     <Compile Include="Views\Grant\GrantIndexViewData.cs" />
@@ -447,6 +452,7 @@
     <Compile Include="Views\FocusArea\IndexGridSpec.cs" />
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
+    <Compile Include="Views\Grant\GrantViewData.cs" />
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
@@ -505,6 +511,7 @@
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
     <Content Include="Views\FocusArea\EditBoundaryErrors.cshtml" />
+    <Content Include="Views\Grant\Detail.cshtml" />
     <None Include="Views\ProjectCreate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewModel.cs" />
     <Compile Include="Views\ProjectCustomAttributeType\Detail.cs" />

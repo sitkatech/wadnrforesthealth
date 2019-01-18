@@ -1,0 +1,183 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="Detail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common
+@using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls
+@using ProjectFirma.Web.Views.Shared.ProjectControls
+@using ProjectFirma.Web.Views.Shared.ProjectLocationControls
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using ProjectFirma.Web.Views.Shared.TextControls
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.ModalDialog
+@using MoreLinq
+@using ProjectFirma.Web.Views.ProjectFunding
+@using ProjectFirma.Web.Views.Shared.ProjectDocument
+@using ProjectFirma.Web.Views.Shared.ProjectOrganization
+@using ProjectFirma.Web.Views.Shared.ProjectPerson
+@inherits ProjectFirma.Web.Views.Grant.Detail
+
+@section JavascriptAndStylesContent
+{
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ MapJavascriptIncludes.RenderPartialView(Html); }
+    <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
+    <link href="~/Content/bootstrap-tags/bootstrap-tags.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+    <script src="@Url.Content("~/Content/bootstrap-toc/bootstrap-toc.min.js")" type="text/javascript"></script>
+}
+
+<style type="text/css">
+
+    .basicsLayout .row {
+         margin-left: 0;
+         margin-right: 0;
+     }
+
+    .basicsLayout .row div {
+        padding-left: 0;
+        padding-right: 5px;
+    }
+
+    .basicsLayout hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+     
+</style>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Overview</a>
+    </li>
+   
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="col-sm-12 col-md-9 col-lg-10">
+            <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() Overview</h2>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            <h3>
+                                @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectUrl, string.Format("Edit {0}", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasEditProjectPermissions)*@
+                                Basics
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="basicsLayout">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="Name">Name</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="Name">There is no name concept yet</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="ShortName">Short Name</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="ShortName">There is no short name concept yet</span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="Organization">Organization</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="Organization">There is no Org concept yet</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="Status">Status</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="Status">There is no status yet</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="Type">Type</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="Type">Standalone or CPG</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="GrantNumber">Grant Number</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="TotalAwardAmount">Total Award Amount</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="TotalAwardAmount">@ViewDataTyped.Grant.AwardedFunds.ToStringCurrency()</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="StartDate">Start Date</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="EndDate">End Date</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+            <script type="text/javascript">
+                jQuery(document)
+                    .ready(function () {
+                        jQuery("#home-tab").click();
+                    });
+            </script>
+
