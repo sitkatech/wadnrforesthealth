@@ -129,6 +129,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual CostType CostType { get; set; }
+        public virtual Person ProgramManagerPerson { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
 
         public static class FieldLengths
