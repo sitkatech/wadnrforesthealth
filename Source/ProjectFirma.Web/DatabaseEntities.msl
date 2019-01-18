@@ -231,8 +231,8 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
           <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

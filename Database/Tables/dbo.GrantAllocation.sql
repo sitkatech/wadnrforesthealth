@@ -10,8 +10,8 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[EndDate] [datetime] NOT NULL,
 	[AllocationAmount] [money] NULL,
 	[CostTypeID] [int] NULL,
-	[ProgramIndex] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProgramManagerPersonID] [int] NULL,
+	[ProgramIndexID] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
@@ -28,3 +28,8 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[Grant] ([GrantID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Grant_GrantID]
+GO
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
+REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
+GO
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID]
