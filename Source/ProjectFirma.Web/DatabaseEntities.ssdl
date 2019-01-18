@@ -43,6 +43,7 @@
     <EntitySet Name="PersonStewardGeospatialArea" EntityType="ProjectFirma.Web.Models.Store.PersonStewardGeospatialArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.Store.ProjectCode" store:Type="Tables" Schema="dbo" />
@@ -1147,6 +1148,13 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonStewardTaxonomyBranchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProgramIndex">
+    <Key>
+      <PropertyRef Name="ProgramIndexID" />
+    </Key>
+    <Property Name="ProgramIndexID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramIndexAbbrev" Type="varchar" Nullable="false" MaxLength="255" />
   </EntityType>
   <EntityType Name="Project">
     <Key>

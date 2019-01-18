@@ -487,6 +487,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProgramIndex">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramIndex">
+        <MappingFragment StoreEntitySet="ProgramIndex">
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Project">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Project">
         <MappingFragment StoreEntitySet="Project">

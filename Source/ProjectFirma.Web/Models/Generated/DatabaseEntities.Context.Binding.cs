@@ -70,6 +70,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardGeospatialArea> PersonStewardGeospatialAreas { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
+        public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
         public virtual DbSet<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
@@ -322,6 +323,9 @@ namespace ProjectFirma.Web.Models
 
                 case "PersonStewardTaxonomyBranch":
                     return PersonStewardTaxonomyBranches.GetPersonStewardTaxonomyBranch(primaryKey);
+
+                case "ProgramIndex":
+                    return ProgramIndices.GetProgramIndex(primaryKey);
 
                 case "ProjectApprovalStatus":
                     var projectApprovalStatus = ProjectApprovalStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

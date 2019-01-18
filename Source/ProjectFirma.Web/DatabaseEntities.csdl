@@ -43,6 +43,7 @@
     <EntitySet Name="PersonStewardGeospatialArea" EntityType="ProjectFirma.Web.Models.PersonStewardGeospatialArea" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.PersonStewardOrganization" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
+    <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
     <EntitySet Name="ProjectCode" EntityType="ProjectFirma.Web.Models.ProjectCode" />
@@ -1282,6 +1283,13 @@
     <Property Name="TaxonomyBranchID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="PersonStewardTaxonomyBranches" ToRole="Person" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" FromRole="PersonStewardTaxonomyBranches" ToRole="TaxonomyBranch" />
+  </EntityType>
+  <EntityType Name="ProgramIndex">
+    <Key>
+      <PropertyRef Name="ProgramIndexID" />
+    </Key>
+    <Property Name="ProgramIndexID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramIndexAbbrev" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="Project">
     <Key>
