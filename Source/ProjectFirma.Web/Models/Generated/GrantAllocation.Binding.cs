@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime startDate, DateTime endDate, decimal? allocationAmount, int? costTypeID, string programIndex, int? programManagerPersonID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime startDate, DateTime endDate, decimal? allocationAmount, int? costTypeID, int? programManagerPersonID, int? programIndexID, int? federalFundCodeID, int? organizationID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -39,8 +39,10 @@ namespace ProjectFirma.Web.Models
             this.EndDate = endDate;
             this.AllocationAmount = allocationAmount;
             this.CostTypeID = costTypeID;
-            this.ProgramIndex = programIndex;
             this.ProgramManagerPersonID = programManagerPersonID;
+            this.ProgramIndexID = programIndexID;
+            this.FederalFundCodeID = federalFundCodeID;
+            this.OrganizationID = organizationID;
         }
 
         /// <summary>
@@ -121,19 +123,24 @@ namespace ProjectFirma.Web.Models
         public DateTime EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
         public int? CostTypeID { get; set; }
-        public string ProgramIndex { get; set; }
         public int? ProgramManagerPersonID { get; set; }
+        public int? ProgramIndexID { get; set; }
+        public int? FederalFundCodeID { get; set; }
+        public int? OrganizationID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual CostType CostType { get; set; }
+        public virtual Person ProgramManagerPerson { get; set; }
+        public virtual ProgramIndex ProgramIndex { get; set; }
+        public virtual FederalFundCode FederalFundCode { get; set; }
+        public virtual Organization Organization { get; set; }
 
         public static class FieldLengths
         {
             public const int ProjectName = 100;
-            public const int ProgramIndex = 100;
         }
     }
 }

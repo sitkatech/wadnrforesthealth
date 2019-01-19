@@ -24,8 +24,15 @@ CREATE TABLE [dbo].[tmpChildrenGrantsInGrantsTab](
 	[Start Date] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[End Date] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Notes] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[GrantAllocationID] [int] NULL,
  CONSTRAINT [PK_tmpChildrenGrantsInGrantsTab_ChildGrantID] PRIMARY KEY CLUSTERED 
 (
 	[ChildGrantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[tmpChildrenGrantsInGrantsTab]  WITH CHECK ADD  CONSTRAINT [FK_tmpChildrenGrantsInGrantsTab_GrantAllocation_GrantAllocationID_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
+GO
+ALTER TABLE [dbo].[tmpChildrenGrantsInGrantsTab] CHECK CONSTRAINT [FK_tmpChildrenGrantsInGrantsTab_GrantAllocation_GrantAllocationID_GrantAllocationID]

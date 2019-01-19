@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[Grant]
+//  Source Table: [dbo].[FederalFundCode]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +15,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[Grant] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[Grant]")]
-    public partial class Grant : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[FederalFundCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[FederalFundCode]")]
+    public partial class FederalFundCode : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected Grant()
+        protected FederalFundCode()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
         }
@@ -30,18 +30,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber) : this()
+        public FederalFundCode(int federalFundCodeID, string federalFundCodeAbbrev) : this()
         {
-            this.GrantID = grantID;
-            this.GrantNumber = grantNumber;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-            this.ProgramIndex = programIndex;
-            this.ProjectCode = projectCode;
-            this.ConditionsAndRequirements = conditionsAndRequirements;
-            this.ComplianceNotes = complianceNotes;
-            this.AwardedFunds = awardedFunds;
-            this.CFDANumber = cFDANumber;
+            this.FederalFundCodeID = federalFundCodeID;
+            this.FederalFundCodeAbbrev = federalFundCodeAbbrev;
         }
 
 
@@ -49,9 +41,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Grant CreateNewBlank()
+        public static FederalFundCode CreateNewBlank()
         {
-            return new Grant();
+            return new FederalFundCode();
         }
 
         /// <summary>
@@ -66,7 +58,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FederalFundCode).Name, typeof(GrantAllocation).Name};
 
 
         /// <summary>
@@ -75,7 +67,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.Grants.Remove(this);
+            dbContext.FederalFundCodes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -90,26 +82,16 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int GrantID { get; set; }
-        public string GrantNumber { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public int? ProgramIndex { get; set; }
-        public string ProjectCode { get; set; }
-        public string ConditionsAndRequirements { get; set; }
-        public string ComplianceNotes { get; set; }
-        public decimal? AwardedFunds { get; set; }
-        public string CFDANumber { get; set; }
+        public int FederalFundCodeID { get; set; }
+        public string FederalFundCodeAbbrev { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
+        public int PrimaryKey { get { return FederalFundCodeID; } set { FederalFundCodeID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
 
         public static class FieldLengths
         {
-            public const int GrantNumber = 30;
-            public const int ProjectCode = 100;
-            public const int CFDANumber = 10;
+            public const int FederalFundCodeAbbrev = 10;
         }
     }
 }

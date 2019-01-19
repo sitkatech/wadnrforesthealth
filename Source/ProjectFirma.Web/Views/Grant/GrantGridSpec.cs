@@ -30,6 +30,8 @@ namespace ProjectFirma.Web.Views.Grant
 {
     public class GrantGridSpec : GridSpec<Models.Grant>
     {
+        public static string GrantNumberHiddenColumnName = "GrantNumberAsText";
+
         public GrantGridSpec(Models.Person currentPerson)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
@@ -38,7 +40,10 @@ namespace ProjectFirma.Web.Views.Grant
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
+            // hidden column for grant number for use by JavaScript
+            Add(GrantNumberHiddenColumnName, x => x.GrantNumber, 0);
             Add("Grant Number", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantNumber), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add("CFDA Number", x => x.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Start Date", x => x.StartDate.HasValue ? x.StartDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("End Date", x => x.EndDate.HasValue ? x.EndDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Awarded Funds", x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);

@@ -42,3 +42,8 @@ namespace ProjectFirma.Web.Models
         }
     }
 }
+
+
+namespace ProjectFirma.Web.Models
+{
+}

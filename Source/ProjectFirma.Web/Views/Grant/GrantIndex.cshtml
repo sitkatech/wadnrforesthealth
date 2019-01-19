@@ -24,6 +24,7 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
+@using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.ProjectCreate
 @inherits ProjectFirma.Web.Views.Grant.GrantIndex
 
@@ -61,11 +62,15 @@
     // <![CDATA[
     jQuery(document).ready(function()
     {
+        //console.log('jQuery Document Ready');
         var grantGrid = Sitka.@ViewDataTyped.GrantGridName;
         grantGrid.grid.attachEvent("onRowSelect", function (rowId)
         {
-            var grantNumberColumnIndex = grantGrid.getColumnIndexByName("GrantNumber");
+            //console.log('grantGrid onRowSelect');
+            var grantNumberColumnIndex = grantGrid.getColumnIndexByName('@GrantGridSpec.GrantNumberHiddenColumnName');
             var currentSelectedGrantNumber = grantGrid.grid.cells(rowId, grantNumberColumnIndex).getValue();
+            //console.log('grantNumberColumnIndex: ' + grantNumberColumnIndex);
+            //console.log('currentSelectedGrantNumber: ' + currentSelectedGrantNumber);
             var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
             grantAllocationGrid.grid.filterBy(grantNumberColumnIndex, currentSelectedGrantNumber);
             var grantNumberFilter = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndex);

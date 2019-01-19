@@ -90,6 +90,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FederalFundCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FederalFundCode">
+        <MappingFragment StoreEntitySet="FederalFundCode">
+          <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
+          <ScalarProperty Name="FederalFundCodeAbbrev" ColumnName="FederalFundCodeAbbrev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FieldDefinitionData">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FieldDefinitionData">
         <MappingFragment StoreEntitySet="FieldDefinitionData">
@@ -218,6 +226,7 @@
           <ScalarProperty Name="ConditionsAndRequirements" ColumnName="ConditionsAndRequirements" />
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
           <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
+          <ScalarProperty Name="CFDANumber" ColumnName="CFDANumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -231,8 +240,10 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
           <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -484,6 +495,14 @@
           <ScalarProperty Name="PersonStewardTaxonomyBranchID" ColumnName="PersonStewardTaxonomyBranchID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="TaxonomyBranchID" ColumnName="TaxonomyBranchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgramIndex">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramIndex">
+        <MappingFragment StoreEntitySet="ProgramIndex">
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
