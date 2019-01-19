@@ -249,6 +249,10 @@
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID">
       <End Role="ProgramManagerPerson" EntitySet="Person" />
       <End Role="GrantAllocationsWhereYouAreTheProgramManagerPerson" EntitySet="GrantAllocation" />
@@ -973,9 +977,11 @@
     <Property Name="ProgramManagerPersonID" Type="Int32" />
     <Property Name="ProgramIndexID" Type="Int32" />
     <Property Name="FederalFundCodeID" Type="Int32" />
+    <Property Name="OrganizationID" Type="Int32" />
     <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="GrantAllocations" ToRole="CostType" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
+    <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="ProgramManagerPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID" FromRole="GrantAllocationsWhereYouAreTheProgramManagerPerson" ToRole="ProgramManagerPerson" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_ProgramIndex_ProgramIndexID" FromRole="GrantAllocations" ToRole="ProgramIndex" />
     <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProjectCodes" />
@@ -1027,6 +1033,7 @@
     <Property Name="OrganizationBoundary" Type="Geometry" />
     <NavigationProperty Name="LogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="OrganizationsWhereYouAreTheLogoFileResource" ToRole="LogoFileResource" />
     <NavigationProperty Name="FundingSources" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="Organization" ToRole="FundingSources" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="Organization" ToRole="GrantAllocations" />
     <NavigationProperty Name="OrganizationType" Relationship="ProjectFirma.Web.Models.FK_Organization_OrganizationType_OrganizationTypeID" FromRole="Organizations" ToRole="OrganizationType" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="OrganizationsWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="OrganizationBoundaryStagings" Relationship="ProjectFirma.Web.Models.FK_OrganizationBoundaryStaging_Organization_OrganizationID" FromRole="Organization" ToRole="OrganizationBoundaryStagings" />
@@ -2514,6 +2521,18 @@
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

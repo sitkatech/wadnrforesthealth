@@ -52,6 +52,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add("Allocation Amount", x => x.AllocationAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Project Codes", x => x.ProjectCodesString, 90, DhtmlxGridColumnFilterType.Text);
             Add("Program Index", x => x.ProgramIndex != null ? x.ProgramIndex.ProgramIndexAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Organization", x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

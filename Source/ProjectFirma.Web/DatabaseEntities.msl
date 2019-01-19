@@ -243,6 +243,7 @@
           <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
