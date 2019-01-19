@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -406,7 +406,8 @@
     <Compile Include="Controllers\TreatmentActivityController.cs" />
     <Compile Include="Models\Grant.cs" />
     <Compile Include="Models\GrantModelExtensions.cs" />
-    <Compile Include="Models\GrantAllocation.cs" />    <Compile Include="Models\TreatmentActivity.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\GrantAllocation.cs" />
+    <Compile Include="Models\TreatmentActivity.DatabaseContextExtensions.cs" />
     <Compile Include="Models\FocusAreaLocationStaging.cs" />
     <Compile Include="Controllers\FocusAreaController.cs" />
     <Compile Include="Models\FocusArea.cs" />
@@ -3014,10 +3015,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js">
       <DependentUpon>jquery.validate.unobtrusive.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\modernizr-2.8.3.min.js">
-      <DependentUpon>modernizr-2.8.3.js</DependentUpon>
-    </Content>
     <Content Include="Views\Shared\GoogleCharts.js" />
     <Content Include="Views\PersonOrganization\PersonOrganizationController.js" />
     <Content Include="Content\css\dhtmlxgrid_ltinfo_skin.css" />
@@ -3409,9 +3406,6 @@
     <Content Include="Scripts\jquery.validate.min.js.map" />
     <Content Include="Views\Shared\DhtmlxGridIncludes.cshtml" />
     <Content Include="Views\Shared\TextControls\EntityExternalLinks.cshtml" />
-    <Content Include="Scripts\modernizr-2.8.3.min.js.map">
-      <DependentUpon>modernizr-2.8.3.min.js</DependentUpon>
-    </Content>
     <Content Include="Views\Shared\SiteLayout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
