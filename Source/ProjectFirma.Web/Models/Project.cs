@@ -344,6 +344,11 @@ namespace ProjectFirma.Web.Models
             return ProjectGeospatialAreas.Select(x => x.GeospatialArea);
         }
 
+        public IEnumerable<Region> GetProjectRegions()
+        {
+            return ProjectRegions.Select(x => x.Region);
+        }
+
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
         {
             return ProjectLocations.ToGeoJsonFeatureCollection();

@@ -22,13 +22,13 @@ CREATE TABLE [dbo].[ProjectUpdateBatch](
 	[BudgetsDiffLog] [dbo].[html] NULL,
 	[ExternalLinksDiffLog] [dbo].[html] NULL,
 	[NotesDiffLog] [dbo].[html] NULL,
-	[GeospatialAreaComment] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ExpectedFundingComment] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ExpectedFundingDiffLog] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[OrganizationsComment] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[OrganizationsDiffLog] [varchar](1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[NoExpendituresToReportExplanation] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ContactsComment] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[RegionNotes] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectUpdateBatch_ProjectUpdateBatchID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateBatchID] ASC

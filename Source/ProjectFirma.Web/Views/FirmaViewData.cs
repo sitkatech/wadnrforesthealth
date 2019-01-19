@@ -145,7 +145,7 @@ namespace ProjectFirma.Web.Views
 
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<RegionController>(c => c.Index()), currentPerson, "Regions", "Group2"));
 
-            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.Where(x => x.GeospatialAreaTypeID != 10).ToList())
+            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList())
             {
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GeospatialAreaController>(c => c.Index(geospatialAreaType)), currentPerson, $"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", "Group2"));
             }

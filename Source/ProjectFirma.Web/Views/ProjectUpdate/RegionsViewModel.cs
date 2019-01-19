@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="LocationSimpleViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="RegionViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,38 +19,31 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.ProjectRegion;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
-    public class GeospatialAreaViewModel : EditProjectGeospatialAreasViewModel
+    public class RegionsViewModel : EditProjectRegionsViewModel
     {
-        //[DisplayName("Review Comments")]
-        //[StringLength(ProjectUpdateBatch.FieldLengths.GeospatialAreaComment)]
-        //public string Comments { get; set; }
-
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public GeospatialAreaViewModel()
+        public RegionsViewModel()
         {
         }
 
-        public GeospatialAreaViewModel(List<int> geospatialAreaIDs,
-            string geospatialAreaNotes)
-            : base(geospatialAreaIDs, geospatialAreaNotes)
+        public RegionsViewModel(List<int> regionIDs, string regionNotes) : base(regionIDs, regionNotes)
         {
-            //Comments = comments;
         }
 
-        public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectGeospatialAreaUpdate> currentProjectUpdateGeospatialAreas, ObservableCollection<ProjectGeospatialAreaUpdate> allProjectUpdateGeospatialAreas)
+        public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectRegionUpdate> currentProjectUpdateRegions, ObservableCollection<ProjectRegionUpdate> allProjectUpdateRegions)
         {
-            UpdateModel(projectUpdateBatch, currentProjectUpdateGeospatialAreas, allProjectUpdateGeospatialAreas);
+            UpdateModel(projectUpdateBatch, currentProjectUpdateRegions, allProjectUpdateRegions);
         }
     }
 }

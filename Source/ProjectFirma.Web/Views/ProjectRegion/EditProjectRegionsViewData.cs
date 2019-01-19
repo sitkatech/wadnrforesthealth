@@ -60,7 +60,6 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         public Dictionary<int, string> RegionNameByID;
         public readonly string RegionMapServiceLayerName;
         public readonly string MapServiceUrl;
-        public readonly string RegionTypeName;
 
         public EditProjectRegionsViewDataForAngular(MapInitJson mapInitJson, List<Models.Region> regionsInViewModel)
         {

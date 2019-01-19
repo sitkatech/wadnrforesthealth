@@ -14,21 +14,18 @@ go
 CREATE table dbo.ProjectRegion(
 	ProjectRegionID int not null identity(1,1) constraint PK_ProjectRegion_ProjectRegionID primary key,
 	ProjectID int not null constraint FK_ProjectRegion_Project_ProjectID foreign key references dbo.Project(ProjectID),
-	RegionID int not null constraint FK_ProjectRegion_Region_RegionID foreign key references dbo.Region(RegionID),
-	ProjectRegionNotes varchar(4000)
+	RegionID int not null constraint FK_ProjectRegion_Region_RegionID foreign key references dbo.Region(RegionID)
 
 );
 
 SET IDENTITY_INSERT dbo.ProjectRegion ON;  
 GO
 
-insert into dbo.ProjectRegion (ProjectRegionID, ProjectID, RegionID, ProjectRegionNotes)
-select pga.ProjectGeospatialAreaID, pga.ProjectID, pga.GeospatialAreaID, gat.Notes 
+insert into dbo.ProjectRegion (ProjectRegionID, ProjectID, RegionID)
+select pga.ProjectGeospatialAreaID, pga.ProjectID, pga.GeospatialAreaID
 from dbo.ProjectGeospatialArea as pga 
 join dbo.GeospatialArea as ga 
-on pga.GeospatialAreaID = ga.GeospatialAreaID 
-join dbo.ProjectGeospatialAreaTypeNote as gat
-on pga.ProjectID = gat.ProjectID and ga.GeospatialAreaTypeID = gat.GeospatialAreaTypeID
+on pga.GeospatialAreaID = ga.GeospatialAreaID
 where ga.GeospatialAreaTypeID = 10;
 go
 
@@ -48,20 +45,17 @@ go
 CREATE table dbo.ProjectRegionUpdate(
 	ProjectRegionUpdateID int not null identity(1,1) constraint PK_ProjectRegionUpdate_ProjectRegionUpdateID primary key,
 	ProjectUpdateBatchID int not null constraint FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID foreign key references dbo.ProjectUpdateBatch(ProjectUpdateBatchID),
-	RegionID int not null constraint FK_ProjectRegionUpdate_Region_RegionID foreign key references dbo.Region(RegionID),
-	ProjectRegionUpdateNotes varchar(4000)
+	RegionID int not null constraint FK_ProjectRegionUpdate_Region_RegionID foreign key references dbo.Region(RegionID)
 );
 
 SET IDENTITY_INSERT dbo.ProjectRegionUpdate ON;  
 GO
 
-insert into dbo.ProjectRegionUpdate (ProjectRegionUpdateID, ProjectUpdateBatchID, RegionID, ProjectRegionUpdateNotes)
-select pgau.ProjectGeospatialAreaUpdateID, pgau.ProjectUpdateBatchID, pgau.GeospatialAreaID, gatnu.Notes
+insert into dbo.ProjectRegionUpdate (ProjectRegionUpdateID, ProjectUpdateBatchID, RegionID)
+select pgau.ProjectGeospatialAreaUpdateID, pgau.ProjectUpdateBatchID, pgau.GeospatialAreaID
 from dbo.ProjectGeospatialAreaUpdate as pgau 
 join dbo.GeospatialArea as ga 
 on pgau.GeospatialAreaID = ga.GeospatialAreaID 
-join dbo.ProjectGeospatialAreaTypeNoteUpdate as gatnu
-on pgau.ProjectUpdateBatchID = gatnu.ProjectUpdateBatchID and ga.GeospatialAreaTypeID = gatnu.GeospatialAreaTypeID
 where ga.GeospatialAreaTypeID = 10;
 go
 
@@ -78,7 +72,33 @@ ALTER TABLE [dbo].[ProjectRegionUpdate] ADD  CONSTRAINT [AK_ProjectRegionUpdate_
 );
 go
 
+
+delete pgau from dbo.ProjectGeospatialAreaUpdate as pgau
+join dbo.GeospatialArea as b on pgau.GeospatialAreaID = b.GeospatialAreaID
+where b.GeospatialAreaTypeID = 10;
+
+delete psga from dbo.PersonStewardGeospatialArea as psga
+join dbo.GeospatialArea as b on psga.GeospatialAreaID = b.GeospatialAreaID
+where b.GeospatialAreaTypeID = 10;
+
+delete from dbo.ProjectGeospatialAreaTypeNote where GeospatialAreaTypeID = 10;
+
+delete pga from dbo.ProjectGeospatialArea as pga
+join dbo.GeospatialArea as b on pga.GeospatialAreaID = b.GeospatialAreaID
+where b.GeospatialAreaTypeID = 10;
+
+delete from dbo.GeospatialArea where GeospatialAreaTypeID = 10;
+
+delete from dbo.GeospatialAreaType where GeospatialAreaTypeID = 10;
+
 ALTER TABLE dbo.FocusArea ADD RegionID int NOT NULL   
     CONSTRAINT FK_FocusArea_Region_RegionID foreign key references dbo.Region(RegionID);
 
+go
+alter table dbo.Project add RegionNotes varchar(4000);
 
+go
+alter table dbo.ProjectUpdateBatch add RegionNotes varchar(4000);
+
+go
+alter table dbo.ProjectUpdateBatch drop column GeospatialAreaComment;

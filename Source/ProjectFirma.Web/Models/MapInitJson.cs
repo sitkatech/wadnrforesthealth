@@ -80,6 +80,16 @@ namespace ProjectFirma.Web.Models
             return layerGeoJsons;
         }
 
+        public static List<LayerGeoJson> GetRegionMapLayers( LayerInitialVisibility layerInitialVisibility)
+        {
+            var layerGeoJsons = new List<LayerGeoJson>
+            {
+                Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+            };
+
+            return layerGeoJsons;
+        }
+
         public static List<LayerGeoJson> GetProjectLocationSimpleMapLayer(IProject project)
         {
             var layerGeoJsons = new List<LayerGeoJson>();

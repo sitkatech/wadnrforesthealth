@@ -18,13 +18,14 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
+@using DocumentFormat.OpenXml.EMMA
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Views.ProjectUpdate
-@using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Views.ProjectRegion
 @using ProjectFirma.Web.Views.Shared.ProjectLocationControls
-@inherits GeospatialArea
+@inherits Regions
 
 @section JavascriptAndStylesContent
 {
@@ -33,7 +34,7 @@ Source code is available upon request via <support@sitkatech.com>.
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
    
     <style>
-        #@ViewDataTyped.EditProjectGeospatialAreasViewData.ViewDataForAngular.MapInitJson.MapDivID
+        #@ViewDataTyped.EditProjectRegionsViewData.ViewDataForAngular.MapInitJson.MapDivID
         {
             height: 450px;
         }
@@ -47,7 +48,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 else
 {
-    EditProjectGeospatialAreas.RenderPartialView(Html, ViewDataTyped.EditProjectGeospatialAreasViewData, Model);
+    EditProjectRegions.RenderPartialView(Html, ViewDataTyped.EditProjectRegionsViewData, Model);
 
     if (ViewDataTyped.ShowApproveAndReturnButton)
     {
@@ -70,11 +71,11 @@ else
     @*This is intentionally down here because the document ready needs to be after the EditProjectLocation document ready*@
     <script type="text/javascript">
         // <![CDATA[
-        jQuery(document).ready(function() { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectGeospatialAreasViewData.EditProjectGeospatialAreasFormID", ".submitProject"); });
+        jQuery(document).ready(function() { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectRegionsViewData.EditProjectRegionsFormID", ".submitProject"); });
 
         function saveForm(autoAdvance)
         {
-            var form = jQuery("#@ViewDataTyped.EditProjectGeospatialAreasViewData.EditProjectGeospatialAreasFormID");
+            var form = jQuery("#@ViewDataTyped.EditProjectRegionsViewData.EditProjectRegionsFormID");
             // Do not submit if the form
             // does not pass client side validation
 

@@ -1264,6 +1264,7 @@
     <Property Name="DefaultBoundingBox" Type="Geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="FocusAreaID" Type="Int32" />
+    <Property Name="RegionNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
@@ -1758,13 +1759,13 @@
     <Property Name="BudgetsDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ExternalLinksDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="NotesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="GeospatialAreaComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ExpectedFundingComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="ExpectedFundingDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="OrganizationsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="OrganizationsDiffLog" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ContactsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="RegionNotes" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />

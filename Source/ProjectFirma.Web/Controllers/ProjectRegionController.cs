@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var regionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
-            var regionNotes = string.Empty;// project.ProjectRegionTypeNotes.SingleOrDefault(x=> x.RegionTypeID == regionType.RegionTypeID)?.Notes;
+            var regionNotes = project.RegionNotes;
             var viewModel = new EditProjectRegionsViewModel(regionIDs, regionNotes);
             return ViewEditProjectRegions(viewModel, project);
         }
@@ -60,19 +60,7 @@ namespace ProjectFirma.Web.Controllers
             var currentProjectRegions = project.ProjectRegions.ToList();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
             viewModel.UpdateModel(project, currentProjectRegions, allProjectRegions);
-            var projectRegionTypeNote = string.Empty;// project.ProjectRegionTypeNotes.SingleOrDefault(x => x.RegionTypeID == regionType.RegionTypeID);
-            if (!string.IsNullOrWhiteSpace(viewModel.ProjectRegionNotes))
-            {
-                //if (projectRegionTypeNote == null)
-                //{
-                //    projectRegionTypeNote = new ProjectRegionTypeNote(project, regionType, viewModel.ProjectRegionNotes);
-                //}
-                //projectRegionTypeNote.Notes = viewModel.ProjectRegionNotes;
-            }
-            else
-            {
-                projectRegionTypeNote?.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            }
+            project.RegionNotes = !string.IsNullOrWhiteSpace(viewModel.RegionNotes) ? viewModel.RegionNotes : null;
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Regions were successfully saved.");
 
             return new ModalDialogFormJsonResult();
@@ -81,7 +69,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditProjectRegions(EditProjectRegionsViewModel viewModel, Project project)
         {
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
-            var layers = MapInitJson.GetRegionMapLayers( LayerInitialVisibility.Show);
+            var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
             var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
             var regionIDs = viewModel.RegionIDs ?? new List<int>();

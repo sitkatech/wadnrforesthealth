@@ -134,6 +134,7 @@ namespace ProjectFirma.Web.Controllers
 
             var editSimpleProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project));
             var editDetailedProjectLocationUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationDetailed(project));
+            var editProjectRegionUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project));
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
             var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
             var editPerformanceMeasureActualsUrl = SitkaRoute<PerformanceMeasureActualController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureActualsForProject(project));
@@ -145,7 +146,9 @@ namespace ProjectFirma.Web.Controllers
             var mapFormID = GenerateEditProjectLocationFormID(project);
             var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName).ToList();
             var dictionaryGeoNotes = project.ProjectGeospatialAreaTypeNotes.ToDictionary(x => x.GeospatialAreaTypeID, x => x.Notes);
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, dictionaryGeoNotes, geospatialAreaTypes, geospatialAreas);
+            var regions = project.ProjectRegions.Select(x => x.Region).ToList();
+            var regionNotes = project.RegionNotes;
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, dictionaryGeoNotes, geospatialAreaTypes, geospatialAreas, regions, regionNotes);
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
@@ -221,7 +224,7 @@ namespace ProjectFirma.Web.Controllers
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID,
                 projectCustomAttributeTypes, geospatialAreaTypes, projectPeopleDetailViewData,
-                treamentActivityGridSpec, treatmentActivityGridDataUrl
+                treamentActivityGridSpec, treatmentActivityGridDataUrl, editProjectRegionUrl
                 );
             return RazorView<Detail, DetailViewData>(viewData);
         }

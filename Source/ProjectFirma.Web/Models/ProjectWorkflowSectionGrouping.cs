@@ -79,17 +79,48 @@ namespace ProjectFirma.Web.Models
         {
             var projectUpdateSections = GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
             var maxSortOrder = projectUpdateSections.Max(x => x.SortOrder);
-            projectUpdateSections.AddRange(HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
+            var priorityAreasLink = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
                 .OrderBy(x => x.GeospatialAreaTypeName).ToList().Select((geospatialAreaType, index) =>
-                    new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized, maxSortOrder + index + 1,
+                    new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized,
+                        maxSortOrder + index + 1,
                         !projectUpdateBatch.IsNew, this,
-                        projectUpdateBatch.IsNew ? null :
-                        SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
-                            y.GeospatialArea(projectUpdateBatch.Project, geospatialAreaType)),
+                        projectUpdateBatch.IsNew
+                            ? null
+                            : SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
+                                y.GeospatialArea(projectUpdateBatch.Project, geospatialAreaType)),
                         updateStatus != null && projectUpdateBatch.IsProjectGeospatialAreaValid(geospatialAreaType),
                         updateStatus != null && IsGeospatialAreaUpdated(projectUpdateBatch, geospatialAreaType)
-                    )));
+                    )).FirstOrDefault();
+            projectUpdateSections.Add(priorityAreasLink);
+
+            var regionsLink = new ProjectSectionSimple("Regions",
+                maxSortOrder + 1,
+                !projectUpdateBatch.IsNew, this,
+                projectUpdateBatch.IsNew
+                    ? null
+                    : SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
+                        y.Region(projectUpdateBatch.Project)),
+                updateStatus != null && projectUpdateBatch.IsProjectRegionValid(),
+                updateStatus != null && IsRegionUpdated(projectUpdateBatch));
+            projectUpdateSections.Add(regionsLink);
+
             return projectUpdateSections;
+        }
+
+        private static bool IsRegionUpdated(ProjectUpdateBatch projectUpdateBatch)
+        {
+            var project = projectUpdateBatch.Project;
+            var originalRegionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
+            var updatedRegionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.RegionID).ToList();
+
+            if (!originalRegionIDs.Any() && !updatedRegionIDs.Any())
+                return false;
+
+            if (originalRegionIDs.Count != updatedRegionIDs.Count)
+                return true;
+
+            var enumerable = originalRegionIDs.Except(updatedRegionIDs);
+            return enumerable.Any();
         }
 
         private static bool IsGeospatialAreaUpdated(ProjectUpdateBatch projectUpdateBatch, GeospatialAreaType geospatialAreaType)

@@ -50,8 +50,8 @@ namespace ProjectFirma.Web.Controllers
             };
 
             var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
-
-            var viewData = new IndexViewData(CurrentPerson, mapInitJson);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
+            var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
 

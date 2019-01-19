@@ -34,6 +34,9 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         [DisplayName("Project Regions")]
         public IEnumerable<int> RegionIDs { get; set; }
 
+        [DisplayName("Project Region Notes")]
+        public string RegionNotes { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -42,9 +45,10 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         {
         }
 
-        public EditProjectRegionsViewModel(List<int> regionIDs)
+        public EditProjectRegionsViewModel(List<int> regionIDs, string regionNotes)
         {
             RegionIDs = regionIDs;
+            RegionNotes = regionNotes;
         }
 
         public void UpdateModel(Models.Project project, List<Models.ProjectRegion> currentProjectRegions, IList<Models.ProjectRegion> allProjectRegions)
@@ -68,12 +72,12 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         {
             var errors = new List<ValidationResult>();
             var noRegionsSelected = RegionIDs == null || RegionIDs.Count().Equals(0);
-            if (noRegionsSelected && string.IsNullOrWhiteSpace(ProjectRegionNotes))
+            if (noRegionsSelected && string.IsNullOrWhiteSpace(RegionNotes))
             {
                 errors.Add(
                     new SitkaValidationResult<EditProjectRegionsViewModel, string>(
                         $"Select at least one region area or provide explanatory information in the Notes section if there are no applicable geospatial areas for this Project.",
-                        x => x.ProjectRegionNotes));
+                        x => x.RegionNotes));
             }
 
             return errors;

@@ -278,6 +278,12 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectGeospatialAreaUpdates);
         }
 
+        public void DeleteProjectRegionUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.DeleteProjectRegionUpdate(ProjectRegionUpdates);
+            RefreshFromDatabase(ProjectRegionUpdates);
+        }
+
         public void DeleteProjectOrganizationUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.DeleteProjectOrganizationUpdate(ProjectOrganizationUpdates);
@@ -471,6 +477,19 @@ namespace ProjectFirma.Web.Models
         public bool IsProjectGeospatialAreaValid(GeospatialAreaType geospatialAreaType)
         {
             return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
+        }
+
+        public RegionsValidationResult ValidateProjectRegion()
+        {
+            //var projectRegionNoteUpdate = P;
+            var incomplete = false;// ProjectRegionUpdates.All(x => x.regio) && projectRegionNoteUpdate == null;
+            var regionValidationResult = new RegionsValidationResult(incomplete);
+            return regionValidationResult;
+        }
+
+        public bool IsProjectRegionValid()
+        {
+            return ValidateProjectRegion().IsValid;
         }
 
         public void SubmitToReviewer(Person currentPerson, DateTime transitionDate)

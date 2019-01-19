@@ -1141,6 +1141,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="DefaultBoundingBox" Type="geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
     <Property Name="FocusAreaID" Type="int" />
+    <Property Name="RegionNotes" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -1531,13 +1532,13 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="BudgetsDiffLog" Type="varchar(max)" />
     <Property Name="ExternalLinksDiffLog" Type="varchar(max)" />
     <Property Name="NotesDiffLog" Type="varchar(max)" />
-    <Property Name="GeospatialAreaComment" Type="varchar" MaxLength="1000" />
     <Property Name="ExpectedFundingComment" Type="varchar" MaxLength="1000" />
     <Property Name="ExpectedFundingDiffLog" Type="varchar(max)" />
     <Property Name="OrganizationsComment" Type="varchar" MaxLength="1000" />
     <Property Name="OrganizationsDiffLog" Type="varchar" MaxLength="1" />
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
     <Property Name="ContactsComment" Type="varchar" MaxLength="1000" />
+    <Property Name="RegionNotes" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>

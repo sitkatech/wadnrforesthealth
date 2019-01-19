@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.Region
         public readonly string GridName;
         public readonly string GridDataUrl;
 
-        public IndexViewData(Person currentPerson, MapInitJson mapInitJson) : base(currentPerson)
+        public IndexViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = "Regions";
             MapInitJson = mapInitJson;

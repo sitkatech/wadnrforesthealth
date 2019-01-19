@@ -85,7 +85,7 @@ angular.module("ProjectFirmaApp")
 
                     },
                     function() {
-                        console.error("There was an error selecting the " + $scope.AngularViewData.RegionTypeName + " from list");
+                        console.error("There was an error selecting the region from list");
                     });
             }
 
@@ -126,7 +126,7 @@ angular.module("ProjectFirmaApp")
                     $scope.firmaMap.wmsParams);
 
                 $scope.firmaMap.selectedRegionLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
-                $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedRegionLayer, "Selected " + $scope.AngularViewData.RegionTypeName + "s");
+                $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedRegionLayer, "Selected Regions");
                 $scope.firmaMap.map.addLayer($scope.firmaMap.selectedRegionLayer);
 
                 // Update map extent to selected regions
@@ -148,7 +148,7 @@ angular.module("ProjectFirmaApp")
                             $scope.firmaMap.map.fitBounds(new L.geoJSON(response).getBounds());
                         },
                         function () {
-                            console.error("There was an error setting map extent to the selected " + $scope.AngularViewData.RegionTypeName + "s");
+                            console.error("There was an error setting map extent to the selected Regions");
                         });
                 }
             };
