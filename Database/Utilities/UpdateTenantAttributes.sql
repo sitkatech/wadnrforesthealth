@@ -31,6 +31,11 @@ update dbo.Person
 set PersonUniqueIdentifier = 'DP4VD4WZ7PT5M-2ZT0ZP9VW-DD7WV4ZZ8D-3DF2DQ9MP'
 where Email = 'mike.jolliffe@sitkatech.com'
 
+
+update dbo.Person
+set PersonUniqueIdentifier = 'DP4VD4DQ9PT2M-1PM3PL8QZ5-D1LW4VZ0FD-DF1ZQ5VZ3T'
+where Email = 'stewart@sitkatech.com'
+
 goto goodbye
 
 failed:
