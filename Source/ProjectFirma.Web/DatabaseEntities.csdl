@@ -9,6 +9,7 @@
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
+    <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.FederalFundCode" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.FieldDefinitionData" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.FileResource" />
@@ -135,6 +136,10 @@
     <AssociationSet Name="FK_CustomPageImage_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="CustomPageImages" EntitySet="CustomPageImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
+      <End Role="FederalFundCode" EntitySet="FederalFundCode" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID" Association="ProjectFirma.Web.Models.FK_FieldDefinitionDataImage_FieldDefinitionData_FieldDefinitionDataID">
       <End Role="FieldDefinitionData" EntitySet="FieldDefinitionData" />
@@ -790,6 +795,14 @@
     <NavigationProperty Name="CustomPage" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID" FromRole="CustomPageImages" ToRole="CustomPage" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID" FromRole="CustomPageImages" ToRole="FileResource" />
   </EntityType>
+  <EntityType Name="FederalFundCode">
+    <Key>
+      <PropertyRef Name="FederalFundCodeID" />
+    </Key>
+    <Property Name="FederalFundCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FederalFundCodeAbbrev" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="FederalFundCode" ToRole="GrantAllocations" />
+  </EntityType>
   <EntityType Name="FieldDefinitionData">
     <Key>
       <PropertyRef Name="FieldDefinitionDataID" />
@@ -959,7 +972,9 @@
     <Property Name="CostTypeID" Type="Int32" />
     <Property Name="ProgramManagerPersonID" Type="Int32" />
     <Property Name="ProgramIndexID" Type="Int32" />
+    <Property Name="FederalFundCodeID" Type="Int32" />
     <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="GrantAllocations" ToRole="CostType" />
+    <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
     <NavigationProperty Name="ProgramManagerPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID" FromRole="GrantAllocationsWhereYouAreTheProgramManagerPerson" ToRole="ProgramManagerPerson" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_ProgramIndex_ProgramIndexID" FromRole="GrantAllocations" ToRole="ProgramIndex" />
@@ -2163,6 +2178,18 @@
       </Principal>
       <Dependent Role="CustomPageImages">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
+    <End Role="FederalFundCode" Type="ProjectFirma.Web.Models.FederalFundCode" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FederalFundCode">
+        <PropertyRef Name="FederalFundCodeID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="FederalFundCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

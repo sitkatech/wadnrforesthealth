@@ -9,6 +9,7 @@
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.Store.FederalFundCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionData" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.Store.FileResource" store:Type="Tables" Schema="dbo" />
@@ -175,6 +176,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_CostType_CostTypeID">
       <End Role="CostType" EntitySet="CostType" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
+      <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
@@ -779,6 +784,13 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="CustomPageID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="FederalFundCode">
+    <Key>
+      <PropertyRef Name="FederalFundCodeID" />
+    </Key>
+    <Property Name="FederalFundCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FederalFundCodeAbbrev" Type="varchar" MaxLength="10" />
+  </EntityType>
   <EntityType Name="FieldDefinitionData">
     <Key>
       <PropertyRef Name="FieldDefinitionDataID" />
@@ -912,6 +924,7 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="CostTypeID" Type="int" />
     <Property Name="ProgramManagerPersonID" Type="int" />
     <Property Name="ProgramIndexID" Type="int" />
+    <Property Name="FederalFundCodeID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationProjectCode">
     <Key>
@@ -1986,6 +1999,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="CostTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
+    <End Role="FederalFundCode" Type="ProjectFirma.Web.Models.Store.FederalFundCode" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FederalFundCode">
+        <PropertyRef Name="FederalFundCodeID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="FederalFundCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

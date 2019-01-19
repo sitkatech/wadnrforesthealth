@@ -90,6 +90,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FederalFundCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FederalFundCode">
+        <MappingFragment StoreEntitySet="FederalFundCode">
+          <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
+          <ScalarProperty Name="FederalFundCodeAbbrev" ColumnName="FederalFundCodeAbbrev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FieldDefinitionData">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FieldDefinitionData">
         <MappingFragment StoreEntitySet="FieldDefinitionData">
@@ -234,6 +242,7 @@
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

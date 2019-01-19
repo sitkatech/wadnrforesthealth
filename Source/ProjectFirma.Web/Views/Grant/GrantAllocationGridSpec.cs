@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
@@ -47,6 +48,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add("Program Manager", x => x.ProgramManagerPerson != null ? x.ProgramManagerPerson.FullNameFirstLast : string.Empty, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Start Date", x => x.StartDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("End Date", x => x.EndDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Federal Fund Code", x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict); 
             Add("Allocation Amount", x => x.AllocationAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Project Codes", x => x.ProjectCodesString, 90, DhtmlxGridColumnFilterType.Text);
             Add("Program Index", x => x.ProgramIndex != null ? x.ProgramIndex.ProgramIndexAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
