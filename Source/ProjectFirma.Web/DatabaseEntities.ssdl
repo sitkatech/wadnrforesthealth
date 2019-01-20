@@ -914,6 +914,7 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="ComplianceNotes" Type="varchar(max)" />
     <Property Name="AwardedFunds" Type="money" />
     <Property Name="CFDANumber" Type="varchar" MaxLength="10" />
+    <Property Name="GrantTitle" Type="varchar" Nullable="false" MaxLength="64" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>

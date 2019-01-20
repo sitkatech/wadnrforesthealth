@@ -227,6 +227,7 @@
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
           <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
           <ScalarProperty Name="CFDANumber" ColumnName="CFDANumber" />
+          <ScalarProperty Name="GrantTitle" ColumnName="GrantTitle" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

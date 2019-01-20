@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantTitle) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
@@ -42,8 +42,19 @@ namespace ProjectFirma.Web.Models
             this.ComplianceNotes = complianceNotes;
             this.AwardedFunds = awardedFunds;
             this.CFDANumber = cFDANumber;
+            this.GrantTitle = grantTitle;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
+        /// </summary>
+        public Grant(string grantTitle) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            
+            this.GrantTitle = grantTitle;
+        }
 
 
         /// <summary>
@@ -51,7 +62,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Grant CreateNewBlank()
         {
-            return new Grant();
+            return new Grant(default(string));
         }
 
         /// <summary>
@@ -100,6 +111,7 @@ namespace ProjectFirma.Web.Models
         public string ComplianceNotes { get; set; }
         public decimal? AwardedFunds { get; set; }
         public string CFDANumber { get; set; }
+        public string GrantTitle { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
@@ -110,6 +122,7 @@ namespace ProjectFirma.Web.Models
             public const int GrantNumber = 30;
             public const int ProjectCode = 100;
             public const int CFDANumber = 10;
+            public const int GrantTitle = 64;
         }
     }
 }
