@@ -1,0 +1,1 @@
+exec sp_rename 'dbo.ProjectCode.ProjectCode', 'ProjectCodeAbbrev'

@@ -85,7 +85,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="form-group form-group-condensed">
         <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.PlannedDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Planning / Design Start Year</strong>
+            @Html.LabelWithSugarFor(FieldDefinition.PlannedDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Planned Date</strong>
         </div>
         <div class="col-sm-8">
             @if (ViewDataTyped.IsEditable)
@@ -101,7 +101,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="form-group form-group-condensed">
         <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Implementation Start Year</strong>
+            @Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Approval/Start Date</strong>
         </div>
         <div class="col-sm-8">
             @if (ViewDataTyped.IsEditable)
@@ -128,22 +128,6 @@ Source code is available upon request via <support@sitkatech.com>.
             else
             {
                 <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionDateFormatted()</p>
-            }
-        </div>
-    </div>
-    <div class="row form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(m => m.FocusAreaID)
-        </div>
-        <div class="col-sm-8" style="padding-left: 10px;">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                @Html.ValidationMessageFor(m => m.FocusAreaID)
-            }
-            else
-            {
-                @ViewDataTyped.ProjectUpdate.FocusArea.FocusAreaName
             }
         </div>
     </div>

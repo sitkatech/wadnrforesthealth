@@ -1,29 +1,30 @@
 ﻿@*-----------------------------------------------------------------------
-    <copyright file="EditProposalClassifications.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
-    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
-    <author>Sitka Technology Group</author>
-    </copyright>
+        <copyright file="EditProposalClassifications.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+        Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+        <author>Sitka Technology Group</author>
+        </copyright>
 
-    <license>
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+        <license>
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU Affero General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    <a href="http://localhost:57753/Views/Project/MyOrganizationsProjectsViewData.cs">http://localhost:57753/Views/Project/MyOrganizationsProjectsViewData.cs</a>
+        GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
 
-    Source code is available upon request via <support@sitkatech.com>.
-    </license>
-    -----------------------------------------------------------------------*@
+        Source code is available upon request via <support@sitkatech.com>.
+        </license>
+        -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.HtmlHelperExtensions
 @using MoreLinq
 @inherits ProjectFirma.Web.Views.ProjectCreate.EditProposalClassifications
-
 <style>
+
     .charactersRemainingText {
         font-size: 10px;
     }
@@ -32,54 +33,54 @@
         font-size: 11px;
     }
 </style>
-
 @using (Html.BeginForm())
 {
-    <div>
-        Click the checkboxes below to associate this @FieldDefinition.Project.GetFieldDefinitionLabel() with one or more @(Html.LabelWithSugarFor(FieldDefinition.Classification, FieldDefinition.Classification.GetFieldDefinitionLabelPluralized())).
-    </div>
-    <div>
-
-        @foreach (var classificationSystem in ViewDataTyped.ClassificationSystems)
+<div>
+    Click the checkboxes below to associate this @FieldDefinition.Project.GetFieldDefinitionLabel() with one or more @(Html.LabelWithSugarFor(FieldDefinition.Classification, FieldDefinition.Classification.GetFieldDefinitionLabelPluralized())).
+</div>
+<div>
+    @foreach (var classificationSystem in ViewDataTyped.ClassificationSystems)
         {
-            <h4>@Html.LabelWithSugarFor(classificationSystem)</h4>
+    <h4>
+        @Html.LabelWithSugarFor(classificationSystem)
+    <sup><span class="requiredFieldIcon glyphicon glyphicon-flash" style="color: #800020; font-size: 8px; "></span></sup>
+</h4>
             foreach (var classification in classificationSystem.Classifications.OrderBy(x => x.DisplayName).ToList())
             {
                 var projectClassificationSimple = Model.ProjectClassificationSimples.Single(x => x.ClassificationID == classification.ClassificationID);
                 var classificationIndex = Model.ProjectClassificationSimples.IndexOf(projectClassificationSimple);
-                <div class="row" style="padding-top: 20px">
-                    <div class="col-xs-12 col-sm-4">
-                        <label>
-                            @Html.CheckBoxFor(x => x.ProjectClassificationSimples[classificationIndex].Selected)
-                            <span style="font-weight: bold">@classification.DisplayName</span>
-                        </label>
-                        <div class="help-block">
-                            @classification.ClassificationDescription
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-8">
-                        <div>
-                            @Html.TextAreaWithMaxLengthFor(x => x.ProjectClassificationSimples[classificationIndex].ProjectClassificationNotesForBinding, new TextAreaForExtensions.TextAreaDimensions(null, 4), string.Format("Select the {0} and describe how it applies to the {1}.", classificationSystem.ClassificationSystemName, FieldDefinition.Project.GetFieldDefinitionLabel()), new List<string> {"form-control"})
-                        </div>
-                        @Html.HiddenFor(x => x.ProjectClassificationSimples[classificationIndex].ClassificationID)
-                        @Html.HiddenFor(x => x.ProjectClassificationSimples[classificationIndex].ClassificationSystemID)
-                    </div>
-                </div>
+<div class="row" style="padding-top: 20px">
+    <div class="col-xs-12 col-sm-4">
+        <label>
+            @Html.CheckBoxFor(x => x.ProjectClassificationSimples[classificationIndex].Selected)
+            <span style="font-weight: bold">@classification.DisplayName</span>
+        </label>
+        <div class="help-block">
+            @classification.ClassificationDescription
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+        <div>
+            @Html.TextAreaWithMaxLengthFor(x => x.ProjectClassificationSimples[classificationIndex].ProjectClassificationNotesForBinding, new TextAreaForExtensions.TextAreaDimensions(null, 4), string.Format("Select the {0} and describe how it applies to the {1}.", classificationSystem.ClassificationSystemName, FieldDefinition.Project.GetFieldDefinitionLabel()), new List<string> {"form-control"})
+        </div>
+        @Html.HiddenFor(x => x.ProjectClassificationSimples[classificationIndex].ClassificationID)
+        @Html.HiddenFor(x => x.ProjectClassificationSimples[classificationIndex].ClassificationSystemID)
+    </div>
+</div>
             }
-            <hr/>
+<hr />
         }
-    </div>
+</div>
 
-    <div id="bottomOfForm"></div>
-    <div id="bottomOfForm" style="margin: 5px 0;">
-    </div>
-    <div class="pull-right">
-        <button type="button" class="btn btn-xs btn-firma" onclick="saveForm(false)">Save</button>
-        <button type="button" class="btn btn-xs btn-firma" onclick="saveForm(true)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
-    </div>
+<div id="bottomOfForm"></div>
+<div id="bottomOfForm" style="margin: 5px 0;">
+</div>
+<div class="pull-right">
+    <button type="button" class="btn btn-xs btn-firma" onclick="saveForm(false)">Save</button>
+    <button type="button" class="btn btn-xs btn-firma" onclick="saveForm(true)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
+</div>
 
 }
-
 <script type="text/javascript">
     // <![CDATA[
 

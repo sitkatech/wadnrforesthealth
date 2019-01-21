@@ -64,8 +64,16 @@
     <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Focus Areas</a>
 </div>
 
-
-<div class="panel">
+<div class="container-fluid">
+    <div class="row">
+        <ul class="nav nav-tabs" id="focusAreaDetailsTabs" style="border-bottom: none;">
+            <li class="active">
+                <a href="#focusAreaOverview" aria-controls="focusAreaOverview" role="tab" data-toggle="tab" id="overviewTab">Overview</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="panel panel-default">
     <div class="panel-body">
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="focusAreaOverview">
@@ -79,11 +87,11 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="row">
-                                            <div class="col-xs-2 fieldLabel">@Html.Label("Name")</div>
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Name")</div>
                                             <div class="col-xs-6">@ViewDataTyped.FocusArea.FocusAreaName</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-2 fieldLabel">@Html.Label("Status")</div>
+                                            <div class="col-xs-6 fieldLabel text-right">@Html.Label("Status")</div>
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.FocusAreaStatus != null ? ViewDataTyped.FocusArea.FocusAreaStatus.FocusAreaStatusDisplayName : string.Empty)</div>
                                         </div>
                                         <div class="row">
@@ -95,7 +103,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @Html.LabelWithSugarFor(FieldDefinition.FundingSource, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)
+                                <a href="@ViewDataTyped.ManageFundingSourcesUrl">@FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized()</a>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -167,6 +183,29 @@
                                 @FieldDefinition.Project.GetFieldDefinitionLabelPluralized()
                             </div>
                             <div class="panel-body">
+                                <p>
+                                    @ViewDataTyped.FocusArea.FocusAreaName is:
+                                </p>
+                                <ul>
+                                    @*@if (ViewDataTyped.TenantHasCanStewardProjectsFocusAreaRelationship)
+                                    {
+                                        <li>
+                                            the <strong>@FieldDefinition.ProjectsStewardFocusAreaRelationshipToProject.GetFieldDefinitionLabel()</strong> for
+                                            <strong>@ViewDataTyped.NumberOfStewardedProjects</strong>
+                                            @(ViewDataTyped.NumberOfStewardedProjects == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
+                                        </li>
+                                    }*@
+                                    <li>
+                                        the <strong>Lead Implementer</strong> for
+                                        <strong>@ViewDataTyped.NumberOfLeadImplementedProjects</strong>
+                                        @(ViewDataTyped.NumberOfLeadImplementedProjects == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
+                                    </li>
+                                    <li>
+                                        a contributor to
+                                        <strong>@ViewDataTyped.NumberOfProjectsContributedTo</strong>
+                                        @(ViewDataTyped.NumberOfProjectsContributedTo == 1 ? FieldDefinition.Project.GetFieldDefinitionLabel() : FieldDefinition.Project.GetFieldDefinitionLabelPluralized())
+                                    </li>
+                                </ul>
                                 @Html.DhtmlxGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectFocusAreaGridName, ViewDataTyped.ProjectFocusAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         </div>

@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Focus Area <a href=\"{SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.Detail(focusArea.PrimaryKey))}\">{focusArea.FocusAreaName}</a> successfully created.");
+            SetMessageForDisplay($"Focus Area {focusArea.FocusAreaName} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -242,7 +242,6 @@ namespace ProjectFirma.Web.Controllers
             var growlMessage = $"Are you sure you want to delete Focus Area \"{focusArea.FocusAreaName}\"";
             var viewData = new ConfirmDialogFormViewData(growlMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-
         }
         private PartialViewResult ViewEdit(EditViewModel viewModel)
         {

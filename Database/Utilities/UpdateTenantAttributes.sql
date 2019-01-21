@@ -24,8 +24,17 @@ set PersonUniqueIdentifier = 'C9E033A2-E53D-4A29-A368-037BF0518E38'
 where Email = 'brian.grass@sitkatech.com'
 
 update dbo.Person
-set PersonUniqueIdentifier = 'F96C4B4F-BFE1-4FC6-8F1E-2CB1B0B19913'
+set PersonUniqueIdentifier = 'DP4LM5FL0TM6F-4PQ8VL4PQ-DD7WV4ZZ8D-9VL7MQ6QL'
 where Email = 'dal.marsters@sitkatech.com'
+
+update dbo.Person
+set PersonUniqueIdentifier = 'DP4VD4WZ7PT5M-2ZT0ZP9VW-DD7WV4ZZ8D-3DF2DQ9MP'
+where Email = 'mike.jolliffe@sitkatech.com'
+
+
+update dbo.Person
+set PersonUniqueIdentifier = 'DP4VD4DQ9PT2M-1PM3PL8QZ5-D1LW4VZ0FD-DF1ZQ5VZ3T'
+where Email = 'stewart@sitkatech.com'
 
 update dbo.Person
 set PersonUniqueIdentifier = 'DP4MT6TV3ZT7M-3QT5ZL6DM-DD7WV4ZZ8D-1FZ3DD4VZ4', RoleID = 8
@@ -34,8 +43,6 @@ where Email = 'tom.kamin@sitkatech.com'
 update dbo.Person
 set PersonUniqueIdentifier = 'DP4MT6TZ6FZ7D-1QW0VV7DV5-D1LW4VZ0FD-DT7QT3LT1P', RoleID = 8
 where Email = 'ian.stavros@sitkatech.com'
-
-
 goto goodbye
 
 failed:

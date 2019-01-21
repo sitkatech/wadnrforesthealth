@@ -32,4 +32,6 @@ values
 (52, 'ManageProjectCustomAttributeTypeInstructions', 'Manage Project Custom Attribute Type Instructions', 2),
 (53, 'ManageProjectCustomAttributeTypesList', 'Manage Project Custom Attribute Types List', 2),
 (54, 'FactSheetCustomText', 'Fact Sheet Custom Text', 2),
-(55, 'FocusAreasList', 'Focus Areas List', 1)
+(55, 'FocusAreasList', 'Focus Areas List', 1),
+(56, 'FullGrantList', 'Full Grant List', 1),
+(57, 'FullGrantAllocationList', 'Full Grant Allocation List', 1)

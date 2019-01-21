@@ -169,7 +169,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProjectCustomAttributeTypeController>.BuildUrlFromExpression(c => c.Manage());
     }
 
-
     public partial class FirmaPageTypeFactSheetCustomText
     {
         public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Index());
@@ -178,5 +177,14 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeFocusAreasList
     {
         public override string GetViewUrl() => SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
+    }
+    public partial class FirmaPageTypeFullGrantList
+    {
+        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeFullGrantAllocationList
+    {
+        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
     }
 }
