@@ -41,13 +41,11 @@ namespace ProjectFirma.Web.Views.Grant
 {
     public class DetailViewData : GrantViewData
     {
-        public string EditGrantUrl { get; }
         public DetailViewData(Person currentPerson, Models.Grant grant)
             : base(currentPerson, grant)
         {
             PageTitle = grant.GrantNumber.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} Detail";
-            //EditProjectUrl = project.GetEditUrl();
         }
     }
 }
