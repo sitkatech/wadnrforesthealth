@@ -51,7 +51,7 @@
                             if(new UserViewFeature().HasPermission(ViewDataTyped.CurrentPerson, x.Person).HasPermission)
                              {
                                  <li>
-                                     <span class="@x.DisplayCssClass">@x.Person.GetFullNameLastFirstAsUrl().</span>
+                                     <span class="@x.DisplayCssClass">@x.Person.GetFullNameLastFirstAsUrl()</span>
                                  </li>
                             }
                             else
