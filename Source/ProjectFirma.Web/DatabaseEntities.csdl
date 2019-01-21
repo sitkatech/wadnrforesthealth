@@ -83,11 +83,14 @@
     <EntitySet Name="ProjectOrganizationUpdate" EntityType="ProjectFirma.Web.Models.ProjectOrganizationUpdate" />
     <EntitySet Name="ProjectPerson" EntityType="ProjectFirma.Web.Models.ProjectPerson" />
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.ProjectPersonUpdate" />
+    <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.ProjectRegion" />
+    <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.ProjectRegionUpdate" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.ProjectTag" />
     <EntitySet Name="ProjectUpdate" EntityType="ProjectFirma.Web.Models.ProjectUpdate" />
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.ProjectUpdateBatch" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.ProjectUpdateConfiguration" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
+    <EntitySet Name="Region" EntityType="ProjectFirma.Web.Models.Region" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
@@ -196,6 +199,10 @@
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
+    <AssociationSet Name="FK_FocusArea_Region_RegionID" Association="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="FocusAreas" EntitySet="FocusArea" />
+    </AssociationSet>
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
@@ -203,6 +210,10 @@
     <AssociationSet Name="FK_Project_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="Projects" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -604,6 +615,10 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectPeople" EntitySet="ProjectPerson" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegion_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectRegions" EntitySet="ProjectRegion" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectTag_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectTags" EntitySet="ProjectTag" />
@@ -699,6 +714,18 @@
     <AssociationSet Name="FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPersonUpdates" EntitySet="ProjectPersonUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegion_Region_RegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="ProjectRegions" EntitySet="ProjectRegion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegionUpdate_Region_RegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectTag_Tag_TagID" Association="ProjectFirma.Web.Models.FK_ProjectTag_Tag_TagID">
       <End Role="Tag" EntitySet="Tag" />
@@ -917,8 +944,11 @@
     <Property Name="FocusAreaName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="FocusAreaStatusID" Type="Int32" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="Geometry" />
+    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="FocusAreas" ToRole="Region" />
     <NavigationProperty Name="FocusAreaLocationStagings" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="FocusAreaLocationStagings" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="Projects" />
+    <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="ProjectUpdates" />
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
     <Key>
@@ -1425,6 +1455,7 @@
     <Property Name="DefaultBoundingBox" Type="Geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="FocusAreaID" Type="Int32" />
+    <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
@@ -1449,6 +1480,7 @@
     <NavigationProperty Name="ProjectNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectNote_Project_ProjectID" FromRole="Project" ToRole="ProjectNotes" />
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_Project_ProjectID" FromRole="Project" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectPeople" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Project_ProjectID" FromRole="Project" ToRole="ProjectPeople" />
+    <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="Project" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="Project" ToRole="TreatmentActivities" />
@@ -1852,6 +1884,26 @@
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_Person_PersonID" FromRole="ProjectPersonUpdates" ToRole="Person" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectPersonUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
+  <EntityType Name="ProjectRegion">
+    <Key>
+      <PropertyRef Name="ProjectRegionID" />
+    </Key>
+    <Property Name="ProjectRegionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="ProjectRegions" ToRole="Project" />
+    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID" FromRole="ProjectRegions" ToRole="Region" />
+  </EntityType>
+  <EntityType Name="ProjectRegionUpdate">
+    <Key>
+      <PropertyRef Name="ProjectRegionUpdateID" />
+    </Key>
+    <Property Name="ProjectRegionUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectRegionUpdates" ToRole="ProjectUpdateBatch" />
+    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_Region_RegionID" FromRole="ProjectRegionUpdates" ToRole="Region" />
+  </EntityType>
   <EntityType Name="ProjectTag">
     <Key>
       <PropertyRef Name="ProjectTagID" />
@@ -1878,6 +1930,8 @@
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
+    <Property Name="FocusAreaID" Type="Int32" />
+    <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
@@ -1911,6 +1965,7 @@
     <Property Name="OrganizationsDiffLog" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ContactsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
@@ -1928,6 +1983,7 @@
     <NavigationProperty Name="ProjectNoteUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectNoteUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectNoteUpdates" />
     <NavigationProperty Name="ProjectOrganizationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganizationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectOrganizationUpdates" />
     <NavigationProperty Name="ProjectPersonUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectPersonUpdates" />
+    <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectRegionUpdates" />
     <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdates" />
     <NavigationProperty Name="ProjectUpdateHistories" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdateHistories" />
   </EntityType>
@@ -1957,6 +2013,17 @@
     <Property Name="TransitionDate" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="UpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" ToRole="UpdatePerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateHistories" ToRole="ProjectUpdateBatch" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="RegionID" />
+    </Key>
+    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <Property Name="RegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="RegionLocation" Type="Geometry" />
+    <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="Region" ToRole="FocusAreas" />
+    <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID" FromRole="Region" ToRole="ProjectRegions" />
+    <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_Region_RegionID" FromRole="Region" ToRole="ProjectRegionUpdates" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -2426,6 +2493,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_FocusArea_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
+    <End Role="FocusAreas" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="FocusAreas">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
     <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="1" />
     <End Role="FocusAreaLocationStagings" Type="ProjectFirma.Web.Models.FocusAreaLocationStaging" Multiplicity="*" />
@@ -2446,6 +2525,18 @@
         <PropertyRef Name="FocusAreaID" />
       </Principal>
       <Dependent Role="Projects">
+        <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="0..1" />
+    <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.ProjectUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="ProjectUpdates">
         <PropertyRef Name="FocusAreaID" />
       </Dependent>
     </ReferentialConstraint>
@@ -3650,6 +3741,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectRegion_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.ProjectRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectRegions">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectTag_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
     <End Role="ProjectTags" Type="ProjectFirma.Web.Models.ProjectTag" Multiplicity="*" />
@@ -3935,6 +4038,42 @@
       </Principal>
       <Dependent Role="ProjectPersonUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegion_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
+    <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.ProjectRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="ProjectRegions">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.ProjectRegionUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectRegionUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegionUpdate_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
+    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.ProjectRegionUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="ProjectRegionUpdates">
+        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -109,12 +109,15 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get; set; }
         public virtual DbSet<ProjectPerson> ProjectPeople { get; set; }
         public virtual DbSet<ProjectPersonUpdate> ProjectPersonUpdates { get; set; }
+        public virtual DbSet<ProjectRegion> ProjectRegions { get; set; }
+        public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTag> ProjectTags { get; set; }
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
         public virtual DbSet<ProjectUpdateHistory> ProjectUpdateHistories { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
+        public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
@@ -495,6 +498,12 @@ namespace ProjectFirma.Web.Models
                 case "ProjectPersonUpdate":
                     return ProjectPersonUpdates.GetProjectPersonUpdate(primaryKey);
 
+                case "ProjectRegion":
+                    return ProjectRegions.GetProjectRegion(primaryKey);
+
+                case "ProjectRegionUpdate":
+                    return ProjectRegionUpdates.GetProjectRegionUpdate(primaryKey);
+
                 case "Project":
                     return Projects.GetProject(primaryKey);
 
@@ -537,6 +546,9 @@ namespace ProjectFirma.Web.Models
                     var projectWorkflowSectionGrouping = ProjectWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectWorkflowSectionGrouping, "ProjectWorkflowSectionGrouping", primaryKey);
                     return projectWorkflowSectionGrouping;
+
+                case "Region":
+                    return Regions.GetRegion(primaryKey);
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);

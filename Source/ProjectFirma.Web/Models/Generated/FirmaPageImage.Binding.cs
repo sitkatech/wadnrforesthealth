@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[FirmaPageImage] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FirmaPageImage]")]
     public partial class FirmaPageImage : IHavePrimaryKey, ICanDeleteFull
     {

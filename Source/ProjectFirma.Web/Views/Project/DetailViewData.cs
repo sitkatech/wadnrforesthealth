@@ -50,6 +50,7 @@ namespace ProjectFirma.Web.Views.Project
         public List<GeospatialAreaType> GeospatialAreaTypes { get; }
         public string EditSimpleProjectLocationUrl { get; }
         public string EditDetailedProjectLocationUrl { get; }
+        public string EditProjectRegionUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
         public string EditPerformanceMeasureExpectedsUrl { get; }
         public string EditPerformanceMeasureActualsUrl { get; }
@@ -89,6 +90,7 @@ namespace ProjectFirma.Web.Views.Project
         public string TreatmentActivityGridDataUrl { get; }
 
         public string EditProjectGeospatialAreaFormID { get; }
+        public string EditProjectRegionFormID { get; }
         public string EditProjectBoundingBoxFormID { get; }
         public string ProjectStewardCannotEditUrl { get; }
         public string ProjectStewardCannotEditPendingApprovalUrl { get; }
@@ -130,7 +132,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl
+            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl, string editProjectRegionUrl
             )
             : base(currentPerson, project)
         {
@@ -267,6 +269,7 @@ namespace ProjectFirma.Web.Views.Project
             MapFormID = mapFormID;
             EditSimpleProjectLocationUrl = editSimpleProjectLocationUrl;
             EditDetailedProjectLocationUrl = editDetailedProjectLocationUrl;
+            EditProjectRegionUrl = editProjectRegionUrl;
 
             EditProjectBoundingBoxUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectBoundingBox(project));
             EditProjectBoundingBoxFormID = editProjectBoundingBoxFormID;
@@ -318,6 +321,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectOrganizationsDetailViewData = projectOrganizationsDetailViewData;
            
             EditProjectGeospatialAreaFormID = ProjectGeospatialAreaController.GetEditProjectGeospatialAreasFormID();
+            EditProjectRegionFormID = ProjectRegionController.GetEditProjectRegionsFormID();
 
             ProjectStewardCannotEditUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.ProjectStewardCannotEdit());

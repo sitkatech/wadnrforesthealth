@@ -79,18 +79,23 @@ namespace ProjectFirma.Web.Models
         {
             var projectUpdateSections = GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
             var maxSortOrder = projectUpdateSections.Max(x => x.SortOrder);
-            projectUpdateSections.AddRange(HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
+            var priorityAreasLink = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
                 .OrderBy(x => x.GeospatialAreaTypeName).ToList().Select((geospatialAreaType, index) =>
-                    new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized, maxSortOrder + index + 1,
+                    new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized,
+                        maxSortOrder + index + 1,
                         !projectUpdateBatch.IsNew, this,
-                        projectUpdateBatch.IsNew ? null :
-                        SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
-                            y.GeospatialArea(projectUpdateBatch.Project, geospatialAreaType)),
+                        projectUpdateBatch.IsNew
+                            ? null
+                            : SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
+                                y.GeospatialArea(projectUpdateBatch.Project, geospatialAreaType)),
                         updateStatus != null && projectUpdateBatch.IsProjectGeospatialAreaValid(geospatialAreaType),
                         updateStatus != null && IsGeospatialAreaUpdated(projectUpdateBatch, geospatialAreaType)
-                    )));
+                    )).FirstOrDefault();
+            projectUpdateSections.Add(priorityAreasLink);
+
             return projectUpdateSections;
         }
+
 
         private static bool IsGeospatialAreaUpdated(ProjectUpdateBatch projectUpdateBatch, GeospatialAreaType geospatialAreaType)
         {
@@ -107,7 +112,6 @@ namespace ProjectFirma.Web.Models
             var enumerable = originalGeospatialAreaIDs.Except(updatedGeospatialAreaIDs);
             return enumerable.Any();
         }
-
     }
 
     public partial class ProjectWorkflowSectionGroupingPerformanceMeasures

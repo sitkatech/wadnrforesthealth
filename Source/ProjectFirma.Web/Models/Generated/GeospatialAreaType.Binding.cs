@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GeospatialAreaType] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[GeospatialAreaType]")]
     public partial class GeospatialAreaType : IHavePrimaryKey, ICanDeleteFull
     {

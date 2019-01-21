@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[PerformanceMeasureExpectedSubcategoryOption] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PerformanceMeasureExpectedSubcategoryOption]")]
     public partial class PerformanceMeasureExpectedSubcategoryOption : IHavePrimaryKey, ICanDeleteFull
     {

@@ -34,6 +34,7 @@ namespace ProjectFirma.Web.Views.Map
         public bool HasSimpleLocation { get; }
         public bool HasDetailedLocation { get; }
         public bool HasGeospatialAreas { get; }
+        public bool HasRegions { get; }
         /* used by ProjectFirmaMaps.ProjectLocationSummary.js */
 
         public ProjectLocationSummaryMapInitJson(IProject project, string mapDivID, bool addProjectProperties, List<Models.GeospatialArea> geospatialAreas) 
@@ -55,6 +56,7 @@ namespace ProjectFirma.Web.Views.Map
                 Layers.Add(new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail", detailedLocationGeoJsonFeatureCollection, "blue", 1, LayerInitialVisibility.Show));
             }
 
+
             HasGeospatialAreas = geospatialAreas.Any();
             if (HasGeospatialAreas)
             {
@@ -62,6 +64,15 @@ namespace ProjectFirma.Web.Views.Map
                     new List<Models.GeospatialArea> {geospatialArea}.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                     LayerInitialVisibility.Show))); 
             }
+
+            var regionGeoJsonFeatureCollection = project.GetProjectRegions().ToGeoJsonFeatureCollection();
+            HasRegions = (regionGeoJsonFeatureCollection != null);
+            if (HasRegions)
+            {
+                Layers.Add(new LayerGeoJson("Region", regionGeoJsonFeatureCollection, "#2dc3a1", 1, LayerInitialVisibility.Show));
+            }
+
+
         }
 
         public static BoundingBox GetProjectBoundingBox(IProject project)

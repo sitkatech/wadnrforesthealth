@@ -25,6 +25,9 @@ using ProjectFirma.Web.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
+using System.Linq;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.FocusArea
 {
@@ -42,6 +45,10 @@ namespace ProjectFirma.Web.Views.FocusArea
         [DisplayName("Status")]
         public int FocusAreaStatusID { get; set; }
 
+        [Required]
+        [DisplayName("Region")]
+        public int RegionID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -53,18 +60,28 @@ namespace ProjectFirma.Web.Views.FocusArea
         {
             FocusAreaName = focusArea.FocusAreaName;
             FocusAreaStatusID = focusArea.FocusAreaStatusID;
+            RegionID = focusArea.RegionID;
         }
 
         public void UpdateModel(Models.FocusArea focusArea)
         {
             focusArea.FocusAreaName = FocusAreaName;
             focusArea.FocusAreaStatusID = FocusAreaStatusID;
+            focusArea.RegionID = RegionID;
         }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validationResults = new List<ValidationResult>();
 
-                return validationResults;
+            if (!string.IsNullOrEmpty(FocusAreaName))
+            {
+                var results =
+                    HttpRequestStorage.DatabaseEntities.FocusAreas.Where(x => x.FocusAreaName == FocusAreaName);
+                if(results.Any())
+                    validationResults.Add(new SitkaValidationResult<EditViewModel, string>("Focus Area Name must be unique. A Focus Area already exists with the name provided.", x => x.FocusAreaName));
+            }
+
+            return validationResults;
         }
     }
 }

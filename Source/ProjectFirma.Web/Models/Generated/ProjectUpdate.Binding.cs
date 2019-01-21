@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectUpdate] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectUpdate]")]
     public partial class ProjectUpdate : IHavePrimaryKey, ICanDeleteFull
     {
@@ -30,7 +29,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -44,6 +43,7 @@ namespace ProjectFirma.Web.Models
             this.PlannedDate = plannedDate;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
             this.PrimaryContactPersonID = primaryContactPersonID;
+            this.FocusAreaID = focusAreaID;
         }
 
         /// <summary>
@@ -119,6 +119,7 @@ namespace ProjectFirma.Web.Models
         public DateTime? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
         public int? PrimaryContactPersonID { get; set; }
+        public int? FocusAreaID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateID; } set { ProjectUpdateID = value; } }
 
@@ -126,6 +127,7 @@ namespace ProjectFirma.Web.Models
         public ProjectStage ProjectStage { get { return ProjectStage.AllLookupDictionary[ProjectStageID]; } }
         public ProjectLocationSimpleType ProjectLocationSimpleType { get { return ProjectLocationSimpleType.AllLookupDictionary[ProjectLocationSimpleTypeID]; } }
         public virtual Person PrimaryContactPerson { get; set; }
+        public virtual FocusArea FocusArea { get; set; }
 
         public static class FieldLengths
         {

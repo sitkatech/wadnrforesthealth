@@ -26,11 +26,13 @@ namespace ProjectFirma.Web.Views.FocusArea
     public class EditViewData : FirmaUserControlViewData
     {
         public readonly IEnumerable<SelectListItem> FocusAreaStatus;
+        public readonly IEnumerable<SelectListItem> Regions;
         public readonly bool IsSitkaAdmin;
 
-        public EditViewData(IEnumerable<SelectListItem> focusAreaStatus, bool isSitkaAdmin)
+        public EditViewData(IEnumerable<SelectListItem> focusAreaStatus, IEnumerable<SelectListItem> regions, bool isSitkaAdmin)
         {
             FocusAreaStatus = focusAreaStatus;
+            Regions = regions;
             IsSitkaAdmin = isSitkaAdmin;
         }
     }
