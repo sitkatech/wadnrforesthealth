@@ -42,6 +42,19 @@ Source code is available upon request via <support@sitkatech.com>.
         {
             padding: 2px 2px 2px 0;
         }
+
+        .glyphicon-exclamation-sign {
+            color: #f0ad4e;
+        }
+
+        .glyphicon-ok {
+            color: green;
+        }
+
+        #projectWizardContent
+        .glyphicon-flag {
+            color: grey;
+        }
     </style>
 }
 
@@ -62,6 +75,9 @@ Source code is available upon request via <support@sitkatech.com>.
     </li>
     <li class="iconRow">
         <div class="iconDefinition">@Html.Raw(ProjectWizardComponents.SectionHasUpdatesIcon)</div> This section has been updated - Use the "Show Changes" button to see changes
+    </li>
+    <li class="iconRow">
+        <div class="iconDefinition">@Html.Raw(ProjectWizardComponents.RequiredInfoOkSubmitReadyIcon)</div> Required information has been provided and the page is complete
     </li>
 </ul>
 

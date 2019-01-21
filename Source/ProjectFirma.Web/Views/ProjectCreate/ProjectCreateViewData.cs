@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             // ReSharper restore PossibleNullReferenceException
             IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
 
-            InstructionsPageUrl = ProjectStage == ProjectStage.Application
+            InstructionsPageUrl = project.ProjectStage == ProjectStage.Application
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
                     x.InstructionsProposal(project.ProjectID))
                 : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
