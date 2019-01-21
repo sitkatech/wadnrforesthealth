@@ -50,7 +50,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GeospatialAreaType> GeospatialAreaTypes { get; set; }
         public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<GrantNote> GrantNotes { get; set; }
         public virtual DbSet<Grant> Grants { get; set; }
+        public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
+        public virtual DbSet<GrantType> GrantTypes { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -243,8 +246,17 @@ namespace ProjectFirma.Web.Models
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);
 
+                case "GrantNote":
+                    return GrantNotes.GetGrantNote(primaryKey);
+
                 case "Grant":
                     return Grants.GetGrant(primaryKey);
+
+                case "GrantStatus":
+                    return GrantStatuses.GetGrantStatus(primaryKey);
+
+                case "GrantType":
+                    return GrantTypes.GetGrantType(primaryKey);
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

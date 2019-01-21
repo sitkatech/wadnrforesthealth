@@ -25,12 +25,16 @@ namespace ProjectFirma.Web.Views.Grant
     public abstract class GrantViewData : FirmaViewData
     {
         public Models.Grant Grant { get; }
+        public string EditGrantUrl { get; set; }
+        public bool UserHasEditGrantPermissions { get; set; }
 
         protected GrantViewData(Person currentPerson, Models.Grant grant) : base(currentPerson, null)
         {
             Grant = grant;
             HtmlPageTitle = grant.GrantNumber;
             EntityName = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
+            EditGrantUrl = grant.GetEditUrl();
+            UserHasEditGrantPermissions = true;
         }
     }
 }
