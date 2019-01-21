@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string regionNotes) : this()
+        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation) : this()
         {
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectID = projectID;
@@ -67,13 +67,14 @@ namespace ProjectFirma.Web.Models
             this.BudgetsDiffLog = budgetsDiffLog;
             this.ExternalLinksDiffLog = externalLinksDiffLog;
             this.NotesDiffLog = notesDiffLog;
+            this.GeospatialAreaComment = geospatialAreaComment;
             this.ExpectedFundingComment = expectedFundingComment;
             this.ExpectedFundingDiffLog = expectedFundingDiffLog;
             this.OrganizationsComment = organizationsComment;
             this.OrganizationsDiffLog = organizationsDiffLog;
             this.NoExpendituresToReportExplanation = noExpendituresToReportExplanation;
             this.ContactsComment = contactsComment;
-            this.RegionNotes = regionNotes;
+            this.NoRegionsExplanation = noRegionsExplanation;
         }
 
         /// <summary>
@@ -293,13 +294,14 @@ namespace ProjectFirma.Web.Models
             get { return NotesDiffLog == null ? null : new HtmlString(NotesDiffLog); }
             set { NotesDiffLog = value?.ToString(); }
         }
+        public string GeospatialAreaComment { get; set; }
         public string ExpectedFundingComment { get; set; }
         public string ExpectedFundingDiffLog { get; set; }
         public string OrganizationsComment { get; set; }
         public string OrganizationsDiffLog { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
         public string ContactsComment { get; set; }
-        public string RegionNotes { get; set; }
+        public string NoRegionsExplanation { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateBatchID; } set { ProjectUpdateBatchID = value; } }
 
@@ -336,11 +338,12 @@ namespace ProjectFirma.Web.Models
             public const int LocationSimpleComment = 1000;
             public const int LocationDetailedComment = 1000;
             public const int BudgetsComment = 1000;
+            public const int GeospatialAreaComment = 1000;
             public const int ExpectedFundingComment = 1000;
             public const int OrganizationsComment = 1000;
             public const int OrganizationsDiffLog = 1;
             public const int ContactsComment = 1000;
-            public const int RegionNotes = 4000;
+            public const int NoRegionsExplanation = 4000;
         }
     }
 }

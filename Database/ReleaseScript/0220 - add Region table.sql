@@ -33,8 +33,6 @@ go
 SET IDENTITY_INSERT dbo.ProjectRegion OFF;  
 GO
 
-
-GO
 ALTER TABLE [dbo].[ProjectRegion] ADD  CONSTRAINT [AK_ProjectRegion_ProjectID_RegionID] UNIQUE NONCLUSTERED 
 (
 	[ProjectID],
@@ -91,14 +89,8 @@ delete from dbo.GeospatialArea where GeospatialAreaTypeID = 10;
 
 delete from dbo.GeospatialAreaType where GeospatialAreaTypeID = 10;
 
-ALTER TABLE dbo.FocusArea ADD RegionID int NOT NULL   
-    CONSTRAINT FK_FocusArea_Region_RegionID foreign key references dbo.Region(RegionID);
+ALTER TABLE dbo.FocusArea ADD RegionID int NOT NULL CONSTRAINT FK_FocusArea_Region_RegionID foreign key references dbo.Region(RegionID);
 
-go
-alter table dbo.Project add RegionNotes varchar(4000);
+alter table dbo.Project add NoRegionsExplanation varchar(4000);
+alter table dbo.ProjectUpdateBatch add NoRegionsExplanation varchar(4000);
 
-go
-alter table dbo.ProjectUpdateBatch add RegionNotes varchar(4000);
-
-go
-alter table dbo.ProjectUpdateBatch drop column GeospatialAreaComment;

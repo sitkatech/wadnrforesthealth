@@ -30,6 +30,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionNotesAndDocuments NotesAndDocuments = ProjectCreateSectionNotesAndDocuments.Instance;
         public static readonly ProjectCreateSectionOrganizations Organizations = ProjectCreateSectionOrganizations.Instance;
         public static readonly ProjectCreateSectionContacts Contacts = ProjectCreateSectionContacts.Instance;
+        public static readonly ProjectCreateSectionRegions Regions = ProjectCreateSectionRegions.Instance;
 
         public static readonly List<ProjectCreateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectCreateSection> AllLookupDictionary;
@@ -39,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Photos, NotesAndDocuments, Organizations, Contacts };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -135,6 +136,8 @@ namespace ProjectFirma.Web.Models
                     return Organizations;
                 case ProjectCreateSectionEnum.Photos:
                     return Photos;
+                case ProjectCreateSectionEnum.Regions:
+                    return Regions;
                 case ProjectCreateSectionEnum.ReportedExpenditures:
                     return ReportedExpenditures;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
@@ -158,7 +161,8 @@ namespace ProjectFirma.Web.Models
         Photos = 13,
         NotesAndDocuments = 14,
         Organizations = 15,
-        Contacts = 16
+        Contacts = 16,
+        Regions = 17
     }
 
     public partial class ProjectCreateSectionBasics : ProjectCreateSection
@@ -231,5 +235,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionContacts(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionContacts Instance = new ProjectCreateSectionContacts(16, @"Contacts", @"Contacts", 26, true, 1);
+    }
+
+    public partial class ProjectCreateSectionRegions : ProjectCreateSection
+    {
+        private ProjectCreateSectionRegions(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionRegions Instance = new ProjectCreateSectionRegions(17, @"Regions", @"Regions", 50, true, 2);
     }
 }

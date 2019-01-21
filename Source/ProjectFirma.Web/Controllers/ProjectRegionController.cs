@@ -40,8 +40,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var regionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
-            var regionNotes = project.RegionNotes;
-            var viewModel = new EditProjectRegionsViewModel(regionIDs, regionNotes);
+            var noRegionsExplanation = project.NoRegionsExplanation;
+            var viewModel = new EditProjectRegionsViewModel(regionIDs, noRegionsExplanation);
             return ViewEditProjectRegions(viewModel, project);
         }
 
@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Controllers
             var currentProjectRegions = project.ProjectRegions.ToList();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
             viewModel.UpdateModel(project, currentProjectRegions, allProjectRegions);
-            project.RegionNotes = !string.IsNullOrWhiteSpace(viewModel.RegionNotes) ? viewModel.RegionNotes : null;
+            project.NoRegionsExplanation = !string.IsNullOrWhiteSpace(viewModel.NoRegionsExplanation) ? viewModel.NoRegionsExplanation : null;
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Regions were successfully saved.");
 
             return new ModalDialogFormJsonResult();

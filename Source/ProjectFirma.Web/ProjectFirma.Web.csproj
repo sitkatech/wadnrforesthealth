@@ -444,6 +444,9 @@
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
+    <Compile Include="Views\ProjectCreate\Regions.cs" />
+    <Compile Include="Views\ProjectCreate\RegionsViewData.cs" />
+    <Compile Include="Views\ProjectCreate\RegionsViewModel.cs" />
     <Compile Include="Views\ProjectRegion\EditProjectRegions.cs" />
     <Compile Include="Views\ProjectRegion\EditProjectRegionsViewData.cs" />
     <Compile Include="Views\ProjectRegion\EditProjectRegionsViewModel.cs" />
@@ -513,6 +516,7 @@
     <Content Include="Views\FocusArea\EditLocation.cshtml" />
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
     <Content Include="Views\FocusArea\EditBoundaryErrors.cshtml" />
+    <Content Include="Views\ProjectCreate\Regions.cshtml" />
     <None Include="Views\ProjectCreate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewModel.cs" />
     <Compile Include="Views\ProjectCustomAttributeType\Detail.cs" />

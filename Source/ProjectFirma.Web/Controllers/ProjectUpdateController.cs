@@ -1150,7 +1150,7 @@ namespace ProjectFirma.Web.Controllers
         #region Region functions
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
-        public ActionResult Region(ProjectPrimaryKey projectPrimaryKey)
+        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
@@ -1160,15 +1160,15 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var regionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.RegionID).ToList();
-            var regionNotes = projectUpdateBatch.RegionNotes;
-            var viewModel = new RegionsViewModel(regionIDs, regionNotes);
-            return ViewRegion(project, projectUpdateBatch, viewModel);
+            var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
+            var viewModel = new RegionsViewModel(regionIDs, noRegionsExplanation);
+            return ViewRegions(project, projectUpdateBatch, viewModel);
         }
 
         [HttpPost]
         [ProjectUpdateCreateEditSubmitFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Region(ProjectPrimaryKey projectPrimaryKey, RegionsViewModel viewModel)
+        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey, RegionsViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
@@ -1179,29 +1179,21 @@ namespace ProjectFirma.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return ViewRegion(project, projectUpdateBatch, viewModel);
+                return ViewRegions(project, projectUpdateBatch, viewModel);
             }
             var currentProjectUpdateRegions = projectUpdateBatch.ProjectRegionUpdates.ToList();
             var allProjectUpdateRegions = HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.Local;
             viewModel.UpdateModelBatch(projectUpdateBatch, currentProjectUpdateRegions, allProjectUpdateRegions);
 
-            if (!string.IsNullOrWhiteSpace(viewModel.RegionNotes))
-            {
-                projectUpdateBatch.RegionNotes = viewModel.RegionNotes;
-            }
-            else
-            {
-                projectUpdateBatch.RegionNotes = null;
-                //HttpRequestStorage.DatabaseEntities.SaveChanges();
-            }
+            projectUpdateBatch.NoRegionsExplanation = viewModel.NoRegionsExplanation;
             if (projectUpdateBatch.IsSubmitted)
             {
-                projectUpdateBatch.RegionNotes = viewModel.RegionNotes;
+                projectUpdateBatch.NoRegionsExplanation = viewModel.NoRegionsExplanation;
             }
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, "Regions");
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.Regions.ProjectUpdateSectionDisplayName);
         }
 
-        private ViewResult ViewRegion(Project project, ProjectUpdateBatch projectUpdateBatch, RegionsViewModel viewModel)
+        private ViewResult ViewRegions(Project project, ProjectUpdateBatch projectUpdateBatch, RegionsViewModel viewModel)
         {
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
 
@@ -1215,12 +1207,12 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate, $"project_{project.ProjectID}_EditMap", false, new List<GeospatialArea>());
             var regionIDs = viewModel.RegionIDs ?? new List<int>();
             var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.RegionID)).ToList();
-            var editProjectRegionsPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Region(project, null));
+            var editProjectRegionsPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Regions(project, null));
             var editProjectRegionsFormId = GenerateEditProjectLocationFormID(project);
 
             var editProjectLocationViewData = new EditProjectRegionsViewData(CurrentPerson, mapInitJson, regionsInViewModel, editProjectRegionsPostUrl, editProjectRegionsFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
-            var regionNotes = projectUpdateBatch.RegionNotes;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new Dictionary<int, string>(), new List<GeospatialAreaType>(), new List<GeospatialArea>(), regions, regionNotes);
+            var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new Dictionary<int, string>(), new List<GeospatialAreaType>(), new List<GeospatialArea>(), regions, noRegionsExplanation);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new RegionsViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, regionValidationResult, updateStatus);
             return RazorView<Views.ProjectUpdate.Regions, RegionsViewData, RegionsViewModel>(viewData, viewModel);
@@ -1252,7 +1244,7 @@ namespace ProjectFirma.Web.Controllers
 
             // refresh the data
             ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
-            projectUpdateBatch.RegionNotes = project.RegionNotes;
+            projectUpdateBatch.NoRegionsExplanation = project.NoRegionsExplanation;
             //ProjectGeospatialAreaTypeNoteUpdate.CreateFromProject(projectUpdateBatch);
             projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             return new ModalDialogFormJsonResult();
@@ -2687,6 +2679,7 @@ namespace ProjectFirma.Web.Controllers
             var isBudgetsUpdated = false;
             var isLocationSimpleUpdated = IsLocationSimpleUpdated(projectUpdateBatch.ProjectID);
             var isLocationDetailUpdated = IsLocationDetailedUpdated(projectUpdateBatch.ProjectID);
+            var isRegionsUpdated = IsRegionUpdated(projectUpdateBatch);
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
@@ -2706,12 +2699,30 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.IsPhotosUpdated,
                 isLocationSimpleUpdated,
                 isLocationDetailUpdated,
+                isRegionsUpdated,
                 isExternalLinksUpdated,
                 isNotesUpdated,
                 isExpectedFundingUpdated,
                 isOrganizationsUpdated,
                 isContactsUpdated);
         }
+
+        private static bool IsRegionUpdated(ProjectUpdateBatch projectUpdateBatch)
+        {
+            var project = projectUpdateBatch.Project;
+            var originalRegionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
+            var updatedRegionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.RegionID).ToList();
+
+            if (!originalRegionIDs.Any() && !updatedRegionIDs.Any())
+                return false;
+
+            if (originalRegionIDs.Count != updatedRegionIDs.Count)
+                return true;
+
+            var enumerable = originalRegionIDs.Except(updatedRegionIDs);
+            return enumerable.Any();
+        }
+
 
         private PartialViewResult ViewHtmlDiff(string htmlDiff, string diffTitle)
         {

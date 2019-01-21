@@ -93,35 +93,9 @@ namespace ProjectFirma.Web.Models
                     )).FirstOrDefault();
             projectUpdateSections.Add(priorityAreasLink);
 
-            var regionsLink = new ProjectSectionSimple("Regions",
-                maxSortOrder + 1,
-                !projectUpdateBatch.IsNew, this,
-                projectUpdateBatch.IsNew
-                    ? null
-                    : SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
-                        y.Region(projectUpdateBatch.Project)),
-                updateStatus != null && projectUpdateBatch.IsProjectRegionValid(),
-                updateStatus != null && IsRegionUpdated(projectUpdateBatch));
-            projectUpdateSections.Add(regionsLink);
-
             return projectUpdateSections;
         }
 
-        private static bool IsRegionUpdated(ProjectUpdateBatch projectUpdateBatch)
-        {
-            var project = projectUpdateBatch.Project;
-            var originalRegionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
-            var updatedRegionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.RegionID).ToList();
-
-            if (!originalRegionIDs.Any() && !updatedRegionIDs.Any())
-                return false;
-
-            if (originalRegionIDs.Count != updatedRegionIDs.Count)
-                return true;
-
-            var enumerable = originalRegionIDs.Except(updatedRegionIDs);
-            return enumerable.Any();
-        }
 
         private static bool IsGeospatialAreaUpdated(ProjectUpdateBatch projectUpdateBatch, GeospatialAreaType geospatialAreaType)
         {
@@ -138,7 +112,6 @@ namespace ProjectFirma.Web.Models
             var enumerable = originalGeospatialAreaIDs.Except(updatedGeospatialAreaIDs);
             return enumerable.Any();
         }
-
     }
 
     public partial class ProjectWorkflowSectionGroupingPerformanceMeasures

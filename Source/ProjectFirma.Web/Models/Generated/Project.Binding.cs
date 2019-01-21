@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string regionNotes) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Models
             this.DefaultBoundingBox = defaultBoundingBox;
             this.NoExpendituresToReportExplanation = noExpendituresToReportExplanation;
             this.FocusAreaID = focusAreaID;
-            this.RegionNotes = regionNotes;
+            this.NoRegionsExplanation = noRegionsExplanation;
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace ProjectFirma.Web.Models
         public DbGeometry DefaultBoundingBox { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
         public int? FocusAreaID { get; set; }
-        public string RegionNotes { get; set; }
+        public string NoRegionsExplanation { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -338,7 +338,7 @@ namespace ProjectFirma.Web.Models
             public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int ProjectLocationNotes = 4000;
             public const int PerformanceMeasureNotes = 500;
-            public const int RegionNotes = 4000;
+            public const int NoRegionsExplanation = 4000;
         }
     }
 }

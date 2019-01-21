@@ -43,6 +43,7 @@ using LtInfo.Common.Models;
 using LtInfo.Common.MvcResults;
 using Newtonsoft.Json;
 using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
@@ -866,11 +867,65 @@ namespace ProjectFirma.Web.Controllers
 
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {geospatialAreaType.GeospatialAreaTypeNamePluralized} successfully saved.");
             return GoToNextSection(viewModel, project, geospatialAreaType.GeospatialAreaTypeNamePluralized);
+        }[HttpGet]
+        [ProjectCreateFeature]
+        public ViewResult Regions(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var regionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
+            var noRegionsExplanation = project.NoRegionsExplanation;
+            var viewModel = new RegionsViewModel(regionIDs, noRegionsExplanation);
+            return ViewEditRegion(project, viewModel);
+        }
+
+        private ViewResult ViewEditRegion(Project project, RegionsViewModel viewModel)
+        {
+            var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
+            var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
+            layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
+            var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var regionIDs = viewModel.RegionIDs ?? new List<int>();
+            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.RegionID)).ToList();
+            var editProjectRegionsPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.Regions(project, null));
+            var editProjectRegionsFormId = GenerateEditProjectRegionsFormID(project);
+
+            var editProjectLocationViewData = new EditProjectRegionsViewData(CurrentPerson, mapInitJson, regionsInViewModel, editProjectRegionsPostUrl, editProjectRegionsFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail);
+
+            var proposalSectionsStatus = GetProposalSectionsStatus(project);
+            proposalSectionsStatus.IsRegionSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsRegionSectionComplete;
+            var viewData = new RegionsViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
+
+            return RazorView<Views.ProjectCreate.Regions, RegionsViewData, RegionsViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey, RegionsViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditRegion(project, viewModel);
+            }
+
+            var currentProjectRegions = project.ProjectRegions.ToList();
+            var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
+            viewModel.UpdateModel(project, currentProjectRegions, allProjectRegions);
+
+            project.NoRegionsExplanation = viewModel.NoRegionsExplanation;
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Regions successfully saved.");
+            return GoToNextSection(viewModel, project, "Regions");
         }
 
         private static string GenerateEditProjectGeospatialAreaFormID(Project project)
         {
             return $"editMapForProject{project.ProjectID}";
+        }
+
+        private static string GenerateEditProjectRegionsFormID(Project project)
+        {
+            return $"editMapForProjectRegions{project.ProjectID}";
         }
 
         [ProjectCreateFeature]

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="LocationSimpleViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,15 +19,13 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.ProjectRegion;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using ProjectFirma.Web.Views.ProjectRegion;
 
-namespace ProjectFirma.Web.Views.ProjectUpdate
-{
+
+namespace ProjectFirma.Web.Views.ProjectCreate
+{    
     public class RegionsViewModel : EditProjectRegionsViewModel
     {
         /// <summary>
@@ -40,10 +38,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public RegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
         {
         }
-
-        public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectRegionUpdate> currentProjectUpdateRegions, ObservableCollection<ProjectRegionUpdate> allProjectUpdateRegions)
+        
+        public void UpdateModel(Models.Project project, List<Models.ProjectRegion> currentProjectRegions, ObservableCollection<Models.ProjectRegion> allProjectRegions)
         {
-            UpdateModel(projectUpdateBatch, currentProjectUpdateRegions, allProjectUpdateRegions);
+            base.UpdateModel(project, currentProjectRegions, allProjectRegions);
         }
-    }
+    }    
 }

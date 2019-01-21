@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="LocationSimpleViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -21,29 +21,19 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.ProjectRegion;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
-namespace ProjectFirma.Web.Views.ProjectUpdate
+namespace ProjectFirma.Web.Views.ProjectCreate
 {
-    public class RegionsViewModel : EditProjectRegionsViewModel
+    public class RegionsViewData : ProjectCreateViewData
     {
-        /// <summary>
-        /// Needed by the ModelBinder
-        /// </summary>
-        public RegionsViewModel()
-        {
-        }
+        public readonly EditProjectRegionsViewData EditProjectRegionsViewData;
 
-        public RegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
+        public RegionsViewData(Person currentPerson,
+            Models.Project project,
+            ProposalSectionsStatus proposalSectionsStatus,
+            EditProjectRegionsViewData editProjectRegionsViewData) : base(currentPerson, project, "Regions", proposalSectionsStatus)
         {
-        }
-
-        public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectRegionUpdate> currentProjectUpdateRegions, ObservableCollection<ProjectRegionUpdate> allProjectUpdateRegions)
-        {
-            UpdateModel(projectUpdateBatch, currentProjectUpdateRegions, allProjectUpdateRegions);
+            EditProjectRegionsViewData = editProjectRegionsViewData;
         }
     }
 }

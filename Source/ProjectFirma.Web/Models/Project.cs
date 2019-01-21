@@ -276,6 +276,11 @@ namespace ProjectFirma.Web.Models
             return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
         }
 
+        public bool IsProjectRegionValid()
+        {
+            return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
+        }
+
         public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
         {
             var projectGeospatialAreas = ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();

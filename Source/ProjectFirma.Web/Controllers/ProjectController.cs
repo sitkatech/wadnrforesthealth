@@ -147,8 +147,8 @@ namespace ProjectFirma.Web.Controllers
             var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName).ToList();
             var dictionaryGeoNotes = project.ProjectGeospatialAreaTypeNotes.ToDictionary(x => x.GeospatialAreaTypeID, x => x.Notes);
             var regions = project.ProjectRegions.Select(x => x.Region).ToList();
-            var regionNotes = project.RegionNotes;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, dictionaryGeoNotes, geospatialAreaTypes, geospatialAreas, regions, regionNotes);
+            var noRegionsExplanation = project.NoRegionsExplanation;
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, dictionaryGeoNotes, geospatialAreaTypes, geospatialAreas, regions, noRegionsExplanation);
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var projectBasicsViewData = new ProjectBasicsViewData(project, false, taxonomyLevel);

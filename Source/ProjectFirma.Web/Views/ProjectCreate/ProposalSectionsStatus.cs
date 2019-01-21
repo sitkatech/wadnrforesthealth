@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
@@ -44,6 +45,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsExpectedFundingSectionComplete { get; set; }
         public bool IsProjectOrganizationsSectionComplete { get; set; }
         public bool IsProjectContactsSectionComplete { get; set; }
+        public bool IsRegionSectionComplete { get; set; }
 
         public ProposalSectionsStatus(Models.Project project, List<GeospatialAreaType> geospatialAreaTypes)
         {
@@ -60,8 +62,13 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 var isGeospatialAreaSectionComplete = true;
                 foreach (var geospatialAreaType in geospatialAreaTypes)
                 {
-                    var geospatialAreaIDs = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).Select(x => x.GeospatialAreaID).ToList();
-                    var editGeospatialAreaValidationResults = new EditProjectGeospatialAreasViewModel(geospatialAreaIDs, project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)?.Notes).GetValidationResults();
+                    var geospatialAreaIDs = project.ProjectGeospatialAreas
+                        .Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)
+                        .Select(x => x.GeospatialAreaID).ToList();
+                    var editGeospatialAreaValidationResults = new EditProjectGeospatialAreasViewModel(geospatialAreaIDs,
+                            project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x =>
+                                x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)?.Notes)
+                        .GetValidationResults();
                     if (editGeospatialAreaValidationResults.Any())
                     {
                         isGeospatialAreaSectionComplete = false;
@@ -76,15 +83,25 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 IsGeospatialAreaSectionComplete = true;
             }
 
-            var performanceMeasureValidationResults = new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
+            var regionIDs = project.ProjectRegions
+                .Select(x => x.RegionID).ToList();
+            var editProjectRegionsValidationResults = new EditProjectRegionsViewModel(regionIDs,
+                    project.NoRegionsExplanation).GetValidationResults();
+
+            IsRegionSectionComplete = !editProjectRegionsValidationResults.Any();
+
+            var performanceMeasureValidationResults =
+                new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
             IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
 
-            var efValidationResults = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(), project.EstimatedTotalCost)
+            var efValidationResults = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(),
+                    project.EstimatedTotalCost)
                 .GetValidationResults();
             IsExpectedFundingSectionComplete = !efValidationResults.Any();
 
             var proposalClassificationSimples = ProjectCreateController.GetProjectClassificationSimples(project);
-            var classificationValidationResults = new EditProposalClassificationsViewModel(proposalClassificationSimples).GetValidationResults();
+            var classificationValidationResults =
+                new EditProposalClassificationsViewModel(proposalClassificationSimples).GetValidationResults();
             IsClassificationsComplete = !classificationValidationResults.Any();
 
             IsNotesSectionComplete = IsBasicsSectionComplete; //there is no validation required on Notes
@@ -98,6 +115,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
             IsGeospatialAreaSectionComplete = false;
+            IsRegionSectionComplete = false;
             IsNotesSectionComplete = false;
         }
     }

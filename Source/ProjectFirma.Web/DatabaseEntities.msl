@@ -469,7 +469,7 @@
           <ScalarProperty Name="DefaultBoundingBox" ColumnName="DefaultBoundingBox" />
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
-          <ScalarProperty Name="RegionNotes" ColumnName="RegionNotes" />
+          <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -898,13 +898,14 @@
           <ScalarProperty Name="BudgetsDiffLog" ColumnName="BudgetsDiffLog" />
           <ScalarProperty Name="ExternalLinksDiffLog" ColumnName="ExternalLinksDiffLog" />
           <ScalarProperty Name="NotesDiffLog" ColumnName="NotesDiffLog" />
+          <ScalarProperty Name="GeospatialAreaComment" ColumnName="GeospatialAreaComment" />
           <ScalarProperty Name="ExpectedFundingComment" ColumnName="ExpectedFundingComment" />
           <ScalarProperty Name="ExpectedFundingDiffLog" ColumnName="ExpectedFundingDiffLog" />
           <ScalarProperty Name="OrganizationsComment" ColumnName="OrganizationsComment" />
           <ScalarProperty Name="OrganizationsDiffLog" ColumnName="OrganizationsDiffLog" />
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
           <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
-          <ScalarProperty Name="RegionNotes" ColumnName="RegionNotes" />
+          <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

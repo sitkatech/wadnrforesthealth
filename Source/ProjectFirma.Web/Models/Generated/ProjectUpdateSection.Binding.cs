@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionNotesAndDocuments NotesAndDocuments = ProjectUpdateSectionNotesAndDocuments.Instance;
         public static readonly ProjectUpdateSectionOrganizations Organizations = ProjectUpdateSectionOrganizations.Instance;
         public static readonly ProjectUpdateSectionContacts Contacts = ProjectUpdateSectionContacts.Instance;
+        public static readonly ProjectUpdateSectionRegions Regions = ProjectUpdateSectionRegions.Instance;
 
         public static readonly List<ProjectUpdateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectUpdateSection> AllLookupDictionary;
@@ -38,7 +39,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Expenditures, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Expenditures, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, Regions };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -136,6 +137,8 @@ namespace ProjectFirma.Web.Models
                     return PerformanceMeasures;
                 case ProjectUpdateSectionEnum.Photos:
                     return Photos;
+                case ProjectUpdateSectionEnum.Regions:
+                    return Regions;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -154,7 +157,8 @@ namespace ProjectFirma.Web.Models
         ExternalLinks = 10,
         NotesAndDocuments = 11,
         Organizations = 12,
-        Contacts = 13
+        Contacts = 13,
+        Regions = 14
     }
 
     public partial class ProjectUpdateSectionBasics : ProjectUpdateSection
@@ -221,5 +225,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectUpdateSectionContacts(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectUpdateSectionContacts Instance = new ProjectUpdateSectionContacts(13, @"Contacts", @"Contacts", 26, true, 1);
+    }
+
+    public partial class ProjectUpdateSectionRegions : ProjectUpdateSection
+    {
+        private ProjectUpdateSectionRegions(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectUpdateSectionRegions Instance = new ProjectUpdateSectionRegions(14, @"Regions", @"Regions", 50, true, 2);
     }
 }

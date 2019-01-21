@@ -13,4 +13,5 @@ values
 (13, 'Photos', 'Photos', 130, 0, 5),
 (14, 'NotesAndDocuments', 'Documents and Notes', 140, 0, 5),
 (15, 'Organizations', 'Organizations', 25, 1, 1),
-(16, 'Contacts', 'Contacts', 26, 1, 1)
+(16, 'Contacts', 'Contacts', 26, 1, 1),
+(17, 'Regions', 'Regions', 50, 1, 2)

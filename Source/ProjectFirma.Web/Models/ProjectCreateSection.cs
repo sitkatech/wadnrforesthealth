@@ -64,6 +64,18 @@ namespace ProjectFirma.Web.Models
             return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditLocationDetailed(project.ProjectID)) : null;
         }
     }
+    public partial class ProjectCreateSectionRegions
+    {
+        public override bool IsComplete(Project project)
+        {
+            return project != null && project.IsProjectRegionValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Regions(project.ProjectID)) : null;
+        }
+    }
 
     public partial class ProjectCreateSectionExpectedPerformanceMeasures
     {
