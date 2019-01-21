@@ -44,11 +44,12 @@ namespace ProjectFirma.Web.Views.Grant
 
             Add("Grant Number", x => x.Grant.GrantNumber, GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("CFDA Number", x => x.Grant.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Grant Allocation Title", x => x.ProjectName, 300, DhtmlxGridColumnFilterType.Text);
+            //Add("Grant Allocation Title", x => x.ProjectName, 300, DhtmlxGridColumnFilterType.Text);
+            Add("Grant Allocation Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Program Manager", x => x.ProgramManagerPerson != null ? x.ProgramManagerPerson.FullNameFirstLast : string.Empty, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Start Date", x => x.StartDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("End Date", x => x.EndDate.ToShortDateString(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Status", x => x.Grant.GrantType.GrantTypeName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Start Date", x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("End Date", x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Status", x => x.Grant.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Federal Fund Code", x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict); 
             Add("Allocation Amount", x => x.AllocationAmount, 90, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add("Project Codes", x => x.ProjectCodesString, 90, DhtmlxGridColumnFilterType.Text);

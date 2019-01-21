@@ -954,8 +954,8 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="GrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
-    <Property Name="StartDate" Type="datetime" Nullable="false" />
-    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
     <Property Name="AllocationAmount" Type="money" />
     <Property Name="CostTypeID" Type="int" />
     <Property Name="ProgramManagerPersonID" Type="int" />

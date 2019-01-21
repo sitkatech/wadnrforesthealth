@@ -1006,8 +1006,8 @@
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="Int32" Nullable="false" />
     <Property Name="ProjectName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" />
-    <Property Name="EndDate" Type="DateTime" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" />
+    <Property Name="EndDate" Type="DateTime" />
     <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="CostTypeID" Type="Int32" />
     <Property Name="ProgramManagerPersonID" Type="Int32" />

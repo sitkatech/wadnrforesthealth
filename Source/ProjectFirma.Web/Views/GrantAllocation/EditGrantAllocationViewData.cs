@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectModelExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,31 +18,26 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using ProjectFirma.Web.Controllers;
-using LtInfo.Common;
-using LtInfo.Common.Models;
-using Microsoft.Ajax.Utilities;
+using System.Web.Mvc;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
+using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Models
+namespace ProjectFirma.Web.Views.Grant
 {
-    public static class GrantModelExtensions
+    public class EditGrantAllocationViewData : FirmaUserControlViewData
     {
-        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
-        public static string GetDetailUrl(this Grant grant)
-        {
-            return DetailUrlTemplate.ParameterReplace(grant.GrantID);
-        }
+        public IEnumerable<SelectListItem> Organizations { get; }
 
-        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
-        public static string GetEditUrl(this Grant grant)
-        {
-            return SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.Edit(grant.GrantID));
-        }
+        public EditGrantType EditGrantType { get; set; }
 
+        public EditGrantAllocationViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations)
+        {
+            Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            EditGrantType = editGrantType;
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime startDate, DateTime endDate, decimal? allocationAmount, int? costTypeID, int? programManagerPersonID, int? programIndexID, int? federalFundCodeID, int? organizationID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programManagerPersonID, int? programIndexID, int? federalFundCodeID, int? organizationID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -48,28 +48,24 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantID, DateTime startDate, DateTime endDate) : this()
+        public GrantAllocation(int grantID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantID = grantID;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocation(Grant grant, DateTime startDate, DateTime endDate) : this()
+        public GrantAllocation(Grant grant) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GrantID = grant.GrantID;
             this.Grant = grant;
             grant.GrantAllocations.Add(this);
-            this.StartDate = startDate;
-            this.EndDate = endDate;
         }
 
         /// <summary>
@@ -77,7 +73,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantAllocation CreateNewBlank(Grant grant)
         {
-            return new GrantAllocation(grant, default(DateTime), default(DateTime));
+            return new GrantAllocation(grant);
         }
 
         /// <summary>
@@ -119,8 +115,8 @@ namespace ProjectFirma.Web.Models
         public int GrantAllocationID { get; set; }
         public int GrantID { get; set; }
         public string ProjectName { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
         public int? CostTypeID { get; set; }
         public int? ProgramManagerPersonID { get; set; }
