@@ -231,6 +231,7 @@
           <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

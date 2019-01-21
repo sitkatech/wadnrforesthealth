@@ -184,6 +184,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
       <End Role="GrantType" EntitySet="GrantType" />
       <End Role="Grants" EntitySet="Grant" />
     </AssociationSet>
+    <AssociationSet Name="FK_Grant_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Grant_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="Grants" EntitySet="Grant" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_CostType_CostTypeID">
       <End Role="CostType" EntitySet="CostType" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
@@ -928,6 +932,7 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="GrantTypeID" Type="int" />
     <Property Name="ShortName" Type="varchar" MaxLength="64" />
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -2044,6 +2049,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="Grants">
         <PropertyRef Name="GrantTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grant_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="Grants">
+        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
