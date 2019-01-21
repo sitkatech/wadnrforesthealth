@@ -228,6 +228,7 @@
           <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
           <ScalarProperty Name="CFDANumber" ColumnName="CFDANumber" />
           <ScalarProperty Name="GrantTitle" ColumnName="GrantTitle" />
+          <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -254,6 +255,14 @@
           <ScalarProperty Name="GrantAllocationProjectCodeID" ColumnName="GrantAllocationProjectCodeID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantType">
+        <MappingFragment StoreEntitySet="GrantType">
+          <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
+          <ScalarProperty Name="GrantTypeName" ColumnName="GrantTypeName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

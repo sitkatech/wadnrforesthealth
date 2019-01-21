@@ -78,7 +78,7 @@
         <div class="col-sm-12 col-md-9 col-lg-10">
             <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() Overview</h2>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12" style="padding: 0px;">
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
@@ -126,7 +126,7 @@
                                         <label for="Type">Type</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Type">Standalone or CPG</span>
+                                        <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
                                     </div>
                                 </div>
                                 <div class="row">

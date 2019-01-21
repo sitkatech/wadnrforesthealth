@@ -24,6 +24,7 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -173,6 +174,10 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID" Association="ProjectFirma.Web.Models.Store.FK_GeospatialArea_GeospatialAreaType_GeospatialAreaTypeID">
       <End Role="GeospatialAreaType" EntitySet="GeospatialAreaType" />
       <End Role="GeospatialAreas" EntitySet="GeospatialArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grant_GrantType_GrantTypeID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantType_GrantTypeID">
+      <End Role="GrantType" EntitySet="GrantType" />
+      <End Role="Grants" EntitySet="Grant" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_CostType_CostTypeID">
       <End Role="CostType" EntitySet="CostType" />
@@ -915,6 +920,7 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="AwardedFunds" Type="money" />
     <Property Name="CFDANumber" Type="varchar" MaxLength="10" />
     <Property Name="GrantTitle" Type="varchar" Nullable="false" MaxLength="64" />
+    <Property Name="GrantTypeID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -939,6 +945,13 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="GrantAllocationProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="ProjectCodeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GrantType">
+    <Key>
+      <PropertyRef Name="GrantTypeID" />
+    </Key>
+    <Property Name="GrantTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantTypeName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -1993,6 +2006,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="GeospatialAreas">
         <PropertyRef Name="GeospatialAreaTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grant_GrantType_GrantTypeID">
+    <End Role="GrantType" Type="ProjectFirma.Web.Models.Store.GrantType" Multiplicity="0..1" />
+    <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantType">
+        <PropertyRef Name="GrantTypeID" />
+      </Principal>
+      <Dependent Role="Grants">
+        <PropertyRef Name="GrantTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

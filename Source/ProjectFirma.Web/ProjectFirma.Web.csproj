@@ -135,6 +135,9 @@
     <Compile Include="Models\Generated\GrantAllocationProjectCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationProjectCodePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantType.Binding.cs" />
+    <Compile Include="Models\Generated\GrantType.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\MeasurementUnitType.Binding.cs" />
     <Compile Include="Models\Generated\MeasurementUnitTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Notification.Binding.cs" />
