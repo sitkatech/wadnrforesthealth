@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls
             {
                 errors.Add(
                     new SitkaValidationResult<EditProjectGeospatialAreasViewModel, string>(
-                        $"Select at least one geospatial area or provide explanatory information in the Notes section if there are no applicable geospatial areas for this Project.",
+                        $"Select at least one priority area or provide explanatory information in the Notes section if there are no applicable priority areas for this Project.",
                         x => x.ProjectGeospatialAreaNotes));
             }
 
