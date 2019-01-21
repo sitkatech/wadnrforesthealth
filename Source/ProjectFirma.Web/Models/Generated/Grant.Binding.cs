@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected Grant()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantNotes = new HashSet<GrantNote>();
         }
 
         /// <summary>
@@ -92,13 +93,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any();
+            return GrantAllocations.Any() || GrantNotes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name};
 
 
         /// <summary>
@@ -116,6 +117,11 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in GrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantNotes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -141,6 +147,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual GrantType GrantType { get; set; }
         public virtual GrantStatus GrantStatus { get; set; }
         public virtual Organization Organization { get; set; }
