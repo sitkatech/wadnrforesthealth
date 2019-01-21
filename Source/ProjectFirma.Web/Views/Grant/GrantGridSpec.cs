@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add("Amount", x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Start Date", x => x.StartDate.HasValue ? x.StartDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("End Date", x => x.EndDate.HasValue ? x.EndDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Status", x => x.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Type", x => x.GrantTypeDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
