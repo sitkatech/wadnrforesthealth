@@ -25,12 +25,13 @@ namespace ProjectFirma.Web.Models
         protected Grant()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantNotes = new HashSet<GrantNote>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
@@ -46,24 +47,26 @@ namespace ProjectFirma.Web.Models
             this.GrantTypeID = grantTypeID;
             this.ShortName = shortName;
             this.GrantStatusID = grantStatusID;
+            this.OrganizationID = organizationID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(string grantName, int grantStatusID) : this()
+        public Grant(string grantName, int grantStatusID, int organizationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantName = grantName;
             this.GrantStatusID = grantStatusID;
+            this.OrganizationID = organizationID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Grant(string grantName, GrantStatus grantStatus) : this()
+        public Grant(string grantName, GrantStatus grantStatus, Organization organization) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -71,14 +74,17 @@ namespace ProjectFirma.Web.Models
             this.GrantStatusID = grantStatus.GrantStatusID;
             this.GrantStatus = grantStatus;
             grantStatus.Grants.Add(this);
+            this.OrganizationID = organization.OrganizationID;
+            this.Organization = organization;
+            organization.Grants.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Grant CreateNewBlank(GrantStatus grantStatus)
+        public static Grant CreateNewBlank(GrantStatus grantStatus, Organization organization)
         {
-            return new Grant(default(string), grantStatus);
+            return new Grant(default(string), grantStatus, organization);
         }
 
         /// <summary>
@@ -87,13 +93,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any();
+            return GrantAllocations.Any() || GrantNotes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name};
 
 
         /// <summary>
@@ -114,6 +120,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in GrantNotes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -131,12 +142,15 @@ namespace ProjectFirma.Web.Models
         public int? GrantTypeID { get; set; }
         public string ShortName { get; set; }
         public int GrantStatusID { get; set; }
+        public int OrganizationID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual GrantType GrantType { get; set; }
         public virtual GrantStatus GrantStatus { get; set; }
+        public virtual Organization Organization { get; set; }
 
         public static class FieldLengths
         {

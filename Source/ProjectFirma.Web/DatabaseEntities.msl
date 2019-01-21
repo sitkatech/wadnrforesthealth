@@ -231,6 +231,7 @@
           <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -257,6 +258,19 @@
           <ScalarProperty Name="GrantAllocationProjectCodeID" ColumnName="GrantAllocationProjectCodeID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantNote">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantNote">
+        <MappingFragment StoreEntitySet="GrantNote">
+          <ScalarProperty Name="GrantNoteID" ColumnName="GrantNoteID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantNoteText" ColumnName="GrantNoteText" />
+          <ScalarProperty Name="CreatedByPersonID" ColumnName="CreatedByPersonID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

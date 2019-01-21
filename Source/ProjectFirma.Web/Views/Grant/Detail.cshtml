@@ -82,7 +82,7 @@
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
-                                @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectUrl, string.Format("Edit {0}", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasEditProjectPermissions)*@
+                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
                                 Basics
                             </h3>
                         </div>
@@ -110,7 +110,7 @@
                                         <label for="Organization">Organization</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Organization">There is no Org concept yet</span>
+                                        <span id="Organization">@ViewDataTyped.Grant.Organization.OrganizationName</span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -166,6 +166,37 @@
                     </div>
                 </div>
             </div>
+            
+            
+            <div class="row">
+                <div class="col-sm-12" style="padding: 0px;">
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            <h3>
+                                @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectUrl, string.Format("Edit {0}", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasEditProjectPermissions)*@
+                                Notes
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="basicsLayout">
+
+                                @foreach (var grantNote in ViewDataTyped.Grant.GrantNotes)
+                                {
+                                    <div class="row">
+                                        <strong>@grantNote.CreatedDate @grantNote.CreatedByPerson.FullNameFirstLast</strong>
+                                    </div>
+                                    <div class="row">
+                                        @grantNote.GrantNoteText
+                                    </div>
+                                }
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -174,7 +205,10 @@
 
 
 
-            <script type="text/javascript">
+
+
+
+<script type="text/javascript">
                 jQuery(document)
                     .ready(function () {
                         jQuery("#home-tab").click();

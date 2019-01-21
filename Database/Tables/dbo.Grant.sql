@@ -17,6 +17,7 @@ CREATE TABLE [dbo].[Grant](
 	[GrantTypeID] [int] NULL,
 	[ShortName] [varchar](64) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[GrantStatusID] [int] NOT NULL,
+	[OrganizationID] [int] NOT NULL,
  CONSTRAINT [PK_Grant_GrantID] PRIMARY KEY CLUSTERED 
 (
 	[GrantID] ASC
@@ -33,3 +34,8 @@ ALTER TABLE [dbo].[Grant]  WITH CHECK ADD  CONSTRAINT [FK_Grant_GrantType_GrantT
 REFERENCES [dbo].[GrantType] ([GrantTypeID])
 GO
 ALTER TABLE [dbo].[Grant] CHECK CONSTRAINT [FK_Grant_GrantType_GrantTypeID]
+GO
+ALTER TABLE [dbo].[Grant]  WITH CHECK ADD  CONSTRAINT [FK_Grant_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
+REFERENCES [dbo].[Organization] ([OrganizationID])
+GO
+ALTER TABLE [dbo].[Grant] CHECK CONSTRAINT [FK_Grant_Organization_OrganizationID]

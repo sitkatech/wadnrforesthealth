@@ -34,6 +34,40 @@ namespace ProjectFirma.Web.Controllers
     public class GrantController : FirmaBaseController
     {
 
+
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult Edit(GrantPrimaryKey grantPrimaryKey)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            var viewModel = new EditGrantViewModel(grant);
+            return ViewEdit(viewModel, grant, EditGrantType.ExistingGrant);
+        }
+
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Edit(GrantPrimaryKey grantPrimaryKey, EditGrantViewModel viewModel)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, grant, EditGrantType.ExistingGrant);
+            }
+            viewModel.UpdateModel(grant, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEdit(EditGrantViewModel viewModel, Grant grant, EditGrantType editGrantType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            
+            var viewData = new EditGrantViewData(editGrantType,
+                organizations
+            );
+            return RazorPartialView<EditGrant, EditGrantViewData, EditGrantViewModel>(viewData, viewModel);
+        }
+
         [GrantsViewFeature]
         public ViewResult Detail(int grantID)
         {
