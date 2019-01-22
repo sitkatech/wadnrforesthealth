@@ -24,13 +24,14 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantAllocation()
         {
+            this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programManagerPersonID, int? programIndexID, int? federalFundCodeID, int? organizationID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programManagerPersonID, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -43,6 +44,7 @@ namespace ProjectFirma.Web.Models
             this.ProgramIndexID = programIndexID;
             this.FederalFundCodeID = federalFundCodeID;
             this.OrganizationID = organizationID;
+            this.RegionID = regionID;
         }
 
         /// <summary>
@@ -82,13 +84,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationProjectCodes.Any();
+            return GrantAllocationNotes.Any() || GrantAllocationProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(GrantAllocationProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationProjectCode).Name};
 
 
         /// <summary>
@@ -104,6 +106,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in GrantAllocationNotes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in GrantAllocationProjectCodes.ToList())
             {
@@ -123,9 +130,11 @@ namespace ProjectFirma.Web.Models
         public int? ProgramIndexID { get; set; }
         public int? FederalFundCodeID { get; set; }
         public int? OrganizationID { get; set; }
+        public int? RegionID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
+        public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual CostType CostType { get; set; }
@@ -133,6 +142,7 @@ namespace ProjectFirma.Web.Models
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }
+        public virtual Region Region { get; set; }
 
         public static class FieldLengths
         {

@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[ProgramIndexID] [int] NULL,
 	[FederalFundCodeID] [int] NULL,
 	[OrganizationID] [int] NULL,
+	[RegionID] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
@@ -50,3 +51,8 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID]
+GO
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Region_RegionID] FOREIGN KEY([RegionID])
+REFERENCES [dbo].[Region] ([RegionID])
+GO
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Region_RegionID]

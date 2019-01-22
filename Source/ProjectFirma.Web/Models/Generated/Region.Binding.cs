@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected Region()
         {
             this.FocusAreas = new HashSet<FocusArea>();
+            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectRegionUpdates = new HashSet<ProjectRegionUpdate>();
         }
@@ -65,13 +66,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FocusAreas.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
+            return FocusAreas.Any() || GrantAllocations.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(FocusArea).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -89,6 +90,11 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in FocusAreas.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -112,6 +118,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return RegionID; } set { RegionID = value; } }
 
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
+        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
 

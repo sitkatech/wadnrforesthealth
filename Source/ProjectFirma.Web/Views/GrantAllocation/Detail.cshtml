@@ -202,22 +202,26 @@
                             </h3>
                         </div>
                         <div class="panel-body">
-                            IN PROGRESS
-                            @*<div class="basicsLayout">
+                            <div class="basicsLayout">
                                 
-                                @foreach (var grantNote in ViewDataTyped.GrantAllocation.G)
+                                @foreach (var grantAllocationNote in ViewDataTyped.GrantAllocation.GrantAllocationNotes)
                                 {
                                     <div class="row">
-                                        <strong>@grantNote.CreatedDate @grantNote.CreatedByPerson.FullNameFirstLast</strong>
+                                        <strong>@grantAllocationNote.CreatedDate @grantAllocationNote.CreatedByPerson.FullNameFirstLast</strong>
                                     </div>
                                     <div class="row">
-                                        @grantNote.GrantNoteText
+                                        @if (grantAllocationNote.GrantAllocationNoteText != "")
+                                        {
+                                            @grantAllocationNote.GrantAllocationNoteText
+                                        }
+                                        else
+                                        {
+                                            <p>No notes available.</p>
+                                        }
                                     </div>
                                 }
 
-
-
-                            </div>*@
+                            </div>
                         </div>
                     </div>
                 </div>
