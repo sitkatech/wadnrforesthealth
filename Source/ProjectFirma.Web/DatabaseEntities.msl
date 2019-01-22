@@ -250,6 +250,20 @@
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationNote">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNote">
+        <MappingFragment StoreEntitySet="GrantAllocationNote">
+          <ScalarProperty Name="GrantAllocationNoteID" ColumnName="GrantAllocationNoteID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="GrantAllocationNoteText" ColumnName="GrantAllocationNoteText" />
+          <ScalarProperty Name="CreatedByPersonID" ColumnName="CreatedByPersonID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

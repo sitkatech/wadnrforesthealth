@@ -46,8 +46,8 @@ namespace ProjectFirma.Web.Views.Grant
             Add("CFDA Number", x => x.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Grant Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantTitle), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Amount", x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Start Date", x => x.StartDate.HasValue ? x.StartDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("End Date", x => x.EndDate.HasValue ? x.EndDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Start Date", x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("End Date", x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Status", x => x.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Type", x => x.GrantTypeDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }

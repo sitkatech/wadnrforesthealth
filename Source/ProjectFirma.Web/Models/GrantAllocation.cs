@@ -5,6 +5,9 @@ namespace ProjectFirma.Web.Models
 {
     public partial class GrantAllocation
     {
+        public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
+        public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
+
         public List<ProjectCode> ProjectCodes
         {
             get

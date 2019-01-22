@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FundingSource> FundingSources { get; set; }
         public virtual DbSet<GeospatialArea> GeospatialAreas { get; set; }
         public virtual DbSet<GeospatialAreaType> GeospatialAreaTypes { get; set; }
+        public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantNote> GrantNotes { get; set; }
@@ -239,6 +240,9 @@ namespace ProjectFirma.Web.Models
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
+
+                case "GrantAllocationNote":
+                    return GrantAllocationNotes.GetGrantAllocationNote(primaryKey);
 
                 case "GrantAllocationProjectCode":
                     return GrantAllocationProjectCodes.GetGrantAllocationProjectCode(primaryKey);

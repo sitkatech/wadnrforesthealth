@@ -23,6 +23,7 @@
     <EntitySet Name="GeospatialAreaType" EntityType="ProjectFirma.Web.Models.Store.GeospatialAreaType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
@@ -219,6 +220,22 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <AssociationSet Name="FK_GrantAllocation_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_ProgramIndex_ProgramIndexID">
       <End Role="ProgramIndex" EntitySet="ProgramIndex" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationNotes" EntitySet="GrantAllocationNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="GrantAllocationNotesWhereYouAreTheCreatedByPerson" EntitySet="GrantAllocationNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantAllocationNote" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -982,14 +999,27 @@ FROM [dbo].[vGeoServerGeospatialArea] AS [vGeoServerGeospatialArea]</DefiningQue
     <Property Name="GrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
-    <Property Name="StartDate" Type="datetime" Nullable="false" />
-    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
     <Property Name="AllocationAmount" Type="money" />
     <Property Name="CostTypeID" Type="int" />
     <Property Name="ProgramManagerPersonID" Type="int" />
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="FederalFundCodeID" Type="int" />
     <Property Name="OrganizationID" Type="int" />
+    <Property Name="RegionID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantAllocationNote">
+    <Key>
+      <PropertyRef Name="GrantAllocationNoteID" />
+    </Key>
+    <Property Name="GrantAllocationNoteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationNoteText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="GrantAllocationProjectCode">
     <Key>
@@ -2225,6 +2255,54 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerGeospatialArea' 
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="ProgramIndexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationNotes" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationNotes">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="GrantAllocationNotesWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationNotesWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
