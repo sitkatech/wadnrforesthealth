@@ -103,4 +103,14 @@ VALUES
 (279, N'CostType', 'CostType', 'Placeholder definition for CostType.'),
 (280, N'ProjectCode', 'Project Code', 'Placeholder definition for Project Code.'),
 (281, N'GrantAllocationProjectCode', 'Grant Allocation Project Code', 'Placeholder definition for Grant Allocation Project Code.'),
-(282, N'ProgramIndex', 'Program Index', 'Placeholder definition for Program Index.')
+(282, N'ProgramIndex', 'Program Index', 'Placeholder definition for Program Index.'),
+(283, N'GrantName', 'Name', N'<p>The name of a grant. Grant names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>'),
+(284, N'GrantShortName', 'Short Name', N'<p>The short hand name to reference a grant</p>'),
+(285, N'GrantStatus', 'Status', N'<p>The status of a grant. This can be Active, Pending, Planned, or Closeout</p>'),
+(286, N'GrantType', 'Type', N'<p>The type of grant. This can either be Stand Alone, or CPG. </p>'),
+(287, N'GrantNumber', 'Grant Number', N'<p>The grant number. </p>'),
+(288, N'CFDA', 'CFDA', N'<p>The CFDA code for a grant. </p>'),
+(289, N'TotalAwardAmount', 'Total Award Amount', N'<p>The total amount of money awarded by the grant. This may include the sum of all associated grant allocations. </p>'),
+(290, N'GrantStartDate', 'Start Date', N'<p>The start date of the grant. </p>'),
+(291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
+(292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>')

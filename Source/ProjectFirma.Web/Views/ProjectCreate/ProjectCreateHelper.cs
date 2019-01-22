@@ -45,5 +45,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 $"Add a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", 700, ProjectTypeSelectionContinueButtonText, "Cancel",
                 new List<string> {"btn", "btn-firma"}, null, null);
         }
+
     }
 }
