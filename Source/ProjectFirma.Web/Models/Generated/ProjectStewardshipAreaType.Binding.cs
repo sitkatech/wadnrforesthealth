@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Models
     {
         public static readonly ProjectStewardshipAreaTypeProjectStewardingOrganizations ProjectStewardingOrganizations = ProjectStewardshipAreaTypeProjectStewardingOrganizations.Instance;
         public static readonly ProjectStewardshipAreaTypeTaxonomyBranches TaxonomyBranches = ProjectStewardshipAreaTypeTaxonomyBranches.Instance;
-        public static readonly ProjectStewardshipAreaTypeGeospatialAreas GeospatialAreas = ProjectStewardshipAreaTypeGeospatialAreas.Instance;
+        public static readonly ProjectStewardshipAreaTypeRegions Regions = ProjectStewardshipAreaTypeRegions.Instance;
 
         public static readonly List<ProjectStewardshipAreaType> All;
         public static readonly ReadOnlyDictionary<int, ProjectStewardshipAreaType> AllLookupDictionary;
@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectStewardshipAreaType()
         {
-            All = new List<ProjectStewardshipAreaType> { ProjectStewardingOrganizations, TaxonomyBranches, GeospatialAreas };
+            All = new List<ProjectStewardshipAreaType> { ProjectStewardingOrganizations, TaxonomyBranches, Regions };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectStewardshipAreaType>(All.ToDictionary(x => x.ProjectStewardshipAreaTypeID));
         }
 
@@ -100,10 +100,10 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case ProjectStewardshipAreaTypeEnum.GeospatialAreas:
-                    return GeospatialAreas;
                 case ProjectStewardshipAreaTypeEnum.ProjectStewardingOrganizations:
                     return ProjectStewardingOrganizations;
+                case ProjectStewardshipAreaTypeEnum.Regions:
+                    return Regions;
                 case ProjectStewardshipAreaTypeEnum.TaxonomyBranches:
                     return TaxonomyBranches;
                 default:
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Models
     {
         ProjectStewardingOrganizations = 1,
         TaxonomyBranches = 2,
-        GeospatialAreas = 3
+        Regions = 3
     }
 
     public partial class ProjectStewardshipAreaTypeProjectStewardingOrganizations : ProjectStewardshipAreaType
@@ -131,9 +131,9 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectStewardshipAreaTypeTaxonomyBranches Instance = new ProjectStewardshipAreaTypeTaxonomyBranches(2, @"TaxonomyBranches", @"Taxonomy Branches");
     }
 
-    public partial class ProjectStewardshipAreaTypeGeospatialAreas : ProjectStewardshipAreaType
+    public partial class ProjectStewardshipAreaTypeRegions : ProjectStewardshipAreaType
     {
-        private ProjectStewardshipAreaTypeGeospatialAreas(int projectStewardshipAreaTypeID, string projectStewardshipAreaTypeName, string projectStewardshipAreaTypeDisplayName) : base(projectStewardshipAreaTypeID, projectStewardshipAreaTypeName, projectStewardshipAreaTypeDisplayName) {}
-        public static readonly ProjectStewardshipAreaTypeGeospatialAreas Instance = new ProjectStewardshipAreaTypeGeospatialAreas(3, @"GeospatialAreas", @"GeospatialAreas");
+        private ProjectStewardshipAreaTypeRegions(int projectStewardshipAreaTypeID, string projectStewardshipAreaTypeName, string projectStewardshipAreaTypeDisplayName) : base(projectStewardshipAreaTypeID, projectStewardshipAreaTypeName, projectStewardshipAreaTypeDisplayName) {}
+        public static readonly ProjectStewardshipAreaTypeRegions Instance = new ProjectStewardshipAreaTypeRegions(3, @"Regions", @"Regions");
     }
 }

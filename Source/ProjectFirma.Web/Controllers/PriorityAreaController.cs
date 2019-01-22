@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using GeoJSON.Net.Feature;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -34,6 +35,7 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
+
 
         [PriorityAreaViewFeature]
         public GridJsonNetJObjectResult<PriorityArea> IndexGridJsonData()

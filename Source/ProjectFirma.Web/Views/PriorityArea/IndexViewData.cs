@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.PriorityArea
         {
             PageTitle = "PriorityAreas";
             MapInitJson = mapInitJson;
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "PriorityArea", ObjectNamePlural = $"PriorityAreas", SaveFiltersInCookie = true};
+            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Priority Area", ObjectNamePlural = "Priority Areas", SaveFiltersInCookie = true};
             GridName = "priorityAreasGrid";
             GridDataUrl = SitkaRoute<PriorityAreaController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
         }

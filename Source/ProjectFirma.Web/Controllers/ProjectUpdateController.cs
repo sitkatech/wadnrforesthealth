@@ -755,14 +755,12 @@ namespace ProjectFirma.Web.Controllers
                 false) {DisablePopups = true};
             var locationSimpleValidationResult = projectUpdateBatch.ValidateProjectLocationSimple();
 
-            var geospatialAreas = projectUpdate.GetProjectGeospatialAreas().ToList();
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate,
                 $"project_{project.ProjectID}_EditMap", true);
 
             var mapPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.LocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationFormID(project);
-            var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName).ToList();            
-            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJsonForEdit, geospatialAreaTypes, null, mapPostUrl, mapFormID);
+            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJsonForEdit, FirmaWebConfiguration.GetWmsLayerNames(), null, mapPostUrl, mapFormID, FirmaWebConfiguration.GetMapServiceUrl());
             var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityArea>(), new List<Region>(), string.Empty, string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new LocationSimpleViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, locationSimpleValidationResult, updateStatus);
@@ -1429,8 +1427,6 @@ namespace ProjectFirma.Web.Controllers
             var allProjectPriorityAreas = HttpRequestStorage.DatabaseEntities.ProjectPriorityAreas.Local;
             HttpRequestStorage.DatabaseEntities.ProjectRegions.Load();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
-            HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreaTypeNotes.Load();
-            var allProjectGeospatialAreaTypeNotes = HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreaTypeNotes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
             var allProjectOrganizations = HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Local;
             HttpRequestStorage.DatabaseEntities.ProjectPeople.Load();

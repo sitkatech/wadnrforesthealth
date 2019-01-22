@@ -46,8 +46,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<FundingSource> FundingSources { get; set; }
-        public virtual DbSet<GeospatialArea> GeospatialAreas { get; set; }
-        public virtual DbSet<GeospatialAreaType> GeospatialAreaTypes { get; set; }
         public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantNote> GrantNotes { get; set; }
@@ -71,8 +69,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PerformanceMeasure> PerformanceMeasures { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
-        public virtual DbSet<PersonStewardGeospatialArea> PersonStewardGeospatialAreas { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
+        public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
         public virtual DbSet<PriorityArea> PriorityAreas { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
@@ -93,10 +91,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
         public virtual DbSet<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
         public virtual DbSet<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
-        public virtual DbSet<ProjectGeospatialArea> ProjectGeospatialAreas { get; set; }
-        public virtual DbSet<ProjectGeospatialAreaTypeNote> ProjectGeospatialAreaTypeNotes { get; set; }
-        public virtual DbSet<ProjectGeospatialAreaTypeNoteUpdate> ProjectGeospatialAreaTypeNoteUpdates { get; set; }
-        public virtual DbSet<ProjectGeospatialAreaUpdate> ProjectGeospatialAreaUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual DbSet<ProjectInternalNote> ProjectInternalNotes { get; set; }
@@ -132,7 +126,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
-        public virtual DbSet<vGeoServerGeospatialArea> vGeoServerGeospatialAreas { get; set; }
+        public virtual DbSet<vGeoServerPriorityArea> vGeoServerPriorityAreas { get; set; }
+        public virtual DbSet<vGeoServerRegion> vGeoServerRegions { get; set; }
 
         public object LoadType(Type type, int primaryKey)
         {
@@ -231,12 +226,6 @@ namespace ProjectFirma.Web.Models
 
                 case "FundingSource":
                     return FundingSources.GetFundingSource(primaryKey);
-
-                case "GeospatialArea":
-                    return GeospatialAreas.GetGeospatialArea(primaryKey);
-
-                case "GeospatialAreaType":
-                    return GeospatialAreaTypes.GetGeospatialAreaType(primaryKey);
 
                 case "GoogleChartType":
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -337,11 +326,11 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(performanceMeasureType, "PerformanceMeasureType", primaryKey);
                     return performanceMeasureType;
 
-                case "PersonStewardGeospatialArea":
-                    return PersonStewardGeospatialAreas.GetPersonStewardGeospatialArea(primaryKey);
-
                 case "PersonStewardOrganization":
                     return PersonStewardOrganizations.GetPersonStewardOrganization(primaryKey);
+
+                case "PersonStewardRegion":
+                    return PersonStewardRegions.GetPersonStewardRegion(primaryKey);
 
                 case "PersonStewardTaxonomyBranch":
                     return PersonStewardTaxonomyBranches.GetPersonStewardTaxonomyBranch(primaryKey);
@@ -432,18 +421,6 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectFundingSourceRequestUpdate":
                     return ProjectFundingSourceRequestUpdates.GetProjectFundingSourceRequestUpdate(primaryKey);
-
-                case "ProjectGeospatialArea":
-                    return ProjectGeospatialAreas.GetProjectGeospatialArea(primaryKey);
-
-                case "ProjectGeospatialAreaTypeNote":
-                    return ProjectGeospatialAreaTypeNotes.GetProjectGeospatialAreaTypeNote(primaryKey);
-
-                case "ProjectGeospatialAreaTypeNoteUpdate":
-                    return ProjectGeospatialAreaTypeNoteUpdates.GetProjectGeospatialAreaTypeNoteUpdate(primaryKey);
-
-                case "ProjectGeospatialAreaUpdate":
-                    return ProjectGeospatialAreaUpdates.GetProjectGeospatialAreaUpdate(primaryKey);
 
                 case "ProjectImage":
                     return ProjectImages.GetProjectImage(primaryKey);

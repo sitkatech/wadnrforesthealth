@@ -101,28 +101,28 @@ namespace ProjectFirma.Web.Views.Shared.UserStewardshipAreas
         }
        
 
-        public void UpdateModel(Person person, ObservableCollection<PersonStewardGeospatialArea> allPersonStewardGeospatialAreas)
+        public void UpdateModel(Person person, ObservableCollection<PersonStewardRegion> allPersonStewardRegions)
         {
             if (PersonStewardshipAreaSimples == null)
             {
                 PersonStewardshipAreaSimples = new List<PersonStewardshipAreaSimple>();
             }
 
-            var personStewardGeospatialAreasUpdated = PersonStewardshipAreaSimples.Select(x =>
+            var personStewardRegionsUpdated = PersonStewardshipAreaSimples.Select(x =>
             {
-                var personStewardGeospatialArea = new PersonStewardGeospatialArea(
+                var personStewardRegion = new PersonStewardRegion(
                     x.PersonStewardshipAreaID ?? ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue(), person.PersonID,
                     x.StewardshipAreaID.GetValueOrDefault()); // will never be null due to RequiredAttribute
-                return personStewardGeospatialArea;
+                return personStewardRegion;
             }).ToList();
 
-            person.PersonStewardGeospatialAreas.Merge(personStewardGeospatialAreasUpdated,
-                allPersonStewardGeospatialAreas,
-                (x, y) => x.PersonStewardGeospatialAreaID == y.PersonStewardGeospatialAreaID,
+            person.PersonStewardRegions.Merge(personStewardRegionsUpdated,
+                allPersonStewardRegions,
+                (x, y) => x.PersonStewardRegionID == y.PersonStewardRegionID,
                 (x, y) =>
                 {
                     x.PersonID = y.PersonID;
-                    x.GeospatialAreaID = y.GeospatialAreaID;
+                    x.RegionID = y.RegionID;
                 });
         }
     }

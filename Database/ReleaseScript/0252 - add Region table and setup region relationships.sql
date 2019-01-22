@@ -18,6 +18,13 @@ CREATE table dbo.ProjectRegionUpdate(
 	CONSTRAINT [AK_ProjectRegionUpdate_ProjectUpdateBatchID_RegionID] UNIQUE ([ProjectUpdateBatchID], [RegionID])
 )
 
+CREATE TABLE dbo.PersonStewardRegion(
+	PersonStewardRegionID int IDENTITY(1,1) NOT NULL CONSTRAINT PK_PersonStewardRegion_PersonStewardRegionID PRIMARY KEY,
+	PersonID int NOT NULL CONSTRAINT FK_PersonStewardRegion_Person_PersonID FOREIGN KEY REFERENCES dbo.Person (PersonID),
+	RegionID int NOT NULL CONSTRAINT FK_PersonStewardRegion_Region_RegionID FOREIGN KEY REFERENCES dbo.Region (RegionID),
+)
+
+
 alter table dbo.Project add NoRegionsExplanation varchar(4000);
 alter table dbo.ProjectUpdateBatch add NoRegionsExplanation varchar(4000);
 
@@ -53,10 +60,6 @@ delete pga from dbo.ProjectGeospatialArea as pga
 join dbo.GeospatialArea as b on pga.GeospatialAreaID = b.GeospatialAreaID
 where b.GeospatialAreaTypeID = @GeospatialAreaTypeID;
 
-delete psga from dbo.PersonStewardGeospatialArea as psga
-join dbo.GeospatialArea as b on psga.GeospatialAreaID = b.GeospatialAreaID
-where b.GeospatialAreaTypeID = @GeospatialAreaTypeID;
-
 update p
 set p.NoRegionsExplanation = pgatn.Notes
 from dbo.ProjectGeospatialAreaTypeNote pgatn
@@ -70,6 +73,17 @@ join dbo.ProjectUpdateBatch p on pgatn.ProjectUpdateBatchID = p.ProjectUpdateBat
 
 delete from dbo.ProjectGeospatialAreaTypeNote where GeospatialAreaTypeID = @GeospatialAreaTypeID;
 delete from dbo.ProjectGeospatialAreaTypeNoteUpdate where GeospatialAreaTypeID = @GeospatialAreaTypeID;
+
+
+insert into dbo.PersonStewardRegion(PersonID, RegionID)
+select PersonID, psga.GeospatialAreaID from dbo.PersonStewardGeospatialArea as psga
+join dbo.GeospatialArea as b on psga.GeospatialAreaID = b.GeospatialAreaID
+where b.GeospatialAreaTypeID = @GeospatialAreaTypeID;
+
+delete psga from dbo.PersonStewardGeospatialArea as psga
+join dbo.GeospatialArea as b on psga.GeospatialAreaID = b.GeospatialAreaID
+where b.GeospatialAreaTypeID = @GeospatialAreaTypeID;
+
 
 delete from dbo.GeospatialArea where GeospatialAreaTypeID = @GeospatialAreaTypeID;
 

@@ -53,9 +53,7 @@ namespace ProjectFirma.Web.Controllers
             var mapInitJson = new MapInitJson($"project_{project.ProjectID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) {AllowFullScreen = false, DisablePopups = true};
             var mapPostUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationFormID(project.ProjectID);
-            var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
-                .ToList();
-            var viewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, geospatialAreaTypes, null, mapPostUrl, mapFormID);
+            var viewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, FirmaWebConfiguration.GetWmsLayerNames(), null, mapPostUrl, mapFormID, FirmaWebConfiguration.GetMapServiceUrl());
             return RazorPartialView<ProjectLocationSimple, ProjectLocationSimpleViewData, ProjectLocationSimpleViewModel>(viewData, viewModel);
         }
 
@@ -274,10 +272,8 @@ namespace ProjectFirma.Web.Controllers
                 .Where(x => x != null)
                 .ToList();
 
-            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList().OrderBy(x => x.GeospatialAreaTypeName).ToList())
-            {
-                layerGeoJsons.Add(GeospatialArea.GetGeospatialAreaWmsLayerGeoJson(geospatialAreaType, "#90C3D4", 0.1m, LayerInitialVisibility.Hide));
-            }
+            layerGeoJsons.Add(PriorityArea.GetPriorityAreaWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
+            layerGeoJsons.Add(Region.GetRegionWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
             var boundingBox = BoundingBox.MakeBoundingBoxFromProject(project);
             var mapInitJson = new MapInitJson("EditProjectBoundingBoxMap", 10, layerGeoJsons, boundingBox)
             {

@@ -65,27 +65,27 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectStewardshipAreaTypeGeospatialAreas
+    public partial class ProjectStewardshipAreaTypeRegions
     {
         public override List<PersonStewardshipAreaSimple> GetPersonStewardshipAreaSimples(Person person)
         {
-            return GetPersonStewardGeospatialAreas(person).Select(x => new PersonStewardshipAreaSimple(x)).ToList();
+            return GetPersonStewardRegions(person).Select(x => new PersonStewardshipAreaSimple(x)).ToList();
         }
 
         public override bool CanStewardProject(Person person, Project project)
         {
-            var canStewardProjectsGeospatialAreasForProject = project.GetCanStewardProjectsGeospatialAreas().Select(x => x.GeospatialAreaID).ToList();
-            return GetPersonStewardGeospatialAreas(person).Any(x => canStewardProjectsGeospatialAreasForProject.Contains(x.GeospatialAreaID));
+            var canStewardProjectsRegionsForProject = project.GetCanStewardProjectsRegions().Select(x => x.RegionID).ToList();
+            return GetPersonStewardRegions(person).Any(x => canStewardProjectsRegionsForProject.Contains(x.RegionID));
         }
 
         public override List<HtmlString> GetProjectStewardshipAreaHtmlStringList(Person person)
         {
-            return GetPersonStewardGeospatialAreas(person).Select(x => x.GeospatialArea.GetDisplayNameAsUrl()).ToList();
+            return GetPersonStewardRegions(person).Select(x => x.Region.GetDisplayNameAsUrl()).ToList();
         }
 
-        private List<PersonStewardGeospatialArea> GetPersonStewardGeospatialAreas(Person person)
+        private List<PersonStewardRegion> GetPersonStewardRegions(Person person)
         {
-            return person.PersonStewardGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName).ToList();
+            return person.PersonStewardRegions.OrderBy(x => x.Region.RegionName).ToList();
         }
     }
 

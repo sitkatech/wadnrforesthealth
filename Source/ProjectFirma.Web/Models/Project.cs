@@ -84,9 +84,9 @@ namespace ProjectFirma.Web.Models
             return TaxonomyLeaf.TaxonomyBranch;
         }
 
-        public List<GeospatialArea> GetCanStewardProjectsGeospatialAreas()
+        public List<Region> GetCanStewardProjectsRegions()
         {
-            return ProjectGeospatialAreas.Select(x => x.GeospatialArea).ToList();
+            return ProjectRegions.Select(x => x.Region).ToList();
         }
 
         public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
@@ -298,17 +298,6 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityAreas.Any() || !string.IsNullOrWhiteSpace(NoPriorityAreasExplanation);
         }
 
-        public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
-        {
-            var projectGeospatialAreas = ProjectGeospatialAreas.Where(x =>
-                x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
-            return new HtmlString(projectGeospatialAreas.Any()
-                ? string.Join(", ",
-                    projectGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName)
-                        .Select(x => x.GeospatialArea.GetDisplayNameAsUrl()))
-                : ViewUtilities.NaString);
-        }
-
         public bool IsMyProject(Person person)
         {
             return !person.IsAnonymousUser && (IsPersonThePrimaryContact(person) ||
@@ -370,11 +359,6 @@ namespace ProjectFirma.Web.Models
         public DbGeometry GetDefaultBoundingBox()
         {
             return DefaultBoundingBox;
-        }
-
-        public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
-        {
-            return ProjectGeospatialAreas.Select(x => x.GeospatialArea);
         }
 
         public IEnumerable<Region> GetProjectRegions()

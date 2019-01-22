@@ -47,7 +47,6 @@ namespace ProjectFirma.Web.Views.Project
 
         public string EditProjectUrl { get; }
         public string EditProjectOrganizationsUrl { get; }
-        public List<GeospatialAreaType> GeospatialAreaTypes { get; }
         public string EditSimpleProjectLocationUrl { get; }
         public string EditDetailedProjectLocationUrl { get; }
         public string EditProjectRegionUrl { get; }

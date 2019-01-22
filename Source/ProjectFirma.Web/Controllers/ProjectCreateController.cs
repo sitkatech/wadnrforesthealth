@@ -131,7 +131,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static ProposalSectionsStatus GetProposalSectionsStatus(Project project)
         {
-            return new ProposalSectionsStatus(project, HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList());
+            return new ProposalSectionsStatus(project);
         }
 
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
@@ -607,9 +607,8 @@ namespace ProjectFirma.Web.Controllers
             
             var mapPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationSimpleFormID(project);
-            var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
-                .ToList();
-            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, geospatialAreaTypes, null, mapPostUrl, mapFormID);
+            var wmsLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
+            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, wmsLayerNames, null, mapPostUrl, mapFormID, FirmaWebConfiguration.GetMapServiceUrl());
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectLocationSimpleSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectLocationSimpleSectionComplete;

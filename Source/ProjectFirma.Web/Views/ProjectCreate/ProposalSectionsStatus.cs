@@ -19,13 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.ProjectPriorityArea;
 using ProjectFirma.Web.Views.ProjectRegion;
-using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
@@ -35,7 +32,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
-        public bool IsGeospatialAreaSectionComplete { get; set; }
         public bool IsClassificationsComplete { get; set; }
         public bool IsNotesSectionComplete { get; set; }
 
@@ -49,7 +45,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsRegionSectionComplete { get; set; }
         public bool IsPriorityAreaSectionComplete { get; set; }
 
-        public ProposalSectionsStatus(Models.Project project, List<GeospatialAreaType> geospatialAreaTypes)
+        public ProposalSectionsStatus(Models.Project project)
         {
             var basicsResults = new BasicsViewModel(project).GetValidationResults();
             IsBasicsSectionComplete = !basicsResults.Any();
@@ -58,32 +54,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsProjectLocationSimpleSectionComplete = !locationSimpleValidationResults.Any();
 
             IsProjectLocationDetailedSectionComplete = IsBasicsSectionComplete;
-
-            if (geospatialAreaTypes.Any())
-            {
-                var isGeospatialAreaSectionComplete = true;
-                foreach (var geospatialAreaType in geospatialAreaTypes)
-                {
-                    var geospatialAreaIDs = project.ProjectGeospatialAreas
-                        .Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)
-                        .Select(x => x.GeospatialAreaID).ToList();
-                    var editGeospatialAreaValidationResults = new EditProjectGeospatialAreasViewModel(geospatialAreaIDs,
-                            project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x =>
-                                x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)?.Notes)
-                        .GetValidationResults();
-                    if (editGeospatialAreaValidationResults.Any())
-                    {
-                        isGeospatialAreaSectionComplete = false;
-                        break;
-                    }
-                }
-
-                IsGeospatialAreaSectionComplete = isGeospatialAreaSectionComplete;
-            }
-            else
-            {
-                IsGeospatialAreaSectionComplete = true;
-            }
 
             var regionIDs = project.ProjectRegions
                 .Select(x => x.RegionID).ToList();
@@ -123,7 +93,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsClassificationsComplete = false;
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
-            IsGeospatialAreaSectionComplete = false;
             IsRegionSectionComplete = false;
             IsPriorityAreaSectionComplete = false;
             IsNotesSectionComplete = false;

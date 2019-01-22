@@ -104,11 +104,6 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.Project.GetDefaultBoundingBox();
         }
 
-        public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
-        {
-            return ProjectUpdateBatch.ProjectGeospatialAreaUpdates.Select(x => x.GeospatialArea);
-        }
-
         public IEnumerable<Region> GetProjectRegions()
         {
             return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.Region);

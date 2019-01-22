@@ -152,12 +152,8 @@ namespace ProjectFirma.Web.Views
             });
 
 
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<PriorityAreaController>(c => c.Index()), currentPerson, "Priority Areas", "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<RegionController>(c => c.Index()), currentPerson, "Regions", "Group2"));
-
-            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList())
-            {
-                programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GeospatialAreaController>(c => c.Index(geospatialAreaType)), currentPerson, $"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", "Group2"));
-            }
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FocusAreaController>(c => c.Index()), currentPerson, "Focus Areas", "Group2"));
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {

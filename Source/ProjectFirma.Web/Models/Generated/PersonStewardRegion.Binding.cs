@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProjectGeospatialArea]
+//  Source Table: [dbo].[PersonStewardRegion]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,13 +15,13 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    [Table("[dbo].[ProjectGeospatialArea]")]
-    public partial class ProjectGeospatialArea : IHavePrimaryKey, ICanDeleteFull
+    [Table("[dbo].[PersonStewardRegion]")]
+    public partial class PersonStewardRegion : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProjectGeospatialArea()
+        protected PersonStewardRegion()
         {
 
         }
@@ -29,46 +29,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGeospatialArea(int projectGeospatialAreaID, int projectID, int geospatialAreaID) : this()
+        public PersonStewardRegion(int personStewardRegionID, int personID, int regionID) : this()
         {
-            this.ProjectGeospatialAreaID = projectGeospatialAreaID;
-            this.ProjectID = projectID;
-            this.GeospatialAreaID = geospatialAreaID;
+            this.PersonStewardRegionID = personStewardRegionID;
+            this.PersonID = personID;
+            this.RegionID = regionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectGeospatialArea(int projectID, int geospatialAreaID) : this()
+        public PersonStewardRegion(int personID, int regionID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectGeospatialAreaID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.PersonStewardRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ProjectID = projectID;
-            this.GeospatialAreaID = geospatialAreaID;
+            this.PersonID = personID;
+            this.RegionID = regionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectGeospatialArea(Project project, GeospatialArea geospatialArea) : this()
+        public PersonStewardRegion(Person person, Region region) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectGeospatialAreaID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.ProjectID = project.ProjectID;
-            this.Project = project;
-            project.ProjectGeospatialAreas.Add(this);
-            this.GeospatialAreaID = geospatialArea.GeospatialAreaID;
-            this.GeospatialArea = geospatialArea;
-            geospatialArea.ProjectGeospatialAreas.Add(this);
+            this.PersonStewardRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.PersonID = person.PersonID;
+            this.Person = person;
+            person.PersonStewardRegions.Add(this);
+            this.RegionID = region.RegionID;
+            this.Region = region;
+            region.PersonStewardRegions.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectGeospatialArea CreateNewBlank(Project project, GeospatialArea geospatialArea)
+        public static PersonStewardRegion CreateNewBlank(Person person, Region region)
         {
-            return new ProjectGeospatialArea(project, geospatialArea);
+            return new PersonStewardRegion(person, region);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectGeospatialArea).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PersonStewardRegion).Name};
 
 
         /// <summary>
@@ -92,18 +92,18 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.ProjectGeospatialAreas.Remove(this);
+            dbContext.PersonStewardRegions.Remove(this);
         }
 
         [Key]
-        public int ProjectGeospatialAreaID { get; set; }
-        public int ProjectID { get; set; }
-        public int GeospatialAreaID { get; set; }
+        public int PersonStewardRegionID { get; set; }
+        public int PersonID { get; set; }
+        public int RegionID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectGeospatialAreaID; } set { ProjectGeospatialAreaID = value; } }
+        public int PrimaryKey { get { return PersonStewardRegionID; } set { PersonStewardRegionID = value; } }
 
-        public virtual Project Project { get; set; }
-        public virtual GeospatialArea GeospatialArea { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual Region Region { get; set; }
 
         public static class FieldLengths
         {

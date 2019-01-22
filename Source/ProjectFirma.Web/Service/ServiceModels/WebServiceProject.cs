@@ -54,10 +54,6 @@ namespace ProjectFirma.Web.Service.ServiceModels
             Datum = "WGS84";
             
             ProjectState = project.ProjectLocationStateProvince;
-            ProjectGeospatialArea = project.ProjectGeospatialAreas.Any()
-                ? string.Join(", ", project.ProjectGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName).Select(x => x.GeospatialArea.GeospatialAreaName))
-                : ViewUtilities.NaString;
-
             ProjectDetailUrl = project.GetDetailUrl();
             ProjectFactSheetUrl = project.GetFactSheetUrl();
         }
@@ -77,9 +73,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
         [DataMember] public double? Latitude { get; set; }
         [DataMember] public double? Longitude { get; set; }
         [DataMember] public string Datum { get; set; }
-        [DataMember] public string ProjectRegion { get; set; }
         [DataMember] public string ProjectState { get; set; }
-        [DataMember] public string ProjectGeospatialArea { get; set; }
 
         [DataMember] public string ProjectDetailUrl { get; set; }
         [DataMember] public string ProjectFactSheetUrl { get; set; }
@@ -132,9 +126,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
             Add("Latitude", x => x.Latitude, 0);
             Add("Longitude", x => x.Longitude, 0);
             Add("Datum", x => x.Datum, 0);
-            Add("ProjectRegion", x => x.ProjectRegion, 0);
             Add("ProjectState", x => x.ProjectState, 0);
-            Add("ProjectGeospatialArea", x => x.ProjectGeospatialArea, 0);
             Add("ProjectDetailUrl", x => x.ProjectDetailUrl, 0);
             Add("ProjectFactSheetUrl", x => x.ProjectFactSheetUrl, 0);
         }

@@ -58,8 +58,8 @@ namespace ProjectFirma.Web.Views.PriorityArea
             BasicProjectInfoGridName = "priorityAreaProjectListGrid";
             BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false)
             {
-                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this PriorityArea",
-                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this PriorityArea",
+                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this Priority Area",
+                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this Priority Area",
                 SaveFiltersInCookie = true
             };
           

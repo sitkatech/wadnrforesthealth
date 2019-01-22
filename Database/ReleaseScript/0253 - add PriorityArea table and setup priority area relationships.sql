@@ -73,4 +73,8 @@ delete from dbo.GeospatialArea where GeospatialAreaTypeID = @GeospatialAreaTypeI
 
 delete from dbo.GeospatialAreaType where GeospatialAreaTypeID = @GeospatialAreaTypeID;
 
+drop table dbo.ProjectGeospatialArea, dbo.ProjectGeospatialAreaTypeNote, dbo.ProjectGeospatialAreaUpdate, dbo.ProjectGeospatialAreaTypeNoteUpdate;
+drop table dbo.PersonStewardGeospatialArea;
+drop table dbo.GeospatialArea, dbo.GeospatialAreaType;
+
 

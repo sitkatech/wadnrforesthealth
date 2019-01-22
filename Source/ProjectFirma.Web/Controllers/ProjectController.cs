@@ -304,7 +304,6 @@ namespace ProjectFirma.Web.Controllers
         {
             new ProjectViewFeature().DemandPermission(CurrentPerson, project);
             var mapDivID = $"project_{project.ProjectID}_Map";
-            var geospatialAreas = project.GetProjectGeospatialAreas().ToList();
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
             var chartName = $"ProjectFactSheet{project.ProjectID}PieChart";
             var expenditureGooglePieChartSlices = project.GetExpenditureGooglePieChartSlices();
@@ -327,7 +326,6 @@ namespace ProjectFirma.Web.Controllers
         {
             new ProjectViewFeature().DemandPermission(CurrentPerson, project);
             var mapDivID = $"project_{project.ProjectID}_Map";
-            var geospatialAreas = project.GetProjectGeospatialAreas().ToList();
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
             var chartName = $"ProjectFundingRequestSheet{project.ProjectID}PieChart";
             var fundingSourceRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
@@ -376,7 +374,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectFundingSourceRequests).Include(x => x.ProjectFundingSourceExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectGeospatialAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectFundingSourceRequests).Include(x => x.ProjectFundingSourceExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -497,14 +495,6 @@ namespace ProjectFirma.Web.Controllers
             var projectFundingSourceExpenditures = (projects.SelectMany(p => p.ProjectFundingSourceExpenditures)).ToList();
             var wsProjectFundingSourceExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectFundingSourceExpenditureSpec, projectFundingSourceExpenditures);
             workSheets.Add(wsProjectFundingSourceExpenditures);
-
-            var projectGeospatialAreaSpec = new ProjectGeospatialAreaExcelSpec();
-            var projectGeospatialAreas = projects.SelectMany(p => p.ProjectGeospatialAreas).ToList();
-            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
-            {
-                var wsProjectGeospatialAreas = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {geospatialAreaType.GeospatialAreaTypeNamePluralized}", projectGeospatialAreaSpec, projectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList());
-                workSheets.Add(wsProjectGeospatialAreas);
-            }
 
             MultiTenantHelpers.GetClassificationSystems().ForEach(c =>
             {

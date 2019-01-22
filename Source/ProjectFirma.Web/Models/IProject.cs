@@ -41,7 +41,6 @@ namespace ProjectFirma.Web.Models
         IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         IEnumerable<IProjectLocation> GetProjectLocationDetails();
         DbGeometry GetDefaultBoundingBox();
-        IEnumerable<GeospatialArea> GetProjectGeospatialAreas();
         IEnumerable<Region> GetProjectRegions();
         IEnumerable<PriorityArea> GetProjectPriorityAreas();
         GeoJSON.Net.Feature.FeatureCollection DetailedLocationToGeoJsonFeatureCollection();

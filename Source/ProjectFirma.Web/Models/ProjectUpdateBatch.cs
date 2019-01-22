@@ -124,8 +124,11 @@ namespace ProjectFirma.Web.Models
             // project locations - detailed
             ProjectLocationUpdate.CreateFromProject(projectUpdateBatch);
 
-            // project geospatialArea
-            ProjectGeospatialAreaUpdate.CreateFromProject(projectUpdateBatch);
+            // project priority area
+            ProjectPriorityAreaUpdate.CreateFromProject(projectUpdateBatch);
+
+            // project region
+            ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
 
             // photos
             ProjectImageUpdate.CreateFromProject(projectUpdateBatch);
