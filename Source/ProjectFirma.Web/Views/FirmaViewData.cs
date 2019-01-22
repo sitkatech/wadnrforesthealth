@@ -133,6 +133,9 @@ namespace ProjectFirma.Web.Views
             return aboutMenu;
         }
 
+        /// <summary>
+        /// Grants Top-Level menu
+        /// </summary>
         private static LtInfoMenuItem BuildGrantMenuItem(Person currentPerson)
         {
             var grantsMenu = new LtInfoMenuItem("Grants");
@@ -150,7 +153,6 @@ namespace ProjectFirma.Web.Views
             {
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramInfoController>(c => c.ClassificationSystem(x.ClassificationSystemID)), currentPerson, x.ClassificationSystemNamePluralized, "Group1"));
             });
-
 
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<RegionController>(c => c.Index()), currentPerson, "Regions", "Group2"));
 
