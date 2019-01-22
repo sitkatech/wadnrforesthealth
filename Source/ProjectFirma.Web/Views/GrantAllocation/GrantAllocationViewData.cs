@@ -18,32 +18,24 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public abstract class GrantViewData : FirmaViewData
+    public abstract class GrantAllocationViewData : FirmaViewData
     {
-        public Models.Grant Grant { get; }
-        public string EditGrantUrl { get; set; }
+        public Models.GrantAllocation GrantAllocation { get; }
+        public string EditGrantAllocationUrl { get; set; }
         public bool UserHasEditGrantPermissions { get; set; }
 
-        public string BackToGrantsText { get; set; }
-
-        public string GrantsListUrl { get; set; }
-
-        protected GrantViewData(Person currentPerson, Models.Grant grant) : base(currentPerson, null)
+        protected GrantAllocationViewData(Person currentPerson, Models.GrantAllocation grantAllocation) : base(currentPerson, null)
         {
-            Grant = grant;
-            HtmlPageTitle = grant.GrantTitle;
-            EntityName = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
-            EditGrantUrl = grant.GetEditUrl();
+            GrantAllocation = grantAllocation;
+            HtmlPageTitle = grantAllocation.ProjectName;
+            EntityName = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
+            // TODO
+            //EditGrantAllocationUrl = grantAllocation.GetEditUrl();
             UserHasEditGrantPermissions = true;
-            BackToGrantsText = "Back to all Grants";
-            GrantsListUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
         }
     }
 }

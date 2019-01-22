@@ -28,19 +28,15 @@ using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class EditGrantViewData : FirmaUserControlViewData
+    public class EditGrantAllocationViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> Organizations { get; }
-        public IEnumerable<SelectListItem> GrantTypes { get; }
-        public IEnumerable<SelectListItem> GrantStatuses { get; }
 
         public EditGrantType EditGrantType { get; set; }
 
-        public EditGrantViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes)
+        public EditGrantAllocationViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
-            GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
             EditGrantType = editGrantType;
         }
     }

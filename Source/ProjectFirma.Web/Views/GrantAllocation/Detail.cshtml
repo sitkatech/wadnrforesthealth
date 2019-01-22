@@ -19,16 +19,28 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common
-@using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls
+@using ProjectFirma.Web.Views.Shared.ProjectControls
+@using ProjectFirma.Web.Views.Shared.ProjectLocationControls
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using ProjectFirma.Web.Views.Shared.TextControls
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
-@inherits ProjectFirma.Web.Views.Grant.Detail
+@using MoreLinq
+@using ProjectFirma.Web.Views.ProjectFunding
+@using ProjectFirma.Web.Views.Shared.ProjectDocument
+@using ProjectFirma.Web.Views.Shared.ProjectOrganization
+@using ProjectFirma.Web.Views.Shared.ProjectPerson
+@inherits ProjectFirma.Web.Views.GrantAllocation.Detail
 
 @section JavascriptAndStylesContent
 {
-    
-
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <link href="~/Content/bootstrap-tags/bootstrap-tags.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
@@ -38,9 +50,9 @@
 <style type="text/css">
 
     .basicsLayout .row {
-        margin-left: 0;
-        margin-right: 0;
-    }
+         margin-left: 0;
+         margin-right: 0;
+     }
 
     .basicsLayout .row div {
         padding-left: 0;
@@ -55,10 +67,6 @@
      
 </style>
 
-<div>
-    <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.GrantsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToGrantsText</a>
-</div>
-
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Overview</a>
@@ -68,13 +76,13 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="col-sm-12 col-md-9 col-lg-10">
-            <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() Overview</h2>
+            <h2 class="sectionHeader">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Overview</h2>
             <div class="row">
                 <div class="col-sm-12" style="padding: 0px;">
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantUrl, string.Format("Edit {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
+                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantPermissions)
                                 Basics
                             </h3>
                         </div>
@@ -82,75 +90,99 @@
                             <div class="basicsLayout">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantName)
+                                        <label for="Name">Name</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Name">@ViewDataTyped.Grant.GrantName</span>
+                                        <span id="Name">@ViewDataTyped.GrantAllocation.ProjectName</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantShortName)
+                                        <label for="ShortName">Short Name</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="ShortName">@ViewDataTyped.Grant.ShortName</span>
+                                        <span id="ShortName"></span>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.Organization)
+                                        <label for="Status">Status</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Organization">@ViewDataTyped.Grant.Organization.OrganizationName</span>
+                                        <span id="Status">@ViewDataTyped.GrantAllocation.Grant.GrantStatus.GrantStatusName</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
+                                        <label for="Type">Type</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Status">@ViewDataTyped.Grant.GrantStatus.GrantStatusName</span>
+                                        <span id="Type">@ViewDataTyped.GrantAllocation.Grant.GrantTypeDisplay</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantType)
+                                        <label for="GrantNumber">Grant Number</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Type">@ViewDataTyped.Grant.GrantTypeDisplay</span>
+                                        <span id="GrantNumber">@ViewDataTyped.GrantAllocation.Grant.GrantNumber</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
+                                        <label for="ProgramIndex">Program Index (PI)</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="GrantNumber">@ViewDataTyped.Grant.GrantNumber</span>
+                                        <span id="ProgramIndex">@ViewDataTyped.GrantAllocation.ProgramIndex.ProgramIndexAbbrev</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.TotalAwardAmount)
+                                        <label for="CFDA">CFDA</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="TotalAwardAmount">@ViewDataTyped.Grant.AwardedFunds.ToStringCurrency()</span>
+                                        <span id="CFDA">@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
+                                        <label for="ProjectCode">Project Code</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="StartDate">@ViewDataTyped.Grant.StartDateDisplay</span>
+                                        <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodesString</span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
+                                        <label for="AllocationAmount">Allocation Amount</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="EndDate">@ViewDataTyped.Grant.EndDateDisplay</span>
+                                        <span id="AllocationAmount">@ViewDataTyped.GrantAllocation.AllocationAmount.ToStringCurrency()</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="StartDate">Start Date</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="StartDate">@ViewDataTyped.GrantAllocation.StartDateDisplay</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="EndDate">End Date</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="EndDate">@ViewDataTyped.GrantAllocation.EndDateDisplay</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="FederalFundCode">Federal Fund Code</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="FederalFundCode">@ViewDataTyped.GrantAllocation.FederalFundCode.FederalFundCodeAbbrev</span>
                                     </div>
                                 </div>
                             </div>
@@ -165,24 +197,29 @@
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewGrantNoteUrl, string.Format("Add new note for {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
+                                @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectUrl, string.Format("Edit {0}", ViewDataTyped.Project.DisplayName), 950, ViewDataTyped.UserHasEditProjectPermissions)*@
                                 Notes
                             </h3>
                         </div>
                         <div class="panel-body">
                             <div class="basicsLayout">
-
-                                @foreach (var grantNote in ViewDataTyped.Grant.GrantNotes.OrderByDescending(n => n.CreatedDate))
+                                
+                                @foreach (var grantAllocationNote in ViewDataTyped.GrantAllocation.GrantAllocationNotes)
                                 {
                                     <div class="row">
-                                        <strong>@grantNote.CreatedDate @grantNote.CreatedByPerson.FullNameFirstLast</strong>
+                                        <strong>@grantAllocationNote.CreatedDate @grantAllocationNote.CreatedByPerson.FullNameFirstLast</strong>
                                     </div>
                                     <div class="row">
-                                        @grantNote.GrantNoteText
+                                        @if (grantAllocationNote.GrantAllocationNoteText != "")
+                                        {
+                                            @grantAllocationNote.GrantAllocationNoteText
+                                        }
+                                        else
+                                        {
+                                            <p>No notes available.</p>
+                                        }
                                     </div>
                                 }
-
-
 
                             </div>
                         </div>
@@ -205,5 +242,5 @@
                     .ready(function () {
                         jQuery("#home-tab").click();
                     });
-</script>
+            </script>
 

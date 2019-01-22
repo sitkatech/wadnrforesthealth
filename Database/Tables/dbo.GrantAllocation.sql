@@ -6,14 +6,15 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[GrantAllocationID] [int] IDENTITY(1,1) NOT NULL,
 	[GrantID] [int] NOT NULL,
 	[ProjectName] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
 	[AllocationAmount] [money] NULL,
 	[CostTypeID] [int] NULL,
 	[ProgramManagerPersonID] [int] NULL,
 	[ProgramIndexID] [int] NULL,
 	[FederalFundCodeID] [int] NULL,
 	[OrganizationID] [int] NULL,
+	[RegionID] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
@@ -50,3 +51,8 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID]
+GO
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Region_RegionID] FOREIGN KEY([RegionID])
+REFERENCES [dbo].[Region] ([RegionID])
+GO
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Region_RegionID]

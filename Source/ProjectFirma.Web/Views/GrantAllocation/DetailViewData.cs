@@ -24,6 +24,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Views.Shared;
@@ -37,17 +38,15 @@ using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using ProjectFirma.Web.Views.Shared.TextControls;
 using ProjectFirma.Web.Views.TreatmentActivity;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class DetailViewData : GrantViewData
+    public class DetailViewData : GrantAllocationViewData
     {
-        public string NewGrantNoteUrl { get; set; }
-        public DetailViewData(Person currentPerson, Models.Grant grant)
-            : base(currentPerson, grant)
+        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation)
+            : base(currentPerson, grantAllocation)
         {
-            PageTitle = grant.GrantTitle.ToEllipsifiedStringClean(110);
-            BreadCrumbTitle = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} Detail";
-            NewGrantNoteUrl = grant.GetNewNoteUrl();
+            PageTitle = grantAllocation.ProjectName.ToEllipsifiedStringClean(110);
+            BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
         }
     }
 }

@@ -25,6 +25,7 @@ using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Grant
 {
@@ -37,17 +38,23 @@ namespace ProjectFirma.Web.Views.Grant
             ObjectNameSingular = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
+            var userHasDeletePermissions = new GrantDeleteFeature().HasPermissionByPerson(currentPerson);
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
             // hidden column for grant number for use by JavaScript
             Add(GrantNumberHiddenColumnName, x => x.GrantNumber, 0);
+            if (userHasDeletePermissions)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true), 30, DhtmlxGridColumnFilterType.None);
+            }
+            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
             Add("Grant Number", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantNumber), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("CFDA Number", x => x.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Grant Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantTitle), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Amount", x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Start Date", x => x.StartDate.HasValue ? x.StartDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("End Date", x => x.EndDate.HasValue ? x.EndDate.Value.ToShortDateString() : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Start Date", x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("End Date", x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Status", x => x.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Type", x => x.GrantTypeDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
