@@ -1,3 +1,0 @@
-Line 1 (LF)
-Line 2 (LF)
-Line 3 (LF)
