@@ -305,6 +305,11 @@ namespace ProjectFirma.Web.Models
             return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
         }
 
+        public bool IsProjectRegionValid()
+        {
+            return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
+        }
+
         public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
         {
             var projectGeospatialAreas = ProjectGeospatialAreas.Where(x =>
@@ -382,6 +387,11 @@ namespace ProjectFirma.Web.Models
         public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
         {
             return ProjectGeospatialAreas.Select(x => x.GeospatialArea);
+        }
+
+        public IEnumerable<Region> GetProjectRegions()
+        {
+            return ProjectRegions.Select(x => x.Region);
         }
 
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()

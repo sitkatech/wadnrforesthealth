@@ -42,7 +42,12 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Application}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
 
-        public BasicsViewData(Person currentPerson,
+        public IEnumerable<SelectListItem> FocusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas
+            .OrderBy(x => x.FocusAreaName)
+            .ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture),
+                y => y.FocusAreaName);
+
+		public BasicsViewData(Person currentPerson,
             IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs, bool showProjectStageDropDown, string instructionsPageUrl,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, instructionsPageUrl)

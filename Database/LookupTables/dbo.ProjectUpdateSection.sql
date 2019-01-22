@@ -12,4 +12,5 @@ values
 (10, 'ExternalLinks', 'External Links', 125, 0, 5),
 (11, 'NotesAndDocuments', 'Documents and Notes', 120, 0, 5),
 (12, 'Organizations', 'Organizations', 25, 1, 1),
-(13, 'Contacts', 'Contacts', 26, 1, 1)
+(13, 'Contacts', 'Contacts', 26, 1, 1),
+(14, 'Regions', 'Regions', 50, 1, 2)

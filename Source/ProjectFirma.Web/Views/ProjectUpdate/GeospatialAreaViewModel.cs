@@ -30,9 +30,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class GeospatialAreaViewModel : EditProjectGeospatialAreasViewModel
     {
-        [DisplayName("Review Comments")]
-        [StringLength(ProjectUpdateBatch.FieldLengths.GeospatialAreaComment)]
-        public string Comments { get; set; }
+        //[DisplayName("Review Comments")]
+        //[StringLength(ProjectUpdateBatch.FieldLengths.GeospatialAreaComment)]
+        //public string Comments { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -42,11 +42,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public GeospatialAreaViewModel(List<int> geospatialAreaIDs,
-            string geospatialAreaNotes,
-            string comments)
+            string geospatialAreaNotes)
             : base(geospatialAreaIDs, geospatialAreaNotes)
         {
-            Comments = comments;
+            //Comments = comments;
         }
 
         public void UpdateModelBatch(ProjectUpdateBatch projectUpdateBatch, List<ProjectGeospatialAreaUpdate> currentProjectUpdateGeospatialAreas, ObservableCollection<ProjectGeospatialAreaUpdate> allProjectUpdateGeospatialAreas)

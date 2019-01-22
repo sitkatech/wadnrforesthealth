@@ -29,6 +29,7 @@ CREATE TABLE [dbo].[ProjectUpdateBatch](
 	[OrganizationsDiffLog] [varchar](1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[NoExpendituresToReportExplanation] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ContactsComment] [varchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[NoRegionsExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_ProjectUpdateBatch_ProjectUpdateBatchID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateBatchID] ASC

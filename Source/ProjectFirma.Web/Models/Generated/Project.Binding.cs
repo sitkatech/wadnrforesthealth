@@ -43,6 +43,7 @@ namespace ProjectFirma.Web.Models
             this.ProjectNotes = new HashSet<ProjectNote>();
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectPeople = new HashSet<ProjectPerson>();
+            this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectTags = new HashSet<ProjectTag>();
             this.ProjectUpdateBatches = new HashSet<ProjectUpdateBatch>();
             this.TreatmentActivities = new HashSet<TreatmentActivity>();
@@ -51,7 +52,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
@@ -78,6 +79,7 @@ namespace ProjectFirma.Web.Models
             this.DefaultBoundingBox = defaultBoundingBox;
             this.NoExpendituresToReportExplanation = noExpendituresToReportExplanation;
             this.FocusAreaID = focusAreaID;
+            this.NoRegionsExplanation = noRegionsExplanation;
         }
 
         /// <summary>
@@ -129,13 +131,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceRequests.Any() || ProjectGeospatialAreas.Any() || ProjectGeospatialAreaTypeNotes.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || TreatmentActivities.Any();
+            return NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceRequests.Any() || ProjectGeospatialAreas.Any() || ProjectGeospatialAreaTypeNotes.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectGeospatialArea).Name, typeof(ProjectGeospatialAreaTypeNote).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectGeospatialArea).Name, typeof(ProjectGeospatialAreaTypeNote).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -247,6 +249,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in ProjectRegions.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectTags.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -289,6 +296,7 @@ namespace ProjectFirma.Web.Models
         public DbGeometry DefaultBoundingBox { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
         public int? FocusAreaID { get; set; }
+        public string NoRegionsExplanation { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -311,6 +319,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectNote> ProjectNotes { get; set; }
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectPerson> ProjectPeople { get; set; }
+        public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
         public virtual ICollection<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
@@ -330,6 +339,7 @@ namespace ProjectFirma.Web.Models
             public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int ProjectLocationNotes = 4000;
             public const int PerformanceMeasureNotes = 500;
+            public const int NoRegionsExplanation = 4000;
         }
     }
 }

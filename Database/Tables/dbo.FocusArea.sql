@@ -7,6 +7,7 @@ CREATE TABLE [dbo].[FocusArea](
 	[FocusAreaName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FocusAreaStatusID] [int] NOT NULL,
 	[FocusAreaLocation] [geometry] NULL,
+	[RegionID] [int] NOT NULL,
  CONSTRAINT [PK_FocusArea_FocusAreaID] PRIMARY KEY CLUSTERED 
 (
 	[FocusAreaID] ASC
@@ -22,3 +23,8 @@ ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_FocusAre
 REFERENCES [dbo].[FocusAreaStatus] ([FocusAreaStatusID])
 GO
 ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_FocusAreaStatus_FocusAreaStatusID]
+GO
+ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_Region_RegionID] FOREIGN KEY([RegionID])
+REFERENCES [dbo].[Region] ([RegionID])
+GO
+ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_Region_RegionID]
