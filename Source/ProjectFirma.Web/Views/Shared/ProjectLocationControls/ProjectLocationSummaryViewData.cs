@@ -30,27 +30,28 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
     {
         public readonly string ProjectLocationNotes;
         public readonly ProjectLocationSummaryMapInitJson ProjectLocationSummaryMapInitJson;
-        public readonly List<Models.GeospatialArea> GeospatialAreas;
+        public readonly List<Models.PriorityArea> PriorityAreas;
         public readonly List<Models.Region> Regions;
         public readonly string NoRegionsExplanation;
         public readonly bool HasLocationNotes;
         public readonly bool HasLocationInformation;
-        public Dictionary<int, string> DictionaryGeoNotes { get; }
 
 
-        public ProjectLocationSummaryViewData(IProject project, ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson, Dictionary<int, string> dictionaryGeoNotes, List<GeospatialAreaType> geospatialAreaTypes, List<Models.GeospatialArea> geospatialAreas, List<Models.Region> regions, string noRegionsExplanation)
+        public ProjectLocationSummaryViewData(IProject project,
+            ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson,
+            List<Models.PriorityArea> priorityAreas, List<Models.Region> regions, string noRegionsExplanation,
+            string noPriorityAreasExplanation)
         {
             ProjectLocationNotes = project.ProjectLocationNotes;
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
-            GeospatialAreas = geospatialAreas;
+            PriorityAreas = priorityAreas;
             Regions = regions;
             NoRegionsExplanation = noRegionsExplanation;
             HasLocationNotes = !string.IsNullOrWhiteSpace(project.ProjectLocationNotes);
             HasLocationInformation = project.ProjectLocationSimpleType != ProjectLocationSimpleType.None;
-            DictionaryGeoNotes = dictionaryGeoNotes;
-            GeospatialAreaTypes = geospatialAreaTypes;
+            NoPriorityAreasExplanation = noPriorityAreasExplanation;
         }
 
-        public List<GeospatialAreaType> GeospatialAreaTypes { get; }
+        public string NoPriorityAreasExplanation { get; }
     }
 }

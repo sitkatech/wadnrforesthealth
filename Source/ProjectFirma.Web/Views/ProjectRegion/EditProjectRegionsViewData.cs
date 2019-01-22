@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Views.ProjectRegion
             TypeAheadInputId = "regionSearch";
             RegionNameByID = regionsInViewModel.ToDictionary(x => x.RegionID, x => x.RegionName);
             RegionMapServiceLayerName = "WADNRForestHealth:Region";//todo: move region layer name and service url to web config
-            MapServiceUrl = "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wmshttps://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms";
+            MapServiceUrl = "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms";
         }
     }
 }

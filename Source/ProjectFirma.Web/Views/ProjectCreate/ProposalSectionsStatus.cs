@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.ProjectPriorityArea;
 using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
 
@@ -46,6 +47,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsProjectOrganizationsSectionComplete { get; set; }
         public bool IsProjectContactsSectionComplete { get; set; }
         public bool IsRegionSectionComplete { get; set; }
+        public bool IsPriorityAreaSectionComplete { get; set; }
 
         public ProposalSectionsStatus(Models.Project project, List<GeospatialAreaType> geospatialAreaTypes)
         {
@@ -90,6 +92,13 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             IsRegionSectionComplete = !editProjectRegionsValidationResults.Any();
 
+            var priorityAreaIDs = project.ProjectPriorityAreas
+                .Select(x => x.PriorityAreaID).ToList();
+            var editProjectPriorityAreasValidationResults = new EditProjectPriorityAreasViewModel(priorityAreaIDs,
+                    project.NoPriorityAreasExplanation).GetValidationResults();
+
+            IsPriorityAreaSectionComplete = !editProjectPriorityAreasValidationResults.Any();
+
             var performanceMeasureValidationResults =
                 new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
             IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
@@ -116,6 +125,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsProjectLocationDetailedSectionComplete = false;
             IsGeospatialAreaSectionComplete = false;
             IsRegionSectionComplete = false;
+            IsPriorityAreaSectionComplete = false;
             IsNotesSectionComplete = false;
         }
     }

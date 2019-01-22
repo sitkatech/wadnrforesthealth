@@ -34,4 +34,6 @@ values
 (54, 'FactSheetCustomText', 'Fact Sheet Custom Text', 2),
 (55, 'FocusAreasList', 'Focus Areas List', 1),
 (56, 'FullGrantList', 'Full Grant List', 1),
-(57, 'FullGrantAllocationList', 'Full Grant Allocation List', 1)
+(57, 'FullGrantAllocationList', 'Full Grant Allocation List', 1),
+(58, 'RegionsList', 'Regions List', 1),
+(59, 'PriorityAreasList', 'Priority Areas List', 1)

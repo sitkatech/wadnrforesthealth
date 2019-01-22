@@ -47,6 +47,7 @@
     <EntitySet Name="PersonStewardGeospatialArea" EntityType="ProjectFirma.Web.Models.PersonStewardGeospatialArea" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.PersonStewardOrganization" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
+    <EntitySet Name="PriorityArea" EntityType="ProjectFirma.Web.Models.PriorityArea" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.ProgramIndex" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Project" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.ProjectClassification" />
@@ -83,6 +84,8 @@
     <EntitySet Name="ProjectOrganizationUpdate" EntityType="ProjectFirma.Web.Models.ProjectOrganizationUpdate" />
     <EntitySet Name="ProjectPerson" EntityType="ProjectFirma.Web.Models.ProjectPerson" />
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.ProjectPersonUpdate" />
+    <EntitySet Name="ProjectPriorityArea" EntityType="ProjectFirma.Web.Models.ProjectPriorityArea" />
+    <EntitySet Name="ProjectPriorityAreaUpdate" EntityType="ProjectFirma.Web.Models.ProjectPriorityAreaUpdate" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.ProjectRegion" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.ProjectRegionUpdate" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.ProjectTag" />
@@ -547,6 +550,14 @@
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectPriorityArea_PriorityArea_PriorityAreaID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityArea_PriorityArea_PriorityAreaID">
+      <End Role="PriorityArea" EntitySet="PriorityArea" />
+      <End Role="ProjectPriorityAreas" EntitySet="ProjectPriorityArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID">
+      <End Role="PriorityArea" EntitySet="PriorityArea" />
+      <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_Project_TaxonomyLeaf_TaxonomyLeafID" Association="ProjectFirma.Web.Models.FK_Project_TaxonomyLeaf_TaxonomyLeafID">
       <End Role="TaxonomyLeaf" EntitySet="TaxonomyLeaf" />
       <End Role="Projects" EntitySet="Project" />
@@ -614,6 +625,10 @@
     <AssociationSet Name="FK_ProjectPerson_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectPerson_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectPeople" EntitySet="ProjectPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectPriorityArea_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityArea_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectPriorityAreas" EntitySet="ProjectPriorityArea" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -714,6 +729,10 @@
     <AssociationSet Name="FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPersonUpdates" EntitySet="ProjectPersonUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+      <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
+      <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_Region_RegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
@@ -1418,6 +1437,16 @@
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="PersonStewardTaxonomyBranches" ToRole="Person" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" FromRole="PersonStewardTaxonomyBranches" ToRole="TaxonomyBranch" />
   </EntityType>
+  <EntityType Name="PriorityArea">
+    <Key>
+      <PropertyRef Name="PriorityAreaID" />
+    </Key>
+    <Property Name="PriorityAreaID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityAreaName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PriorityAreaLocation" Type="Geometry" />
+    <NavigationProperty Name="ProjectPriorityAreas" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityArea_PriorityArea_PriorityAreaID" FromRole="PriorityArea" ToRole="ProjectPriorityAreas" />
+    <NavigationProperty Name="ProjectPriorityAreaUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID" FromRole="PriorityArea" ToRole="ProjectPriorityAreaUpdates" />
+  </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
       <PropertyRef Name="ProgramIndexID" />
@@ -1456,6 +1485,7 @@
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />
@@ -1480,6 +1510,7 @@
     <NavigationProperty Name="ProjectNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectNote_Project_ProjectID" FromRole="Project" ToRole="ProjectNotes" />
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_Project_ProjectID" FromRole="Project" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectPeople" Relationship="ProjectFirma.Web.Models.FK_ProjectPerson_Project_ProjectID" FromRole="Project" ToRole="ProjectPeople" />
+    <NavigationProperty Name="ProjectPriorityAreas" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityArea_Project_ProjectID" FromRole="Project" ToRole="ProjectPriorityAreas" />
     <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="Project" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
@@ -1884,6 +1915,26 @@
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_Person_PersonID" FromRole="ProjectPersonUpdates" ToRole="Person" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectPersonUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
+  <EntityType Name="ProjectPriorityArea">
+    <Key>
+      <PropertyRef Name="ProjectPriorityAreaID" />
+    </Key>
+    <Property Name="ProjectPriorityAreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityAreaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PriorityArea" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityArea_PriorityArea_PriorityAreaID" FromRole="ProjectPriorityAreas" ToRole="PriorityArea" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityArea_Project_ProjectID" FromRole="ProjectPriorityAreas" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectPriorityAreaUpdate">
+    <Key>
+      <PropertyRef Name="ProjectPriorityAreaUpdateID" />
+    </Key>
+    <Property Name="ProjectPriorityAreaUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
+    <Property Name="PriorityAreaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PriorityArea" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID" FromRole="ProjectPriorityAreaUpdates" ToRole="PriorityArea" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectPriorityAreaUpdates" ToRole="ProjectUpdateBatch" />
+  </EntityType>
   <EntityType Name="ProjectRegion">
     <Key>
       <PropertyRef Name="ProjectRegionID" />
@@ -1966,6 +2017,7 @@
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ContactsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
@@ -1983,6 +2035,7 @@
     <NavigationProperty Name="ProjectNoteUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectNoteUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectNoteUpdates" />
     <NavigationProperty Name="ProjectOrganizationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganizationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectOrganizationUpdates" />
     <NavigationProperty Name="ProjectPersonUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPersonUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectPersonUpdates" />
+    <NavigationProperty Name="ProjectPriorityAreaUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectPriorityAreaUpdates" />
     <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectRegionUpdates" />
     <NavigationProperty Name="ProjectUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdates" />
     <NavigationProperty Name="ProjectUpdateHistories" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectUpdateHistories" />
@@ -3537,6 +3590,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectPriorityArea_PriorityArea_PriorityAreaID">
+    <End Role="PriorityArea" Type="ProjectFirma.Web.Models.PriorityArea" Multiplicity="1" />
+    <End Role="ProjectPriorityAreas" Type="ProjectFirma.Web.Models.ProjectPriorityArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityArea">
+        <PropertyRef Name="PriorityAreaID" />
+      </Principal>
+      <Dependent Role="ProjectPriorityAreas">
+        <PropertyRef Name="PriorityAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID">
+    <End Role="PriorityArea" Type="ProjectFirma.Web.Models.PriorityArea" Multiplicity="1" />
+    <End Role="ProjectPriorityAreaUpdates" Type="ProjectFirma.Web.Models.ProjectPriorityAreaUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriorityArea">
+        <PropertyRef Name="PriorityAreaID" />
+      </Principal>
+      <Dependent Role="ProjectPriorityAreaUpdates">
+        <PropertyRef Name="PriorityAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Project_TaxonomyLeaf_TaxonomyLeafID">
     <End Role="TaxonomyLeaf" Type="ProjectFirma.Web.Models.TaxonomyLeaf" Multiplicity="1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
@@ -3737,6 +3814,18 @@
         <PropertyRef Name="ProjectID" />
       </Principal>
       <Dependent Role="ProjectPeople">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectPriorityArea_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
+    <End Role="ProjectPriorityAreas" Type="ProjectFirma.Web.Models.ProjectPriorityArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="ProjectPriorityAreas">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
@@ -4037,6 +4126,18 @@
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
       <Dependent Role="ProjectPersonUpdates">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
+    <End Role="ProjectPriorityAreaUpdates" Type="ProjectFirma.Web.Models.ProjectPriorityAreaUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectUpdateBatch">
+        <PropertyRef Name="ProjectUpdateBatchID" />
+      </Principal>
+      <Dependent Role="ProjectPriorityAreaUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>

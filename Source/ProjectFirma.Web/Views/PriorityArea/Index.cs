@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="LocationSimple.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="Index.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,11 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using LtInfo.Common.Mvc;
-
-namespace ProjectFirma.Web.Views.ProjectUpdate
+namespace ProjectFirma.Web.Views.PriorityArea
 {
-    public abstract class GeospatialArea : TypedWebViewPage<GeospatialAreaViewData, GeospatialAreaViewModel>
+    public abstract class Index : LtInfo.Common.Mvc.TypedWebViewPage<IndexViewData>
     {
     }
 }

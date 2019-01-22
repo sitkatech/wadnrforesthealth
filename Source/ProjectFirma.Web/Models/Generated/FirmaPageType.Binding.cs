@@ -50,6 +50,8 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFocusAreasList FocusAreasList = FirmaPageTypeFocusAreasList.Instance;
         public static readonly FirmaPageTypeFullGrantList FullGrantList = FirmaPageTypeFullGrantList.Instance;
         public static readonly FirmaPageTypeFullGrantAllocationList FullGrantAllocationList = FirmaPageTypeFullGrantAllocationList.Instance;
+        public static readonly FirmaPageTypeRegionsList RegionsList = FirmaPageTypeRegionsList.Instance;
+        public static readonly FirmaPageTypePriorityAreasList PriorityAreasList = FirmaPageTypePriorityAreasList.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -59,7 +61,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -175,6 +177,8 @@ namespace ProjectFirma.Web.Models
                     return PendingProjects;
                 case FirmaPageTypeEnum.PerformanceMeasuresList:
                     return PerformanceMeasuresList;
+                case FirmaPageTypeEnum.PriorityAreasList:
+                    return PriorityAreasList;
                 case FirmaPageTypeEnum.ProjectMap:
                     return ProjectMap;
                 case FirmaPageTypeEnum.ProjectStewardOrganizationList:
@@ -183,6 +187,8 @@ namespace ProjectFirma.Web.Models
                     return Proposals;
                 case FirmaPageTypeEnum.ProposeProjectInstructions:
                     return ProposeProjectInstructions;
+                case FirmaPageTypeEnum.RegionsList:
+                    return RegionsList;
                 case FirmaPageTypeEnum.TagList:
                     return TagList;
                 case FirmaPageTypeEnum.Taxonomy:
@@ -234,7 +240,9 @@ namespace ProjectFirma.Web.Models
         FactSheetCustomText = 54,
         FocusAreasList = 55,
         FullGrantList = 56,
-        FullGrantAllocationList = 57
+        FullGrantAllocationList = 57,
+        RegionsList = 58,
+        PriorityAreasList = 59
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -427,5 +435,17 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeFullGrantAllocationList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeFullGrantAllocationList Instance = new FirmaPageTypeFullGrantAllocationList(57, @"FullGrantAllocationList", @"Full Grant Allocation List", 1);
+    }
+
+    public partial class FirmaPageTypeRegionsList : FirmaPageType
+    {
+        private FirmaPageTypeRegionsList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeRegionsList Instance = new FirmaPageTypeRegionsList(58, @"RegionsList", @"Regions List", 1);
+    }
+
+    public partial class FirmaPageTypePriorityAreasList : FirmaPageType
+    {
+        private FirmaPageTypePriorityAreasList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypePriorityAreasList Instance = new FirmaPageTypePriorityAreasList(59, @"PriorityAreasList", @"Priority Areas List", 1);
     }
 }

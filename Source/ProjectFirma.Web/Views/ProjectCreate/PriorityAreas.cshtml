@@ -1,5 +1,5 @@
 ﻿@*-----------------------------------------------------------------------
-<copyright file="LocationSimple.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="PriorityAreas.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,10 +18,11 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*@
-@using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.HtmlHelperExtensions
-@using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls
-@inherits ProjectFirma.Web.Views.ProjectCreate.GeospatialArea
+@using ProjectFirma.Web.Views.ProjectPriorityArea
+@using ProjectFirma.Web.Views.Shared
+
+@inherits ProjectFirma.Web.Views.ProjectCreate.PriorityAreas
 
 @section JavascriptAndStylesContent
 {
@@ -30,7 +31,7 @@ Source code is available upon request via <support@sitkatech.com>.
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 }
 
-@{ Html.RenderRazorSitkaPartial<EditProjectGeospatialAreas, EditProjectGeospatialAreasViewData, EditProjectGeospatialAreasViewModel>(ViewDataTyped.EditProjectGeospatialAreasViewData, Model); }
+@{ Html.RenderRazorSitkaPartial<EditProjectPriorityAreas, EditProjectPriorityAreasViewData, EditProjectPriorityAreasViewModel>(ViewDataTyped.EditProjectPriorityAreasViewData, Model); }
 
 <div style="margin: 5px 0;">
 </div>
@@ -44,10 +45,10 @@ Source code is available upon request via <support@sitkatech.com>.
 @*This is intentionally down here because the document ready needs to be after the EditProjectLocation document ready*@
 <script type="text/javascript">
     // <![CDATA[
-    jQuery(document).ready(function () { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectGeospatialAreasViewData.EditProjectGeospatialAreasFormID", ".submitProject"); });
+    jQuery(document).ready(function () { HookupCheckIfFormIsDirty("#@ViewDataTyped.EditProjectPriorityAreasViewData.EditProjectPriorityAreasFormID", ".submitProject"); });
 
     function saveForm(autoAdvance) {
-        var form = jQuery("#@ViewDataTyped.EditProjectGeospatialAreasViewData.EditProjectGeospatialAreasFormID");
+        var form = jQuery("#@ViewDataTyped.EditProjectPriorityAreasViewData.EditProjectPriorityAreasFormID");
         // Do not submit if the form
         // does not pass client side validation
 

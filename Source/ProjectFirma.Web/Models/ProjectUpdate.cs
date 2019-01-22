@@ -114,6 +114,11 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.Region);
         }
 
+        public IEnumerable<PriorityArea> GetProjectPriorityAreas()
+        {
+            return ProjectUpdateBatch.ProjectPriorityAreaUpdates.Select(x => x.PriorityArea);
+        }
+
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
         {
             return ProjectUpdateBatch.ProjectLocationUpdates.ToGeoJsonFeatureCollection();

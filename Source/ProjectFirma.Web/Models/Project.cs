@@ -288,26 +288,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public GeospatialAreaValidationResult ValidateProjectGeospatialArea(GeospatialAreaType geospatialAreaType)
-        {
-            var projectGeospatialAreaTypeNoteUpdate =
-                ProjectGeospatialAreaTypeNotes.SingleOrDefault(x =>
-                    x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
-            var incomplete =
-                ProjectGeospatialAreas.All(x =>
-                    x.GeospatialArea.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID) &&
-                projectGeospatialAreaTypeNoteUpdate == null;
-            return new GeospatialAreaValidationResult(incomplete, geospatialAreaType);
-        }
-
-        public bool IsProjectGeospatialAreaValid(GeospatialAreaType geospatialAreaType)
-        {
-            return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
-        }
-
         public bool IsProjectRegionValid()
         {
             return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
+        }
+
+        public bool IsProjectPriorityAreaValid()
+        {
+            return ProjectPriorityAreas.Any() || !string.IsNullOrWhiteSpace(NoPriorityAreasExplanation);
         }
 
         public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
@@ -392,6 +380,10 @@ namespace ProjectFirma.Web.Models
         public IEnumerable<Region> GetProjectRegions()
         {
             return ProjectRegions.Select(x => x.Region);
+        }
+        public IEnumerable<PriorityArea> GetProjectPriorityAreas()
+        {
+            return ProjectPriorityAreas.Select(x => x.PriorityArea);
         }
 
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()

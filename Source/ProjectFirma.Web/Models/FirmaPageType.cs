@@ -187,4 +187,14 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
     }
+
+    public partial class FirmaPageTypePriorityAreasList
+    {
+        public override string GetViewUrl() => SitkaRoute<PriorityAreaController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeRegionsList
+    {
+        public override string GetViewUrl() => SitkaRoute<RegionController>.BuildUrlFromExpression(c => c.Index());
+    }
 }

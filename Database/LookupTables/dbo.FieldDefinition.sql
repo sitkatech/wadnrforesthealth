@@ -103,4 +103,5 @@ VALUES
 (279, N'CostType', 'CostType', 'Placeholder definition for CostType.'),
 (280, N'ProjectCode', 'Project Code', 'Placeholder definition for Project Code.'),
 (281, N'GrantAllocationProjectCode', 'Grant Allocation Project Code', 'Placeholder definition for Grant Allocation Project Code.'),
-(282, N'ProgramIndex', 'Program Index', 'Placeholder definition for Program Index.')
+(282, N'ProgramIndex', 'Program Index', 'Placeholder definition for Program Index.'),
+(284, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area')
