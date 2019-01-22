@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[FederalFundCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FederalFundCode]")]
     public partial class FederalFundCode : IHavePrimaryKey, ICanDeleteFull
     {

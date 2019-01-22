@@ -80,10 +80,6 @@ namespace ProjectFirma.Web.Views.PerformanceMeasure
             {
                 Add(reportedValueColumnName, a => a.ReportedValue, 150, DhtmlxGridColumnFormatType.Decimal);
             }
-            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
-            {
-                Add($"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", a => a.Project.GetProjectGeospatialAreaNamesAsHyperlinks(geospatialAreaType), 350, DhtmlxGridColumnFilterType.Html);
-            }
         }
     }
 }

@@ -42,7 +42,6 @@ namespace ProjectFirma.Web.Controllers
         [RegionViewFeature]
         public ViewResult Index()
         {
-
             var layerGeoJsons = new List<LayerGeoJson>();
             layerGeoJsons = new List<LayerGeoJson>
             {

@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectCustomAttribute] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectCustomAttribute]")]
     public partial class ProjectCustomAttribute : IHavePrimaryKey, ICanDeleteFull
     {

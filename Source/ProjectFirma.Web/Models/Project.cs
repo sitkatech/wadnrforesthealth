@@ -84,9 +84,9 @@ namespace ProjectFirma.Web.Models
             return TaxonomyLeaf.TaxonomyBranch;
         }
 
-        public List<GeospatialArea> GetCanStewardProjectsGeospatialAreas()
+        public List<Region> GetCanStewardProjectsRegions()
         {
-            return ProjectGeospatialAreas.Select(x => x.GeospatialArea).ToList();
+            return ProjectRegions.Select(x => x.Region).ToList();
         }
 
         public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
@@ -288,37 +288,14 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public GeospatialAreaValidationResult ValidateProjectGeospatialArea(GeospatialAreaType geospatialAreaType)
-        {
-            var projectGeospatialAreaTypeNoteUpdate =
-                ProjectGeospatialAreaTypeNotes.SingleOrDefault(x =>
-                    x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
-            var incomplete =
-                ProjectGeospatialAreas.All(x =>
-                    x.GeospatialArea.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID) &&
-                projectGeospatialAreaTypeNoteUpdate == null;
-            return new GeospatialAreaValidationResult(incomplete, geospatialAreaType);
-        }
-
-        public bool IsProjectGeospatialAreaValid(GeospatialAreaType geospatialAreaType)
-        {
-            return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
-        }
-
         public bool IsProjectRegionValid()
         {
             return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
         }
 
-        public HtmlString GetProjectGeospatialAreaNamesAsHyperlinks(GeospatialAreaType geospatialAreaType)
+        public bool IsProjectPriorityAreaValid()
         {
-            var projectGeospatialAreas = ProjectGeospatialAreas.Where(x =>
-                x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
-            return new HtmlString(projectGeospatialAreas.Any()
-                ? string.Join(", ",
-                    projectGeospatialAreas.OrderBy(x => x.GeospatialArea.GeospatialAreaName)
-                        .Select(x => x.GeospatialArea.GetDisplayNameAsUrl()))
-                : ViewUtilities.NaString);
+            return ProjectPriorityAreas.Any() || !string.IsNullOrWhiteSpace(NoPriorityAreasExplanation);
         }
 
         public bool IsMyProject(Person person)
@@ -384,14 +361,13 @@ namespace ProjectFirma.Web.Models
             return DefaultBoundingBox;
         }
 
-        public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
-        {
-            return ProjectGeospatialAreas.Select(x => x.GeospatialArea);
-        }
-
         public IEnumerable<Region> GetProjectRegions()
         {
             return ProjectRegions.Select(x => x.Region);
+        }
+        public IEnumerable<PriorityArea> GetProjectPriorityAreas()
+        {
+            return ProjectPriorityAreas.Select(x => x.PriorityArea);
         }
 
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()

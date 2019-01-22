@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[Region] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Region]")]
     public partial class Region : IHavePrimaryKey, ICanDeleteFull
     {
@@ -26,6 +25,7 @@ namespace ProjectFirma.Web.Models
         {
             this.FocusAreas = new HashSet<FocusArea>();
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
             this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectRegionUpdates = new HashSet<ProjectRegionUpdate>();
         }
@@ -66,13 +66,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FocusAreas.Any() || GrantAllocations.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
+            return FocusAreas.Any() || GrantAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -99,6 +99,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in PersonStewardRegions.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectRegions.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -119,6 +124,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
 

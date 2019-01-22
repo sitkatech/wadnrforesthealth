@@ -44,9 +44,9 @@ namespace ProjectFirma.Web.Views.Shared.UserStewardshipAreas
             ViewDataForAngular = new EditViewDataForAngular(allTaxonomyBranches);
             Standalone = standalone;
         }
-        public EditUserStewardshipAreasViewData(Person currentPerson, List<Models.GeospatialArea> allGeospatialAreas, bool standalone) : base(currentPerson)
+        public EditUserStewardshipAreasViewData(Person currentPerson, List<Models.Region> allRegions, bool standalone) : base(currentPerson)
         {
-            ViewDataForAngular = new EditViewDataForAngular(allGeospatialAreas);
+            ViewDataForAngular = new EditViewDataForAngular(allRegions);
             Standalone = standalone;
         }
 
@@ -63,9 +63,9 @@ namespace ProjectFirma.Web.Views.Shared.UserStewardshipAreas
             {
                 AllStewardshipAreas = allTaxonomyBranches.OrderBy(x => x.DisplayName).Select(x => new StewardshipAreaSimple(x)).ToList();
             }
-            public EditViewDataForAngular(List<Models.GeospatialArea> allGeospatialAreas)
+            public EditViewDataForAngular(List<Models.Region> allRegions)
             {
-                AllStewardshipAreas = allGeospatialAreas.OrderBy(x => x.DisplayName).Select(x => new StewardshipAreaSimple(x)).ToList();
+                AllStewardshipAreas = allRegions.OrderBy(x => x.DisplayName).Select(x => new StewardshipAreaSimple(x)).ToList();
             }
         }
     }

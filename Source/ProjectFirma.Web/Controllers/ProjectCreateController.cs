@@ -22,10 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Spatial;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
@@ -41,14 +38,13 @@ using LtInfo.Common.DbSpatial;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using LtInfo.Common.MvcResults;
-using Newtonsoft.Json;
 using ProjectFirma.Web.Views.Project;
+using ProjectFirma.Web.Views.ProjectPriorityArea;
 using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
-using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using ProjectFirma.Web.Views.Shared.SortOrder;
 using Basics = ProjectFirma.Web.Views.ProjectCreate.Basics;
@@ -73,8 +69,6 @@ using PerformanceMeasures = ProjectFirma.Web.Views.ProjectCreate.PerformanceMeas
 using PerformanceMeasuresViewData = ProjectFirma.Web.Views.ProjectCreate.PerformanceMeasuresViewData;
 using PerformanceMeasuresViewModel = ProjectFirma.Web.Views.ProjectCreate.PerformanceMeasuresViewModel;
 using Photos = ProjectFirma.Web.Views.ProjectCreate.Photos;
-using GeospatialAreaViewData = ProjectFirma.Web.Views.ProjectCreate.GeospatialAreaViewData;
-using GeospatialAreaViewModel = ProjectFirma.Web.Views.ProjectCreate.GeospatialAreaViewModel;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -137,7 +131,7 @@ namespace ProjectFirma.Web.Controllers
 
         private static ProposalSectionsStatus GetProposalSectionsStatus(Project project)
         {
-            return new ProposalSectionsStatus(project, HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList());
+            return new ProposalSectionsStatus(project);
         }
 
         [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
@@ -613,9 +607,8 @@ namespace ProjectFirma.Web.Controllers
             
             var mapPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationSimpleFormID(project);
-            var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
-                .ToList();
-            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, geospatialAreaTypes, null, mapPostUrl, mapFormID);
+            var wmsLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
+            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, wmsLayerNames, null, mapPostUrl, mapFormID, FirmaWebConfiguration.GetMapServiceUrl());
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectLocationSimpleSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectLocationSimpleSectionComplete;
@@ -807,68 +800,6 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProjectCreateFeature]
-        public ViewResult EditGeospatialArea(ProjectPrimaryKey projectPrimaryKey, GeospatialAreaTypePrimaryKey geospatialAreaTypePrimaryKey)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var geospatialAreaType = geospatialAreaTypePrimaryKey.EntityObject;
-            var geospatialAreaIDs = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).Select(x => x.GeospatialAreaID).ToList();
-            var geospatialAreaNotes = project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)?.Notes;
-            var viewModel = new GeospatialAreaViewModel(geospatialAreaIDs, geospatialAreaNotes);
-            return ViewEditGeospatialArea(project, viewModel, geospatialAreaType);
-        }
-
-        private ViewResult ViewEditGeospatialArea(Project project, GeospatialAreaViewModel viewModel, GeospatialAreaType geospatialAreaType)
-        {
-            var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
-            var layers = MapInitJson.GetGeospatialAreaMapLayersForGeospatialAreaType(geospatialAreaType, LayerInitialVisibility.Show);
-            layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
-            var mapInitJson = new MapInitJson("projectGeospatialAreaMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
-            var geospatialAreaIDs = viewModel.GeospatialAreaIDs ?? new List<int>();
-            var geospatialAreasInViewModel = HttpRequestStorage.DatabaseEntities.GeospatialAreas.Where(x => geospatialAreaIDs.Contains(x.GeospatialAreaID)).ToList();
-            var editProjectGeospatialAreasPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditGeospatialArea(project, geospatialAreaType, null));
-            var editProjectGeospatialAreasFormId = GenerateEditProjectGeospatialAreaFormID(project);
-
-            var editProjectLocationViewData = new EditProjectGeospatialAreasViewData(CurrentPerson, mapInitJson, geospatialAreasInViewModel, editProjectGeospatialAreasPostUrl, editProjectGeospatialAreasFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail, geospatialAreaType);
-
-            var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            proposalSectionsStatus.IsGeospatialAreaSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsGeospatialAreaSectionComplete;
-            var viewData = new GeospatialAreaViewData(CurrentPerson, project, geospatialAreaType, proposalSectionsStatus, editProjectLocationViewData);
-
-            return RazorView<Views.ProjectCreate.GeospatialArea, GeospatialAreaViewData, GeospatialAreaViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGeospatialArea(ProjectPrimaryKey projectPrimaryKey, GeospatialAreaTypePrimaryKey geospatialAreaTypePrimaryKey, GeospatialAreaViewModel viewModel)
-        {
-            var project = projectPrimaryKey.EntityObject;
-            var geospatialAreaType = geospatialAreaTypePrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditGeospatialArea(project, viewModel, geospatialAreaType);
-            }
-            var currentProjectGeospatialAreas = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).ToList();
-            var allProjectGeospatialAreas = HttpRequestStorage.DatabaseEntities.ProjectGeospatialAreas.Local;
-            viewModel.UpdateModel(project, currentProjectGeospatialAreas, allProjectGeospatialAreas);
-            var projectGeospatialAreaTypeNote = project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
-            if (!string.IsNullOrWhiteSpace(viewModel.ProjectGeospatialAreaNotes))
-            {
-                if (projectGeospatialAreaTypeNote == null)
-                {
-                    projectGeospatialAreaTypeNote = new ProjectGeospatialAreaTypeNote(project, geospatialAreaType, viewModel.ProjectGeospatialAreaNotes);
-                }
-                projectGeospatialAreaTypeNote.Notes = viewModel.ProjectGeospatialAreaNotes;
-            }
-            else
-            {
-                projectGeospatialAreaTypeNote?.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            }
-
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {geospatialAreaType.GeospatialAreaTypeNamePluralized} successfully saved.");
-            return GoToNextSection(viewModel, project, geospatialAreaType.GeospatialAreaTypeNamePluralized);
-        }[HttpGet]
-        [ProjectCreateFeature]
         public ViewResult Regions(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
@@ -918,9 +849,65 @@ namespace ProjectFirma.Web.Controllers
             return GoToNextSection(viewModel, project, "Regions");
         }
 
+        [HttpGet]
+        [ProjectCreateFeature]
+        public ViewResult PriorityAreas(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var priorityAreaIDs = project.ProjectPriorityAreas.Select(x => x.PriorityAreaID).ToList();
+            var noPriorityAreasExplanation = project.NoPriorityAreasExplanation;
+            var viewModel = new PriorityAreasViewModel(priorityAreaIDs, noPriorityAreasExplanation);
+            return ViewEditPriorityArea(project, viewModel);
+        }
+
+        private ViewResult ViewEditPriorityArea(Project project, PriorityAreasViewModel viewModel)
+        {
+            var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
+            var layers = MapInitJson.GetPriorityAreaMapLayers(LayerInitialVisibility.Show);
+            layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
+            var mapInitJson = new MapInitJson("projectPriorityAreaMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true };
+            var priorityAreaIDs = viewModel.PriorityAreaIDs ?? new List<int>();
+            var priorityAreasInViewModel = HttpRequestStorage.DatabaseEntities.PriorityAreas.Where(x => priorityAreaIDs.Contains(x.PriorityAreaID)).ToList();
+            var editProjectPriorityAreasPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.PriorityAreas(project, null));
+            var editProjectPriorityAreasFormId = GenerateEditProjectPriorityAreasFormID(project);
+
+            var editProjectLocationViewData = new EditProjectPriorityAreasViewData(CurrentPerson, mapInitJson, priorityAreasInViewModel, editProjectPriorityAreasPostUrl, editProjectPriorityAreasFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail);
+
+            var proposalSectionsStatus = GetProposalSectionsStatus(project);
+            proposalSectionsStatus.IsPriorityAreaSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPriorityAreaSectionComplete;
+            var viewData = new PriorityAreasViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
+
+            return RazorView<Views.ProjectCreate.PriorityAreas, PriorityAreasViewData, PriorityAreasViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult PriorityAreas(ProjectPrimaryKey projectPrimaryKey, PriorityAreasViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditPriorityArea(project, viewModel);
+            }
+
+            var currentProjectPriorityAreas = project.ProjectPriorityAreas.ToList();
+            var allProjectPriorityAreas = HttpRequestStorage.DatabaseEntities.ProjectPriorityAreas.Local;
+            viewModel.UpdateModel(project, currentProjectPriorityAreas, allProjectPriorityAreas);
+
+            project.NoPriorityAreasExplanation = viewModel.NoPriorityAreasExplanation;
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Priority Areas successfully saved.");
+            return GoToNextSection(viewModel, project, ProjectCreateSection.PriorityAreas.ProjectCreateSectionDisplayName);
+        }
+
         private static string GenerateEditProjectGeospatialAreaFormID(Project project)
         {
             return $"editMapForProject{project.ProjectID}";
+        }
+
+        private static string GenerateEditProjectPriorityAreasFormID(Project project)
+        {
+            return $"editMapForProjectPriorityAreas{project.ProjectID}";
         }
 
         private static string GenerateEditProjectRegionsFormID(Project project)

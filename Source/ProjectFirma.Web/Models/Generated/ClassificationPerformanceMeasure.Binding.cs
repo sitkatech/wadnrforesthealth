@@ -15,7 +15,6 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ClassificationPerformanceMeasure] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ClassificationPerformanceMeasure]")]
     public partial class ClassificationPerformanceMeasure : IHavePrimaryKey, ICanDeleteFull
     {

@@ -192,29 +192,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GeospatialArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GeospatialArea">
-        <MappingFragment StoreEntitySet="GeospatialArea">
-          <ScalarProperty Name="GeospatialAreaID" ColumnName="GeospatialAreaID" />
-          <ScalarProperty Name="GeospatialAreaName" ColumnName="GeospatialAreaName" />
-          <ScalarProperty Name="GeospatialAreaFeature" ColumnName="GeospatialAreaFeature" />
-          <ScalarProperty Name="GeospatialAreaTypeID" ColumnName="GeospatialAreaTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GeospatialAreaType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GeospatialAreaType">
-        <MappingFragment StoreEntitySet="GeospatialAreaType">
-          <ScalarProperty Name="GeospatialAreaTypeID" ColumnName="GeospatialAreaTypeID" />
-          <ScalarProperty Name="GeospatialAreaTypeName" ColumnName="GeospatialAreaTypeName" />
-          <ScalarProperty Name="GeospatialAreaTypeNamePluralized" ColumnName="GeospatialAreaTypeNamePluralized" />
-          <ScalarProperty Name="GeospatialAreaIntroContent" ColumnName="GeospatialAreaIntroContent" />
-          <ScalarProperty Name="GeospatialAreaTypeDefinition" ColumnName="GeospatialAreaTypeDefinition" />
-          <ScalarProperty Name="MapServiceUrl" ColumnName="MapServiceUrl" />
-          <ScalarProperty Name="GeospatialAreaLayerName" ColumnName="GeospatialAreaLayerName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Grant">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Grant">
         <MappingFragment StoreEntitySet="Grant">
@@ -520,15 +497,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PersonStewardGeospatialArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonStewardGeospatialArea">
-        <MappingFragment StoreEntitySet="PersonStewardGeospatialArea">
-          <ScalarProperty Name="PersonStewardGeospatialAreaID" ColumnName="PersonStewardGeospatialAreaID" />
-          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="GeospatialAreaID" ColumnName="GeospatialAreaID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PersonStewardOrganization">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonStewardOrganization">
         <MappingFragment StoreEntitySet="PersonStewardOrganization">
@@ -538,12 +506,30 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PersonStewardRegion">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonStewardRegion">
+        <MappingFragment StoreEntitySet="PersonStewardRegion">
+          <ScalarProperty Name="PersonStewardRegionID" ColumnName="PersonStewardRegionID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PersonStewardTaxonomyBranch">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch">
         <MappingFragment StoreEntitySet="PersonStewardTaxonomyBranch">
           <ScalarProperty Name="PersonStewardTaxonomyBranchID" ColumnName="PersonStewardTaxonomyBranchID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="TaxonomyBranchID" ColumnName="TaxonomyBranchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriorityArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityArea">
+        <MappingFragment StoreEntitySet="PriorityArea">
+          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
+          <ScalarProperty Name="PriorityAreaName" ColumnName="PriorityAreaName" />
+          <ScalarProperty Name="PriorityAreaLocation" ColumnName="PriorityAreaLocation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -584,6 +570,7 @@
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
+          <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -760,44 +747,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectGeospatialArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGeospatialArea">
-        <MappingFragment StoreEntitySet="ProjectGeospatialArea">
-          <ScalarProperty Name="ProjectGeospatialAreaID" ColumnName="ProjectGeospatialAreaID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="GeospatialAreaID" ColumnName="GeospatialAreaID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectGeospatialAreaTypeNote">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGeospatialAreaTypeNote">
-        <MappingFragment StoreEntitySet="ProjectGeospatialAreaTypeNote">
-          <ScalarProperty Name="ProjectGeospatialAreaTypeNoteID" ColumnName="ProjectGeospatialAreaTypeNoteID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="GeospatialAreaTypeID" ColumnName="GeospatialAreaTypeID" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectGeospatialAreaTypeNoteUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGeospatialAreaTypeNoteUpdate">
-        <MappingFragment StoreEntitySet="ProjectGeospatialAreaTypeNoteUpdate">
-          <ScalarProperty Name="ProjectGeospatialAreaTypeNoteUpdateID" ColumnName="ProjectGeospatialAreaTypeNoteUpdateID" />
-          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="GeospatialAreaTypeID" ColumnName="GeospatialAreaTypeID" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectGeospatialAreaUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGeospatialAreaUpdate">
-        <MappingFragment StoreEntitySet="ProjectGeospatialAreaUpdate">
-          <ScalarProperty Name="ProjectGeospatialAreaUpdateID" ColumnName="ProjectGeospatialAreaUpdateID" />
-          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="GeospatialAreaID" ColumnName="GeospatialAreaID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectImage">
         <MappingFragment StoreEntitySet="ProjectImage">
@@ -952,6 +901,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectPriorityArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPriorityArea">
+        <MappingFragment StoreEntitySet="ProjectPriorityArea">
+          <ScalarProperty Name="ProjectPriorityAreaID" ColumnName="ProjectPriorityAreaID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectPriorityAreaUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPriorityAreaUpdate">
+        <MappingFragment StoreEntitySet="ProjectPriorityAreaUpdate">
+          <ScalarProperty Name="ProjectPriorityAreaUpdateID" ColumnName="ProjectPriorityAreaUpdateID" />
+          <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
+          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProjectRegion">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectRegion">
         <MappingFragment StoreEntitySet="ProjectRegion">
@@ -1028,6 +995,7 @@
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
           <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
+          <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1224,15 +1192,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerGeospatialArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerGeospatialArea">
-        <MappingFragment StoreEntitySet="vGeoServerGeospatialArea">
-          <ScalarProperty Name="GeospatialAreaID" ColumnName="GeospatialAreaID" />
+    <EntitySetMapping Name="vGeoServerPriorityArea">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPriorityArea">
+        <MappingFragment StoreEntitySet="vGeoServerPriorityArea">
+          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
           <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="GeospatialAreaName" ColumnName="GeospatialAreaName" />
-          <ScalarProperty Name="GeospatialAreaFeature" ColumnName="GeospatialAreaFeature" />
+          <ScalarProperty Name="PriorityAreaName" ColumnName="PriorityAreaName" />
+          <ScalarProperty Name="PriorityAreaLocation" ColumnName="PriorityAreaLocation" />
           <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-          <ScalarProperty Name="GeospatialAreaTypeName" ColumnName="GeospatialAreaTypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vGeoServerRegion">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerRegion">
+        <MappingFragment StoreEntitySet="vGeoServerRegion">
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+          <ScalarProperty Name="RegionLocation" ColumnName="RegionLocation" />
+          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

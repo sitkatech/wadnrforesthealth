@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GeoJSON.Net.Feature;
 using LtInfo.Common.GeoJson;
-using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -57,26 +56,11 @@ namespace ProjectFirma.Web.Models
 
         public static List<LayerGeoJson> GetAllGeospatialAreaMapLayers(LayerInitialVisibility layerInitialVisibility)
         {
-            var geospatialAreaTypes = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.OrderBy(x => x.GeospatialAreaTypeName)
-                .ToList();
-            var layerGeoJsons = new List<LayerGeoJson>();
-            foreach (var geospatialAreaType in geospatialAreaTypes)
-            {
-                layerGeoJsons.Add(GeospatialArea.GetGeospatialAreaWmsLayerGeoJson(geospatialAreaType, "#59ACFF", 0.2m,
-                    layerInitialVisibility));
-            }
-
-            return layerGeoJsons;
-        }
-
-        public static List<LayerGeoJson> GetGeospatialAreaMapLayersForGeospatialAreaType(GeospatialAreaType geospatialAreaType, LayerInitialVisibility layerInitialVisibility)
-        {
             var layerGeoJsons = new List<LayerGeoJson>
             {
-                GeospatialArea.GetGeospatialAreaWmsLayerGeoJson(geospatialAreaType, "#59ACFF", 0.2m,
-                    layerInitialVisibility)
+                PriorityArea.GetPriorityAreaWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
+                Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
             };
-
             return layerGeoJsons;
         }
 
@@ -85,6 +69,16 @@ namespace ProjectFirma.Web.Models
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+            };
+
+            return layerGeoJsons;
+        }
+
+        public static List<LayerGeoJson> GetPriorityAreaMapLayers( LayerInitialVisibility layerInitialVisibility)
+        {
+            var layerGeoJsons = new List<LayerGeoJson>
+            {
+                PriorityArea.GetPriorityAreaWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
             };
 
             return layerGeoJsons;

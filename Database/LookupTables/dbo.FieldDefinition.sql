@@ -113,4 +113,5 @@ VALUES
 (289, N'TotalAwardAmount', 'Total Award Amount', N'<p>The total amount of money awarded by the grant. This may include the sum of all associated grant allocations. </p>'),
 (290, N'GrantStartDate', 'Start Date', N'<p>The start date of the grant. </p>'),
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
-(292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>')
+(292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
+(293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area')

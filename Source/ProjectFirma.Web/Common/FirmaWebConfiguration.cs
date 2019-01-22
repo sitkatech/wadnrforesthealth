@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Web.Configuration;
 using LtInfo.Common;
 
@@ -50,6 +51,26 @@ namespace ProjectFirma.Web.Common
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
         {
             return CanonicalHostName;
+        }
+
+        public static List<string> GetWmsLayerNames()
+        {
+            return new List<string> { GetRegionWmsLayerName(), GetPriorityAreaWmsLayerName() };
+        }
+
+        public static string GetRegionWmsLayerName()
+        {
+            return "WADNRForestHealth:Region"; //todo: move region layer name to web config
+        }
+
+        public static string GetPriorityAreaWmsLayerName()
+        {
+            return "WADNRForestHealth:PriorityArea";//todo: move priorityArea layer name to web config
+        }
+
+        public static string GetMapServiceUrl()
+        {
+            return "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms"; //todo: move service url to web config
         }
     }
 }

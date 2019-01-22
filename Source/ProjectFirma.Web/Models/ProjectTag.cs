@@ -30,11 +30,10 @@ namespace ProjectFirma.Web.Models
             get
             {
                 var project = HttpRequestStorage.DatabaseEntities.Projects.Find(ProjectID);
-                var tag = HttpRequestStorage.DatabaseEntities.GeospatialAreas.Find(TagID);
+                var tag = HttpRequestStorage.DatabaseEntities.Tags.Find(TagID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var tagName = tag != null ? tag.AuditDescriptionString : ViewUtilities.NotFoundString;
-                return string.Format("Project: {0}, Tag: {1}", projectName, tagName); 
-                
+                return $"Project: {projectName}, Tag: {tagName}";                 
             }
         }
     }
