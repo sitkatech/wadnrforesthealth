@@ -41,7 +41,13 @@ namespace ProjectFirma.Web.Models
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
         public static string GetEditUrl(this Grant grant)
         {
-            return SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.Edit(grant.GrantID));
+            return EditUrlTemplate.ParameterReplace(grant.GrantID);
+        }
+
+        public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.NewGrantNote(UrlTemplate.Parameter1Int)));
+        public static string GetNewNoteUrl(this Grant grant)
+        {
+            return NewNoteUrlTemplate.ParameterReplace(grant.GrantID);
         }
 
     }

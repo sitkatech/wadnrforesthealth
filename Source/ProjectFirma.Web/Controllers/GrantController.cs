@@ -34,6 +34,36 @@ namespace ProjectFirma.Web.Controllers
     public class GrantController : FirmaBaseController
     {
 
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult NewGrantNote(GrantPrimaryKey grantPrimaryKey)
+        {
+            var viewModel = new EditGrantNoteViewModel();
+            return ViewEditNote(viewModel, EditGrantNoteType.NewNote);
+        }
+
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantNote(GrantPrimaryKey grantPrimaryKey, EditGrantNoteViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNote(viewModel, EditGrantNoteType.NewNote);
+            }
+            var grant = grantPrimaryKey.EntityObject;
+            var grantNote = GrantNote.CreateNewBlank(grant, CurrentPerson);
+            viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.GrantNotes.Add(grantNote);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult ViewEditNote(EditGrantNoteViewModel viewModel, EditGrantNoteType editGrantNoteType)
+        {
+            var viewData = new EditGrantNoteViewData(editGrantNoteType);
+            return RazorPartialView<EditGrantNote, EditGrantNoteViewData, EditGrantNoteViewModel>(viewData, viewModel);
+        }
 
         [HttpGet]
         [GrantEditAsAdminFeature]
@@ -61,9 +91,13 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEdit(EditGrantViewModel viewModel, Grant grant, EditGrantType editGrantType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
             
             var viewData = new EditGrantViewData(editGrantType,
-                organizations
+                organizations, 
+                grantStatuses,
+                grantTypes
             );
             return RazorPartialView<EditGrant, EditGrantViewData, EditGrantViewModel>(viewData, viewModel);
         }

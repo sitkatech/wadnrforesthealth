@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -470,7 +470,10 @@
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\Grant\Detail.cs" />
     <Compile Include="Views\Grant\DetailViewData.cs" />
+    <Compile Include="Views\Grant\EditGrantNote.cs" />
+    <Compile Include="Views\Grant\EditGrantNoteViewData.cs" />
     <Compile Include="Views\Grant\EditGrantViewData.cs" />
+    <Compile Include="Views\Grant\EditGrantNoteViewModel.cs" />
     <Compile Include="Views\Grant\EditGrantViewModel.cs" />
     <Compile Include="Views\Grant\EditGrant.cs" />
     <Compile Include="Views\Grant\GrantGridSpec.cs" />
@@ -581,6 +584,7 @@
     <Content Include="Views\ProjectCreate\Regions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
     <Content Include="Views\GrantAllocation\Detail.cshtml" />
+    <Content Include="Views\Grant\EditGrantNote.cshtml" />
     <None Include="Views\ProjectCreate\GeospatialArea.cshtml" />
     <Compile Include="Views\ProjectCreate\GeospatialAreaViewModel.cs" />
     <Compile Include="Views\ProjectCustomAttributeType\Detail.cs" />
