@@ -1,4 +1,6 @@
-﻿namespace ProjectFirma.Web.Models
+﻿using LtInfo.Common.Views;
+
+namespace ProjectFirma.Web.Models
 {
     public partial class Grant : IAuditableEntity
     {

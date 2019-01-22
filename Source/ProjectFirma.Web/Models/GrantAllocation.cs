@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantAllocation
+    public partial class GrantAllocation : IAuditableEntity
     {
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
@@ -23,6 +23,11 @@ namespace ProjectFirma.Web.Models
             {
                 return string.Join(", ", ProjectCodes.Select(x => x.ProjectCodeAbbrev));
             }
+        }
+
+        public string AuditDescriptionString
+        {
+            get { return ProjectName; }
         }
     }
 }

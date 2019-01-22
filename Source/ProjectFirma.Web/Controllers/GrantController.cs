@@ -28,11 +28,45 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
 {
     public class GrantController : FirmaBaseController
     {
+
+
+        [HttpGet]
+        [GrantDeleteFeature]
+        public PartialViewResult DeleteGrant(GrantPrimaryKey grantPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrant(grantPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrant(Grant grant, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.Grant.GetFieldDefinitionLabel()} '{grant.GrantTitle}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrant(GrantPrimaryKey grantPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrant(grant, viewModel);
+            }
+
+            var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{grant.GrantTitle}\" successfully deleted.";
+            grant.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
 
         [HttpGet]
         [GrantEditAsAdminFeature]
@@ -71,7 +105,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grant = grantPrimaryKey.EntityObject;
             var viewModel = new EditGrantViewModel(grant);
-            return ViewEdit(viewModel, grant, EditGrantType.ExistingGrant);
+            return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
         }
 
         [HttpPost]
@@ -82,13 +116,13 @@ namespace ProjectFirma.Web.Controllers
             var grant = grantPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel, grant, EditGrantType.ExistingGrant);
+                return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
             }
             viewModel.UpdateModel(grant, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditGrantViewModel viewModel, Grant grant, EditGrantType editGrantType)
+        private PartialViewResult ViewEdit(EditGrantViewModel viewModel, EditGrantType editGrantType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
@@ -102,6 +136,33 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditGrant, EditGrantViewData, EditGrantViewModel>(viewData, viewModel);
         }
 
+
+        [HttpGet]
+        [GrantCreateFeature]
+        public PartialViewResult New()
+        {
+            
+            var viewModel = new EditGrantViewModel();
+            return ViewEdit(viewModel,EditGrantType.NewGrant);
+        }
+
+        [HttpPost]
+        [GrantCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditGrantViewModel viewModel)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditGrantType.NewGrant);
+            }
+            var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(g => g.GrantStatusID == viewModel.GrantStatusID);
+            var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
+            var grant = Grant.CreateNewBlank(grantStatus, grantOrganization);
+            viewModel.UpdateModel(grant, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+       
         [GrantsViewFeature]
         public ViewResult GrantDetail(int grantID)
         {

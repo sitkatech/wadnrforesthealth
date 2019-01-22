@@ -35,11 +35,7 @@
 
 @section RightOfPageTitle
 {
-    @*@if (ViewDataTyped.DisplayActionButtons)
-    {
-        @ProjectCreateHelper.AddProjectButton()
-        <a class="btn btn-firma" href="@ViewDataTyped.ProjectUpdatesUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() requiring an update">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit") Update @FieldDefinition.Project.GetFieldDefinitionLabel()</a>
-    }*@
+    @GrantCreateHelper.AddGrantButton()
 }
 
 <div style="padding-top: 10px;">
@@ -47,11 +43,12 @@
 </div>
 
 <div style="margin-top: 10px">
+    
     @* Grant Grid *@
     <h3>Grants</h3>
     @Html.DhtmlxGrid(ViewDataTyped.GrantGridSpec, ViewDataTyped.GrantGridName, ViewDataTyped.GrantGridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
-    
-    <br/>
+
+    <br />
 
     @* Grant Allocation Grid *@
     <h3>Grant Allocations</h3>

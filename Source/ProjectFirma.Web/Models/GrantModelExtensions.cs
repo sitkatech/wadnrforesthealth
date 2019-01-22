@@ -32,6 +32,14 @@ namespace ProjectFirma.Web.Models
 {
     public static class GrantModelExtensions
     {
+
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.DeleteGrant(UrlTemplate.Parameter1Int)));
+        public static string GetDeleteUrl(this Grant grant)
+        {
+            return DeleteUrlTemplate.ParameterReplace(grant.GrantID);
+        }
+
+
         public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
         public static string GetDetailUrl(this Grant grant)
         {
