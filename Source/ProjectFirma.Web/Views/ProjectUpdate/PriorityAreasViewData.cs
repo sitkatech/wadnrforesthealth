@@ -38,12 +38,12 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             Models.ProjectUpdate projectUpdate,
             EditProjectPriorityAreasViewData editProjectPriorityAreasViewData,
             ProjectLocationSummaryViewData projectLocationSummaryViewData, 
-            PriorityAreasValidationResult regionValidationResult,
-            UpdateStatus updateStatus) : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, regionValidationResult.GetWarningMessages(), "PriorityAreas")
+            PriorityAreasValidationResult priorityAreaValidationResult,
+            UpdateStatus updateStatus) : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, priorityAreaValidationResult.GetWarningMessages(), "Priority Areas")
         {
             EditProjectPriorityAreasViewData = editProjectPriorityAreasViewData;
             ProjectLocationSummaryViewData = projectLocationSummaryViewData;
-            RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshProjectRegion(projectUpdate.ProjectUpdateBatch.Project));
+            RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshProjectPriorityArea(projectUpdate.ProjectUpdateBatch.Project));
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdate.ProjectUpdateBatch.LocationSimpleComment, projectUpdate.ProjectUpdateBatch.IsReturned);
         } 
     }

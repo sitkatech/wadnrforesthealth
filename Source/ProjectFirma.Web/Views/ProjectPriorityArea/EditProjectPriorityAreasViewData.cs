@@ -66,8 +66,8 @@ namespace ProjectFirma.Web.Views.ProjectPriorityArea
             FindPriorityAreaByNameUrl = SitkaRoute<ProjectPriorityAreaController>.BuildUrlFromExpression(c => c.FindPriorityAreaByName(null));
             TypeAheadInputId = "priorityAreaSearch";
             PriorityAreaNameByID = priorityAreasInViewModel.ToDictionary(x => x.PriorityAreaID, x => x.PriorityAreaName);
-            PriorityAreaMapServiceLayerName = "WADNRForestHealth:PriorityArea";//todo: move priorityArea layer name and service url to web config
-            MapServiceUrl = "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms";
+            PriorityAreaMapServiceLayerName =  FirmaWebConfiguration.GetPriorityAreaWmsLayerName();
+            MapServiceUrl = FirmaWebConfiguration.GetMapServiceUrl();
         }
     }
 }

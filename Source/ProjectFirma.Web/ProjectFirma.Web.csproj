@@ -419,7 +419,9 @@
     <Compile Include="Common\ICanDeleteFull.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
+    <Compile Include="Models\ProjectPriorityArea.cs" />
     <Compile Include="Models\ProjectPriorityAreaUpdate.cs" />
+    <Compile Include="Models\ProjectRegion.cs" />
     <Compile Include="Models\ProjectRegionUpdate.cs" />
     <Compile Include="Models\RegionModelExtensions.cs" />
     <Compile Include="Models\Region.cs" />
@@ -503,7 +505,6 @@
     <Compile Include="Views\ProjectRegion\EditProjectRegions.cs" />
     <Compile Include="Views\ProjectRegion\EditProjectRegionsViewData.cs" />
     <Compile Include="Views\ProjectRegion\EditProjectRegionsViewModel.cs" />
-    <Compile Include="Views\ProjectRegion\EditProjectRegionsViewModelTest.cs" />
     <Compile Include="Views\ProjectUpdate\Contacts.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />

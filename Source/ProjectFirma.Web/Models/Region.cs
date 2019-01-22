@@ -65,8 +65,8 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("Regions", "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms",
-                "WADNRForestHealth:Region", MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
+            return new LayerGeoJson("Regions", FirmaWebConfiguration.GetMapServiceUrl(),
+                FirmaWebConfiguration.GetRegionWmsLayerName(), MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
                 layerInitialVisibility);//todo: move service url and layer name to web.config
         }
 

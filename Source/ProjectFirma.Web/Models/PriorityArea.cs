@@ -44,9 +44,9 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetPriorityAreaWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("PriorityAreas", "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms",
-                "WADNRForestHealth:PriorityArea", MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
-                layerInitialVisibility);//todo: move service url and layer name to web.config
+            return new LayerGeoJson("PriorityAreas", FirmaWebConfiguration.GetMapServiceUrl(),
+                FirmaWebConfiguration.GetPriorityAreaWmsLayerName(), MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
+                layerInitialVisibility);
         }
 
         public static List<LayerGeoJson> GetPriorityAreaAndAssociatedProjectLayers(PriorityArea priorityArea, List<Project> projects)

@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Models
             {
                 var priorityArea = PriorityArea != null ? PriorityArea.DisplayName : ViewUtilities.NotFoundString;
                 var projectUpdate = ProjectUpdateBatch != null ? ProjectUpdateBatch.ProjectUpdate.DisplayName : ViewUtilities.NotFoundString;
-                return $"PriorityArea: {priorityArea}, {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {projectUpdate}";
+                return $"Priority Area: {priorityArea}, {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {projectUpdate}";
             }
         }
 

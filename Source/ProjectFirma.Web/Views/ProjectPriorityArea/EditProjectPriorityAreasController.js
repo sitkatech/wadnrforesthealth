@@ -25,7 +25,7 @@ angular.module("ProjectFirmaApp")
                                 wildcard: "%QUERY"
                             }
                         }),
-                        display: "Priority Area Name",
+                        display: "PriorityAreaName",
                         limit: Number.MAX_VALUE
                     });
 

@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.PriorityArea
 
         public IndexViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = "PriorityAreas";
+            PageTitle = "Priority Areas";
             MapInitJson = mapInitJson;
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Priority Area", ObjectNamePlural = "Priority Areas", SaveFiltersInCookie = true};
             GridName = "priorityAreasGrid";
