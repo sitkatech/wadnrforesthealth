@@ -58,6 +58,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public EditViewModel(Models.FocusArea focusArea)
         {
+            FocusAreaID = focusArea.FocusAreaID;
             FocusAreaName = focusArea.FocusAreaName;
             FocusAreaStatusID = focusArea.FocusAreaStatusID;
             RegionID = focusArea.RegionID;
@@ -68,6 +69,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             focusArea.FocusAreaName = FocusAreaName;
             focusArea.FocusAreaStatusID = FocusAreaStatusID;
             focusArea.RegionID = RegionID;
+            focusArea.FocusAreaID = FocusAreaID;
         }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -75,8 +77,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
             if (!string.IsNullOrEmpty(FocusAreaName))
             {
-                var results =
-                    HttpRequestStorage.DatabaseEntities.FocusAreas.Where(x => x.FocusAreaName == FocusAreaName);
+                var results = HttpRequestStorage.DatabaseEntities.FocusAreas.Where(x => x.FocusAreaName == FocusAreaName && x.FocusAreaID != FocusAreaID);
                 if(results.Any())
                     validationResults.Add(new SitkaValidationResult<EditViewModel, string>("Focus Area Name must be unique. A Focus Area already exists with the name provided.", x => x.FocusAreaName));
             }

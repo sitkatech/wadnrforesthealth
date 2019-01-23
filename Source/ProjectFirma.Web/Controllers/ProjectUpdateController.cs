@@ -1810,6 +1810,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var originalHtml = GeneratePartialViewForProjectBasics(project);            
             projectUpdate.CommitChangesToProject(project);
+            project.FocusArea = projectUpdate.FocusArea;
             var updatedHtml = GeneratePartialViewForProjectBasics(project);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);

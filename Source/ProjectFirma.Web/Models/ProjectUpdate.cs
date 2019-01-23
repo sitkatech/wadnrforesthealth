@@ -56,6 +56,7 @@ namespace ProjectFirma.Web.Models
             PlannedDate = project.PlannedDate;
             ApprovalStartDate = project.ApprovalStartDate;
             CompletionDate = project.CompletionDate;
+            FocusAreaID = project.FocusAreaID;
             EstimatedTotalCost = project.EstimatedTotalCost;
         }
 
@@ -74,6 +75,7 @@ namespace ProjectFirma.Web.Models
             project.ApprovalStartDate = ApprovalStartDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
+            project.FocusAreaID = FocusAreaID;
             project.PrimaryContactPersonID = PrimaryContactPersonID;
         }
 
