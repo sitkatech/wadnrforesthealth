@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectExternalLinkUpdate](
 	[ProjectExternalLinkUpdateID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
 	[ExternalLinkLabel] [varchar](300) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ExternalLinkUrl] [varchar](300) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -19,13 +18,3 @@ ALTER TABLE [dbo].[ProjectExternalLinkUpdate]  WITH CHECK ADD  CONSTRAINT [FK_Pr
 REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID])
 GO
 ALTER TABLE [dbo].[ProjectExternalLinkUpdate] CHECK CONSTRAINT [FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID]
-GO
-ALTER TABLE [dbo].[ProjectExternalLinkUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID] FOREIGN KEY([ProjectUpdateBatchID], [TenantID])
-REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectExternalLinkUpdate] CHECK CONSTRAINT [FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectExternalLinkUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectExternalLinkUpdate_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectExternalLinkUpdate] CHECK CONSTRAINT [FK_ProjectExternalLinkUpdate_Tenant_TenantID]

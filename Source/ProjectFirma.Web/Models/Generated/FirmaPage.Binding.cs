@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[FirmaPage] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FirmaPage]")]
-    public partial class FirmaPage : IHavePrimaryKey, IHaveATenantID
+    public partial class FirmaPage : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected FirmaPage()
         {
             this.FirmaPageImages = new HashSet<FirmaPageImage>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllFirmaPages.Remove(this);
+            dbContext.FirmaPages.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -103,7 +103,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int FirmaPageID { get; set; }
-        public int TenantID { get; private set; }
         public int FirmaPageTypeID { get; set; }
         public string FirmaPageContent { get; set; }
         [NotMapped]
@@ -116,7 +115,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return FirmaPageID; } set { FirmaPageID = value; } }
 
         public virtual ICollection<FirmaPageImage> FirmaPageImages { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public FirmaPageType FirmaPageType { get { return FirmaPageType.AllLookupDictionary[FirmaPageTypeID]; } }
 
         public static class FieldLengths

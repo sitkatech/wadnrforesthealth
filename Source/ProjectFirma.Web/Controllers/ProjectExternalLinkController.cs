@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var currentProjectExternalLinks = project.ProjectExternalLinks.ToList();
             HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Load();
-            var allProjectExternalLinks = HttpRequestStorage.DatabaseEntities.AllProjectExternalLinks.Local;
+            var allProjectExternalLinks = HttpRequestStorage.DatabaseEntities.ProjectExternalLinks.Local;
             viewModel.UpdateModel(currentProjectExternalLinks, allProjectExternalLinks);
             return new ModalDialogFormJsonResult();
         }

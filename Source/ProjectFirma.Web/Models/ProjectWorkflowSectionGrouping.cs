@@ -44,75 +44,18 @@ namespace ProjectFirma.Web.Models
     {
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
-            var projectCreateSections = GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
-            var maxSortOrder = projectCreateSections.Max(x => x.SortOrder);
-            IEnumerable<ProjectSectionSimple> projectSectionSimples;
-            if (project == null)
-            {
-                projectSectionSimples = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
-                    .OrderBy(x => x.GeospatialAreaTypeName).ToList().Select((geospatialAreaType, index) =>
-                        new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized,
-                            maxSortOrder + index + 1,
-                            false, this,
-                            string.Empty,
-                            false, false));
-            }
-            else
-            {
-                projectSectionSimples = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
-                    .OrderBy(x => x.GeospatialAreaTypeName).ToList().Select((geospatialAreaType, index) =>
-                        new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized,
-                            maxSortOrder + index + 1,
-                            true, this,
-                            SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(y =>
-                                y.EditGeospatialArea(project, geospatialAreaType)),
-                            !ignoreStatus && project.IsProjectGeospatialAreaValid(geospatialAreaType), false));
-
-            }
-
-            projectCreateSections.AddRange(projectSectionSimples);
-            return projectCreateSections;
+            return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
         }
 
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
             UpdateStatus updateStatus, bool ignoreStatus)
         {
-            var projectUpdateSections = GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
-            var maxSortOrder = projectUpdateSections.Max(x => x.SortOrder);
-            projectUpdateSections.AddRange(HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes
-                .OrderBy(x => x.GeospatialAreaTypeName).ToList().Select((geospatialAreaType, index) =>
-                    new ProjectSectionSimple(geospatialAreaType.GeospatialAreaTypeNamePluralized, maxSortOrder + index + 1,
-                        !projectUpdateBatch.IsNew, this,
-                        projectUpdateBatch.IsNew ? null :
-                        SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(y =>
-                            y.GeospatialArea(projectUpdateBatch.Project, geospatialAreaType)),
-                        updateStatus != null && projectUpdateBatch.IsProjectGeospatialAreaValid(geospatialAreaType),
-                        updateStatus != null && IsGeospatialAreaUpdated(projectUpdateBatch, geospatialAreaType)
-                    )));
-            return projectUpdateSections;
+            return GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
         }
-
-        private static bool IsGeospatialAreaUpdated(ProjectUpdateBatch projectUpdateBatch, GeospatialAreaType geospatialAreaType)
-        {
-            var project = projectUpdateBatch.Project;            
-            var originalGeospatialAreaIDs = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).Select(x => x.GeospatialAreaID).ToList();
-            var updatedGeospatialAreaIDs = projectUpdateBatch.ProjectGeospatialAreaUpdates.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).Select(x => x.GeospatialAreaID).ToList();
-
-            if (!originalGeospatialAreaIDs.Any() && !updatedGeospatialAreaIDs.Any())
-                return false;
-
-            if (originalGeospatialAreaIDs.Count != updatedGeospatialAreaIDs.Count)
-                return true;
-
-            var enumerable = originalGeospatialAreaIDs.Except(updatedGeospatialAreaIDs);
-            return enumerable.Any();
-        }
-
     }
 
     public partial class ProjectWorkflowSectionGroupingPerformanceMeasures
     {
-
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
             // TODO Neutered Per WA DNR #1446. May decide to bring it back later
@@ -171,13 +114,7 @@ namespace ProjectFirma.Web.Models
     {
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
-            var projectCreateSections = ProjectCreateSections.Except(new List<ProjectCreateSection> { ProjectCreateSection.Assessment }).ToList();
-            if (HttpRequestStorage.DatabaseEntities.AssessmentQuestions.Any())
-            {
-                projectCreateSections.Add(ProjectCreateSection.Assessment);
-            }
-
-            return GetProjectCreateSectionsImpl(project, projectCreateSections, ignoreStatus);
+            return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
         }
 
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,

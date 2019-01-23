@@ -74,6 +74,44 @@ namespace ProjectFirma.Web.Models
         }
     }
 
+    public partial class ProjectUpdateSectionRegions
+    {
+        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+        {
+            return projectUpdateBatch.IsProjectRegionValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Regions(project)) : null;
+        }
+
+        public override bool SectionIsUpdated(UpdateStatus updateStatus)
+        {
+            return updateStatus.IsRegionsUpdated;
+        }
+    }
+
+    public partial class ProjectUpdateSectionPriorityAreas
+    {
+        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+        {
+            return projectUpdateBatch.IsProjectPriorityAreaValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.PriorityAreas(project)) : null;
+        }
+
+        public override bool SectionIsUpdated(UpdateStatus updateStatus)
+        {
+            return updateStatus.IsPriorityAreasUpdated;
+        }
+    }
+
     public partial class ProjectUpdateSectionPerformanceMeasures
     {
         public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)

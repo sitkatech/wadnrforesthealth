@@ -10,8 +10,9 @@ values
 (8, 'ExpectedFunding', 'Expected Funding', 80, 0, 4),
 (9, 'ReportedExpenditures', 'Reported Expenditures', 90, 1, 4),
 (11, 'Classifications', 'Classifications', 110, 1, 5),
-(12, 'Assessment', 'Asssessment', 120, 1, 5),
 (13, 'Photos', 'Photos', 130, 0, 5),
 (14, 'NotesAndDocuments', 'Documents and Notes', 140, 0, 5),
 (15, 'Organizations', 'Organizations', 25, 1, 1),
-(16, 'Contacts', 'Contacts', 26, 1, 1)
+(16, 'Contacts', 'Contacts', 26, 1, 1),
+(17, 'Regions', 'Regions', 50, 1, 2),
+(18, 'PriorityAreas', 'Priority Areas', 45, 1, 2)

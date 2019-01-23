@@ -167,7 +167,7 @@ namespace ProjectFirma.Web.Controllers
             var fileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.upload, CurrentPerson);
             var firmaPage = firmaPagePrimaryKey.EntityObject;
             var ppImage = new FirmaPageImage(firmaPage, fileResource);
-            HttpRequestStorage.DatabaseEntities.AllFirmaPageImages.Add(ppImage);
+            HttpRequestStorage.DatabaseEntities.FirmaPageImages.Add(ppImage);
             return Content(viewModel.GetCkEditorJavascriptContentToReturn(fileResource));
         }
 
@@ -193,7 +193,7 @@ namespace ProjectFirma.Web.Controllers
             var fileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.upload, CurrentPerson);
             var firmaPage = firmaPagePrimaryKey.EntityObject;
             var ppImage = new FirmaPageImage(firmaPage, fileResource);
-            HttpRequestStorage.DatabaseEntities.AllFirmaPageImages.Add(ppImage);
+            HttpRequestStorage.DatabaseEntities.FirmaPageImages.Add(ppImage);
             return Content(viewModel.GetCkEditorJavascriptContentToReturn(fileResource));
         }
 
@@ -218,7 +218,7 @@ namespace ProjectFirma.Web.Controllers
             var fileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.upload, CurrentPerson);
             var fieldDefinition = fieldDefinitionPrimaryKey.EntityObject;
             var image = new FieldDefinitionDataImage(fieldDefinition.GetFieldDefinitionData().FieldDefinitionDataID, fileResource.FileResourceID);
-            HttpRequestStorage.DatabaseEntities.AllFieldDefinitionDataImages.Add(image);
+            HttpRequestStorage.DatabaseEntities.FieldDefinitionDataImages.Add(image);
             return Content(viewModel.GetCkEditorJavascriptContentToReturn(fileResource));
         }
 
@@ -263,7 +263,7 @@ namespace ProjectFirma.Web.Controllers
             var fileResource = FileResource.CreateNewFromHttpPostedFileAndSave(viewModel.upload, CurrentPerson);
             var customPage = customPagePrimaryKey.EntityObject;
             var ppImage = new CustomPageImage(customPage, fileResource);
-            HttpRequestStorage.DatabaseEntities.AllCustomPageImages.Add(ppImage);
+            HttpRequestStorage.DatabaseEntities.CustomPageImages.Add(ppImage);
             return Content(viewModel.GetCkEditorJavascriptContentToReturn(fileResource));
         }
     }

@@ -65,6 +65,32 @@ namespace ProjectFirma.Web.Models
         }
     }
 
+    public partial class ProjectCreateSectionRegions
+    {
+        public override bool IsComplete(Project project)
+        {
+            return project != null && project.IsProjectRegionValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Regions(project.ProjectID)) : null;
+        }
+    }
+
+    public partial class ProjectCreateSectionPriorityAreas
+    {
+        public override bool IsComplete(Project project)
+        {
+            return project != null && project.IsProjectPriorityAreaValid();
+        }
+
+        public override string GetSectionUrl(Project project)
+        {
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.PriorityAreas(project.ProjectID)) : null;
+        }
+    }
+
     public partial class ProjectCreateSectionExpectedPerformanceMeasures
     {
         public override bool IsComplete(Project project)
@@ -108,24 +134,6 @@ namespace ProjectFirma.Web.Models
         public override string GetSectionUrl(Project project)
         {
             return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.PerformanceMeasures(project.ProjectID)) : null;
-        }
-    }
-
-    public partial class ProjectCreateSectionAssessment
-    {
-        public override bool IsComplete(Project project)
-        {
-            if (project == null)
-            {
-                return false;
-            }
-            var assessmentValidationResults = new EditAssessmentViewModel(project.ProjectAssessmentQuestions.Select(x => new ProjectAssessmentQuestionSimple(x)).ToList()).GetValidationResults();
-            return !assessmentValidationResults.Any();
-        }
-
-        public override string GetSectionUrl(Project project)
-        {
-            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditAssessment(project.ProjectID)) : null;
         }
     }
 

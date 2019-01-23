@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, performanceMeasure);
             }
             HttpRequestStorage.DatabaseEntities.TaxonomyLeafPerformanceMeasures.Load();
-            viewModel.UpdateModel(performanceMeasure.TaxonomyLeafPerformanceMeasures.ToList(), HttpRequestStorage.DatabaseEntities.AllTaxonomyLeafPerformanceMeasures.Local);
+            viewModel.UpdateModel(performanceMeasure.TaxonomyLeafPerformanceMeasures.ToList(), HttpRequestStorage.DatabaseEntities.TaxonomyLeafPerformanceMeasures.Local);
             return new ModalDialogFormJsonResult();
         }
 

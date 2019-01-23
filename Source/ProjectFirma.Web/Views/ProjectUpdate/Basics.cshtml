@@ -85,7 +85,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="form-group form-group-condensed">
         <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.PlannedDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Planning / Design Start Year</strong>
+            @Html.LabelWithSugarFor(FieldDefinition.PlannedDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Planned Date</strong>
         </div>
         <div class="col-sm-8">
             @if (ViewDataTyped.IsEditable)
@@ -101,7 +101,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="form-group form-group-condensed">
         <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Implementation Start Year</strong>
+            @Html.LabelWithSugarFor(FieldDefinition.ApprovalStartDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Approval/Start Date</strong>
         </div>
         <div class="col-sm-8">
             @if (ViewDataTyped.IsEditable)
@@ -131,6 +131,16 @@ Source code is available upon request via <support@sitkatech.com>.
             }
         </div>
     </div>
+    
+    <div class="form-group">
+        <div class="col-xs-12 col-sm-4 control-label">
+            @Html.LabelWithSugarFor(m => m.FocusAreaID)
+        </div>
+        <div class="col-xs-12 col-sm-8">
+            @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new {@class = "form-control", style = "width: auto;"})
+            @Html.ValidationMessageFor(m => m.FocusAreaID)
+        </div>
+    </div>
     <div class="row form-group-condensed">
         <div class="col-sm-4 control-label">
             @Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf)
@@ -139,6 +149,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @ViewDataTyped.TaxonomyLeafDisplayName
         </div>
     </div>
+
 
     @Html.EditorFor(m => m.ProjectCustomAttributes, new { ProjectCustomAttributes = ViewDataTyped.ProjectCustomAttributeTypes, colLeft = 4, colRight = 8 })
 </div>

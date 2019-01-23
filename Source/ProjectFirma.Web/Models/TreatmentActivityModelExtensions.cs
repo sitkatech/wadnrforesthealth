@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Models
 {
     public static class TreatmentActivityModelExtensions
     {
-        private static readonly int RegionGeoSpatialAreaTypeID = 10;
         public static string GetStatusDisplayName(this Models.TreatmentActivity treatmentActivity)
         {
             return treatmentActivity.TreatmentActivityStatus.TreatmentActivityStatusDisplayName;
@@ -53,11 +52,8 @@ namespace ProjectFirma.Web.Models
         }
 
         public static string GetProjectRegions(this Models.TreatmentActivity treatmentActivity)
-        {
-            
-            var result = treatmentActivity.Project.GetProjectGeospatialAreas()
-                .Where(x => x.GeospatialAreaTypeID.Equals(RegionGeoSpatialAreaTypeID)).OrderBy(x => x.GeospatialAreaName).Select(x => x.GeospatialAreaName).Distinct();
-
+        {            
+            var result = treatmentActivity.Project.GetProjectRegions().OrderBy(x => x.RegionName).Select(x => x.RegionName).Distinct();
             return string.Join(",",result);
         }
 

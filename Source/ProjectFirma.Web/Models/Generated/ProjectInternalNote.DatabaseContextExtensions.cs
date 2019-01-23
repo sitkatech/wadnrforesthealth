@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectInternalNote]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectInternalNote;
         }
 
-        public static void DeleteProjectInternalNote(this List<int> projectInternalNoteIDList)
+        public static void DeleteProjectInternalNote(this IQueryable<ProjectInternalNote> projectInternalNotes, List<int> projectInternalNoteIDList)
         {
             if(projectInternalNoteIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectInternalNotes.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectInternalNotes.Where(x => projectInternalNoteIDList.Contains(x.ProjectInternalNoteID)));
+                projectInternalNotes.Where(x => projectInternalNoteIDList.Contains(x.ProjectInternalNoteID)).Delete();
             }
         }
 
-        public static void DeleteProjectInternalNote(this ICollection<ProjectInternalNote> projectInternalNotesToDelete)
+        public static void DeleteProjectInternalNote(this IQueryable<ProjectInternalNote> projectInternalNotes, ICollection<ProjectInternalNote> projectInternalNotesToDelete)
         {
             if(projectInternalNotesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectInternalNotes.RemoveRange(projectInternalNotesToDelete);
+                var projectInternalNoteIDList = projectInternalNotesToDelete.Select(x => x.ProjectInternalNoteID).ToList();
+                projectInternalNotes.Where(x => projectInternalNoteIDList.Contains(x.ProjectInternalNoteID)).Delete();
             }
         }
 
-        public static void DeleteProjectInternalNote(this int projectInternalNoteID)
+        public static void DeleteProjectInternalNote(this IQueryable<ProjectInternalNote> projectInternalNotes, int projectInternalNoteID)
         {
-            DeleteProjectInternalNote(new List<int> { projectInternalNoteID });
+            DeleteProjectInternalNote(projectInternalNotes, new List<int> { projectInternalNoteID });
         }
 
-        public static void DeleteProjectInternalNote(this ProjectInternalNote projectInternalNoteToDelete)
+        public static void DeleteProjectInternalNote(this IQueryable<ProjectInternalNote> projectInternalNotes, ProjectInternalNote projectInternalNoteToDelete)
         {
-            DeleteProjectInternalNote(new List<ProjectInternalNote> { projectInternalNoteToDelete });
+            DeleteProjectInternalNote(projectInternalNotes, new List<ProjectInternalNote> { projectInternalNoteToDelete });
         }
     }
 }

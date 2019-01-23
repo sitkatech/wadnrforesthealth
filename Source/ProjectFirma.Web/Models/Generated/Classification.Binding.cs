@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[Classification] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Classification]")]
-    public partial class Classification : IHavePrimaryKey, IHaveATenantID
+    public partial class Classification : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +26,6 @@ namespace ProjectFirma.Web.Models
         {
             this.ClassificationPerformanceMeasures = new HashSet<ClassificationPerformanceMeasure>();
             this.ProjectClassifications = new HashSet<ProjectClassification>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllClassifications.Remove(this);
+            dbContext.Classifications.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -122,7 +122,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ClassificationID { get; set; }
-        public int TenantID { get; private set; }
         public string ClassificationDescription { get; set; }
         public string ThemeColor { get; set; }
         public string DisplayName { get; set; }
@@ -135,7 +134,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual ICollection<ProjectClassification> ProjectClassifications { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual FileResource KeyImageFileResource { get; set; }
         public virtual ClassificationSystem ClassificationSystem { get; set; }
 

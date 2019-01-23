@@ -61,10 +61,6 @@ namespace ProjectFirma.Web.Views.Project
             Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.EstimatedTotalCost, 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.SecuredFunding.ToGridHeaderString(), x => x.GetSecuredFunding(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.UnfundedNeed.ToGridHeaderString(), x => x.UnfundedNeed(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
-            {
-                Add($"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", a => a.GetProjectGeospatialAreaNamesAsHyperlinks(geospatialAreaType), 350, DhtmlxGridColumnFilterType.Html);
-            }
             Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.ProjectDescription, 300);
             if (userHasTagManagePermissions)
             {
@@ -96,10 +92,6 @@ namespace ProjectFirma.Web.Views.Project
             Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.Project.EstimatedTotalCost, 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.SecuredFunding.ToGridHeaderString(), x => x.Project.GetSecuredFunding(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.UnfundedNeed.ToGridHeaderString(), x => x.Project.UnfundedNeed(), 110, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
-            {
-                Add($"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", a => a.Project.GetProjectGeospatialAreaNamesAsHyperlinks(geospatialAreaType), 350, DhtmlxGridColumnFilterType.Html);
-            }
             Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.Project.ProjectDescription, 300);
         }
     }

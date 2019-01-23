@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Project](
 	[ProjectID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[TaxonomyLeafID] [int] NOT NULL,
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -29,19 +28,11 @@ CREATE TABLE [dbo].[Project](
 	[DefaultBoundingBox] [geometry] NULL,
 	[NoExpendituresToReportExplanation] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FocusAreaID] [int] NULL,
+	[NoRegionsExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[NoPriorityAreasExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_Project_ProjectID_TenantID] UNIQUE NONCLUSTERED 
-(
-	[ProjectID] ASC,
-	[TenantID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_Project_ProjectName_TenantID] UNIQUE NONCLUSTERED 
-(
-	[ProjectName] ASC,
-	[TenantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
@@ -55,11 +46,6 @@ ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_Prima
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_PersonID]
-GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_TenantID_PersonID_TenantID] FOREIGN KEY([PrimaryContactPersonID], [TenantID])
-REFERENCES [dbo].[Person] ([PersonID], [TenantID])
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_Person_PrimaryContactPersonID_TenantID_PersonID_TenantID]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Person_ProposingPersonID_PersonID] FOREIGN KEY([ProposingPersonID])
 REFERENCES [dbo].[Person] ([PersonID])
@@ -90,16 +76,6 @@ ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_TaxonomyLeaf
 REFERENCES [dbo].[TaxonomyLeaf] ([TaxonomyLeafID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_TaxonomyLeaf_TaxonomyLeafID]
-GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_TaxonomyLeaf_TaxonomyLeafID_TenantID] FOREIGN KEY([TaxonomyLeafID], [TenantID])
-REFERENCES [dbo].[TaxonomyLeaf] ([TaxonomyLeafID], [TenantID])
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_TaxonomyLeaf_TaxonomyLeafID_TenantID]
-GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_Tenant_TenantID]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ApprovalStartDateLessThanEqualToCompletionDate] CHECK  (([ApprovalStartDate] IS NULL OR [CompletionDate] IS NULL OR [CompletionDate]>=[ApprovalStartDate]))
 GO

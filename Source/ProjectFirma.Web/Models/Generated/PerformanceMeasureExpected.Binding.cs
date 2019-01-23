@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[PerformanceMeasureExpected] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PerformanceMeasureExpected]")]
-    public partial class PerformanceMeasureExpected : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureExpected : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected PerformanceMeasureExpected()
         {
             this.PerformanceMeasureExpectedSubcategoryOptions = new HashSet<PerformanceMeasureExpectedSubcategoryOption>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllPerformanceMeasureExpecteds.Remove(this);
+            dbContext.PerformanceMeasureExpecteds.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -110,7 +110,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int PerformanceMeasureExpectedID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int PerformanceMeasureID { get; set; }
         public double? ExpectedValue { get; set; }
@@ -118,7 +117,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return PerformanceMeasureExpectedID; } set { PerformanceMeasureExpectedID = value; } }
 
         public virtual ICollection<PerformanceMeasureExpectedSubcategoryOption> PerformanceMeasureExpectedSubcategoryOptions { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
 

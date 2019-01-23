@@ -224,9 +224,11 @@ namespace ProjectFirma.Web.Models
                 return new BoundingBox(new Point(project.ProjectLocationPoint), 0.001m);
             }
 
-            if (project.GetProjectGeospatialAreas().Any())
+            if (project.GetProjectRegions().Any() || project.GetProjectPriorityAreas().Any())
             {
-                return new BoundingBox(project.GetProjectGeospatialAreas().Select(x => x.GeospatialAreaFeature).ToList());
+                var dbGeometrys = project.GetProjectRegions().Select(x => x.RegionLocation).ToList();
+                dbGeometrys.AddRange(project.GetProjectPriorityAreas().Select(x => x.PriorityAreaLocation).ToList());
+                return new BoundingBox(dbGeometrys);
             }
 
             if (MultiTenantHelpers.GetDefaultBoundingBox() != null)
@@ -234,10 +236,7 @@ namespace ProjectFirma.Web.Models
                 return new BoundingBox(MultiTenantHelpers.GetDefaultBoundingBox());
             }
 
-            var geospatialAreaDbGeometries = HttpRequestStorage.DatabaseEntities.GeospatialAreas.Select(x => x.GeospatialAreaFeature).ToList();
-            return geospatialAreaDbGeometries.Any()
-                ? new BoundingBox(geospatialAreaDbGeometries)
-                : MakeNewDefaultBoundingBox();
+            return MakeNewDefaultBoundingBox();
         }
 
         public static BoundingBox MakeBoundingBoxFromLayerGeoJsonList(List<LayerGeoJson> layerGeoJsons)

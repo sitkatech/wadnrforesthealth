@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[CustomPage] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[CustomPage]")]
-    public partial class CustomPage : IHavePrimaryKey, IHaveATenantID
+    public partial class CustomPage : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected CustomPage()
         {
             this.CustomPageImages = new HashSet<CustomPageImage>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllCustomPages.Remove(this);
+            dbContext.CustomPages.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -109,7 +109,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int CustomPageID { get; set; }
-        public int TenantID { get; private set; }
         public string CustomPageDisplayName { get; set; }
         public string CustomPageVanityUrl { get; set; }
         public int CustomPageDisplayTypeID { get; set; }
@@ -124,7 +123,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return CustomPageID; } set { CustomPageID = value; } }
 
         public virtual ICollection<CustomPageImage> CustomPageImages { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public CustomPageDisplayType CustomPageDisplayType { get { return CustomPageDisplayType.AllLookupDictionary[CustomPageDisplayTypeID]; } }
 
         public static class FieldLengths

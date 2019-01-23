@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[PersonStewardTaxonomyBranch] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PersonStewardTaxonomyBranch]")]
-    public partial class PersonStewardTaxonomyBranch : IHavePrimaryKey, IHaveATenantID
+    public partial class PersonStewardTaxonomyBranch : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected PersonStewardTaxonomyBranch()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,18 +93,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllPersonStewardTaxonomyBranches.Remove(this);
+            dbContext.PersonStewardTaxonomyBranches.Remove(this);
         }
 
         [Key]
         public int PersonStewardTaxonomyBranchID { get; set; }
-        public int TenantID { get; private set; }
         public int PersonID { get; set; }
         public int TaxonomyBranchID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonStewardTaxonomyBranchID; } set { PersonStewardTaxonomyBranchID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Person Person { get; set; }
         public virtual TaxonomyBranch TaxonomyBranch { get; set; }
 

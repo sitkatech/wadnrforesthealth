@@ -195,7 +195,7 @@ namespace ProjectFirma.Web.Controllers
                     LoginName = username,
                     OrganizationID = unknownOrganization.OrganizationID
                 };
-                HttpRequestStorage.DatabaseEntities.AllPeople.Add(person);
+                HttpRequestStorage.DatabaseEntities.People.Add(person);
                 sendNewUserNotification = true;
             }
             else

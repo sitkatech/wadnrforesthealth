@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[PerformanceMeasureNote] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PerformanceMeasureNote]")]
-    public partial class PerformanceMeasureNote : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureNote : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected PerformanceMeasureNote()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -97,12 +97,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllPerformanceMeasureNotes.Remove(this);
+            dbContext.PerformanceMeasureNotes.Remove(this);
         }
 
         [Key]
         public int PerformanceMeasureNoteID { get; set; }
-        public int TenantID { get; private set; }
         public int PerformanceMeasureID { get; set; }
         public string Note { get; set; }
         public int? CreatePersonID { get; set; }
@@ -112,7 +111,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return PerformanceMeasureNoteID; } set { PerformanceMeasureNoteID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
         public virtual Person CreatePerson { get; set; }
         public virtual Person UpdatePerson { get; set; }

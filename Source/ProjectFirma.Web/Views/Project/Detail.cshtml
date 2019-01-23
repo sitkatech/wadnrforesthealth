@@ -204,10 +204,12 @@
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Simple", ViewDataTyped.EditSimpleProjectLocationUrl, string.Format("Edit {0} - Simple", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Detailed", ViewDataTyped.EditDetailedProjectLocationUrl, string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
 
-                                        @foreach (var geospatialAreaType in ViewDataTyped.GeospatialAreaTypes)
-                                        {
-                                            <li>@ModalDialogFormHelper.ModalDialogFormLink(geospatialAreaType.GeospatialAreaTypeNamePluralized, geospatialAreaType.GetEditGeospatialAreasUrl(ViewDataTyped.Project), string.Format("Edit {0}", geospatialAreaType.GeospatialAreaTypeNamePluralized), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectGeospatialAreaFormID)</li>
-                                        }
+                                        <li>
+                                            @ModalDialogFormHelper.ModalDialogFormLink("Priority Areas", ViewDataTyped.EditProjectPriorityAreaUrl, "Edit Priority Areas", 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectPriorityAreaFormID)
+                                        </li>
+                                        <li>
+                                            @ModalDialogFormHelper.ModalDialogFormLink("Regions", ViewDataTyped.EditProjectRegionUrl, "Edit Regions", 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectRegionFormID)
+                                        </li>
 
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Map Extent", ViewDataTyped.EditProjectBoundingBoxUrl, string.Format("Edit {0} - Map Extent", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectBoundingBoxFormID)</li>
                                     </ul>

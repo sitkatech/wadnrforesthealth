@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var performanceMeasure = HttpRequestStorage.DatabaseEntities.AllPerformanceMeasures.Find(PerformanceMeasureID);
+                var performanceMeasure = HttpRequestStorage.DatabaseEntities.PerformanceMeasures.Find(PerformanceMeasureID);
                 var pmName = performanceMeasure != null ? performanceMeasure.AuditDescriptionString : ViewUtilities.NotFoundString;
                 return $"Performance Measure: {pmName}";
             }

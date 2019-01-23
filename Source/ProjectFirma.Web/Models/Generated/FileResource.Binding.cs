@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[FileResource] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FileResource]")]
-    public partial class FileResource : IHavePrimaryKey, IHaveATenantID
+    public partial class FileResource : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -28,16 +29,13 @@ namespace ProjectFirma.Web.Models
             this.FieldDefinitionDataImages = new HashSet<FieldDefinitionDataImage>();
             this.FirmaHomePageImages = new HashSet<FirmaHomePageImage>();
             this.FirmaPageImages = new HashSet<FirmaPageImage>();
-            this.MonitoringProgramDocuments = new HashSet<MonitoringProgramDocument>();
             this.OrganizationsWhereYouAreTheLogoFileResource = new HashSet<Organization>();
             this.ProjectDocuments = new HashSet<ProjectDocument>();
             this.ProjectDocumentUpdates = new HashSet<ProjectDocumentUpdate>();
             this.ProjectImages = new HashSet<ProjectImage>();
             this.ProjectImageUpdates = new HashSet<ProjectImageUpdate>();
-            this.TenantAttributesWhereYouAreTheTenantBannerLogoFileResource = new HashSet<TenantAttribute>();
-            this.TenantAttributesWhereYouAreTheTenantSquareLogoFileResource = new HashSet<TenantAttribute>();
-            this.TenantAttributesWhereYouAreTheTenantStyleSheetFileResource = new HashSet<TenantAttribute>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
+            this.SystemAttributesWhereYouAreTheBannerLogoFileResource = new HashSet<SystemAttribute>();
+            this.SystemAttributesWhereYouAreTheSquareLogoFileResource = new HashSet<SystemAttribute>();
         }
 
         /// <summary>
@@ -104,13 +102,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || MonitoringProgramDocuments.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || TenantAttributesWhereYouAreTheTenantBannerLogoFileResource.Any() || TenantAttributesWhereYouAreTheTenantSquareLogoFileResource.Any() || TenantAttributesWhereYouAreTheTenantStyleSheetFileResource.Any();
+            return ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(MonitoringProgramDocument).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(TenantAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -119,7 +117,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllFileResources.Remove(this);
+            dbContext.FileResources.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -152,11 +150,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in MonitoringProgramDocuments.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in OrganizationsWhereYouAreTheLogoFileResource.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -182,17 +175,12 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in TenantAttributesWhereYouAreTheTenantBannerLogoFileResource.ToList())
+            foreach(var x in SystemAttributesWhereYouAreTheBannerLogoFileResource.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in TenantAttributesWhereYouAreTheTenantSquareLogoFileResource.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in TenantAttributesWhereYouAreTheTenantStyleSheetFileResource.ToList())
+            foreach(var x in SystemAttributesWhereYouAreTheSquareLogoFileResource.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -200,7 +188,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int FileResourceID { get; set; }
-        public int TenantID { get; private set; }
         public int FileResourceMimeTypeID { get; set; }
         public string OriginalBaseFilename { get; set; }
         public string OriginalFileExtension { get; set; }
@@ -216,16 +203,13 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual ICollection<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual ICollection<FirmaPageImage> FirmaPageImages { get; set; }
-        public virtual ICollection<MonitoringProgramDocument> MonitoringProgramDocuments { get; set; }
         public virtual ICollection<Organization> OrganizationsWhereYouAreTheLogoFileResource { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
         public virtual ICollection<ProjectDocumentUpdate> ProjectDocumentUpdates { get; set; }
         public virtual ICollection<ProjectImage> ProjectImages { get; set; }
         public virtual ICollection<ProjectImageUpdate> ProjectImageUpdates { get; set; }
-        public virtual ICollection<TenantAttribute> TenantAttributesWhereYouAreTheTenantBannerLogoFileResource { get; set; }
-        public virtual ICollection<TenantAttribute> TenantAttributesWhereYouAreTheTenantSquareLogoFileResource { get; set; }
-        public virtual ICollection<TenantAttribute> TenantAttributesWhereYouAreTheTenantStyleSheetFileResource { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
+        public virtual ICollection<SystemAttribute> SystemAttributesWhereYouAreTheBannerLogoFileResource { get; set; }
+        public virtual ICollection<SystemAttribute> SystemAttributesWhereYouAreTheSquareLogoFileResource { get; set; }
         public FileResourceMimeType FileResourceMimeType { get { return FileResourceMimeType.AllLookupDictionary[FileResourceMimeTypeID]; } }
         public virtual Person CreatePerson { get; set; }
 

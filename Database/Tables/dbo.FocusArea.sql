@@ -4,10 +4,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FocusArea](
 	[FocusAreaID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[FocusAreaName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FocusAreaStatusID] [int] NOT NULL,
 	[FocusAreaLocation] [geometry] NULL,
+	[RegionID] [int] NOT NULL,
  CONSTRAINT [PK_FocusArea_FocusAreaID] PRIMARY KEY CLUSTERED 
 (
 	[FocusAreaID] ASC
@@ -24,7 +24,7 @@ REFERENCES [dbo].[FocusAreaStatus] ([FocusAreaStatusID])
 GO
 ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_FocusAreaStatus_FocusAreaStatusID]
 GO
-ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
+ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_Region_RegionID] FOREIGN KEY([RegionID])
+REFERENCES [dbo].[Region] ([RegionID])
 GO
-ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_Tenant_TenantID]
+ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_Region_RegionID]

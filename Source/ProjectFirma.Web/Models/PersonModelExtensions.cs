@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -34,6 +35,11 @@ namespace ProjectFirma.Web.Models
         public static HtmlString GetFullNameFirstLastAsUrl(this Person person)
         {
             return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameFirstLast);
+        }
+
+        public static HtmlString GetFullNameLastFirstAsUrl(this Person person)
+        {
+            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameLastFirst);
         }
 
         public static HtmlString GetFullNameFirstLastAndOrgAsUrl(this Person person)

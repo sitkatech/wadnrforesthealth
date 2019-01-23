@@ -103,7 +103,7 @@ namespace ProjectFirma.Web.Models
             var objectContext = dbContext.GetObjectContext();
             var testProject = TestFramework.TestProject.Insert(dbContext);
             // Act
-            testProject.DeleteProject();
+            testProject.DeleteFull(dbContext);
 
             var changeTracker = dbContext.ChangeTracker;
             changeTracker.DetectChanges();
@@ -153,7 +153,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testFundingSource.DeleteFundingSource();
+            testFundingSource.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this FundingSource name as deleted
             Check.Assert(
@@ -192,7 +192,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testTaxonomyLeaf.DeleteTaxonomyLeaf();
+            testTaxonomyLeaf.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this TaxonomyLeafName as deleted
             Check.Assert(
@@ -234,7 +234,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testProject.DeleteProject();
+            testProject.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Project name as deleted
             Check.Assert(
@@ -276,7 +276,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testTaxonomyTrunk.DeleteTaxonomyTrunk();
+            testTaxonomyTrunk.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this TaxonomyTrunk name as deleted
             Check.Assert(
@@ -318,7 +318,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testOrganization.DeleteOrganization();
+            testOrganization.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Organization name as deleted
             Check.Assert(
@@ -360,7 +360,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testTaxonomyBranch.DeleteTaxonomyBranch();
+            testTaxonomyBranch.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this TaxonomyBranch name as deleted
             Check.Assert(
@@ -402,106 +402,13 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testProjectNote.DeleteProjectNote();
+            testProjectNote.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this ProjectNote name as deleted
             Check.Assert(
                 HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
                     al => al.TableName == "ProjectNote" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testProjectNote.ProjectNoteID) != null,
                 "Could not find deleted ProjectNote record");
-        }
-
-        [Test]
-        [Ignore] //Ignoring because this test doesn't work without at least one pre-existing entries in the geospatialArea table
-        public void TestProjectGeospatialAreaAuditLogging()
-        {
-            // This is a test that is driven off looking for IDs, not strings...
-            // -----------------------------------------------------------------
-
-            // Get an arbitrary real-word person to do these actions
-            var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
-
-            // Create audit logging
-            // --------------------
-
-            // Make a test object and save it
-            var dbContext = HttpRequestStorage.DatabaseEntities;
-
-            var testProjectGeospatialArea = TestFramework.TestProjectGeospatialArea.Create(dbContext);
-            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-
-            // Check that the audit log mentions this object
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for GeospatialArea \"{0}\" in Audit Log database entries.", testProjectGeospatialArea.GeospatialAreaID));
-            Check.Assert(
-                HttpRequestStorage.DatabaseEntities.AuditLogs.ToList()
-                    .Any(al => al.ColumnName == "GeospatialAreaID" && al.OriginalValue != null && al.OriginalValue.Contains(testProjectGeospatialArea.GeospatialAreaID.ToString(CultureInfo.InvariantCulture))));
-
-            // Change audit logging
-            // --------------------
-
-            // Make changes to the original object
-            var newGeospatialArea = HttpRequestStorage.DatabaseEntities.GeospatialAreas.First(ws => ws.GeospatialAreaID != testProjectGeospatialArea.GeospatialAreaID);
-            testProjectGeospatialArea.GeospatialAreaID = newGeospatialArea.GeospatialAreaID;
-            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-
-            // Check that the audit log mentions this NEW ID in reference to our ProjectGeospatialArea name
-            Check.Assert(
-                HttpRequestStorage.DatabaseEntities.AuditLogs.ToList()
-                    .Any(al => al.TableName == "ProjectGeospatialArea" && al.ColumnName == "GeospatialAreaID" && al.NewValue.Contains(newGeospatialArea.GeospatialAreaID.ToString(CultureInfo.InvariantCulture))));
-
-            // Delete audit logging
-            // --------------------
-
-            testProjectGeospatialArea.DeleteProjectGeospatialArea();
-            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-            // Check that the audit log mentions this ProjectGeospatialArea name as deleted
-            Check.Assert(
-                HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
-                    al => al.TableName == "ProjectGeospatialArea" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testProjectGeospatialArea.ProjectGeospatialAreaID) !=
-                null,
-                "Could not find deleted ProjectGeospatialArea record");
-        }
-
-        [Test]
-        public void TestGeospatialAreaAuditLogging()
-        {
-            // Get an arbitrary real-word person to do these actions
-            var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
-
-            // Create audit logging
-            // --------------------
-
-            // Make a test object and save it
-            var dbContext = HttpRequestStorage.DatabaseEntities;
-
-            var testGeospatialArea = TestFramework.TestGeospatialArea.Create(dbContext);
-            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-
-            // Check that the audit log mentions this object
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for GeospatialArea \"{0}\" in Audit Log database entries.", testGeospatialArea.GeospatialAreaName));
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testGeospatialArea.GeospatialAreaName)));
-
-            // Change audit logging
-            // --------------------
-
-            // Make changes to the original object
-            var newGeospatialAreaName = TestFramework.MakeTestName("New GeospatialArea", GeospatialArea.FieldLengths.GeospatialAreaName);
-            testGeospatialArea.GeospatialAreaName = newGeospatialAreaName;
-            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-
-            // Check that the audit log mentions this NEW name
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newGeospatialAreaName)));
-
-            // Delete audit logging
-            // --------------------
-
-            testGeospatialArea.DeleteGeospatialArea();
-            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-            // Check that the audit log mentions this GeospatialArea name as deleted
-            Check.Assert(
-                HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
-                    al => al.TableName == "GeospatialArea" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testGeospatialArea.GeospatialAreaID) != null,
-                "Could not find deleted GeospatialArea record");
         }
 
         [Test]
@@ -539,7 +446,7 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
-            testClassification.DeleteClassification();
+            testClassification.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Classification name as deleted
             Check.Assert(

@@ -94,11 +94,6 @@ namespace ProjectFirma.Web.Models
             set => ProjectUpdateBatch.ProjectCustomAttributeUpdates = (ICollection<ProjectCustomAttributeUpdate>) value;
         }
 
-        public IEnumerable<IQuestionAnswer> GetQuestionAnswers()
-        {
-            return null;
-        }
-
         public IEnumerable<IProjectLocation> GetProjectLocationDetails()
         {
             return ProjectUpdateBatch.ProjectLocationUpdates.ToList();
@@ -109,9 +104,14 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.Project.GetDefaultBoundingBox();
         }
 
-        public IEnumerable<GeospatialArea> GetProjectGeospatialAreas()
+        public IEnumerable<Region> GetProjectRegions()
         {
-            return ProjectUpdateBatch.ProjectGeospatialAreaUpdates.Select(x => x.GeospatialArea);
+            return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.Region);
+        }
+
+        public IEnumerable<PriorityArea> GetProjectPriorityAreas()
+        {
+            return ProjectUpdateBatch.ProjectPriorityAreaUpdates.Select(x => x.PriorityArea);
         }
 
         public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
@@ -133,13 +133,13 @@ namespace ProjectFirma.Web.Models
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var projectUpdate = new ProjectUpdate(projectUpdateBatch);
-            HttpRequestStorage.DatabaseEntities.AllProjectUpdates.Add(projectUpdate);
+            HttpRequestStorage.DatabaseEntities.ProjectUpdates.Add(projectUpdate);
         }
 
         public static void CommitToProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var projectUpdate = new ProjectUpdate(projectUpdateBatch);
-            HttpRequestStorage.DatabaseEntities.AllProjectUpdates.Add(projectUpdate);
+            HttpRequestStorage.DatabaseEntities.ProjectUpdates.Add(projectUpdate);
         }
 
         public Person GetPrimaryContact() => PrimaryContactPerson ?? GetPrimaryContactOrganization()?.PrimaryContactPerson;

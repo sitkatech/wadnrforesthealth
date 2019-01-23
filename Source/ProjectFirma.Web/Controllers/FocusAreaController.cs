@@ -21,11 +21,28 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [FocusAreaManageFeature]
-        public PartialViewResult DeleteFocusArea(FocusAreaPrimaryKey focusAreaPrimaryKey)
+        public PartialViewResult Delete(FocusAreaPrimaryKey focusAreaPrimaryKey)
         {
             var focusArea = focusAreaPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(focusArea.FocusAreaID);
             return ViewDeleteFocusArea(focusArea, viewModel);
+        }
+
+        [HttpPost]
+        [FocusAreaManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Delete(FocusAreaPrimaryKey focusAreaPrimaryKey,
+            ConfirmDialogFormViewModel viewModel)
+        {
+            var focusArea = focusAreaPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteFocusArea(focusArea, viewModel);
+            }
+
+            focusArea.DeleteFull(HttpRequestStorage.DatabaseEntities);
+
+            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
@@ -45,9 +62,9 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel);
             }
-            var focusArea = new FocusArea(string.Empty, ModelObjectHelpers.NotYetAssignedID);
+            var focusArea = new FocusArea(string.Empty, ModelObjectHelpers.NotYetAssignedID, ModelObjectHelpers.NotYetAssignedID);
             viewModel.UpdateModel(focusArea);
-            HttpRequestStorage.DatabaseEntities.AllFocusAreas.Add(focusArea);
+            HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             SetMessageForDisplay($"Focus Area {focusArea.FocusAreaName} successfully created.");
 
@@ -166,7 +183,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             viewModel.UpdateModel(focusArea);
-            HttpRequestStorage.DatabaseEntities.AllFocusAreaLocationStagings.RemoveRange(focusArea
+            HttpRequestStorage.DatabaseEntities.FocusAreaLocationStagings.RemoveRange(focusArea
                 .FocusAreaLocationStagings);
 
             SetMessageForDisplay($"Focus Area Location for {focusArea.GetDisplayNameAsUrl()} successfully updated.");
@@ -222,16 +239,19 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteFocusArea(FocusArea focusArea, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Focus Area \"{focusArea.FocusAreaName}\" has been deleted";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            var growlMessage = $"Are you sure you want to delete Focus Area \"{focusArea.FocusAreaName}\"";
+            var viewData = new ConfirmDialogFormViewData(growlMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
         private PartialViewResult ViewEdit(EditViewModel viewModel)
         {
             var focusAreaStatusAsSelectListItems =
-                FocusAreaStatus.All.ToSelectListWithEmptyFirstRow(v => v.FocusAreaStatusID.ToString(), m => m.FocusAreaStatusDisplayName);
+                FocusAreaStatus.All.ToSelectListWithEmptyFirstRow(k => k.FocusAreaStatusID.ToString(), v => v.FocusAreaStatusDisplayName);
+            var regions =
+                HttpRequestStorage.DatabaseEntities.Regions.ToSelectListWithEmptyFirstRow(k => k.RegionID.ToString(),
+                    v => v.RegionName);
             var isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
-            var viewData = new EditViewData(focusAreaStatusAsSelectListItems, isSitkaAdmin);
+            var viewData = new EditViewData(focusAreaStatusAsSelectListItems, regions, isSitkaAdmin);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 
@@ -276,7 +296,7 @@ namespace ProjectFirma.Web.Controllers
             hasSpatialData = false;
 
             var layers = new List<LayerGeoJson>();
-            var focusAreas = HttpRequestStorage.DatabaseEntities.AllFocusAreas.ToList();
+            var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var locationFeatures = new List<Feature>();
 
             foreach (var focusArea in focusAreas)

@@ -27,6 +27,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Views.ProjectCreate;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
@@ -81,7 +82,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             AreProjectBasicsValid = projectUpdateBatch.AreProjectBasicsValid;
 
             //Neuter UpdateStatus for non-approver users until we go live with "Show Changes" for all users.
-            UpdateStatus = CurrentPerson.IsApprover() ? updateStatus : new UpdateStatus(false, false, false, false, false, false, false, false, false, false, false, false);
+            UpdateStatus = CurrentPerson.IsApprover() ? updateStatus : new UpdateStatus(false, false, false, false, false, false, false, false, false, false, false, false, false, false);
             HasUpdateStarted = ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID);
 
             ValidationWarnings = validationWarnings;

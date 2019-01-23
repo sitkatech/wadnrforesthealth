@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[OrganizationTypeRelationshipType] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[OrganizationTypeRelationshipType]")]
-    public partial class OrganizationTypeRelationshipType : IHavePrimaryKey, IHaveATenantID
+    public partial class OrganizationTypeRelationshipType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected OrganizationTypeRelationshipType()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,18 +93,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllOrganizationTypeRelationshipTypes.Remove(this);
+            dbContext.OrganizationTypeRelationshipTypes.Remove(this);
         }
 
         [Key]
         public int OrganizationTypeRelationshipTypeID { get; set; }
-        public int TenantID { get; private set; }
         public int OrganizationTypeID { get; set; }
         public int RelationshipTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return OrganizationTypeRelationshipTypeID; } set { OrganizationTypeRelationshipTypeID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual OrganizationType OrganizationType { get; set; }
         public virtual RelationshipType RelationshipType { get; set; }
 

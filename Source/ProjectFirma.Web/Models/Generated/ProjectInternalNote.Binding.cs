@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProjectInternalNote] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectInternalNote]")]
-    public partial class ProjectInternalNote : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectInternalNote : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectInternalNote()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -97,12 +97,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectInternalNotes.Remove(this);
+            dbContext.ProjectInternalNotes.Remove(this);
         }
 
         [Key]
         public int ProjectInternalNoteID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public string Note { get; set; }
         public int? CreatePersonID { get; set; }
@@ -112,7 +111,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectInternalNoteID; } set { ProjectInternalNoteID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual Person CreatePerson { get; set; }
         public virtual Person UpdatePerson { get; set; }

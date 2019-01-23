@@ -24,9 +24,9 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var projectUpdateBatch = HttpRequestStorage.DatabaseEntities.AllProjectUpdateBatches.Find(ProjectUpdateBatchID);
+                var projectUpdateBatch = HttpRequestStorage.DatabaseEntities.ProjectUpdateBatches.Find(ProjectUpdateBatchID);
                 var project = projectUpdateBatch?.Project;
-                var organization = HttpRequestStorage.DatabaseEntities.AllOrganizations.Find(OrganizationID);
+                var organization = HttpRequestStorage.DatabaseEntities.Organizations.Find(OrganizationID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var organizationName = organization != null ? organization.AuditDescriptionString : ViewUtilities.NotFoundString;
                 return $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {projectName}, Organization: {organizationName}";

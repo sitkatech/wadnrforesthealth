@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PersonStewardTaxonomyBranch]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return personStewardTaxonomyBranch;
         }
 
-        public static void DeletePersonStewardTaxonomyBranch(this List<int> personStewardTaxonomyBranchIDList)
+        public static void DeletePersonStewardTaxonomyBranch(this IQueryable<PersonStewardTaxonomyBranch> personStewardTaxonomyBranches, List<int> personStewardTaxonomyBranchIDList)
         {
             if(personStewardTaxonomyBranchIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPersonStewardTaxonomyBranches.RemoveRange(HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID)));
+                personStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID)).Delete();
             }
         }
 
-        public static void DeletePersonStewardTaxonomyBranch(this ICollection<PersonStewardTaxonomyBranch> personStewardTaxonomyBranchesToDelete)
+        public static void DeletePersonStewardTaxonomyBranch(this IQueryable<PersonStewardTaxonomyBranch> personStewardTaxonomyBranches, ICollection<PersonStewardTaxonomyBranch> personStewardTaxonomyBranchesToDelete)
         {
             if(personStewardTaxonomyBranchesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPersonStewardTaxonomyBranches.RemoveRange(personStewardTaxonomyBranchesToDelete);
+                var personStewardTaxonomyBranchIDList = personStewardTaxonomyBranchesToDelete.Select(x => x.PersonStewardTaxonomyBranchID).ToList();
+                personStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID)).Delete();
             }
         }
 
-        public static void DeletePersonStewardTaxonomyBranch(this int personStewardTaxonomyBranchID)
+        public static void DeletePersonStewardTaxonomyBranch(this IQueryable<PersonStewardTaxonomyBranch> personStewardTaxonomyBranches, int personStewardTaxonomyBranchID)
         {
-            DeletePersonStewardTaxonomyBranch(new List<int> { personStewardTaxonomyBranchID });
+            DeletePersonStewardTaxonomyBranch(personStewardTaxonomyBranches, new List<int> { personStewardTaxonomyBranchID });
         }
 
-        public static void DeletePersonStewardTaxonomyBranch(this PersonStewardTaxonomyBranch personStewardTaxonomyBranchToDelete)
+        public static void DeletePersonStewardTaxonomyBranch(this IQueryable<PersonStewardTaxonomyBranch> personStewardTaxonomyBranches, PersonStewardTaxonomyBranch personStewardTaxonomyBranchToDelete)
         {
-            DeletePersonStewardTaxonomyBranch(new List<PersonStewardTaxonomyBranch> { personStewardTaxonomyBranchToDelete });
+            DeletePersonStewardTaxonomyBranch(personStewardTaxonomyBranches, new List<PersonStewardTaxonomyBranch> { personStewardTaxonomyBranchToDelete });
         }
     }
 }

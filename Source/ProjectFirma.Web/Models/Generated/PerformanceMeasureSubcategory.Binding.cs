@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[PerformanceMeasureSubcategory] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PerformanceMeasureSubcategory]")]
-    public partial class PerformanceMeasureSubcategory : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureSubcategory : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -27,8 +28,6 @@ namespace ProjectFirma.Web.Models
             this.PerformanceMeasureActualSubcategoryOptionUpdates = new HashSet<PerformanceMeasureActualSubcategoryOptionUpdate>();
             this.PerformanceMeasureExpectedSubcategoryOptions = new HashSet<PerformanceMeasureExpectedSubcategoryOption>();
             this.PerformanceMeasureSubcategoryOptions = new HashSet<PerformanceMeasureSubcategoryOption>();
-            this.SnapshotPerformanceMeasureSubcategoryOptions = new HashSet<SnapshotPerformanceMeasureSubcategoryOption>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -82,13 +81,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return PerformanceMeasureActualSubcategoryOptions.Any() || PerformanceMeasureActualSubcategoryOptionUpdates.Any() || PerformanceMeasureExpectedSubcategoryOptions.Any() || PerformanceMeasureSubcategoryOptions.Any() || SnapshotPerformanceMeasureSubcategoryOptions.Any();
+            return PerformanceMeasureActualSubcategoryOptions.Any() || PerformanceMeasureActualSubcategoryOptionUpdates.Any() || PerformanceMeasureExpectedSubcategoryOptions.Any() || PerformanceMeasureSubcategoryOptions.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PerformanceMeasureSubcategory).Name, typeof(PerformanceMeasureActualSubcategoryOption).Name, typeof(PerformanceMeasureActualSubcategoryOptionUpdate).Name, typeof(PerformanceMeasureExpectedSubcategoryOption).Name, typeof(PerformanceMeasureSubcategoryOption).Name, typeof(SnapshotPerformanceMeasureSubcategoryOption).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PerformanceMeasureSubcategory).Name, typeof(PerformanceMeasureActualSubcategoryOption).Name, typeof(PerformanceMeasureActualSubcategoryOptionUpdate).Name, typeof(PerformanceMeasureExpectedSubcategoryOption).Name, typeof(PerformanceMeasureSubcategoryOption).Name};
 
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllPerformanceMeasureSubcategories.Remove(this);
+            dbContext.PerformanceMeasureSubcategories.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -124,16 +123,10 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in SnapshotPerformanceMeasureSubcategoryOptions.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
         public int PerformanceMeasureSubcategoryID { get; set; }
-        public int TenantID { get; private set; }
         public int PerformanceMeasureID { get; set; }
         public string PerformanceMeasureSubcategoryDisplayName { get; set; }
         public string ChartConfigurationJson { get; set; }
@@ -145,8 +138,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<PerformanceMeasureActualSubcategoryOptionUpdate> PerformanceMeasureActualSubcategoryOptionUpdates { get; set; }
         public virtual ICollection<PerformanceMeasureExpectedSubcategoryOption> PerformanceMeasureExpectedSubcategoryOptions { get; set; }
         public virtual ICollection<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
-        public virtual ICollection<SnapshotPerformanceMeasureSubcategoryOption> SnapshotPerformanceMeasureSubcategoryOptions { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
         public GoogleChartType GoogleChartType { get { return GoogleChartTypeID.HasValue ? GoogleChartType.AllLookupDictionary[GoogleChartTypeID.Value] : null; } }
 

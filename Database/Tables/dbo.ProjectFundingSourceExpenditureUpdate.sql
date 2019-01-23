@@ -4,7 +4,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProjectFundingSourceExpenditureUpdate](
 	[ProjectFundingSourceExpenditureUpdateID] [int] IDENTITY(1,1) NOT NULL,
-	[TenantID] [int] NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
 	[FundingSourceID] [int] NOT NULL,
 	[CalendarYear] [int] NOT NULL,
@@ -27,22 +26,7 @@ REFERENCES [dbo].[FundingSource] ([FundingSourceID])
 GO
 ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate] CHECK CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID]
 GO
-ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID_TenantID] FOREIGN KEY([FundingSourceID], [TenantID])
-REFERENCES [dbo].[FundingSource] ([FundingSourceID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate] CHECK CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID_TenantID]
-GO
 ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID] FOREIGN KEY([ProjectUpdateBatchID])
 REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID])
 GO
 ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate] CHECK CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID]
-GO
-ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID] FOREIGN KEY([ProjectUpdateBatchID], [TenantID])
-REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID], [TenantID])
-GO
-ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate] CHECK CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID_TenantID]
-GO
-ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_Tenant_TenantID] FOREIGN KEY([TenantID])
-REFERENCES [dbo].[Tenant] ([TenantID])
-GO
-ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate] CHECK CONSTRAINT [FK_ProjectFundingSourceExpenditureUpdate_Tenant_TenantID]

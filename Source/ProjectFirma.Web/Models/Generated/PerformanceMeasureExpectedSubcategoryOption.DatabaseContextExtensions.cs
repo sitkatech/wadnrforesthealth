@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[PerformanceMeasureExpectedSubcategoryOption]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureExpectedSubcategoryOption;
         }
 
-        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this List<int> performanceMeasureExpectedSubcategoryOptionIDList)
+        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this IQueryable<PerformanceMeasureExpectedSubcategoryOption> performanceMeasureExpectedSubcategoryOptions, List<int> performanceMeasureExpectedSubcategoryOptionIDList)
         {
             if(performanceMeasureExpectedSubcategoryOptionIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpectedSubcategoryOptions.RemoveRange(HttpRequestStorage.DatabaseEntities.PerformanceMeasureExpectedSubcategoryOptions.Where(x => performanceMeasureExpectedSubcategoryOptionIDList.Contains(x.PerformanceMeasureExpectedSubcategoryOptionID)));
+                performanceMeasureExpectedSubcategoryOptions.Where(x => performanceMeasureExpectedSubcategoryOptionIDList.Contains(x.PerformanceMeasureExpectedSubcategoryOptionID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this ICollection<PerformanceMeasureExpectedSubcategoryOption> performanceMeasureExpectedSubcategoryOptionsToDelete)
+        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this IQueryable<PerformanceMeasureExpectedSubcategoryOption> performanceMeasureExpectedSubcategoryOptions, ICollection<PerformanceMeasureExpectedSubcategoryOption> performanceMeasureExpectedSubcategoryOptionsToDelete)
         {
             if(performanceMeasureExpectedSubcategoryOptionsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllPerformanceMeasureExpectedSubcategoryOptions.RemoveRange(performanceMeasureExpectedSubcategoryOptionsToDelete);
+                var performanceMeasureExpectedSubcategoryOptionIDList = performanceMeasureExpectedSubcategoryOptionsToDelete.Select(x => x.PerformanceMeasureExpectedSubcategoryOptionID).ToList();
+                performanceMeasureExpectedSubcategoryOptions.Where(x => performanceMeasureExpectedSubcategoryOptionIDList.Contains(x.PerformanceMeasureExpectedSubcategoryOptionID)).Delete();
             }
         }
 
-        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this int performanceMeasureExpectedSubcategoryOptionID)
+        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this IQueryable<PerformanceMeasureExpectedSubcategoryOption> performanceMeasureExpectedSubcategoryOptions, int performanceMeasureExpectedSubcategoryOptionID)
         {
-            DeletePerformanceMeasureExpectedSubcategoryOption(new List<int> { performanceMeasureExpectedSubcategoryOptionID });
+            DeletePerformanceMeasureExpectedSubcategoryOption(performanceMeasureExpectedSubcategoryOptions, new List<int> { performanceMeasureExpectedSubcategoryOptionID });
         }
 
-        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this PerformanceMeasureExpectedSubcategoryOption performanceMeasureExpectedSubcategoryOptionToDelete)
+        public static void DeletePerformanceMeasureExpectedSubcategoryOption(this IQueryable<PerformanceMeasureExpectedSubcategoryOption> performanceMeasureExpectedSubcategoryOptions, PerformanceMeasureExpectedSubcategoryOption performanceMeasureExpectedSubcategoryOptionToDelete)
         {
-            DeletePerformanceMeasureExpectedSubcategoryOption(new List<PerformanceMeasureExpectedSubcategoryOption> { performanceMeasureExpectedSubcategoryOptionToDelete });
+            DeletePerformanceMeasureExpectedSubcategoryOption(performanceMeasureExpectedSubcategoryOptions, new List<PerformanceMeasureExpectedSubcategoryOption> { performanceMeasureExpectedSubcategoryOptionToDelete });
         }
     }
 }

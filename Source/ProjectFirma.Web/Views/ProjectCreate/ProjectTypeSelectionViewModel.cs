@@ -19,40 +19,22 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using LtInfo.Common;
 using LtInfo.Common.Models;
-using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
-    public class ProjectTypeSelectionViewModel : FormViewModel, IValidatableObject
+    public class ProjectTypeSelectionViewModel : FormViewModel
     {
         public enum ProjectCreateType
         {
             Application,
-            Existing,
-            ImportExternal
+            Existing
         }
         
         [DisplayName("Project Create Type")]
         [Required(ErrorMessage = "You must select an option in order to proceed.")]
         public ProjectCreateType? CreateType { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var errors = new List<ValidationResult>();
-
-            // Should only be able to import external when project external data source is set on tenant attribute
-            if (CreateType == ProjectCreateType.ImportExternal &&
-                !HttpRequestStorage.Tenant.GetTenantAttribute().ProjectExternalDataSourceEnabled)
-            {
-                errors.Add(new SitkaValidationResult<ProjectTypeSelectionViewModel, ProjectCreateType?>("Invalid option.", m => m.CreateType));
-            }
-
-            return errors;
-        }
     }
 }

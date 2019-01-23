@@ -27,7 +27,6 @@ using System.Security.Principal;
 using System.Web;
 using LtInfo.Common;
 using ProjectFirma.Web.Models;
-using LtInfo.Common.DesignByContract;
 using Person = ProjectFirma.Web.Models.Person;
 
 namespace ProjectFirma.Web.Common
@@ -60,30 +59,6 @@ namespace ProjectFirma.Web.Common
             set { SetValue(PersonKey, value); }
         }
 
-        public static Tenant Tenant
-        {
-            get
-            {
-                return GetValueOrDefault(TenantKey,
-                    () =>
-                    {
-                        var httpContext = HttpContext.Current;
-                        if (httpContext != null)
-                        {
-                            var urlHost = httpContext.Request.Url.Host;
-                            var tenant = Tenant.All.SingleOrDefault(x => urlHost.Equals(FirmaWebConfiguration.FirmaEnvironment.GetCanonicalHostNameForEnvironment(x), StringComparison.InvariantCultureIgnoreCase));
-                            Check.RequireNotNull(tenant, string.Format("Could not determine tenant from host {0}", urlHost));
-                            return tenant;
-                        }
-                        else
-                        {
-                            return Tenant.WashingtonDepartmentOfNaturalResources;
-                        }
-                    });
-            }
-        }
-
-
         public static DatabaseEntities DatabaseEntities
         {
             get { return (DatabaseEntities) LtInfoEntityTypeLoader; }
@@ -99,13 +74,7 @@ namespace ProjectFirma.Web.Common
         public static void StartContextForTest()
         {
             var context = MakeNewContext(true);
-            SetValue(TenantKey, Tenant.WashingtonDepartmentOfNaturalResources);
             SetValue(DatabaseContextKey, context);
-        }
-
-        public static void SetTenantForHangfire(Tenant tenant)
-        {
-            SetValue(TenantKey, tenant);
         }
 
         public static void EndContextForTest()
@@ -121,17 +90,6 @@ namespace ProjectFirma.Web.Common
                 BackingStore[DatabaseContextKey] = null;
             }
             BackingStore.Remove(DatabaseContextKey);
-
-            if (!BackingStore.Contains(TenantKey))
-            {
-                return;
-            }
-            var tenant = BackingStore[TenantKey] as Tenant;
-            if (tenant != null)
-            {
-                BackingStore[TenantKey] = null;
-            }
-            BackingStore.Remove(TenantKey);
 
             if (!BackingStore.Contains(PersonKey))
             {
@@ -251,7 +209,7 @@ namespace ProjectFirma.Web.Common
             }
 
             // calls to the account provisioning service from keystone are authenticated calls, but not by forms auth tickets.  they come in with the user identity of the
-            // application pool that keystone runs under and have an authentication type of "Kerberos". these particular invokations need to be treated the same way as the
+            // application pool that keystone runs under and have an authentication type of "Kerberos". these particular invocations need to be treated the same way as the
             // unauthenticated calls over basic bindings - that is they do not map to a MM user and should be considered "anonymous".
 
             //These are OpenID AuthenticationTypes, WIF ones include "Keberos" and "Federation"
@@ -260,6 +218,10 @@ namespace ProjectFirma.Web.Common
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
                 var user = getUserByGuid(saml2UserClaims.UniqueIdentifier);
+                if (user == null)
+                {
+                    throw new Saml2ClaimNotFoundException($"User not found for GUID {saml2UserClaims.UniqueIdentifier} ({saml2UserClaims.DisplayName})");
+                }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)
                 {

@@ -98,12 +98,9 @@ namespace ProjectFirma.Web.Views
             {
                 BuildAboutMenu(currentPerson),
                 BuildProjectsMenu(currentPerson),
+                BuildGrantMenuItem(currentPerson),
                 BuildProgramInfoMenu(currentPerson)
             };
-            if (MultiTenantHelpers.DisplayAccomplishmentDashboard())
-            {
-                TopLevelLtInfoMenuItems.Add(BuildResultsMenu(currentPerson));
-            }
             TopLevelLtInfoMenuItems.Add(BuildManageMenu(currentPerson));
 
             TopLevelLtInfoMenuItems.ForEach(x => x.ExtraTopLevelMenuCssClasses = new List<string> { "navigation-root-item" });
@@ -136,15 +133,15 @@ namespace ProjectFirma.Web.Views
             return aboutMenu;
         }
 
-        private static LtInfoMenuItem BuildResultsMenu(Person currentPerson)
+        /// <summary>
+        /// Grants Top-Level menu
+        /// </summary>
+        private static LtInfoMenuItem BuildGrantMenuItem(Person currentPerson)
         {
-            var resultsMenu = new LtInfoMenuItem("Results");
+            var grantsMenu = new LtInfoMenuItem("Grants");
+            grantsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List", "Group1"));
 
-            resultsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ResultsController>(c => c.AccomplishmentsDashboard()), currentPerson, "Accomplishments Dashboard"));
-            //resultsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ResultsController>(c => c.ProjectMap()), currentPerson, $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Map"));
-
-            //resultsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<SnapshotController>(c => c.Index()), currentPerson, "System Snapshot", "Group2"));
-            return resultsMenu;
+            return grantsMenu;
         }
 
         private static LtInfoMenuItem BuildProgramInfoMenu(Person currentPerson)
@@ -155,13 +152,10 @@ namespace ProjectFirma.Web.Views
             MultiTenantHelpers.GetClassificationSystems().ForEach(x =>
             {
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProgramInfoController>(c => c.ClassificationSystem(x.ClassificationSystemID)), currentPerson, x.ClassificationSystemNamePluralized, "Group1"));
-            });            
-            
+            });
 
-            foreach (var geospatialAreaType in HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList())
-            {
-                programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GeospatialAreaController>(c => c.Index(geospatialAreaType)), currentPerson, $"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", "Group2"));
-            }
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<PriorityAreaController>(c => c.Index()), currentPerson, "Priority Areas", "Group2"));
+            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<RegionController>(c => c.Index()), currentPerson, "Regions", "Group2"));
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FocusAreaController>(c => c.Index()), currentPerson, "Focus Areas", "Group2"));
             if (MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship())
             {
@@ -195,8 +189,6 @@ namespace ProjectFirma.Web.Views
             });
             
 
-            MultiTenantHelpers.AddTechnicalAssistanceParametersMenuItem(manageMenu, "Group1");
-
             // Group 2 - System Config stuff
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<UserController>(c => c.Index()), currentPerson, "Users and Contacts", "Group2"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.FeaturedList()), currentPerson, $"Featured {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", "Group2"));
@@ -214,9 +206,7 @@ namespace ProjectFirma.Web.Views
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.InternalSetupNotes()), currentPerson, "Internal Setup Notes", "Group4"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.StyleGuide()), currentPerson, "Style Guide", "Group4"));
             
-            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<CostParameterSetController>(c => c.Detail()), currentPerson, "Cost Parameters", "Group5"));            
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationAndRelationshipTypeController>(c => c.Index()), currentPerson, Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabelPluralized(), "Group5"));
-            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<TenantController>(c => c.Detail()), currentPerson, "Tenant Configuration", "Group5"));
            
             return manageMenu;
         }
@@ -227,18 +217,10 @@ namespace ProjectFirma.Web.Views
             var projectsMenu = new LtInfoMenuItem($"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}");
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ResultsController>(c => c.ProjectMap()), currentPerson, $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Map", "Group1"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Index()), currentPerson, $"Full {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} List", "Group2"));            
-            //projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectUpdateController>(c => c.MyProjectsRequiringAnUpdate()), currentPerson, "Update My Project(s)", "Group3"));
-            //var projectUpdateStatusMenuItemName = string.Format("{0} Status of Project Updates", FirmaDateUtilities.CalculateCurrentYearToUseForReporting());
-            //projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectUpdateController>(c => c.ProjectUpdateStatus()), currentPerson, projectUpdateStatusMenuItemName, "Group3"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Proposed()), currentPerson, $"{Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()}", "Group3"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectController>(c => c.Pending()), currentPerson, $"Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", "Group3"));
             projectsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<TreatmentActivityController>(tac => tac.Index()),currentPerson, "Treatments", "Group4"));
             return projectsMenu;
-        }
-
-        public string IsActiveUrl(string currentUrlPathAndQuery, string urlToCompare)
-        {
-            return currentUrlPathAndQuery == urlToCompare ? " class=\"active\"" : string.Empty;
         }
 
         public string GetBreadCrumbTitle()

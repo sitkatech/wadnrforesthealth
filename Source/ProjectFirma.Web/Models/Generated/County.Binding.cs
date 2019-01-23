@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[County] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[County]")]
-    public partial class County : IHavePrimaryKey, IHaveATenantID
+    public partial class County : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected County()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -92,19 +92,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllCounties.Remove(this);
+            dbContext.Counties.Remove(this);
         }
 
         [Key]
         public int CountyID { get; set; }
-        public int TenantID { get; private set; }
         public string CountyName { get; set; }
         public int StateProvinceID { get; set; }
         public DbGeometry CountyFeature { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return CountyID; } set { CountyID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual StateProvince StateProvince { get; set; }
 
         public static class FieldLengths

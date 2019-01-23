@@ -15,20 +15,18 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[Project] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Project]")]
-    public partial class Project : IHavePrimaryKey, IHaveATenantID
+    public partial class Project : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
         protected Project()
         {
-            this.ContractorTimeActivities = new HashSet<ContractorTimeActivity>();
             this.NotificationProjects = new HashSet<NotificationProject>();
             this.PerformanceMeasureActuals = new HashSet<PerformanceMeasureActual>();
             this.PerformanceMeasureExpecteds = new HashSet<PerformanceMeasureExpected>();
-            this.ProjectAssessmentQuestions = new HashSet<ProjectAssessmentQuestion>();
-            this.ProjectBudgets = new HashSet<ProjectBudget>();
             this.ProjectClassifications = new HashSet<ProjectClassification>();
             this.ProjectCustomAttributes = new HashSet<ProjectCustomAttribute>();
             this.ProjectDocuments = new HashSet<ProjectDocument>();
@@ -36,8 +34,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectExternalLinks = new HashSet<ProjectExternalLink>();
             this.ProjectFundingSourceExpenditures = new HashSet<ProjectFundingSourceExpenditure>();
             this.ProjectFundingSourceRequests = new HashSet<ProjectFundingSourceRequest>();
-            this.ProjectGeospatialAreas = new HashSet<ProjectGeospatialArea>();
-            this.ProjectGeospatialAreaTypeNotes = new HashSet<ProjectGeospatialAreaTypeNote>();
             this.ProjectImages = new HashSet<ProjectImage>();
             this.ProjectInternalNotes = new HashSet<ProjectInternalNote>();
             this.ProjectLocations = new HashSet<ProjectLocation>();
@@ -45,17 +41,17 @@ namespace ProjectFirma.Web.Models
             this.ProjectNotes = new HashSet<ProjectNote>();
             this.ProjectOrganizations = new HashSet<ProjectOrganization>();
             this.ProjectPeople = new HashSet<ProjectPerson>();
+            this.ProjectPriorityAreas = new HashSet<ProjectPriorityArea>();
+            this.ProjectRegions = new HashSet<ProjectRegion>();
             this.ProjectTags = new HashSet<ProjectTag>();
             this.ProjectUpdateBatches = new HashSet<ProjectUpdateBatch>();
-            this.SnapshotProjects = new HashSet<SnapshotProject>();
             this.TreatmentActivities = new HashSet<TreatmentActivity>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID) : this()
+        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation) : this()
         {
             this.ProjectID = projectID;
             this.TaxonomyLeafID = taxonomyLeafID;
@@ -82,6 +78,8 @@ namespace ProjectFirma.Web.Models
             this.DefaultBoundingBox = defaultBoundingBox;
             this.NoExpendituresToReportExplanation = noExpendituresToReportExplanation;
             this.FocusAreaID = focusAreaID;
+            this.NoRegionsExplanation = noRegionsExplanation;
+            this.NoPriorityAreasExplanation = noPriorityAreasExplanation;
         }
 
         /// <summary>
@@ -133,13 +131,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ContractorTimeActivities.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectAssessmentQuestions.Any() || ProjectBudgets.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceRequests.Any() || ProjectGeospatialAreas.Any() || ProjectGeospatialAreaTypeNotes.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || SnapshotProjects.Any() || TreatmentActivities.Any();
+            return NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityAreas.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(ContractorTimeActivity).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectAssessmentQuestion).Name, typeof(ProjectBudget).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectGeospatialArea).Name, typeof(ProjectGeospatialAreaTypeNote).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(SnapshotProject).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityArea).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -148,18 +146,13 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllProjects.Remove(this);
+            dbContext.Projects.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
-
-            foreach(var x in ContractorTimeActivities.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
 
             foreach(var x in NotificationProjects.ToList())
             {
@@ -172,16 +165,6 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in PerformanceMeasureExpecteds.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectAssessmentQuestions.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectBudgets.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -221,16 +204,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectGeospatialAreas.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectGeospatialAreaTypeNotes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProjectImages.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -266,17 +239,22 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in ProjectPriorityAreas.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in ProjectRegions.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in ProjectTags.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
             foreach(var x in ProjectUpdateBatches.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in SnapshotProjects.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -289,7 +267,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectID { get; set; }
-        public int TenantID { get; private set; }
         public int TaxonomyLeafID { get; set; }
         public int ProjectStageID { get; set; }
         public string ProjectName { get; set; }
@@ -314,15 +291,14 @@ namespace ProjectFirma.Web.Models
         public DbGeometry DefaultBoundingBox { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
         public int? FocusAreaID { get; set; }
+        public string NoRegionsExplanation { get; set; }
+        public string NoPriorityAreasExplanation { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
-        public virtual ICollection<ContractorTimeActivity> ContractorTimeActivities { get; set; }
         public virtual ICollection<NotificationProject> NotificationProjects { get; set; }
         public virtual ICollection<PerformanceMeasureActual> PerformanceMeasureActuals { get; set; }
         public virtual ICollection<PerformanceMeasureExpected> PerformanceMeasureExpecteds { get; set; }
-        public virtual ICollection<ProjectAssessmentQuestion> ProjectAssessmentQuestions { get; set; }
-        public virtual ICollection<ProjectBudget> ProjectBudgets { get; set; }
         public virtual ICollection<ProjectClassification> ProjectClassifications { get; set; }
         public virtual ICollection<ProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
@@ -330,8 +306,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual ICollection<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
         public virtual ICollection<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
-        public virtual ICollection<ProjectGeospatialArea> ProjectGeospatialAreas { get; set; }
-        public virtual ICollection<ProjectGeospatialAreaTypeNote> ProjectGeospatialAreaTypeNotes { get; set; }
         public virtual ICollection<ProjectImage> ProjectImages { get; set; }
         public virtual ICollection<ProjectInternalNote> ProjectInternalNotes { get; set; }
         public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }
@@ -339,11 +313,11 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectNote> ProjectNotes { get; set; }
         public virtual ICollection<ProjectOrganization> ProjectOrganizations { get; set; }
         public virtual ICollection<ProjectPerson> ProjectPeople { get; set; }
+        public virtual ICollection<ProjectPriorityArea> ProjectPriorityAreas { get; set; }
+        public virtual ICollection<ProjectRegion> ProjectRegions { get; set; }
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
         public virtual ICollection<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
-        public virtual ICollection<SnapshotProject> SnapshotProjects { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual TaxonomyLeaf TaxonomyLeaf { get; set; }
         public ProjectStage ProjectStage { get { return ProjectStage.AllLookupDictionary[ProjectStageID]; } }
         public ProjectLocationSimpleType ProjectLocationSimpleType { get { return ProjectLocationSimpleType.AllLookupDictionary[ProjectLocationSimpleTypeID]; } }
@@ -360,6 +334,8 @@ namespace ProjectFirma.Web.Models
             public const int PerformanceMeasureActualYearsExemptionExplanation = 4000;
             public const int ProjectLocationNotes = 4000;
             public const int PerformanceMeasureNotes = 500;
+            public const int NoRegionsExplanation = 4000;
+            public const int NoPriorityAreasExplanation = 4000;
         }
     }
 }

@@ -57,11 +57,11 @@ namespace ProjectFirma.Web.Models
 
         private bool IsPassingAllValidationRules()
         {
-            var areAllProjectGeospatialAreasValid = HttpRequestStorage.DatabaseEntities.GeospatialAreaTypes.ToList().All(IsProjectGeospatialAreaValid);
             return AreProjectBasicsValid && AreExpendituresValid() &&
-                   ArePerformanceMeasuresValid() &&
+                  // ArePerformanceMeasuresValid() &&
                    IsProjectLocationSimpleValid() &&
-                   areAllProjectGeospatialAreasValid;
+                   IsProjectPriorityAreaValid() &&
+                   IsProjectRegionValid();
         }
 
         public bool InEditableState => Project.IsActiveProject() && (IsCreated || IsReturned);
@@ -124,8 +124,11 @@ namespace ProjectFirma.Web.Models
             // project locations - detailed
             ProjectLocationUpdate.CreateFromProject(projectUpdateBatch);
 
-            // project geospatialArea
-            ProjectGeospatialAreaUpdate.CreateFromProject(projectUpdateBatch);
+            // project priority area
+            ProjectPriorityAreaUpdate.CreateFromProject(projectUpdateBatch);
+
+            // project region
+            ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
 
             // photos
             ProjectImageUpdate.CreateFromProject(projectUpdateBatch);
@@ -198,130 +201,101 @@ namespace ProjectFirma.Web.Models
         public static void DeleteProjectImageUpdates(ICollection<ProjectImageUpdate> projectImageUpdates)
         {
             var projectImageFileResourceIDsToDelete = projectImageUpdates.Where(x => x.FileResourceID.HasValue).Select(x => x.FileResourceID.Value).ToList();
-            projectImageUpdates.DeleteProjectImageUpdate();
-            projectImageFileResourceIDsToDelete.DeleteFileResource();
+            HttpRequestStorage.DatabaseEntities.ProjectImageUpdates.DeleteProjectImageUpdate(projectImageUpdates);
+            HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(projectImageFileResourceIDsToDelete);
         }
 
         public void DeleteProjectExternalLinkUpdates()
         {
-            ProjectExternalLinkUpdates.DeleteProjectExternalLinkUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectExternalLinkUpdates.DeleteProjectExternalLinkUpdate(ProjectExternalLinkUpdates);
             RefreshFromDatabase(ProjectExternalLinkUpdates);
         }
 
         public void DeleteProjectNoteUpdates()
         {
-            ProjectNoteUpdates.DeleteProjectNoteUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectNoteUpdates.DeleteProjectNoteUpdate(ProjectNoteUpdates);
             RefreshFromDatabase(ProjectNoteUpdates);
         }
         
         public void DeleteProjectDocumentUpdates()
         {
-            ProjectDocumentUpdates.DeleteProjectDocumentUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectDocumentUpdates.DeleteProjectDocumentUpdate(ProjectDocumentUpdates);
             RefreshFromDatabase(ProjectDocumentUpdates);
-        }
-
-        public void DeleteProjectUpdateHistories()
-        {
-            ProjectUpdateHistories.DeleteProjectUpdateHistory();
-            RefreshFromDatabase(ProjectUpdateHistories);
         }
 
         public void DeletePerformanceMeasuresProjectExemptReportingYearUpdates()
         {
             var performanceMeasuresExemptReportingYears = this.GetPerformanceMeasuresExemptReportingYears();
-            performanceMeasuresExemptReportingYears.DeleteProjectExemptReportingYearUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(performanceMeasuresExemptReportingYears);
             PerformanceMeasureActualYearsExemptionExplanation = null;
             RefreshFromDatabase(performanceMeasuresExemptReportingYears);
         }
         public void DeleteExpendituresProjectExemptReportingYearUpdates()
         {
             var performanceMeasuresExemptReportingYears = this.GetExpendituresExemptReportingYears();
-            performanceMeasuresExemptReportingYears.DeleteProjectExemptReportingYearUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYearUpdates.DeleteProjectExemptReportingYearUpdate(performanceMeasuresExemptReportingYears);
             NoExpendituresToReportExplanation = null;
             RefreshFromDatabase(performanceMeasuresExemptReportingYears);
         }
 
         public void DeleteProjectFundingSourceExpenditureUpdates()
         {
-            ProjectFundingSourceExpenditureUpdates.DeleteProjectFundingSourceExpenditureUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.DeleteProjectFundingSourceExpenditureUpdate(ProjectFundingSourceExpenditureUpdates);
             RefreshFromDatabase(ProjectFundingSourceExpenditureUpdates);
         }
 
         public void DeleteProjectFundingSourceRequestUpdates()
         {
-            ProjectFundingSourceRequestUpdates.DeleteProjectFundingSourceRequestUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.DeleteProjectFundingSourceRequestUpdate(ProjectFundingSourceRequestUpdates);
             RefreshFromDatabase(ProjectFundingSourceRequestUpdates);
-        }
-
-        public void DeleteProjectBudgetUpdates()
-        {
-            // TODO: Neutered per #1136; most likely will bring back when BOR project starts
-            //ProjectBudgetUpdates.DeleteProjectBudgetUpdate();
-            //RefreshFromDatabase(ProjectBudgetUpdates);
         }
 
         public void DeletePerformanceMeasureActualUpdates()
         {
-            PerformanceMeasureActualUpdates.SelectMany(x => x.PerformanceMeasureActualSubcategoryOptionUpdates.Select(y => y.PerformanceMeasureActualSubcategoryOptionUpdateID)).ToList().DeletePerformanceMeasureActualSubcategoryOptionUpdate();
-            PerformanceMeasureActualUpdates.DeletePerformanceMeasureActualUpdate();
+            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualSubcategoryOptionUpdates.DeletePerformanceMeasureActualSubcategoryOptionUpdate(PerformanceMeasureActualUpdates.SelectMany(x => x.PerformanceMeasureActualSubcategoryOptionUpdates.Select(y => y.PerformanceMeasureActualSubcategoryOptionUpdateID)).ToList());
+            HttpRequestStorage.DatabaseEntities.PerformanceMeasureActualUpdates.DeletePerformanceMeasureActualUpdate(PerformanceMeasureActualUpdates);
             RefreshFromDatabase(PerformanceMeasureActualUpdates);
         }
 
         public void DeleteProjectLocationUpdates()
         {
-            ProjectLocationUpdates.DeleteProjectLocationUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(ProjectLocationUpdates);
             RefreshFromDatabase(ProjectLocationUpdates);
         }
 
         public void DeleteProjectLocationStagingUpdates()
         {
-            ProjectLocationStagingUpdates.DeleteProjectLocationStagingUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectLocationStagingUpdates.DeleteProjectLocationStagingUpdate(ProjectLocationStagingUpdates);
             RefreshFromDatabase(ProjectLocationStagingUpdates);
         }
 
-        public void DeleteProjectGeospatialAreaUpdates()
+        public void DeleteProjectPriorityAreaUpdates()
         {
-            ProjectGeospatialAreaUpdates.DeleteProjectGeospatialAreaUpdate();
-            RefreshFromDatabase(ProjectGeospatialAreaUpdates);
+            HttpRequestStorage.DatabaseEntities.ProjectPriorityAreaUpdates.DeleteProjectPriorityAreaUpdate(ProjectPriorityAreaUpdates);
+            RefreshFromDatabase(ProjectPriorityAreaUpdates);
+        }
+
+        public void DeleteProjectRegionUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.DeleteProjectRegionUpdate(ProjectRegionUpdates);
+            RefreshFromDatabase(ProjectRegionUpdates);
         }
 
         public void DeleteProjectOrganizationUpdates()
         {
-            ProjectOrganizationUpdates.DeleteProjectOrganizationUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectOrganizationUpdates.DeleteProjectOrganizationUpdate(ProjectOrganizationUpdates);
             RefreshFromDatabase(ProjectOrganizationUpdates);
         }
 
         public void DeleteProjectContactUpdates()
         {
-            ProjectPersonUpdates.DeleteProjectPersonUpdate();
+            HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.DeleteProjectPersonUpdate(ProjectPersonUpdates);
             RefreshFromDatabase(ProjectPersonUpdates);
         }
 
         public void DeleteAll()
         {
-            DeleteProjectLocationStagingUpdates();
-            DeleteProjectLocationUpdates();
-            DeletePerformanceMeasureActualUpdates();
-            DeletePerformanceMeasuresProjectExemptReportingYearUpdates();
-            DeleteProjectFundingSourceExpenditureUpdates();
-            DeleteProjectFundingSourceRequestUpdates();
-            // TODO: Neutered per #1136; most likely will bring back when BOR project starts
-//            DeleteProjectBudgetUpdates();
-            DeleteProjectImageUpdates();
-            DeleteProjectExternalLinkUpdates();
-            DeleteProjectNoteUpdates();
-            DeleteProjectUpdateHistories();
-            DeleteProjectUpdate();
-            DeleteProjectGeospatialAreaUpdates();
-            DeleteProjectOrganizationUpdates();
-            DeleteProjectDocumentUpdates();
-            DeleteProjectContactUpdates();
-            this.DeleteProjectUpdateBatch();
-        }
-
-        private void DeleteProjectUpdate()
-        {
-            ProjectUpdate.DeleteProjectUpdate();
+            DeleteFull(HttpRequestStorage.DatabaseEntities);
         }
 
         public BasicsValidationResult ValidateProjectBasics()
@@ -489,17 +463,28 @@ namespace ProjectFirma.Web.Models
             return ValidateProjectLocationSimple().IsValid;
         }
 
-        public GeospatialAreaValidationResult ValidateProjectGeospatialArea(GeospatialAreaType geospatialAreaType)
+        public RegionsValidationResult ValidateProjectRegion()
         {
-            var projectGeospatialAreaTypeNoteUpdate = ProjectGeospatialAreaTypeNoteUpdates.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID);
-            var incomplete = ProjectGeospatialAreaUpdates.All(x => x.GeospatialArea.GeospatialAreaTypeID != geospatialAreaType.GeospatialAreaTypeID) && projectGeospatialAreaTypeNoteUpdate == null;
-            var geospatialAreaValidationResult = new GeospatialAreaValidationResult(incomplete, geospatialAreaType);
-            return geospatialAreaValidationResult;
+            var incomplete = !ProjectRegionUpdates.Any() && string.IsNullOrWhiteSpace(NoRegionsExplanation);
+            var regionValidationResult = new RegionsValidationResult(incomplete);
+            return regionValidationResult;
         }
 
-        public bool IsProjectGeospatialAreaValid(GeospatialAreaType geospatialAreaType)
+        public bool IsProjectRegionValid()
         {
-            return ValidateProjectGeospatialArea(geospatialAreaType).IsValid;
+            return ValidateProjectRegion().IsValid;
+        }
+
+        public PriorityAreasValidationResult ValidateProjectPriorityArea()
+        {
+            var incomplete = !ProjectPriorityAreaUpdates.Any() && string.IsNullOrWhiteSpace(NoPriorityAreasExplanation);
+            var priorityAreaValidationResult = new PriorityAreasValidationResult(incomplete);
+            return priorityAreaValidationResult;
+        }
+
+        public bool IsProjectPriorityAreaValid()
+        {
+            return ValidateProjectPriorityArea().IsValid;
         }
 
         public void SubmitToReviewer(Person currentPerson, DateTime transitionDate)
@@ -524,8 +509,8 @@ namespace ProjectFirma.Web.Models
             IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
             IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
-            IList<ProjectGeospatialArea> projectGeospatialAreas, 
-            IList<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotes, 
+            IList<ProjectPriorityArea> projectPriorityAreas, 
+            IList<ProjectRegion> projectRegions, 
             IList<ProjectFundingSourceRequest> projectFundingSourceRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
@@ -544,8 +529,8 @@ namespace ProjectFirma.Web.Models
                 projectNotes,
                 projectImages,
                 projectLocations,
-                projectGeospatialAreas,
-                projectGeospatialAreaTypeNotes,
+                projectPriorityAreas,
+                projectRegions,
                 projectFundingSourceRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
@@ -579,8 +564,8 @@ namespace ProjectFirma.Web.Models
                 IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
                 IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
-                IList<ProjectGeospatialArea> projectGeospatialAreas,
-                IList<ProjectGeospatialAreaTypeNote> projectGeospatialAreaTypeNotes,
+                IList<ProjectPriorityArea> projectPriorityAreas,
+                IList<ProjectRegion> projectRegions,
                 IList<ProjectFundingSourceRequest> projectFundingSourceRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
@@ -623,9 +608,11 @@ namespace ProjectFirma.Web.Models
             // project location detailed
             ProjectLocationUpdate.CommitChangesToProject(this, projectLocations);
 
-            // project geospatialArea
-            ProjectGeospatialAreaUpdate.CommitChangesToProject(this, projectGeospatialAreas);
-            ProjectGeospatialAreaTypeNoteUpdate.CommitChangesToProject(this, projectGeospatialAreaTypeNotes);
+            // project priorityArea
+            ProjectPriorityAreaUpdate.CommitChangesToProject(this, projectPriorityAreas);
+
+            // project region
+            ProjectRegionUpdate.CommitChangesToProject(this, projectRegions);
 
             // photos
             ProjectImageUpdate.CommitChangesToProject(this, projectImages);
@@ -662,7 +649,7 @@ namespace ProjectFirma.Web.Models
         private static void CreateNewTransitionRecord(ProjectUpdateBatch projectUpdateBatch, ProjectUpdateState projectUpdateState, Person currentPerson, DateTime transitionDate)
         {
             var projectUpdateHistory = new ProjectUpdateHistory(projectUpdateBatch, projectUpdateState, currentPerson, transitionDate);
-            HttpRequestStorage.DatabaseEntities.AllProjectUpdateHistories.Add(projectUpdateHistory);
+            HttpRequestStorage.DatabaseEntities.ProjectUpdateHistories.Add(projectUpdateHistory);
             projectUpdateBatch.ProjectUpdateStateID = projectUpdateState.ProjectUpdateStateID;
             projectUpdateBatch.TickleLastUpdateDate(transitionDate, currentPerson);
         }

@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProjectFundingSourceExpenditure] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectFundingSourceExpenditure]")]
-    public partial class ProjectFundingSourceExpenditure : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectFundingSourceExpenditure : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectFundingSourceExpenditure()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -99,12 +99,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectFundingSourceExpenditures.Remove(this);
+            dbContext.ProjectFundingSourceExpenditures.Remove(this);
         }
 
         [Key]
         public int ProjectFundingSourceExpenditureID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int FundingSourceID { get; set; }
         public int CalendarYear { get; set; }
@@ -112,7 +111,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectFundingSourceExpenditureID; } set { ProjectFundingSourceExpenditureID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual FundingSource FundingSource { get; set; }
 

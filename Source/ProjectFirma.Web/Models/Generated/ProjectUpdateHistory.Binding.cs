@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProjectUpdateHistory] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectUpdateHistory]")]
-    public partial class ProjectUpdateHistory : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectUpdateHistory : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectUpdateHistory()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -99,12 +99,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectUpdateHistories.Remove(this);
+            dbContext.ProjectUpdateHistories.Remove(this);
         }
 
         [Key]
         public int ProjectUpdateHistoryID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectUpdateBatchID { get; set; }
         public int ProjectUpdateStateID { get; set; }
         public int UpdatePersonID { get; set; }
@@ -112,7 +111,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateHistoryID; } set { ProjectUpdateHistoryID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public ProjectUpdateState ProjectUpdateState { get { return ProjectUpdateState.AllLookupDictionary[ProjectUpdateStateID]; } }
         public virtual Person UpdatePerson { get; set; }

@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[FirmaPageImage] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FirmaPageImage]")]
-    public partial class FirmaPageImage : IHavePrimaryKey, IHaveATenantID
+    public partial class FirmaPageImage : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected FirmaPageImage()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,18 +93,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllFirmaPageImages.Remove(this);
+            dbContext.FirmaPageImages.Remove(this);
         }
 
         [Key]
         public int FirmaPageImageID { get; set; }
-        public int TenantID { get; private set; }
         public int FirmaPageID { get; set; }
         public int FileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return FirmaPageImageID; } set { FirmaPageImageID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual FirmaPage FirmaPage { get; set; }
         public virtual FileResource FileResource { get; set; }
 

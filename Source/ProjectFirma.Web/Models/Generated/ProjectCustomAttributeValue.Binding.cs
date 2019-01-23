@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProjectCustomAttributeValue] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectCustomAttributeValue]")]
-    public partial class ProjectCustomAttributeValue : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectCustomAttributeValue : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectCustomAttributeValue()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -91,18 +91,16 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectCustomAttributeValues.Remove(this);
+            dbContext.ProjectCustomAttributeValues.Remove(this);
         }
 
         [Key]
         public int ProjectCustomAttributeValueID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectCustomAttributeID { get; set; }
         public string AttributeValue { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCustomAttributeValueID; } set { ProjectCustomAttributeValueID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectCustomAttribute ProjectCustomAttribute { get; set; }
 
         public static class FieldLengths

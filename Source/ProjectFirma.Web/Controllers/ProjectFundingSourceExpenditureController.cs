@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Controllers
             List<ProjectFundingSourceExpenditure> currentProjectFundingSourceExpenditures, Project project)
         {
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceExpenditures.Local;
+            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Local;
             viewModel.UpdateModel(currentProjectFundingSourceExpenditures, allProjectFundingSourceExpenditures, project);
 
             return new ModalDialogFormJsonResult();

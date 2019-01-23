@@ -39,10 +39,10 @@ namespace ProjectFirma.Web.Models
         ProjectStage ProjectStage { get; }
         decimal? EstimatedTotalCost { get; }
         IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes { get; set; }
-        IEnumerable<IQuestionAnswer> GetQuestionAnswers();
         IEnumerable<IProjectLocation> GetProjectLocationDetails();
         DbGeometry GetDefaultBoundingBox();
-        IEnumerable<GeospatialArea> GetProjectGeospatialAreas();
+        IEnumerable<Region> GetProjectRegions();
+        IEnumerable<PriorityArea> GetProjectPriorityAreas();
         GeoJSON.Net.Feature.FeatureCollection DetailedLocationToGeoJsonFeatureCollection();
         GeoJSON.Net.Feature.FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties);        
     }

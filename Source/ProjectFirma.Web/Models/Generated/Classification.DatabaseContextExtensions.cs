@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[Classification]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return classification;
         }
 
-        public static void DeleteClassification(this List<int> classificationIDList)
+        public static void DeleteClassification(this IQueryable<Classification> classifications, List<int> classificationIDList)
         {
             if(classificationIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllClassifications.RemoveRange(HttpRequestStorage.DatabaseEntities.Classifications.Where(x => classificationIDList.Contains(x.ClassificationID)));
+                classifications.Where(x => classificationIDList.Contains(x.ClassificationID)).Delete();
             }
         }
 
-        public static void DeleteClassification(this ICollection<Classification> classificationsToDelete)
+        public static void DeleteClassification(this IQueryable<Classification> classifications, ICollection<Classification> classificationsToDelete)
         {
             if(classificationsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllClassifications.RemoveRange(classificationsToDelete);
+                var classificationIDList = classificationsToDelete.Select(x => x.ClassificationID).ToList();
+                classifications.Where(x => classificationIDList.Contains(x.ClassificationID)).Delete();
             }
         }
 
-        public static void DeleteClassification(this int classificationID)
+        public static void DeleteClassification(this IQueryable<Classification> classifications, int classificationID)
         {
-            DeleteClassification(new List<int> { classificationID });
+            DeleteClassification(classifications, new List<int> { classificationID });
         }
 
-        public static void DeleteClassification(this Classification classificationToDelete)
+        public static void DeleteClassification(this IQueryable<Classification> classifications, Classification classificationToDelete)
         {
-            DeleteClassification(new List<Classification> { classificationToDelete });
+            DeleteClassification(classifications, new List<Classification> { classificationToDelete });
         }
     }
 }

@@ -72,13 +72,20 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             CurrentPersonCanWithdraw = new ProjectCreateFeature().HasPermission(currentPerson, project).HasPermission;
 
             Project = project;
+            ProjectStage = project.ProjectStage;
             ProposalSectionsStatus = proposalSectionsStatus;
             CanAdvanceStage = ProposalSectionsStatus.AreAllSectionsValidForProject(project);
             // ReSharper disable PossibleNullReferenceException
             ProjectStateIsValidInWizard = project.ProjectApprovalStatus == ProjectApprovalStatus.Draft || project.ProjectApprovalStatus == ProjectApprovalStatus.Returned || project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
             // ReSharper restore PossibleNullReferenceException
             IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
-            InstructionsPageUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Instructions(project));
+
+            InstructionsPageUrl = project.ProjectStage == ProjectStage.Application
+                ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
+                    x.InstructionsProposal(project.ProjectID))
+                : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
+                    x.InstructionsEnterHistoric(project.ProjectID));
+
             var pagetitle = project.ProjectStage == ProjectStage.Application ? $"{Models.FieldDefinition.Application.GetFieldDefinitionLabel()}" : $"Add {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
             PageTitle = $"{pagetitle}: {project.DisplayName}";
 
@@ -93,8 +100,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ReturnUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Return(project));
             WithdrawUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Withdraw(project));
             RejectUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Reject(project));
-
-            ProjectStage = project.ProjectStage;
         }
 
         //New (not yet created) Projects use this constructor. Valid only for Instructions and Basics page.

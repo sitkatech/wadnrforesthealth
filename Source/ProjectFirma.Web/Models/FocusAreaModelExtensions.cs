@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
 {
     public static class FocusAreaModelExtensions
     {
-        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.DeleteFocusArea(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Delete(UrlTemplate.Parameter1Int)));
 
 
         public static HtmlString GetDisplayNameAsUrl(this FocusArea focusArea)
@@ -65,6 +65,16 @@ namespace ProjectFirma.Web.Models
         public static List<Project> GetProposalsVisibleToUser(this FocusArea focusArea, Person person)
         {
             return focusArea.GetAllAssociatedProjects().GetProposalsVisibleToUser(person);
+        }
+
+        public static string GetDeleteFocusAreaUrl(this FocusArea focusArea)
+        {
+            return SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Delete(focusArea.PrimaryKey));
+        }
+
+        public static bool CanFocusAreaBeDeleted(this FocusArea focusArea)
+        {
+            return !focusArea.HasDependentObjects();
         }
 
 

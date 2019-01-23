@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProjectUpdateConfiguration] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectUpdateConfiguration]")]
-    public partial class ProjectUpdateConfiguration : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectUpdateConfiguration : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectUpdateConfiguration()
         {
 
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -87,12 +87,11 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AllProjectUpdateConfigurations.Remove(this);
+            dbContext.ProjectUpdateConfigurations.Remove(this);
         }
 
         [Key]
         public int ProjectUpdateConfigurationID { get; set; }
-        public int TenantID { get; private set; }
         public DateTime? ProjectUpdateKickOffDate { get; set; }
         public DateTime? ProjectUpdateCloseOutDate { get; set; }
         public int? ProjectUpdateReminderInterval { get; set; }
@@ -123,7 +122,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateConfigurationID; } set { ProjectUpdateConfigurationID = value; } }
 
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
+
 
         public static class FieldLengths
         {

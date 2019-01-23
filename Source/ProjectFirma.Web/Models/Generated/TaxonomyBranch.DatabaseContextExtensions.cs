@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[TaxonomyBranch]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return taxonomyBranch;
         }
 
-        public static void DeleteTaxonomyBranch(this List<int> taxonomyBranchIDList)
+        public static void DeleteTaxonomyBranch(this IQueryable<TaxonomyBranch> taxonomyBranches, List<int> taxonomyBranchIDList)
         {
             if(taxonomyBranchIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTaxonomyBranches.RemoveRange(HttpRequestStorage.DatabaseEntities.TaxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID)));
+                taxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID)).Delete();
             }
         }
 
-        public static void DeleteTaxonomyBranch(this ICollection<TaxonomyBranch> taxonomyBranchesToDelete)
+        public static void DeleteTaxonomyBranch(this IQueryable<TaxonomyBranch> taxonomyBranches, ICollection<TaxonomyBranch> taxonomyBranchesToDelete)
         {
             if(taxonomyBranchesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllTaxonomyBranches.RemoveRange(taxonomyBranchesToDelete);
+                var taxonomyBranchIDList = taxonomyBranchesToDelete.Select(x => x.TaxonomyBranchID).ToList();
+                taxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID)).Delete();
             }
         }
 
-        public static void DeleteTaxonomyBranch(this int taxonomyBranchID)
+        public static void DeleteTaxonomyBranch(this IQueryable<TaxonomyBranch> taxonomyBranches, int taxonomyBranchID)
         {
-            DeleteTaxonomyBranch(new List<int> { taxonomyBranchID });
+            DeleteTaxonomyBranch(taxonomyBranches, new List<int> { taxonomyBranchID });
         }
 
-        public static void DeleteTaxonomyBranch(this TaxonomyBranch taxonomyBranchToDelete)
+        public static void DeleteTaxonomyBranch(this IQueryable<TaxonomyBranch> taxonomyBranches, TaxonomyBranch taxonomyBranchToDelete)
         {
-            DeleteTaxonomyBranch(new List<TaxonomyBranch> { taxonomyBranchToDelete });
+            DeleteTaxonomyBranch(taxonomyBranches, new List<TaxonomyBranch> { taxonomyBranchToDelete });
         }
     }
 }

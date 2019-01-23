@@ -29,17 +29,12 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Processing '{JobName}' notifications.");
 
             // we're "tenant-agnostic" right now
-            var projectUpdateConfigurations = DbContext.AllProjectUpdateConfigurations.ToList();
+            var projectUpdateConfigurations = DbContext.ProjectUpdateConfigurations.ToList();
             var reminderSubject = "Time to update your Projects";
 
             foreach (var projectUpdateConfiguration in projectUpdateConfigurations)
             {
                 List<Notification> notifications = new List<Notification>();
-                var tenant = projectUpdateConfiguration.Tenant;
-                HttpRequestStorage
-                    .SetTenantForHangfire(
-                        tenant); // we're intentionally overriding the HRS tenant here because Hangfire doesn't live in tenant-world
-                // now that HRS.Tenant is set to the one we want, this is just that tenant's projects.
                 var projects = DbContext.Projects;
 
                 if (projectUpdateConfiguration.EnableProjectUpdateReminders)
@@ -48,7 +43,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     if (DateTime.Today == projectUpdateKickOffDate.GetValueOrDefault().Date)
                     {
                         notifications.AddRange(RunNotifications(projects, reminderSubject,
-                                                        projectUpdateConfiguration.ProjectUpdateKickOffIntroContent, tenant, true));
+                                                        projectUpdateConfiguration.ProjectUpdateKickOffIntroContent, true));
                     }
                 }
 
@@ -56,8 +51,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 {
                     if (TodayIsReminderDayForProjectUpdateConfiguration(projectUpdateConfiguration))
                     {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject, projectUpdateConfiguration.ProjectUpdateReminderIntroContent, tenant, false));
-                        // notiftyOnAll is false b/c we only send periodic reminders for projects whose updates haven't been submitted yet.
+                        notifications.AddRange(RunNotifications(projects, reminderSubject, projectUpdateConfiguration.ProjectUpdateReminderIntroContent, false));
+                        // notifyOnAll is false b/c we only send periodic reminders for projects whose updates haven't been submitted yet.
                     }
                 }
 
@@ -67,12 +62,12 @@ namespace ProjectFirma.Web.ScheduledJobs
                     if (DateTime.Today == projectUpdateCloseOutDate.GetValueOrDefault().Date)
                     {
                         notifications.AddRange(RunNotifications(projects, reminderSubject,
-                            projectUpdateConfiguration.ProjectUpdateCloseOutIntroContent, tenant, false));
+                            projectUpdateConfiguration.ProjectUpdateCloseOutIntroContent, false));
                     }
                 }
 
-                DbContext.AllNotifications.AddRange(notifications);
-                DbContext.SaveChangesOverridingTenantBounds();
+                DbContext.Notifications.AddRange(notifications);
+                DbContext.SaveChanges();
             }
         }
 
@@ -89,19 +84,18 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// <param name="allProjects"></param>
         /// <param name="reminderSubject"></param>
         /// <param name="introContent"></param>
-        /// <param name="tenant"></param>
         /// <param name="notifyOnAll"></param>
         private List<Notification> RunNotifications(IQueryable<Project> allProjects, string reminderSubject,
-            string introContent, Tenant tenant, bool notifyOnAll)
+            string introContent, bool notifyOnAll)
         {
             // Constrain to tenant boundaries.
-            var tenantProjects = allProjects.Where(x => x.TenantID == tenant.TenantID).ToList();
-            var tenantAttribute = DbContext.AllTenantAttributes.Single(a => a.TenantID == tenant.TenantID);
-            var toolDisplayName = tenantAttribute.ToolDisplayName;
+            var tenantProjects = allProjects;
+            var tenantAttribute = DbContext.SystemAttributes.Single();
+            var toolDisplayName = "Forest Health Tracker";
 
             var contactSupportEmail = tenantAttribute.PrimaryContactPerson.Email;
 
-            var toolLogo = tenantAttribute.TenantSquareLogoFileResource;
+            var toolLogo = tenantAttribute.SquareLogoFileResource;
 
             var projectUpdateNotificationHelper = new ProjectUpdateNotificationHelper(contactSupportEmail,
                 introContent,

@@ -70,7 +70,5 @@ namespace ProjectFirma.Web.Controllers
         protected override ISitkaDbContext SitkaDbContext => HttpRequestStorage.DatabaseEntities;
 
         protected Person CurrentPerson => HttpRequestStorage.Person;
-
-        protected Tenant CurrentTenant => HttpRequestStorage.Tenant;
     }
 }

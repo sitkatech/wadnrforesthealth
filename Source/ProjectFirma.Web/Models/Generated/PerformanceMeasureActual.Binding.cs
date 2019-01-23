@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[PerformanceMeasureActual] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[PerformanceMeasureActual]")]
-    public partial class PerformanceMeasureActual : IHavePrimaryKey, IHaveATenantID
+    public partial class PerformanceMeasureActual : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected PerformanceMeasureActual()
         {
             this.PerformanceMeasureActualSubcategoryOptions = new HashSet<PerformanceMeasureActualSubcategoryOption>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllPerformanceMeasureActuals.Remove(this);
+            dbContext.PerformanceMeasureActuals.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -115,7 +115,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int PerformanceMeasureActualID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectID { get; set; }
         public int PerformanceMeasureID { get; set; }
         public int CalendarYear { get; set; }
@@ -124,7 +123,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return PerformanceMeasureActualID; } set { PerformanceMeasureActualID = value; } }
 
         public virtual ICollection<PerformanceMeasureActualSubcategoryOption> PerformanceMeasureActualSubcategoryOptions { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual Project Project { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
 

@@ -19,23 +19,22 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
-using System.Linq;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Views.ProjectUpdate;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
-using ProjectFirma.Web.Views.Shared.ProjectControls;
-using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
-using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.TextControls;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.ProjectFunding;
+using ProjectFirma.Web.Views.ProjectUpdate;
+using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
+using ProjectFirma.Web.Views.Shared.ProjectControls;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
+using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
+using ProjectFirma.Web.Views.Shared.TextControls;
 using ProjectFirma.Web.Views.TreatmentActivity;
 
 namespace ProjectFirma.Web.Views.Project
@@ -48,9 +47,10 @@ namespace ProjectFirma.Web.Views.Project
 
         public string EditProjectUrl { get; }
         public string EditProjectOrganizationsUrl { get; }
-        public List<GeospatialAreaType> GeospatialAreaTypes { get; }
         public string EditSimpleProjectLocationUrl { get; }
         public string EditDetailedProjectLocationUrl { get; }
+        public string EditProjectRegionUrl { get; }
+        public string EditProjectPriorityAreaUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
         public string EditPerformanceMeasureExpectedsUrl { get; }
         public string EditPerformanceMeasureActualsUrl { get; }
@@ -89,7 +89,8 @@ namespace ProjectFirma.Web.Views.Project
         public string TreatmentActivityGridName { get; }
         public string TreatmentActivityGridDataUrl { get; }
 
-        public string EditProjectGeospatialAreaFormID { get; }
+        public string EditProjectPriorityAreaFormID { get; }
+        public string EditProjectRegionFormID { get; }
         public string EditProjectBoundingBoxFormID { get; }
         public string ProjectStewardCannotEditUrl { get; }
         public string ProjectStewardCannotEditPendingApprovalUrl { get; }
@@ -106,7 +107,6 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
-        public string EditContractorTimeActivitiesUrl { get; }
         public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
@@ -131,8 +131,8 @@ namespace ProjectFirma.Web.Views.Project
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, List<GeospatialAreaType> geospatialAreaTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl
+            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
+            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl
             )
             : base(currentPerson, project)
         {
@@ -269,6 +269,8 @@ namespace ProjectFirma.Web.Views.Project
             MapFormID = mapFormID;
             EditSimpleProjectLocationUrl = editSimpleProjectLocationUrl;
             EditDetailedProjectLocationUrl = editDetailedProjectLocationUrl;
+            EditProjectRegionUrl = editProjectRegionUrl;
+            EditProjectPriorityAreaUrl = editProjectPriorityAreaUrl;
 
             EditProjectBoundingBoxUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectBoundingBox(project));
             EditProjectBoundingBoxFormID = editProjectBoundingBoxFormID;
@@ -289,7 +291,6 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
             EditReportedExpendituresUrl = editReportedExpendituresUrl;
-            GeospatialAreaTypes = geospatialAreaTypes;
             ProjectPeopleDetailViewData = projectPeopleDetailViewData;
             EditExternalLinksUrl = editExternalLinksUrl;
             ImageGalleryViewData = imageGalleryViewData;
@@ -319,7 +320,8 @@ namespace ProjectFirma.Web.Views.Project
             ProjectNotificationGridDataUrl = projectNotificationGridDataUrl;
             ProjectOrganizationsDetailViewData = projectOrganizationsDetailViewData;
            
-            EditProjectGeospatialAreaFormID = ProjectGeospatialAreaController.GetEditProjectGeospatialAreasFormID();
+            EditProjectPriorityAreaFormID = ProjectPriorityAreaController.GetEditProjectPriorityAreasFormID();
+            EditProjectRegionFormID = ProjectRegionController.GetEditProjectRegionsFormID();
 
             ProjectStewardCannotEditUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.ProjectStewardCannotEdit());
@@ -333,9 +335,6 @@ namespace ProjectFirma.Web.Views.Project
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
                 new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
-
-            EditContractorTimeActivitiesUrl =
-                SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.EditContractorTimeActivities(project));
 
             EditTreatmentActivityUrl =
                 SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));

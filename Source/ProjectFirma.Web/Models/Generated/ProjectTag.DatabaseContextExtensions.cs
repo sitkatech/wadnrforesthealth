@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectTag]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectTag;
         }
 
-        public static void DeleteProjectTag(this List<int> projectTagIDList)
+        public static void DeleteProjectTag(this IQueryable<ProjectTag> projectTags, List<int> projectTagIDList)
         {
             if(projectTagIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectTags.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectTags.Where(x => projectTagIDList.Contains(x.ProjectTagID)));
+                projectTags.Where(x => projectTagIDList.Contains(x.ProjectTagID)).Delete();
             }
         }
 
-        public static void DeleteProjectTag(this ICollection<ProjectTag> projectTagsToDelete)
+        public static void DeleteProjectTag(this IQueryable<ProjectTag> projectTags, ICollection<ProjectTag> projectTagsToDelete)
         {
             if(projectTagsToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectTags.RemoveRange(projectTagsToDelete);
+                var projectTagIDList = projectTagsToDelete.Select(x => x.ProjectTagID).ToList();
+                projectTags.Where(x => projectTagIDList.Contains(x.ProjectTagID)).Delete();
             }
         }
 
-        public static void DeleteProjectTag(this int projectTagID)
+        public static void DeleteProjectTag(this IQueryable<ProjectTag> projectTags, int projectTagID)
         {
-            DeleteProjectTag(new List<int> { projectTagID });
+            DeleteProjectTag(projectTags, new List<int> { projectTagID });
         }
 
-        public static void DeleteProjectTag(this ProjectTag projectTagToDelete)
+        public static void DeleteProjectTag(this IQueryable<ProjectTag> projectTags, ProjectTag projectTagToDelete)
         {
-            DeleteProjectTag(new List<ProjectTag> { projectTagToDelete });
+            DeleteProjectTag(projectTags, new List<ProjectTag> { projectTagToDelete });
         }
     }
 }

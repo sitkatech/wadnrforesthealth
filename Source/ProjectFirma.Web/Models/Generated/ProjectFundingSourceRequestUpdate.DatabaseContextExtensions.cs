@@ -4,6 +4,7 @@
 //  Source Table: [dbo].[ProjectFundingSourceRequestUpdate]
 using System.Collections.Generic;
 using System.Linq;
+using Z.EntityFramework.Plus;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -19,30 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectFundingSourceRequestUpdate;
         }
 
-        public static void DeleteProjectFundingSourceRequestUpdate(this List<int> projectFundingSourceRequestUpdateIDList)
+        public static void DeleteProjectFundingSourceRequestUpdate(this IQueryable<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates, List<int> projectFundingSourceRequestUpdateIDList)
         {
             if(projectFundingSourceRequestUpdateIDList.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequestUpdates.RemoveRange(HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID)));
+                projectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectFundingSourceRequestUpdate(this ICollection<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdatesToDelete)
+        public static void DeleteProjectFundingSourceRequestUpdate(this IQueryable<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates, ICollection<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdatesToDelete)
         {
             if(projectFundingSourceRequestUpdatesToDelete.Any())
             {
-                HttpRequestStorage.DatabaseEntities.AllProjectFundingSourceRequestUpdates.RemoveRange(projectFundingSourceRequestUpdatesToDelete);
+                var projectFundingSourceRequestUpdateIDList = projectFundingSourceRequestUpdatesToDelete.Select(x => x.ProjectFundingSourceRequestUpdateID).ToList();
+                projectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID)).Delete();
             }
         }
 
-        public static void DeleteProjectFundingSourceRequestUpdate(this int projectFundingSourceRequestUpdateID)
+        public static void DeleteProjectFundingSourceRequestUpdate(this IQueryable<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates, int projectFundingSourceRequestUpdateID)
         {
-            DeleteProjectFundingSourceRequestUpdate(new List<int> { projectFundingSourceRequestUpdateID });
+            DeleteProjectFundingSourceRequestUpdate(projectFundingSourceRequestUpdates, new List<int> { projectFundingSourceRequestUpdateID });
         }
 
-        public static void DeleteProjectFundingSourceRequestUpdate(this ProjectFundingSourceRequestUpdate projectFundingSourceRequestUpdateToDelete)
+        public static void DeleteProjectFundingSourceRequestUpdate(this IQueryable<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates, ProjectFundingSourceRequestUpdate projectFundingSourceRequestUpdateToDelete)
         {
-            DeleteProjectFundingSourceRequestUpdate(new List<ProjectFundingSourceRequestUpdate> { projectFundingSourceRequestUpdateToDelete });
+            DeleteProjectFundingSourceRequestUpdate(projectFundingSourceRequestUpdates, new List<ProjectFundingSourceRequestUpdate> { projectFundingSourceRequestUpdateToDelete });
         }
     }
 }

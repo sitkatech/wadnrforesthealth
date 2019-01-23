@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProjectCustomAttributeUpdate] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProjectCustomAttributeUpdate]")]
-    public partial class ProjectCustomAttributeUpdate : IHavePrimaryKey, IHaveATenantID
+    public partial class ProjectCustomAttributeUpdate : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected ProjectCustomAttributeUpdate()
         {
             this.ProjectCustomAttributeUpdateValues = new HashSet<ProjectCustomAttributeUpdateValue>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllProjectCustomAttributeUpdates.Remove(this);
+            dbContext.ProjectCustomAttributeUpdates.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -109,14 +109,12 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectCustomAttributeUpdateID { get; set; }
-        public int TenantID { get; private set; }
         public int ProjectUpdateBatchID { get; set; }
         public int ProjectCustomAttributeTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCustomAttributeUpdateID; } set { ProjectCustomAttributeUpdateID = value; } }
 
         public virtual ICollection<ProjectCustomAttributeUpdateValue> ProjectCustomAttributeUpdateValues { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public virtual ProjectCustomAttributeType ProjectCustomAttributeType { get; set; }
 

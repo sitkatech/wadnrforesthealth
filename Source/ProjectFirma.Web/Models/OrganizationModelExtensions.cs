@@ -25,7 +25,6 @@ using System.Web;
 using GeoJSON.Net.Feature;
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
-using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GeoJson;
 using ProjectFirma.Web.Common;
 
@@ -130,15 +129,6 @@ namespace ProjectFirma.Web.Models
             }
 
             return allActiveProjectsAndProposals.Where(x => x.GetPrimaryContactOrganization() == organization).ToList();
-        }
-
-        public static List<Project> GetAllActiveProjectsWhereOrganizationReportsInAccomplishmentsDashboard(this Organization organization)
-        {
-            Check.Assert(MultiTenantHelpers.DisplayAccomplishmentDashboard());
-            return organization.GetAllAssociatedProjects()
-                .GetActiveProjectsAndProposals(MultiTenantHelpers.ShowApplicationsToThePublic())
-                .Where(x => x.GetOrganizationsToReportInAccomplishments().Any(y => y == organization))
-                .ToList();
         }
     }
 }

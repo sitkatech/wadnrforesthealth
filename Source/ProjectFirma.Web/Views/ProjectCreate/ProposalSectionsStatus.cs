@@ -19,13 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Shared.ProjectGeospatialAreaControls;
+using ProjectFirma.Web.Views.ProjectPriorityArea;
+using ProjectFirma.Web.Views.ProjectRegion;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
 {
@@ -35,11 +32,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
-        public bool IsGeospatialAreaSectionComplete { get; set; }
         public bool IsClassificationsComplete { get; set; }
-        public bool IsAssessmentComplete { get; set; }
         public bool IsNotesSectionComplete { get; set; }
-        public bool AreAllSectionsValid => IsBasicsSectionComplete && IsPerformanceMeasureSectionComplete && IsClassificationsComplete && IsAssessmentComplete && IsProjectLocationSimpleSectionComplete && IsProjectLocationDetailedSectionComplete && IsGeospatialAreaSectionComplete && IsNotesSectionComplete && IsExpectedFundingSectionComplete;
+
         public static bool AreAllSectionsValidForProject(Models.Project project)
         {
             return Models.Project.GetApplicableProposalWizardSections(project, false).All(x => x.IsComplete);
@@ -47,8 +42,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsExpectedFundingSectionComplete { get; set; }
         public bool IsProjectOrganizationsSectionComplete { get; set; }
         public bool IsProjectContactsSectionComplete { get; set; }
+        public bool IsRegionSectionComplete { get; set; }
+        public bool IsPriorityAreaSectionComplete { get; set; }
 
-        public ProposalSectionsStatus(Models.Project project, List<GeospatialAreaType> geospatialAreaTypes)
+        public ProposalSectionsStatus(Models.Project project)
         {
             var basicsResults = new BasicsViewModel(project).GetValidationResults();
             IsBasicsSectionComplete = !basicsResults.Any();
@@ -58,39 +55,33 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             IsProjectLocationDetailedSectionComplete = IsBasicsSectionComplete;
 
-            if (geospatialAreaTypes.Any())
-            {
-                var isGeospatialAreaSectionComplete = true;
-                foreach (var geospatialAreaType in geospatialAreaTypes)
-                {
-                    var geospatialAreaIDs = project.ProjectGeospatialAreas.Where(x => x.GeospatialArea.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID).Select(x => x.GeospatialAreaID).ToList();
-                    var editGeospatialAreaValidationResults = new EditProjectGeospatialAreasViewModel(geospatialAreaIDs, project.ProjectGeospatialAreaTypeNotes.SingleOrDefault(x => x.GeospatialAreaTypeID == geospatialAreaType.GeospatialAreaTypeID)?.Notes).GetValidationResults();
-                    if (editGeospatialAreaValidationResults.Any())
-                    {
-                        isGeospatialAreaSectionComplete = false;
-                        break;
-                    }
-                }
+            var regionIDs = project.ProjectRegions
+                .Select(x => x.RegionID).ToList();
+            var editProjectRegionsValidationResults = new EditProjectRegionsViewModel(regionIDs,
+                    project.NoRegionsExplanation).GetValidationResults();
 
-                IsGeospatialAreaSectionComplete = isGeospatialAreaSectionComplete;
-            }
-            else
-            {
-                IsGeospatialAreaSectionComplete = true;
-            }
+            IsRegionSectionComplete = !editProjectRegionsValidationResults.Any();
 
-            var performanceMeasureValidationResults = new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
+            var priorityAreaIDs = project.ProjectPriorityAreas
+                .Select(x => x.PriorityAreaID).ToList();
+            var editProjectPriorityAreasValidationResults = new EditProjectPriorityAreasViewModel(priorityAreaIDs,
+                    project.NoPriorityAreasExplanation).GetValidationResults();
+
+            IsPriorityAreaSectionComplete = !editProjectPriorityAreasValidationResults.Any();
+
+            var performanceMeasureValidationResults =
+                new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
             IsPerformanceMeasureSectionComplete = !performanceMeasureValidationResults.Any();
 
-            var efValidationResults = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(), project.EstimatedTotalCost)
+            var efValidationResults = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(),
+                    project.EstimatedTotalCost)
                 .GetValidationResults();
             IsExpectedFundingSectionComplete = !efValidationResults.Any();
 
             var proposalClassificationSimples = ProjectCreateController.GetProjectClassificationSimples(project);
-            var classificationValidationResults = new EditProposalClassificationsViewModel(proposalClassificationSimples).GetValidationResults();
+            var classificationValidationResults =
+                new EditProposalClassificationsViewModel(proposalClassificationSimples).GetValidationResults();
             IsClassificationsComplete = !classificationValidationResults.Any();
-
-            IsAssessmentComplete = ProjectCreateController.GetProjectAssessmentQuestionSimples(project).All(simple => simple.Answer.HasValue);
 
             IsNotesSectionComplete = IsBasicsSectionComplete; //there is no validation required on Notes
         }
@@ -100,10 +91,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsBasicsSectionComplete = false;
             IsPerformanceMeasureSectionComplete = false;
             IsClassificationsComplete = false;
-            IsAssessmentComplete = false;
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
-            IsGeospatialAreaSectionComplete = false;
+            IsRegionSectionComplete = false;
+            IsPriorityAreaSectionComplete = false;
             IsNotesSectionComplete = false;
         }
     }

@@ -95,16 +95,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate());
     }
 
-    public partial class FirmaPageTypeProjectResults
-    {
-        public override string GetViewUrl() => SitkaRoute<ResultsController>.BuildUrlFromExpression(x => x.AccomplishmentsDashboard());
-    }
-
-    public partial class FirmaPageTypeSpendingByPerformanceMeasureByProject
-    {
-        public override string GetViewUrl() => SitkaRoute<ResultsController>.BuildUrlFromExpression(x => x.SpendingByPerformanceMeasureByProject(null));
-    }
-
     public partial class FirmaPageTypeProjectMap
     {
         public override string GetViewUrl() => SitkaRoute<ResultsController>.BuildUrlFromExpression(x => x.ProjectMap());
@@ -123,11 +113,6 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeManageUpdateNotifications
     {
         public override string GetViewUrl() => SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Manage());
-    }
-
-    public partial class FirmaPageTypeCostParameterSet
-    {
-        public override string GetViewUrl() => SitkaRoute<CostParameterSetController>.BuildUrlFromExpression(x => x.Detail());
     }
 
     public partial class FirmaPageTypeFullProjectListSimple
@@ -150,10 +135,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Pending());
     }
 
-    public partial class FirmaPageTypeMonitoringProgramsList
-    {
-        public override string GetViewUrl() => SitkaRoute<MonitoringProgramController>.BuildUrlFromExpression(x => x.Index());
-    }
     public partial class FirmaPageTypeProposeProjectInstructions
     {
         public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
@@ -173,11 +154,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<HomeController>.BuildUrlFromExpression(x => x.Training());
     }
 
-    public partial class FirmaPageTypeProjectCreateImportExternal
-    {
-        public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.ImportExternal());
-    }
-
     public partial class FirmaPageTypeCustomFooter
     {
         public override string GetViewUrl() => string.Empty;
@@ -193,7 +169,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<ProjectCustomAttributeTypeController>.BuildUrlFromExpression(c => c.Manage());
     }
 
-
     public partial class FirmaPageTypeFactSheetCustomText
     {
         public override string GetViewUrl() => SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Index());
@@ -202,5 +177,24 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeFocusAreasList
     {
         public override string GetViewUrl() => SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
+    }
+    public partial class FirmaPageTypeFullGrantList
+    {
+        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeFullGrantAllocationList
+    {
+        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypePriorityAreasList
+    {
+        public override string GetViewUrl() => SitkaRoute<PriorityAreaController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeRegionsList
+    {
+        public override string GetViewUrl() => SitkaRoute<RegionController>.BuildUrlFromExpression(c => c.Index());
     }
 }

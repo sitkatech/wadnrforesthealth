@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Models;
 
@@ -33,10 +32,11 @@ namespace ProjectFirma.Web.Views.Map
         public double? ProjectLocationYCoord { get; }
         public bool HasSimpleLocation { get; }
         public bool HasDetailedLocation { get; }
-        public bool HasGeospatialAreas { get; }
+        public bool HasRegions { get; }
+        public bool HasPriorityAreas { get; }
         /* used by ProjectFirmaMaps.ProjectLocationSummary.js */
 
-        public ProjectLocationSummaryMapInitJson(IProject project, string mapDivID, bool addProjectProperties, List<Models.GeospatialArea> geospatialAreas) 
+        public ProjectLocationSummaryMapInitJson(IProject project, string mapDivID, bool addProjectProperties) 
             : base(mapDivID, DefaultZoomLevel, GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide), GetProjectBoundingBox(project))
         {
             var simpleLocationGeoJsonFeatureCollection = project.SimpleLocationToGeoJsonFeatureCollection(addProjectProperties);
@@ -55,13 +55,21 @@ namespace ProjectFirma.Web.Views.Map
                 Layers.Add(new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail", detailedLocationGeoJsonFeatureCollection, "blue", 1, LayerInitialVisibility.Show));
             }
 
-            HasGeospatialAreas = geospatialAreas.Any();
-            if (HasGeospatialAreas)
+            var regionGeoJsonFeatureCollection = project.GetProjectRegions().ToGeoJsonFeatureCollection();
+            HasRegions = (regionGeoJsonFeatureCollection != null);
+            if (HasRegions)
             {
-               geospatialAreas.ForEach(geospatialArea => Layers.Add(new LayerGeoJson(geospatialArea.DisplayName,
-                    new List<Models.GeospatialArea> {geospatialArea}.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
-                    LayerInitialVisibility.Show))); 
+                Layers.Add(new LayerGeoJson("Region", regionGeoJsonFeatureCollection, "#2dc3a1", 1, LayerInitialVisibility.Show));
             }
+
+            var priorityAreaGeoJsonFeatureCollection = project.GetProjectPriorityAreas().ToGeoJsonFeatureCollection();
+            HasPriorityAreas = (priorityAreaGeoJsonFeatureCollection != null);
+            if (HasPriorityAreas)
+            {
+                Layers.Add(new LayerGeoJson("Priority Area", priorityAreaGeoJsonFeatureCollection, "#2dc3a1", 1, LayerInitialVisibility.Show));
+            }
+
+
         }
 
         public static BoundingBox GetProjectBoundingBox(IProject project)

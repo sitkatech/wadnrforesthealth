@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[Tag] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Tag]")]
-    public partial class Tag : IHavePrimaryKey, IHaveATenantID
+    public partial class Tag : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -24,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected Tag()
         {
             this.ProjectTags = new HashSet<ProjectTag>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllTags.Remove(this);
+            dbContext.Tags.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -94,14 +94,12 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int TagID { get; set; }
-        public int TenantID { get; private set; }
         public string TagName { get; set; }
         public string TagDescription { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TagID; } set { TagID = value; } }
 
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
 
         public static class FieldLengths
         {

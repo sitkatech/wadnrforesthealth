@@ -62,6 +62,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
 
+		[FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
+        public int? FocusAreaID { get; set; }
+
         public int? ImportExternalProjectStagingID { get; set; }
 
         public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
@@ -83,18 +86,12 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             PlannedDate = project.PlannedDate;
             ApprovalStartDate = project.ApprovalStartDate;
             CompletionDate = project.CompletionDate;
+            FocusAreaID = project.FocusAreaID;
             ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
 
         public void UpdateModel(Models.Project project, Person person)
         {
-            if (ImportExternalProjectStagingID.HasValue)
-            {
-                var importExternalProjectStagingToDelete = HttpRequestStorage.DatabaseEntities.ImportExternalProjectStagings.Single(x =>
-                    x.ImportExternalProjectStagingID == ImportExternalProjectStagingID);
-                HttpRequestStorage.DatabaseEntities.AllImportExternalProjectStagings.Remove(importExternalProjectStagingToDelete);
-            }
-
             project.ProposingPersonID = person.PersonID;
             project.TaxonomyLeafID = TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectID = ProjectID ?? ModelObjectHelpers.NotYetAssignedID;
@@ -105,6 +102,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.PlannedDate = PlannedDate;
             project.ApprovalStartDate = ApprovalStartDate;
             project.CompletionDate = CompletionDate;
+            project.FocusAreaID = FocusAreaID;
             ProjectCustomAttributes?.UpdateModel(project, person);
         }
 

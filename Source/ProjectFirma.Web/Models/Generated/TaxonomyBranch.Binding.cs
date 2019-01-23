@@ -15,8 +15,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[TaxonomyBranch] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[TaxonomyBranch]")]
-    public partial class TaxonomyBranch : IHavePrimaryKey, IHaveATenantID
+    public partial class TaxonomyBranch : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
@@ -25,7 +26,6 @@ namespace ProjectFirma.Web.Models
         {
             this.PersonStewardTaxonomyBranches = new HashSet<PersonStewardTaxonomyBranch>();
             this.TaxonomyLeafs = new HashSet<TaxonomyLeaf>();
-            this.TenantID = HttpRequestStorage.Tenant.TenantID;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.AllTaxonomyBranches.Remove(this);
+            dbContext.TaxonomyBranches.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -117,7 +117,6 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int TaxonomyBranchID { get; set; }
-        public int TenantID { get; private set; }
         public int TaxonomyTrunkID { get; set; }
         public string TaxonomyBranchName { get; set; }
         public string TaxonomyBranchDescription { get; set; }
@@ -135,7 +134,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
         public virtual ICollection<TaxonomyLeaf> TaxonomyLeafs { get; set; }
-        public Tenant Tenant { get { return Tenant.AllLookupDictionary[TenantID]; } }
         public virtual TaxonomyTrunk TaxonomyTrunk { get; set; }
 
         public static class FieldLengths

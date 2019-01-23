@@ -18,13 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Models;
-using LtInfo.Common;
 using LtInfo.Common.ExcelWorkbookUtilities;
-using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Project
@@ -41,11 +37,8 @@ namespace ProjectFirma.Web.Views.Project
                 {
                     AddColumn(y.ClassificationSystemNamePluralized, x => string.Join(",", x.ProjectClassifications.Where(z => z.Classification.ClassificationSystem == y).Select(tc => tc.Classification.DisplayName)));
                 });
-            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
-            {
-                AddColumn($"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", x => x.GetProjectGeospatialAreaNamesAsHyperlinks(geospatialAreaType).ToString());
-            }
-
+            AddColumn("Priority Areas", x => string.Join(",", x.GetProjectPriorityAreas().Select(y => y.PriorityAreaName)));
+            AddColumn("Regions", x => string.Join(",", x.GetProjectRegions().Select(y => y.RegionName)));
             AddColumn(Models.FieldDefinition.ApprovalStartDate.GetFieldDefinitionLabel(), x => x.GetImplementationStartYear());
             AddColumn(Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel(), x => x.GetCompletionYear());
             AddColumn(Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel(), x => x.ProjectDescription);
@@ -67,7 +60,7 @@ namespace ProjectFirma.Web.Views.Project
         }
     }
 
-    public class ProjectImplementingOrganizationOrProjectFundingOrganizationExcelSpec : ExcelWorksheetSpec<Models.ProjectOrganizationRelationship>
+    public class ProjectImplementingOrganizationOrProjectFundingOrganizationExcelSpec : ExcelWorksheetSpec<ProjectOrganizationRelationship>
     {
         public ProjectImplementingOrganizationOrProjectFundingOrganizationExcelSpec()
         {
@@ -140,20 +133,7 @@ namespace ProjectFirma.Web.Views.Project
         }
     }
 
-    public class ProjectGeospatialAreaExcelSpec : ExcelWorksheetSpec<Models.ProjectGeospatialArea>
-    {
-        public ProjectGeospatialAreaExcelSpec()
-        {
-            AddColumn($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} ID", x => x.Project.ProjectID);
-            AddColumn($"{Models.FieldDefinition.ProjectName.GetFieldDefinitionLabel()}", x => x.Project.ProjectName);
-            foreach (var geospatialAreaType in new List<GeospatialAreaType>())
-            {
-                AddColumn($"{geospatialAreaType.GeospatialAreaTypeNamePluralized}", x => x.GeospatialArea.DisplayName);
-            }
-        }
-    }
-
-    public class ProjectClassificationExcelSpec : ExcelWorksheetSpec<Models.ProjectClassification>
+    public class ProjectClassificationExcelSpec : ExcelWorksheetSpec<ProjectClassification>
     {
         public ProjectClassificationExcelSpec()
         {

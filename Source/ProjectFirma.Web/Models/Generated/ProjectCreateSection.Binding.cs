@@ -26,11 +26,12 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionExpectedFunding ExpectedFunding = ProjectCreateSectionExpectedFunding.Instance;
         public static readonly ProjectCreateSectionReportedExpenditures ReportedExpenditures = ProjectCreateSectionReportedExpenditures.Instance;
         public static readonly ProjectCreateSectionClassifications Classifications = ProjectCreateSectionClassifications.Instance;
-        public static readonly ProjectCreateSectionAssessment Assessment = ProjectCreateSectionAssessment.Instance;
         public static readonly ProjectCreateSectionPhotos Photos = ProjectCreateSectionPhotos.Instance;
         public static readonly ProjectCreateSectionNotesAndDocuments NotesAndDocuments = ProjectCreateSectionNotesAndDocuments.Instance;
         public static readonly ProjectCreateSectionOrganizations Organizations = ProjectCreateSectionOrganizations.Instance;
         public static readonly ProjectCreateSectionContacts Contacts = ProjectCreateSectionContacts.Instance;
+        public static readonly ProjectCreateSectionRegions Regions = ProjectCreateSectionRegions.Instance;
+        public static readonly ProjectCreateSectionPriorityAreas PriorityAreas = ProjectCreateSectionPriorityAreas.Instance;
 
         public static readonly List<ProjectCreateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectCreateSection> AllLookupDictionary;
@@ -40,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Assessment, Photos, NotesAndDocuments, Organizations, Contacts };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -116,8 +117,6 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case ProjectCreateSectionEnum.Assessment:
-                    return Assessment;
                 case ProjectCreateSectionEnum.Basics:
                     return Basics;
                 case ProjectCreateSectionEnum.Classifications:
@@ -138,6 +137,10 @@ namespace ProjectFirma.Web.Models
                     return Organizations;
                 case ProjectCreateSectionEnum.Photos:
                     return Photos;
+                case ProjectCreateSectionEnum.PriorityAreas:
+                    return PriorityAreas;
+                case ProjectCreateSectionEnum.Regions:
+                    return Regions;
                 case ProjectCreateSectionEnum.ReportedExpenditures:
                     return ReportedExpenditures;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
@@ -158,11 +161,12 @@ namespace ProjectFirma.Web.Models
         ExpectedFunding = 8,
         ReportedExpenditures = 9,
         Classifications = 11,
-        Assessment = 12,
         Photos = 13,
         NotesAndDocuments = 14,
         Organizations = 15,
-        Contacts = 16
+        Contacts = 16,
+        Regions = 17,
+        PriorityAreas = 18
     }
 
     public partial class ProjectCreateSectionBasics : ProjectCreateSection
@@ -213,12 +217,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionClassifications Instance = new ProjectCreateSectionClassifications(11, @"Classifications", @"Classifications", 110, true, 5);
     }
 
-    public partial class ProjectCreateSectionAssessment : ProjectCreateSection
-    {
-        private ProjectCreateSectionAssessment(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionAssessment Instance = new ProjectCreateSectionAssessment(12, @"Assessment", @"Asssessment", 120, true, 5);
-    }
-
     public partial class ProjectCreateSectionPhotos : ProjectCreateSection
     {
         private ProjectCreateSectionPhotos(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
@@ -241,5 +239,17 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionContacts(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionContacts Instance = new ProjectCreateSectionContacts(16, @"Contacts", @"Contacts", 26, true, 1);
+    }
+
+    public partial class ProjectCreateSectionRegions : ProjectCreateSection
+    {
+        private ProjectCreateSectionRegions(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionRegions Instance = new ProjectCreateSectionRegions(17, @"Regions", @"Regions", 50, true, 2);
+    }
+
+    public partial class ProjectCreateSectionPriorityAreas : ProjectCreateSection
+    {
+        private ProjectCreateSectionPriorityAreas(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionPriorityAreas Instance = new ProjectCreateSectionPriorityAreas(18, @"PriorityAreas", @"Priority Areas", 45, true, 2);
     }
 }
