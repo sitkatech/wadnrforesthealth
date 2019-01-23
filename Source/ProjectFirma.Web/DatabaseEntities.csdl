@@ -854,6 +854,7 @@
     </Key>
     <Property Name="FederalFundCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FederalFundCodeAbbrev" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="FederalFundCodeProgram" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="FederalFundCode" ToRole="GrantAllocations" />
   </EntityType>
   <EntityType Name="FieldDefinitionData">

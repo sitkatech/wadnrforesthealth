@@ -850,6 +850,7 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
     </Key>
     <Property Name="FederalFundCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="FederalFundCodeAbbrev" Type="varchar" MaxLength="10" />
+    <Property Name="FederalFundCodeProgram" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="FieldDefinitionData">
     <Key>

@@ -95,6 +95,7 @@
         <MappingFragment StoreEntitySet="FederalFundCode">
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="FederalFundCodeAbbrev" ColumnName="FederalFundCodeAbbrev" />
+          <ScalarProperty Name="FederalFundCodeProgram" ColumnName="FederalFundCodeProgram" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

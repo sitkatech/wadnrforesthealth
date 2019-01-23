@@ -5,6 +5,7 @@ GO
 CREATE TABLE [dbo].[FederalFundCode](
 	[FederalFundCodeID] [int] IDENTITY(1,1) NOT NULL,
 	[FederalFundCodeAbbrev] [varchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[FederalFundCodeProgram] [nvarchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_FederalFundCode_FederalFundCodeID] PRIMARY KEY CLUSTERED 
 (
 	[FederalFundCodeID] ASC
