@@ -15,6 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[Grant] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[Grant]")]
     public partial class Grant : IHavePrimaryKey, ICanDeleteFull
     {

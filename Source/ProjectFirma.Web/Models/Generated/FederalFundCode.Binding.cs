@@ -15,6 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[FederalFundCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[FederalFundCode]")]
     public partial class FederalFundCode : IHavePrimaryKey, ICanDeleteFull
     {
@@ -29,10 +30,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public FederalFundCode(int federalFundCodeID, string federalFundCodeAbbrev) : this()
+        public FederalFundCode(int federalFundCodeID, string federalFundCodeAbbrev, string federalFundCodeProgram) : this()
         {
             this.FederalFundCodeID = federalFundCodeID;
             this.FederalFundCodeAbbrev = federalFundCodeAbbrev;
+            this.FederalFundCodeProgram = federalFundCodeProgram;
         }
 
 
@@ -83,6 +85,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int FederalFundCodeID { get; set; }
         public string FederalFundCodeAbbrev { get; set; }
+        public string FederalFundCodeProgram { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return FederalFundCodeID; } set { FederalFundCodeID = value; } }
 
@@ -91,6 +94,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int FederalFundCodeAbbrev = 10;
+            public const int FederalFundCodeProgram = 255;
         }
     }
 }
