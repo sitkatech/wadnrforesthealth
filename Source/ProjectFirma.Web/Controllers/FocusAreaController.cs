@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Focus Area {focusArea.FocusAreaName} successfully created.");
+            SetMessageForDisplay($"Focus Area {focusArea.GetDisplayNameAsUrl()} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -90,7 +90,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel);
             }
-            //viewModel.UpdateModel(focusArea, CurrentPerson);
+            viewModel.UpdateModel(focusArea);
             return new ModalDialogFormJsonResult();
         }
 
