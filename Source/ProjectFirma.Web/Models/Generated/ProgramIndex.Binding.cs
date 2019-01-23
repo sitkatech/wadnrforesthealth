@@ -15,6 +15,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    // Table [dbo].[ProgramIndex] is NOT multi-tenant, so is attributed as ICanDeleteFull
     [Table("[dbo].[ProgramIndex]")]
     public partial class ProgramIndex : IHavePrimaryKey, ICanDeleteFull
     {
