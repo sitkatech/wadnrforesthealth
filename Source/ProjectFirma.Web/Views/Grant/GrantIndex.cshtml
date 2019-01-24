@@ -33,10 +33,6 @@
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
 }
 
-@section RightOfPageTitle
-{
-    @GrantCreateHelper.AddGrantButton()
-}
 
 <div style="padding-top: 10px;">
     @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
