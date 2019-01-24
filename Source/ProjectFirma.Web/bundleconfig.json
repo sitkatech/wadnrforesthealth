@@ -34,5 +34,11 @@
     "inputFiles": [
       "ScriptsCustom/ModalDialogForm.js"
     ]
+  },
+  {
+    "outputFileName": "Content/css/style-WashingtonDepartmentOfNaturalResources.min.css",
+    "inputFiles": [
+      "Content/css/style-WashingtonDepartmentOfNaturalResources.css"
+    ]
   }
 ]

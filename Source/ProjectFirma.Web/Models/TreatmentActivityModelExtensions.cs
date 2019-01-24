@@ -109,6 +109,16 @@ namespace ProjectFirma.Web.Models
             return returnValue;
         }
 
+        public static string GetProgramIndexName(this Models.TreatmentActivity treatmentActivity)
+        {
+            return treatmentActivity.ProgramIndex == null ? "Program Index Not Set" : treatmentActivity.ProgramIndex.ProgramIndexAbbrev;
+        }
+
+        public static string GetProjectCodeName(this Models.TreatmentActivity treatmentActivity)
+        {
+            return treatmentActivity.ProjectCode == null ? "Project Code Not Set" : treatmentActivity.ProjectCode.ProjectCodeAbbrev;
+        }
+
         public static string GetDeleteTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)
         {
             return SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(pc => pc.DeleteTreatmentActivity(treatmentActivity));

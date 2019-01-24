@@ -1173,8 +1173,6 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
           <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
-          <ScalarProperty Name="TreatmentActivityProgramIndex" ColumnName="TreatmentActivityProgramIndex" />
-          <ScalarProperty Name="TreatmentActivityProjectCode" ColumnName="TreatmentActivityProjectCode" />
           <ScalarProperty Name="TreatmentActivityStatusID" ColumnName="TreatmentActivityStatusID" />
           <ScalarProperty Name="TreatmentActivityContactID" ColumnName="TreatmentActivityContactID" />
           <ScalarProperty Name="TreatmentActivityFootprintAcres" ColumnName="TreatmentActivityFootprintAcres" />
@@ -1191,6 +1189,8 @@
           <ScalarProperty Name="TreatmentActivityMachinePileBurnAcres" ColumnName="TreatmentActivityMachinePileBurnAcres" />
           <ScalarProperty Name="TreatmentActivityOtherTreatmentAcres" ColumnName="TreatmentActivityOtherTreatmentAcres" />
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
