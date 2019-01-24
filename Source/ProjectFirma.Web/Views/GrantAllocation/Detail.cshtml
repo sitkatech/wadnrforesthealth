@@ -50,9 +50,9 @@
 <style type="text/css">
 
     .basicsLayout .row {
-         margin-left: 0;
-         margin-right: 0;
-     }
+        margin-left: 0;
+        margin-right: 0;
+    }
 
     .basicsLayout .row div {
         padding-left: 0;
@@ -66,6 +66,10 @@
 
      
 </style>
+
+<div>
+    <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.GrantAllocationsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToGrantAllocationsText</a>
+</div>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
@@ -82,7 +86,7 @@
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantPermissions)
+                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
                                 Basics
                             </h3>
                         </div>

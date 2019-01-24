@@ -27,44 +27,44 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Views.GrantAllocation;
 
 namespace ProjectFirma.Web.Controllers
 {
     public class GrantAllocationController : FirmaBaseController
     {
-        //[HttpGet]
+        [HttpGet]
         //[GrantAllocationEditAsAdminFeature]
-        //public PartialViewResult Edit(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
-        //{
-        //    var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-        //    var viewModel = new EditGrantAllocationViewModel(grantAllocation);
-        //    return ViewEdit(viewModel, grantAllocation, EditGrantType.ExistingGrant);
-        //}
+        public PartialViewResult Edit(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationViewModel(grantAllocation);
+            return ViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
+        }
 
-        //[HttpPost]
+        [HttpPost]
         //[GrantAllocationEditAsAdminFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult Edit(GrantPrimaryKey grantPrimaryKey, EditGrantViewModel viewModel)
-        //{
-        //    var grant = grantPrimaryKey.EntityObject;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewEdit(viewModel, grant, EditGrantType.ExistingGrant);
-        //    }
-        //    viewModel.UpdateModel(grant, CurrentPerson);
-        //    return new ModalDialogFormJsonResult();
-        //}
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Edit(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationViewModel viewModel)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
+            }
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
 
-        //private PartialViewResult ViewEdit(EditGrantViewModel viewModel, GrantAllocation grantAllocation, EditGrantType editGrantType)
-        //{
-        //    var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+        private PartialViewResult ViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
 
-        //    var viewData = new EditGrantAllocationViewData(editGrantType,
-        //        organizations
-        //    );
-        //    return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
-        //}
+            var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
+                organizations
+            );
+            return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
+        }
 
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(int grantAllocationID)

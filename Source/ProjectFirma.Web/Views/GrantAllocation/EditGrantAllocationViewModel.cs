@@ -27,20 +27,36 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject
     {
-        public int GrantID { get; set; }
+        public int GrantAllocationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectName)]
         [Required]
         public string ProjectName { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
+        [Required]
+        public int OrganizationID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
+        [Required]
+        public string GrantStatus { get; set; }
+
+        public string GrantType { get; set; }
+        public string GrantNumber { get; set; }
+        public string ProgramIndex { get; set; }
+        public string CFDA { get; set; }
+        public string ProjectCode { get; set; }
+        public string FederalFundCode { get; set; }
+        public string Region { get; set; }
+        public string AllocationAmount { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
       
-
-
-        /// <summary>
+ /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
         public EditGrantAllocationViewModel()
@@ -50,6 +66,19 @@ namespace ProjectFirma.Web.Views.Grant
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
         {
             ProjectName = grantAllocation.ProjectName;
+            OrganizationID = grantAllocation.Grant.OrganizationID;
+            //TODO GET THESE WIRED TO THE FRONT SIDE EDIT DIALOG IN EditGrantAllocation.cshtml
+            GrantStatus = grantAllocation.Grant.GrantStatus.GrantStatusName;
+            GrantType = grantAllocation.Grant.GrantType.GrantTypeName;
+            GrantNumber = grantAllocation.Grant.GrantNumber;
+            ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
+            CFDA = grantAllocation.Grant.CFDANumber;
+            ProjectCode = grantAllocation.ProjectCodesString;
+            FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
+            Region = grantAllocation.Region.RegionName;
+            AllocationAmount = grantAllocation.AllocationAmount.ToStringCurrency();
+            StartDate = grantAllocation.StartDateDisplay;
+            EndDate = grantAllocation.EndDateDisplay;
         }
 
         public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)

@@ -26,18 +26,18 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 
-namespace ProjectFirma.Web.Views.Grant
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class EditGrantAllocationViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> Organizations { get; }
 
-        public EditGrantType EditGrantType { get; set; }
+        public EditGrantAllocationType EditGrantAllocationType { get; set; }
 
-        public EditGrantAllocationViewData(EditGrantType editGrantType, IEnumerable<Models.Organization> organizations)
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
-            EditGrantType = editGrantType;
+            EditGrantAllocationType = editGrantAllocationType;
         }
     }
 }

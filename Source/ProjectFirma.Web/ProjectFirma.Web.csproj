@@ -471,6 +471,7 @@
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Views\GrantAllocation\Detail.cs" />
     <Compile Include="Views\GrantAllocation\DetailViewData.cs" />
+    <Compile Include="Views\GrantAllocation\EditGrantAllocation.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationViewModel.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
@@ -1073,6 +1074,7 @@
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
+    <Content Include="Views\GrantAllocation\EditGrantAllocation.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
