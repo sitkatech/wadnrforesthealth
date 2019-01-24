@@ -8,13 +8,14 @@ using ProjectFirma.Web.Views.TreatmentActivity;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Controllers
 {
     public class TreatmentActivityController : FirmaBaseController
     {
         [HttpGet]
-        [FirmaAdminFeature]
+        [TreatmentActivityManageFeature]
         public PartialViewResult EditTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey)
         {
             var treatmentActivity = treatmentActivityPrimaryKey.EntityObject;
@@ -24,7 +25,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [FirmaAdminFeature]
+        [TreatmentActivityManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey, EditTreatmentActivityViewModel viewModel)
         {
@@ -54,10 +55,18 @@ namespace ProjectFirma.Web.Controllers
                     m => m.TreatmentActivityStatusDisplayName);
 
             var contactsAsSelectListItems =
-                treatmentActivity.Project.ProjectPeople.ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
-                    d => d.Person.FullNameFirstLastAndOrg);
+                treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
+                    d => d.FullNameFirstLastAndOrg);
 
-            var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems, CurrentPerson);
+            var programIndices =
+                HttpRequestStorage.DatabaseEntities.ProgramIndices.ToSelectListWithEmptyFirstRow(k => k.ProgramIndexID.ToString(),
+                    v => v.ProgramIndexAbbrev);
+
+            var projectCodes =
+                HttpRequestStorage.DatabaseEntities.ProjectCodes.ToSelectListWithEmptyFirstRow(
+                    k => k.ProjectCodeID.ToString(), v => v.ProjectCodeAbbrev);
+
+            var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems, programIndices, projectCodes,  CurrentPerson);
             return RazorPartialView<EditTreatmentActivity, EditTreatmentActivityViewData, EditTreatmentActivityViewModel>(viewData, viewModel);
         }
 
@@ -87,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [FirmaAdminFeature]
+        [TreatmentActivityManageFeature]
         public PartialViewResult DeleteTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(treatmentActivityPrimaryKey.PrimaryKeyValue);
@@ -102,7 +111,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [FirmaAdminFeature]
+        [TreatmentActivityManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteTreatmentActivity(TreatmentActivityPrimaryKey treatmentActivityPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -119,14 +128,14 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [FirmaAdminFeature]
+        [TreatmentActivityViewFeature]
         public ViewResult Index()
         {
             var viewData = new IndexViewData(CurrentPerson);
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [FirmaAdminFeature]
+        [TreatmentActivityViewFeature]
         public GridJsonNetJObjectResult<TreatmentActivity> TreatmentActivityGridJsonData(ProjectPrimaryKey projectPrimaryKey)
         {
             var gridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
@@ -136,7 +145,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [FirmaAdminFeature]
+        [TreatmentActivityViewFeature]
         public GridJsonNetJObjectResult<TreatmentActivity> IndexGridJsonData()
         {
             var gridSpec = new TreatmentActivityIndexGridSpec(CurrentPerson);

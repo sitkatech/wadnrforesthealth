@@ -30,7 +30,11 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
         public IEnumerable<SelectListItem> TreatmentActivityContact { get; }
 
-        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContact, Person currentPerson) : base(currentPerson)
+        public IEnumerable<SelectListItem> ProgramIndices { get; }
+
+        public IEnumerable<SelectListItem> ProjectCodes { get; }
+
+        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContact, IEnumerable<SelectListItem> programIndices, IEnumerable<SelectListItem> projectCodes, Person currentPerson) : base(currentPerson)
         {
 
 
@@ -38,6 +42,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
             TreatmentActivityStatus = treatmentActivityStatus;
             TreatmentActivityContact = treatmentActivityContact;
+            ProgramIndices = programIndices;
+            ProjectCodes = projectCodes;
         }
     }
 }

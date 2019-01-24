@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected ProjectCode()
         {
             this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
+            this.TreatmentActivities = new HashSet<TreatmentActivity>();
         }
 
         /// <summary>
@@ -62,13 +63,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationProjectCodes.Any();
+            return GrantAllocationProjectCodes.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(GrantAllocationProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(GrantAllocationProjectCode).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -89,6 +90,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in TreatmentActivities.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -98,6 +104,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
 
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
+        public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
 
         public static class FieldLengths
         {
