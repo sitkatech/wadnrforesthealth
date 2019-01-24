@@ -178,7 +178,7 @@ namespace ProjectFirma.Web.Controllers
 
         private ActionResult CreateAndEditBasicsPostImpl(BasicsViewModel viewModel)
         {
-            var project = new Project(viewModel.TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID,
+            var project = new Project(viewModel.ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID,
                 viewModel.ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID,
                 viewModel.ProjectName,
                 viewModel.ProjectDescription,
@@ -195,12 +195,12 @@ namespace ProjectFirma.Web.Controllers
 
         private ViewResult ViewCreateAndEditBasics(BasicsViewModel viewModel, bool newProjectIsHistoric)
         {
-            var taxonomyLeafs = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs;
+            var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
             var instructionsPageUrl = newProjectIsHistoric
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))
                 : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, taxonomyLeafs, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, projectTypes, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
@@ -228,9 +228,9 @@ namespace ProjectFirma.Web.Controllers
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsBasicsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsBasicsSectionComplete;
             
-            var taxonomyLeafs = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs;
+            var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, taxonomyLeafs, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes, projectCustomAttributeTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }

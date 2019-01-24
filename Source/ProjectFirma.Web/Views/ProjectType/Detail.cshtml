@@ -31,7 +31,7 @@
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.PerformanceMeasure
-@inherits ProjectFirma.Web.Views.TaxonomyLeaf.Detail
+@inherits ProjectFirma.Web.Views.ProjectType.Detail
 
 @section JavascriptAndStylesContent
 {
@@ -50,7 +50,7 @@
 }
 
 <div>
-    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @ViewDataTyped.TaxonomyLeafDisplayNamePluralized</a>
+    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @ViewDataTyped.ProjectTypeDisplayNamePluralized</a>
 </div>
 
 
@@ -59,7 +59,7 @@
         <div class="col-md-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    <h2>@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditTaxonomyLeafUrl, string.Format("Edit {0} - {1}", ViewDataTyped.TaxonomyLeafDisplayName, ViewDataTyped.TaxonomyLeaf.DisplayName), ViewDataTyped.UserHasTaxonomyLeafManagePermissions) Basics</h2>
+                    <h2>@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectTypeUrl, string.Format("Edit {0} - {1}", ViewDataTyped.ProjectTypeDisplayName, ViewDataTyped.ProjectType.DisplayName), ViewDataTyped.UserHasProjectTypeManagePermissions) Basics</h2>
                 </div>
                 <div class="panel-body">
                     @{ ProjectTaxonomy.RenderPartialView(Html, ViewDataTyped.ProjectTaxonomyViewData); }
@@ -68,17 +68,17 @@
 
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    <h2>@Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeafDescription, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) @FieldDefinition.TaxonomyLeafDescription.GetFieldDefinitionLabel()</h2>
+                    <h2>@Html.LabelWithSugarFor(FieldDefinition.ProjectTypeDescription, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) @FieldDefinition.ProjectTypeDescription.GetFieldDefinitionLabel()</h2>
                 </div>
                 <div class="panel-body">
                     <div>
-                        @ViewDataTyped.TaxonomyLeaf.TaxonomyLeafDescriptionHtmlString
+                        @ViewDataTyped.ProjectType.ProjectTypeDescriptionHtmlString
                     </div>
                 </div>
             </div>
             <div class="panel panelFirma" style="height: auto">
                 <div class="panel-heading panelTitle">
-                    <h2>@ViewDataTyped.TaxonomyLeafDisplayName @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() Map</h2>
+                    <h2>@ViewDataTyped.ProjectTypeDisplayName @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() Map</h2>
                 </div>
                 <div style="padding: 10px">
                     To zoom, hold down Shift and drag a rectangle.

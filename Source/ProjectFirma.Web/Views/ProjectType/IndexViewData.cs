@@ -24,7 +24,7 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+namespace ProjectFirma.Web.Views.ProjectType
 {
     public class IndexViewData : FirmaViewData
     {
@@ -35,26 +35,26 @@ namespace ProjectFirma.Web.Views.TaxonomyLeaf
 
         public IndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            var taxonomyLeafDisplayNamePluralized = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabelPluralized();
-            PageTitle = taxonomyLeafDisplayNamePluralized;
+            var projectTypeDisplayNamePluralized = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabelPluralized();
+            PageTitle = projectTypeDisplayNamePluralized;
 
-            var hasTaxonomyLeafManagePermissions = new TaxonomyLeafManageFeature().HasPermissionByPerson(currentPerson);
-            var taxonomyLeafDisplayName = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabel();
+            var hasProjectTypeManagePermissions = new ProjectTypeManageFeature().HasPermissionByPerson(currentPerson);
+            var projectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             GridSpec = new IndexGridSpec(currentPerson)
             {
-                ObjectNameSingular = taxonomyLeafDisplayName,
-                ObjectNamePlural = taxonomyLeafDisplayNamePluralized,
+                ObjectNameSingular = projectTypeDisplayName,
+                ObjectNamePlural = projectTypeDisplayNamePluralized,
                 SaveFiltersInCookie = true
             };
 
-            if (hasTaxonomyLeafManagePermissions)
+            if (hasProjectTypeManagePermissions)
             {
-                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(t => t.New()), string.Format("Create a new {0}", taxonomyLeafDisplayName));
+                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(t => t.New()), string.Format("Create a new {0}", projectTypeDisplayName));
             }
 
-            GridName = "taxonomyLeafsGrid";
-            GridDataUrl = SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
-            EditSortOrderUrl = SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(tc => tc.EditSortOrder());
+            GridName = "projectTypesGrid";
+            GridDataUrl = SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
+            EditSortOrderUrl = SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(tc => tc.EditSortOrder());
         }
     }
 }

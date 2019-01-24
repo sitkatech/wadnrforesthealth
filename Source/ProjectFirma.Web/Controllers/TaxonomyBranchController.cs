@@ -241,14 +241,14 @@ namespace ProjectFirma.Web.Controllers
         [TaxonomyBranchManageFeature]
         public PartialViewResult EditChildrenSortOrder(TaxonomyBranchPrimaryKey taxonomyBranchPrimaryKey)
         {
-            var taxonomyLeafs = taxonomyBranchPrimaryKey.EntityObject.TaxonomyLeafs;
+            var projectTypes = taxonomyBranchPrimaryKey.EntityObject.ProjectTypes;
             var viewModel = new EditSortOrderViewModel();
-            return ViewEditChildrenSortOrder(taxonomyLeafs, viewModel);
+            return ViewEditChildrenSortOrder(projectTypes, viewModel);
         }
 
-        private PartialViewResult ViewEditChildrenSortOrder(ICollection<TaxonomyLeaf> taxonomyLeafss, EditSortOrderViewModel viewModel)
+        private PartialViewResult ViewEditChildrenSortOrder(ICollection<ProjectType> projectTypess, EditSortOrderViewModel viewModel)
         {
-            var viewData = new EditSortOrderViewData(new List<IHaveASortOrder>(taxonomyLeafss), FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabelPluralized());
+            var viewData = new EditSortOrderViewData(new List<IHaveASortOrder>(projectTypess), FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabelPluralized());
             return RazorPartialView<EditSortOrder, EditSortOrderViewData, EditSortOrderViewModel>(viewData, viewModel);
         }
 
@@ -257,14 +257,14 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditChildrenSortOrder(TaxonomyBranchPrimaryKey taxonomyBranchPrimaryKey, EditSortOrderViewModel viewModel)
         {
-            var taxonomyLeafs = taxonomyBranchPrimaryKey.EntityObject.TaxonomyLeafs;
+            var projectTypes = taxonomyBranchPrimaryKey.EntityObject.ProjectTypes;
 
             if (!ModelState.IsValid)
             {
-                return ViewEditChildrenSortOrder(taxonomyLeafs, viewModel);
+                return ViewEditChildrenSortOrder(projectTypes, viewModel);
             }
 
-            viewModel.UpdateModel(new List<IHaveASortOrder>(taxonomyLeafs));
+            viewModel.UpdateModel(new List<IHaveASortOrder>(projectTypes));
             SetMessageForDisplay($"Successfully Updated {FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabel()} Sort Order");
             return new ModalDialogFormJsonResult();
         }

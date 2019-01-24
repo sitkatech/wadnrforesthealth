@@ -23,13 +23,13 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class TaxonomyLeafPerformanceMeasure : IAuditableEntity
+    public partial class ProjectTypePerformanceMeasure : IAuditableEntity
     {
         public string AuditDescriptionString
         {
             get
             {
-                var program = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.Find(TaxonomyLeafID);
+                var program = HttpRequestStorage.DatabaseEntities.ProjectTypes.Find(ProjectTypeID);
                 var performanceMeasure = HttpRequestStorage.DatabaseEntities.PerformanceMeasures.Find(PerformanceMeasureID);
                 var projectName = program != null ? program.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var performanceMeasureName = performanceMeasure != null ? performanceMeasure.AuditDescriptionString : ViewUtilities.NotFoundString;

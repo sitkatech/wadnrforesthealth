@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Views.TaxonomyTrunk
         public string TaxonomyTrunkDisplayName { get; }
         public string TaxonomyTrunkDisplayNamePluralized { get; }
         public string TaxonomyBranchDisplayNamePluralized { get; }
-        public string TaxonomyLeafDisplayNamePluralized { get; }
+        public string ProjectTypeDisplayNamePluralized { get; }
 
         public bool CanHaveAssociatedPerformanceMeasures { get; }
         public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.Views.TaxonomyTrunk
             TaxonomyTrunkDisplayName = Models.FieldDefinition.TaxonomyTrunk.GetFieldDefinitionLabel();
             TaxonomyTrunkDisplayNamePluralized = Models.FieldDefinition.TaxonomyTrunk.GetFieldDefinitionLabelPluralized();
             TaxonomyBranchDisplayNamePluralized = Models.FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabelPluralized();
-            TaxonomyLeafDisplayNamePluralized = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabelPluralized();
+            ProjectTypeDisplayNamePluralized = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabelPluralized();
 
             ProjectLocationsMapInitJson = projectLocationsMapInitJson;
             ProjectLocationsMapViewData = projectLocationsMapViewData;

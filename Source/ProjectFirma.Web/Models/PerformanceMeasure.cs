@@ -48,29 +48,29 @@ namespace ProjectFirma.Web.Models
         {
             var taxonomyBranchPerformanceMeasureGroupedByLevel = GetTaxonomyTiers();
             return taxonomyBranchPerformanceMeasureGroupedByLevel
-                .Where(group => group.Any(x => x.IsPrimaryTaxonomyLeaf))
+                .Where(group => group.Any(x => x.IsPrimaryProjectType))
                 .Select(group => group.Key).FirstOrDefault();
         }
 
-        public IEnumerable<IGrouping<ITaxonomyTier, TaxonomyLeafPerformanceMeasure>> GetTaxonomyTiers()
+        public IEnumerable<IGrouping<ITaxonomyTier, ProjectTypePerformanceMeasure>> GetTaxonomyTiers()
         {
-            Func<TaxonomyLeafPerformanceMeasure, ITaxonomyTier> groupingFunc;
+            Func<ProjectTypePerformanceMeasure, ITaxonomyTier> groupingFunc;
             switch (MultiTenantHelpers.GetAssociatePerformanceMeasureTaxonomyLevel().ToEnum)
             {
                 case TaxonomyLevelEnum.Trunk:
-                    groupingFunc = x => x.TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk;
+                    groupingFunc = x => x.ProjectType.TaxonomyBranch.TaxonomyTrunk;
                     break;
                 case TaxonomyLevelEnum.Branch:
-                    groupingFunc = x => x.TaxonomyLeaf.TaxonomyBranch;
+                    groupingFunc = x => x.ProjectType.TaxonomyBranch;
                     break;
                 case TaxonomyLevelEnum.Leaf:
-                    groupingFunc = x => x.TaxonomyLeaf;
+                    groupingFunc = x => x.ProjectType;
                     break;
                 default:
                     throw new ArgumentException();
             }
 
-            var taxonomyBranchPerformanceMeasureGroupedByLevel = TaxonomyLeafPerformanceMeasures.GroupBy(groupingFunc);
+            var taxonomyBranchPerformanceMeasureGroupedByLevel = ProjectTypePerformanceMeasures.GroupBy(groupingFunc);
             return taxonomyBranchPerformanceMeasureGroupedByLevel;
         }
 

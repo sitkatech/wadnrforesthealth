@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="TaxonomyLeafModelExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectTypeModelExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -32,49 +32,49 @@ using ProjectFirma.Web.Views.Shared.SortOrder;
 
 namespace ProjectFirma.Web.Models
 {
-    public static class TaxonomyLeafModelExtensions
+    public static class ProjectTypeModelExtensions
     {
-        public static HtmlString GetDisplayNameAsUrl(this TaxonomyLeaf taxonomyLeaf)
+        public static HtmlString GetDisplayNameAsUrl(this ProjectType projectType)
         {
-            return UrlTemplate.MakeHrefString(taxonomyLeaf.GetSummaryUrl(), taxonomyLeaf.DisplayName);
+            return UrlTemplate.MakeHrefString(projectType.GetSummaryUrl(), projectType.DisplayName);
         }
 
-        public static string GetSummaryUrl(this TaxonomyLeaf taxonomyLeaf)
+        public static string GetSummaryUrl(this ProjectType projectType)
         {
-            return SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(x =>
-                x.Detail(taxonomyLeaf.TaxonomyLeafID));
+            return SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(x =>
+                x.Detail(projectType.ProjectTypeID));
         }
 
-        public static string GetDeleteUrl(this TaxonomyLeaf taxonomyLeaf)
+        public static string GetDeleteUrl(this ProjectType projectType)
         {
-            return SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(c =>
-                c.DeleteTaxonomyLeaf(taxonomyLeaf.TaxonomyLeafID));
+            return SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(c =>
+                c.DeleteProjectType(projectType.ProjectTypeID));
         }
 
-        public static IEnumerable<SelectListItem> ToGroupedSelectList(this List<TaxonomyLeaf> taxonomyLeafs)
+        public static IEnumerable<SelectListItem> ToGroupedSelectList(this List<ProjectType> projectTypes)
         {
             var selectListItems = new List<SelectListItem>();
             var groups = new Dictionary<string, SelectListGroup>();
 
             if (MultiTenantHelpers.IsTaxonomyLevelTrunk())
             {
-                BuildThreeTierSelectList(taxonomyLeafs, groups, selectListItems);
+                BuildThreeTierSelectList(projectTypes, groups, selectListItems);
             }
             else if (MultiTenantHelpers.IsTaxonomyLevelBranch())
             {
-                foreach (var taxonomyBranchGrouping in taxonomyLeafs.GroupBy(x => x.TaxonomyBranch)
+                foreach (var taxonomyBranchGrouping in projectTypes.GroupBy(x => x.TaxonomyBranch)
                     .OrderBy(x => x.Key.TaxonomyBranchSortOrder).ThenBy(x=>x.Key.DisplayName))
                 {
                     var taxonomyBranch = taxonomyBranchGrouping.Key;
                     var selectListGroup = new SelectListGroup {Name = taxonomyBranch.DisplayName};
                     groups.Add(taxonomyBranch.DisplayName, selectListGroup);
 
-                    foreach (var taxonomyLeaf in taxonomyBranchGrouping.OrderBy(x => x.TaxonomyLeafSortOrder).ThenBy(x=>x.DisplayName))
+                    foreach (var projectType in taxonomyBranchGrouping.OrderBy(x => x.ProjectTypeSortOrder).ThenBy(x=>x.DisplayName))
                     {
                         selectListItems.Add(new SelectListItem
                         {
-                            Value = taxonomyLeaf.TaxonomyLeafID.ToString(),
-                            Text = taxonomyLeaf.DisplayName,
+                            Value = projectType.ProjectTypeID.ToString(),
+                            Text = projectType.DisplayName,
                             Group = selectListGroup
                         });
                     }
@@ -82,17 +82,17 @@ namespace ProjectFirma.Web.Models
             }
             else
             {
-                return taxonomyLeafs.SortByOrderThenName().ToSelectListWithEmptyFirstRow(m => m.TaxonomyLeafID.ToString(), m => m.DisplayName,
-                    $"Select the {MultiTenantHelpers.GetTaxonomyLeafDisplayNameForProject()}");
+                return projectTypes.SortByOrderThenName().ToSelectListWithEmptyFirstRow(m => m.ProjectTypeID.ToString(), m => m.DisplayName,
+                    $"Select the {MultiTenantHelpers.GetProjectTypeDisplayNameForProject()}");
             }
 
             return selectListItems;
         }
 
-        private static void BuildThreeTierSelectList(List<TaxonomyLeaf> taxonomyLeafs,
+        private static void BuildThreeTierSelectList(List<ProjectType> projectTypes,
             Dictionary<string, SelectListGroup> groups, List<SelectListItem> selectListItems)
         {
-            foreach (var taxonomyTrunkGrouping in taxonomyLeafs.GroupBy(x => x.TaxonomyBranch.TaxonomyTrunk)
+            foreach (var taxonomyTrunkGrouping in projectTypes.GroupBy(x => x.TaxonomyBranch.TaxonomyTrunk)
                 .OrderBy(x => x.Key.TaxonomyTrunkSortOrder).ThenBy(x=>x.Key.DisplayName))
             {
                 foreach (var taxonomyBranchGrouping in taxonomyTrunkGrouping.GroupBy(x => x.TaxonomyBranch)
@@ -103,12 +103,12 @@ namespace ProjectFirma.Web.Models
                     var selectListGroup = new SelectListGroup() {Name = displayName};
                     groups.Add(displayName, selectListGroup);
 
-                    foreach (var taxonomyLeaf in taxonomyBranchGrouping.OrderBy(x => x.TaxonomyLeafSortOrder).ThenBy(x => x.DisplayName))
+                    foreach (var projectType in taxonomyBranchGrouping.OrderBy(x => x.ProjectTypeSortOrder).ThenBy(x => x.DisplayName))
                     {
                         selectListItems.Add(new SelectListItem()
                         {
-                            Value = taxonomyLeaf.TaxonomyLeafID.ToString(),
-                            Text = taxonomyLeaf.DisplayName,
+                            Value = projectType.ProjectTypeID.ToString(),
+                            Text = projectType.DisplayName,
                             Group = selectListGroup
                         });
                     }
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static IEnumerable<TaxonomyLeaf> OrderTaxonomyLeaves(this List<TaxonomyLeaf> taxonomyLeaves)
+        public static IEnumerable<ProjectType> OrderTaxonomyLeaves(this List<ProjectType> taxonomyLeaves)
         {
             switch (MultiTenantHelpers.GetTaxonomyLevel().ToEnum)
             {
@@ -124,13 +124,13 @@ namespace ProjectFirma.Web.Models
                     return taxonomyLeaves.OrderBy(x => x.TaxonomyBranch.TaxonomyTrunk.TaxonomyTrunkSortOrder)
                         .ThenBy(x => x.TaxonomyBranch.TaxonomyTrunk.DisplayName)
                         .ThenBy(x => x.TaxonomyBranch.TaxonomyBranchSortOrder).ThenBy(x => x.TaxonomyBranch.DisplayName)
-                        .ThenBy(x => x.TaxonomyLeafSortOrder).ThenBy(x => x.DisplayName);
+                        .ThenBy(x => x.ProjectTypeSortOrder).ThenBy(x => x.DisplayName);
                 case TaxonomyLevelEnum.Branch:
                     return taxonomyLeaves.OrderBy(x => x.TaxonomyBranch.TaxonomyBranchSortOrder)
                         .ThenBy(x => x.TaxonomyBranch.DisplayName)
-                        .ThenBy(x => x.TaxonomyLeafSortOrder).ThenBy(x => x.DisplayName);
+                        .ThenBy(x => x.ProjectTypeSortOrder).ThenBy(x => x.DisplayName);
                 case TaxonomyLevelEnum.Leaf:
-                    return taxonomyLeaves.OrderBy(x => x.TaxonomyLeafSortOrder).ThenBy(x => x.DisplayName);
+                    return taxonomyLeaves.OrderBy(x => x.ProjectTypeSortOrder).ThenBy(x => x.DisplayName);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

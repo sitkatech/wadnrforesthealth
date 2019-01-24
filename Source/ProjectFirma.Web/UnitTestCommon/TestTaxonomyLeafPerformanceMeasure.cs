@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="TestTaxonomyLeafPerformanceMeasure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="TestProjectTypePerformanceMeasure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -24,19 +24,19 @@ namespace ProjectFirma.Web.UnitTestCommon
 {
     public static partial class TestFramework
     {
-        public static class TestTaxonomyLeafPerformanceMeasure
+        public static class TestProjectTypePerformanceMeasure
         {
-            public static TaxonomyLeafPerformanceMeasure Create()
+            public static ProjectTypePerformanceMeasure Create()
             {
-                var taxonomyLeaf = TestTaxonomyLeaf.Create();
+                var projectType = TestProjectType.Create();
                 var performanceMeasure = TestPerformanceMeasure.Create();
-                return Create(taxonomyLeaf, performanceMeasure);
+                return Create(projectType, performanceMeasure);
             }
 
-            public static TaxonomyLeafPerformanceMeasure Create(TaxonomyLeaf taxonomyLeaf, PerformanceMeasure performanceMeasure)
+            public static ProjectTypePerformanceMeasure Create(ProjectType projectType, PerformanceMeasure performanceMeasure)
             {
-                var taxonomyLeafPerformanceMeasure = TaxonomyLeafPerformanceMeasure.CreateNewBlank(taxonomyLeaf, performanceMeasure);
-                return taxonomyLeafPerformanceMeasure;
+                var projectTypePerformanceMeasure = ProjectTypePerformanceMeasure.CreateNewBlank(projectType, performanceMeasure);
+                return projectTypePerformanceMeasure;
             }
         }
     }

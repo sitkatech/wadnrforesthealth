@@ -56,21 +56,21 @@ namespace ProjectFirma.Web.Models
             var dbContext = HttpRequestStorage.DatabaseEntities;
             var objectContext = dbContext.GetObjectContext();
             var testProject = TestFramework.TestProject.Insert(dbContext);
-            var originalTaxonomyLeafName = testProject.TaxonomyLeaf.TaxonomyLeafName;
+            var originalProjectTypeName = testProject.ProjectType.ProjectTypeName;
             // Act
-            var newTaxonomyLeaf = TestFramework.TestTaxonomyLeaf.Create(dbContext);
+            var newProjectType = TestFramework.TestProjectType.Create(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            testProject.TaxonomyLeafID = newTaxonomyLeaf.TaxonomyLeafID;
+            testProject.ProjectTypeID = newProjectType.ProjectTypeID;
 
             var changeTracker = dbContext.ChangeTracker;
             changeTracker.DetectChanges();
             var modifiedEntries = changeTracker.Entries().Where(e => e.State == EntityState.Modified).ToList();
             var dbEntry = modifiedEntries.First();
-            var result = AuditLog.GetAuditDescriptionStringIfAnyForProperty(objectContext, dbEntry, "TaxonomyLeafID", AuditLogEventType.Modified);
+            var result = AuditLog.GetAuditDescriptionStringIfAnyForProperty(objectContext, dbEntry, "ProjectTypeID", AuditLogEventType.Modified);
 
             // Assert
-            Assert.That(result, Is.EqualTo(string.Format("TaxonomyLeaf: {0} changed to {1}", originalTaxonomyLeafName, newTaxonomyLeaf.TaxonomyLeafName)));
+            Assert.That(result, Is.EqualTo(string.Format("ProjectType: {0} changed to {1}", originalProjectTypeName, newProjectType.ProjectTypeName)));
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
-        public void TestTaxonomyLeafAuditLogging()
+        public void TestProjectTypeAuditLogging()
         {
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
@@ -172,33 +172,33 @@ namespace ProjectFirma.Web.Models
             // --------------------
 
             var dbContext = HttpRequestStorage.DatabaseEntities;
-            var testTaxonomyLeaf = TestFramework.TestTaxonomyLeaf.Create(dbContext);
+            var testProjectType = TestFramework.TestProjectType.Create(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
             // Check that the audit log mentions this FundingSource
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for TaxonomyLeaf named \"{0}\" in Audit Log database entries.", testTaxonomyLeaf.TaxonomyLeafName));
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testTaxonomyLeaf.TaxonomyLeafName)));
+            System.Diagnostics.Trace.WriteLine(string.Format("Looking for ProjectType named \"{0}\" in Audit Log database entries.", testProjectType.ProjectTypeName));
+            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testProjectType.ProjectTypeName)));
 
             // Change audit logging
             // --------------------
 
-            var newTaxonomyLeafName = TestFramework.MakeTestName("New TaxonomyLeafName", TaxonomyLeaf.FieldLengths.TaxonomyLeafName);
-            testTaxonomyLeaf.TaxonomyLeafName = newTaxonomyLeafName;
+            var newProjectTypeName = TestFramework.MakeTestName("New ProjectTypeName", ProjectType.FieldLengths.ProjectTypeName);
+            testProjectType.ProjectTypeName = newProjectTypeName;
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
             // Check that the audit log mentions this NEW name
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newTaxonomyLeafName)));
+            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newProjectTypeName)));
 
             // Delete audit logging
             // --------------------
 
-            testTaxonomyLeaf.DeleteFull(dbContext);
+            testProjectType.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-            // Check that the audit log mentions this TaxonomyLeafName as deleted
+            // Check that the audit log mentions this ProjectTypeName as deleted
             Check.Assert(
                 HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
-                    al => al.TableName == "TaxonomyLeaf" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testTaxonomyLeaf.TaxonomyLeafID) != null,
-                "Could not find deleted TaxonomyLeaf record");
+                    al => al.TableName == "ProjectType" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testProjectType.ProjectTypeID) != null,
+                "Could not find deleted ProjectType record");
         }
 
         [Test]

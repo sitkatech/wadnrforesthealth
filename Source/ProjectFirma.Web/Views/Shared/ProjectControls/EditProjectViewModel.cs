@@ -56,9 +56,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TaxonomyLeaf)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectType)]
         [Required(ErrorMessage = "This field is required.")]
-        public int? TaxonomyLeafID { get; set; }
+        public int? ProjectTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         public Money? EstimatedTotalCost { get; set; }
@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public EditProjectViewModel(Models.Project project, bool hasExistingProjectUpdate)
         {
-            TaxonomyLeafID = project.TaxonomyLeafID;
+            ProjectTypeID = project.ProjectTypeID;
             ProjectID = project.ProjectID;
             ProjectName = project.ProjectName;
             ProjectDescription = project.ProjectDescription;
@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         {
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
-            project.TaxonomyLeafID = TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID;
+            project.ProjectTypeID = ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectStageID = ProjectStageID;
             project.ApprovalStartDate = ApprovalStartDate;
             project.PlannedDate = PlannedDate;
@@ -155,9 +155,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                 yield return new SitkaValidationResult<EditProjectViewModel, int>(errorMessage, m => m.ProjectStageID);
             }
 
-            var projectTypeIDsWhereFocusAreaRequired = Models.TaxonomyLeaf.GetAllProjectTypeIDsWhereFocusAreaRequired();
+            var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
 
-            if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(TaxonomyLeafID.Value))
+            if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
             {
                 var errorMessage = "Focus Area is required for your selected project type";
                 yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);

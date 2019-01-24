@@ -128,21 +128,21 @@ Source code is available upon request via <support@sitkatech.com>.
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
                 <h2>
-                    <a href="@ViewDataTyped.IndexUrl">@ViewDataTyped.TaxonomyLeafDisplayNamePluralized</a>
+                    <a href="@ViewDataTyped.IndexUrl">@ViewDataTyped.ProjectTypeDisplayNamePluralized</a>
                 </h2>
             </div>
             <div class="panel-body">
-                @if (ViewDataTyped.TaxonomyTrunk.TaxonomyLeafs.Any())
+                @if (ViewDataTyped.TaxonomyTrunk.ProjectTypes.Any())
                 {
                     <table class="summaryLayout">
                         <tr>
-                            <th>@Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)</th>
+                            <th>@Html.LabelWithSugarFor(FieldDefinition.ProjectType, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)</th>
                         </tr>
-                        @foreach (var taxonomyLeaf in ViewDataTyped.TaxonomyTrunk.TaxonomyLeafs.SortByOrderThenName())
+                        @foreach (var projectType in ViewDataTyped.TaxonomyTrunk.ProjectTypes.SortByOrderThenName())
                         {
                             <tr>
                                 <td>
-                                    @taxonomyLeaf.GetDisplayNameAsUrl()
+                                    @projectType.GetDisplayNameAsUrl()
                                 </td>
                             </tr>
                         }
@@ -150,7 +150,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 }
                 else
                 {
-                    <p>No @ViewDataTyped.TaxonomyLeafDisplayNamePluralized set for this @ViewDataTyped.TaxonomyTrunkDisplayName.</p>
+                    <p>No @ViewDataTyped.ProjectTypeDisplayNamePluralized set for this @ViewDataTyped.TaxonomyTrunkDisplayName.</p>
                 }
             </div>
         </div>

@@ -33,13 +33,13 @@ namespace ProjectFirma.Web.Views.Shared
     {
         public string PerformanceMeasureDisplayNamePluralized { get; set; }
         public string PerformanceMeasureDisplayName { get; set; }
-        public IEnumerable<IGrouping<Models.PerformanceMeasure, TaxonomyLeafPerformanceMeasure>> TaxonomyTierPerformanceMeasures { get; }
+        public IEnumerable<IGrouping<Models.PerformanceMeasure, ProjectTypePerformanceMeasure>> TaxonomyTierPerformanceMeasures { get; }
         public HtmlString PerformanceMeasureHeaderDisplayName { get; }
         public HtmlString IsPrimaryTaxonomyTierHeaderDisplayName { get; }
         public string PerformanceMeasuresUrl { get; }
         public bool CanHaveAssociatedPerformanceMeasures { get; }
 
-        public RelatedPerformanceMeasuresViewData(TaxonomyLevel associatePerformanceMeasureTaxonomyLevel, bool showHelpLinks, IEnumerable<IGrouping<Models.PerformanceMeasure, TaxonomyLeafPerformanceMeasure>> taxonomyTierPerformanceMeasures, bool canHaveAssociatedPerformanceMeasures)
+        public RelatedPerformanceMeasuresViewData(TaxonomyLevel associatePerformanceMeasureTaxonomyLevel, bool showHelpLinks, IEnumerable<IGrouping<Models.PerformanceMeasure, ProjectTypePerformanceMeasure>> taxonomyTierPerformanceMeasures, bool canHaveAssociatedPerformanceMeasures)
         {
             CanHaveAssociatedPerformanceMeasures = canHaveAssociatedPerformanceMeasures;
             TaxonomyTierPerformanceMeasures = taxonomyTierPerformanceMeasures;

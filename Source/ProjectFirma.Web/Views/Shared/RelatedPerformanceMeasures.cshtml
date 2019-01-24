@@ -44,14 +44,14 @@
                     {
                         <tr>
                             <td>@taxonomyTierPerformanceMeasure.Key.GetDisplayNameAsUrl()</td>
-                            <td style="text-align: center">@taxonomyTierPerformanceMeasure.First().IsPrimaryTaxonomyLeaf.ToCheckboxImageOrEmpty()</td>
+                            <td style="text-align: center">@taxonomyTierPerformanceMeasure.First().IsPrimaryProjectType.ToCheckboxImageOrEmpty()</td>
                         </tr>
                     }
                 </table>
             }
             else
             {
-                <p class="systemText">No @ViewDataTyped.PerformanceMeasureDisplayNamePluralized set for this @FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabel().</p>
+                <p class="systemText">No @ViewDataTyped.PerformanceMeasureDisplayNamePluralized set for this @FieldDefinition.ProjectType.GetFieldDefinitionLabel().</p>
             }
         </div>
     </div>
