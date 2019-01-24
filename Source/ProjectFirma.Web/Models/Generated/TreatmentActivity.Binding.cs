@@ -30,14 +30,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int treatmentActivityID, int projectID, DateTime? treatmentActivityStartDate, DateTime? treatmentActivityEndDate, string treatmentActivityProgramIndex, string treatmentActivityProjectCode, int treatmentActivityStatusID, int? treatmentActivityContactID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, string treatmentActivityNotes) : this()
+        public TreatmentActivity(int treatmentActivityID, int projectID, DateTime? treatmentActivityStartDate, DateTime? treatmentActivityEndDate, int treatmentActivityStatusID, int? treatmentActivityContactID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, string treatmentActivityNotes, int? programIndexID, int? projectCodeID) : this()
         {
             this.TreatmentActivityID = treatmentActivityID;
             this.ProjectID = projectID;
             this.TreatmentActivityStartDate = treatmentActivityStartDate;
             this.TreatmentActivityEndDate = treatmentActivityEndDate;
-            this.TreatmentActivityProgramIndex = treatmentActivityProgramIndex;
-            this.TreatmentActivityProjectCode = treatmentActivityProjectCode;
             this.TreatmentActivityStatusID = treatmentActivityStatusID;
             this.TreatmentActivityContactID = treatmentActivityContactID;
             this.TreatmentActivityFootprintAcres = treatmentActivityFootprintAcres;
@@ -54,6 +52,8 @@ namespace ProjectFirma.Web.Models
             this.TreatmentActivityMachinePileBurnAcres = treatmentActivityMachinePileBurnAcres;
             this.TreatmentActivityOtherTreatmentAcres = treatmentActivityOtherTreatmentAcres;
             this.TreatmentActivityNotes = treatmentActivityNotes;
+            this.ProgramIndexID = programIndexID;
+            this.ProjectCodeID = projectCodeID;
         }
 
         /// <summary>
@@ -144,8 +144,6 @@ namespace ProjectFirma.Web.Models
         public int ProjectID { get; set; }
         public DateTime? TreatmentActivityStartDate { get; set; }
         public DateTime? TreatmentActivityEndDate { get; set; }
-        public string TreatmentActivityProgramIndex { get; set; }
-        public string TreatmentActivityProjectCode { get; set; }
         public int TreatmentActivityStatusID { get; set; }
         public int? TreatmentActivityContactID { get; set; }
         public decimal TreatmentActivityFootprintAcres { get; set; }
@@ -162,17 +160,20 @@ namespace ProjectFirma.Web.Models
         public decimal TreatmentActivityMachinePileBurnAcres { get; set; }
         public decimal TreatmentActivityOtherTreatmentAcres { get; set; }
         public string TreatmentActivityNotes { get; set; }
+        public int? ProgramIndexID { get; set; }
+        public int? ProjectCodeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentActivityID; } set { TreatmentActivityID = value; } }
 
         public virtual Project Project { get; set; }
         public TreatmentActivityStatus TreatmentActivityStatus { get { return TreatmentActivityStatus.AllLookupDictionary[TreatmentActivityStatusID]; } }
         public virtual Person TreatmentActivityContact { get; set; }
+        public virtual ProgramIndex ProgramIndex { get; set; }
+        public virtual ProjectCode ProjectCode { get; set; }
 
         public static class FieldLengths
         {
-            public const int TreatmentActivityProgramIndex = 100;
-            public const int TreatmentActivityProjectCode = 100;
+
         }
     }
 }

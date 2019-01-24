@@ -32,47 +32,65 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
  
         public int ProjectID { get; set; }
         public int TreatmentActivityID { get; set; }
+
         [Required]
         [DisplayName("Contact")]
         public int? TreatmentActivityContactID { get; set; }
         
         [DisplayName("Start Date")]
         public DateTime? TreatmentActivityStartDate { get; set; }
+
         [DisplayName("End Date")]
         public DateTime? TreatmentActivityEndDate { get; set; }
+
         [DisplayName("Program Index")]
-        public string TreatmentActivityProgramIndex { get; set; }
+        public int? ProgramIndexID { get; set; }
         [DisplayName("Project Code")]
-        public string TreatmentActivityProjectCode { get; set; }
+        public int? ProjectCodeID { get; set; }
+
         [Required]
         [DisplayName("Status")]
         public int TreatmentActivityStatusID { get; set; }
+
         [DisplayName("Notes")]
         public string TreatmentActivityNotes { get; set; }
+
         [DisplayName("Total Footprint")]
         public decimal TreatmentActivityFootprintAcres { get; set; }
+
         [DisplayName("Chipping")]
         public decimal TreatmentActivityChippingAcres { get; set; }
+
         [DisplayName("Pruning")]
         public decimal TreatmentActivityPruningAcres { get; set; }
+
         [DisplayName("Thinning")]
         public decimal TreatmentActivityThinningAcres { get; set; }
+
         [DisplayName("Mastication")]
         public decimal TreatmentActivityMasticationAcres { get; set; }
+
         [DisplayName("Grazing")]
         public decimal TreatmentActivityGrazingAcres { get; set; }
+
         [DisplayName("Lop and Scatter")]
         public decimal TreatmentActivityLopAndScatterAcres { get; set; }
+
         [DisplayName("Biomass Removal")]
         public decimal TreatmentActivityBiomassRemovalAcres { get; set; }
+
         [DisplayName("Hand Pile")]
         public decimal TreatmentActivityHandPileAcres { get; set; }
+
         [DisplayName("Broadcast Burn")]
         public decimal TreatmentActivityBroadcastBurnAcres { get; set; }
+
         [DisplayName("Hand Pile Burn")]
         public decimal TreatmentActivityHandPileBurnAcres { get; set; }
+
         [DisplayName("Machine Pile Burn")]
         public decimal TreatmentActivityMachinePileBurnAcres { get; set; }
+
         [DisplayName("Other Treatment")]
         public decimal TreatmentActivityOtherTreatmentAcres { get; set; }
 
@@ -89,8 +107,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityContactID = treatmentActivity.TreatmentActivityContactID;
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
-            TreatmentActivityProgramIndex = treatmentActivity.TreatmentActivityProgramIndex;
-            TreatmentActivityProjectCode = treatmentActivity.TreatmentActivityProjectCode;
+            ProgramIndexID = treatmentActivity.ProgramIndexID;
+            ProjectCodeID = treatmentActivity.ProjectCodeID;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
             TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
             TreatmentActivityFootprintAcres = treatmentActivity.TreatmentActivityFootprintAcres;
@@ -126,8 +144,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             treatmentActivity.TreatmentActivityContactID = TreatmentActivityContactID;
             treatmentActivity.TreatmentActivityStartDate = TreatmentActivityStartDate;
             treatmentActivity.TreatmentActivityEndDate = TreatmentActivityEndDate;
-            treatmentActivity.TreatmentActivityProgramIndex = TreatmentActivityProgramIndex;
-            treatmentActivity.TreatmentActivityProjectCode = TreatmentActivityProjectCode;
+            treatmentActivity.ProgramIndexID = ProgramIndexID;
+            treatmentActivity.ProjectCodeID = ProjectCodeID;
             treatmentActivity.TreatmentActivityStatusID = TreatmentActivityStatusID;
             treatmentActivity.TreatmentActivityNotes = TreatmentActivityNotes;
             treatmentActivity.TreatmentActivityFootprintAcres = TreatmentActivityFootprintAcres;
@@ -144,7 +162,6 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             treatmentActivity.TreatmentActivityMachinePileBurnAcres = TreatmentActivityMachinePileBurnAcres;
             treatmentActivity.TreatmentActivityOtherTreatmentAcres = TreatmentActivityOtherTreatmentAcres;
 
-            //HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
     }
 }

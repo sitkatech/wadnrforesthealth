@@ -7,8 +7,6 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[ProjectID] [int] NOT NULL,
 	[TreatmentActivityStartDate] [datetime] NULL,
 	[TreatmentActivityEndDate] [datetime] NULL,
-	[TreatmentActivityProgramIndex] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[TreatmentActivityProjectCode] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TreatmentActivityStatusID] [int] NOT NULL,
 	[TreatmentActivityContactID] [int] NULL,
 	[TreatmentActivityFootprintAcres] [decimal](18, 0) NOT NULL,
@@ -25,6 +23,8 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[TreatmentActivityMachinePileBurnAcres] [decimal](18, 0) NOT NULL,
 	[TreatmentActivityOtherTreatmentAcres] [decimal](18, 0) NOT NULL,
 	[TreatmentActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProgramIndexID] [int] NULL,
+	[ProjectCodeID] [int] NULL,
  CONSTRAINT [PK_TreatmentActivity_TreatmentActivityID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentActivityID] ASC
@@ -37,10 +37,20 @@ REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID]
 GO
+ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
+REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
+GO
+ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_ProgramIndex_ProgramIndexID]
+GO
 ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_Project_ProjectID]
+GO
+ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_ProjectCode_ProjectCodeID] FOREIGN KEY([ProjectCodeID])
+REFERENCES [dbo].[ProjectCode] ([ProjectCodeID])
+GO
+ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_ProjectCode_ProjectCodeID]
 GO
 ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_TreatmentActivityStatus_TreamentActivityStatusID] FOREIGN KEY([TreatmentActivityStatusID])
 REFERENCES [dbo].[TreatmentActivityStatus] ([TreatmentActivityStatusID])

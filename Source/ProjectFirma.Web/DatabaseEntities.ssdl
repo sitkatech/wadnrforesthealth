@@ -772,8 +772,16 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
       <End Role="TreatmentActivityContact" EntitySet="Person" />
       <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
     </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_ProgramIndex_ProgramIndexID">
+      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_TreatmentActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
@@ -1895,8 +1903,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="TreatmentActivityStartDate" Type="datetime" />
     <Property Name="TreatmentActivityEndDate" Type="datetime" />
-    <Property Name="TreatmentActivityProgramIndex" Type="varchar" MaxLength="100" />
-    <Property Name="TreatmentActivityProjectCode" Type="varchar" MaxLength="100" />
     <Property Name="TreatmentActivityStatusID" Type="int" Nullable="false" />
     <Property Name="TreatmentActivityContactID" Type="int" />
     <Property Name="TreatmentActivityFootprintAcres" Type="decimal" Nullable="false" />
@@ -1913,6 +1919,8 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
     <Property Name="TreatmentActivityMachinePileBurnAcres" Type="decimal" Nullable="false" />
     <Property Name="TreatmentActivityOtherTreatmentAcres" Type="decimal" Nullable="false" />
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
+    <Property Name="ProgramIndexID" Type="int" />
+    <Property Name="ProjectCodeID" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -3900,6 +3908,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TreatmentActivity_ProgramIndex_ProgramIndexID">
+    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="0..1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramIndex">
+        <PropertyRef Name="ProgramIndexID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
+        <PropertyRef Name="ProgramIndexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TreatmentActivity_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
     <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
@@ -3909,6 +3929,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="TreatmentActivities">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
+        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

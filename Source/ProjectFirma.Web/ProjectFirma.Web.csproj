@@ -429,6 +429,8 @@
     <Compile Include="Common\ICanDeleteFull.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
+    <Compile Include="Models\ProgramIndex.cs" />
+    <Compile Include="Models\ProjectCode.cs" />
     <Compile Include="Models\ProjectPriorityArea.cs" />
     <Compile Include="Models\ProjectPriorityAreaUpdate.cs" />
     <Compile Include="Models\ProjectRegion.cs" />
@@ -474,6 +476,8 @@
     <Compile Include="Security\RegionManageFeature.cs" />
     <Compile Include="Security\PriorityAreaViewFeature.cs" />
     <Compile Include="Security\RegionViewFeature.cs" />
+    <Compile Include="Security\TreatmentActivityManageFeature.cs" />
+    <Compile Include="Security\TreatmentActivityViewFeature.cs" />
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Views\GrantAllocation\Detail.cs" />
     <Compile Include="Views\GrantAllocation\DetailViewData.cs" />
@@ -594,6 +598,9 @@
     <Compile Include="Models\ProjectCustomAttributeUpdateValue.cs" />
     <Compile Include="ScheduledJobs\ProjectUpdateNotificationHelper.cs" />
     <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.css" />
+    <Content Include="Content\css\style-WashingtonDepartmentOfNaturalResources.min.css">
+      <DependentUpon>style-WashingtonDepartmentOfNaturalResources.css</DependentUpon>
+    </Content>
     <Content Include="Content\img\SAW-logo.jpg" />
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
