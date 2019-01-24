@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[TaxonomyLeaf]
+//  Source Table: [dbo].[ProjectType]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,64 +15,64 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[TaxonomyLeaf] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[TaxonomyLeaf]")]
-    public partial class TaxonomyLeaf : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectType] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectType]")]
+    public partial class ProjectType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected TaxonomyLeaf()
+        protected ProjectType()
         {
             this.Projects = new HashSet<Project>();
-            this.TaxonomyLeafPerformanceMeasures = new HashSet<TaxonomyLeafPerformanceMeasure>();
+            this.ProjectTypePerformanceMeasures = new HashSet<ProjectTypePerformanceMeasure>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TaxonomyLeaf(int taxonomyLeafID, int taxonomyBranchID, string taxonomyLeafName, string taxonomyLeafDescription, string taxonomyLeafCode, string themeColor, int? taxonomyLeafSortOrder) : this()
+        public ProjectType(int projectTypeID, int taxonomyBranchID, string projectTypeName, string projectTypeDescription, string projectTypeCode, string themeColor, int? projectTypeSortOrder) : this()
         {
-            this.TaxonomyLeafID = taxonomyLeafID;
+            this.ProjectTypeID = projectTypeID;
             this.TaxonomyBranchID = taxonomyBranchID;
-            this.TaxonomyLeafName = taxonomyLeafName;
-            this.TaxonomyLeafDescription = taxonomyLeafDescription;
-            this.TaxonomyLeafCode = taxonomyLeafCode;
+            this.ProjectTypeName = projectTypeName;
+            this.ProjectTypeDescription = projectTypeDescription;
+            this.ProjectTypeCode = projectTypeCode;
             this.ThemeColor = themeColor;
-            this.TaxonomyLeafSortOrder = taxonomyLeafSortOrder;
+            this.ProjectTypeSortOrder = projectTypeSortOrder;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TaxonomyLeaf(int taxonomyBranchID, string taxonomyLeafName) : this()
+        public ProjectType(int taxonomyBranchID, string projectTypeName) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.TaxonomyLeafID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.TaxonomyBranchID = taxonomyBranchID;
-            this.TaxonomyLeafName = taxonomyLeafName;
+            this.ProjectTypeName = projectTypeName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public TaxonomyLeaf(TaxonomyBranch taxonomyBranch, string taxonomyLeafName) : this()
+        public ProjectType(TaxonomyBranch taxonomyBranch, string projectTypeName) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.TaxonomyLeafID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.TaxonomyBranchID = taxonomyBranch.TaxonomyBranchID;
             this.TaxonomyBranch = taxonomyBranch;
-            taxonomyBranch.TaxonomyLeafs.Add(this);
-            this.TaxonomyLeafName = taxonomyLeafName;
+            taxonomyBranch.ProjectTypes.Add(this);
+            this.ProjectTypeName = projectTypeName;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static TaxonomyLeaf CreateNewBlank(TaxonomyBranch taxonomyBranch)
+        public static ProjectType CreateNewBlank(TaxonomyBranch taxonomyBranch)
         {
-            return new TaxonomyLeaf(taxonomyBranch, default(string));
+            return new ProjectType(taxonomyBranch, default(string));
         }
 
         /// <summary>
@@ -81,13 +81,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Projects.Any() || TaxonomyLeafPerformanceMeasures.Any();
+            return Projects.Any() || ProjectTypePerformanceMeasures.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TaxonomyLeaf).Name, typeof(Project).Name, typeof(TaxonomyLeafPerformanceMeasure).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectType).Name, typeof(Project).Name, typeof(ProjectTypePerformanceMeasure).Name};
 
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.TaxonomyLeafs.Remove(this);
+            dbContext.ProjectTypes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -109,37 +109,37 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in TaxonomyLeafPerformanceMeasures.ToList())
+            foreach(var x in ProjectTypePerformanceMeasures.ToList())
             {
                 x.DeleteFull(dbContext);
             }
         }
 
         [Key]
-        public int TaxonomyLeafID { get; set; }
+        public int ProjectTypeID { get; set; }
         public int TaxonomyBranchID { get; set; }
-        public string TaxonomyLeafName { get; set; }
-        public string TaxonomyLeafDescription { get; set; }
+        public string ProjectTypeName { get; set; }
+        public string ProjectTypeDescription { get; set; }
         [NotMapped]
-        public HtmlString TaxonomyLeafDescriptionHtmlString
+        public HtmlString ProjectTypeDescriptionHtmlString
         { 
-            get { return TaxonomyLeafDescription == null ? null : new HtmlString(TaxonomyLeafDescription); }
-            set { TaxonomyLeafDescription = value?.ToString(); }
+            get { return ProjectTypeDescription == null ? null : new HtmlString(ProjectTypeDescription); }
+            set { ProjectTypeDescription = value?.ToString(); }
         }
-        public string TaxonomyLeafCode { get; set; }
+        public string ProjectTypeCode { get; set; }
         public string ThemeColor { get; set; }
-        public int? TaxonomyLeafSortOrder { get; set; }
+        public int? ProjectTypeSortOrder { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return TaxonomyLeafID; } set { TaxonomyLeafID = value; } }
+        public int PrimaryKey { get { return ProjectTypeID; } set { ProjectTypeID = value; } }
 
         public virtual ICollection<Project> Projects { get; set; }
-        public virtual ICollection<TaxonomyLeafPerformanceMeasure> TaxonomyLeafPerformanceMeasures { get; set; }
+        public virtual ICollection<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
         public virtual TaxonomyBranch TaxonomyBranch { get; set; }
 
         public static class FieldLengths
         {
-            public const int TaxonomyLeafName = 100;
-            public const int TaxonomyLeafCode = 10;
+            public const int ProjectTypeName = 100;
+            public const int ProjectTypeCode = 10;
             public const int ThemeColor = 7;
         }
     }

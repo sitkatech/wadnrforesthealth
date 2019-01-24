@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
             switch (taxonomyLevelEnum)
             {
                 case TaxonomyLevelEnum.Leaf:
-                    return FieldDefinition.TaxonomyLeaf;
+                    return FieldDefinition.ProjectType;
                 case TaxonomyLevelEnum.Branch:
                     return FieldDefinition.TaxonomyBranch;
                 case TaxonomyLevelEnum.Trunk:

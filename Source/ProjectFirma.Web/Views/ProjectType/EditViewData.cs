@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Index.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,9 +18,25 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+using System.Collections.Generic;
+using System.Web.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
+
+namespace ProjectFirma.Web.Views.ProjectType
 {
-    public abstract class Index : LtInfo.Common.Mvc.TypedWebViewPage<IndexViewData>
+    public class EditViewData : FirmaUserControlViewData
     {
+        public IEnumerable<SelectListItem> TaxonomyBranches { get; }
+        public string TaxonomyBranchDisplayName { get; }
+        public bool ShowTaxonomyBranch { get; }
+
+        public EditViewData(IEnumerable<SelectListItem> taxonomyBranches, string taxonomyBranchDisplayName)
+        {
+            TaxonomyBranches = taxonomyBranches;
+            TaxonomyBranchDisplayName = taxonomyBranchDisplayName;
+            ShowTaxonomyBranch = !MultiTenantHelpers.IsTaxonomyLevelLeaf();
+        }
+
     }
 }

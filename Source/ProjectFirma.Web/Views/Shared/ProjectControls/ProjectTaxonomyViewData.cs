@@ -28,11 +28,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
     {
         public Models.TaxonomyTrunk TaxonomyTrunk { get; }
         public Models.TaxonomyBranch TaxonomyBranch { get; }
-        public Models.TaxonomyLeaf TaxonomyLeaf { get; }
+        public Models.ProjectType ProjectType { get; }
         public Models.Project Project { get; }
 
         public bool IsProject { get; }
-        public bool IsTaxonomyLeaf { get; }
+        public bool IsProjectType { get; }
         public bool IsTaxonomyBranch { get; }
         public bool IsTaxonomyTrunk { get; }
         public TaxonomyLevel TaxonomyLevel { get; }
@@ -45,24 +45,24 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         {
         }
 
-        public ProjectTaxonomyViewData(Models.TaxonomyLeaf taxonomyLeaf, TaxonomyLevel taxonomyLevel) : this(taxonomyLeaf.TaxonomyBranch.TaxonomyTrunk, taxonomyLeaf.TaxonomyBranch, taxonomyLeaf, null, taxonomyLevel)
+        public ProjectTaxonomyViewData(Models.ProjectType projectType, TaxonomyLevel taxonomyLevel) : this(projectType.TaxonomyBranch.TaxonomyTrunk, projectType.TaxonomyBranch, projectType, null, taxonomyLevel)
         {
         }
 
-        public ProjectTaxonomyViewData(Models.Project project, TaxonomyLevel taxonomyLevel) : this(project.TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk, project.TaxonomyLeaf.TaxonomyBranch, project.TaxonomyLeaf, project, taxonomyLevel)
+        public ProjectTaxonomyViewData(Models.Project project, TaxonomyLevel taxonomyLevel) : this(project.ProjectType.TaxonomyBranch.TaxonomyTrunk, project.ProjectType.TaxonomyBranch, project.ProjectType, project, taxonomyLevel)
         {
         }
 
-        private ProjectTaxonomyViewData(Models.TaxonomyTrunk taxonomyTrunk, Models.TaxonomyBranch taxonomyBranch, Models.TaxonomyLeaf taxonomyLeaf, Models.Project project, TaxonomyLevel taxonomyLevel)
+        private ProjectTaxonomyViewData(Models.TaxonomyTrunk taxonomyTrunk, Models.TaxonomyBranch taxonomyBranch, Models.ProjectType projectType, Models.Project project, TaxonomyLevel taxonomyLevel)
         {
-            TaxonomyLeaf = taxonomyLeaf;
+            ProjectType = projectType;
             TaxonomyTrunk = taxonomyTrunk;
             TaxonomyBranch = taxonomyBranch;
             Project = project;
             IsProject = Project != null;
-            IsTaxonomyLeaf = TaxonomyLeaf != null && !IsProject;
-            IsTaxonomyBranch = TaxonomyBranch != null && !IsTaxonomyLeaf && !IsProject;
-            IsTaxonomyTrunk = TaxonomyTrunk != null && !IsTaxonomyBranch && !IsTaxonomyLeaf && !IsProject;
+            IsProjectType = ProjectType != null && !IsProject;
+            IsTaxonomyBranch = TaxonomyBranch != null && !IsProjectType && !IsProject;
+            IsTaxonomyTrunk = TaxonomyTrunk != null && !IsTaxonomyBranch && !IsProjectType && !IsProject;
             TaxonomyLevel = taxonomyLevel;
         }
     }

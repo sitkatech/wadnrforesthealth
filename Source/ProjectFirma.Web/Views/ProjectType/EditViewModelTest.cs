@@ -26,7 +26,7 @@ using LtInfo.Common;
 using LtInfo.Common.Mvc;
 using NUnit.Framework;
 
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+namespace ProjectFirma.Web.Views.ProjectType
 {
     [TestFixture]
     public class EditViewModelTest
@@ -35,38 +35,38 @@ namespace ProjectFirma.Web.Views.TaxonomyLeaf
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {
             // Arrange
-            var taxonomyLeaf = TestFramework.TestTaxonomyLeaf.Create();
+            var projectType = TestFramework.TestProjectType.Create();
 
             // Act
-            var viewModel = new EditViewModel(taxonomyLeaf);
+            var viewModel = new EditViewModel(projectType);
 
             // Assert
-            Assert.That(viewModel.TaxonomyLeafID, Is.EqualTo(taxonomyLeaf.TaxonomyLeafID));
-            Assert.That(viewModel.TaxonomyLeafName, Is.EqualTo(taxonomyLeaf.TaxonomyLeafName));
+            Assert.That(viewModel.ProjectTypeID, Is.EqualTo(projectType.ProjectTypeID));
+            Assert.That(viewModel.ProjectTypeName, Is.EqualTo(projectType.ProjectTypeName));
         }
 
         [Test]
         public void UpdateModelTest()
         {
             // Arrange
-            var taxonomyLeaf = TestFramework.TestTaxonomyLeaf.Create();
-            var viewModel = new EditViewModel(taxonomyLeaf);
-            viewModel.TaxonomyLeafName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.TaxonomyLeafName), Models.TaxonomyLeaf.FieldLengths.TaxonomyLeafName);
+            var projectType = TestFramework.TestProjectType.Create();
+            var viewModel = new EditViewModel(projectType);
+            viewModel.ProjectTypeName = TestFramework.MakeTestName(GeneralUtility.NameOf(() => viewModel.ProjectTypeName), Models.ProjectType.FieldLengths.ProjectTypeName);
 
             // Act
-            viewModel.UpdateModel(taxonomyLeaf, TestFramework.TestPerson.Create());
+            viewModel.UpdateModel(projectType, TestFramework.TestPerson.Create());
 
             // Assert
-            Assert.That(taxonomyLeaf.TaxonomyLeafName, Is.EqualTo(viewModel.TaxonomyLeafName));
+            Assert.That(projectType.ProjectTypeName, Is.EqualTo(viewModel.ProjectTypeName));
         }
 
         [Test]
         public void CanValidateModelTest()
         {
             // Arrange
-            var taxonomyLeaf = TestFramework.TestTaxonomyLeaf.Create();
-            var viewModel = new EditViewModel(taxonomyLeaf);
-            var nameOfTaxonomyLeafName = GeneralUtility.NameOf(() => viewModel.TaxonomyLeafName);
+            var projectType = TestFramework.TestProjectType.Create();
+            var viewModel = new EditViewModel(projectType);
+            var nameOfProjectTypeName = GeneralUtility.NameOf(() => viewModel.ProjectTypeName);
 
             ICollection<ValidationResult> validationResults;
 
@@ -75,21 +75,21 @@ namespace ProjectFirma.Web.Views.TaxonomyLeaf
 
             // Assert
             Assert.That(validationResults.Count, Is.EqualTo(2), "Expecting certain number of errors");
-            TestFramework.AssertFieldRequired(validationResults, nameOfTaxonomyLeafName);
+            TestFramework.AssertFieldRequired(validationResults, nameOfProjectTypeName);
 
             // Act
             // Set string fields to string longer than their max lengths
-            viewModel.TaxonomyLeafName = TestFramework.MakeTestNameLongerThan(nameOfTaxonomyLeafName, Models.TaxonomyLeaf.FieldLengths.TaxonomyLeafName);
-            viewModel.TaxonomyLeafDescription = new HtmlString("Test Description");
+            viewModel.ProjectTypeName = TestFramework.MakeTestNameLongerThan(nameOfProjectTypeName, Models.ProjectType.FieldLengths.ProjectTypeName);
+            viewModel.ProjectTypeDescription = new HtmlString("Test Description");
             DataAnnotationsValidator.TryValidate(viewModel, out validationResults);
 
             // Assert
             Assert.That(validationResults.Count, Is.EqualTo(1), "Expecting certain number of errors");
-            TestFramework.AssertFieldStringLength(validationResults, nameOfTaxonomyLeafName, Models.TaxonomyLeaf.FieldLengths.TaxonomyLeafName);
+            TestFramework.AssertFieldStringLength(validationResults, nameOfProjectTypeName, Models.ProjectType.FieldLengths.ProjectTypeName);
 
             // Act
             // Happy path
-            viewModel.TaxonomyLeafName = TestFramework.MakeTestName(nameOfTaxonomyLeafName, Models.TaxonomyLeaf.FieldLengths.TaxonomyLeafName);
+            viewModel.ProjectTypeName = TestFramework.MakeTestName(nameOfProjectTypeName, Models.ProjectType.FieldLengths.ProjectTypeName);
             var isValid = DataAnnotationsValidator.TryValidate(viewModel, out validationResults);
 
             // Assert

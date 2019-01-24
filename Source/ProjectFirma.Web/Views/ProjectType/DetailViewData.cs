@@ -31,13 +31,13 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
 
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+namespace ProjectFirma.Web.Views.ProjectType
 {
     public class DetailViewData : FirmaViewData
     {
-        public Models.TaxonomyLeaf TaxonomyLeaf { get; }
-        public bool UserHasTaxonomyLeafManagePermissions { get; }
-        public string EditTaxonomyLeafUrl { get; }
+        public Models.ProjectType ProjectType { get; }
+        public bool UserHasProjectTypeManagePermissions { get; }
+        public string EditProjectTypeUrl { get; }
         public string IndexUrl { get; }
 
         public BasicProjectInfoGridSpec BasicProjectInfoGridSpec { get; }
@@ -48,47 +48,47 @@ namespace ProjectFirma.Web.Views.TaxonomyLeaf
         public ProjectLocationsMapInitJson ProjectLocationsMapInitJson { get; }
         public ProjectLocationsMapViewData ProjectLocationsMapViewData { get; }
         public string ProjectMapFilteredUrl { get; }
-        public string TaxonomyLeafDisplayName { get; }
-        public string TaxonomyLeafDisplayNamePluralized { get; }
+        public string ProjectTypeDisplayName { get; }
+        public string ProjectTypeDisplayNamePluralized { get; }
 
         public bool CanHaveAssociatedPerformanceMeasures { get; }
         public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
         public RelatedPerformanceMeasuresViewData RelatedPerformanceMeasuresViewData { get; }
 
         public DetailViewData(Person currentPerson,
-            Models.TaxonomyLeaf taxonomyLeaf,
+            Models.ProjectType projectType,
             ProjectLocationsMapInitJson projectLocationsMapInitJson,
             ProjectLocationsMapViewData projectLocationsMapViewData, bool canHaveAssociatedPerformanceMeasures,
             RelatedPerformanceMeasuresViewData relatedPerformanceMeasuresViewData,
             List<PerformanceMeasureChartViewData> performanceMeasureChartViewDatas, TaxonomyLevel taxonomyLevel) : base(currentPerson)
         {
-            TaxonomyLeaf = taxonomyLeaf;
-            PageTitle = taxonomyLeaf.DisplayName;
-            var fieldDefinitionTaxonomyLeaf = Models.FieldDefinition.TaxonomyLeaf;
-            var taxonomyLeafDisplayName = fieldDefinitionTaxonomyLeaf.GetFieldDefinitionLabel();
-            EntityName = taxonomyLeafDisplayName;
+            ProjectType = projectType;
+            PageTitle = projectType.DisplayName;
+            var fieldDefinitionProjectType = Models.FieldDefinition.ProjectType;
+            var projectTypeDisplayName = fieldDefinitionProjectType.GetFieldDefinitionLabel();
+            EntityName = projectTypeDisplayName;
 
             ProjectLocationsMapInitJson = projectLocationsMapInitJson;
             ProjectLocationsMapViewData = projectLocationsMapViewData;
             ProjectMapFilteredUrl = ProjectLocationsMapInitJson.ProjectMapCustomization.GetCustomizedUrl();
 
-            UserHasTaxonomyLeafManagePermissions = new TaxonomyLeafManageFeature().HasPermissionByPerson(CurrentPerson);
-            EditTaxonomyLeafUrl = SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(c => c.Edit(taxonomyLeaf));
+            UserHasProjectTypeManagePermissions = new ProjectTypeManageFeature().HasPermissionByPerson(CurrentPerson);
+            EditProjectTypeUrl = SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(c => c.Edit(projectType));
             IndexUrl = SitkaRoute<ProgramInfoController>.BuildUrlFromExpression(x => x.Taxonomy());
 
-            BasicProjectInfoGridName = "taxonomyLeafProjectListGrid";
+            BasicProjectInfoGridName = "projectTypeProjectListGrid";
             BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, true)
             {
-                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} with this {taxonomyLeafDisplayName}",
-                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} with this {taxonomyLeafDisplayName}",
+                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} with this {projectTypeDisplayName}",
+                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} with this {projectTypeDisplayName}",
                 SaveFiltersInCookie = true
             };
 
-            BasicProjectInfoGridDataUrl = SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(taxonomyLeaf));
-            ProjectTaxonomyViewData = new ProjectTaxonomyViewData(taxonomyLeaf, taxonomyLevel);
+            BasicProjectInfoGridDataUrl = SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(projectType));
+            ProjectTaxonomyViewData = new ProjectTaxonomyViewData(projectType, taxonomyLevel);
 
-            TaxonomyLeafDisplayName = taxonomyLeafDisplayName;
-            TaxonomyLeafDisplayNamePluralized = fieldDefinitionTaxonomyLeaf.GetFieldDefinitionLabelPluralized();
+            ProjectTypeDisplayName = projectTypeDisplayName;
+            ProjectTypeDisplayNamePluralized = fieldDefinitionProjectType.GetFieldDefinitionLabelPluralized();
 
             CanHaveAssociatedPerformanceMeasures = canHaveAssociatedPerformanceMeasures;
             PerformanceMeasureChartViewDatas = performanceMeasureChartViewDatas;

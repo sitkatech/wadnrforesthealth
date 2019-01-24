@@ -4,7 +4,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Project](
 	[ProjectID] [int] IDENTITY(1,1) NOT NULL,
-	[TaxonomyLeafID] [int] NOT NULL,
+	[ProjectTypeID] [int] NOT NULL,
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -72,10 +72,10 @@ REFERENCES [dbo].[ProjectStage] ([ProjectStageID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_ProjectStage_ProjectStageID]
 GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_TaxonomyLeaf_TaxonomyLeafID] FOREIGN KEY([TaxonomyLeafID])
-REFERENCES [dbo].[TaxonomyLeaf] ([TaxonomyLeafID])
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_ProjectType_ProjectTypeID] FOREIGN KEY([ProjectTypeID])
+REFERENCES [dbo].[ProjectType] ([ProjectTypeID])
 GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_TaxonomyLeaf_TaxonomyLeafID]
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_ProjectType_ProjectTypeID]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ApprovalStartDateLessThanEqualToCompletionDate] CHECK  (([ApprovalStartDate] IS NULL OR [CompletionDate] IS NULL OR [CompletionDate]>=[ApprovalStartDate]))
 GO

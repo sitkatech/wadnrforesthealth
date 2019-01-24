@@ -51,10 +51,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation) : this()
         {
             this.ProjectID = projectID;
-            this.TaxonomyLeafID = taxonomyLeafID;
+            this.ProjectTypeID = projectTypeID;
             this.ProjectStageID = projectStageID;
             this.ProjectName = projectName;
             this.ProjectDescription = projectDescription;
@@ -85,12 +85,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int taxonomyLeafID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID) : this()
+        public Project(int projectTypeID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.TaxonomyLeafID = taxonomyLeafID;
+            this.ProjectTypeID = projectTypeID;
             this.ProjectStageID = projectStageID;
             this.ProjectName = projectName;
             this.ProjectDescription = projectDescription;
@@ -102,13 +102,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Project(TaxonomyLeaf taxonomyLeaf, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus) : this()
+        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.TaxonomyLeafID = taxonomyLeaf.TaxonomyLeafID;
-            this.TaxonomyLeaf = taxonomyLeaf;
-            taxonomyLeaf.Projects.Add(this);
+            this.ProjectTypeID = projectType.ProjectTypeID;
+            this.ProjectType = projectType;
+            projectType.Projects.Add(this);
             this.ProjectStageID = projectStage.ProjectStageID;
             this.ProjectName = projectName;
             this.ProjectDescription = projectDescription;
@@ -120,9 +120,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Project CreateNewBlank(TaxonomyLeaf taxonomyLeaf, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus)
+        public static Project CreateNewBlank(ProjectType projectType, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus)
         {
-            return new Project(taxonomyLeaf, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus);
+            return new Project(projectType, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectID { get; set; }
-        public int TaxonomyLeafID { get; set; }
+        public int ProjectTypeID { get; set; }
         public int ProjectStageID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
@@ -318,7 +318,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectTag> ProjectTags { get; set; }
         public virtual ICollection<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
-        public virtual TaxonomyLeaf TaxonomyLeaf { get; set; }
+        public virtual ProjectType ProjectType { get; set; }
         public ProjectStage ProjectStage { get { return ProjectStage.AllLookupDictionary[ProjectStageID]; } }
         public ProjectLocationSimpleType ProjectLocationSimpleType { get { return ProjectLocationSimpleType.AllLookupDictionary[ProjectLocationSimpleTypeID]; } }
         public virtual Person PrimaryContactPerson { get; set; }

@@ -26,13 +26,13 @@ using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+namespace ProjectFirma.Web.Views.ProjectType
 {
-    public class IndexGridSpec : GridSpec<Models.TaxonomyLeaf>
+    public class IndexGridSpec : GridSpec<Models.ProjectType>
     {
         public IndexGridSpec(Person currentPerson)
         {
-            if (new TaxonomyLeafManageFeature().HasPermissionByPerson(currentPerson))
+            if (new ProjectTypeManageFeature().HasPermissionByPerson(currentPerson))
             {
                 Add(string.Empty,
                     x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, !x.HasDependentObjects()),
@@ -47,11 +47,11 @@ namespace ProjectFirma.Web.Views.TaxonomyLeaf
             {
                 Add(Models.FieldDefinition.TaxonomyBranch.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.TaxonomyBranch.SummaryUrl, a.TaxonomyBranch.TaxonomyBranchName), 300);
             }
-            Add(Models.FieldDefinition.TaxonomyLeaf.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetSummaryUrl(), a.TaxonomyLeafName), 350, DhtmlxGridColumnFilterType.Html);
-            Add("Description", a => a.TaxonomyLeafDescriptionHtmlString, 350);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetSummaryUrl(), a.ProjectTypeName), 350, DhtmlxGridColumnFilterType.Html);
+            Add("Description", a => a.ProjectTypeDescriptionHtmlString, 350);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(currentPerson).Count, 90);
-            Add($"# of {Models.FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized()}", a => a.TaxonomyLeafPerformanceMeasures.Count, 90);
-            Add("Sort Order", a => a.TaxonomyLeafSortOrder, 90, DhtmlxGridColumnFormatType.None);
+            Add($"# of {Models.FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabelPluralized()}", a => a.ProjectTypePerformanceMeasures.Count, 90);
+            Add("Sort Order", a => a.ProjectTypeSortOrder, 90, DhtmlxGridColumnFormatType.None);
         }
     }
 }

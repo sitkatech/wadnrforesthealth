@@ -28,21 +28,21 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+namespace ProjectFirma.Web.Views.ProjectType
 {
     public class EditViewModel : FormViewModel, IValidatableObject
     {
         [Required]
-        public int TaxonomyLeafID { get; set; }
+        public int ProjectTypeID { get; set; }
 
         [Required]
-        [StringLength(Models.TaxonomyLeaf.FieldLengths.TaxonomyLeafName)]
+        [StringLength(Models.ProjectType.FieldLengths.ProjectTypeName)]
         [DisplayName("Name")]
-        public string TaxonomyLeafName { get; set; }
+        public string ProjectTypeName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TaxonomyLeafDescription)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectTypeDescription)]
         [Required]
-        public HtmlString TaxonomyLeafDescription { get; set; }
+        public HtmlString ProjectTypeDescription { get; set; }
 
         [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.TaxonomyBranch)]
@@ -57,34 +57,34 @@ namespace ProjectFirma.Web.Views.TaxonomyLeaf
         {
         }
 
-        public EditViewModel(Models.TaxonomyLeaf taxonomyLeaf)
+        public EditViewModel(Models.ProjectType projectType)
         {
-            TaxonomyLeafID = taxonomyLeaf.TaxonomyLeafID;
-            TaxonomyLeafName = taxonomyLeaf.TaxonomyLeafName;
-            TaxonomyLeafDescription = taxonomyLeaf.TaxonomyLeafDescriptionHtmlString;
-            TaxonomyBranchID = taxonomyLeaf.TaxonomyBranchID;
-            ThemeColor = taxonomyLeaf.ThemeColor;
+            ProjectTypeID = projectType.ProjectTypeID;
+            ProjectTypeName = projectType.ProjectTypeName;
+            ProjectTypeDescription = projectType.ProjectTypeDescriptionHtmlString;
+            TaxonomyBranchID = projectType.TaxonomyBranchID;
+            ThemeColor = projectType.ThemeColor;
         }
 
-        public void UpdateModel(Models.TaxonomyLeaf taxonomyLeaf, Person currentPerson)
+        public void UpdateModel(Models.ProjectType projectType, Person currentPerson)
         {
-            taxonomyLeaf.TaxonomyLeafName = TaxonomyLeafName;
-            taxonomyLeaf.TaxonomyLeafDescriptionHtmlString = TaxonomyLeafDescription;
-            taxonomyLeaf.TaxonomyBranchID = !MultiTenantHelpers.IsTaxonomyLevelLeaf()
+            projectType.ProjectTypeName = ProjectTypeName;
+            projectType.ProjectTypeDescriptionHtmlString = ProjectTypeDescription;
+            projectType.TaxonomyBranchID = !MultiTenantHelpers.IsTaxonomyLevelLeaf()
                 ? TaxonomyBranchID
                 : HttpRequestStorage.DatabaseEntities.TaxonomyBranches.First().TaxonomyBranchID; // really should only be one
             ;
-            taxonomyLeaf.ThemeColor = ThemeColor;
+            projectType.ThemeColor = ThemeColor;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var errors = new List<ValidationResult>();
 
-            var existingTaxonomyLeafs = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.ToList();
-            if (!Models.TaxonomyLeaf.IsTaxonomyLeafNameUnique(existingTaxonomyLeafs, TaxonomyLeafName, TaxonomyLeafID))
+            var existingProjectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList();
+            if (!Models.ProjectType.IsProjectTypeNameUnique(existingProjectTypes, ProjectTypeName, ProjectTypeID))
             {
-                errors.Add(new SitkaValidationResult<EditViewModel, string>("Name already exists", x => x.TaxonomyLeafName));
+                errors.Add(new SitkaValidationResult<EditViewModel, string>("Name already exists", x => x.ProjectTypeName));
             }
 
             return errors;

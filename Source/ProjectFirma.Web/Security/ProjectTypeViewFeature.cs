@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="TaxonomyLeafViewFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectTypeViewFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -24,8 +24,8 @@ using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View {0}", FieldDefinitionEnum.TaxonomyLeaf)]
-    public class TaxonomyLeafViewFeature : AnonymousUnclassifiedFeature
+    [SecurityFeatureDescription("View {0}", FieldDefinitionEnum.ProjectType)]
+    public class ProjectTypeViewFeature : AnonymousUnclassifiedFeature
     {
     }
 }

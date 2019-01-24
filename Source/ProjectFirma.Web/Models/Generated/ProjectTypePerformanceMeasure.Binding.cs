@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[TaxonomyLeafPerformanceMeasure]
+//  Source Table: [dbo].[ProjectTypePerformanceMeasure]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +15,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[TaxonomyLeafPerformanceMeasure] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[TaxonomyLeafPerformanceMeasure]")]
-    public partial class TaxonomyLeafPerformanceMeasure : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectTypePerformanceMeasure] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectTypePerformanceMeasure]")]
+    public partial class ProjectTypePerformanceMeasure : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected TaxonomyLeafPerformanceMeasure()
+        protected ProjectTypePerformanceMeasure()
         {
 
         }
@@ -30,49 +30,49 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TaxonomyLeafPerformanceMeasure(int taxonomyLeafPerformanceMeasureID, int taxonomyLeafID, int performanceMeasureID, bool isPrimaryTaxonomyLeaf) : this()
+        public ProjectTypePerformanceMeasure(int projectTypePerformanceMeasureID, int projectTypeID, int performanceMeasureID, bool isPrimaryProjectType) : this()
         {
-            this.TaxonomyLeafPerformanceMeasureID = taxonomyLeafPerformanceMeasureID;
-            this.TaxonomyLeafID = taxonomyLeafID;
+            this.ProjectTypePerformanceMeasureID = projectTypePerformanceMeasureID;
+            this.ProjectTypeID = projectTypeID;
             this.PerformanceMeasureID = performanceMeasureID;
-            this.IsPrimaryTaxonomyLeaf = isPrimaryTaxonomyLeaf;
+            this.IsPrimaryProjectType = isPrimaryProjectType;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TaxonomyLeafPerformanceMeasure(int taxonomyLeafID, int performanceMeasureID, bool isPrimaryTaxonomyLeaf) : this()
+        public ProjectTypePerformanceMeasure(int projectTypeID, int performanceMeasureID, bool isPrimaryProjectType) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.TaxonomyLeafPerformanceMeasureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectTypePerformanceMeasureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.TaxonomyLeafID = taxonomyLeafID;
+            this.ProjectTypeID = projectTypeID;
             this.PerformanceMeasureID = performanceMeasureID;
-            this.IsPrimaryTaxonomyLeaf = isPrimaryTaxonomyLeaf;
+            this.IsPrimaryProjectType = isPrimaryProjectType;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public TaxonomyLeafPerformanceMeasure(TaxonomyLeaf taxonomyLeaf, PerformanceMeasure performanceMeasure, bool isPrimaryTaxonomyLeaf) : this()
+        public ProjectTypePerformanceMeasure(ProjectType projectType, PerformanceMeasure performanceMeasure, bool isPrimaryProjectType) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.TaxonomyLeafPerformanceMeasureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.TaxonomyLeafID = taxonomyLeaf.TaxonomyLeafID;
-            this.TaxonomyLeaf = taxonomyLeaf;
-            taxonomyLeaf.TaxonomyLeafPerformanceMeasures.Add(this);
+            this.ProjectTypePerformanceMeasureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectTypeID = projectType.ProjectTypeID;
+            this.ProjectType = projectType;
+            projectType.ProjectTypePerformanceMeasures.Add(this);
             this.PerformanceMeasureID = performanceMeasure.PerformanceMeasureID;
             this.PerformanceMeasure = performanceMeasure;
-            performanceMeasure.TaxonomyLeafPerformanceMeasures.Add(this);
-            this.IsPrimaryTaxonomyLeaf = isPrimaryTaxonomyLeaf;
+            performanceMeasure.ProjectTypePerformanceMeasures.Add(this);
+            this.IsPrimaryProjectType = isPrimaryProjectType;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static TaxonomyLeafPerformanceMeasure CreateNewBlank(TaxonomyLeaf taxonomyLeaf, PerformanceMeasure performanceMeasure)
+        public static ProjectTypePerformanceMeasure CreateNewBlank(ProjectType projectType, PerformanceMeasure performanceMeasure)
         {
-            return new TaxonomyLeafPerformanceMeasure(taxonomyLeaf, performanceMeasure, default(bool));
+            return new ProjectTypePerformanceMeasure(projectType, performanceMeasure, default(bool));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TaxonomyLeafPerformanceMeasure).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectTypePerformanceMeasure).Name};
 
 
         /// <summary>
@@ -96,18 +96,18 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.TaxonomyLeafPerformanceMeasures.Remove(this);
+            dbContext.ProjectTypePerformanceMeasures.Remove(this);
         }
 
         [Key]
-        public int TaxonomyLeafPerformanceMeasureID { get; set; }
-        public int TaxonomyLeafID { get; set; }
+        public int ProjectTypePerformanceMeasureID { get; set; }
+        public int ProjectTypeID { get; set; }
         public int PerformanceMeasureID { get; set; }
-        public bool IsPrimaryTaxonomyLeaf { get; set; }
+        public bool IsPrimaryProjectType { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return TaxonomyLeafPerformanceMeasureID; } set { TaxonomyLeafPerformanceMeasureID = value; } }
+        public int PrimaryKey { get { return ProjectTypePerformanceMeasureID; } set { ProjectTypePerformanceMeasureID = value; } }
 
-        public virtual TaxonomyLeaf TaxonomyLeaf { get; set; }
+        public virtual ProjectType ProjectType { get; set; }
         public virtual PerformanceMeasure PerformanceMeasure { get; set; }
 
         public static class FieldLengths

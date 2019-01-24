@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="TaxonomyLeafManageFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="TestProjectTypePerformanceMeasure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,13 +18,26 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Security
+namespace ProjectFirma.Web.UnitTestCommon
 {
-    [SecurityFeatureDescription("Manage {0}", FieldDefinitionEnum.TaxonomyLeaf)]
-    public class TaxonomyLeafManageFeature : FirmaAdminFeature
+    public static partial class TestFramework
     {
+        public static class TestProjectTypePerformanceMeasure
+        {
+            public static ProjectTypePerformanceMeasure Create()
+            {
+                var projectType = TestProjectType.Create();
+                var performanceMeasure = TestPerformanceMeasure.Create();
+                return Create(projectType, performanceMeasure);
+            }
+
+            public static ProjectTypePerformanceMeasure Create(ProjectType projectType, PerformanceMeasure performanceMeasure)
+            {
+                var projectTypePerformanceMeasure = ProjectTypePerformanceMeasure.CreateNewBlank(projectType, performanceMeasure);
+                return projectTypePerformanceMeasure;
+            }
+        }
     }
 }

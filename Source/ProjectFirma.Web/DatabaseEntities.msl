@@ -574,7 +574,7 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Project">
         <MappingFragment StoreEntitySet="Project">
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="TaxonomyLeafID" ColumnName="TaxonomyLeafID" />
+          <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
           <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
@@ -975,6 +975,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ProjectType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectType">
+        <MappingFragment StoreEntitySet="ProjectType">
+          <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
+          <ScalarProperty Name="TaxonomyBranchID" ColumnName="TaxonomyBranchID" />
+          <ScalarProperty Name="ProjectTypeName" ColumnName="ProjectTypeName" />
+          <ScalarProperty Name="ProjectTypeDescription" ColumnName="ProjectTypeDescription" />
+          <ScalarProperty Name="ProjectTypeCode" ColumnName="ProjectTypeCode" />
+          <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
+          <ScalarProperty Name="ProjectTypeSortOrder" ColumnName="ProjectTypeSortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectTypePerformanceMeasure">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectTypePerformanceMeasure">
+        <MappingFragment StoreEntitySet="ProjectTypePerformanceMeasure">
+          <ScalarProperty Name="ProjectTypePerformanceMeasureID" ColumnName="ProjectTypePerformanceMeasureID" />
+          <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
+          <ScalarProperty Name="PerformanceMeasureID" ColumnName="PerformanceMeasureID" />
+          <ScalarProperty Name="IsPrimaryProjectType" ColumnName="IsPrimaryProjectType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ProjectUpdate">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectUpdate">
         <MappingFragment StoreEntitySet="ProjectUpdate">
@@ -1144,29 +1167,6 @@
           <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
           <ScalarProperty Name="TaxonomyBranchCode" ColumnName="TaxonomyBranchCode" />
           <ScalarProperty Name="TaxonomyBranchSortOrder" ColumnName="TaxonomyBranchSortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TaxonomyLeaf">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TaxonomyLeaf">
-        <MappingFragment StoreEntitySet="TaxonomyLeaf">
-          <ScalarProperty Name="TaxonomyLeafID" ColumnName="TaxonomyLeafID" />
-          <ScalarProperty Name="TaxonomyBranchID" ColumnName="TaxonomyBranchID" />
-          <ScalarProperty Name="TaxonomyLeafName" ColumnName="TaxonomyLeafName" />
-          <ScalarProperty Name="TaxonomyLeafDescription" ColumnName="TaxonomyLeafDescription" />
-          <ScalarProperty Name="TaxonomyLeafCode" ColumnName="TaxonomyLeafCode" />
-          <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
-          <ScalarProperty Name="TaxonomyLeafSortOrder" ColumnName="TaxonomyLeafSortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TaxonomyLeafPerformanceMeasure">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TaxonomyLeafPerformanceMeasure">
-        <MappingFragment StoreEntitySet="TaxonomyLeafPerformanceMeasure">
-          <ScalarProperty Name="TaxonomyLeafPerformanceMeasureID" ColumnName="TaxonomyLeafPerformanceMeasureID" />
-          <ScalarProperty Name="TaxonomyLeafID" ColumnName="TaxonomyLeafID" />
-          <ScalarProperty Name="PerformanceMeasureID" ColumnName="PerformanceMeasureID" />
-          <ScalarProperty Name="IsPrimaryTaxonomyLeaf" ColumnName="IsPrimaryTaxonomyLeaf" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

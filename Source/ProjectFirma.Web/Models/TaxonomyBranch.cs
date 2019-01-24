@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
 
         public List<Project> GetAssociatedProjects(Person person)
         {
-            return TaxonomyLeafs.SelectMany(y => y.Projects).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
+            return ProjectTypes.SelectMany(y => y.Projects).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
         }
 
         public int TaxonomyTierID => TaxonomyBranchID;
@@ -83,9 +83,9 @@ namespace ProjectFirma.Web.Models
 
         public string AuditDescriptionString => TaxonomyBranchName;
 
-        public List<IGrouping<PerformanceMeasure, TaxonomyLeafPerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
+        public List<IGrouping<PerformanceMeasure, ProjectTypePerformanceMeasure>> GetTaxonomyTierPerformanceMeasures()
         {
-            return TaxonomyLeafs.SelectMany(x => x.TaxonomyLeafPerformanceMeasures).GroupBy(y => y.PerformanceMeasure).ToList();
+            return ProjectTypes.SelectMany(x => x.ProjectTypePerformanceMeasures).GroupBy(y => y.PerformanceMeasure).ToList();
         }
 
         public FancyTreeNode ToFancyTreeNode(Person currentPerson)
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Models
             {
                 ThemeColor = string.IsNullOrWhiteSpace(ThemeColor) ? TaxonomyTrunk.ThemeColor : ThemeColor,
                 MapUrl = CustomizedMapUrl,
-                Children = TaxonomyLeafs.SortByOrderThenName().Select(x => x.ToFancyTreeNode(currentPerson)).ToList()
+                Children = ProjectTypes.SortByOrderThenName().Select(x => x.ToFancyTreeNode(currentPerson)).ToList()
             };
             return fancyTreeNode;
         }

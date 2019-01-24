@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.TaxonomyBranch
 
         public string TaxonomyBranchDisplayName { get; }
         public string TaxonomyBranchDisplayNamePluralized { get; }
-        public string TaxonomyLeafDisplayNamePluralized { get; }
+        public string ProjectTypeDisplayNamePluralized { get; }
 
         public bool CanHaveAssociatedPerformanceMeasures { get; }
         public List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas { get; }
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.TaxonomyBranch
             var taxonomyBranchDisplayName = Models.FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabel();
             TaxonomyBranchDisplayName = taxonomyBranchDisplayName;
             TaxonomyBranchDisplayNamePluralized = Models.FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabelPluralized();
-            TaxonomyLeafDisplayNamePluralized = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabelPluralized();
+            ProjectTypeDisplayNamePluralized = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabelPluralized();
             EntityName = taxonomyBranchDisplayName;
 
             ProjectMapFilteredUrl = ProjectLocationsMapInitJson.ProjectMapCustomization.GetCustomizedUrl();

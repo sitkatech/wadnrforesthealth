@@ -23,7 +23,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeInternalSetupNotes InternalSetupNotes = FirmaPageTypeInternalSetupNotes.Instance;
         public static readonly FirmaPageTypeFullProjectList FullProjectList = FirmaPageTypeFullProjectList.Instance;
         public static readonly FirmaPageTypePerformanceMeasuresList PerformanceMeasuresList = FirmaPageTypePerformanceMeasuresList.Instance;
-        public static readonly FirmaPageTypeTaxonomyLeafList TaxonomyLeafList = FirmaPageTypeTaxonomyLeafList.Instance;
+        public static readonly FirmaPageTypeProjectTypeList ProjectTypeList = FirmaPageTypeProjectTypeList.Instance;
         public static readonly FirmaPageTypeTaxonomyBranchList TaxonomyBranchList = FirmaPageTypeTaxonomyBranchList.Instance;
         public static readonly FirmaPageTypeTaxonomyTrunkList TaxonomyTrunkList = FirmaPageTypeTaxonomyTrunkList.Instance;
         public static readonly FirmaPageTypeFundingSourcesList FundingSourcesList = FirmaPageTypeFundingSourcesList.Instance;
@@ -62,7 +62,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
+<<<<<<< HEAD
             All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, TaxonomyLeafList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList, FullAgreementList };
+=======
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList };
+>>>>>>> features/1460_ProjectTypeCustomAttribute
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -186,6 +190,8 @@ namespace ProjectFirma.Web.Models
                     return ProjectMap;
                 case FirmaPageTypeEnum.ProjectStewardOrganizationList:
                     return ProjectStewardOrganizationList;
+                case FirmaPageTypeEnum.ProjectTypeList:
+                    return ProjectTypeList;
                 case FirmaPageTypeEnum.Proposals:
                     return Proposals;
                 case FirmaPageTypeEnum.ProposeProjectInstructions:
@@ -198,8 +204,6 @@ namespace ProjectFirma.Web.Models
                     return Taxonomy;
                 case FirmaPageTypeEnum.TaxonomyBranchList:
                     return TaxonomyBranchList;
-                case FirmaPageTypeEnum.TaxonomyLeafList:
-                    return TaxonomyLeafList;
                 case FirmaPageTypeEnum.TaxonomyTrunkList:
                     return TaxonomyTrunkList;
                 case FirmaPageTypeEnum.Training:
@@ -217,7 +221,7 @@ namespace ProjectFirma.Web.Models
         InternalSetupNotes = 5,
         FullProjectList = 6,
         PerformanceMeasuresList = 9,
-        TaxonomyLeafList = 11,
+        ProjectTypeList = 11,
         TaxonomyBranchList = 13,
         TaxonomyTrunkList = 14,
         FundingSourcesList = 15,
@@ -279,10 +283,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypePerformanceMeasuresList Instance = new FirmaPageTypePerformanceMeasuresList(9, @"PerformanceMeasuresList", @"Performance Measures List", 1);
     }
 
-    public partial class FirmaPageTypeTaxonomyLeafList : FirmaPageType
+    public partial class FirmaPageTypeProjectTypeList : FirmaPageType
     {
-        private FirmaPageTypeTaxonomyLeafList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeTaxonomyLeafList Instance = new FirmaPageTypeTaxonomyLeafList(11, @"TaxonomyLeafList", @"Taxonomy Leaf List", 1);
+        private FirmaPageTypeProjectTypeList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeProjectTypeList Instance = new FirmaPageTypeProjectTypeList(11, @"ProjectTypeList", @"Project Type List", 1);
     }
 
     public partial class FirmaPageTypeTaxonomyBranchList : FirmaPageType

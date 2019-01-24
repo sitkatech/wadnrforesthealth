@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="TestTaxonomyLeaf.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="TestProjectType.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -24,25 +24,25 @@ namespace ProjectFirma.Web.UnitTestCommon
 {
     public static partial class TestFramework
     {
-        public static class TestTaxonomyLeaf
+        public static class TestProjectType
         {
-            public static TaxonomyLeaf Create()
+            public static ProjectType Create()
             {
                 var taxonomyBranch = TestTaxonomyBranch.Create();
-                var taxonomyLeaf = TaxonomyLeaf.CreateNewBlank(taxonomyBranch);
-                return taxonomyLeaf;
+                var projectType = ProjectType.CreateNewBlank(taxonomyBranch);
+                return projectType;
             }
 
             /// <summary>
-            /// Create new TaxonomyLeaf and attach it to the given context
+            /// Create new ProjectType and attach it to the given context
             /// </summary>
-            public static TaxonomyLeaf Create(DatabaseEntities dbContext)
+            public static ProjectType Create(DatabaseEntities dbContext)
             {
                 var taxonomyBranch = TestTaxonomyBranch.Create(dbContext);
-                var taxonomyLeaf = new TaxonomyLeaf(taxonomyBranch, MakeTestName("Test Taxonomy Tier One", TaxonomyLeaf.FieldLengths.TaxonomyLeafName));
-                var newTaxonomyLeaf = taxonomyLeaf;
-                dbContext.TaxonomyLeafs.Add(newTaxonomyLeaf);
-                return newTaxonomyLeaf;
+                var projectType = new ProjectType(taxonomyBranch, MakeTestName("Test Taxonomy Tier One", ProjectType.FieldLengths.ProjectTypeName));
+                var newProjectType = projectType;
+                dbContext.ProjectTypes.Add(newProjectType);
+                return newProjectType;
             }
         }
     }

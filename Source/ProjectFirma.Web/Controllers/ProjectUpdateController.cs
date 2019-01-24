@@ -2231,7 +2231,7 @@ namespace ProjectFirma.Web.Controllers
             var originalImages = new List<IFileResourcePhoto>(project.ProjectImages);
             var updatedImages = new List<IFileResourcePhoto>(projectUpdateBatch.ProjectImageUpdates);
 
-            var dummyProject = Project.CreateNewBlank(TaxonomyLeaf.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
+            var dummyProject = Project.CreateNewBlank(ProjectType.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
                 ProjectApprovalStatus.Approved);

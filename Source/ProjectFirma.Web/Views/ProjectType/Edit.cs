@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Detail.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="Edit.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,9 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.TaxonomyLeaf
+namespace ProjectFirma.Web.Views.ProjectType
 {
-    public abstract class Detail : LtInfo.Common.Mvc.TypedWebViewPage<DetailViewData>
+    public abstract class Edit : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditViewData, EditViewModel>
     {
     }
 }

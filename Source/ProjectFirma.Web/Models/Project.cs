@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Models
 
         public TaxonomyBranch GetCanStewardProjectsTaxonomyBranch()
         {
-            return TaxonomyLeaf.TaxonomyBranch;
+            return ProjectType.TaxonomyBranch;
         }
 
         public List<Region> GetCanStewardProjectsRegions()
@@ -392,15 +392,15 @@ namespace ProjectFirma.Web.Models
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(projectLocationPoint);
             feature.Properties.Add("TaxonomyTrunkID",
-                TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture));
+                ProjectType.TaxonomyBranch.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture));
             feature.Properties.Add("ProjectStageID", ProjectStageID.ToString(CultureInfo.InvariantCulture));
             feature.Properties.Add("Info", DisplayName);
             if (addProjectProperties)
             {
                 feature.Properties.Add("ProjectID", ProjectID.ToString(CultureInfo.InvariantCulture));
                 feature.Properties.Add("TaxonomyBranchID",
-                    TaxonomyLeaf.TaxonomyBranchID.ToString(CultureInfo.InvariantCulture));
-                feature.Properties.Add("TaxonomyLeafID", TaxonomyLeafID.ToString(CultureInfo.InvariantCulture));
+                    ProjectType.TaxonomyBranchID.ToString(CultureInfo.InvariantCulture));
+                feature.Properties.Add("ProjectTypeID", ProjectTypeID.ToString(CultureInfo.InvariantCulture));
                 feature.Properties.Add("ClassificationID",
                     string.Join(",", ProjectClassifications.Select(x => x.ClassificationID)));
                 var associatedOrganizations = this.GetAssociatedOrganizations();
@@ -518,7 +518,7 @@ namespace ProjectFirma.Web.Models
                 $"{UrlTemplate.MakeHrefString(this.GetFactSheetUrl(), ProjectName, ProjectName)}",
                 FancyTreeNodeKey.ToString(), false)
             {
-                ThemeColor = TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk.ThemeColor,
+                ThemeColor = ProjectType.TaxonomyBranch.TaxonomyTrunk.ThemeColor,
                 MapUrl = null
             };
             return fancyTreeNode;

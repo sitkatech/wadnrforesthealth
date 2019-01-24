@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         protected TaxonomyBranch()
         {
             this.PersonStewardTaxonomyBranches = new HashSet<PersonStewardTaxonomyBranch>();
-            this.TaxonomyLeafs = new HashSet<TaxonomyLeaf>();
+            this.ProjectTypes = new HashSet<ProjectType>();
         }
 
         /// <summary>
@@ -81,13 +81,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return PersonStewardTaxonomyBranches.Any() || TaxonomyLeafs.Any();
+            return PersonStewardTaxonomyBranches.Any() || ProjectTypes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TaxonomyBranch).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(TaxonomyLeaf).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(TaxonomyBranch).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(ProjectType).Name};
 
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in TaxonomyLeafs.ToList())
+            foreach(var x in ProjectTypes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -133,7 +133,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return TaxonomyBranchID; } set { TaxonomyBranchID = value; } }
 
         public virtual ICollection<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
-        public virtual ICollection<TaxonomyLeaf> TaxonomyLeafs { get; set; }
+        public virtual ICollection<ProjectType> ProjectTypes { get; set; }
         public virtual TaxonomyTrunk TaxonomyTrunk { get; set; }
 
         public static class FieldLengths
