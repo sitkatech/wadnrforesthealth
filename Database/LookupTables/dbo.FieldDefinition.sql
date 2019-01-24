@@ -114,4 +114,5 @@ VALUES
 (290, N'GrantStartDate', 'Start Date', N'<p>The start date of the grant. </p>'),
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
 (292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
-(293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area')
+(293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
+(294, N'GrantTitle', 'Title', N'<p>{GrantName} ({GrantShortName})</p>')

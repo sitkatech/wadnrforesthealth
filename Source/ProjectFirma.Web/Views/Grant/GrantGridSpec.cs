@@ -21,6 +21,8 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.HtmlHelperExtensions;
+using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -39,6 +41,12 @@ namespace ProjectFirma.Web.Views.Grant
             ObjectNamePlural = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new GrantDeleteFeature().HasPermissionByPerson(currentPerson);
+            var userHasCreatePermissions = new GrantCreateFeature().HasPermissionByPerson(currentPerson);
+            if (userHasCreatePermissions)
+            {
+                var contentUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.New());
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Focus Area");
+            }
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 
@@ -49,14 +57,14 @@ namespace ProjectFirma.Web.Views.Grant
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true), 30, DhtmlxGridColumnFilterType.None);
             }
             Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
-            Add("Grant Number", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantNumber), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add("CFDA Number", x => x.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Grant Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantTitle), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
-            Add("Amount", x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Start Date", x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("End Date", x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Status", x => x.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Type", x => x.GrantTypeDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantNumber), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantTitle.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantTitle), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
+            Add(Models.FieldDefinition.TotalAwardAmount.ToGridHeaderString(), x => x.AwardedFunds.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantStatus.ToGridHeaderString(), x => x.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantType.ToGridHeaderString(), x => x.GrantTypeDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }
