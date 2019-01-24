@@ -1033,6 +1033,7 @@
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="RegionName" ColumnName="RegionName" />
           <ScalarProperty Name="RegionLocation" ColumnName="RegionLocation" />
+          <ScalarProperty Name="RegionAbbrev" ColumnName="RegionAbbrev" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

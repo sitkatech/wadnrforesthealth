@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[Region](
 	[RegionID] [int] NOT NULL,
 	[RegionName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[RegionLocation] [geometry] NULL,
+	[RegionAbbrev] [nvarchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Region_RegionID] PRIMARY KEY CLUSTERED 
 (
 	[RegionID] ASC

@@ -34,11 +34,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Region(int regionID, string regionName, DbGeometry regionLocation) : this()
+        public Region(int regionID, string regionName, DbGeometry regionLocation, string regionAbbrev) : this()
         {
             this.RegionID = regionID;
             this.RegionName = regionName;
             this.RegionLocation = regionLocation;
+            this.RegionAbbrev = regionAbbrev;
         }
 
         /// <summary>
@@ -120,6 +121,7 @@ namespace ProjectFirma.Web.Models
         public int RegionID { get; set; }
         public string RegionName { get; set; }
         public DbGeometry RegionLocation { get; set; }
+        public string RegionAbbrev { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return RegionID; } set { RegionID = value; } }
 
@@ -132,6 +134,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int RegionName = 100;
+            public const int RegionAbbrev = 10;
         }
     }
 }
