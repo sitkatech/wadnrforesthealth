@@ -59,9 +59,11 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
-                organizations
+                organizations,
+                grantStatuses
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }
@@ -73,13 +75,5 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
-
-        //[GrantsViewFullListFeature]
-        //public ViewResult Index()
-        //{
-        //    var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullProjectList);
-        //    var viewData = new GrantIndexViewData(CurrentPerson, firmaPage);
-        //    return RazorView<GrantIndex, GrantIndexViewData>(viewData);
-        //}
     }
 }

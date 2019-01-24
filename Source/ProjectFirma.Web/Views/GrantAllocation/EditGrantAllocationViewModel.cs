@@ -43,17 +43,36 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStatus)]
         [Required]
-        public string GrantStatus { get; set; }
+        public int GrantStatusID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
         public string GrantType { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
         public string GrantNumber { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public string ProgramIndex { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
         public string CFDA { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
         public string ProjectCode { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public string FederalFundCode { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Region)]
         public string Region { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
         public string AllocationAmount { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public string StartDate { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
         public string EndDate { get; set; }
       
  /// <summary>
@@ -68,14 +87,14 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectName = grantAllocation.ProjectName;
             OrganizationID = grantAllocation.Grant.OrganizationID;
             //TODO GET THESE WIRED TO THE FRONT SIDE EDIT DIALOG IN EditGrantAllocation.cshtml
-            GrantStatus = grantAllocation.Grant.GrantStatus.GrantStatusName;
+            GrantStatusID = grantAllocation.Grant.GrantStatusID;
             GrantType = grantAllocation.Grant.GrantType.GrantTypeName;
             GrantNumber = grantAllocation.Grant.GrantNumber;
             ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
             CFDA = grantAllocation.Grant.CFDANumber;
             ProjectCode = grantAllocation.ProjectCodesString;
             FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
-            Region = grantAllocation.Region.RegionName;
+            Region = grantAllocation.RegionNameDisplay;
             AllocationAmount = grantAllocation.AllocationAmount.ToStringCurrency();
             StartDate = grantAllocation.StartDateDisplay;
             EndDate = grantAllocation.EndDateDisplay;

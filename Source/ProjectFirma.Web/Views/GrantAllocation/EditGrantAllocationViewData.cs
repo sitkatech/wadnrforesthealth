@@ -33,10 +33,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> Organizations { get; }
 
         public EditGrantAllocationType EditGrantAllocationType { get; set; }
+        public IEnumerable<SelectListItem> GrantStatuses { get; }
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations)
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
             EditGrantAllocationType = editGrantAllocationType;
         }
     }
