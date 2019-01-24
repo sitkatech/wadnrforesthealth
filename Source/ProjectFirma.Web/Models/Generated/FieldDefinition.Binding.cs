@@ -387,6 +387,12 @@ namespace ProjectFirma.Web.Models
                     return ProjectStewardOrganizationDisplayName;
                 case FieldDefinitionEnum.ProjectStewardshipArea:
                     return ProjectStewardshipArea;
+                case FieldDefinitionEnum.ProjectType:
+                    return ProjectType;
+                case FieldDefinitionEnum.ProjectTypeDescription:
+                    return ProjectTypeDescription;
+                case FieldDefinitionEnum.ProjectTypeDisplayNameForProject:
+                    return ProjectTypeDisplayNameForProject;
                 case FieldDefinitionEnum.ProjectUpdateCloseOutDate:
                     return ProjectUpdateCloseOutDate;
                 case FieldDefinitionEnum.ProjectUpdateKickOffDate:
@@ -421,12 +427,6 @@ namespace ProjectFirma.Web.Models
                     return TaxonomyBranch;
                 case FieldDefinitionEnum.TaxonomyBranchDescription:
                     return TaxonomyBranchDescription;
-                case FieldDefinitionEnum.ProjectType:
-                    return ProjectType;
-                case FieldDefinitionEnum.ProjectTypeDescription:
-                    return ProjectTypeDescription;
-                case FieldDefinitionEnum.ProjectTypeDisplayNameForProject:
-                    return ProjectTypeDisplayNameForProject;
                 case FieldDefinitionEnum.TaxonomySystemName:
                     return TaxonomySystemName;
                 case FieldDefinitionEnum.TaxonomyTrunk:
@@ -566,7 +566,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionProjectType : FieldDefinition
     {
         private FieldDefinitionProjectType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectType Instance = new FieldDefinitionProjectType(1, @"ProjectType", @"Taxonomy Leaf", @"<p>The highest level record in the hierarchical project taxonomy system.</p>");
+        public static readonly FieldDefinitionProjectType Instance = new FieldDefinitionProjectType(1, @"ProjectType", @"Project Type", @"<p>The highest level record in the hierarchical project taxonomy system.</p>");
     }
 
     public partial class FieldDefinitionExpectedValue : FieldDefinition
@@ -938,7 +938,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionProjectTypeDisplayNameForProject : FieldDefinition
     {
         private FieldDefinitionProjectTypeDisplayNameForProject(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectTypeDisplayNameForProject Instance = new FieldDefinitionProjectTypeDisplayNameForProject(244, @"ProjectTypeDisplayNameForProject", @"Taxonomy Tier One Display Name For Project", @"<p>A custom label describing how a Project relates to it's highest Taxonomy tier..</p>");
+        public static readonly FieldDefinitionProjectTypeDisplayNameForProject Instance = new FieldDefinitionProjectTypeDisplayNameForProject(244, @"ProjectTypeDisplayNameForProject", @"Project Type Tier One Display Name For Project", @"<p>A custom label describing how a Project relates to it's highest Taxonomy tier..</p>");
     }
 
     public partial class FieldDefinitionProjectRelationshipType : FieldDefinition
@@ -1010,7 +1010,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionProjectTypeDescription : FieldDefinition
     {
         private FieldDefinitionProjectTypeDescription(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionProjectTypeDescription Instance = new FieldDefinitionProjectTypeDescription(256, @"ProjectTypeDescription", @"Taxonomy Leaf Description", @"<p>The long-form description of the entries in the project taxonomy system.</p>");
+        public static readonly FieldDefinitionProjectTypeDescription Instance = new FieldDefinitionProjectTypeDescription(256, @"ProjectTypeDescription", @"Project Type Description", @"<p>The long-form description of the entries in the project taxonomy system.</p>");
     }
 
     public partial class FieldDefinitionShowApplicationsToThePublic : FieldDefinition

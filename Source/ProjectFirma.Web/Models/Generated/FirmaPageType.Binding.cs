@@ -183,6 +183,8 @@ namespace ProjectFirma.Web.Models
                     return ProjectMap;
                 case FirmaPageTypeEnum.ProjectStewardOrganizationList:
                     return ProjectStewardOrganizationList;
+                case FirmaPageTypeEnum.ProjectTypeList:
+                    return ProjectTypeList;
                 case FirmaPageTypeEnum.Proposals:
                     return Proposals;
                 case FirmaPageTypeEnum.ProposeProjectInstructions:
@@ -195,8 +197,6 @@ namespace ProjectFirma.Web.Models
                     return Taxonomy;
                 case FirmaPageTypeEnum.TaxonomyBranchList:
                     return TaxonomyBranchList;
-                case FirmaPageTypeEnum.ProjectTypeList:
-                    return ProjectTypeList;
                 case FirmaPageTypeEnum.TaxonomyTrunkList:
                     return TaxonomyTrunkList;
                 case FirmaPageTypeEnum.Training:
@@ -278,7 +278,7 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeProjectTypeList : FirmaPageType
     {
         private FirmaPageTypeProjectTypeList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypeProjectTypeList Instance = new FirmaPageTypeProjectTypeList(11, @"ProjectTypeList", @"Taxonomy Leaf List", 1);
+        public static readonly FirmaPageTypeProjectTypeList Instance = new FirmaPageTypeProjectTypeList(11, @"ProjectTypeList", @"Project Type List", 1);
     }
 
     public partial class FirmaPageTypeTaxonomyBranchList : FirmaPageType

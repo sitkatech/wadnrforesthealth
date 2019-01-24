@@ -112,10 +112,10 @@ namespace ProjectFirma.Web.Models
                     return Classification;
                 case ProjectLocationFilterTypeEnum.ProjectStage:
                     return ProjectStage;
-                case ProjectLocationFilterTypeEnum.TaxonomyBranch:
-                    return TaxonomyBranch;
                 case ProjectLocationFilterTypeEnum.ProjectType:
                     return ProjectType;
+                case ProjectLocationFilterTypeEnum.TaxonomyBranch:
+                    return TaxonomyBranch;
                 case ProjectLocationFilterTypeEnum.TaxonomyTrunk:
                     return TaxonomyTrunk;
                 default:
@@ -148,7 +148,7 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectLocationFilterTypeProjectType : ProjectLocationFilterType
     {
         private ProjectLocationFilterTypeProjectType(int projectLocationFilterTypeID, string projectLocationFilterTypeName, string projectLocationFilterTypeNameWithIdentifier, string projectLocationFilterTypeDisplayName, int sortOrder, int displayGroup) : base(projectLocationFilterTypeID, projectLocationFilterTypeName, projectLocationFilterTypeNameWithIdentifier, projectLocationFilterTypeDisplayName, sortOrder, displayGroup) {}
-        public static readonly ProjectLocationFilterTypeProjectType Instance = new ProjectLocationFilterTypeProjectType(3, @"ProjectType", @"ProjectTypeID", @"Taxonomy Leaf", 30, 1);
+        public static readonly ProjectLocationFilterTypeProjectType Instance = new ProjectLocationFilterTypeProjectType(3, @"ProjectType", @"ProjectTypeID", @"Project Type", 30, 1);
     }
 
     public partial class ProjectLocationFilterTypeClassification : ProjectLocationFilterType
