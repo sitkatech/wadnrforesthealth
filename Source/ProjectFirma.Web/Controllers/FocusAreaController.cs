@@ -45,6 +45,17 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        private PartialViewResult ViewDeleteFocusArea(FocusArea focusArea, ConfirmDialogFormViewModel viewModel)
+        {
+            var canDelete = !focusArea.HasDependentObjects();
+            var confirmMessage = canDelete
+                ? $"Are you sure you want to delete this Focus Area '{focusArea.FocusAreaName}'?"
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage("Focus Area", SitkaRoute<FocusAreaController>.BuildLinkFromExpression(x => x.Detail(focusArea), "here"));
+
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
         [HttpGet]
         [FocusAreaManageFeature]
         public PartialViewResult New()
@@ -237,12 +248,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private PartialViewResult ViewDeleteFocusArea(FocusArea focusArea, ConfirmDialogFormViewModel viewModel)
-        {
-            var growlMessage = $"Are you sure you want to delete Focus Area \"{focusArea.FocusAreaName}\"";
-            var viewData = new ConfirmDialogFormViewData(growlMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
+        
         private PartialViewResult ViewEdit(EditViewModel viewModel)
         {
             var focusAreaStatusAsSelectListItems =
