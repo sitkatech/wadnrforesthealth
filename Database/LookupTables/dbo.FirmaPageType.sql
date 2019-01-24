@@ -36,4 +36,5 @@ values
 (56, 'FullGrantList', 'Full Grant List', 1),
 (57, 'FullGrantAllocationList', 'Full Grant Allocation List', 1),
 (58, 'RegionsList', 'Regions List', 1),
-(59, 'PriorityAreasList', 'Priority Areas List', 1)
+(59, 'PriorityAreasList', 'Priority Areas List', 1),
+(60, 'FullAgreementList', 'Full Agreement List', 1)
