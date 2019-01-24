@@ -1,12 +1,17 @@
+--begin tran
+delete from dbo.Agreement
 
+/*
 select * from dbo.tmpAgreement
 select * from dbo.Agreement
+*/
 
 
 
 insert into dbo.Agreement (TmpAgreementID, 
                            AgreementNumber, 
-                           /*StartDate, EndDate,*/ 
+                           StartDate, 
+                           EndDate, 
                            AgreementAmount, 
                            ExpendedAmount, 
                            BalanceAmount, 
@@ -14,7 +19,8 @@ insert into dbo.Agreement (TmpAgreementID,
                            Notes)
 select ta.TmpAgreementID, 
        ta.AgreementNumber, 
-       /*ta.StartDate, ta.EndDate,*/ 
+       TRY_PARSE(ta.StartDate as DATETIME), 
+       TRY_PARSE(ta.EndDate as DATETIME), 
        TRY_PARSE(ta.AgreementAmount AS MONEY), 
        TRY_PARSE(ta.Expended as MONEY), 
        TRY_PARSE(ta.Balance as MONEY), 
@@ -31,3 +37,7 @@ where ta.AgreementNumber in
     group by ta.AgreementNumber
     having count(*) = 1
 )
+
+select * from dbo.Agreement
+
+--rollback tran
