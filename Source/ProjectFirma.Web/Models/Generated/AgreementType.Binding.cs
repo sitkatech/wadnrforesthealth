@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProjectCode]
+//  Source Table: [dbo].[AgreementType]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,46 +15,36 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectCode] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProjectCode]")]
-    public partial class ProjectCode : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[AgreementType] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[AgreementType]")]
+    public partial class AgreementType : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProjectCode()
+        protected AgreementType()
         {
             this.Agreements = new HashSet<Agreement>();
-            this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(int projectCodeID, string projectCodeAbbrev) : this()
+        public AgreementType(int agreementTypeID, string agreementTypeAbbrev, string agreementTypeName) : this()
         {
-            this.ProjectCodeID = projectCodeID;
-            this.ProjectCodeAbbrev = projectCodeAbbrev;
+            this.AgreementTypeID = agreementTypeID;
+            this.AgreementTypeAbbrev = agreementTypeAbbrev;
+            this.AgreementTypeName = agreementTypeName;
         }
 
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public ProjectCode(string projectCodeAbbrev) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.ProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.ProjectCodeAbbrev = projectCodeAbbrev;
-        }
 
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectCode CreateNewBlank()
+        public static AgreementType CreateNewBlank()
         {
-            return new ProjectCode(default(string));
+            return new AgreementType();
         }
 
         /// <summary>
@@ -63,13 +53,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Agreements.Any() || GrantAllocationProjectCodes.Any();
+            return Agreements.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(Agreement).Name, typeof(GrantAllocationProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(AgreementType).Name, typeof(Agreement).Name};
 
 
         /// <summary>
@@ -78,7 +68,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteFull(DatabaseEntities dbContext)
         {
             DeleteChildren(dbContext);
-            dbContext.ProjectCodes.Remove(this);
+            dbContext.AgreementTypes.Remove(this);
         }
         /// <summary>
         /// Dependent type names of this entity
@@ -90,25 +80,21 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in GrantAllocationProjectCodes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
-        public int ProjectCodeID { get; set; }
-        public string ProjectCodeAbbrev { get; set; }
+        public int AgreementTypeID { get; set; }
+        public string AgreementTypeAbbrev { get; set; }
+        public string AgreementTypeName { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
+        public int PrimaryKey { get { return AgreementTypeID; } set { AgreementTypeID = value; } }
 
         public virtual ICollection<Agreement> Agreements { get; set; }
-        public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
 
         public static class FieldLengths
         {
-            public const int ProjectCodeAbbrev = 100;
+            public const int AgreementTypeAbbrev = 100;
+            public const int AgreementTypeName = 100;
         }
     }
 }

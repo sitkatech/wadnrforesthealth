@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ProjectFirma.Web.Models" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Agreement" />
+    <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.AgreementType" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.AuditLog" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
@@ -102,6 +104,18 @@
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="vGeoServerPriorityArea" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityArea" />
     <EntitySet Name="vGeoServerRegion" EntityType="ProjectFirma.Web.Models.vGeoServerRegion" />
+    <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID">
+      <End Role="AgreementType" EntitySet="AgreementType" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agreement_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_Agreement_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AuditLogs" EntitySet="AuditLog" />
@@ -754,6 +768,36 @@
   <ComplexType Name="fnSplitString_Result">
     <Property Name="splitdata" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
   </ComplexType>
+  <EntityType Name="Agreement">
+    <Key>
+      <PropertyRef Name="AgreementID" />
+    </Key>
+    <Property Name="AgreementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TmpAgreementID" Type="Int32" />
+    <Property Name="AgreementTypeID" Type="Int32" />
+    <Property Name="AgreementNumber" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProjectCodeID" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" />
+    <Property Name="EndDate" Type="DateTime" />
+    <Property Name="AgreementAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ExpendedAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="BalanceAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="RegionID" Type="Int32" />
+    <Property Name="FirstBillDueOn" Type="DateTime" />
+    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="AgreementType" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID" FromRole="Agreements" ToRole="AgreementType" />
+    <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_Agreement_ProjectCode_ProjectCodeID" FromRole="Agreements" ToRole="ProjectCode" />
+    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Agreements" ToRole="Region" />
+  </EntityType>
+  <EntityType Name="AgreementType">
+    <Key>
+      <PropertyRef Name="AgreementTypeID" />
+    </Key>
+    <Property Name="AgreementTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementTypeAbbrev" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="AgreementTypeName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID" FromRole="AgreementType" ToRole="Agreements" />
+  </EntityType>
   <EntityType Name="AuditLog">
     <Key>
       <PropertyRef Name="AuditLogID" />
@@ -1500,6 +1544,7 @@
     </Key>
     <Property Name="ProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectCodeAbbrev" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="Agreements" />
     <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProjectCodes" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
@@ -1997,6 +2042,7 @@
     <Property Name="RegionID" Type="Int32" Nullable="false" />
     <Property Name="RegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RegionLocation" Type="Geometry" />
+    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Region" ToRole="Agreements" />
     <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="Region" ToRole="FocusAreas" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID" FromRole="Region" ToRole="GrantAllocations" />
     <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Region_RegionID" FromRole="Region" ToRole="PersonStewardRegions" />
@@ -2193,6 +2239,42 @@
     <Property Name="RegionLocation" Type="Geometry" />
     <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
+  <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
+    <End Role="AgreementType" Type="ProjectFirma.Web.Models.AgreementType" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementType">
+        <PropertyRef Name="AgreementTypeID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="AgreementTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.ProjectCode" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AuditLog_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
     <End Role="AuditLogs" Type="ProjectFirma.Web.Models.AuditLog" Multiplicity="*" />
