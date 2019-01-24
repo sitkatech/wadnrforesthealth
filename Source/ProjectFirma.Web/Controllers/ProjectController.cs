@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var latestNotApprovedUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             var viewModel = new EditProjectViewModel(project, latestNotApprovedUpdateBatch != null);
-            return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.TaxonomyLeaf.DisplayName, project.TotalExpenditures);
+            return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName, project.TotalExpenditures);
         }
 
         [HttpPost]
@@ -75,27 +75,27 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.TaxonomyLeaf.DisplayName, project.TotalExpenditures);
+                return ViewEdit(viewModel, project, EditProjectType.ExistingProject, project.ProjectType.DisplayName, project.TotalExpenditures);
             }
             viewModel.UpdateModel(project, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditProjectViewModel viewModel, Project project, EditProjectType editProjectType, string taxonomyLeafDisplayName, decimal? totalExpenditures)
+        private PartialViewResult ViewEdit(EditProjectViewModel viewModel, Project project, EditProjectType editProjectType, string projectTypeDisplayName, decimal? totalExpenditures)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var taxonomyLeafs = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.ToList().OrderBy(ap => ap.DisplayName).ToList();
+            var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().OrderBy(ap => ap.DisplayName).ToList();
             var primaryContactPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var viewData = new EditProjectViewData(editProjectType,
-                taxonomyLeafDisplayName,
+                projectTypeDisplayName,
                 ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
                 primaryContactPeople,
                 defaultPrimaryContact,
                 totalExpenditures,
-                taxonomyLeafs,
+                projectTypes,
                 projectCustomAttributeTypes,
                 focusAreas
             );

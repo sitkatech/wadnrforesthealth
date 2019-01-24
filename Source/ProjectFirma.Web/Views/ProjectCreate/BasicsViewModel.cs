@@ -33,9 +33,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     {
         public int? ProjectID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.TaxonomyLeaf)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectType)]
         [Required]
-        public int? TaxonomyLeafID { get; set; }
+        public int? ProjectTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectName)]
         [StringLength(Models.Project.FieldLengths.ProjectName)]
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public BasicsViewModel(Models.Project project)
         {
-            TaxonomyLeafID = project.TaxonomyLeafID;
+            ProjectTypeID = project.ProjectTypeID;
             ProjectID = project.ProjectID;
             ProjectName = project.ProjectName;
             ProjectDescription = project.ProjectDescription;
@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public void UpdateModel(Models.Project project, Person person)
         {
             project.ProposingPersonID = person.PersonID;
-            project.TaxonomyLeafID = TaxonomyLeafID ?? ModelObjectHelpers.NotYetAssignedID;
+            project.ProjectTypeID = ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectID = ProjectID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectName = ProjectName;
             project.ProjectDescription = ProjectDescription;
@@ -115,9 +115,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList();
 
-            if (TaxonomyLeafID == -1)
+            if (ProjectTypeID == -1)
             {
-                yield return new SitkaValidationResult<BasicsViewModel, int?>($"{MultiTenantHelpers.GetTaxonomyLeafDisplayNameForProject()} is required.", m => m.TaxonomyLeafID);
+                yield return new SitkaValidationResult<BasicsViewModel, int?>($"{MultiTenantHelpers.GetProjectTypeDisplayNameForProject()} is required.", m => m.ProjectTypeID);
             }
 
             if (!Models.Project.IsProjectNameUnique(projects, ProjectName, ProjectID))

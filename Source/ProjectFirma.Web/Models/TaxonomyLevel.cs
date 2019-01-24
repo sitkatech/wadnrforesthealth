@@ -40,12 +40,12 @@ namespace ProjectFirma.Web.Models
     {
         public override FieldDefinition GetFieldDefinition()
         {
-            return FieldDefinition.TaxonomyLeaf;
+            return FieldDefinition.ProjectType;
         }
 
         public override List<ITaxonomyTier> GetTaxonomyTiers()
         {
-            return new List<ITaxonomyTier>(HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.ToList());
+            return new List<ITaxonomyTier>(HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList());
         }
     }
 }

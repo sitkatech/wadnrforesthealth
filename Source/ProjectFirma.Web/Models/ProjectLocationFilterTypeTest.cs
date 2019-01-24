@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         public void TestProjectLocationFilterTypesAddedAsProjectProperties()
         {
             var project = Project.CreateNewBlank(
-                TaxonomyLeaf.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
+                ProjectType.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
                 // TODO: Verify that "Approved" is the correct project state or use the correct value

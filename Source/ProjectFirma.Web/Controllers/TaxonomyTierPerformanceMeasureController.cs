@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Controllers
             var performanceMeasure = performanceMeasurePrimaryKey.EntityObject;
             var taxonomyTierPerformanceMeasureSimples = performanceMeasure.GetTaxonomyTiers().Select(x =>
                     new TaxonomyTierPerformanceMeasureSimple(x.Key.TaxonomyTierID, x.First().PerformanceMeasureID,
-                        x.First().IsPrimaryTaxonomyLeaf)).ToList();
+                        x.First().IsPrimaryProjectType)).ToList();
             var primaryTaxonomyTierID = performanceMeasure.GetPrimaryTaxonomyTier()?.TaxonomyTierID;
             var viewModel = new EditViewModel(taxonomyTierPerformanceMeasureSimples, primaryTaxonomyTierID);
             return ViewEdit(viewModel, performanceMeasure);
@@ -55,8 +55,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, performanceMeasure);
             }
-            HttpRequestStorage.DatabaseEntities.TaxonomyLeafPerformanceMeasures.Load();
-            viewModel.UpdateModel(performanceMeasure.TaxonomyLeafPerformanceMeasures.ToList(), HttpRequestStorage.DatabaseEntities.TaxonomyLeafPerformanceMeasures.Local);
+            HttpRequestStorage.DatabaseEntities.ProjectTypePerformanceMeasures.Load();
+            viewModel.UpdateModel(performanceMeasure.ProjectTypePerformanceMeasures.ToList(), HttpRequestStorage.DatabaseEntities.ProjectTypePerformanceMeasures.Local);
             return new ModalDialogFormJsonResult();
         }
 

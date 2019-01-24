@@ -45,9 +45,9 @@ namespace ProjectFirma.Web.Views.TaxonomyTierPerformanceMeasure
             PrimaryTaxonomyTierID = primaryTaxonomyTierID;
         }
 
-        public void UpdateModel(List<TaxonomyLeafPerformanceMeasure> currentTaxonomyLeafPerformanceMeasures, IList<TaxonomyLeafPerformanceMeasure> allTaxonomyLeafPerformanceMeasures)
+        public void UpdateModel(List<ProjectTypePerformanceMeasure> currentProjectTypePerformanceMeasures, IList<ProjectTypePerformanceMeasure> allProjectTypePerformanceMeasures)
         {
-            var taxonomyLeafPerformanceMeasuresUpdated = new List<TaxonomyLeafPerformanceMeasure>();
+            var projectTypePerformanceMeasuresUpdated = new List<ProjectTypePerformanceMeasure>();
             if (TaxonomyTierPerformanceMeasures != null)
             {
                 // Completely rebuild the list
@@ -58,9 +58,9 @@ namespace ProjectFirma.Web.Views.TaxonomyTierPerformanceMeasure
                     var taxonomyBranchesForTrunk = HttpRequestStorage.DatabaseEntities.TaxonomyBranches
                         .Where(x => taxonomyTrunkIDsSelected.Contains(x.TaxonomyTrunkID))
                         .ToLookup(x => x.TaxonomyTrunkID);
-                    taxonomyLeafPerformanceMeasuresUpdated = TaxonomyTierPerformanceMeasures.SelectMany(tt =>
-                        taxonomyBranchesForTrunk[tt.TaxonomyTierID].SelectMany(tb => tb.TaxonomyLeafs.Select(x =>
-                            new TaxonomyLeafPerformanceMeasure(x.TaxonomyLeafID, tt.PerformanceMeasureID,
+                    projectTypePerformanceMeasuresUpdated = TaxonomyTierPerformanceMeasures.SelectMany(tt =>
+                        taxonomyBranchesForTrunk[tt.TaxonomyTierID].SelectMany(tb => tb.ProjectTypes.Select(x =>
+                            new ProjectTypePerformanceMeasure(x.ProjectTypeID, tt.PerformanceMeasureID,
                                 tt.TaxonomyTierID == PrimaryTaxonomyTierID)))).ToList();
 
                 }
@@ -68,23 +68,23 @@ namespace ProjectFirma.Web.Views.TaxonomyTierPerformanceMeasure
                 {
                     var taxonomyBranchIDsSelected =
                         TaxonomyTierPerformanceMeasures.Select(x => x.TaxonomyTierID).ToList();
-                    var taxonomyLeafsForBranch = HttpRequestStorage.DatabaseEntities.TaxonomyLeafs
+                    var projectTypesForBranch = HttpRequestStorage.DatabaseEntities.ProjectTypes
                         .Where(x => taxonomyBranchIDsSelected.Contains(x.TaxonomyBranchID))
                         .ToLookup(x => x.TaxonomyBranchID);
-                    taxonomyLeafPerformanceMeasuresUpdated = TaxonomyTierPerformanceMeasures.SelectMany(tb =>
-                        taxonomyLeafsForBranch[tb.TaxonomyTierID].Select(x =>
-                            new TaxonomyLeafPerformanceMeasure(x.TaxonomyLeafID, tb.PerformanceMeasureID,
+                    projectTypePerformanceMeasuresUpdated = TaxonomyTierPerformanceMeasures.SelectMany(tb =>
+                        projectTypesForBranch[tb.TaxonomyTierID].Select(x =>
+                            new ProjectTypePerformanceMeasure(x.ProjectTypeID, tb.PerformanceMeasureID,
                                 tb.TaxonomyTierID == PrimaryTaxonomyTierID))).ToList();
                 }
                 else
                 {
-                    taxonomyLeafPerformanceMeasuresUpdated = TaxonomyTierPerformanceMeasures.Select(x => new TaxonomyLeafPerformanceMeasure(x.TaxonomyTierID, x.PerformanceMeasureID, x.TaxonomyTierID == PrimaryTaxonomyTierID)).ToList();
+                    projectTypePerformanceMeasuresUpdated = TaxonomyTierPerformanceMeasures.Select(x => new ProjectTypePerformanceMeasure(x.TaxonomyTierID, x.PerformanceMeasureID, x.TaxonomyTierID == PrimaryTaxonomyTierID)).ToList();
                 }
             }
-            currentTaxonomyLeafPerformanceMeasures.Merge(taxonomyLeafPerformanceMeasuresUpdated,
-                allTaxonomyLeafPerformanceMeasures,
-                (x, y) => x.TaxonomyLeafID == y.TaxonomyLeafID && x.PerformanceMeasureID == y.PerformanceMeasureID,
-                (x, y) => x.IsPrimaryTaxonomyLeaf = y.IsPrimaryTaxonomyLeaf);
+            currentProjectTypePerformanceMeasures.Merge(projectTypePerformanceMeasuresUpdated,
+                allProjectTypePerformanceMeasures,
+                (x, y) => x.ProjectTypeID == y.ProjectTypeID && x.PerformanceMeasureID == y.PerformanceMeasureID,
+                (x, y) => x.IsPrimaryProjectType = y.IsPrimaryProjectType);
         }
     }
 }

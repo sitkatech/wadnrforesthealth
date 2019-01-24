@@ -65,9 +65,9 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<PerformanceMeasureController>.BuildUrlFromExpression(x => x.Index());
     }
 
-    public partial class FirmaPageTypeTaxonomyLeafList
+    public partial class FirmaPageTypeProjectTypeList
     {
-        public override string GetViewUrl() => SitkaRoute<TaxonomyLeafController>.BuildUrlFromExpression(x => x.Index());
+        public override string GetViewUrl() => SitkaRoute<ProjectTypeController>.BuildUrlFromExpression(x => x.Index());
     }
 
     public partial class FirmaPageTypeTaxonomyTrunkList
@@ -196,5 +196,10 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeRegionsList
     {
         public override string GetViewUrl() => SitkaRoute<RegionController>.BuildUrlFromExpression(c => c.Index());
+    }
+
+    public partial class FirmaPageTypeFullAgreementList
+    {
+        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
     }
 }

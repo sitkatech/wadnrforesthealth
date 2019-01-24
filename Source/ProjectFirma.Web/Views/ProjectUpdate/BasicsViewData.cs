@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public IEnumerable<SelectListItem> CompletionDateRange { get; }
         public IEnumerable<SelectListItem> ProjectStages { get; }
         public IEnumerable<SelectListItem> FocusAreas { get; }
-        public string TaxonomyLeafDisplayName { get; }
+        public string ProjectTypeDisplayName { get; }
         public string RefreshUrl { get; }
         public string DiffUrl { get; }
 
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, basicsValidationResult.GetWarningMessages(), ProjectUpdateSection.Basics.ProjectUpdateSectionDisplayName)
         {
             ProjectUpdate = projectUpdate;
-            TaxonomyLeafDisplayName = projectUpdate.ProjectUpdateBatch.Project.TaxonomyLeaf.DisplayName;
+            ProjectTypeDisplayName = projectUpdate.ProjectUpdateBatch.Project.ProjectType.DisplayName;
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
             FocusAreas = focusAreas.OrderBy(x => x.FocusAreaName)
                 .ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);

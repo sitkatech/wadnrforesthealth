@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
     {
         public override Expression<Func<Project, bool>> GetFilterFunction(List<int> filterValues)
         {
-            return project => filterValues.Contains(project.TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunkID);
+            return project => filterValues.Contains(project.ProjectType.TaxonomyBranch.TaxonomyTrunkID);
         }
 
         public override string DisplayName => FieldDefinition.TaxonomyTrunk.GetFieldDefinitionLabel();
@@ -45,20 +45,20 @@ namespace ProjectFirma.Web.Models
     {
         public override Expression<Func<Project, bool>> GetFilterFunction(List<int> filterValues)
         {
-            return project => filterValues.Contains(project.TaxonomyLeaf.TaxonomyBranchID);
+            return project => filterValues.Contains(project.ProjectType.TaxonomyBranchID);
         }
 
         public override string DisplayName => FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabel();
     }
 
-    public partial class ProjectLocationFilterTypeTaxonomyLeaf
+    public partial class ProjectLocationFilterTypeProjectType
     {
         public override Expression<Func<Project, bool>> GetFilterFunction(List<int> filterValues)
         {
-            return project => filterValues.Contains(project.TaxonomyLeaf.TaxonomyLeafID);
+            return project => filterValues.Contains(project.ProjectType.ProjectTypeID);
         }
 
-        public override string DisplayName => FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabel();
+        public override string DisplayName => FieldDefinition.ProjectType.GetFieldDefinitionLabel();
     }
 
     public partial class ProjectLocationFilterTypeClassification

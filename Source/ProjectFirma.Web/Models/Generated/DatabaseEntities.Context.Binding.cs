@@ -113,6 +113,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTag> ProjectTags { get; set; }
+        public virtual DbSet<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
+        public virtual DbSet<ProjectType> ProjectTypes { get; set; }
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
         public virtual DbSet<ProjectUpdateHistory> ProjectUpdateHistories { get; set; }
@@ -124,8 +126,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<SystemAttribute> SystemAttributes { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TaxonomyBranch> TaxonomyBranches { get; set; }
-        public virtual DbSet<TaxonomyLeafPerformanceMeasure> TaxonomyLeafPerformanceMeasures { get; set; }
-        public virtual DbSet<TaxonomyLeaf> TaxonomyLeafs { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
@@ -521,6 +521,12 @@ namespace ProjectFirma.Web.Models
                 case "ProjectTag":
                     return ProjectTags.GetProjectTag(primaryKey);
 
+                case "ProjectTypePerformanceMeasure":
+                    return ProjectTypePerformanceMeasures.GetProjectTypePerformanceMeasure(primaryKey);
+
+                case "ProjectType":
+                    return ProjectTypes.GetProjectType(primaryKey);
+
                 case "ProjectUpdateBatch":
                     return ProjectUpdateBatches.GetProjectUpdateBatch(primaryKey);
 
@@ -578,12 +584,6 @@ namespace ProjectFirma.Web.Models
 
                 case "TaxonomyBranch":
                     return TaxonomyBranches.GetTaxonomyBranch(primaryKey);
-
-                case "TaxonomyLeafPerformanceMeasure":
-                    return TaxonomyLeafPerformanceMeasures.GetTaxonomyLeafPerformanceMeasure(primaryKey);
-
-                case "TaxonomyLeaf":
-                    return TaxonomyLeafs.GetTaxonomyLeaf(primaryKey);
 
                 case "TaxonomyLevel":
                     var taxonomyLevel = TaxonomyLevel.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

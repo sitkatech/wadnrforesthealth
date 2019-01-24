@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.ProgramInfo
         public List<FancyTreeNode> TopLevelTaxonomyTierAsFancyTreeNodes { get; }
         public string TaxonomyTrunkDisplayName { get; }
         public string TaxonomyBranchDisplayName { get; }
-        public string TaxonomyLeafDisplayName { get; }
+        public string ProjectTypeDisplayName { get; }
         public TaxonomyLevel TaxonomyLevel { get; }
 
         public TaxonomyViewData(Person currentPerson, Models.FirmaPage firmaPage,
@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProgramInfo
             PageTitle = MultiTenantHelpers.GetTaxonomySystemName();
             TaxonomyTrunkDisplayName = Models.FieldDefinition.TaxonomyTrunk.GetFieldDefinitionLabel();
             TaxonomyBranchDisplayName = Models.FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabel();
-            TaxonomyLeafDisplayName = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabel();
+            ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             TaxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
         }
     }

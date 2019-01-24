@@ -135,11 +135,11 @@ namespace ProjectFirma.Web.Controllers
                     taxonomyBranchesAsSelectListItems);
             }
 
-            var taxonomyLeafsAsSelectListItems =
-                HttpRequestStorage.DatabaseEntities.TaxonomyLeafs.AsEnumerable().ToSelectList(
-                    x => x.TaxonomyLeafID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
-            projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.TaxonomyLeaf),
-                taxonomyLeafsAsSelectListItems);
+            var projectTypesAsSelectListItems =
+                HttpRequestStorage.DatabaseEntities.ProjectTypes.AsEnumerable().ToSelectList(
+                    x => x.ProjectTypeID.ToString(CultureInfo.InvariantCulture), x => x.DisplayName);
+            projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.ProjectType),
+                projectTypesAsSelectListItems);
 
             var classificationsAsSelectList = MultiTenantHelpers.GetClassificationSystems().SelectMany(x => x.Classifications).ToSelectList(x => x.ClassificationID.ToString(CultureInfo.InvariantCulture), x => MultiTenantHelpers.GetClassificationSystems().Count > 1 ? $"{x.ClassificationSystem.ClassificationSystemName} - {x.DisplayName}" : x.DisplayName);
             projectLocationFilterTypesAndValues.Add(new ProjectLocationFilterTypeSimple(ProjectLocationFilterType.Classification, string.Join(" & ", MultiTenantHelpers.GetClassificationSystems().Select(x => x.ClassificationSystemName).ToList())), classificationsAsSelectList);
@@ -212,23 +212,23 @@ namespace ProjectFirma.Web.Controllers
         {
             foreach (var taxonomyBranchNode in taxonomyBranchNodes)
             {
-                var taxonomyLeafNodes = taxonomyBranchNode.Children.ToList();
-                PruneProjectsFromTaxonomyLeaves(taxonomyLeafNodes, projectsIDsThatDoNotHaveSimpleLocation);
-                taxonomyBranchNode.Children = taxonomyLeafNodes;
+                var projectTypeNodes = taxonomyBranchNode.Children.ToList();
+                PruneProjectsFromTaxonomyLeaves(projectTypeNodes, projectsIDsThatDoNotHaveSimpleLocation);
+                taxonomyBranchNode.Children = projectTypeNodes;
             }
             taxonomyBranchNodes.RemoveAll(x => !x.Children.Any());
 
         }
 
-        private static void PruneProjectsFromTaxonomyLeaves(List<FancyTreeNode> taxonomyLeafNodes,
+        private static void PruneProjectsFromTaxonomyLeaves(List<FancyTreeNode> projectTypeNodes,
             List<string> projectsIDsThatDoNotHaveSimpleLocation)
         {
-            foreach (var taxonomyLeafNode in taxonomyLeafNodes)
+            foreach (var projectTypeNode in projectTypeNodes)
             {
-                taxonomyLeafNode.Children.RemoveAll(x => !projectsIDsThatDoNotHaveSimpleLocation.Contains(x.Key));
+                projectTypeNode.Children.RemoveAll(x => !projectsIDsThatDoNotHaveSimpleLocation.Contains(x.Key));
             }
 
-            taxonomyLeafNodes.RemoveAll(x => !x.Children.Any());
+            projectTypeNodes.RemoveAll(x => !x.Children.Any());
         }
     }
 }

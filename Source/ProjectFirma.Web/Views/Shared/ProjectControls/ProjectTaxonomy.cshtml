@@ -40,14 +40,14 @@ Source code is available upon request via <support@sitkatech.com>.
 <div id="taxonomyBasicsPanel">
     @{
 
-        if (ViewDataTyped.TaxonomyLeaf != null)
+        if (ViewDataTyped.ProjectType != null)
         {
             <div class="row taxonomyRow">
                 <div class="col-sm-3 taxonomyBasicsPanelLabel">
-                    @Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
+                    @Html.LabelWithSugarFor(FieldDefinition.ProjectType, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)
                 </div>
                 <div class="col-sm-9">
-                    <span class="taxonomyLink@(ViewDataTyped.IsTaxonomyLeaf ? " selected" : string.Empty)">@(ViewDataTyped.IsTaxonomyLeaf ? new HtmlString(ViewDataTyped.TaxonomyLeaf.DisplayName) : ViewDataTyped.TaxonomyLeaf.GetDisplayNameAsUrl())</span>
+                    <span class="taxonomyLink@(ViewDataTyped.IsProjectType ? " selected" : string.Empty)">@(ViewDataTyped.IsProjectType ? new HtmlString(ViewDataTyped.ProjectType.DisplayName) : ViewDataTyped.ProjectType.GetDisplayNameAsUrl())</span>
                 </div>
             </div>
         }

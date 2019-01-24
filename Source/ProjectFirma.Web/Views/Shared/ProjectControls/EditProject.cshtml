@@ -32,10 +32,10 @@ Source code is available upon request via <support@sitkatech.com>.
 {
 <div class="form-horizontal">
     <div class="form-group">
-        <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.TaxonomyLeafID, 600, MultiTenantHelpers.GetTaxonomyLeafDisplayNameForProject())</div>
+        <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectTypeID, 600, MultiTenantHelpers.GetProjectTypeDisplayNameForProject())</div>
         <div class="col-xs-8">
-            @Html.SearchableDropDownListFor(x => x.TaxonomyLeafID, ViewDataTyped.TaxonomyLeafs, string.Format("Select a {0}", MultiTenantHelpers.GetTaxonomyLeafDisplayNameForProject()))
-            @Html.ValidationMessageFor(m => m.TaxonomyLeafID)
+            @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes, string.Format("Select a {0}", MultiTenantHelpers.GetProjectTypeDisplayNameForProject()))
+            @Html.ValidationMessageFor(m => m.ProjectTypeID)
         </div>
     </div>
     <div class="form-group">

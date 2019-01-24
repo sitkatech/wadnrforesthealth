@@ -8,7 +8,7 @@ values
 (5, 'InternalSetupNotes', 'Internal Setup Notes', 2),
 (6, 'FullProjectList', 'Full Project List', 1),
 (9, 'PerformanceMeasuresList', 'Performance Measures List', 1),
-(11, 'TaxonomyLeafList', 'Taxonomy Leaf List', 1),
+(11, 'ProjectTypeList', 'Project Type List', 1),
 (13, 'TaxonomyBranchList', 'Taxonomy Branch List', 1),
 (14, 'TaxonomyTrunkList', 'Taxonomy Trunk List', 1),
 (15, 'FundingSourcesList', 'Funding Sources List', 1),
@@ -36,4 +36,5 @@ values
 (56, 'FullGrantList', 'Full Grant List', 1),
 (57, 'FullGrantAllocationList', 'Full Grant Allocation List', 1),
 (58, 'RegionsList', 'Regions List', 1),
-(59, 'PriorityAreasList', 'Priority Areas List', 1)
+(59, 'PriorityAreasList', 'Priority Areas List', 1),
+(60, 'FullAgreementList', 'Full Agreement List', 1)
