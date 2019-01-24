@@ -1,6 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ProjectFirmaWebModelsStoreContainer" CdmEntityContainer="DatabaseEntities">
+    <EntitySetMapping Name="Agreement">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Agreement">
+        <MappingFragment StoreEntitySet="Agreement">
+          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
+          <ScalarProperty Name="TmpAgreementID" ColumnName="TmpAgreementID" />
+          <ScalarProperty Name="AgreementTypeID" ColumnName="AgreementTypeID" />
+          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="AgreementAmount" ColumnName="AgreementAmount" />
+          <ScalarProperty Name="ExpendedAmount" ColumnName="ExpendedAmount" />
+          <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="FirstBillDueOn" ColumnName="FirstBillDueOn" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgreementType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementType">
+        <MappingFragment StoreEntitySet="AgreementType">
+          <ScalarProperty Name="AgreementTypeID" ColumnName="AgreementTypeID" />
+          <ScalarProperty Name="AgreementTypeAbbrev" ColumnName="AgreementTypeAbbrev" />
+          <ScalarProperty Name="AgreementTypeName" ColumnName="AgreementTypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="AuditLog">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AuditLog">
         <MappingFragment StoreEntitySet="AuditLog">
