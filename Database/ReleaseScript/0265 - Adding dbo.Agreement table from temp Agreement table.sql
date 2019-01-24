@@ -82,41 +82,10 @@ ALTER TABLE [dbo].Agreement  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Region_Reg
 REFERENCES [dbo].Region (RegionID)
 GO
 
+-- The data actually has duplicate Agreement numbers; it's an open question about what to do about them, we need to talk
+-- to the client. I'm starting off from the sane perspective that Agreement numbers shouldn't be duplicated, however.
+CREATE UNIQUE NONCLUSTERED INDEX UNIQUE_INDEX_Agreement_AgreementNumber
+ON dbo.Agreement(AgreementNumber)
+WHERE AgreementNumber IS NOT NULL
+
 --rollback tran
-
-
-
-
-
-/*
-
-
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
-REFERENCES [dbo].[Organization] ([OrganizationID])
-GO
-
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Organization_OrganizationID]
-GO
-
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID] FOREIGN KEY([ProgramManagerPersonID])
-REFERENCES [dbo].[Person] ([PersonID])
-GO
-
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID]
-GO
-
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
-REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
-GO
-
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID]
-GO
-
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Region_RegionID] FOREIGN KEY([RegionID])
-REFERENCES [dbo].[Region] ([RegionID])
-GO
-
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Region_RegionID]
-GO
-
-*/
