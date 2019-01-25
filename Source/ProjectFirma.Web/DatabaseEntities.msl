@@ -640,6 +640,7 @@
           <ScalarProperty Name="IsRequired" ColumnName="IsRequired" />
           <ScalarProperty Name="ProjectCustomAttributeTypeDescription" ColumnName="ProjectCustomAttributeTypeDescription" />
           <ScalarProperty Name="ProjectCustomAttributeTypeOptionsSchema" ColumnName="ProjectCustomAttributeTypeOptionsSchema" />
+          <ScalarProperty Name="ApplyToAllProjectTypes" ColumnName="ApplyToAllProjectTypes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -995,6 +996,15 @@
           <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
           <ScalarProperty Name="PerformanceMeasureID" ColumnName="PerformanceMeasureID" />
           <ScalarProperty Name="IsPrimaryProjectType" ColumnName="IsPrimaryProjectType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectTypeProjectCustomAttributeType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType">
+        <MappingFragment StoreEntitySet="ProjectTypeProjectCustomAttributeType">
+          <ScalarProperty Name="ProjectTypeProjectCustomAttributeTypeID" ColumnName="ProjectTypeProjectCustomAttributeTypeID" />
+          <ScalarProperty Name="ProjectTypeID" ColumnName="ProjectTypeID" />
+          <ScalarProperty Name="ProjectCustomAttributeTypeID" ColumnName="ProjectCustomAttributeTypeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

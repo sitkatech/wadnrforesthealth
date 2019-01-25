@@ -114,6 +114,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTag> ProjectTags { get; set; }
         public virtual DbSet<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
+        public virtual DbSet<ProjectTypeProjectCustomAttributeType> ProjectTypeProjectCustomAttributeTypes { get; set; }
         public virtual DbSet<ProjectType> ProjectTypes { get; set; }
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
@@ -523,6 +524,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectTypePerformanceMeasure":
                     return ProjectTypePerformanceMeasures.GetProjectTypePerformanceMeasure(primaryKey);
+
+                case "ProjectTypeProjectCustomAttributeType":
+                    return ProjectTypeProjectCustomAttributeTypes.GetProjectTypeProjectCustomAttributeType(primaryKey);
 
                 case "ProjectType":
                     return ProjectTypes.GetProjectType(primaryKey);
