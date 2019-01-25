@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
             grantAllocation.Grant.CFDANumber = CFDA;
             // TODO check out how to get this back into database
-            grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
+            //grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
             grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
