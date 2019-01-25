@@ -1793,6 +1793,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="RegionID" Type="int" Nullable="false" />
     <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="RegionLocation" Type="geometry" />
+    <Property Name="RegionAbbrev" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -1882,6 +1883,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxonomyTrunkCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyTrunkSortOrder" Type="int" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpFuzzyMatchingRegionsToGrants' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->

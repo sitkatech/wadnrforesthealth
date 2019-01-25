@@ -2078,6 +2078,7 @@
     <Property Name="RegionID" Type="Int32" Nullable="false" />
     <Property Name="RegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="RegionLocation" Type="Geometry" />
+    <Property Name="RegionAbbrev" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Region" ToRole="Agreements" />
     <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="Region" ToRole="FocusAreas" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID" FromRole="Region" ToRole="GrantAllocations" />
