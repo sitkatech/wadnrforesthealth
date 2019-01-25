@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string FederalFundCode { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Region)]
-        public int RegionID { get; set; }
+        public int? RegionID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
         public Money? AllocationAmount { get; set; }
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             CFDA = grantAllocation.Grant.CFDANumber;
             //ProjectCodeID = grantAllocation.ProjectCodes;
             FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
-            RegionID = grantAllocation.Region.RegionID;
+            RegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
             StartDate = grantAllocation.StartDate;
             EndDate = grantAllocation.EndDate;
@@ -112,7 +112,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             // TODO check out how to get this back into database
             //grantAllocation.ProjectCodes = ProjectCodeID;
             grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode;
-            grantAllocation.Region.RegionID = RegionID;
+            grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;
             grantAllocation.EndDate = EndDate;
