@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Controllers
                     m => m.TreatmentActivityStatusDisplayName);
 
             var contactsAsSelectListItems =
-                treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
+                treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).OrderBy(x => x.LastName).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
                     d => d.FullNameFirstLastAndOrg);
 
             var programIndices =
