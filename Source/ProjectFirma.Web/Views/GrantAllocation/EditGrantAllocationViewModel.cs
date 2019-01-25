@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantID = grantAllocation.Grant.GrantID;
             ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
             CFDA = grantAllocation.Grant.CFDANumber;
-            //ProjectCodeID = grantAllocation.GrantAllocationProjectCode.ProjectCodeID;
+            //ProjectCodeID = grantAllocation.ProjectCodes;
             FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
             RegionID = grantAllocation.Region.RegionID;
             AllocationAmount = grantAllocation.AllocationAmount;
@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
             grantAllocation.Grant.CFDANumber = CFDA;
             // TODO check out how to get this back into database
- 
+            //grantAllocation.ProjectCodes = ProjectCodeID;
             grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode;
             grantAllocation.Region.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;

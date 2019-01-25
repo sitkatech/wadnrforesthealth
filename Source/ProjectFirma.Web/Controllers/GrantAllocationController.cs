@@ -63,21 +63,23 @@ namespace ProjectFirma.Web.Controllers
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
             var grants = HttpRequestStorage.DatabaseEntities.Grants;
             var regions = HttpRequestStorage.DatabaseEntities.Regions;
+            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes;
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                 organizations,
                 grantStatuses,
                 grantTypes,
                 grants,
-                regions
+                regions,
+                projectCodes
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }
 
         [GrantAllocationsViewFeature]
-        public ViewResult GrantAllocationDetail(int grantAllocationID)
+        public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationID);
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
             var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }

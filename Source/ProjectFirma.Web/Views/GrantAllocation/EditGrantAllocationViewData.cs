@@ -37,14 +37,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> GrantTypes { get; }
         public IEnumerable<SelectListItem> GrantNumbers { get; }
         public IEnumerable<SelectListItem> Regions { get; }
+        public IEnumerable<SelectListItem> ProjectCodes { get; }
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes, IEnumerable<Models.Grant> grants, IEnumerable<Models.Region> regions)
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes, IEnumerable<Models.Grant> grants, IEnumerable<Models.Region> regions, IEnumerable<Models.ProjectCode> projectCodes)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
             GrantNumbers = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
             Regions = regions.ToSelectListWithEmptyFirstRow(x => x.RegionID.ToString(CultureInfo.InvariantCulture), y => y.RegionName);
+            ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
 
             EditGrantAllocationType = editGrantAllocationType;
         }
