@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionContacts Contacts = ProjectCreateSectionContacts.Instance;
         public static readonly ProjectCreateSectionRegions Regions = ProjectCreateSectionRegions.Instance;
         public static readonly ProjectCreateSectionPriorityAreas PriorityAreas = ProjectCreateSectionPriorityAreas.Instance;
+        public static readonly ProjectCreateSectionProjectCustomAttributes ProjectCustomAttributes = ProjectCreateSectionProjectCustomAttributes.Instance;
 
         public static readonly List<ProjectCreateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectCreateSection> AllLookupDictionary;
@@ -41,7 +42,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectCustomAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -139,6 +140,8 @@ namespace ProjectFirma.Web.Models
                     return Photos;
                 case ProjectCreateSectionEnum.PriorityAreas:
                     return PriorityAreas;
+                case ProjectCreateSectionEnum.ProjectCustomAttributes:
+                    return ProjectCustomAttributes;
                 case ProjectCreateSectionEnum.Regions:
                     return Regions;
                 case ProjectCreateSectionEnum.ReportedExpenditures:
@@ -166,7 +169,8 @@ namespace ProjectFirma.Web.Models
         Organizations = 15,
         Contacts = 16,
         Regions = 17,
-        PriorityAreas = 18
+        PriorityAreas = 18,
+        ProjectCustomAttributes = 19
     }
 
     public partial class ProjectCreateSectionBasics : ProjectCreateSection
@@ -251,5 +255,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionPriorityAreas(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionPriorityAreas Instance = new ProjectCreateSectionPriorityAreas(18, @"PriorityAreas", @"Priority Areas", 45, true, 2);
+    }
+
+    public partial class ProjectCreateSectionProjectCustomAttributes : ProjectCreateSection
+    {
+        private ProjectCreateSectionProjectCustomAttributes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionProjectCustomAttributes Instance = new ProjectCreateSectionProjectCustomAttributes(19, @"ProjectCustomAttributes", @"Project Custom Attributes", 22, true, 1);
     }
 }

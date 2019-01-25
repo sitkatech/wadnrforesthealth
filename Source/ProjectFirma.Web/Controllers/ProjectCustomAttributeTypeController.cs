@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Models;
@@ -38,11 +39,17 @@ namespace ProjectFirma.Web.Controllers
             return Content(projectCustomAttributeTypePrimaryKey.EntityObject.ProjectCustomAttributeTypeDescription);
         }
 
+        private List<ProjectTypeJson> GetProjectTypeJsonList()
+        {
+            var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList();
+            return projectTypes.Select(x => new ProjectTypeJson(x)).OrderBy(x => x.ProjectTypeName).ToList();
+        }
+
         [HttpGet]
         [FirmaAdminFeature]
         public PartialViewResult New()
         {
-            var viewModel = new EditViewModel();
+            var viewModel = new EditViewModel(GetProjectTypeJsonList());
             return ViewEdit(viewModel, null);
         }
 
@@ -56,7 +63,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, null);
             }
 
-            var projectCustomAttributeType = new ProjectCustomAttributeType(String.Empty, ProjectCustomAttributeDataType.String, false);
+            var projectCustomAttributeType = new ProjectCustomAttributeType(String.Empty, ProjectCustomAttributeDataType.String, false, false);
             viewModel.UpdateModel(projectCustomAttributeType, CurrentPerson);
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.Add(projectCustomAttributeType);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -70,7 +77,13 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult Edit(ProjectCustomAttributeTypePrimaryKey projectCustomAttributeTypePrimaryKey)
         {
             var projectCustomAttributeType = projectCustomAttributeTypePrimaryKey.EntityObject;
-            var viewModel = new EditViewModel(projectCustomAttributeType);
+            var projectTypesSelected = projectCustomAttributeType.ProjectTypeProjectCustomAttributeTypes
+                .Select(x => x.ProjectType).Select(x => new ProjectTypeJson(x.ProjectTypeName, x.ProjectTypeID, true))
+                .ToList();
+            var projectTypesUnselected = GetProjectTypeJsonList().Where(x => !projectTypesSelected.Select(y => y.ProjectTypeID).Contains(x.ProjectTypeID));
+            projectTypesSelected.AddRange(projectTypesUnselected);
+            var projectTypeJsons = projectTypesSelected.OrderBy(x => x.ProjectTypeName).ToList();
+            var viewModel = new EditViewModel(projectCustomAttributeType, projectTypeJsons);
             return ViewEdit(viewModel, projectCustomAttributeType);
         }
 

@@ -30,6 +30,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectUpdate : IProject
     {
+        public int ProjectTypeID => ProjectUpdateBatch.Project.ProjectTypeID;
         public int EntityID => ProjectUpdateID;
         public string DisplayName => ProjectUpdateBatch.Project.DisplayName;
 
