@@ -34,11 +34,18 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public EditGrantAllocationType EditGrantAllocationType { get; set; }
         public IEnumerable<SelectListItem> GrantStatuses { get; }
+        public IEnumerable<SelectListItem> GrantTypes { get; }
+        public IEnumerable<SelectListItem> GrantNumbers { get; }
+        public IEnumerable<SelectListItem> Regions { get; }
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses)
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes, IEnumerable<Models.Grant> grants, IEnumerable<Models.Region> regions)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
+            GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
+            GrantNumbers = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
+            Regions = regions.ToSelectListWithEmptyFirstRow(x => x.RegionID.ToString(CultureInfo.InvariantCulture), y => y.RegionName);
+
             EditGrantAllocationType = editGrantAllocationType;
         }
     }

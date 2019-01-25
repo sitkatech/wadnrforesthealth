@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Controllers
     public class GrantAllocationController : FirmaBaseController
     {
         [HttpGet]
-        //[GrantAllocationEditAsAdminFeature]
+        [GrantAllocationEditAsAdminFeature]
         public PartialViewResult Edit(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        //[GrantAllocationEditAsAdminFeature]
+        [GrantAllocationEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult Edit(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationViewModel viewModel)
         {
@@ -60,10 +60,16 @@ namespace ProjectFirma.Web.Controllers
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
+            var grants = HttpRequestStorage.DatabaseEntities.Grants;
+            var regions = HttpRequestStorage.DatabaseEntities.Regions;
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                 organizations,
-                grantStatuses
+                grantStatuses,
+                grantTypes,
+                grants,
+                regions
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }

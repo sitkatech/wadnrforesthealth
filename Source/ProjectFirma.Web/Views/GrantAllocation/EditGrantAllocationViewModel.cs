@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using ApprovalUtilities.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
@@ -46,10 +47,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int GrantStatusID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
-        public string GrantType { get; set; }
+        public int GrantTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
-        public string GrantNumber { get; set; }
+        public int GrantID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public string ProgramIndex { get; set; }
@@ -58,22 +59,22 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string CFDA { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
-        public string ProjectCode { get; set; }
+        public string ProjectCodeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public string FederalFundCode { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Region)]
-        public string Region { get; set; }
+        public int RegionID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
-        public string AllocationAmount { get; set; }
+        public Money? AllocationAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
-        public string StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
-        public string EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
       
  /// <summary>
         /// Needed by the ModelBinder
@@ -86,23 +87,36 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             ProjectName = grantAllocation.ProjectName;
             OrganizationID = grantAllocation.Grant.OrganizationID;
-            //TODO GET THESE WIRED TO THE FRONT SIDE EDIT DIALOG IN EditGrantAllocation.cshtml
             GrantStatusID = grantAllocation.Grant.GrantStatusID;
-            GrantType = grantAllocation.Grant.GrantType.GrantTypeName;
-            GrantNumber = grantAllocation.Grant.GrantNumber;
+            GrantTypeID = grantAllocation.Grant.GrantType.GrantTypeID;
+            GrantID = grantAllocation.Grant.GrantID;
             ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
             CFDA = grantAllocation.Grant.CFDANumber;
-            ProjectCode = grantAllocation.ProjectCodesString;
+            //ProjectCodeID = grantAllocation.GrantAllocationProjectCode.ProjectCodeID;
             FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
-            Region = grantAllocation.RegionNameDisplay;
-            AllocationAmount = grantAllocation.AllocationAmount.ToStringCurrency();
-            StartDate = grantAllocation.StartDateDisplay;
-            EndDate = grantAllocation.EndDateDisplay;
+            RegionID = grantAllocation.Region.RegionID;
+            AllocationAmount = grantAllocation.AllocationAmount;
+            StartDate = grantAllocation.StartDate;
+            EndDate = grantAllocation.EndDate;
         }
 
         public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)
         {
             grantAllocation.ProjectName = ProjectName;
+            grantAllocation.OrganizationID = OrganizationID;
+            grantAllocation.Grant.GrantStatusID = GrantStatusID;
+            grantAllocation.Grant.GrantType.GrantTypeID = GrantTypeID;
+            grantAllocation.Grant.GrantID = GrantID;
+            grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
+            grantAllocation.Grant.CFDANumber = CFDA;
+            // TODO check out how to get this back into database
+ 
+            grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode;
+            grantAllocation.Region.RegionID = RegionID;
+            grantAllocation.AllocationAmount = AllocationAmount;
+            grantAllocation.StartDate = StartDate;
+            grantAllocation.EndDate = EndDate;
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

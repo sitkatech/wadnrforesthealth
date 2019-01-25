@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.Grant
             Add("Region", x => x.Region != null ? x.Region.RegionName : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Federal Fund Code", x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict); 
             Add("Allocation Amount", x => x.AllocationAmount, 90, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            Add("Project Codes", x => x.ProjectCodesString, 90, DhtmlxGridColumnFilterType.Text);
+            Add("Project Codes", x => x.ProjectCodesAsCsvString, 90, DhtmlxGridColumnFilterType.Text);
             Add("Program Index", x => x.ProgramIndex != null ? x.ProgramIndex.ProgramIndexAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Organization", x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }

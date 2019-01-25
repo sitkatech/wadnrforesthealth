@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using MoreLinq;
 
 namespace ProjectFirma.Web.Models
 {
@@ -20,17 +23,37 @@ namespace ProjectFirma.Web.Models
         }
 
         // List of ProjectCodes as a comma delimited string ("EEB, GMX" for example)
-        public string ProjectCodesString
+        public string ProjectCodesAsCsvString
         {
             get
             {
-                return string.Join(", ", ProjectCodes.Select(x => x.ProjectCodeAbbrev));
+                return string.Join($"{ProjectCodeSeparator} ", ProjectCodes.OrderBy(x => x.ProjectCodeAbbrev).Select(x => x.ProjectCodeAbbrev));
             }
         }
+
+        private const string ProjectCodeSeparator = ",";
+        
 
         public string AuditDescriptionString
         {
             get { return ProjectName; }
+        }
+
+        //private List<ProjectCode> MakeProjectCodeFromCsvString(string projectCodeCsvString)
+        //{
+        //    if (string.IsNullOrWhiteSpace(projectCodeCsvString))
+        //    {
+        //        return new List<ProjectCode>();
+        //    }
+        //    var projectCodeAbbreviationsStringList = Regex.Split(projectCodeCsvString, $@"\s*{ProjectCodeSeparator}\s*").Select(x => x.Trim()).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
+        //    var projectCodeList = projectCodeAbbreviationsStringList.Select(x => ProjectCodes.Single(c =>
+        //        String.Equals(c.ProjectCodeAbbrev, projectCodeCsvString, StringComparison.InvariantCultureIgnoreCase))).ToList();
+        //    return projectCodeList;
+        //}
+
+        public void SetProjectCodesFromCsvString(string projectCode)
+        {
+            throw new NotImplementedException();
         }
     }
 }
