@@ -37,6 +37,13 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
         [StringLength(Models.ProjectCustomAttributeType.FieldLengths.ProjectCustomAttributeTypeDescription)]
         public string ProjectCustomAttributeTypeDesription { get; set; }
 
+        [Required]
+        [DisplayName("Apply To All Project Types?")]
+        public bool? ApplyToAllProjectTypes { get; set; }
+
+        public List<ProjectTypeJson> ProjectTypeJsonList { get; set; }
+
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -44,7 +51,15 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
         {
         }
 
-        public EditViewModel(Models.ProjectCustomAttributeType projectCustomAttributeType)
+        /// <summary>
+        /// Needed by the ModelBinder
+        /// </summary>
+        public EditViewModel(List<ProjectTypeJson> projectTypeJsonList)
+        {
+            ProjectTypeJsonList = projectTypeJsonList;
+        }
+
+        public EditViewModel(Models.ProjectCustomAttributeType projectCustomAttributeType, List<ProjectTypeJson> projectTypeJsonList)
         {
             ProjectCustomAttributeTypeID = projectCustomAttributeType.ProjectCustomAttributeTypeID;
             ProjectCustomAttributeTypeName = projectCustomAttributeType.ProjectCustomAttributeTypeName;
@@ -53,6 +68,8 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
             ProjectCustomAttributeTypeOptionsSchema = projectCustomAttributeType.ProjectCustomAttributeTypeOptionsSchema;
             IsRequired = projectCustomAttributeType.IsRequired;
             ProjectCustomAttributeTypeDesription = projectCustomAttributeType.ProjectCustomAttributeTypeDescription;
+            ApplyToAllProjectTypes = projectCustomAttributeType.ApplyToAllProjectTypes;
+            ProjectTypeJsonList = projectTypeJsonList;
         }
 
 
@@ -63,6 +80,7 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
             projectCustomAttributeType.MeasurementUnitTypeID = MeasurementUnitTypeID;
             projectCustomAttributeType.IsRequired = IsRequired.GetValueOrDefault();
             projectCustomAttributeType.ProjectCustomAttributeTypeDescription = ProjectCustomAttributeTypeDesription;
+            projectCustomAttributeType.ApplyToAllProjectTypes = ApplyToAllProjectTypes ?? false;
 
             var projectCustomAttributeDataType = ProjectCustomAttributeDataTypeID != null
                 ? ProjectCustomAttributeDataType.AllLookupDictionary[ProjectCustomAttributeDataTypeID.Value]
@@ -75,6 +93,47 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
             {
                 projectCustomAttributeType.ProjectCustomAttributeTypeOptionsSchema = null;
             }
+
+            var existingProjectTypeProjectCustomAttributeTypes =
+                projectCustomAttributeType.ProjectTypeProjectCustomAttributeTypes.ToList();
+
+            if (!projectCustomAttributeType.ApplyToAllProjectTypes)
+            {
+                foreach (var projectTypeJson in ProjectTypeJsonList)
+                {
+                    if (!projectTypeJson.Selected)
+                    {
+                        var existingToDelete =
+                            existingProjectTypeProjectCustomAttributeTypes.SingleOrDefault(x =>
+                                x.ProjectTypeID == projectTypeJson.ProjectTypeID);
+                        if (existingToDelete != null)
+                        {
+                            existingProjectTypeProjectCustomAttributeTypes.Remove(existingToDelete);
+                            existingToDelete.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                        }
+                    }
+                    if (projectTypeJson.Selected)
+                    {
+                        if (!existingProjectTypeProjectCustomAttributeTypes.Any(x =>
+                            x.ProjectTypeID == projectTypeJson.ProjectTypeID))
+                        {
+                            var projectTypeProjectCustomAttributeType = new ProjectTypeProjectCustomAttributeType(projectTypeJson.ProjectTypeID, projectCustomAttributeType.ProjectCustomAttributeTypeID);
+                            existingProjectTypeProjectCustomAttributeTypes.Add(projectTypeProjectCustomAttributeType);
+                        }
+                        
+                    }
+                }
+
+                projectCustomAttributeType.ProjectTypeProjectCustomAttributeTypes =
+                    existingProjectTypeProjectCustomAttributeTypes;
+            }
+            else
+            {
+                existingProjectTypeProjectCustomAttributeTypes.ForEach(x => x.DeleteFull(HttpRequestStorage.DatabaseEntities));
+                projectCustomAttributeType.ProjectTypeProjectCustomAttributeTypes = null;
+            }
+
+            
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

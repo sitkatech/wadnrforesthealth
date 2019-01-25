@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         {
             this.Projects = new HashSet<Project>();
             this.ProjectTypePerformanceMeasures = new HashSet<ProjectTypePerformanceMeasure>();
+            this.ProjectTypeProjectCustomAttributeTypes = new HashSet<ProjectTypeProjectCustomAttributeType>();
         }
 
         /// <summary>
@@ -81,13 +82,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Projects.Any() || ProjectTypePerformanceMeasures.Any();
+            return Projects.Any() || ProjectTypePerformanceMeasures.Any() || ProjectTypeProjectCustomAttributeTypes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectType).Name, typeof(Project).Name, typeof(ProjectTypePerformanceMeasure).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectType).Name, typeof(Project).Name, typeof(ProjectTypePerformanceMeasure).Name, typeof(ProjectTypeProjectCustomAttributeType).Name};
 
 
         /// <summary>
@@ -113,6 +114,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in ProjectTypeProjectCustomAttributeTypes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -134,6 +140,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
+        public virtual ICollection<ProjectTypeProjectCustomAttributeType> ProjectTypeProjectCustomAttributeTypes { get; set; }
         public virtual TaxonomyBranch TaxonomyBranch { get; set; }
 
         public static class FieldLengths

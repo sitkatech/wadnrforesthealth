@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.Models
     public interface IProject
     {
         int EntityID { get; }
+        int ProjectTypeID { get; }
         DbGeometry ProjectLocationPoint { get; set; }
         string DisplayName { get; }
         ProjectLocationSimpleType ProjectLocationSimpleType { get; }
@@ -45,5 +46,6 @@ namespace ProjectFirma.Web.Models
         IEnumerable<PriorityArea> GetProjectPriorityAreas();
         GeoJSON.Net.Feature.FeatureCollection DetailedLocationToGeoJsonFeatureCollection();
         GeoJSON.Net.Feature.FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties);        
+        
     }
 }

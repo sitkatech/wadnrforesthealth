@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; private set; }
         private string ProjectDisplayName { get; }
         public bool IsEditable = true;
+        public bool ProjectTypeHasBeenSet { get; set; }
 
         public IEnumerable<SelectListItem> ProjectStages = ProjectStage.All.Except(new List<ProjectStage>{ProjectStage.Application}).OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
 
@@ -48,29 +49,27 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 y => y.FocusAreaName);
 
 		public BasicsViewData(Person currentPerson,
-            IEnumerable<Models.ProjectType> projectTypes, bool showProjectStageDropDown, string instructionsPageUrl,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
+            IEnumerable<Models.ProjectType> projectTypes, bool showProjectStageDropDown, string instructionsPageUrl)
             : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, instructionsPageUrl)
         {
             // This constructor is only used for the case where we're coming from the instructions, so we hide the dropdown if they clicked the button for proposing a new project.
             ShowProjectStageDropDown = showProjectStageDropDown;
-            AssignParameters(projectTypes, projectCustomAttributeTypes);
+            AssignParameters(projectTypes);
         }
 
         public BasicsViewData(Person currentPerson,
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
-            IEnumerable<Models.ProjectType> projectTypes,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
+            IEnumerable<Models.ProjectType> projectTypes)
             : base(currentPerson, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
             ProjectDisplayName = project.DisplayName;
-            AssignParameters(projectTypes, projectCustomAttributeTypes);
+            AssignParameters(projectTypes);
+            ProjectTypeHasBeenSet = project?.ProjectType != null;
         }
 
-        private void AssignParameters(IEnumerable<Models.ProjectType> projectTypes,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
+        private void AssignParameters(IEnumerable<Models.ProjectType> projectTypes)
         {
             ProjectTypes = projectTypes.ToList().OrderTaxonomyLeaves().ToList().ToGroupedSelectList();
             
@@ -90,7 +89,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 PageTitle += $": {ProjectDisplayName}";
             }
 
-            ProjectCustomAttributeTypes = projectCustomAttributeTypes;
         }
     }
 }

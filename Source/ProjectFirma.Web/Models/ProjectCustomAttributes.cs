@@ -12,6 +12,7 @@ namespace ProjectFirma.Web.Models
     public class ProjectCustomAttributes : PartialViewModel, IValidatableObject
     {
         public IList<ProjectCustomAttributeSimple> Attributes { get; set; }
+        public int ProjectTypeIDForCustomAttributes { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -35,6 +36,7 @@ namespace ProjectFirma.Web.Models
                         .ToList()
                 })
                 .ToList();
+            ProjectTypeIDForCustomAttributes = project.ProjectTypeID;
         }
 
         public void UpdateModel(Project project, Person currentPerson)
@@ -147,13 +149,23 @@ namespace ProjectFirma.Web.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            return GetValidationResults();
+        }
+
+        public IEnumerable<ValidationResult> GetValidationResults()
+        {
+            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
+            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
+                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
+                                .Select(y => y.ProjectTypeID).Contains(ProjectTypeIDForCustomAttributes)).ToList();
+
             var customAttributeTypeIDs = Attributes.Select(x => x.ProjectCustomAttributeTypeID).ToList();
             var customAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes
                 .Where(x => customAttributeTypeIDs.Contains(x.ProjectCustomAttributeTypeID))
                 .ToList();
 
             var projectCustomAttributeSimples = Attributes
-                .Where(x => x.ProjectCustomAttributeValues != null && x.ProjectCustomAttributeValues.Any());
+                .Where(x => x.ProjectCustomAttributeValues != null && x.ProjectCustomAttributeValues.Any()).ToList();
 
             foreach (var attributeSimple in projectCustomAttributeSimples)
             {
@@ -170,6 +182,14 @@ namespace ProjectFirma.Web.Models
                 if (type.IsRequired && attributeSimple.ProjectCustomAttributeValues.All(string.IsNullOrWhiteSpace))
                 {
                     yield return new ValidationResult($"Value is required for {type.ProjectCustomAttributeTypeName}.");
+                }
+            }
+
+            foreach (var projectCustomAttributeType in projectCustomAttributeTypesForThisProject)
+            {
+                if (projectCustomAttributeType.IsRequired && projectCustomAttributeSimples.All(x => x.ProjectCustomAttributeTypeID != projectCustomAttributeType.ProjectCustomAttributeTypeID))
+                {
+                    yield return new ValidationResult($"Value is required for {projectCustomAttributeType.ProjectCustomAttributeTypeName}.");
                 }
             }
         }
