@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string CFDA { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
-        public string ProjectCodeID { get; set; }
+        public List<int> ProjectCodeIDs { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public string FederalFundCode { get; set; }
@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantID = grantAllocation.Grant.GrantID;
             ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
             CFDA = grantAllocation.Grant.CFDANumber;
-            //ProjectCodeID = grantAllocation.ProjectCodes;
+            ProjectCodeIDs = grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeID).ToList();
             FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
             RegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
@@ -110,7 +110,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
             grantAllocation.Grant.CFDANumber = CFDA;
             // TODO check out how to get this back into database
-            //grantAllocation.ProjectCodes = ProjectCodeID;
+            grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
             grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
