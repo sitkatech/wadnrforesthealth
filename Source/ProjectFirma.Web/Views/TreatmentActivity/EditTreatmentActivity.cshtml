@@ -19,6 +19,7 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Models
 
 @inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
 
@@ -35,9 +36,11 @@
 
 @if (ViewDataTyped.TreatmentActivityContact.Count() <= 1)
 {
-    <p>
-        There are no Project Contacts for this Project. You will need to add the Contact to the Project before adding a Treatment.
-    </p>
+    <div class="alert alert-warning" role="alert">
+        <p>
+            There are no Contacts for this @FieldDefinition.Project.GetFieldDefinitionLabel(). You will need to add the Contact to the @FieldDefinition.Project.GetFieldDefinitionLabel() before adding a Treatment.
+        </p>
+    </div>
 }
 
 @Html.ValidationSummary()
@@ -74,7 +77,7 @@
             <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityStatusID)
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 @Html.DropDownListFor(m => m.TreatmentActivityStatusID, ViewDataTyped.TreatmentActivityStatus, new { @class = "form-control", style = "width:100%" })
                 @Html.ValidationMessageFor(m => m.TreatmentActivityStatusID)
             </div>
@@ -96,7 +99,7 @@
             </div>
         </div>
     </div>
-
+    <br/>
     <div class="form-horizontal">
         <div class="form-group no-margin-top col-md-10 col-md-offset-2">
             <div class="col-sm-4 text-right control-label">
@@ -237,7 +240,7 @@
             <div class="col-sm-2 control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityNotes)
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-10">
                 @Html.TextAreaFor(m => m.TreatmentActivityNotes, new { @class = "form-control", style = "width:100%" })
                 @Html.ValidationMessageFor(m => m.TreatmentActivityNotes)
             </div>
