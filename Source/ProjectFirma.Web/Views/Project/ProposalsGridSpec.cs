@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.Project
                     DhtmlxGridColumnFilterType.Html);
             }
             Add(Models.FieldDefinition.IsPrimaryContactOrganization.ToGridHeaderString(), x => x.GetPrimaryContactOrganization().GetShortNameAsUrl(), 150, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.TaxonomyLeaf.ToGridHeaderString(), x => x.TaxonomyLeaf == null ? string.Empty : x.TaxonomyLeaf.DisplayName, 300, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProjectType.ToGridHeaderString(), x => x.ProjectType == null ? string.Empty : x.ProjectType.DisplayName, 300, DhtmlxGridColumnFilterType.Html);
             Add(Models.FieldDefinition.PlannedDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ApprovalStartDate.ToGridHeaderString(), x => x.GetApprovalStartDateFormatted(), 115, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.GetCompletionDateFormatted(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);

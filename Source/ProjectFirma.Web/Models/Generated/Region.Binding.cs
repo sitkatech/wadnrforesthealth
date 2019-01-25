@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Region()
         {
+            this.Agreements = new HashSet<Agreement>();
             this.FocusAreas = new HashSet<FocusArea>();
             this.GrantAllocations = new HashSet<GrantAllocation>();
             this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
@@ -68,13 +69,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FocusAreas.Any() || GrantAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
+            return Agreements.Any() || FocusAreas.Any() || GrantAllocations.Any() || PersonStewardRegions.Any() || ProjectRegions.Any() || ProjectRegionUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(Agreement).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -90,6 +91,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in Agreements.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in FocusAreas.ToList())
             {
@@ -125,6 +131,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return RegionID; } set { RegionID = value; } }
 
+        public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }

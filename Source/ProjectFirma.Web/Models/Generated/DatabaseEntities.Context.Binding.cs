@@ -28,6 +28,8 @@ namespace ProjectFirma.Web.Models
         {
             throw new UnintentionalCodeFirstException();
         }
+        public virtual DbSet<Agreement> Agreements { get; set; }
+        public virtual DbSet<AgreementType> AgreementTypes { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
@@ -111,6 +113,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectTag> ProjectTags { get; set; }
+        public virtual DbSet<ProjectTypePerformanceMeasure> ProjectTypePerformanceMeasures { get; set; }
+        public virtual DbSet<ProjectType> ProjectTypes { get; set; }
         public virtual DbSet<ProjectUpdateBatch> ProjectUpdateBatches { get; set; }
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
         public virtual DbSet<ProjectUpdateHistory> ProjectUpdateHistories { get; set; }
@@ -122,8 +126,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<SystemAttribute> SystemAttributes { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TaxonomyBranch> TaxonomyBranches { get; set; }
-        public virtual DbSet<TaxonomyLeafPerformanceMeasure> TaxonomyLeafPerformanceMeasures { get; set; }
-        public virtual DbSet<TaxonomyLeaf> TaxonomyLeafs { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
@@ -138,6 +140,12 @@ namespace ProjectFirma.Web.Models
                     var activityType = ActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(activityType, "ActivityType", primaryKey);
                     return activityType;
+
+                case "Agreement":
+                    return Agreements.GetAgreement(primaryKey);
+
+                case "AgreementType":
+                    return AgreementTypes.GetAgreementType(primaryKey);
 
                 case "AuditLogEventType":
                     var auditLogEventType = AuditLogEventType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -513,6 +521,12 @@ namespace ProjectFirma.Web.Models
                 case "ProjectTag":
                     return ProjectTags.GetProjectTag(primaryKey);
 
+                case "ProjectTypePerformanceMeasure":
+                    return ProjectTypePerformanceMeasures.GetProjectTypePerformanceMeasure(primaryKey);
+
+                case "ProjectType":
+                    return ProjectTypes.GetProjectType(primaryKey);
+
                 case "ProjectUpdateBatch":
                     return ProjectUpdateBatches.GetProjectUpdateBatch(primaryKey);
 
@@ -570,12 +584,6 @@ namespace ProjectFirma.Web.Models
 
                 case "TaxonomyBranch":
                     return TaxonomyBranches.GetTaxonomyBranch(primaryKey);
-
-                case "TaxonomyLeafPerformanceMeasure":
-                    return TaxonomyLeafPerformanceMeasures.GetTaxonomyLeafPerformanceMeasure(primaryKey);
-
-                case "TaxonomyLeaf":
-                    return TaxonomyLeafs.GetTaxonomyLeaf(primaryKey);
 
                 case "TaxonomyLevel":
                     var taxonomyLevel = TaxonomyLevel.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

@@ -75,17 +75,17 @@
                     @if (ViewDataTyped.TaxonomyLevel == TaxonomyLevel.Trunk)
                     {
                         <dt><strong>@ViewDataTyped.TaxonomyTrunkDisplayName:</strong></dt>
-                        <dd>@ViewDataTyped.TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk.TaxonomyTrunkName</dd>
+                        <dd>@ViewDataTyped.ProjectType.TaxonomyBranch.TaxonomyTrunk.TaxonomyTrunkName</dd>
                         <dt><strong>@ViewDataTyped.TaxonomyBranchDisplayName:</strong></dt>
-                        <dd>@ViewDataTyped.TaxonomyLeaf.TaxonomyBranch.TaxonomyBranchName</dd>
+                        <dd>@ViewDataTyped.ProjectType.TaxonomyBranch.TaxonomyBranchName</dd>
                     }
                     @if (ViewDataTyped.TaxonomyLevel == TaxonomyLevel.Branch)
                     {
                         <dt><strong>@ViewDataTyped.TaxonomyBranchDisplayName:</strong></dt>
-                        <dd>@ViewDataTyped.TaxonomyLeaf.TaxonomyBranch.TaxonomyBranchName</dd>
+                        <dd>@ViewDataTyped.ProjectType.TaxonomyBranch.TaxonomyBranchName</dd>
                     }
-                    <dt><strong>@ViewDataTyped.TaxonomyLeafDisplayName:</strong></dt>
-                    <dd>@ViewDataTyped.TaxonomyLeaf.TaxonomyLeafName</dd>
+                    <dt><strong>@ViewDataTyped.ProjectTypeDisplayName:</strong></dt>
+                    <dd>@ViewDataTyped.ProjectType.ProjectTypeName</dd>
                     <dt><strong>@FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel():</strong></dt>
                     <dd>@ViewDataTyped.EstimatedTotalCost</dd>
                     @foreach (var classificationSystem in ViewDataTyped.ClassificationsBySystem)

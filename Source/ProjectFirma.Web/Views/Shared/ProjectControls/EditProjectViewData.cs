@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 {
     public class EditProjectViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> TaxonomyLeafs { get; }
+        public IEnumerable<SelectListItem> ProjectTypes { get; }
         public IEnumerable<SelectListItem> StartYearRange { get; }
         public IEnumerable<SelectListItem> CompletionDateRange { get; }
         public IEnumerable<SelectListItem> ProjectStages { get; }
@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public IEnumerable<SelectListItem> FocusAreas { get; }
         public Person DefaultPrimaryContactPerson { get; }
         public EditProjectType EditProjectType { get; }
-        public string TaxonomyLeafDisplayName { get; }
+        public string ProjectTypeDisplayName { get; }
         public decimal? TotalExpenditures { get; }
         public string DefaultPrimaryContactPersonName { get; }
         public bool HasThreeTierTaxonomy { get; }
@@ -47,18 +47,18 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
 
         public EditProjectViewData(EditProjectType editProjectType,
-            string taxonomyLeafDisplayName,
+            string projectTypeDisplayName,
             IEnumerable<ProjectStage> projectStages,
             IEnumerable<Models.Organization> organizations,
             IEnumerable<Person> primaryContactPeople,
             Person defaultPrimaryContactPerson,
             decimal? totalExpenditures,
-            List<Models.TaxonomyLeaf> taxonomyLeafs,
+            List<Models.ProjectType> projectTypes,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes,
             IEnumerable<Models.FocusArea> focusAreas)
         {
             EditProjectType = editProjectType;
-            TaxonomyLeafDisplayName = taxonomyLeafDisplayName;
+            ProjectTypeDisplayName = projectTypeDisplayName;
             TotalExpenditures = totalExpenditures;
             ProjectStages = projectStages.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectStageID.ToString(CultureInfo.InvariantCulture), y => y.ProjectStageDisplayName);
             
@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLastAndOrgShortName,
                     $"<Set Based on {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}'s Associated {Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}>");
             DefaultPrimaryContactPerson = defaultPrimaryContactPerson;
-            TaxonomyLeafs = taxonomyLeafs.ToGroupedSelectList();
+            ProjectTypes = projectTypes.ToGroupedSelectList();
             StartYearRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class BasicsViewData : ProjectCreateViewData
     {
-        public IEnumerable<SelectListItem> TaxonomyLeafs { get; private set; }
+        public IEnumerable<SelectListItem> ProjectTypes { get; private set; }
         public IEnumerable<SelectListItem> StartYearRange { get; private set; }
         public IEnumerable<SelectListItem> CompletionDateRange { get; private set; }
         public bool HasCanStewardProjectsOrganizationRelationship { get; private set; }
@@ -48,31 +48,31 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 y => y.FocusAreaName);
 
 		public BasicsViewData(Person currentPerson,
-            IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs, bool showProjectStageDropDown, string instructionsPageUrl,
+            IEnumerable<Models.ProjectType> projectTypes, bool showProjectStageDropDown, string instructionsPageUrl,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, instructionsPageUrl)
         {
             // This constructor is only used for the case where we're coming from the instructions, so we hide the dropdown if they clicked the button for proposing a new project.
             ShowProjectStageDropDown = showProjectStageDropDown;
-            AssignParameters(taxonomyLeafs, projectCustomAttributeTypes);
+            AssignParameters(projectTypes, projectCustomAttributeTypes);
         }
 
         public BasicsViewData(Person currentPerson,
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
-            IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs,
+            IEnumerable<Models.ProjectType> projectTypes,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
             : base(currentPerson, project, ProjectCreateSection.Basics.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
             ProjectDisplayName = project.DisplayName;
-            AssignParameters(taxonomyLeafs, projectCustomAttributeTypes);
+            AssignParameters(projectTypes, projectCustomAttributeTypes);
         }
 
-        private void AssignParameters(IEnumerable<Models.TaxonomyLeaf> taxonomyLeafs,
+        private void AssignParameters(IEnumerable<Models.ProjectType> projectTypes,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
         {
-            TaxonomyLeafs = taxonomyLeafs.ToList().OrderTaxonomyLeaves().ToList().ToGroupedSelectList();
+            ProjectTypes = projectTypes.ToList().OrderTaxonomyLeaves().ToList().ToGroupedSelectList();
             
             
             StartYearRange =

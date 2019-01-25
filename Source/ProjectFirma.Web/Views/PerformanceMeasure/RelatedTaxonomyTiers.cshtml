@@ -22,18 +22,18 @@
 @using ProjectFirma.Web.Views.PerformanceMeasure
 @inherits RelatedTaxonomyTiers
 
-@if (ViewDataTyped.TaxonomyLeafPerformanceMeasures.Any())
+@if (ViewDataTyped.ProjectTypePerformanceMeasures.Any())
 {
     <table class="summaryLayout">
         <tr>
             <th>@ViewDataTyped.TaxonomyTierHeaderDisplayName</th>
             <th>@ViewDataTyped.IsPrimaryTaxonomyTierHeaderDisplayName</th>
         </tr>
-        @foreach (var taxonomyTierPerformanceMeasure in ViewDataTyped.TaxonomyLeafPerformanceMeasures.OrderBy(x => x.Key.SortOrder).ThenBy(x => x.Key.DisplayName, StringComparer.InvariantCultureIgnoreCase))
+        @foreach (var taxonomyTierPerformanceMeasure in ViewDataTyped.ProjectTypePerformanceMeasures.OrderBy(x => x.Key.SortOrder).ThenBy(x => x.Key.DisplayName, StringComparer.InvariantCultureIgnoreCase))
         {
             <tr>
                 <td>@taxonomyTierPerformanceMeasure.Key.GetDisplayNameAsUrl()</td>
-                <td style="text-align: center">@taxonomyTierPerformanceMeasure.First().IsPrimaryTaxonomyLeaf.ToCheckboxImageOrEmpty()</td>
+                <td style="text-align: center">@taxonomyTierPerformanceMeasure.First().IsPrimaryProjectType.ToCheckboxImageOrEmpty()</td>
             </tr>
         }
     </table>

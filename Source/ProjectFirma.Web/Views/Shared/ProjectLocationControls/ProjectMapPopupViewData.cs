@@ -35,14 +35,14 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public string TaxonomyTrunkDisplayName { get; private set; }
         public string TaxonomyBranchDisplayName { get; private set; }
-        public string TaxonomyLeafDisplayName { get; private set; }
+        public string ProjectTypeDisplayName { get; private set; }
         public string ClassificationDisplayNamePluralized { get; private set; }
 
         public string DisplayName { get; set; }
         public Models.ProjectImage KeyPhoto { get; set; }
         public string Duration { get; set; }
         public ProjectStage ProjectStage { get; set; }
-        public Models.TaxonomyLeaf TaxonomyLeaf { get; set; }
+        public Models.ProjectType ProjectType { get; set; }
         public string EstimatedTotalCost { get; set; }
         public Dictionary<Models.ClassificationSystem, string> ClassificationsBySystem { get; set; }
         public string FactSheetUrl { get; set; }
@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             KeyPhoto = project.KeyPhoto;
             Duration = project.Duration;
             ProjectStage = project.ProjectStage;
-            TaxonomyLeaf = project.TaxonomyLeaf;
+            ProjectType = project.ProjectType;
             EstimatedTotalCost = project.EstimatedTotalCost.HasValue ? project.EstimatedTotalCost.ToStringCurrency() : "Unknown";
             
             var dict = new Dictionary<Models.ClassificationSystem, string>();
@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         {
             TaxonomyTrunkDisplayName = Models.FieldDefinition.TaxonomyTrunk.GetFieldDefinitionLabel();
             TaxonomyBranchDisplayName = Models.FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabel();
-            TaxonomyLeafDisplayName = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabel();
+            ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             ClassificationDisplayNamePluralized = Models.FieldDefinition.Classification.GetFieldDefinitionLabelPluralized();
         }
     }

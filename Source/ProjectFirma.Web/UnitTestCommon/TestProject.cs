@@ -30,20 +30,20 @@ namespace ProjectFirma.Web.UnitTestCommon
         {
             public static Project Create()
             {
-                var taxonomyLeaf = TestTaxonomyLeaf.Create();
+                var projectType = TestProjectType.Create();
                 var projectStage = ProjectStage.Planned;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = Project.CreateNewBlank(taxonomyLeaf, projectStage, ProjectLocationSimpleType.None,
+                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None,
                      ProjectApprovalStatus.Approved);
                 return project;
             }
 
             public static Project Create(DatabaseEntities dbContext)
             {
-                var taxonomyLeaf = TestTaxonomyLeaf.Create(dbContext);
+                var projectType = TestProjectType.Create(dbContext);
 
                 var projectStage = ProjectStage.Planned;
-                var project = new Project(taxonomyLeaf,
+                var project = new Project(projectType,
                     projectStage,
                     string.Format("Test Project Name {0}", Guid.NewGuid()),
                     MakeTestName("Test Project Description"),
@@ -58,10 +58,10 @@ namespace ProjectFirma.Web.UnitTestCommon
 
             public static Project Create(short projectID, string projectName)
             {
-                var taxonomyLeaf = TestTaxonomyLeaf.Create();
+                var projectType = TestProjectType.Create();
                 var projectStage = ProjectStage.Implementation;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = new Project(taxonomyLeaf, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved)
+                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved)
                 {
                     ProjectID = projectID
                 };

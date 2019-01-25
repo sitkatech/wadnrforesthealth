@@ -34,13 +34,13 @@ namespace ProjectFirma.Web.Views.PerformanceMeasure
         public string TaxonomyTierDisplayNamePluralized { get; set; }
         public string TaxonomyTierDisplayName { get; set; }
         public string PerformanceMeasureDisplayName { get; set; }
-        public IEnumerable<IGrouping<ITaxonomyTier, TaxonomyLeafPerformanceMeasure>> TaxonomyLeafPerformanceMeasures { get; }
+        public IEnumerable<IGrouping<ITaxonomyTier, ProjectTypePerformanceMeasure>> ProjectTypePerformanceMeasures { get; }
         public HtmlString TaxonomyTierHeaderDisplayName { get; }
         public HtmlString IsPrimaryTaxonomyTierHeaderDisplayName { get; }
 
         public RelatedTaxonomyTiersViewData(Models.PerformanceMeasure performanceMeasure, TaxonomyLevel associatePerformanceMeasureTaxonomyLevel, bool showHelpLinks)
         {
-            TaxonomyLeafPerformanceMeasures = performanceMeasure.GetTaxonomyTiers();
+            ProjectTypePerformanceMeasures = performanceMeasure.GetTaxonomyTiers();
             PerformanceMeasureDisplayName = MultiTenantHelpers.GetPerformanceMeasureName();
             var fieldDefinitionForTaxonomyTier = associatePerformanceMeasureTaxonomyLevel.GetFieldDefinition();
             TaxonomyTierDisplayName = fieldDefinitionForTaxonomyTier.GetFieldDefinitionLabel();

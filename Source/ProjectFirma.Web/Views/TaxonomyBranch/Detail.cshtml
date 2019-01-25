@@ -100,23 +100,23 @@
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
                 <h2>
-                    <a href="@ViewDataTyped.IndexUrl">@ViewDataTyped.TaxonomyLeafDisplayNamePluralized</a>
+                    <a href="@ViewDataTyped.IndexUrl">@ViewDataTyped.ProjectTypeDisplayNamePluralized</a>
                 </h2>
             </div>
             <div class="panel-body">
-                @if (ViewDataTyped.TaxonomyBranch.TaxonomyLeafs.Any())
+                @if (ViewDataTyped.TaxonomyBranch.ProjectTypes.Any())
                 {
                     <div class="pull-right">@SortOrderHelper.SortOrderModalLink(ViewDataTyped.EditChildrenSortOrderUrl, ViewDataTyped.UserHasTaxonomyBranchManagePermissions)</div>
 
                     <table class="summaryLayout">
                         <tr>
-                            <th>@Html.LabelWithSugarFor(FieldDefinition.TaxonomyLeaf, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)</th>
+                            <th>@Html.LabelWithSugarFor(FieldDefinition.ProjectType, LabelWithSugarForExtensions.DisplayStyle.HelpIconWithLabel)</th>
                         </tr>
-                        @foreach (var taxonomyLeaf in ViewDataTyped.TaxonomyBranch.TaxonomyLeafs.SortByOrderThenName())
+                        @foreach (var projectType in ViewDataTyped.TaxonomyBranch.ProjectTypes.SortByOrderThenName())
                         {
                             <tr>
                                 <td>
-                                    @taxonomyLeaf.GetDisplayNameAsUrl()
+                                    @projectType.GetDisplayNameAsUrl()
                                 </td>
                             </tr>
                         }
@@ -124,7 +124,7 @@
                 }
                 else
                 {
-                    <p class="systemText">No @ViewDataTyped.TaxonomyLeafDisplayNamePluralized set for this @ViewDataTyped.TaxonomyBranchDisplayName.</p>
+                    <p class="systemText">No @ViewDataTyped.ProjectTypeDisplayNamePluralized set for this @ViewDataTyped.TaxonomyBranchDisplayName.</p>
                 }
             </div>
         </div>

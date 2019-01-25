@@ -18,7 +18,7 @@ namespace ProjectFirma.Web.Models
 {
     public abstract partial class FieldDefinition : IHavePrimaryKey
     {
-        public static readonly FieldDefinitionTaxonomyLeaf TaxonomyLeaf = FieldDefinitionTaxonomyLeaf.Instance;
+        public static readonly FieldDefinitionProjectType ProjectType = FieldDefinitionProjectType.Instance;
         public static readonly FieldDefinitionExpectedValue ExpectedValue = FieldDefinitionExpectedValue.Instance;
         public static readonly FieldDefinitionTaxonomyTrunk TaxonomyTrunk = FieldDefinitionTaxonomyTrunk.Instance;
         public static readonly FieldDefinitionFundingSource FundingSource = FieldDefinitionFundingSource.Instance;
@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionClassificationGoalStatement ClassificationGoalStatement = FieldDefinitionClassificationGoalStatement.Instance;
         public static readonly FieldDefinitionClassificationNarrative ClassificationNarrative = FieldDefinitionClassificationNarrative.Instance;
         public static readonly FieldDefinitionTaxonomySystemName TaxonomySystemName = FieldDefinitionTaxonomySystemName.Instance;
-        public static readonly FieldDefinitionTaxonomyLeafDisplayNameForProject TaxonomyLeafDisplayNameForProject = FieldDefinitionTaxonomyLeafDisplayNameForProject.Instance;
+        public static readonly FieldDefinitionProjectTypeDisplayNameForProject ProjectTypeDisplayNameForProject = FieldDefinitionProjectTypeDisplayNameForProject.Instance;
         public static readonly FieldDefinitionProjectRelationshipType ProjectRelationshipType = FieldDefinitionProjectRelationshipType.Instance;
         public static readonly FieldDefinitionProjectSteward ProjectSteward = FieldDefinitionProjectSteward.Instance;
         public static readonly FieldDefinitionChartLastUpdatedDate ChartLastUpdatedDate = FieldDefinitionChartLastUpdatedDate.Instance;
@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionCustomPageDisplayType CustomPageDisplayType = FieldDefinitionCustomPageDisplayType.Instance;
         public static readonly FieldDefinitionTaxonomyTrunkDescription TaxonomyTrunkDescription = FieldDefinitionTaxonomyTrunkDescription.Instance;
         public static readonly FieldDefinitionTaxonomyBranchDescription TaxonomyBranchDescription = FieldDefinitionTaxonomyBranchDescription.Instance;
-        public static readonly FieldDefinitionTaxonomyLeafDescription TaxonomyLeafDescription = FieldDefinitionTaxonomyLeafDescription.Instance;
+        public static readonly FieldDefinitionProjectTypeDescription ProjectTypeDescription = FieldDefinitionProjectTypeDescription.Instance;
         public static readonly FieldDefinitionShowApplicationsToThePublic ShowApplicationsToThePublic = FieldDefinitionShowApplicationsToThePublic.Instance;
         public static readonly FieldDefinitionShowLeadImplementerLogoOnFactSheet ShowLeadImplementerLogoOnFactSheet = FieldDefinitionShowLeadImplementerLogoOnFactSheet.Instance;
         public static readonly FieldDefinitionProjectCustomAttribute ProjectCustomAttribute = FieldDefinitionProjectCustomAttribute.Instance;
@@ -130,6 +130,8 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionGrantEndDate GrantEndDate = FieldDefinitionGrantEndDate.Instance;
         public static readonly FieldDefinitionGrantNote GrantNote = FieldDefinitionGrantNote.Instance;
         public static readonly FieldDefinitionPriorityArea PriorityArea = FieldDefinitionPriorityArea.Instance;
+        public static readonly FieldDefinitionGrantTitle GrantTitle = FieldDefinitionGrantTitle.Instance;
+        public static readonly FieldDefinitionAgreement Agreement = FieldDefinitionAgreement.Instance;
         public static readonly FieldDefinitionFederalFundCode FederalFundCode = FieldDefinitionFederalFundCode.Instance;
         public static readonly FieldDefinitionAllocationAmount AllocationAmount = FieldDefinitionAllocationAmount.Instance;
 
@@ -141,7 +143,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { TaxonomyLeaf, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ApprovalStartDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, PlannedDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, TaxonomyLeafDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, TaxonomyLeafDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, FederalFundCode, AllocationAmount };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ApprovalStartDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, PlannedDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, GrantTitle, Agreement, FederalFundCode, AllocationAmount };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -219,6 +221,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
+                case FieldDefinitionEnum.Agreement:
+                    return Agreement;
                 case FieldDefinitionEnum.AllocationAmount:
                     return AllocationAmount;
                 case FieldDefinitionEnum.Application:
@@ -299,6 +303,8 @@ namespace ProjectFirma.Web.Models
                     return GrantStartDate;
                 case FieldDefinitionEnum.GrantStatus:
                     return GrantStatus;
+                case FieldDefinitionEnum.GrantTitle:
+                    return GrantTitle;
                 case FieldDefinitionEnum.GrantType:
                     return GrantType;
                 case FieldDefinitionEnum.IsPrimaryContactOrganization:
@@ -393,6 +399,12 @@ namespace ProjectFirma.Web.Models
                     return ProjectStewardOrganizationDisplayName;
                 case FieldDefinitionEnum.ProjectStewardshipArea:
                     return ProjectStewardshipArea;
+                case FieldDefinitionEnum.ProjectType:
+                    return ProjectType;
+                case FieldDefinitionEnum.ProjectTypeDescription:
+                    return ProjectTypeDescription;
+                case FieldDefinitionEnum.ProjectTypeDisplayNameForProject:
+                    return ProjectTypeDisplayNameForProject;
                 case FieldDefinitionEnum.ProjectUpdateCloseOutDate:
                     return ProjectUpdateCloseOutDate;
                 case FieldDefinitionEnum.ProjectUpdateKickOffDate:
@@ -427,12 +439,6 @@ namespace ProjectFirma.Web.Models
                     return TaxonomyBranch;
                 case FieldDefinitionEnum.TaxonomyBranchDescription:
                     return TaxonomyBranchDescription;
-                case FieldDefinitionEnum.TaxonomyLeaf:
-                    return TaxonomyLeaf;
-                case FieldDefinitionEnum.TaxonomyLeafDescription:
-                    return TaxonomyLeafDescription;
-                case FieldDefinitionEnum.TaxonomyLeafDisplayNameForProject:
-                    return TaxonomyLeafDisplayNameForProject;
                 case FieldDefinitionEnum.TaxonomySystemName:
                     return TaxonomySystemName;
                 case FieldDefinitionEnum.TaxonomyTrunk:
@@ -455,7 +461,7 @@ namespace ProjectFirma.Web.Models
 
     public enum FieldDefinitionEnum
     {
-        TaxonomyLeaf = 1,
+        ProjectType = 1,
         ExpectedValue = 4,
         TaxonomyTrunk = 5,
         FundingSource = 8,
@@ -517,7 +523,7 @@ namespace ProjectFirma.Web.Models
         ClassificationGoalStatement = 241,
         ClassificationNarrative = 242,
         TaxonomySystemName = 243,
-        TaxonomyLeafDisplayNameForProject = 244,
+        ProjectTypeDisplayNameForProject = 244,
         ProjectRelationshipType = 245,
         ProjectSteward = 246,
         ChartLastUpdatedDate = 247,
@@ -529,7 +535,7 @@ namespace ProjectFirma.Web.Models
         CustomPageDisplayType = 253,
         TaxonomyTrunkDescription = 254,
         TaxonomyBranchDescription = 255,
-        TaxonomyLeafDescription = 256,
+        ProjectTypeDescription = 256,
         ShowApplicationsToThePublic = 257,
         ShowLeadImplementerLogoOnFactSheet = 258,
         ProjectCustomAttribute = 259,
@@ -567,14 +573,16 @@ namespace ProjectFirma.Web.Models
         GrantEndDate = 291,
         GrantNote = 292,
         PriorityArea = 293,
-        FederalFundCode = 294,
-        AllocationAmount = 295
+        GrantTitle = 294,
+        Agreement = 295,
+        FederalFundCode = 296,
+        AllocationAmount = 297
     }
 
-    public partial class FieldDefinitionTaxonomyLeaf : FieldDefinition
+    public partial class FieldDefinitionProjectType : FieldDefinition
     {
-        private FieldDefinitionTaxonomyLeaf(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionTaxonomyLeaf Instance = new FieldDefinitionTaxonomyLeaf(1, @"TaxonomyLeaf", @"Taxonomy Leaf", @"<p>The highest level record in the hierarchical project taxonomy system.</p>");
+        private FieldDefinitionProjectType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionProjectType Instance = new FieldDefinitionProjectType(1, @"ProjectType", @"Project Type", @"<p>The highest level record in the hierarchical project taxonomy system.</p>");
     }
 
     public partial class FieldDefinitionExpectedValue : FieldDefinition
@@ -943,10 +951,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionTaxonomySystemName Instance = new FieldDefinitionTaxonomySystemName(243, @"TaxonomySystemName", @"Taxonomy System Name", @"<p>The customized name for the hierarchical project taxonomy system.<p>");
     }
 
-    public partial class FieldDefinitionTaxonomyLeafDisplayNameForProject : FieldDefinition
+    public partial class FieldDefinitionProjectTypeDisplayNameForProject : FieldDefinition
     {
-        private FieldDefinitionTaxonomyLeafDisplayNameForProject(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionTaxonomyLeafDisplayNameForProject Instance = new FieldDefinitionTaxonomyLeafDisplayNameForProject(244, @"TaxonomyLeafDisplayNameForProject", @"Taxonomy Tier One Display Name For Project", @"<p>A custom label describing how a Project relates to it's highest Taxonomy tier..</p>");
+        private FieldDefinitionProjectTypeDisplayNameForProject(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionProjectTypeDisplayNameForProject Instance = new FieldDefinitionProjectTypeDisplayNameForProject(244, @"ProjectTypeDisplayNameForProject", @"Project Type Tier One Display Name For Project", @"<p>A custom label describing how a Project relates to it's highest Taxonomy tier..</p>");
     }
 
     public partial class FieldDefinitionProjectRelationshipType : FieldDefinition
@@ -1015,10 +1023,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionTaxonomyBranchDescription Instance = new FieldDefinitionTaxonomyBranchDescription(255, @"TaxonomyBranchDescription", @"Taxonomy Branch Description", @"<p>The long-form description of the entries in the project taxonomy system.</p>");
     }
 
-    public partial class FieldDefinitionTaxonomyLeafDescription : FieldDefinition
+    public partial class FieldDefinitionProjectTypeDescription : FieldDefinition
     {
-        private FieldDefinitionTaxonomyLeafDescription(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionTaxonomyLeafDescription Instance = new FieldDefinitionTaxonomyLeafDescription(256, @"TaxonomyLeafDescription", @"Taxonomy Leaf Description", @"<p>The long-form description of the entries in the project taxonomy system.</p>");
+        private FieldDefinitionProjectTypeDescription(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionProjectTypeDescription Instance = new FieldDefinitionProjectTypeDescription(256, @"ProjectTypeDescription", @"Project Type Description", @"<p>The long-form description of the entries in the project taxonomy system.</p>");
     }
 
     public partial class FieldDefinitionShowApplicationsToThePublic : FieldDefinition
@@ -1243,15 +1251,27 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionPriorityArea Instance = new FieldDefinitionPriorityArea(293, @"PriorityArea", @"Priority Area", @"Placeholder definition for Priority Area");
     }
 
+    public partial class FieldDefinitionGrantTitle : FieldDefinition
+    {
+        private FieldDefinitionGrantTitle(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantTitle Instance = new FieldDefinitionGrantTitle(294, @"GrantTitle", @"Title", @"<p>{GrantName} ({GrantShortName})</p>");
+    }
+
+    public partial class FieldDefinitionAgreement : FieldDefinition
+    {
+        private FieldDefinitionAgreement(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionAgreement Instance = new FieldDefinitionAgreement(295, @"Agreement", @"Agreement", @"<p>Placeholder for Agreement.</p>");
+    }
+
     public partial class FieldDefinitionFederalFundCode : FieldDefinition
     {
         private FieldDefinitionFederalFundCode(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionFederalFundCode Instance = new FieldDefinitionFederalFundCode(294, @"FederalFundCode", @"Federal Fund Code", @"Placeholder definition for Federal Fund Code description.");
+        public static readonly FieldDefinitionFederalFundCode Instance = new FieldDefinitionFederalFundCode(296, @"FederalFundCode", @"Federal Fund Code", @"Placeholder definition for Federal Fund Code description.");
     }
 
     public partial class FieldDefinitionAllocationAmount : FieldDefinition
     {
         private FieldDefinitionAllocationAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionAllocationAmount Instance = new FieldDefinitionAllocationAmount(295, @"AllocationAmount", @"Allocation Amount", @"Placeholder for GrantAllocation Allocation Amount.");
+        public static readonly FieldDefinitionAllocationAmount Instance = new FieldDefinitionAllocationAmount(297, @"AllocationAmount", @"Allocation Amount", @"Placeholder for GrantAllocation Allocation Amount.");
     }
 }

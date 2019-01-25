@@ -99,6 +99,7 @@ namespace ProjectFirma.Web.Views
                 BuildAboutMenu(currentPerson),
                 BuildProjectsMenu(currentPerson),
                 BuildGrantMenuItem(currentPerson),
+                BuildAgreementMenuItem(currentPerson),
                 BuildProgramInfoMenu(currentPerson)
             };
             TopLevelLtInfoMenuItems.Add(BuildManageMenu(currentPerson));
@@ -144,6 +145,17 @@ namespace ProjectFirma.Web.Views
             return grantsMenu;
         }
 
+        /// <summary>
+        /// Agreements Top-Level menu
+        /// </summary>
+        private static LtInfoMenuItem BuildAgreementMenuItem(Person currentPerson)
+        {
+            var agreementsMenu = new LtInfoMenuItem("Agreements");
+            agreementsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<AgreementController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} List", "Group1"));
+
+            return agreementsMenu;
+        }
+
         private static LtInfoMenuItem BuildProgramInfoMenu(Person currentPerson)
         {
             var programInfoMenu = new LtInfoMenuItem("Program Info");
@@ -182,7 +194,7 @@ namespace ProjectFirma.Web.Views
             {
                 manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<TaxonomyBranchController>(c => c.Manage()), currentPerson, Models.FieldDefinition.TaxonomyBranch.GetFieldDefinitionLabelPluralized(), "Group1"));
             }
-            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<TaxonomyLeafController>(c => c.Manage()), currentPerson, Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabelPluralized(), "Group1"));
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectTypeController>(c => c.Manage()), currentPerson, Models.FieldDefinition.ProjectType.GetFieldDefinitionLabelPluralized(), "Group1"));
             MultiTenantHelpers.GetClassificationSystems().ForEach(x =>
             {
                 manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ClassificationController>(c => c.Index(x.ClassificationSystemID)), currentPerson, x.ClassificationSystemNamePluralized, "Group1"));

@@ -54,10 +54,10 @@ namespace ProjectFirma.Web.Views.Project
         public string FactSheetPdfUrl { get; }
 
         public string TaxonomyColor { get; }
-        public string TaxonomyLeafName { get; }
+        public string ProjectTypeName { get; }
         public string TaxonomyBranchName { get; }
 
-        public string TaxonomyLeafDisplayName { get; }
+        public string ProjectTypeDisplayName { get; }
         public Person PrimaryContactPerson { get; }
         public ViewPageContentViewData CustomFactSheetPageTextViewData { get; }
 
@@ -111,7 +111,7 @@ namespace ProjectFirma.Web.Views.Project
             CalculatedChartHeight = 350 - ExpenditureGooglePieChartSlices.Count * 19;
             FactSheetPdfUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.FactSheetPdf(project));
 
-            if (project.TaxonomyLeaf == null)
+            if (project.ProjectType == null)
             {
                 TaxonomyColor = "blue";
             }
@@ -120,19 +120,19 @@ namespace ProjectFirma.Web.Views.Project
                 switch (MultiTenantHelpers.GetTaxonomyLevel().ToEnum)
                 {
                     case TaxonomyLevelEnum.Leaf:
-                        TaxonomyColor = project.TaxonomyLeaf.ThemeColor;
+                        TaxonomyColor = project.ProjectType.ThemeColor;
                         break;
                     case TaxonomyLevelEnum.Branch:
-                        TaxonomyColor = project.TaxonomyLeaf.TaxonomyBranch.ThemeColor;
+                        TaxonomyColor = project.ProjectType.TaxonomyBranch.ThemeColor;
                         break;
                     case TaxonomyLevelEnum.Trunk:
-                        TaxonomyColor = project.TaxonomyLeaf.TaxonomyBranch.TaxonomyTrunk.ThemeColor;
+                        TaxonomyColor = project.ProjectType.TaxonomyBranch.TaxonomyTrunk.ThemeColor;
                         break;
                 }
             }
-            TaxonomyLeafName = project.TaxonomyLeaf == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.TaxonomyLeaf.DisplayName;
-            TaxonomyBranchName = project.TaxonomyLeaf == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.TaxonomyLeaf.TaxonomyBranch.DisplayName;
-            TaxonomyLeafDisplayName = Models.FieldDefinition.TaxonomyLeaf.GetFieldDefinitionLabel();
+            ProjectTypeName = project.ProjectType == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.ProjectType.DisplayName;
+            TaxonomyBranchName = project.ProjectType == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.ProjectType.TaxonomyBranch.DisplayName;
+            ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             PrimaryContactPerson = project.GetPrimaryContact();
             CustomFactSheetPageTextViewData = new ViewPageContentViewData(firmaPageFactSheet, false);
         }

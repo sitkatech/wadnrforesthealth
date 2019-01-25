@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ProjectFirma.Web.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
+    <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Store.Classification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ClassificationPerformanceMeasure" store:Type="Tables" Schema="dbo" />
@@ -84,6 +86,8 @@
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.Store.ProjectRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.Store.ProjectTag" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectType" EntityType="ProjectFirma.Web.Models.Store.ProjectType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectTypePerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ProjectTypePerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateConfiguration" store:Type="Tables" Schema="dbo" />
@@ -95,8 +99,6 @@
     <EntitySet Name="SystemAttribute" EntityType="ProjectFirma.Web.Models.Store.SystemAttribute" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Store.Tag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TaxonomyLeaf" EntityType="ProjectFirma.Web.Models.Store.TaxonomyLeaf" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TaxonomyLeafPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.TaxonomyLeafPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
@@ -118,6 +120,18 @@ FROM [dbo].[vGeoServerPriorityArea] AS [vGeoServerPriorityArea]</DefiningQuery>
 [vGeoServerRegion].[Ogr_Geometry] AS [Ogr_Geometry]
 FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementType_AgreementTypeID">
+      <End Role="AgreementType" EntitySet="AgreementType" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agreement_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AuditLogs" EntitySet="AuditLog" />
@@ -434,8 +448,8 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
       <End Role="ReviewedByPerson" EntitySet="Person" />
       <End Role="ProjectsWhereYouAreTheReviewedByPerson" EntitySet="Project" />
     </AssociationSet>
-    <AssociationSet Name="FK_Project_TaxonomyLeaf_TaxonomyLeafID" Association="ProjectFirma.Web.Models.Store.FK_Project_TaxonomyLeaf_TaxonomyLeafID">
-      <End Role="TaxonomyLeaf" EntitySet="TaxonomyLeaf" />
+    <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_Project_ProjectType_ProjectTypeID">
+      <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="Projects" EntitySet="Project" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectClassification_Classification_ClassificationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectClassification_Classification_ClassificationID">
@@ -694,6 +708,18 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
       <End Role="Tag" EntitySet="Tag" />
       <End Role="ProjectTags" EntitySet="ProjectTag" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectType_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectType_TaxonomyBranch_TaxonomyBranchID">
+      <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
+      <End Role="ProjectTypes" EntitySet="ProjectType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
+      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
+      <End Role="ProjectTypePerformanceMeasures" EntitySet="ProjectTypePerformanceMeasure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID">
+      <End Role="ProjectType" EntitySet="ProjectType" />
+      <End Role="ProjectTypePerformanceMeasures" EntitySet="ProjectTypePerformanceMeasure" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
@@ -742,18 +768,6 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
-    <AssociationSet Name="FK_TaxonomyLeaf_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.Store.FK_TaxonomyLeaf_TaxonomyBranch_TaxonomyBranchID">
-      <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
-      <End Role="TaxonomyLeafs" EntitySet="TaxonomyLeaf" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TaxonomyLeafPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.Store.FK_TaxonomyLeafPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-      <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
-      <End Role="TaxonomyLeafPerformanceMeasures" EntitySet="TaxonomyLeafPerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TaxonomyLeafPerformanceMeasure_TaxonomyLeaf_TaxonomyLeafID" Association="ProjectFirma.Web.Models.Store.FK_TaxonomyLeafPerformanceMeasure_TaxonomyLeaf_TaxonomyLeafID">
-      <End Role="TaxonomyLeaf" EntitySet="TaxonomyLeaf" />
-      <End Role="TaxonomyLeafPerformanceMeasures" EntitySet="TaxonomyLeafPerformanceMeasure" />
-    </AssociationSet>
     <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
       <End Role="TreatmentActivityContact" EntitySet="Person" />
       <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
@@ -771,6 +785,32 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
       <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Agreement">
+    <Key>
+      <PropertyRef Name="AgreementID" />
+    </Key>
+    <Property Name="AgreementID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TmpAgreementID" Type="int" />
+    <Property Name="AgreementTypeID" Type="int" />
+    <Property Name="AgreementNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="ProjectCodeID" Type="int" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="AgreementAmount" Type="money" />
+    <Property Name="ExpendedAmount" Type="money" />
+    <Property Name="BalanceAmount" Type="money" />
+    <Property Name="RegionID" Type="int" />
+    <Property Name="FirstBillDueOn" Type="datetime" />
+    <Property Name="Notes" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="AgreementType">
+    <Key>
+      <PropertyRef Name="AgreementTypeID" />
+    </Key>
+    <Property Name="AgreementTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementTypeAbbrev" Type="varchar" MaxLength="100" />
+    <Property Name="AgreementTypeName" Type="varchar" MaxLength="100" />
+  </EntityType>
   <EntityType Name="AuditLog">
     <Key>
       <PropertyRef Name="AuditLogID" />
@@ -1285,7 +1325,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="ProjectID" />
     </Key>
     <Property Name="ProjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TaxonomyLeafID" Type="int" Nullable="false" />
+    <Property Name="ProjectTypeID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
     <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
@@ -1649,6 +1689,27 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="TagID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="ProjectType">
+    <Key>
+      <PropertyRef Name="ProjectTypeID" />
+    </Key>
+    <Property Name="ProjectTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
+    <Property Name="ProjectTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectTypeDescription" Type="varchar(max)" />
+    <Property Name="ProjectTypeCode" Type="varchar" MaxLength="10" />
+    <Property Name="ThemeColor" Type="varchar" MaxLength="7" />
+    <Property Name="ProjectTypeSortOrder" Type="int" />
+  </EntityType>
+  <EntityType Name="ProjectTypePerformanceMeasure">
+    <Key>
+      <PropertyRef Name="ProjectTypePerformanceMeasureID" />
+    </Key>
+    <Property Name="ProjectTypePerformanceMeasureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectTypeID" Type="int" Nullable="false" />
+    <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
+    <Property Name="IsPrimaryProjectType" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="ProjectUpdate">
     <Key>
       <PropertyRef Name="ProjectUpdateID" />
@@ -1811,27 +1872,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxonomyBranchCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyBranchSortOrder" Type="int" />
   </EntityType>
-  <EntityType Name="TaxonomyLeaf">
-    <Key>
-      <PropertyRef Name="TaxonomyLeafID" />
-    </Key>
-    <Property Name="TaxonomyLeafID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
-    <Property Name="TaxonomyLeafName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="TaxonomyLeafDescription" Type="varchar(max)" />
-    <Property Name="TaxonomyLeafCode" Type="varchar" MaxLength="10" />
-    <Property Name="ThemeColor" Type="varchar" MaxLength="7" />
-    <Property Name="TaxonomyLeafSortOrder" Type="int" />
-  </EntityType>
-  <EntityType Name="TaxonomyLeafPerformanceMeasure">
-    <Key>
-      <PropertyRef Name="TaxonomyLeafPerformanceMeasureID" />
-    </Key>
-    <Property Name="TaxonomyLeafPerformanceMeasureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TaxonomyLeafID" Type="int" Nullable="false" />
-    <Property Name="PerformanceMeasureID" Type="int" Nullable="false" />
-    <Property Name="IsPrimaryTaxonomyLeaf" Type="bit" Nullable="false" />
-  </EntityType>
   <EntityType Name="TaxonomyTrunk">
     <Key>
       <PropertyRef Name="TaxonomyTrunkID" />
@@ -1916,6 +1956,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     <Property Name="RegionLocation" Type="geometry" />
     <Property Name="Ogr_Geometry" Type="geometry" />
   </EntityType>
+  <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
+    <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementType">
+        <PropertyRef Name="AgreementTypeID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="AgreementTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_Region_RegionID">
+    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AuditLog_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="AuditLogs" Type="ProjectFirma.Web.Models.Store.AuditLog" Multiplicity="*" />
@@ -2864,15 +2940,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Project_TaxonomyLeaf_TaxonomyLeafID">
-    <End Role="TaxonomyLeaf" Type="ProjectFirma.Web.Models.Store.TaxonomyLeaf" Multiplicity="1" />
+  <Association Name="FK_Project_ProjectType_ProjectTypeID">
+    <End Role="ProjectType" Type="ProjectFirma.Web.Models.Store.ProjectType" Multiplicity="1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TaxonomyLeaf">
-        <PropertyRef Name="TaxonomyLeafID" />
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeID" />
       </Principal>
       <Dependent Role="Projects">
-        <PropertyRef Name="TaxonomyLeafID" />
+        <PropertyRef Name="ProjectTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3644,6 +3720,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectType_TaxonomyBranch_TaxonomyBranchID">
+    <End Role="TaxonomyBranch" Type="ProjectFirma.Web.Models.Store.TaxonomyBranch" Multiplicity="1" />
+    <End Role="ProjectTypes" Type="ProjectFirma.Web.Models.Store.ProjectType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaxonomyBranch">
+        <PropertyRef Name="TaxonomyBranchID" />
+      </Principal>
+      <Dependent Role="ProjectTypes">
+        <PropertyRef Name="TaxonomyBranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
+    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.Store.PerformanceMeasure" Multiplicity="1" />
+    <End Role="ProjectTypePerformanceMeasures" Type="ProjectFirma.Web.Models.Store.ProjectTypePerformanceMeasure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PerformanceMeasure">
+        <PropertyRef Name="PerformanceMeasureID" />
+      </Principal>
+      <Dependent Role="ProjectTypePerformanceMeasures">
+        <PropertyRef Name="PerformanceMeasureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID">
+    <End Role="ProjectType" Type="ProjectFirma.Web.Models.Store.ProjectType" Multiplicity="1" />
+    <End Role="ProjectTypePerformanceMeasures" Type="ProjectFirma.Web.Models.Store.ProjectTypePerformanceMeasure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeID" />
+      </Principal>
+      <Dependent Role="ProjectTypePerformanceMeasures">
+        <PropertyRef Name="ProjectTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
     <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
     <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="*" />
@@ -3785,42 +3897,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="TaxonomyBranches">
         <PropertyRef Name="TaxonomyTrunkID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TaxonomyLeaf_TaxonomyBranch_TaxonomyBranchID">
-    <End Role="TaxonomyBranch" Type="ProjectFirma.Web.Models.Store.TaxonomyBranch" Multiplicity="1" />
-    <End Role="TaxonomyLeafs" Type="ProjectFirma.Web.Models.Store.TaxonomyLeaf" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TaxonomyBranch">
-        <PropertyRef Name="TaxonomyBranchID" />
-      </Principal>
-      <Dependent Role="TaxonomyLeafs">
-        <PropertyRef Name="TaxonomyBranchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TaxonomyLeafPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
-    <End Role="PerformanceMeasure" Type="ProjectFirma.Web.Models.Store.PerformanceMeasure" Multiplicity="1" />
-    <End Role="TaxonomyLeafPerformanceMeasures" Type="ProjectFirma.Web.Models.Store.TaxonomyLeafPerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PerformanceMeasure">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Principal>
-      <Dependent Role="TaxonomyLeafPerformanceMeasures">
-        <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TaxonomyLeafPerformanceMeasure_TaxonomyLeaf_TaxonomyLeafID">
-    <End Role="TaxonomyLeaf" Type="ProjectFirma.Web.Models.Store.TaxonomyLeaf" Multiplicity="1" />
-    <End Role="TaxonomyLeafPerformanceMeasures" Type="ProjectFirma.Web.Models.Store.TaxonomyLeafPerformanceMeasure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TaxonomyLeaf">
-        <PropertyRef Name="TaxonomyLeafID" />
-      </Principal>
-      <Dependent Role="TaxonomyLeafPerformanceMeasures">
-        <PropertyRef Name="TaxonomyLeafID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
