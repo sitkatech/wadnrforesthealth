@@ -254,7 +254,7 @@ namespace ProjectFirma.Web.Controllers
             var focusAreaStatusAsSelectListItems =
                 FocusAreaStatus.All.ToSelectListWithEmptyFirstRow(k => k.FocusAreaStatusID.ToString(), v => v.FocusAreaStatusDisplayName);
             var regions =
-                HttpRequestStorage.DatabaseEntities.Regions.ToSelectListWithEmptyFirstRow(k => k.RegionID.ToString(),
+                HttpRequestStorage.DatabaseEntities.Regions.ToList().OrderBy(x => x.DisplayName).ToSelectListWithEmptyFirstRow(k => k.RegionID.ToString(),
                     v => v.RegionName);
             var isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
             var viewData = new EditViewData(focusAreaStatusAsSelectListItems, regions, isSitkaAdmin);

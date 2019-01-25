@@ -361,6 +361,9 @@
     <Compile Include="Models\Generated\ProjectTypePerformanceMeasure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectTypePerformanceMeasurePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectTypePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectTypeProjectCustomAttributeType.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectTypeProjectCustomAttributeType.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\ProjectTypeProjectCustomAttributeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectUpdateBatch.Binding.cs" />
@@ -441,6 +444,8 @@
     <Compile Include="Models\GrantAllocationProjectCode.cs" />
     <Compile Include="Models\GrantNote.cs" />
     <Compile Include="Models\ProjectRegionUpdate.cs" />
+    <Compile Include="Models\ProjectTypeJson.cs" />
+    <Compile Include="Models\ProjectTypeProjectCustomAttributeType.cs" />
     <Compile Include="Models\RegionModelExtensions.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Controllers\TreatmentActivityController.cs" />
@@ -531,6 +536,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
+    <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
+    <Compile Include="Views\ProjectCreate\CustomAttributesViewData.cs" />
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
@@ -1699,6 +1707,7 @@
     <Content Include="Views\PriorityArea\Index.cshtml" />
     <Content Include="Views\PriorityArea\MapTooltip.cshtml" />
     <Content Include="Views\ProjectUpdate\PriorityAreas.cshtml" />
+    <Content Include="Views\ProjectCreate\CustomAttributes.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
@@ -3642,8 +3651,6 @@
           <DevelopmentServerPort>10097</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://wadnrforesthealth.localhost.projectfirma.com</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>https://wadnrforesthealth.localhost.projectfirma.com</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>https://localhost.projectFirma.sitkatech.com</CustomServerUrl>

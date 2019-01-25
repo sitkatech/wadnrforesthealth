@@ -13,6 +13,7 @@
     var colLeft = ViewData.ContainsKey("colLeft") && ViewData["colLeft"] is int ? ViewData["colLeft"] : 4;
     var colRight = ViewData.ContainsKey("colRight") && ViewData["colRight"] is int ? ViewData["colRight"] : 8;
 }
+@Html.HiddenFor(x => x.ProjectTypeIDForCustomAttributes)
 
 @for (var indexOfAttribute = 0; indexOfAttribute < projectCustomAttributeTypes.Count; indexOfAttribute++)
 {

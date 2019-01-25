@@ -88,6 +88,7 @@
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.ProjectTag" />
     <EntitySet Name="ProjectType" EntityType="ProjectFirma.Web.Models.ProjectType" />
     <EntitySet Name="ProjectTypePerformanceMeasure" EntityType="ProjectFirma.Web.Models.ProjectTypePerformanceMeasure" />
+    <EntitySet Name="ProjectTypeProjectCustomAttributeType" EntityType="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" />
     <EntitySet Name="ProjectUpdate" EntityType="ProjectFirma.Web.Models.ProjectUpdate" />
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.ProjectUpdateBatch" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.ProjectUpdateConfiguration" />
@@ -664,6 +665,10 @@
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
       <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
+      <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
+      <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectCustomAttributeUpdates" EntitySet="ProjectCustomAttributeUpdate" />
@@ -755,6 +760,10 @@
     <AssociationSet Name="FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
       <End Role="ProjectTypePerformanceMeasures" EntitySet="ProjectTypePerformanceMeasure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID">
+      <End Role="ProjectType" EntitySet="ProjectType" />
+      <End Role="ProjectTypeProjectCustomAttributeTypes" EntitySet="ProjectTypeProjectCustomAttributeType" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1579,8 +1588,10 @@
     <Property Name="IsRequired" Type="Boolean" Nullable="false" />
     <Property Name="ProjectCustomAttributeTypeDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="ProjectCustomAttributeTypeOptionsSchema" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ApplyToAllProjectTypes" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="ProjectCustomAttributes" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributes" />
     <NavigationProperty Name="ProjectCustomAttributeUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectCustomAttributeUpdate_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectCustomAttributeUpdates" />
+    <NavigationProperty Name="ProjectTypeProjectCustomAttributeTypes" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectCustomAttributeType" ToRole="ProjectTypeProjectCustomAttributeTypes" />
   </EntityType>
   <EntityType Name="ProjectCustomAttributeUpdate">
     <Key>
@@ -1959,6 +1970,7 @@
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="Projects" />
     <NavigationProperty Name="TaxonomyBranch" Relationship="ProjectFirma.Web.Models.FK_ProjectType_TaxonomyBranch_TaxonomyBranchID" FromRole="ProjectTypes" ToRole="TaxonomyBranch" />
     <NavigationProperty Name="ProjectTypePerformanceMeasures" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="ProjectTypePerformanceMeasures" />
+    <NavigationProperty Name="ProjectTypeProjectCustomAttributeTypes" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" FromRole="ProjectType" ToRole="ProjectTypeProjectCustomAttributeTypes" />
   </EntityType>
   <EntityType Name="ProjectTypePerformanceMeasure">
     <Key>
@@ -1970,6 +1982,16 @@
     <Property Name="IsPrimaryProjectType" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="PerformanceMeasure" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" FromRole="ProjectTypePerformanceMeasures" ToRole="PerformanceMeasure" />
     <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_ProjectTypePerformanceMeasure_ProjectType_ProjectTypeID" FromRole="ProjectTypePerformanceMeasures" ToRole="ProjectType" />
+  </EntityType>
+  <EntityType Name="ProjectTypeProjectCustomAttributeType">
+    <Key>
+      <PropertyRef Name="ProjectTypeProjectCustomAttributeTypeID" />
+    </Key>
+    <Property Name="ProjectTypeProjectCustomAttributeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCustomAttributeTypeID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ProjectCustomAttributeType" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" FromRole="ProjectTypeProjectCustomAttributeTypes" ToRole="ProjectCustomAttributeType" />
+    <NavigationProperty Name="ProjectType" Relationship="ProjectFirma.Web.Models.FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID" FromRole="ProjectTypeProjectCustomAttributeTypes" ToRole="ProjectType" />
   </EntityType>
   <EntityType Name="ProjectUpdate">
     <Key>
@@ -3932,6 +3954,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
+    <End Role="ProjectCustomAttributeType" Type="ProjectFirma.Web.Models.ProjectCustomAttributeType" Multiplicity="1" />
+    <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCustomAttributeType">
+        <PropertyRef Name="ProjectCustomAttributeTypeID" />
+      </Principal>
+      <Dependent Role="ProjectTypeProjectCustomAttributeTypes">
+        <PropertyRef Name="ProjectCustomAttributeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectCustomAttributeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectCustomAttributeUpdates" Type="ProjectFirma.Web.Models.ProjectCustomAttributeUpdate" Multiplicity="*" />
@@ -4204,6 +4238,18 @@
         <PropertyRef Name="ProjectTypeID" />
       </Principal>
       <Dependent Role="ProjectTypePerformanceMeasures">
+        <PropertyRef Name="ProjectTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectTypeProjectCustomAttributeType_ProjectType_ProjectTypeID">
+    <End Role="ProjectType" Type="ProjectFirma.Web.Models.ProjectType" Multiplicity="1" />
+    <End Role="ProjectTypeProjectCustomAttributeTypes" Type="ProjectFirma.Web.Models.ProjectTypeProjectCustomAttributeType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeID" />
+      </Principal>
+      <Dependent Role="ProjectTypeProjectCustomAttributeTypes">
         <PropertyRef Name="ProjectTypeID" />
       </Dependent>
     </ReferentialConstraint>

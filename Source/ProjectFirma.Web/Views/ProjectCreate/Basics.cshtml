@@ -51,6 +51,8 @@ Source code is available upon request via <support@sitkatech.com>.
 {
     <div class="form-horizontal">
         <div class="form-group">
+           
+
             <div class="col-xs-12 col-sm-4 control-label">
                 @Html.LabelWithSugarFor(m => m.ProjectTypeID, 600, MultiTenantHelpers.GetProjectTypeDisplayNameForProject())
             </div>
@@ -58,6 +60,11 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes, string.Format("Select a {0}", MultiTenantHelpers.GetProjectTypeDisplayNameForProject()))
                 @Html.ValidationMessageFor(m => m.ProjectTypeID)
             </div>
+            
+            @if (ViewDataTyped.ProjectTypeHasBeenSet)
+            {
+                <div class="col-xs-12 col-sm-offset-4 col-sm-8"> <em>Warning: Changing your Project Type may delete previously entered Custom Attribute Data that doesn't apply to a different Project Type.</em></div>
+            }
         </div>
         <div class="form-group">
             <div class="col-xs-12 col-sm-4 control-label">
@@ -136,7 +143,6 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.ValidationMessageFor(m => m.FocusAreaID)
             </div>
         </div>
-        @Html.EditorFor(m => m.ProjectCustomAttributes, new {ProjectCustomAttributes = ViewDataTyped.ProjectCustomAttributeTypes, colLeft = 4, colRight = 8})
     </div>
 
     @Html.HiddenFor(m => m.ProjectID)

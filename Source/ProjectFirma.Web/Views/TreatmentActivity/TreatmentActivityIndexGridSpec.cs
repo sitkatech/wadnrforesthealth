@@ -1,5 +1,6 @@
 ﻿using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
 
@@ -10,12 +11,9 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
         public TreatmentActivityIndexGridSpec(Person currentPerson)
         {
 
-            //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTreatmentActivityUrl(), new FirmaAdminFeature().HasPermissionByPerson(currentPerson), true), 30, DhtmlxGridColumnFilterType.None);
-            //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl())), 30, DhtmlxGridColumnFilterType.None);
-
             Add("Project Name", a => UrlTemplate.MakeHrefString(a.GetProjectDetailUrl(), a.GetProjectName()), 150, DhtmlxGridColumnFilterType.Html);
-            Add("Focus Area", a => a.GetFocusAreaText(), 150, DhtmlxGridColumnFilterType.Html);
-            Add("Region", a => a.GetProjectRegions(), 150, DhtmlxGridColumnFilterType.Text);
+            Add("Focus Area", a => a.GetFocusAreaText(), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.Region.ToGridHeaderString(), a => a.GetProjectRegions(), 150, DhtmlxGridColumnFilterType.Text);
             Add("Contact", a => a.GetContactText(), 125, DhtmlxGridColumnFilterType.Text);
             Add("Status", a => a.GetStatusDisplayName(), 75, DhtmlxGridColumnFilterType.Text);
             Add("Program Index", a => a.GetProgramIndexName(), 75, DhtmlxGridColumnFilterType.Text);
@@ -35,7 +33,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             Add("Hand Pile Burn Acres", a => a.TreatmentActivityHandPileBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
             Add("Machine Burn Acres", a => a.TreatmentActivityMachinePileBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
             Add("Other Acres", a => a.TreatmentActivityOtherTreatmentAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
-
+            Add("Notes", a => a.TreatmentActivityNotes, 200, DhtmlxGridColumnFilterType.Text);
         }
 
 

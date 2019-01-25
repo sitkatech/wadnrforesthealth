@@ -199,10 +199,43 @@ namespace ProjectFirma.Web.Controllers
             var instructionsPageUrl = newProjectIsHistoric
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsEnterHistoric(null))
                 : SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.InstructionsProposal(null));
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectTypes, newProjectIsHistoric, instructionsPageUrl, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, projectTypes, newProjectIsHistoric, instructionsPageUrl);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProjectCreateFeature]
+        public ViewResult EditProjectCustomAttributes(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new CustomAttributesViewModel(project);
+            return ViewEditProjectCustomAttributes(project, viewModel);
+        }
+
+        private ViewResult ViewEditProjectCustomAttributes(Project project, CustomAttributesViewModel viewModel)
+        {
+            var proposalSectionsStatus = GetProposalSectionsStatus(project);
+            proposalSectionsStatus.IsCustomAttributesSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsCustomAttributesSectionComplete;
+            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
+            var viewData = new CustomAttributesViewData(CurrentPerson, project, proposalSectionsStatus, projectCustomAttributeTypes);
+
+            return RazorView<CustomAttributes, CustomAttributesViewData, CustomAttributesViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [ProjectCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditProjectCustomAttributes(ProjectPrimaryKey projectPrimaryKey, CustomAttributesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditProjectCustomAttributes(project, viewModel);
+            }
+            viewModel.UpdateModel(project, CurrentPerson);
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabelPluralized()} successfully saved.");
+            return GoToNextSection(viewModel, project, ProjectCreateSection.ProjectCustomAttributes.ProjectCreateSectionDisplayName);
         }
 
         [HttpGet]
@@ -229,8 +262,7 @@ namespace ProjectFirma.Web.Controllers
             proposalSectionsStatus.IsBasicsSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsBasicsSectionComplete;
             
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes;
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes, projectCustomAttributeTypes);
+            var viewData = new BasicsViewData(CurrentPerson, project, proposalSectionsStatus, projectTypes);
 
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
