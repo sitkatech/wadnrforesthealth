@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Controllers
                     m => m.TreatmentActivityStatusDisplayName);
 
             var contactsAsSelectListItems =
-                treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
+                treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).OrderBy(x => x.LastName).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
                     d => d.FullNameFirstLastAndOrg);
 
             var programIndices =
@@ -149,7 +149,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<TreatmentActivity> IndexGridJsonData()
         {
             var gridSpec = new TreatmentActivityIndexGridSpec(CurrentPerson);
-            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities.OrderBy(x => x.TreatmentActivityStartDate).ToList();
+            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities.OrderBy(x => x.Project.ProjectName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentActivity>(treatmentActivities, gridSpec);
             return gridJsonNetJObjectResult;
         }

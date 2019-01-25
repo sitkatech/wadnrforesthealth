@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Models
             HtmlString returnValue = new HtmlString(string.Empty);
             if (treatmentActivity.TreatmentActivityContactID == null)
             {
-                returnValue = "Contact Not Set".ToHTMLFormattedString();
+                returnValue = "".ToHTMLFormattedString();
             }
             else
             {
@@ -98,7 +98,7 @@ namespace ProjectFirma.Web.Models
             HtmlString returnValue = new HtmlString(string.Empty);
             if (treatmentActivity.Project.FocusAreaID == null)
             {
-                returnValue = "Focus Area Not Set".ToHTMLFormattedString();
+                returnValue = "".ToHTMLFormattedString();
             }
             else
             {
@@ -111,12 +111,12 @@ namespace ProjectFirma.Web.Models
 
         public static string GetProgramIndexName(this Models.TreatmentActivity treatmentActivity)
         {
-            return treatmentActivity.ProgramIndex == null ? "Program Index Not Set" : treatmentActivity.ProgramIndex.ProgramIndexAbbrev;
+            return treatmentActivity.ProgramIndex == null ? "" : treatmentActivity.ProgramIndex.ProgramIndexAbbrev;
         }
 
         public static string GetProjectCodeName(this Models.TreatmentActivity treatmentActivity)
         {
-            return treatmentActivity.ProjectCode == null ? "Project Code Not Set" : treatmentActivity.ProjectCode.ProjectCodeAbbrev;
+            return treatmentActivity.ProjectCode == null ? "" : treatmentActivity.ProjectCode.ProjectCodeAbbrev;
         }
 
         public static string GetDeleteTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)

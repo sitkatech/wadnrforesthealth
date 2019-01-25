@@ -159,7 +159,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
             if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
             {
-                var errorMessage = "Focus Area is required for your selected project type";
+                var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
                 yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
             }
         }
