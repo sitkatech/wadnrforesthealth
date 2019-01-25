@@ -32,6 +32,12 @@ namespace ProjectFirma.Web.Models
 {
     public static class GrantAllocationModelExtensions
     {
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.DeleteGrantAllocation(UrlTemplate.Parameter1Int)));
+        public static string GetDeleteUrl(this GrantAllocation grantAllocation)
+        {
+            return DeleteUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+        }
+
         public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.GrantAllocationDetail(UrlTemplate.Parameter1Int)));
         public static string GetDetailUrl(this GrantAllocation grantAllocation)
         {
@@ -39,12 +45,11 @@ namespace ProjectFirma.Web.Models
         }
 
 
-        // TODO
-        //public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
-        //public static string GetEditUrl(this GrantAllocation grantAllocation)
-        //{
-        //    return SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.Edit(grantAllocation.GrantAllocationID));
-        //}
+        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
+        public static string GetEditUrl(this GrantAllocation grantAllocation)
+        {
+            return EditUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+        }
 
     }
 }

@@ -116,4 +116,6 @@ VALUES
 (292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
 (293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
 (294, N'GrantTitle', 'Title', N'<p>{GrantName} ({GrantShortName})</p>'),
-(295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>')
+(295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
+(296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
+(297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.')

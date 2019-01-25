@@ -476,6 +476,7 @@
     <Compile Include="Security\AgreementsViewFullListFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantCreateFeature.cs" />
+    <Compile Include="Security\GrantAllocationDeleteFeature.cs" />
     <Compile Include="Security\GrantDeleteFeature.cs" />
     <Compile Include="Security\GrantEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationsViewFeature.cs" />
@@ -498,6 +499,7 @@
     <Compile Include="Views\Agreement\AgreementIndexViewData.cs" />
     <Compile Include="Views\GrantAllocation\Detail.cs" />
     <Compile Include="Views\GrantAllocation\DetailViewData.cs" />
+    <Compile Include="Views\GrantAllocation\EditGrantAllocation.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationViewModel.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
@@ -1107,6 +1109,7 @@
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
+    <Content Include="Views\GrantAllocation\EditGrantAllocation.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
