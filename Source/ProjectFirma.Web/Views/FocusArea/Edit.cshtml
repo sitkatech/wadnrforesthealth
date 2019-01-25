@@ -41,7 +41,7 @@
                 @Html.LabelWithSugarFor(m => m.FocusAreaStatusID)
             </div>
             <div class="col-sm-9">
-                @Html.DropDownListFor(m => m.FocusAreaStatusID, ViewDataTyped.FocusAreaStatus, new { @class = "form-control", style = "width:100%" })
+                @Html.DropDownListFor(m => m.FocusAreaStatusID, ViewDataTyped.FocusAreaStatus, new { @class = "form-control", style = "width:auto" })
                 @Html.ValidationMessageFor(m => m.FocusAreaStatusID)
             </div>
         </div>
@@ -50,7 +50,7 @@
                 @Html.LabelWithSugarFor(m => m.RegionID)
             </div>
             <div class="col-sm-9">
-                @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { @class = "form-control", style = "width:100%" })
+                @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { @class = "form-control", style = "width:auto" })
                 @Html.ValidationMessageFor(m => m.RegionID)
             </div>
         </div>
