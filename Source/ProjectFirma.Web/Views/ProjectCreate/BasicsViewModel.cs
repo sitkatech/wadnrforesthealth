@@ -67,7 +67,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public int? ImportExternalProjectStagingID { get; set; }
 
-        public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -87,7 +86,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ApprovalStartDate = project.ApprovalStartDate;
             CompletionDate = project.CompletionDate;
             FocusAreaID = project.FocusAreaID;
-            ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
 
         public void UpdateModel(Models.Project project, Person person)
@@ -103,7 +101,23 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ApprovalStartDate = ApprovalStartDate;
             project.CompletionDate = CompletionDate;
             project.FocusAreaID = FocusAreaID;
-            ProjectCustomAttributes?.UpdateModel(project, person);
+
+
+            var nonAllTypeAttributes = project.ProjectCustomAttributes.Where(x => !x.ProjectCustomAttributeType.ApplyToAllProjectTypes).ToList();
+            if (nonAllTypeAttributes.Any())
+            {
+                foreach (var projectCustomAttribute in nonAllTypeAttributes)
+                {
+                    var projectTypeList = projectCustomAttribute.ProjectCustomAttributeType
+                        .ProjectTypeProjectCustomAttributeTypes.Select(x => x.ProjectTypeID).ToList();
+                    if (!projectTypeList.Contains(project.ProjectTypeID))
+                    {
+                        projectCustomAttribute.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                    }
+                }
+            }
+
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

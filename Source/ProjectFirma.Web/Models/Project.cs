@@ -714,6 +714,15 @@ namespace ProjectFirma.Web.Models
                 .OrderBy(x => x.ProjectWorkflowSectionGrouping.SortOrder).ThenBy(x => x.SortOrder).ToList();
         }
 
+        public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProject()
+        {
+            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
+            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
+                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
+                                .Select(y => y.ProjectTypeID).Contains(this.ProjectTypeID)).ToList();
+            return projectCustomAttributeTypesForThisProject;
+        }
+
         public string GetPlannedDate()
         {
             return PlannedDate?.ToShortDateString();

@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Linq;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.ProjectPriorityArea;
 using ProjectFirma.Web.Views.ProjectRegion;
 
@@ -29,6 +30,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
     public class ProposalSectionsStatus
     {
         public bool IsBasicsSectionComplete { get; set; }
+        public bool IsCustomAttributesSectionComplete { get; set; }
         public bool IsPerformanceMeasureSectionComplete { get; set; }
         public bool IsProjectLocationSimpleSectionComplete { get; set; }
         public bool IsProjectLocationDetailedSectionComplete { get; set; }
@@ -49,6 +51,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             var basicsResults = new BasicsViewModel(project).GetValidationResults();
             IsBasicsSectionComplete = !basicsResults.Any();
+
+            var customAttributeResults = new CustomAttributesViewModel(project).GetValidationResults();
+            IsCustomAttributesSectionComplete = !customAttributeResults.Any();
 
             var locationSimpleValidationResults = new LocationSimpleViewModel(project).GetValidationResults();
             IsProjectLocationSimpleSectionComplete = !locationSimpleValidationResults.Any();

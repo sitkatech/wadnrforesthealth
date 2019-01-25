@@ -534,6 +534,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
+    <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
+    <Compile Include="Views\ProjectCreate\CustomAttributesViewData.cs" />
     <Compile Include="Views\ProjectCreate\Contacts.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
@@ -1701,6 +1704,7 @@
     <Content Include="Views\PriorityArea\Index.cshtml" />
     <Content Include="Views\PriorityArea\MapTooltip.cshtml" />
     <Content Include="Views\ProjectUpdate\PriorityAreas.cshtml" />
+    <Content Include="Views\ProjectCreate\CustomAttributes.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
