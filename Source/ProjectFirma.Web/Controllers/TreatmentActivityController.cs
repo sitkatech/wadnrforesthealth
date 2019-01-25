@@ -149,7 +149,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<TreatmentActivity> IndexGridJsonData()
         {
             var gridSpec = new TreatmentActivityIndexGridSpec(CurrentPerson);
-            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities.OrderBy(x => x.TreatmentActivityStartDate).ToList();
+            var treatmentActivities = HttpRequestStorage.DatabaseEntities.TreatmentActivities.OrderBy(x => x.Project.ProjectName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<TreatmentActivity>(treatmentActivities, gridSpec);
             return gridJsonNetJObjectResult;
         }
