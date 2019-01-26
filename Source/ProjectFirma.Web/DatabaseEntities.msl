@@ -8,7 +8,6 @@
           <ScalarProperty Name="TmpAgreementID" ColumnName="TmpAgreementID" />
           <ScalarProperty Name="AgreementTypeID" ColumnName="AgreementTypeID" />
           <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
-          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AgreementAmount" ColumnName="AgreementAmount" />
@@ -17,6 +16,15 @@
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="FirstBillDueOn" ColumnName="FirstBillDueOn" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgreementProjectCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementProjectCode">
+        <MappingFragment StoreEntitySet="AgreementProjectCode">
+          <ScalarProperty Name="AgreementProjectCodeID" ColumnName="AgreementProjectCodeID" />
+          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1092,9 +1100,9 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Region">
         <MappingFragment StoreEntitySet="Region">
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="RegionAbbrev" ColumnName="RegionAbbrev" />
           <ScalarProperty Name="RegionName" ColumnName="RegionName" />
           <ScalarProperty Name="RegionLocation" ColumnName="RegionLocation" />
-          <ScalarProperty Name="RegionAbbrev" ColumnName="RegionAbbrev" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

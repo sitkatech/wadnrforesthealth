@@ -7,7 +7,6 @@ CREATE TABLE [dbo].[Agreement](
 	[TmpAgreementID] [int] NULL,
 	[AgreementTypeID] [int] NULL,
 	[AgreementNumber] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[ProjectCodeID] [int] NULL,
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,
 	[AgreementAmount] [money] NULL,
@@ -37,11 +36,6 @@ ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Agreemen
 REFERENCES [dbo].[AgreementType] ([AgreementTypeID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_AgreementType_AgreementTypeID]
-GO
-ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_ProjectCode_ProjectCodeID] FOREIGN KEY([ProjectCodeID])
-REFERENCES [dbo].[ProjectCode] ([ProjectCodeID])
-GO
-ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_ProjectCode_ProjectCodeID]
 GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Region_RegionID] FOREIGN KEY([RegionID])
 REFERENCES [dbo].[Region] ([RegionID])

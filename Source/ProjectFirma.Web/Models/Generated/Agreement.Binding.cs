@@ -24,19 +24,18 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Agreement()
         {
-
+            this.AgreementProjectCodes = new HashSet<AgreementProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, int? projectCodeID, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes) : this()
+        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes) : this()
         {
             this.AgreementID = agreementID;
             this.TmpAgreementID = tmpAgreementID;
             this.AgreementTypeID = agreementTypeID;
             this.AgreementNumber = agreementNumber;
-            this.ProjectCodeID = projectCodeID;
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.AgreementAmount = agreementAmount;
@@ -63,13 +62,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return AgreementProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementProjectCode).Name};
 
 
         /// <summary>
@@ -77,8 +76,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             dbContext.Agreements.Remove(this);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in AgreementProjectCodes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -86,7 +96,6 @@ namespace ProjectFirma.Web.Models
         public int? TmpAgreementID { get; set; }
         public int? AgreementTypeID { get; set; }
         public string AgreementNumber { get; set; }
-        public int? ProjectCodeID { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal? AgreementAmount { get; set; }
@@ -98,8 +107,8 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
+        public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }
-        public virtual ProjectCode ProjectCode { get; set; }
         public virtual Region Region { get; set; }
 
         public static class FieldLengths
