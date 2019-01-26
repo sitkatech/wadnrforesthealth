@@ -100,25 +100,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EndDate = grantAllocation.EndDate;
         }
 
-        public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)
-        {
-            grantAllocation.ProjectName = ProjectName;
-            grantAllocation.OrganizationID = OrganizationID;
-            grantAllocation.Grant.GrantStatusID = GrantStatusID;
-            grantAllocation.Grant.GrantType.GrantTypeID = GrantTypeID;
-            grantAllocation.Grant.GrantID = GrantID;
-            grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
-            grantAllocation.Grant.CFDANumber = CFDA;
-            // TODO check out how to get this back into database
-            //grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
-            grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode;
-            grantAllocation.RegionID = RegionID;
-            grantAllocation.AllocationAmount = AllocationAmount;
-            grantAllocation.StartDate = StartDate;
-            grantAllocation.EndDate = EndDate;
-
-        }
-
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (ProjectName == "")
@@ -126,6 +107,25 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
                     FirmaValidationMessages.OrganizationNameUnique, m => m.ProjectName);
             }
+        }
+
+        public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)
+        {
+            grantAllocation.ProjectName = ProjectName;
+            grantAllocation.OrganizationID = OrganizationID;
+            grantAllocation.Grant.GrantStatusID = GrantStatusID;
+            grantAllocation.Grant.GrantType.GrantTypeID = GrantTypeID;
+            grantAllocation.Grant.GrantID = GrantID;
+            // Need to get the FK value to ProgramIndex table where it equals the ProgramIndex string
+            //grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
+            grantAllocation.Grant.CFDANumber = CFDA;
+            // TODO check out how to get these back into database
+            //grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
+            //grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode != null ? FederalFundCode : String.Empty;
+            grantAllocation.RegionID = RegionID;
+            grantAllocation.AllocationAmount = AllocationAmount;
+            grantAllocation.StartDate = StartDate;
+            grantAllocation.EndDate = EndDate;
         }
     }
 }

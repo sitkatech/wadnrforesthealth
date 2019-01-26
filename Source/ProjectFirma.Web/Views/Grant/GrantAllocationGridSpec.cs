@@ -23,6 +23,7 @@ using System;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -41,6 +42,12 @@ namespace ProjectFirma.Web.Views.Grant
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}"; ;
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new GrantAllocationDeleteFeature().HasPermissionByPerson(currentPerson);
+            var userHasCreatePermissions = new GrantCreateFeature().HasPermissionByPerson(currentPerson);
+            if (userHasCreatePermissions)
+            {
+                var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New());
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Grant Allocation");
+            }
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());
 

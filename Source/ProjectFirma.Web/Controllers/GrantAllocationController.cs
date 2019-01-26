@@ -110,6 +110,31 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }
 
+        [HttpGet]
+        [GrantAllocationCreateFeature]
+        public PartialViewResult New()
+        {
+
+            var viewModel = new EditGrantAllocationViewModel();
+            return ViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation);
+        }
+
+        [HttpPost]
+        [GrantAllocationCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditGrantAllocationViewModel viewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation);
+            }
+            var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == viewModel.GrantID);
+            var grantAllocation = GrantAllocation.CreateNewBlank(grant);
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {

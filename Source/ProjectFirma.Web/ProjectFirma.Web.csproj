@@ -472,6 +472,7 @@
     <Compile Include="Security\AgreementDeleteFeature.cs" />
     <Compile Include="Security\AgreementsViewFullListFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
+    <Compile Include="Security\GrantAllocationCreateFeature.cs" />
     <Compile Include="Security\GrantCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationDeleteFeature.cs" />
     <Compile Include="Security\GrantDeleteFeature.cs" />
