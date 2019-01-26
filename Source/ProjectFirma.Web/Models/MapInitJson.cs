@@ -22,7 +22,10 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.Linq;
 using GeoJSON.Net.Feature;
+using LtInfo.Common;
 using LtInfo.Common.GeoJson;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -59,7 +62,9 @@ namespace ProjectFirma.Web.Models
             var layerGeoJsons = new List<LayerGeoJson>
             {
                 PriorityArea.GetPriorityAreaWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
-                Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+                Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
+                GetAllSimpleProjectLocations(),
+                GetAllDetailedProjectLocations()
             };
             return layerGeoJsons;
         }
@@ -82,6 +87,23 @@ namespace ProjectFirma.Web.Models
             };
 
             return layerGeoJsons;
+        }
+
+        public static LayerGeoJson GetAllSimpleProjectLocations()
+        {
+            var mapTooltipUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.ProjectMapPopup(UrlTemplate.Parameter1Int)));
+
+            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Simple", FirmaWebConfiguration.GetMapServiceUrl(),
+                FirmaWebConfiguration.GetAllProjectLocationsSimpleWmsLayerName(), mapTooltipUrlTemplate.UrlTemplateString, "orange", .2m,
+                LayerInitialVisibility.Hide);
+        }
+
+        public static LayerGeoJson GetAllDetailedProjectLocations()
+        {
+            var mapTooltipUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.ProjectMapPopup(UrlTemplate.Parameter1Int)));
+            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Detail", FirmaWebConfiguration.GetMapServiceUrl(),
+                FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), mapTooltipUrlTemplate.UrlTemplateString, "orange", .2m,
+                LayerInitialVisibility.Hide);
         }
 
         public static List<LayerGeoJson> GetProjectLocationSimpleMapLayer(IProject project)

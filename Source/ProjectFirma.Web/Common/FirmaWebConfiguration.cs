@@ -68,6 +68,16 @@ namespace ProjectFirma.Web.Common
             return "WADNRForestHealth:PriorityArea";//todo: move priorityArea layer name to web config
         }
 
+        public static string GetAllProjectLocationsSimpleWmsLayerName()
+        {
+            return "WADNRForestHealth:vGeoServerProjectLocationSimple";//todo: move layer name to web config
+        }
+
+        public static string GetAllProjectLocationsDetailedWmsLayerName()
+        {
+            return "WADNRForestHealth:vGeoServerProjectLocationDetailed";//todo: move layer name to web config
+        }
+
         public static string GetMapServiceUrl()
         {
             return "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms"; //todo: move service url to web config

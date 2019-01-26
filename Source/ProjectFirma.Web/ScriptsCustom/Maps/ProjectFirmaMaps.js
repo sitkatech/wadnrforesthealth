@@ -141,6 +141,7 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     if (currentLayer.LayerInitialVisibility === 1) {
         layerGroup.addTo(this.map);
     }
+    console.log("Hi");
     wmsLayer.on("click", function (e) { self.getFeatureInfo(e); });
 
     overlayLayers[currentLayer.LayerName] = layerGroup;
@@ -409,13 +410,13 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 service: 'WMS',
                 version: "1.1.1",
                 request: 'GetFeatureInfo',
-                layers: wmsLayers[0].wmsParams.layers,
+                layers: null,
                 styles: "",
                 srs: 'EPSG:4326',
                 bbox: this.map.getBounds().toBBoxString(),
                 height: size.y,
                 width: size.x,
-                query_layers: wmsLayers[0].wmsParams.layers,
+                query_layers: null,
                 info_format: 'application/json'
             };
 
@@ -426,9 +427,12 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
 
         for (var j = 0; j < wmsLayers.length; ++j) {
             var layer = wmsLayers[j];
+            geospatialAreaWMSParams.layers = wmsLayers[j].wmsParams.layers;
+            geospatialAreaWMSParams.query_layers = wmsLayers[j].wmsParams.layers;
+
             var query = layer._url + L.Util.getParamString(geospatialAreaWMSParams, null, true);            
             ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query }))
-                .then(function (response) { return self.formatGeospatialAreaResponse(response); }));
+                .then(function (response) { return self.formatGeospatialAreaResponse(ajaxCalls, response); }));
      
         }        
 
@@ -445,6 +449,9 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 //wms layers
                 _.forEach(responses,
                     function (resp) {
+                        if (resp == null) {
+                            return;
+                        }
                         allLayers.push(resp);
                     });
                 //lat lon
@@ -494,14 +501,49 @@ ProjectFirmaMaps.Map.prototype.removeDuplicatesFromArray = function (originalArr
 
 
 
-    ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
+ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (ajaxCalls, json) {
         var vectorLayerInfoHtmlForPopup = null;
         if (json.features.length > 0) {
 
-            var atag = "<a title='' href='/GeospatialArea/Detail/" + json.features[0].properties.GeospatialAreaID + "'>" + json.features[0].properties.GeospatialAreaName + "</a>";
+            var firstFeature = json.features[0];
+
+            var url = "";
+            var linkText = "";
+            var labelText = "";
+            var linkHtml = "";
+            switch (firstFeature.geometry_name) {
+                case "RegionLocation":
+                    url = "/Region/Detail/" + firstFeature.properties.RegionID;
+                    linkText = firstFeature.properties.RegionName;
+                    linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
+                    labelText = "Region";
+                    break;
+                case "PriorityAreaLocation":
+                    url = "/PriorityArea/Detail/" + firstFeature.properties.PriorityAreaID;
+                    linkText = firstFeature.properties.PriorityAreaName;
+                    linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
+                    labelText = "Priority Area";
+                    break;
+                case "ProjectLocationGeometry":
+                case "ProjectLocationPoint":
+                    // https://wadnrforesthealth.qa.projectfirma.com/Project/ProjectMapPopup/12494
+                    // ProjectID
+                    url = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
+                    labelText = "Project";
+
+                    jQuery.ajax({
+                            url: url,
+                            async: false,
+                            success: function(response) {
+                                linkHtml = response;
+                            }
+                        }
+                    );
+            }
+
             vectorLayerInfoHtmlForPopup = {
-                label: json.features[0].properties.GeospatialAreaTypeName,
-                link: atag
+                label: labelText,
+                link: linkHtml
             }
         }
     return vectorLayerInfoHtmlForPopup;

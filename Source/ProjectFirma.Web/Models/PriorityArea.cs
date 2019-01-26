@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetPriorityAreaWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("PriorityAreas", FirmaWebConfiguration.GetMapServiceUrl(),
+            return new LayerGeoJson("All Priority Areas", FirmaWebConfiguration.GetMapServiceUrl(),
                 FirmaWebConfiguration.GetPriorityAreaWmsLayerName(), MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
                 layerInitialVisibility);
         }
