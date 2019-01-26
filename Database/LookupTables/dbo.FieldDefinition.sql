@@ -118,4 +118,5 @@ VALUES
 (294, N'GrantTitle', 'Title', N'<p>{GrantName} ({GrantShortName})</p>'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
-(297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.')
+(297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.'),
+(298, N'ProgramManager', 'Program Manager', 'Placeholder for Program Manager.')

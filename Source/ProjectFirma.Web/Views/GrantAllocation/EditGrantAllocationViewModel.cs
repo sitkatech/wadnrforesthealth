@@ -115,12 +115,13 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.Grant.GrantStatusID = GrantStatusID;
             grantAllocation.Grant.GrantType.GrantTypeID = GrantTypeID;
-            grantAllocation.Grant.GrantID = GrantID;
+            // TODO figure out how to get around 'this is part of the object's key information and can't be modified with GrantID'
+            //grantAllocation.Grant.GrantID = GrantID;
+            // TODO check out how to get these back into database correctly
             // Need to get the FK value to ProgramIndex table where it equals the ProgramIndex string
             //grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
             grantAllocation.Grant.CFDANumber = CFDA;
-            // TODO check out how to get these back into database
-            //grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
+            grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
             //grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode != null ? FederalFundCode : String.Empty;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
