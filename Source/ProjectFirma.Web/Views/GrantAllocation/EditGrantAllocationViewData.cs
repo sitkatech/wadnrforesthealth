@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -38,8 +40,14 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> GrantNumbers { get; }
         public IEnumerable<SelectListItem> Regions { get; }
         public IEnumerable<SelectListItem> ProjectCodes { get; }
+        public IEnumerable<SelectListItem> ProgramIndices { get; }
+        public IEnumerable<SelectListItem> CFDANumbers { get; }
+        public IEnumerable<SelectListItem> FederalFundCodes { get; }
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes, IEnumerable<Models.Grant> grants, IEnumerable<Models.Region> regions, IEnumerable<Models.ProjectCode> projectCodes)
+
+
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantStatus> grantStatuses, IEnumerable<Models.GrantType> grantTypes, IEnumerable<Models.Grant> grants, IEnumerable<Models.Region> regions, IEnumerable<Models.ProjectCode> projectCodes, IEnumerable<Models.ProgramIndex> programIndices,
+          IEnumerable<Models.Grant> cfdaNumbers, IEnumerable<Models.FederalFundCode> federalFundCodes)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
             GrantStatuses = grantStatuses.ToSelectListWithEmptyFirstRow(x => x.GrantStatusID.ToString(CultureInfo.InvariantCulture), y => y.GrantStatusName);
@@ -47,6 +55,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantNumbers = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
             Regions = regions.ToSelectListWithEmptyFirstRow(x => x.RegionID.ToString(CultureInfo.InvariantCulture), y => y.RegionName);
             ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
+            ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(
+                x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => y.ProgramIndexAbbrev);
+            CFDANumbers = cfdaNumbers.ToSelectListWithEmptyFirstRow(x => x.CFDANumber != null ? x.CFDANumber.ToString(CultureInfo.InvariantCulture): string.Empty, y => y.CFDANumber);
+            FederalFundCodes = federalFundCodes.ToSelectListWithEmptyFirstRow(
+                x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
 
             EditGrantAllocationType = editGrantAllocationType;
         }

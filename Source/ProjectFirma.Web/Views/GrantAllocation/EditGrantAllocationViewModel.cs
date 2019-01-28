@@ -53,16 +53,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int GrantID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
-        public string ProgramIndex { get; set; }
+        public int? ProgramIndexID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CFDA)]
-        public string CFDA { get; set; }
+        public string CFDANumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
         public List<int> ProjectCodeIDs { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
-        public string FederalFundCode { get; set; }
+        public int? FederalFundCodeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Region)]
         public int? RegionID { get; set; }
@@ -90,10 +90,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantStatusID = grantAllocation.Grant.GrantStatusID;
             GrantTypeID = grantAllocation.Grant.GrantTypeID;
             GrantID = grantAllocation.Grant.GrantID;
-            ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
-            CFDA = grantAllocation.Grant.CFDANumber;
+            ProgramIndexID = grantAllocation.ProgramIndex.ProgramIndexID;
+            CFDANumber = grantAllocation.Grant.CFDANumber;
             ProjectCodeIDs = grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeID).ToList();
-            FederalFundCode = grantAllocation.FederalFundCode.FederalFundCodeAbbrev;
+            FederalFundCodeID = grantAllocation.FederalFundCode.FederalFundCodeID;
             RegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
             StartDate = grantAllocation.StartDate;
@@ -116,10 +116,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.Grant.GrantStatusID = GrantStatusID;
             grantAllocation.Grant.GrantTypeID = GrantTypeID;
             grantAllocation.GrantID = GrantID;
-            grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex != null ? ProgramIndex : String.Empty;
-            grantAllocation.Grant.CFDANumber = CFDA;
+            //grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex != null ? ProgramIndex : String.Empty;
+            grantAllocation.ProgramIndexID = ProgramIndexID;
+            grantAllocation.Grant.CFDANumber = CFDANumber;
             grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
-            grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode != null ? FederalFundCode : String.Empty;
+            grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;

@@ -436,6 +436,7 @@
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\GrantAllocationController.cs" />
     <Compile Include="Common\ICanDeleteFull.cs" />
+    <Compile Include="Models\FederalFundCode.cs" />
     <Compile Include="Models\GrantType.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
