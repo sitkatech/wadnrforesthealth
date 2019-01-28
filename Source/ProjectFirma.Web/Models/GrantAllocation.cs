@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using LtInfo.Common;
 using MoreLinq;
 using ProjectFirma.Web.Common;
 
@@ -50,32 +51,17 @@ namespace ProjectFirma.Web.Models
             get { return ProjectName; }
         }
 
-        //private List<ProjectCode> MakeProjectCodeFromCsvString(string projectCodeCsvString)
-        //{
-        //    if (string.IsNullOrWhiteSpace(projectCodeCsvString))
-        //    {
-        //        return new List<ProjectCode>();
-        //    }
-        //    var projectCodeAbbreviationsStringList = Regex.Split(projectCodeCsvString, $@"\s*{ProjectCodeSeparator}\s*").Select(x => x.Trim()).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
-        //    var projectCodeList = projectCodeAbbreviationsStringList.Select(x => ProjectCodes.Single(c =>
-        //        String.Equals(c.ProjectCodeAbbrev, projectCodeCsvString, StringComparison.InvariantCultureIgnoreCase))).ToList();
-        //    return projectCodeList;
-        //}
-
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
         {
             var convertedProjectCodes = new List<ProjectCode>();
-            foreach (var desiredProjectCodeId in desiredProjectCodeIDs)
+            if (desiredProjectCodeIDs != null)
             {
-                convertedProjectCodes.Add(HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == desiredProjectCodeId));
+                foreach (var desiredProjectCodeId in desiredProjectCodeIDs)
+                {
+                    convertedProjectCodes.Add(HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == desiredProjectCodeId));
+                }
             }
-
             return convertedProjectCodes;
-        }
-
-        public void SetProjectCodesFromCsvString(string projectCode)
-        {
-            throw new NotImplementedException();
         }
     }
 }

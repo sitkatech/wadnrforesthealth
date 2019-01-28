@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int GrantStatusID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantType)]
-        public int GrantTypeID { get; set; }
+        public int? GrantTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
         public int GrantID { get; set; }
@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectName = grantAllocation.ProjectName;
             OrganizationID = grantAllocation.Grant.OrganizationID;
             GrantStatusID = grantAllocation.Grant.GrantStatusID;
-            GrantTypeID = grantAllocation.Grant.GrantType.GrantTypeID;
+            GrantTypeID = grantAllocation.Grant.GrantTypeID;
             GrantID = grantAllocation.Grant.GrantID;
             ProgramIndex = grantAllocation.ProgramIndex.ProgramIndexAbbrev;
             CFDA = grantAllocation.Grant.CFDANumber;
@@ -114,15 +114,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.ProjectName = ProjectName;
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.Grant.GrantStatusID = GrantStatusID;
-            grantAllocation.Grant.GrantType.GrantTypeID = GrantTypeID;
-            // TODO figure out how to get around 'this is part of the object's key information and can't be modified with GrantID'
-            //grantAllocation.Grant.GrantID = GrantID;
-            // TODO check out how to get these back into database correctly
-            // Need to get the FK value to ProgramIndex table where it equals the ProgramIndex string
-            //grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex;
+            grantAllocation.Grant.GrantTypeID = GrantTypeID;
+            grantAllocation.GrantID = GrantID;
+            grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex != null ? ProgramIndex : String.Empty;
             grantAllocation.Grant.CFDANumber = CFDA;
             grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
-            //grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode != null ? FederalFundCode : String.Empty;
+            grantAllocation.FederalFundCode.FederalFundCodeAbbrev = FederalFundCode != null ? FederalFundCode : String.Empty;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;

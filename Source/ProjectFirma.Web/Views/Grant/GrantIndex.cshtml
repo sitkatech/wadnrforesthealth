@@ -57,17 +57,37 @@
     {
         //console.log('jQuery Document Ready');
         var grantGrid = Sitka.@ViewDataTyped.GrantGridName;
+
+        // Get current selected grant number from Parent grid for a given rowId
+        function getCurrentSelectedGrantNumberInParentGrid(rowId)
+        {
+            //console.log('grantGrid onRowSelect - entering');
+            var grantNumberColumnIndexForParentGrantGrid = grantGrid.getColumnIndexByName('@GrantGridSpec.GrantNumberHiddenColumnName');
+            var currentSelectedGrantNumberInParentGrantGrid = grantGrid.grid.cells(rowId, grantNumberColumnIndexForParentGrantGrid).getValue();
+            //console.log('grantNumberColumnIndexForParentGrantGrid: ' + grantNumberColumnIndexForParentGrantGrid);
+            //console.log('currentSelectedGrantNumberInParentGrantGrid: ' + currentSelectedGrantNumberInParentGrantGrid);
+            return currentSelectedGrantNumberInParentGrantGrid;
+        }
+
+        // Select given grant number in the Child grid
+        function selectGivenGrantNumberFilterInChildGrid(currentSelectedGrantNumberInParentGrantGrid)
+        {
+            //console.log('selectGivenGrantNumberFilterInChildGrid(' + currentSelectedGrantNumberInParentGrantGrid + ')');
+            var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
+            var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
+            //console.log('Grant allocation child grid grant column index: ' + grantNumberColumnIndexForChildGrantGrid);
+            grantAllocationGrid.grid.filterBy(grantNumberColumnIndexForChildGrantGrid, currentSelectedGrantNumberInParentGrantGrid);
+            var grantNumberFilterForChildGrantGrid = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndexForChildGrantGrid);
+            //console.log('Got filter element for child grantNumberColumnIndex: ' + grantNumberColumnIndexForChildGrantGrid);
+            //console.log('Filter element for child grantNumberColumnIndex: ' + grantNumberFilterForChildGrantGrid);
+            grantNumberFilterForChildGrantGrid.value = currentSelectedGrantNumberInParentGrantGrid;
+            //console.log('grantGrid onRowSelect - exiting');
+        }
+
         grantGrid.grid.attachEvent("onRowSelect", function (rowId)
         {
-            //console.log('grantGrid onRowSelect');
-            var grantNumberColumnIndex = grantGrid.getColumnIndexByName('@GrantGridSpec.GrantNumberHiddenColumnName');
-            var currentSelectedGrantNumber = grantGrid.grid.cells(rowId, grantNumberColumnIndex).getValue();
-            //console.log('grantNumberColumnIndex: ' + grantNumberColumnIndex);
-            //console.log('currentSelectedGrantNumber: ' + currentSelectedGrantNumber);
-            var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
-            grantAllocationGrid.grid.filterBy(grantNumberColumnIndex, currentSelectedGrantNumber);
-            var grantNumberFilter = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndex);
-            grantNumberFilter.value = currentSelectedGrantNumber;
+            var currentSelectedGrantNumberInParentGrid = getCurrentSelectedGrantNumberInParentGrid(rowId);
+            selectGivenGrantNumberFilterInChildGrid(currentSelectedGrantNumberInParentGrid);
         });
         grantGrid.grid.attachEvent("onXLE", function() { grantGrid.grid.selectRow(0, true); });
         grantGrid.grid.attachEvent("onFilterEnd", function() { grantGrid.grid.selectRow(0, true); });
