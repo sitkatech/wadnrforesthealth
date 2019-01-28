@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.Grant
             }
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant.GrantNumber, GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.Grant.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => x.ProjectName, GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), GrantAllocationGridSpec.GrantNumberColumnWidth, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.ProgramManagerPerson != null ? x.ProgramManagerPerson.FullNameFirstLast : string.Empty, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
