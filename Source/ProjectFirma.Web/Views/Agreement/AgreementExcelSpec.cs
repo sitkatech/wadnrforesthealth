@@ -20,6 +20,8 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common.ExcelWorkbookUtilities;
+using LtInfo.Common.HtmlHelperExtensions;
+using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -27,8 +29,13 @@ namespace ProjectFirma.Web.Views.Agreement
     {
         public AgreementExcelSpec()
         {
-            // TODO: We likely need FieldDefinition labels here. 
-            AddColumn("AgreementID", x => x.PrimaryKey);
+            AddColumn("Type", x => x.AgreementType?.AgreementTypeAbbrev);
+            AddColumn("Number", x => x.AgreementNumber);
+            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => "N/A");
+            AddColumn(Models.FieldDefinition.Organization.GetFieldDefinitionLabel(), x => "N/A");
+            AddColumn("Title", x => "N/A");
+            AddColumn("Start Date", x => x.StartDateDisplay);
+            AddColumn("End Date", x => x.EndDateDisplay);
         }
     }
 }

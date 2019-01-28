@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Agreement> AgreementGridJsonData()
         {
             var gridSpec = new AgreementGridSpec(CurrentPerson);
-            var agreements = new List<Agreement>();
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Controllers
         [AgreementsViewFullListFeature]
         public ExcelResult AgreementsExcelDownload()
         {
-            var agreements = new List<Agreement>();
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
             var workbookTitle = FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized();
             return AgreementsExcelDownloadImpl(agreements, workbookTitle);
         }
@@ -45,9 +45,9 @@ namespace ProjectFirma.Web.Controllers
             var workSheets = new List<IExcelWorkbookSheetDescriptor>();
 
             // Agreements
-            var grantSpec = new AgreementExcelSpec();
-            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()}", grantSpec, agreements);
-            workSheets.Add(wsGrants);
+            var agreementExcelSpec = new AgreementExcelSpec();
+            var agreementWorkSheet = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()}", agreementExcelSpec, agreements);
+            workSheets.Add(agreementWorkSheet);
 
             // Overall excel file
             var wbm = new ExcelWorkbookMaker(workSheets);
