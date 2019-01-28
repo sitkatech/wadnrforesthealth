@@ -27,6 +27,7 @@ using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
+using MoreLinq;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
@@ -57,7 +58,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
             ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(
                 x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => y.ProgramIndexAbbrev);
-            CFDANumbers = cfdaNumbers.ToSelectListWithEmptyFirstRow(x => x.CFDANumber != null ? x.CFDANumber.ToString(CultureInfo.InvariantCulture): string.Empty, y => y.CFDANumber);
+            CFDANumbers = cfdaNumbers.DistinctBy(x => x.CFDANumber).ToSelectListWithEmptyFirstRow(x => x.CFDANumber != null ? x.CFDANumber.ToString(CultureInfo.InvariantCulture): string.Empty, y => y.CFDANumber);
             FederalFundCodes = federalFundCodes.ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
 
