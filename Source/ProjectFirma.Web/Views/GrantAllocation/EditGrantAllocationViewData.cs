@@ -58,11 +58,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
             ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(
                 x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => y.ProgramIndexAbbrev);
-            CFDANumbers = cfdaNumbers.DistinctBy(x => x.CFDANumber).ToSelectListWithEmptyFirstRow(x => x.CFDANumber != null ? x.CFDANumber.ToString(CultureInfo.InvariantCulture): string.Empty, y => y.CFDANumber);
+            CFDANumbers = MakeDistinctListOfCFDANumbersGivenGrants(cfdaNumbers).ToSelectListWithEmptyFirstRow(x => x.CFDANumber.ToString(CultureInfo.InvariantCulture), y => y.CFDANumber);
             FederalFundCodes = federalFundCodes.ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
 
             EditGrantAllocationType = editGrantAllocationType;
+        }
+
+        private static IEnumerable<Models.Grant> MakeDistinctListOfCFDANumbersGivenGrants(IEnumerable<Models.Grant> grants)
+        {
+            return grants.Where(x => x.CFDANumber != null).DistinctBy(x => x.CFDANumber);
         }
     }
 }
