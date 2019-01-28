@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             AddColumn("Type", x => x.AgreementType?.AgreementTypeAbbrev);
             AddColumn("Number", x => x.AgreementNumber);
-            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => x.Grant.GrantTitle);
+            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => x.Grant.GrantNumber);
             AddColumn(Models.FieldDefinition.Organization.GetFieldDefinitionLabel(), x => x.Organization.DisplayName);
             AddColumn("Title", x => x.AgreementTitle);
             AddColumn("Start Date", x => x.StartDateDisplay);
