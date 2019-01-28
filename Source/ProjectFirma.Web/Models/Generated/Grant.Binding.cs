@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Grant()
         {
+            this.Agreements = new HashSet<Agreement>();
             this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantNotes = new HashSet<GrantNote>();
         }
@@ -93,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || GrantNotes.Any();
+            return Agreements.Any() || GrantAllocations.Any() || GrantNotes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(Agreement).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name};
 
 
         /// <summary>
@@ -115,6 +116,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in Agreements.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in GrantAllocations.ToList())
             {
@@ -146,6 +152,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
+        public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual GrantType GrantType { get; set; }

@@ -118,4 +118,10 @@ VALUES
 (294, N'GrantTitle', 'Title', N'<p>{GrantName} ({GrantShortName})</p>'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
-(297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.')
+(297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.'),
+(298, N'AgreementType', 'Agreement Type', '<p>The type of Agreement.</p>'),
+(299, N'AgreementNumber', 'Agreement Number', '<p>The number for referencing the Agreement</p>'),
+(300, N'AgreementTitle', 'Agreement Title', '<p>The Agreement Title should generally include a 1) reference to the location, 2) the primary implementation activity, and 3) the year.</p>'),
+(301, N'AgreementStartDate', 'Agreement Start Date', '<p>The start date of the Agreement.</p>'),
+(302, N'AgreementEndDate', 'Agreement End Date', '<p>The end date of the Agreement.</p>'),
+(303, N'AgreementAmount', 'Agreement Amount', '<p>The amount of the Agreement.</p>')

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes) : this()
+        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int grantID) : this()
         {
             this.AgreementID = agreementID;
             this.TmpAgreementID = tmpAgreementID;
@@ -44,16 +44,46 @@ namespace ProjectFirma.Web.Models
             this.RegionID = regionID;
             this.FirstBillDueOn = firstBillDueOn;
             this.Notes = notes;
+            this.AgreementTitle = agreementTitle;
+            this.OrganizationID = organizationID;
+            this.GrantID = grantID;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
+        /// </summary>
+        public Agreement(string agreementTitle, int organizationID, int grantID) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.AgreementID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            
+            this.AgreementTitle = agreementTitle;
+            this.OrganizationID = organizationID;
+            this.GrantID = grantID;
+        }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public Agreement(string agreementTitle, Organization organization, Grant grant) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.AgreementID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.AgreementTitle = agreementTitle;
+            this.OrganizationID = organization.OrganizationID;
+            this.Organization = organization;
+            organization.Agreements.Add(this);
+            this.GrantID = grant.GrantID;
+            this.Grant = grant;
+            grant.Agreements.Add(this);
+        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Agreement CreateNewBlank()
+        public static Agreement CreateNewBlank(Organization organization, Grant grant)
         {
-            return new Agreement();
+            return new Agreement(default(string), organization, grant);
         }
 
         /// <summary>
@@ -104,16 +134,22 @@ namespace ProjectFirma.Web.Models
         public int? RegionID { get; set; }
         public DateTime? FirstBillDueOn { get; set; }
         public string Notes { get; set; }
+        public string AgreementTitle { get; set; }
+        public int OrganizationID { get; set; }
+        public int GrantID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
         public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }
         public virtual Region Region { get; set; }
+        public virtual Organization Organization { get; set; }
+        public virtual Grant Grant { get; set; }
 
         public static class FieldLengths
         {
             public const int AgreementNumber = 100;
+            public const int AgreementTitle = 256;
         }
     }
 }
