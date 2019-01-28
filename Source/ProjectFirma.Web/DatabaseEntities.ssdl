@@ -126,6 +126,14 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
+    <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agreement_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Organization_OrganizationID">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -815,6 +823,9 @@ FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
     <Property Name="RegionID" Type="int" />
     <Property Name="FirstBillDueOn" Type="datetime" />
     <Property Name="Notes" Type="varchar(max)" />
+    <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementProjectCode">
     <Key>
@@ -1995,6 +2006,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="AgreementTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_Organization_OrganizationID">
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

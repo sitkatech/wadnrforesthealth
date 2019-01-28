@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using LtInfo.Common;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
@@ -31,11 +32,12 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             AddColumn("Type", x => x.AgreementType?.AgreementTypeAbbrev);
             AddColumn("Number", x => x.AgreementNumber);
-            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => "N/A");
-            AddColumn(Models.FieldDefinition.Organization.GetFieldDefinitionLabel(), x => "N/A");
-            AddColumn("Title", x => "N/A");
+            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => x.Grant.GrantTitle);
+            AddColumn(Models.FieldDefinition.Organization.GetFieldDefinitionLabel(), x => x.Organization.DisplayName);
+            AddColumn("Title", x => x.AgreementTitle);
             AddColumn("Start Date", x => x.StartDateDisplay);
             AddColumn("End Date", x => x.EndDateDisplay);
+            AddColumn("Amount", x => x.AgreementAmount.ToStringCurrency());
         }
     }
 }

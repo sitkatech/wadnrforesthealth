@@ -58,11 +58,12 @@ namespace ProjectFirma.Web.Views.Agreement
             }
             Add(Models.FieldDefinition.AgreementType.ToGridHeaderString("Type"), x => x.AgreementType?.AgreementTypeAbbrev, 70, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.AgreementNumber.ToGridHeaderString("Number"), x => x.AgreementNumber, 100, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.FundingSource.ToGridHeaderString(), x => "N/A", 100, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => "N/A", 100, DhtmlxGridColumnFilterType.Html);
-            Add(Models.FieldDefinition.AgreementTitle.ToGridHeaderString("Title"), x => "N/A", 100, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.FundingSource.ToGridHeaderString(), x => x.Grant.GrantTitle, 100, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Organization.DisplayName, 100, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.AgreementTitle.ToGridHeaderString("Title"), x => x.AgreementTitle, 100, DhtmlxGridColumnFilterType.Html);
             Add(Models.FieldDefinition.AgreementStartDate.ToGridHeaderString("Start Date"), x => x.StartDateDisplay, 70, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.AgreementEndDate.ToGridHeaderString("End Date"), x => x.EndDateDisplay, 70, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.AgreementAmount.ToGridHeaderString("Amount"), x => x.AgreementAmount.ToStringCurrency(), 70, DhtmlxGridColumnFilterType.Text);
            
         }
     }

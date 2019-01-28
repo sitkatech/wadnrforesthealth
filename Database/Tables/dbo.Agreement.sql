@@ -15,6 +15,9 @@ CREATE TABLE [dbo].[Agreement](
 	[RegionID] [int] NULL,
 	[FirstBillDueOn] [datetime] NULL,
 	[Notes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[AgreementTitle] [varchar](256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[OrganizationID] [int] NOT NULL,
+	[GrantID] [int] NOT NULL,
  CONSTRAINT [PK_Agreement_AgreementID] PRIMARY KEY CLUSTERED 
 (
 	[AgreementID] ASC
@@ -36,6 +39,16 @@ ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Agreemen
 REFERENCES [dbo].[AgreementType] ([AgreementTypeID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_AgreementType_AgreementTypeID]
+GO
+ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Grant_GrantID] FOREIGN KEY([GrantID])
+REFERENCES [dbo].[Grant] ([GrantID])
+GO
+ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_Grant_GrantID]
+GO
+ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
+REFERENCES [dbo].[Organization] ([OrganizationID])
+GO
+ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_Organization_OrganizationID]
 GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Region_RegionID] FOREIGN KEY([RegionID])
 REFERENCES [dbo].[Region] ([RegionID])
