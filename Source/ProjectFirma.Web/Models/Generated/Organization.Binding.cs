@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Organization()
         {
+            this.Agreements = new HashSet<Agreement>();
             this.FundingSources = new HashSet<FundingSource>();
             this.Grants = new HashSet<Grant>();
             this.GrantAllocations = new HashSet<GrantAllocation>();
@@ -92,13 +93,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return FundingSources.Any() || Grants.Any() || GrantAllocations.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
+            return Agreements.Any() || FundingSources.Any() || Grants.Any() || GrantAllocations.Any() || OrganizationBoundaryStagings.Any() || People.Any() || PersonStewardOrganizations.Any() || ProjectOrganizations.Any() || ProjectOrganizationUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(FundingSource).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(FundingSource).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};
 
 
         /// <summary>
@@ -114,6 +115,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in Agreements.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in FundingSources.ToList())
             {
@@ -170,6 +176,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return OrganizationID; } set { OrganizationID = value; } }
 
+        public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<FundingSource> FundingSources { get; set; }
         public virtual ICollection<Grant> Grants { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }

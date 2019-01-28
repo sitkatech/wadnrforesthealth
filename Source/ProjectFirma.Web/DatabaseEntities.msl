@@ -16,6 +16,9 @@
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="FirstBillDueOn" ColumnName="FirstBillDueOn" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
