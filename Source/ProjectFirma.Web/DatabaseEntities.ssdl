@@ -4029,6 +4029,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
@@ -4075,5 +4079,14 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpGrantAllocationsFlatFil
   <Property Name="Match_Other" Type="nvarchar" MaxLength="50" />
   <Property Name="Match_Match" Type="nvarchar" MaxLength="50" />
   <Property Name="Notes" Type="nvarchar" MaxLength="50" />
+</EntityType>
+Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpWADNROrganizations' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpWADNROrganizations">
+  <Property Name="Name" Type="nvarchar" MaxLength="255" />
+  <Property Name="ShortName" Type="nvarchar" MaxLength="255" />
+  <Property Name="OrganizationType" Type="nvarchar" MaxLength="255" />
+  <Property Name="OrganizationTypeID" Type="int" />
 </EntityType>-->
 </Schema>
