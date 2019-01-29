@@ -32,6 +32,10 @@ namespace ProjectFirma.Web.Models
         {
             if(projectCustomAttributeUpdatesToDelete.Any())
             {
+                
+                var valuesToDelete = projectCustomAttributeUpdatesToDelete.SelectMany(x => x.ProjectCustomAttributeUpdateValues).ToList();
+                HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.DeleteProjectCustomAttributeUpdateValue(valuesToDelete);
+
                 var projectCustomAttributeUpdateIDList = projectCustomAttributeUpdatesToDelete.Select(x => x.ProjectCustomAttributeUpdateID).ToList();
                 projectCustomAttributeUpdates.Where(x => projectCustomAttributeUpdateIDList.Contains(x.ProjectCustomAttributeUpdateID)).Delete();
             }

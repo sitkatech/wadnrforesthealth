@@ -287,6 +287,12 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectOrganizationUpdates);
         }
 
+        public void DeleteProjectAttributeUpdates()
+        {
+            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.DeleteProjectCustomAttributeUpdate(ProjectCustomAttributeUpdates);
+            RefreshFromDatabase(ProjectCustomAttributeUpdates);
+        }
+
         public void DeleteProjectContactUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectPersonUpdates.DeleteProjectPersonUpdate(ProjectPersonUpdates);
@@ -315,6 +321,25 @@ namespace ProjectFirma.Web.Models
                 return _areProjectBasicsValid.Value;
             }
             private set => _areProjectBasicsValid = value;
+        }
+
+        public ProjectAttributeValidationResult ValidateProjectAttributes()
+        {
+            return new ProjectAttributeValidationResult(ProjectUpdate);
+        }
+
+        private bool? _areProjectAttributesValid;
+        public bool AreProjectAttributesValid
+        {
+            get
+            {
+                if (!_areProjectAttributesValid.HasValue)
+                {
+                    _areProjectAttributesValid = ValidateProjectAttributes().IsValid;
+                }
+                return _areProjectAttributesValid.Value;
+            }
+            private set => _areProjectAttributesValid = value;
         }
 
         public bool NewStageIsPlanningDesign => ProjectUpdate.ProjectStage == ProjectStage.Planned;

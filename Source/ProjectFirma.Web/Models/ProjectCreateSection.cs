@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectCreateSectionProjectCustomAttributes
+    public partial class ProjectCreateSectionProjectAttributes
     {
         public override bool IsComplete(Project project)
         {

@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LtInfo.Common;
@@ -27,17 +28,21 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Models;
 
-namespace ProjectFirma.Web.Views.ProjectCreate
+namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class CustomAttributesViewModel : FormViewModel, IValidatableObject
     {
-        public int ProjectID { get; set; }
+        public int ProjectUpdateID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectType)]
         [Required]
         public int ProjectTypeID { get; set; }
 
         public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
+
+        [DisplayName("Comments")]
+        [StringLength(ProjectUpdateBatch.FieldLengths.ProjectAttributesComment)]
+        public string Comments { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -46,27 +51,27 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
         }
 
-        public CustomAttributesViewModel(Models.Project project)
+        public CustomAttributesViewModel(Models.ProjectUpdate projectUpdate)
         {
-            ProjectTypeID = project.ProjectTypeID;
-            ProjectID = project.ProjectID;
-            ProjectCustomAttributes = new ProjectCustomAttributes(project);
+            ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
+            ProjectUpdateID = projectUpdate.ProjectUpdateID;
+            ProjectCustomAttributes = new ProjectCustomAttributes(projectUpdate);
         }
 
-        public void UpdateModel(Models.Project project, Person person)
+        public void UpdateModel(Models.ProjectUpdate projectUpdate, Person person)
         {
-            ProjectCustomAttributes?.UpdateModel(project, person);
+            ProjectCustomAttributes?.UpdateModel(projectUpdate, person);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-           return GetValidationResults();
+            var listWarnings = new List<string>();
+           return GetValidationResults(out listWarnings);
         }
 
-        public IEnumerable<ValidationResult> GetValidationResults()
+        public IEnumerable<ValidationResult> GetValidationResults(out List<string> errorMessages)
         {
-            var warnings = new List<string>();
-            return ProjectCustomAttributes.GetValidationResults(out warnings);
+            return ProjectCustomAttributes.GetValidationResults(out errorMessages);
         }
     }
 }
