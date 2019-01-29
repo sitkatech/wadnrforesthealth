@@ -131,10 +131,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
-        public virtual DbSet<vGeoServerPriorityArea> vGeoServerPriorityAreas { get; set; }
-        public virtual DbSet<vGeoServerProjectLocationDetailed> vGeoServerProjectLocationDetaileds { get; set; }
-        public virtual DbSet<vGeoServerProjectLocationSimple> vGeoServerProjectLocationSimples { get; set; }
-        public virtual DbSet<vGeoServerRegion> vGeoServerRegions { get; set; }
 
         public object LoadType(Type type, int primaryKey)
         {

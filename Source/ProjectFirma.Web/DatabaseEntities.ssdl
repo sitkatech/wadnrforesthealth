@@ -104,42 +104,6 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="vGeoServerPriorityArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityArea">
-      <DefiningQuery>SELECT 
-[vGeoServerPriorityArea].[PriorityAreaID] AS [PriorityAreaID], 
-[vGeoServerPriorityArea].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPriorityArea].[PriorityAreaName] AS [PriorityAreaName], 
-[vGeoServerPriorityArea].[PriorityAreaLocation] AS [PriorityAreaLocation], 
-[vGeoServerPriorityArea].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPriorityArea] AS [vGeoServerPriorityArea]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerProjectLocationDetailed" EntityType="ProjectFirma.Web.Models.Store.vGeoServerProjectLocationDetailed" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerProjectLocationDetailed">
-      <DefiningQuery>SELECT 
-[vGeoServerProjectLocationDetailed].[ProjectID] AS [ProjectID], 
-[vGeoServerProjectLocationDetailed].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerProjectLocationDetailed].[ProjectLocationID] AS [ProjectLocationID], 
-[vGeoServerProjectLocationDetailed].[ProjectName] AS [ProjectName], 
-[vGeoServerProjectLocationDetailed].[Annotation] AS [Annotation], 
-[vGeoServerProjectLocationDetailed].[ProjectLocationGeometry] AS [ProjectLocationGeometry]
-FROM [dbo].[vGeoServerProjectLocationDetailed] AS [vGeoServerProjectLocationDetailed]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerProjectLocationSimple" EntityType="ProjectFirma.Web.Models.Store.vGeoServerProjectLocationSimple" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerProjectLocationSimple">
-      <DefiningQuery>SELECT 
-[vGeoServerProjectLocationSimple].[ProjectID] AS [ProjectID], 
-[vGeoServerProjectLocationSimple].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerProjectLocationSimple].[ProjectName] AS [ProjectName], 
-[vGeoServerProjectLocationSimple].[ProjectLocationPoint] AS [ProjectLocationPoint]
-FROM [dbo].[vGeoServerProjectLocationSimple] AS [vGeoServerProjectLocationSimple]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerRegion" EntityType="ProjectFirma.Web.Models.Store.vGeoServerRegion" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerRegion">
-      <DefiningQuery>SELECT 
-[vGeoServerRegion].[RegionID] AS [RegionID], 
-[vGeoServerRegion].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerRegion].[RegionName] AS [RegionName], 
-[vGeoServerRegion].[RegionLocation] AS [RegionLocation], 
-[vGeoServerRegion].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementType_AgreementTypeID">
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -1988,65 +1952,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerPriorityArea">
-    <Key>
-      <PropertyRef Name="PriorityAreaID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityAreaName" />
-    </Key>
-    <Property Name="PriorityAreaID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityAreaName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="PriorityAreaLocation" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationDetailed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerProjectLocationDetailed">
-    <Key>
-      <PropertyRef Name="ProjectID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="ProjectLocationID" />
-      <PropertyRef Name="ProjectName" />
-      <PropertyRef Name="ProjectLocationGeometry" />
-    </Key>
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="ProjectLocationID" Type="int" Nullable="false" />
-    <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
-    <Property Name="Annotation" Type="varchar" MaxLength="255" />
-    <Property Name="ProjectLocationGeometry" Type="geometry" Nullable="false" />
-  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationSimple' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerProjectLocationSimple">
-    <Key>
-      <PropertyRef Name="ProjectID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="ProjectName" />
-    </Key>
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
-    <Property Name="ProjectLocationPoint" Type="geometry" />
-  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerRegion">
-    <Key>
-      <PropertyRef Name="RegionID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="RegionName" />
-    </Key>
-    <Property Name="RegionID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="RegionLocation" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
   <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
     <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />

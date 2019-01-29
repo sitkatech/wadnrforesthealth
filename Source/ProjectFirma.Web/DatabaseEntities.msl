@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ProjectFirmaWebModelsStoreContainer" CdmEntityContainer="DatabaseEntities">
-    <EntitySetMapping Name="ActivityType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ActivityType">
-        <MappingFragment StoreEntitySet="ActivityType">
-          <ScalarProperty Name="ActivityTypeID" ColumnName="ActivityTypeID" />
-          <ScalarProperty Name="ActivityTypeName" ColumnName="ActivityTypeName" />
-          <ScalarProperty Name="ActivityTypeDisplayName" ColumnName="ActivityTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Agreement">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Agreement">
         <MappingFragment StoreEntitySet="Agreement">
@@ -63,15 +54,6 @@
           <ScalarProperty Name="NewValue" ColumnName="NewValue" />
           <ScalarProperty Name="AuditDescription" ColumnName="AuditDescription" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AuditLogEventType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AuditLogEventType">
-        <MappingFragment StoreEntitySet="AuditLogEventType">
-          <ScalarProperty Name="AuditLogEventTypeID" ColumnName="AuditLogEventTypeID" />
-          <ScalarProperty Name="AuditLogEventTypeName" ColumnName="AuditLogEventTypeName" />
-          <ScalarProperty Name="AuditLogEventTypeDisplayName" ColumnName="AuditLogEventTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -138,16 +120,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CustomPageDisplayType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CustomPageDisplayType">
-        <MappingFragment StoreEntitySet="CustomPageDisplayType">
-          <ScalarProperty Name="CustomPageDisplayTypeID" ColumnName="CustomPageDisplayTypeID" />
-          <ScalarProperty Name="CustomPageDisplayTypeName" ColumnName="CustomPageDisplayTypeName" />
-          <ScalarProperty Name="CustomPageDisplayTypeDisplayName" ColumnName="CustomPageDisplayTypeDisplayName" />
-          <ScalarProperty Name="CustomPageDisplayTypeDescription" ColumnName="CustomPageDisplayTypeDescription" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CustomPageImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CustomPageImage">
         <MappingFragment StoreEntitySet="CustomPageImage">
@@ -157,42 +129,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DatabaseMigration">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.DatabaseMigration">
-        <MappingFragment StoreEntitySet="DatabaseMigration">
-          <ScalarProperty Name="DatabaseMigrationNumber" ColumnName="DatabaseMigrationNumber" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Deployment">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Deployment">
-        <MappingFragment StoreEntitySet="Deployment">
-          <ScalarProperty Name="DeploymentID" ColumnName="DeploymentID" />
-          <ScalarProperty Name="Version" ColumnName="Version" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="DeployedBy" ColumnName="DeployedBy" />
-          <ScalarProperty Name="DeployedFrom" ColumnName="DeployedFrom" />
-          <ScalarProperty Name="Source" ColumnName="Source" />
-          <ScalarProperty Name="Script" ColumnName="Script" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FederalFundCode">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FederalFundCode">
         <MappingFragment StoreEntitySet="FederalFundCode">
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="FederalFundCodeAbbrev" ColumnName="FederalFundCodeAbbrev" />
           <ScalarProperty Name="FederalFundCodeProgram" ColumnName="FederalFundCodeProgram" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FieldDefinition">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FieldDefinition">
-        <MappingFragment StoreEntitySet="FieldDefinition">
-          <ScalarProperty Name="FieldDefinitionID" ColumnName="FieldDefinitionID" />
-          <ScalarProperty Name="FieldDefinitionName" ColumnName="FieldDefinitionName" />
-          <ScalarProperty Name="FieldDefinitionDisplayName" ColumnName="FieldDefinitionDisplayName" />
-          <ScalarProperty Name="DefaultDefinition" ColumnName="DefaultDefinition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -229,18 +171,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FileResourceMimeType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FileResourceMimeType">
-        <MappingFragment StoreEntitySet="FileResourceMimeType">
-          <ScalarProperty Name="FileResourceMimeTypeID" ColumnName="FileResourceMimeTypeID" />
-          <ScalarProperty Name="FileResourceMimeTypeName" ColumnName="FileResourceMimeTypeName" />
-          <ScalarProperty Name="FileResourceMimeTypeDisplayName" ColumnName="FileResourceMimeTypeDisplayName" />
-          <ScalarProperty Name="FileResourceMimeTypeContentTypeName" ColumnName="FileResourceMimeTypeContentTypeName" />
-          <ScalarProperty Name="FileResourceMimeTypeIconSmallFilename" ColumnName="FileResourceMimeTypeIconSmallFilename" />
-          <ScalarProperty Name="FileResourceMimeTypeIconNormalFilename" ColumnName="FileResourceMimeTypeIconNormalFilename" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FirmaHomePageImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaHomePageImage">
         <MappingFragment StoreEntitySet="FirmaHomePageImage">
@@ -269,25 +199,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FirmaPageRenderType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaPageRenderType">
-        <MappingFragment StoreEntitySet="FirmaPageRenderType">
-          <ScalarProperty Name="FirmaPageRenderTypeID" ColumnName="FirmaPageRenderTypeID" />
-          <ScalarProperty Name="FirmaPageRenderTypeName" ColumnName="FirmaPageRenderTypeName" />
-          <ScalarProperty Name="FirmaPageRenderTypeDisplayName" ColumnName="FirmaPageRenderTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FirmaPageType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaPageType">
-        <MappingFragment StoreEntitySet="FirmaPageType">
-          <ScalarProperty Name="FirmaPageTypeID" ColumnName="FirmaPageTypeID" />
-          <ScalarProperty Name="FirmaPageTypeName" ColumnName="FirmaPageTypeName" />
-          <ScalarProperty Name="FirmaPageTypeDisplayName" ColumnName="FirmaPageTypeDisplayName" />
-          <ScalarProperty Name="FirmaPageRenderTypeID" ColumnName="FirmaPageRenderTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FocusArea">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FocusArea">
         <MappingFragment StoreEntitySet="FocusArea">
@@ -309,15 +220,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FocusAreaStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FocusAreaStatus">
-        <MappingFragment StoreEntitySet="FocusAreaStatus">
-          <ScalarProperty Name="FocusAreaStatusID" ColumnName="FocusAreaStatusID" />
-          <ScalarProperty Name="FocusAreaStatusName" ColumnName="FocusAreaStatusName" />
-          <ScalarProperty Name="FocusAreaStatusDisplayName" ColumnName="FocusAreaStatusDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FundingSource">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FundingSource">
         <MappingFragment StoreEntitySet="FundingSource">
@@ -327,29 +229,6 @@
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="FundingSourceDescription" ColumnName="FundingSourceDescription" />
           <ScalarProperty Name="FundingSourceAmount" ColumnName="FundingSourceAmount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="geometry_columns">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.geometry_columns">
-        <MappingFragment StoreEntitySet="geometry_columns">
-          <ScalarProperty Name="f_table_catalog" ColumnName="f_table_catalog" />
-          <ScalarProperty Name="f_table_schema" ColumnName="f_table_schema" />
-          <ScalarProperty Name="f_table_name" ColumnName="f_table_name" />
-          <ScalarProperty Name="f_geometry_column" ColumnName="f_geometry_column" />
-          <ScalarProperty Name="coord_dimension" ColumnName="coord_dimension" />
-          <ScalarProperty Name="srid" ColumnName="srid" />
-          <ScalarProperty Name="geometry_type" ColumnName="geometry_type" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GoogleChartType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GoogleChartType">
-        <MappingFragment StoreEntitySet="GoogleChartType">
-          <ScalarProperty Name="GoogleChartTypeID" ColumnName="GoogleChartTypeID" />
-          <ScalarProperty Name="GoogleChartTypeName" ColumnName="GoogleChartTypeName" />
-          <ScalarProperty Name="GoogleChartTypeDisplayName" ColumnName="GoogleChartTypeDisplayName" />
-          <ScalarProperty Name="SeriesDataDisplayType" ColumnName="SeriesDataDisplayType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -443,18 +322,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MeasurementUnitType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.MeasurementUnitType">
-        <MappingFragment StoreEntitySet="MeasurementUnitType">
-          <ScalarProperty Name="MeasurementUnitTypeID" ColumnName="MeasurementUnitTypeID" />
-          <ScalarProperty Name="MeasurementUnitTypeName" ColumnName="MeasurementUnitTypeName" />
-          <ScalarProperty Name="MeasurementUnitTypeDisplayName" ColumnName="MeasurementUnitTypeDisplayName" />
-          <ScalarProperty Name="LegendDisplayName" ColumnName="LegendDisplayName" />
-          <ScalarProperty Name="SingularDisplayName" ColumnName="SingularDisplayName" />
-          <ScalarProperty Name="NumberOfSignificantDigits" ColumnName="NumberOfSignificantDigits" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Notification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Notification">
         <MappingFragment StoreEntitySet="Notification">
@@ -471,15 +338,6 @@
           <ScalarProperty Name="NotificationProjectID" ColumnName="NotificationProjectID" />
           <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="NotificationType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.NotificationType">
-        <MappingFragment StoreEntitySet="NotificationType">
-          <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
-          <ScalarProperty Name="NotificationTypeName" ColumnName="NotificationTypeName" />
-          <ScalarProperty Name="NotificationTypeDisplayName" ColumnName="NotificationTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -596,16 +454,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PerformanceMeasureDataSourceType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PerformanceMeasureDataSourceType">
-        <MappingFragment StoreEntitySet="PerformanceMeasureDataSourceType">
-          <ScalarProperty Name="PerformanceMeasureDataSourceTypeID" ColumnName="PerformanceMeasureDataSourceTypeID" />
-          <ScalarProperty Name="PerformanceMeasureDataSourceTypeName" ColumnName="PerformanceMeasureDataSourceTypeName" />
-          <ScalarProperty Name="PerformanceMeasureDataSourceTypeDisplayName" ColumnName="PerformanceMeasureDataSourceTypeDisplayName" />
-          <ScalarProperty Name="IsCustomCalculation" ColumnName="IsCustomCalculation" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PerformanceMeasureExpected">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PerformanceMeasureExpected">
         <MappingFragment StoreEntitySet="PerformanceMeasureExpected">
@@ -659,24 +507,6 @@
           <ScalarProperty Name="PerformanceMeasureSubcategoryOptionName" ColumnName="PerformanceMeasureSubcategoryOptionName" />
           <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
           <ScalarProperty Name="ShowOnFactSheet" ColumnName="ShowOnFactSheet" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PerformanceMeasureTargetValueType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PerformanceMeasureTargetValueType">
-        <MappingFragment StoreEntitySet="PerformanceMeasureTargetValueType">
-          <ScalarProperty Name="PerformanceMeasureTargetValueTypeID" ColumnName="PerformanceMeasureTargetValueTypeID" />
-          <ScalarProperty Name="PerformanceMeasureTargetValueTypeName" ColumnName="PerformanceMeasureTargetValueTypeName" />
-          <ScalarProperty Name="PerformanceMeasureTargetValueTypeDisplayName" ColumnName="PerformanceMeasureTargetValueTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PerformanceMeasureType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PerformanceMeasureType">
-        <MappingFragment StoreEntitySet="PerformanceMeasureType">
-          <ScalarProperty Name="PerformanceMeasureTypeID" ColumnName="PerformanceMeasureTypeID" />
-          <ScalarProperty Name="PerformanceMeasureTypeName" ColumnName="PerformanceMeasureTypeName" />
-          <ScalarProperty Name="PerformanceMeasureTypeDisplayName" ColumnName="PerformanceMeasureTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -784,15 +614,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectApprovalStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectApprovalStatus">
-        <MappingFragment StoreEntitySet="ProjectApprovalStatus">
-          <ScalarProperty Name="ProjectApprovalStatusID" ColumnName="ProjectApprovalStatusID" />
-          <ScalarProperty Name="ProjectApprovalStatusName" ColumnName="ProjectApprovalStatusName" />
-          <ScalarProperty Name="ProjectApprovalStatusDisplayName" ColumnName="ProjectApprovalStatusDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectClassification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectClassification">
         <MappingFragment StoreEntitySet="ProjectClassification">
@@ -811,54 +632,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectColorByType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectColorByType">
-        <MappingFragment StoreEntitySet="ProjectColorByType">
-          <ScalarProperty Name="ProjectColorByTypeID" ColumnName="ProjectColorByTypeID" />
-          <ScalarProperty Name="ProjectColorByTypeName" ColumnName="ProjectColorByTypeName" />
-          <ScalarProperty Name="ProjectColorByTypeNameWithIdentifier" ColumnName="ProjectColorByTypeNameWithIdentifier" />
-          <ScalarProperty Name="ProjectColorByTypeDisplayName" ColumnName="ProjectColorByTypeDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCostType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCostType">
-        <MappingFragment StoreEntitySet="ProjectCostType">
-          <ScalarProperty Name="ProjectCostTypeID" ColumnName="ProjectCostTypeID" />
-          <ScalarProperty Name="ProjectCostTypeName" ColumnName="ProjectCostTypeName" />
-          <ScalarProperty Name="ProjectCostTypeDisplayName" ColumnName="ProjectCostTypeDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCreateSection">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCreateSection">
-        <MappingFragment StoreEntitySet="ProjectCreateSection">
-          <ScalarProperty Name="ProjectCreateSectionID" ColumnName="ProjectCreateSectionID" />
-          <ScalarProperty Name="ProjectCreateSectionName" ColumnName="ProjectCreateSectionName" />
-          <ScalarProperty Name="ProjectCreateSectionDisplayName" ColumnName="ProjectCreateSectionDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="HasCompletionStatus" ColumnName="HasCompletionStatus" />
-          <ScalarProperty Name="ProjectWorkflowSectionGroupingID" ColumnName="ProjectWorkflowSectionGroupingID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectCustomAttribute">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttribute">
         <MappingFragment StoreEntitySet="ProjectCustomAttribute">
           <ScalarProperty Name="ProjectCustomAttributeID" ColumnName="ProjectCustomAttributeID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="ProjectCustomAttributeTypeID" ColumnName="ProjectCustomAttributeTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectCustomAttributeDataType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCustomAttributeDataType">
-        <MappingFragment StoreEntitySet="ProjectCustomAttributeDataType">
-          <ScalarProperty Name="ProjectCustomAttributeDataTypeID" ColumnName="ProjectCustomAttributeDataTypeID" />
-          <ScalarProperty Name="ProjectCustomAttributeDataTypeName" ColumnName="ProjectCustomAttributeDataTypeName" />
-          <ScalarProperty Name="ProjectCustomAttributeDataTypeDisplayName" ColumnName="ProjectCustomAttributeDataTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -922,15 +701,6 @@
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
           <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectExemptReportingType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectExemptReportingType">
-        <MappingFragment StoreEntitySet="ProjectExemptReportingType">
-          <ScalarProperty Name="ProjectExemptReportingTypeID" ColumnName="ProjectExemptReportingTypeID" />
-          <ScalarProperty Name="ProjectExemptReportingTypeName" ColumnName="ProjectExemptReportingTypeName" />
-          <ScalarProperty Name="ProjectExemptReportingTypeDisplayName" ColumnName="ProjectExemptReportingTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1032,16 +802,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectImageTiming">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectImageTiming">
-        <MappingFragment StoreEntitySet="ProjectImageTiming">
-          <ScalarProperty Name="ProjectImageTimingID" ColumnName="ProjectImageTimingID" />
-          <ScalarProperty Name="ProjectImageTimingName" ColumnName="ProjectImageTimingName" />
-          <ScalarProperty Name="ProjectImageTimingDisplayName" ColumnName="ProjectImageTimingDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectImageUpdate">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectImageUpdate">
         <MappingFragment StoreEntitySet="ProjectImageUpdate">
@@ -1077,28 +837,6 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="ProjectLocationGeometry" ColumnName="ProjectLocationGeometry" />
           <ScalarProperty Name="Annotation" ColumnName="Annotation" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectLocationFilterType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectLocationFilterType">
-        <MappingFragment StoreEntitySet="ProjectLocationFilterType">
-          <ScalarProperty Name="ProjectLocationFilterTypeID" ColumnName="ProjectLocationFilterTypeID" />
-          <ScalarProperty Name="ProjectLocationFilterTypeName" ColumnName="ProjectLocationFilterTypeName" />
-          <ScalarProperty Name="ProjectLocationFilterTypeNameWithIdentifier" ColumnName="ProjectLocationFilterTypeNameWithIdentifier" />
-          <ScalarProperty Name="ProjectLocationFilterTypeDisplayName" ColumnName="ProjectLocationFilterTypeDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="DisplayGroup" ColumnName="DisplayGroup" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectLocationSimpleType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectLocationSimpleType">
-        <MappingFragment StoreEntitySet="ProjectLocationSimpleType">
-          <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
-          <ScalarProperty Name="ProjectLocationSimpleTypeName" ColumnName="ProjectLocationSimpleTypeName" />
-          <ScalarProperty Name="DisplayInstructions" ColumnName="DisplayInstructions" />
-          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1194,17 +932,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectPersonRelationshipType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPersonRelationshipType">
-        <MappingFragment StoreEntitySet="ProjectPersonRelationshipType">
-          <ScalarProperty Name="ProjectPersonRelationshipTypeID" ColumnName="ProjectPersonRelationshipTypeID" />
-          <ScalarProperty Name="ProjectPersonRelationshipTypeName" ColumnName="ProjectPersonRelationshipTypeName" />
-          <ScalarProperty Name="ProjectPersonRelationshipTypeDisplayName" ColumnName="ProjectPersonRelationshipTypeDisplayName" />
-          <ScalarProperty Name="FieldDefinitionID" ColumnName="FieldDefinitionID" />
-          <ScalarProperty Name="IsRequired" ColumnName="IsRequired" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectPersonUpdate">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPersonUpdate">
         <MappingFragment StoreEntitySet="ProjectPersonUpdate">
@@ -1248,26 +975,6 @@
           <ScalarProperty Name="ProjectRegionUpdateID" ColumnName="ProjectRegionUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectStage">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectStage">
-        <MappingFragment StoreEntitySet="ProjectStage">
-          <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
-          <ScalarProperty Name="ProjectStageName" ColumnName="ProjectStageName" />
-          <ScalarProperty Name="ProjectStageDisplayName" ColumnName="ProjectStageDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="ProjectStageColor" ColumnName="ProjectStageColor" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectStewardshipAreaType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectStewardshipAreaType">
-        <MappingFragment StoreEntitySet="ProjectStewardshipAreaType">
-          <ScalarProperty Name="ProjectStewardshipAreaTypeID" ColumnName="ProjectStewardshipAreaTypeID" />
-          <ScalarProperty Name="ProjectStewardshipAreaTypeName" ColumnName="ProjectStewardshipAreaTypeName" />
-          <ScalarProperty Name="ProjectStewardshipAreaTypeDisplayName" ColumnName="ProjectStewardshipAreaTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1392,37 +1099,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectUpdateSection">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectUpdateSection">
-        <MappingFragment StoreEntitySet="ProjectUpdateSection">
-          <ScalarProperty Name="ProjectUpdateSectionID" ColumnName="ProjectUpdateSectionID" />
-          <ScalarProperty Name="ProjectUpdateSectionName" ColumnName="ProjectUpdateSectionName" />
-          <ScalarProperty Name="ProjectUpdateSectionDisplayName" ColumnName="ProjectUpdateSectionDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="HasCompletionStatus" ColumnName="HasCompletionStatus" />
-          <ScalarProperty Name="ProjectWorkflowSectionGroupingID" ColumnName="ProjectWorkflowSectionGroupingID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectUpdateState">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectUpdateState">
-        <MappingFragment StoreEntitySet="ProjectUpdateState">
-          <ScalarProperty Name="ProjectUpdateStateID" ColumnName="ProjectUpdateStateID" />
-          <ScalarProperty Name="ProjectUpdateStateName" ColumnName="ProjectUpdateStateName" />
-          <ScalarProperty Name="ProjectUpdateStateDisplayName" ColumnName="ProjectUpdateStateDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProjectWorkflowSectionGrouping">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectWorkflowSectionGrouping">
-        <MappingFragment StoreEntitySet="ProjectWorkflowSectionGrouping">
-          <ScalarProperty Name="ProjectWorkflowSectionGroupingID" ColumnName="ProjectWorkflowSectionGroupingID" />
-          <ScalarProperty Name="ProjectWorkflowSectionGroupingName" ColumnName="ProjectWorkflowSectionGroupingName" />
-          <ScalarProperty Name="ProjectWorkflowSectionGroupingDisplayName" ColumnName="ProjectWorkflowSectionGroupingDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Region">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Region">
         <MappingFragment StoreEntitySet="Region">
@@ -1444,27 +1120,6 @@
           <ScalarProperty Name="RelationshipTypeDescription" ColumnName="RelationshipTypeDescription" />
           <ScalarProperty Name="ReportInAccomplishmentsDashboard" ColumnName="ReportInAccomplishmentsDashboard" />
           <ScalarProperty Name="ShowOnFactSheet" ColumnName="ShowOnFactSheet" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Role">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Role">
-        <MappingFragment StoreEntitySet="Role">
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-          <ScalarProperty Name="RoleDisplayName" ColumnName="RoleDisplayName" />
-          <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="spatial_ref_sys">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.spatial_ref_sys">
-        <MappingFragment StoreEntitySet="spatial_ref_sys">
-          <ScalarProperty Name="srid" ColumnName="srid" />
-          <ScalarProperty Name="auth_name" ColumnName="auth_name" />
-          <ScalarProperty Name="auth_srid" ColumnName="auth_srid" />
-          <ScalarProperty Name="srtext" ColumnName="srtext" />
-          <ScalarProperty Name="proj4text" ColumnName="proj4text" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1491,16 +1146,6 @@
           <ScalarProperty Name="RequestDescription" ColumnName="RequestDescription" />
           <ScalarProperty Name="RequestPersonOrganization" ColumnName="RequestPersonOrganization" />
           <ScalarProperty Name="RequestPersonPhone" ColumnName="RequestPersonPhone" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SupportRequestType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.SupportRequestType">
-        <MappingFragment StoreEntitySet="SupportRequestType">
-          <ScalarProperty Name="SupportRequestTypeID" ColumnName="SupportRequestTypeID" />
-          <ScalarProperty Name="SupportRequestTypeName" ColumnName="SupportRequestTypeName" />
-          <ScalarProperty Name="SupportRequestTypeDisplayName" ColumnName="SupportRequestTypeDisplayName" />
-          <ScalarProperty Name="SupportRequestTypeSortOrder" ColumnName="SupportRequestTypeSortOrder" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1547,15 +1192,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TaxonomyLevel">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TaxonomyLevel">
-        <MappingFragment StoreEntitySet="TaxonomyLevel">
-          <ScalarProperty Name="TaxonomyLevelID" ColumnName="TaxonomyLevelID" />
-          <ScalarProperty Name="TaxonomyLevelName" ColumnName="TaxonomyLevelName" />
-          <ScalarProperty Name="TaxonomyLevelDisplayName" ColumnName="TaxonomyLevelDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TaxonomyTrunk">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TaxonomyTrunk">
         <MappingFragment StoreEntitySet="TaxonomyTrunk">
@@ -1565,93 +1201,6 @@
           <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
           <ScalarProperty Name="TaxonomyTrunkCode" ColumnName="TaxonomyTrunkCode" />
           <ScalarProperty Name="TaxonomyTrunkSortOrder" ColumnName="TaxonomyTrunkSortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tmpAgreement">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreement">
-        <MappingFragment StoreEntitySet="tmpAgreement">
-          <ScalarProperty Name="TmpAgreementID" ColumnName="TmpAgreementID" />
-          <ScalarProperty Name="AgreementType" ColumnName="AgreementType" />
-          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
-          <ScalarProperty Name="SourceOfFunding" ColumnName="SourceOfFunding" />
-          <ScalarProperty Name="AgencyEntity" ColumnName="AgencyEntity" />
-          <ScalarProperty Name="PM" ColumnName="PM" />
-          <ScalarProperty Name="ProgramIndexProjectCode" ColumnName="ProgramIndexProjectCode" />
-          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-          <ScalarProperty Name="AgreementAmount" ColumnName="AgreementAmount" />
-          <ScalarProperty Name="Expended" ColumnName="Expended" />
-          <ScalarProperty Name="Balance" ColumnName="Balance" />
-          <ScalarProperty Name="INCLUDED_IN_BALANCE_INV_AMT_SUBMITTED_ON_7_12_OR_AFTER" ColumnName="INCLUDED_IN_BALANCE_INV_AMT_SUBMITTED_ON_7_12_OR_AFTER" />
-          <ScalarProperty Name="Region_Div" ColumnName="Region_Div" />
-          <ScalarProperty Name="ACTIVITY" ColumnName="ACTIVITY" />
-          <ScalarProperty Name="C1ST_BILL_DUE_ON" ColumnName="1ST_BILL_DUE_ON" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="PARTNER_CONTACT" ColumnName="PARTNER_CONTACT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tmpChildrenGrantsInGrantsTab">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpChildrenGrantsInGrantsTab">
-        <MappingFragment StoreEntitySet="tmpChildrenGrantsInGrantsTab">
-          <ScalarProperty Name="ChildGrantID" ColumnName="ChildGrantID" />
-          <ScalarProperty Name="Parent_Child__SITKA_" ColumnName="Parent Child (SITKA)" />
-          <ScalarProperty Name="Grant__" ColumnName="Grant #" />
-          <ScalarProperty Name="CFDA__" ColumnName="CFDA #" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Program_Manager" ColumnName="Program Manager" />
-          <ScalarProperty Name="Prog_Index" ColumnName="Prog Index" />
-          <ScalarProperty Name="Project_Codes" ColumnName="Project Codes" />
-          <ScalarProperty Name="Funding_increase" ColumnName="Funding increase" />
-          <ScalarProperty Name="Federal_Fund_Code" ColumnName="Federal Fund Code" />
-          <ScalarProperty Name="Funds_Awarded" ColumnName="Funds Awarded" />
-          <ScalarProperty Name="Matching_Funds" ColumnName="Matching Funds" />
-          <ScalarProperty Name="Grant_Total" ColumnName="Grant Total" />
-          <ScalarProperty Name="DNR_Match_Amount" ColumnName="DNR Match Amount" />
-          <ScalarProperty Name="Non_DNR_Other_Match" ColumnName="Non-DNR Other Match" />
-          <ScalarProperty Name="Landowner_Match" ColumnName="Landowner Match" />
-          <ScalarProperty Name="Match_PI___Alpha_Code" ColumnName="Match PI &amp; Alpha Code" />
-          <ScalarProperty Name="Expend_Method" ColumnName="Expend Method" />
-          <ScalarProperty Name="Start_Date" ColumnName="Start Date" />
-          <ScalarProperty Name="End_Date" ColumnName="End Date" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tmpFuzzyMatchingRegionsToGrants">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpFuzzyMatchingRegionsToGrants">
-        <MappingFragment StoreEntitySet="tmpFuzzyMatchingRegionsToGrants">
-          <ScalarProperty Name="REGION" ColumnName="REGION" />
-          <ScalarProperty Name="SUMMARY" ColumnName="SUMMARY" />
-          <ScalarProperty Name="GRANTS" ColumnName="GRANTS" />
-          <ScalarProperty Name="Levenshtein_Distance_Ratio" ColumnName="Levenshtein_Distance_Ratio" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tmpGrantsFlatFile">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpGrantsFlatFile">
-        <MappingFragment StoreEntitySet="tmpGrantsFlatFile">
-          <ScalarProperty Name="Grant_Number" ColumnName="Grant_Number" />
-          <ScalarProperty Name="CFDA" ColumnName="CFDA" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Program_Manager" ColumnName="Program_Manager" />
-          <ScalarProperty Name="Prog_Index" ColumnName="Prog_Index" />
-          <ScalarProperty Name="Project_Codes" ColumnName="Project_Codes" />
-          <ScalarProperty Name="Funding_Increase" ColumnName="Funding_Increase" />
-          <ScalarProperty Name="Federal_Fund_Code" ColumnName="Federal_Fund_Code" />
-          <ScalarProperty Name="Funds_Awarded" ColumnName="Funds_Awarded" />
-          <ScalarProperty Name="Matching_Funds" ColumnName="Matching_Funds" />
-          <ScalarProperty Name="Grant_Total" ColumnName="Grant_Total" />
-          <ScalarProperty Name="DNR_Match_Amount" ColumnName="DNR_Match_Amount" />
-          <ScalarProperty Name="Non_DNR_Other_Match" ColumnName="Non_DNR_Other_Match" />
-          <ScalarProperty Name="Landowner_Match" ColumnName="Landowner_Match" />
-          <ScalarProperty Name="Match_PI_Alpha_Code" ColumnName="Match_PI_Alpha_Code" />
-          <ScalarProperty Name="Expend_Method" ColumnName="Expend_Method" />
-          <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
-          <ScalarProperty Name="End_Date" ColumnName="End_Date" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1691,181 +1240,6 @@
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TreatmentActivityStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentActivityStatus">
-        <MappingFragment StoreEntitySet="TreatmentActivityStatus">
-          <ScalarProperty Name="TreatmentActivityStatusID" ColumnName="TreatmentActivityStatusID" />
-          <ScalarProperty Name="TreatmentActivityStatusName" ColumnName="TreatmentActivityStatusName" />
-          <ScalarProperty Name="TreatmentActivityStatusDisplayName" ColumnName="TreatmentActivityStatusDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TreatmentType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentType">
-        <MappingFragment StoreEntitySet="TreatmentType">
-          <ScalarProperty Name="TreatmentTypeID" ColumnName="TreatmentTypeID" />
-          <ScalarProperty Name="TreatmentTypeName" ColumnName="TreatmentTypeName" />
-          <ScalarProperty Name="TreatmentTypeDisplayName" ColumnName="TreatmentTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AggregatedCounter">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AggregatedCounter">
-        <MappingFragment StoreEntitySet="AggregatedCounter">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Key" ColumnName="Key" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Counter">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Counter">
-        <MappingFragment StoreEntitySet="Counter">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Key" ColumnName="Key" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Hash">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Hash">
-        <MappingFragment StoreEntitySet="Hash">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Key" ColumnName="Key" />
-          <ScalarProperty Name="Field" ColumnName="Field" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Job">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Job">
-        <MappingFragment StoreEntitySet="Job">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="StateId" ColumnName="StateId" />
-          <ScalarProperty Name="StateName" ColumnName="StateName" />
-          <ScalarProperty Name="InvocationData" ColumnName="InvocationData" />
-          <ScalarProperty Name="Arguments" ColumnName="Arguments" />
-          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="JobParameter">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.JobParameter">
-        <MappingFragment StoreEntitySet="JobParameter">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="JobQueue">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.JobQueue">
-        <MappingFragment StoreEntitySet="JobQueue">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="Queue" ColumnName="Queue" />
-          <ScalarProperty Name="FetchedAt" ColumnName="FetchedAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="List">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.List">
-        <MappingFragment StoreEntitySet="List">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Key" ColumnName="Key" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Schema">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Schema">
-        <MappingFragment StoreEntitySet="Schema">
-          <ScalarProperty Name="Version" ColumnName="Version" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Server">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Server">
-        <MappingFragment StoreEntitySet="Server">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-          <ScalarProperty Name="LastHeartbeat" ColumnName="LastHeartbeat" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Set">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Set">
-        <MappingFragment StoreEntitySet="Set">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Key" ColumnName="Key" />
-          <ScalarProperty Name="Score" ColumnName="Score" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="State">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.State">
-        <MappingFragment StoreEntitySet="State">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Reason" ColumnName="Reason" />
-          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-          <ScalarProperty Name="Data" ColumnName="Data" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPriorityArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPriorityArea">
-        <MappingFragment StoreEntitySet="vGeoServerPriorityArea">
-          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityAreaName" ColumnName="PriorityAreaName" />
-          <ScalarProperty Name="PriorityAreaLocation" ColumnName="PriorityAreaLocation" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerProjectLocationDetailed">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerProjectLocationDetailed">
-        <MappingFragment StoreEntitySet="vGeoServerProjectLocationDetailed">
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="ProjectLocationID" ColumnName="ProjectLocationID" />
-          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-          <ScalarProperty Name="Annotation" ColumnName="Annotation" />
-          <ScalarProperty Name="ProjectLocationGeometry" ColumnName="ProjectLocationGeometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerProjectLocationSimple">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerProjectLocationSimple">
-        <MappingFragment StoreEntitySet="vGeoServerProjectLocationSimple">
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-          <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerRegion">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerRegion">
-        <MappingFragment StoreEntitySet="vGeoServerRegion">
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-          <ScalarProperty Name="RegionLocation" ColumnName="RegionLocation" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
