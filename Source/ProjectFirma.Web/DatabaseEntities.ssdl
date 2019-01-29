@@ -4117,5 +4117,6 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpWADNROrganizations' doe
   <Property Name="Name" Type="nvarchar" MaxLength="255" />
   <Property Name="ShortName" Type="nvarchar" MaxLength="255" />
   <Property Name="OrganizationType" Type="nvarchar" MaxLength="255" />
+  <Property Name="OrganizationTypeID" Type="int" />
 </EntityType>-->
 </Schema>
