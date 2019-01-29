@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
-            return ViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
         }
 
         [HttpPost]
@@ -83,14 +83,14 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
             }
             // Listify the ProjectCodes
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
+        private PartialViewResult GrantAllocationViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
@@ -98,6 +98,9 @@ namespace ProjectFirma.Web.Controllers
             var grants = HttpRequestStorage.DatabaseEntities.Grants;
             var regions = HttpRequestStorage.DatabaseEntities.Regions;
             var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes;
+            var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices;
+            var cfdaNumbers = HttpRequestStorage.DatabaseEntities.Grants;
+            var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                 organizations,
@@ -105,9 +108,35 @@ namespace ProjectFirma.Web.Controllers
                 grantTypes,
                 grants,
                 regions,
-                projectCodes
+                projectCodes,
+                programIndices,
+                cfdaNumbers,
+                federalFundCodes
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationCreateFeature]
+        public PartialViewResult New()
+        {
+            var viewModel = new EditGrantAllocationViewModel();
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation);
+        }
+
+        [HttpPost]
+        [GrantAllocationCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditGrantAllocationViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation);
+            }
+            var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == viewModel.GrantID);
+            var grantAllocation = GrantAllocation.CreateNewBlank(grant);
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            return new ModalDialogFormJsonResult();
         }
 
         [GrantAllocationsViewFeature]

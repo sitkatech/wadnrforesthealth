@@ -124,4 +124,5 @@ VALUES
 (300, N'AgreementTitle', 'Agreement Title', '<p>The Agreement Title should generally include a 1) reference to the location, 2) the primary implementation activity, and 3) the year.</p>'),
 (301, N'AgreementStartDate', 'Agreement Start Date', '<p>The start date of the Agreement.</p>'),
 (302, N'AgreementEndDate', 'Agreement End Date', '<p>The end date of the Agreement.</p>'),
-(303, N'AgreementAmount', 'Agreement Amount', '<p>The amount of the Agreement.</p>')
+(303, N'AgreementAmount', 'Agreement Amount', '<p>The amount of the Agreement.</p>'),
+(304, N'ProgramManager', 'Program Manager', 'Placeholder for Program Manager.')

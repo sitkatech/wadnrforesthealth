@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using LtInfo.Common;
 using MoreLinq;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -22,7 +24,14 @@ namespace ProjectFirma.Web.Models
             {
                 return this.GrantAllocationProjectCodes.Select(x => x.ProjectCode).Distinct().ToList();
             }
-            // TODO set => WHAT IS THIS?
+
+            set
+            {
+                // Cleanup old records
+                this.GrantAllocationProjectCodes.ToList().ForEach(gapc => gapc.DeleteFull(HttpRequestStorage.DatabaseEntities));
+                // Create entirely new records
+                this.GrantAllocationProjectCodes = value.Select(pc => new GrantAllocationProjectCode(this, pc)).ToList();
+            }
         }
 
         // List of ProjectCodes as a comma delimited string ("EEB, GMX" for example)
@@ -42,32 +51,17 @@ namespace ProjectFirma.Web.Models
             get { return ProjectName; }
         }
 
-        //private List<ProjectCode> MakeProjectCodeFromCsvString(string projectCodeCsvString)
-        //{
-        //    if (string.IsNullOrWhiteSpace(projectCodeCsvString))
-        //    {
-        //        return new List<ProjectCode>();
-        //    }
-        //    var projectCodeAbbreviationsStringList = Regex.Split(projectCodeCsvString, $@"\s*{ProjectCodeSeparator}\s*").Select(x => x.Trim()).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
-        //    var projectCodeList = projectCodeAbbreviationsStringList.Select(x => ProjectCodes.Single(c =>
-        //        String.Equals(c.ProjectCodeAbbrev, projectCodeCsvString, StringComparison.InvariantCultureIgnoreCase))).ToList();
-        //    return projectCodeList;
-        //}
-
-        public List<ProjectCode> ConvertIntsToProjectCodes(List<int> projectCodeIDs)
+        public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
         {
-            var projectCodes = new List<ProjectCode>();
-            foreach (var projectCodeID in projectCodeIDs)
+            var convertedProjectCodes = new List<ProjectCode>();
+            if (desiredProjectCodeIDs != null)
             {
-               projectCodeIDs.Select(x => ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == projectCodeID));
+                foreach (var desiredProjectCodeId in desiredProjectCodeIDs)
+                {
+                    convertedProjectCodes.Add(HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == desiredProjectCodeId));
+                }
             }
-
-            return projectCodes;
-        }
-
-        public void SetProjectCodesFromCsvString(string projectCode)
-        {
-            throw new NotImplementedException();
+            return convertedProjectCodes;
         }
     }
 }
