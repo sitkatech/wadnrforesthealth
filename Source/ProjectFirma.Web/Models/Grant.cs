@@ -1,4 +1,5 @@
-﻿using LtInfo.Common.Views;
+﻿using System.Collections.Generic;
+using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Models
 {

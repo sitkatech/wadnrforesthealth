@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.ProjectPriorityArea
             TypeAheadInputId = "priorityAreaSearch";
             PriorityAreaNameByID = priorityAreasInViewModel.ToDictionary(x => x.PriorityAreaID, x => x.PriorityAreaName);
             PriorityAreaMapServiceLayerName =  FirmaWebConfiguration.GetPriorityAreaWmsLayerName();
-            MapServiceUrl = FirmaWebConfiguration.GetMapServiceUrl();
+            MapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
         }
     }
 }

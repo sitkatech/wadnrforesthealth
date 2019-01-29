@@ -37,6 +37,7 @@
     <add key="ADFSEndPoint" value="${adfs-sso-endpoint}" />
     <add key="DefaultModalDialogButtonCssClasses" value="btn-firma,btn-xs" />
     <add key="WkhtmltopdfExecutable" value="${wkhtmltopdf-executable}" />
+    <add key="WebMapServiceUrl" value="${web-map-service-url}" />
   </appSettings>
   <system.net>
     <mailSettings>
