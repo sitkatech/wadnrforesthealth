@@ -51,14 +51,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? approvalStartDate, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation, DateTime? expirationDate) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
             this.ProjectStageID = projectStageID;
             this.ProjectName = projectName;
             this.ProjectDescription = projectDescription;
-            this.ApprovalStartDate = approvalStartDate;
             this.CompletionDate = completionDate;
             this.EstimatedTotalCost = estimatedTotalCost;
             this.ProjectLocationPoint = projectLocationPoint;
@@ -80,6 +79,7 @@ namespace ProjectFirma.Web.Models
             this.FocusAreaID = focusAreaID;
             this.NoRegionsExplanation = noRegionsExplanation;
             this.NoPriorityAreasExplanation = noPriorityAreasExplanation;
+            this.ExpirationDate = expirationDate;
         }
 
         /// <summary>
@@ -271,7 +271,6 @@ namespace ProjectFirma.Web.Models
         public int ProjectStageID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
-        public DateTime? ApprovalStartDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
         public DbGeometry ProjectLocationPoint { get; set; }
@@ -293,6 +292,7 @@ namespace ProjectFirma.Web.Models
         public int? FocusAreaID { get; set; }
         public string NoRegionsExplanation { get; set; }
         public string NoPriorityAreasExplanation { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 

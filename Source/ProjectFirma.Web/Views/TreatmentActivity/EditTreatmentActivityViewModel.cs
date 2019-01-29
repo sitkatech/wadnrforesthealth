@@ -58,6 +58,9 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
         [DisplayName("Total Footprint")]
         public decimal TreatmentActivityFootprintAcres { get; set; }
 
+        [DisplayName("Slash")]
+        public decimal TreatmentActivitySlashAcres { get; set; }
+
         [DisplayName("Chipping")]
         public decimal TreatmentActivityChippingAcres { get; set; }
 
@@ -112,6 +115,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
             TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
             TreatmentActivityFootprintAcres = treatmentActivity.TreatmentActivityFootprintAcres;
+            TreatmentActivitySlashAcres = treatmentActivity.TreatmentActivitySlashAcres;
             TreatmentActivityChippingAcres = treatmentActivity.TreatmentActivityChippingAcres;
             TreatmentActivityPruningAcres = treatmentActivity.TreatmentActivityPruningAcres;
             TreatmentActivityThinningAcres = treatmentActivity.TreatmentActivityThinningAcres;

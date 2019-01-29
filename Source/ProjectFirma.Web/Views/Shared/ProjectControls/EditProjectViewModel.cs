@@ -47,8 +47,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [Required]
         public int ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
-        public DateTime? ApprovalStartDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
+        public DateTime? ExpirationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         public DateTime? PlannedDate { get; set; }
@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             OldProjectStageID = project.ProjectStageID;
-            ApprovalStartDate = project.ApprovalStartDate;
+            ExpirationDate = project.ExpirationDate;
             PlannedDate = project.PlannedDate;
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.ProjectDescription = ProjectDescription;
             project.ProjectTypeID = ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID;
             project.ProjectStageID = ProjectStageID;
-            project.ApprovalStartDate = ApprovalStartDate;
+            project.ExpirationDate = ExpirationDate;
             project.PlannedDate = PlannedDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
@@ -120,14 +120,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                     FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ApprovalStartDate < PlannedDate)
-            {
-                yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>(
-                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
-                    m => m.ApprovalStartDate);
-            }
-
-            if (CompletionDate < ApprovalStartDate)
+            if (CompletionDate < PlannedDate)
             {
                 yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>(
                     FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,

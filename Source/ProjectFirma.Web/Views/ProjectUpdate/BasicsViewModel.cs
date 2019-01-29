@@ -43,8 +43,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
         public DateTime? PlannedDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
-        public DateTime? ApprovalStartDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
+        public DateTime? ExpirationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectDescription = projectUpdate.ProjectDescription;
             ProjectStageID = projectUpdate.ProjectStageID;
             PlannedDate = projectUpdate.PlannedDate;
-            ApprovalStartDate = projectUpdate.ApprovalStartDate;
+            ExpirationDate = projectUpdate.ExpirationDate;
             CompletionDate = projectUpdate.CompletionDate;
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
@@ -80,21 +80,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ProjectDescription = ProjectDescription;
             projectUpdate.ProjectStageID = ProjectStageID;
             projectUpdate.PlannedDate = PlannedDate;
-            projectUpdate.ApprovalStartDate = ApprovalStartDate;
+            projectUpdate.ExpirationDate = ExpirationDate;
             projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.FocusAreaID = FocusAreaID;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ApprovalStartDate < PlannedDate)
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
-                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
-                    m => m.ApprovalStartDate);
-            }
-
-            if (CompletionDate < ApprovalStartDate)
+            if (CompletionDate < PlannedDate)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,

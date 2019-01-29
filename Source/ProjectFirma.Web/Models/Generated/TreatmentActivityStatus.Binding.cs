@@ -20,6 +20,7 @@ namespace ProjectFirma.Web.Models
     {
         public static readonly TreatmentActivityStatusPlanned Planned = TreatmentActivityStatusPlanned.Instance;
         public static readonly TreatmentActivityStatusCompleted Completed = TreatmentActivityStatusCompleted.Instance;
+        public static readonly TreatmentActivityStatusCancelled Cancelled = TreatmentActivityStatusCancelled.Instance;
 
         public static readonly List<TreatmentActivityStatus> All;
         public static readonly ReadOnlyDictionary<int, TreatmentActivityStatus> AllLookupDictionary;
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static TreatmentActivityStatus()
         {
-            All = new List<TreatmentActivityStatus> { Planned, Completed };
+            All = new List<TreatmentActivityStatus> { Planned, Completed, Cancelled };
             AllLookupDictionary = new ReadOnlyDictionary<int, TreatmentActivityStatus>(All.ToDictionary(x => x.TreatmentActivityStatusID));
         }
 
@@ -99,6 +100,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
+                case TreatmentActivityStatusEnum.Cancelled:
+                    return Cancelled;
                 case TreatmentActivityStatusEnum.Completed:
                     return Completed;
                 case TreatmentActivityStatusEnum.Planned:
@@ -112,7 +115,8 @@ namespace ProjectFirma.Web.Models
     public enum TreatmentActivityStatusEnum
     {
         Planned = 1,
-        Completed = 2
+        Completed = 2,
+        Cancelled = 3
     }
 
     public partial class TreatmentActivityStatusPlanned : TreatmentActivityStatus
@@ -125,5 +129,11 @@ namespace ProjectFirma.Web.Models
     {
         private TreatmentActivityStatusCompleted(int treatmentActivityStatusID, string treatmentActivityStatusName, string treatmentActivityStatusDisplayName) : base(treatmentActivityStatusID, treatmentActivityStatusName, treatmentActivityStatusDisplayName) {}
         public static readonly TreatmentActivityStatusCompleted Instance = new TreatmentActivityStatusCompleted(2, @"Completed", @"Completed");
+    }
+
+    public partial class TreatmentActivityStatusCancelled : TreatmentActivityStatus
+    {
+        private TreatmentActivityStatusCancelled(int treatmentActivityStatusID, string treatmentActivityStatusName, string treatmentActivityStatusDisplayName) : base(treatmentActivityStatusID, treatmentActivityStatusName, treatmentActivityStatusDisplayName) {}
+        public static readonly TreatmentActivityStatusCancelled Instance = new TreatmentActivityStatusCancelled(3, @"Cancelled", @"Cancelled");
     }
 }

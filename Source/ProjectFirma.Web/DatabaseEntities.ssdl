@@ -1343,7 +1343,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="140" />
     <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
-    <Property Name="ApprovalStartDate" Type="datetime" />
     <Property Name="CompletionDate" Type="datetime" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
@@ -1365,6 +1364,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FocusAreaID" Type="int" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="ExpirationDate" Type="datetime" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -1741,7 +1741,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectStageID" Type="int" Nullable="false" />
     <Property Name="ProjectDescription" Type="varchar" Nullable="false" MaxLength="4000" />
-    <Property Name="ApprovalStartDate" Type="datetime" />
     <Property Name="CompletionDate" Type="datetime" />
     <Property Name="EstimatedTotalCost" Type="money" />
     <Property Name="ProjectLocationPoint" Type="geometry" />
@@ -1750,6 +1749,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="FocusAreaID" Type="int" />
+    <Property Name="ExpirationDate" Type="datetime" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
     <Key>
@@ -1950,6 +1950,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
     <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="ProjectCodeID" Type="int" />
+    <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.

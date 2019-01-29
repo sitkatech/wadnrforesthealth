@@ -55,9 +55,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [Required]
         public DateTime? PlannedDate { get; set; }
         
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
         [Required]
-        public DateTime? ApprovalStartDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             PlannedDate = project.PlannedDate;
-            ApprovalStartDate = project.ApprovalStartDate;
+            ExpirationDate = project.ExpirationDate;
             CompletionDate = project.CompletionDate;
             FocusAreaID = project.FocusAreaID;
         }
@@ -98,7 +98,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ProjectStageID = ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID;
 
             project.PlannedDate = PlannedDate;
-            project.ApprovalStartDate = ApprovalStartDate;
+            project.ExpirationDate = ExpirationDate;
             project.CompletionDate = CompletionDate;
             project.FocusAreaID = FocusAreaID;
 
@@ -139,12 +139,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                 yield return new SitkaValidationResult<BasicsViewModel, string>(FirmaValidationMessages.ProjectNameUnique, m => m.ProjectName);
             }
 
-            if (ApprovalStartDate < PlannedDate)
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate, m => m.ApprovalStartDate);
-            }
-
-            if (CompletionDate < ApprovalStartDate)
+            if (CompletionDate < PlannedDate)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear, m => m.CompletionDate);
             }
@@ -157,19 +152,19 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();
             if (ProjectStageID == ProjectStage.Implementation.ProjectStageID)
             {
-                if (ApprovalStartDate?.Year > currentYear)
+                if (PlannedDate?.Year > currentYear)
                 {
                     yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                         FirmaValidationMessages.ImplementationYearMustBePastOrPresentForImplementationProjects,
-                        m => m.ApprovalStartDate);
+                        m => m.PlannedDate);
                 }
             }
             
-            if (ApprovalStartDate == null && ProjectStageID != ProjectStage.Cancelled.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
+            if (PlannedDate == null && ProjectStageID != ProjectStage.Cancelled.ProjectStageID && ProjectStageID != ProjectStage.Deferred.ProjectStageID)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Implementation year is required when the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} stage is not Deferred or Terminated",
-                    m => m.ApprovalStartDate);
+                    m => m.PlannedDate);
             }
 
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
