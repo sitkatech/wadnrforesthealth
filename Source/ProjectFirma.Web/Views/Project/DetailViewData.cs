@@ -105,8 +105,7 @@ namespace ProjectFirma.Web.Views.Project
         public readonly ProjectOrganizationsDetailViewData ProjectOrganizationsDetailViewData;
         public List<Models.ClassificationSystem> ClassificationSystems { get; }
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
-        public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
-
+        public ProjectAttributesViewData ProjectAttributesViewData { get; }
         public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
@@ -114,7 +113,7 @@ namespace ProjectFirma.Web.Views.Project
 
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
-            ProjectBasicsViewData projectBasicsViewData, ProjectLocationSummaryViewData projectLocationSummaryViewData,
+            ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData, ProjectLocationSummaryViewData projectLocationSummaryViewData,
             ProjectFundingDetailViewData projectFundingDetailViewData,
             PerformanceMeasureExpectedSummaryViewData performanceMeasureExpectedSummaryViewData,
             PerformanceMeasureReportedValuesGroupedViewData performanceMeasureReportedValuesGroupedViewData,
@@ -130,8 +129,7 @@ namespace ProjectFirma.Web.Views.Project
             string editExternalLinksUrl, ProjectNotificationGridSpec projectNotificationGridSpec,
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
-            string editProjectBoundingBoxFormID,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, ProjectPeopleDetailViewData projectPeopleDetailViewData,
+            string editProjectBoundingBoxFormID, ProjectPeopleDetailViewData projectPeopleDetailViewData,
             TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl
             )
             : base(currentPerson, project)
@@ -274,7 +272,7 @@ namespace ProjectFirma.Web.Views.Project
 
             EditProjectBoundingBoxUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectBoundingBox(project));
             EditProjectBoundingBoxFormID = editProjectBoundingBoxFormID;
-            ProjectCustomAttributeTypes = projectCustomAttributeTypes;
+            ProjectAttributesViewData = projectAttributesViewData;
 
             EditProjectOrganizationsUrl = editProjectOrganizationsUrl;
 

@@ -1069,6 +1069,8 @@
           <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
+          <ScalarProperty Name="ProjectAttributesComment" ColumnName="ProjectAttributesComment" />
+          <ScalarProperty Name="ProjectAttributesDiffLog" ColumnName="ProjectAttributesDiffLog" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

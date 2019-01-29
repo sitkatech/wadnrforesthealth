@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation, string noPriorityAreasExplanation) : this()
+        public ProjectUpdateBatch(int projectUpdateBatchID, int projectID, DateTime lastUpdateDate, string performanceMeasureActualYearsExemptionExplanation, int lastUpdatePersonID, string basicsComment, string expendituresComment, string performanceMeasuresComment, string locationSimpleComment, string locationDetailedComment, string budgetsComment, int projectUpdateStateID, bool isPhotosUpdated, string basicsDiffLog, string performanceMeasureDiffLog, string expendituresDiffLog, string budgetsDiffLog, string externalLinksDiffLog, string notesDiffLog, string geospatialAreaComment, string expectedFundingComment, string expectedFundingDiffLog, string organizationsComment, string organizationsDiffLog, string noExpendituresToReportExplanation, string contactsComment, string noRegionsExplanation, string noPriorityAreasExplanation, string projectAttributesComment, string projectAttributesDiffLog) : this()
         {
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.ProjectID = projectID;
@@ -76,6 +76,8 @@ namespace ProjectFirma.Web.Models
             this.ContactsComment = contactsComment;
             this.NoRegionsExplanation = noRegionsExplanation;
             this.NoPriorityAreasExplanation = noPriorityAreasExplanation;
+            this.ProjectAttributesComment = projectAttributesComment;
+            this.ProjectAttributesDiffLog = projectAttributesDiffLog;
         }
 
         /// <summary>
@@ -299,6 +301,14 @@ namespace ProjectFirma.Web.Models
         public string ContactsComment { get; set; }
         public string NoRegionsExplanation { get; set; }
         public string NoPriorityAreasExplanation { get; set; }
+        public string ProjectAttributesComment { get; set; }
+        public string ProjectAttributesDiffLog { get; set; }
+        [NotMapped]
+        public HtmlString ProjectAttributesDiffLogHtmlString
+        { 
+            get { return ProjectAttributesDiffLog == null ? null : new HtmlString(ProjectAttributesDiffLog); }
+            set { ProjectAttributesDiffLog = value?.ToString(); }
+        }
         [NotMapped]
         public int PrimaryKey { get { return ProjectUpdateBatchID; } set { ProjectUpdateBatchID = value; } }
 
@@ -341,6 +351,7 @@ namespace ProjectFirma.Web.Models
             public const int ContactsComment = 1000;
             public const int NoRegionsExplanation = 4000;
             public const int NoPriorityAreasExplanation = 4000;
+            public const int ProjectAttributesComment = 1000;
         }
     }
 }

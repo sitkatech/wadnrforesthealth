@@ -2073,6 +2073,8 @@
     <Property Name="ContactsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectAttributesComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectAttributesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
