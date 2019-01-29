@@ -228,3 +228,55 @@ values
 ('Whalen, Jim',2220,37,5271,4,CAST(N'2015-05-14T00:00:00.000' AS DateTime), CAST(N'2015-12-31T00:00:00.000' AS DateTime), CAST(N'2015-12-31T00:00:00.000' AS DateTime), '',14175,3,3,0,NULL,NULL),
 ('Rudolph, Dennis',2220,37,5271,5,CAST(N'2018-05-14T00:00:00.000' AS DateTime), CAST(N'2018-08-08T00:00:00.000' AS DateTime), NULL, '',13800,3,3,0,NULL,NULL),
 ('CCA-IAA93-096393',2220,37,5271,4,CAST(N'2017-10-23T00:00:00.000' AS DateTime), CAST(N'2018-08-08T00:00:00.000' AS DateTime), CAST(N'2018-06-30T00:00:00.000' AS DateTime), '',18654.6,3,3,0,NULL,NULL)
+
+go
+
+insert into dbo.AuditLog(
+	PersonID, 
+	AuditLogDate, 
+	AuditLogEventTypeID, 
+	TableName, 
+	RecordID, 
+	ColumnName, 
+	OriginalValue, 
+	NewValue, 
+	AuditDescription, 
+	ProjectID)
+select
+    5250,
+    getdate(),
+	1,
+	'Project',
+	p.ProjectID,
+	'ProjectID',
+	null,
+	p.ProjectID,
+    'Project imported',
+	p.ProjectID
+from
+    dbo.Project p
+
+go
+
+insert into dbo.ProjectOrganization(
+	ProjectID, 
+	OrganizationID, 
+	RelationshipTypeID)
+select
+	p.ProjectID,
+	4704,
+	33
+from
+    dbo.Project p
+
+go
+
+insert into dbo.ProjectRegion(
+	ProjectID,
+	RegionID)
+select
+	p.ProjectID,
+	fa.RegionID
+from
+    dbo.Project p
+	join dbo.FocusArea fa on p.FocusAreaID = fa.FocusAreaID
