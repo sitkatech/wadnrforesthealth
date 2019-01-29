@@ -48,6 +48,8 @@ namespace ProjectFirma.Web.Common
 
         public static readonly string CanonicalHostName = SitkaConfiguration.GetRequiredAppSetting("CanonicalHostName");
 
+        public static readonly string WebMapServiceUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("WebMapServiceUrl");
+
         public static readonly int GeoSpatialReferenceID = 4326;
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
@@ -78,11 +80,6 @@ namespace ProjectFirma.Web.Common
         public static string GetAllProjectLocationsDetailedWmsLayerName()
         {
             return "WADNRForestHealth:ProjectLocationDetailed";//todo: move layer name to web config
-        }
-
-        public static string GetMapServiceUrl()
-        {
-            return "https://localhost-wadnrforesthealth-mapserver.projectfirma.com/geoserver/WADNRForestHealth/wms"; //todo: move service url to web config
         }
     }
 }

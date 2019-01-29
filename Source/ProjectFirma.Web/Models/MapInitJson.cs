@@ -93,7 +93,7 @@ namespace ProjectFirma.Web.Models
         {
             var mapTooltipUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.ProjectMapPopup(UrlTemplate.Parameter1Int)));
 
-            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Simple", FirmaWebConfiguration.GetMapServiceUrl(),
+            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Simple", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectLocationsSimpleWmsLayerName(), mapTooltipUrlTemplate.UrlTemplateString, "orange", .2m,
                 LayerInitialVisibility.Hide);
         }
@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
         public static LayerGeoJson GetAllDetailedProjectLocations()
         {
             var mapTooltipUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectController>.BuildUrlFromExpression(t => t.ProjectMapPopup(UrlTemplate.Parameter1Int)));
-            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Detail", FirmaWebConfiguration.GetMapServiceUrl(),
+            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Detail", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), mapTooltipUrlTemplate.UrlTemplateString, "orange", .2m,
                 LayerInitialVisibility.Hide);
         }

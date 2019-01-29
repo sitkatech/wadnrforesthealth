@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("All Regions", FirmaWebConfiguration.GetMapServiceUrl(),
+            return new LayerGeoJson("All Regions", FirmaWebConfiguration.WebMapServiceUrl,
                 FirmaWebConfiguration.GetRegionWmsLayerName(), MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
                 layerInitialVisibility);
         }
