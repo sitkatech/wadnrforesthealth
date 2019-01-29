@@ -24,17 +24,7 @@ namespace ProjectFirma.Web.Models
         public ProjectCustomAttributes(IProject project)
         {
             Attributes = project.ProjectCustomAttributes
-                .Select(x => new ProjectCustomAttributeSimple
-                {
-                    ProjectCustomAttributeTypeID = x.ProjectCustomAttributeTypeID,
-                    ProjectCustomAttributeValues = x.Values
-                        .Select(y =>
-                            y.IProjectCustomAttribute.ProjectCustomAttributeType.ProjectCustomAttributeDataType ==
-                            ProjectCustomAttributeDataType.DateTime
-                                ? DateTime.Parse(y.AttributeValue).ToShortDateString()
-                                : y.AttributeValue)
-                        .ToList()
-                })
+                .Select(x => new ProjectCustomAttributeSimple(x))
                 .ToList();
             ProjectTypeIDForCustomAttributes = project.ProjectTypeID;
         }
@@ -149,11 +139,14 @@ namespace ProjectFirma.Web.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return GetValidationResults();
+            var warningList = new List<string>();
+            return GetValidationResults(out warningList);
         }
 
-        public IEnumerable<ValidationResult> GetValidationResults()
+        public IEnumerable<ValidationResult> GetValidationResults(out List<string> errorMessages)
         {
+            var outList = new List<ValidationResult>();
+            errorMessages = new List<string>();
             var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
                 .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
@@ -174,14 +167,18 @@ namespace ProjectFirma.Web.Models
                 {
                     if (!string.IsNullOrWhiteSpace(value) && !type.ProjectCustomAttributeDataType.ValueIsCorrectDataType(value))
                     {
-                        yield return new ValidationResult($"Entered value for {type.ProjectCustomAttributeTypeName} does not match expected type " +
-                                                          $"({type.ProjectCustomAttributeDataType.ProjectCustomAttributeDataTypeDisplayName}).");
+                        var errorMessage = $"Entered value for {type.ProjectCustomAttributeTypeName} does not match expected type " +
+                                           $"({type.ProjectCustomAttributeDataType.ProjectCustomAttributeDataTypeDisplayName}).";
+                        errorMessages.Add(errorMessage);
+                        outList.Add(new ValidationResult(errorMessage));
                     }
                 }
 
                 if (type.IsRequired && attributeSimple.ProjectCustomAttributeValues.All(string.IsNullOrWhiteSpace))
                 {
-                    yield return new ValidationResult($"Value is required for {type.ProjectCustomAttributeTypeName}.");
+                    var warningMessage = $"Value is required for {type.ProjectCustomAttributeTypeName}.";
+                    errorMessages.Add(warningMessage);
+                    outList.Add(new ValidationResult(warningMessage));
                 }
             }
 
@@ -189,9 +186,13 @@ namespace ProjectFirma.Web.Models
             {
                 if (projectCustomAttributeType.IsRequired && projectCustomAttributeSimples.All(x => x.ProjectCustomAttributeTypeID != projectCustomAttributeType.ProjectCustomAttributeTypeID))
                 {
-                    yield return new ValidationResult($"Value is required for {projectCustomAttributeType.ProjectCustomAttributeTypeName}.");
+                    var warningMessage = $"Value is required for {projectCustomAttributeType.ProjectCustomAttributeTypeName}.";
+                    errorMessages.Add(warningMessage);
+                    outList.Add(new ValidationResult(warningMessage));
                 }
             }
+
+            return outList;
         }
     }
 }

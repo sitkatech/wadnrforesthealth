@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
             IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes)
-            : base(currentPerson, project, ProjectCreateSection.ProjectCustomAttributes.ProjectCreateSectionDisplayName, proposalSectionsStatus)
+            : base(currentPerson, project, ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ShowProjectStageDropDown = project.ProjectStage != ProjectStage.Application;
             ProjectDisplayName = project.DisplayName;

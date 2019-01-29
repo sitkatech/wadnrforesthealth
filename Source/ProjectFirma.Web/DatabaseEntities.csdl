@@ -104,8 +104,6 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
-    <EntitySet Name="vGeoServerPriorityArea" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityArea" />
-    <EntitySet Name="vGeoServerRegion" EntityType="ProjectFirma.Web.Models.vGeoServerRegion" />
     <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID">
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -2075,6 +2073,8 @@
     <Property Name="ContactsComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectAttributesComment" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectAttributesDiffLog" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="PerformanceMeasureActualUpdates" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActualUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="PerformanceMeasureActualUpdates" />
     <NavigationProperty Name="LastUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Person_LastUpdatePersonID_PersonID" FromRole="ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson" ToRole="LastUpdatePerson" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="ProjectUpdateBatches" ToRole="Project" />
@@ -2278,30 +2278,6 @@
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="TreatmentActivities" ToRole="ProgramIndex" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID" FromRole="TreatmentActivities" ToRole="ProjectCode" />
-  </EntityType>
-  <EntityType Name="vGeoServerPriorityArea">
-    <Key>
-      <PropertyRef Name="PriorityAreaID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityAreaName" />
-    </Key>
-    <Property Name="PriorityAreaID" Type="Int32" Nullable="false" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="PriorityAreaName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="PriorityAreaLocation" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
-  </EntityType>
-  <EntityType Name="vGeoServerRegion">
-    <Key>
-      <PropertyRef Name="RegionID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="RegionName" />
-    </Key>
-    <Property Name="RegionID" Type="Int32" Nullable="false" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="RegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="RegionLocation" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
     <End Role="AgreementType" Type="ProjectFirma.Web.Models.AgreementType" Multiplicity="0..1" />

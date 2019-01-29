@@ -1069,6 +1069,8 @@
           <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
+          <ScalarProperty Name="ProjectAttributesComment" ColumnName="ProjectAttributesComment" />
+          <ScalarProperty Name="ProjectAttributesDiffLog" ColumnName="ProjectAttributesDiffLog" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1240,28 +1242,6 @@
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerPriorityArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPriorityArea">
-        <MappingFragment StoreEntitySet="vGeoServerPriorityArea">
-          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="PriorityAreaName" ColumnName="PriorityAreaName" />
-          <ScalarProperty Name="PriorityAreaLocation" ColumnName="PriorityAreaLocation" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="vGeoServerRegion">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerRegion">
-        <MappingFragment StoreEntitySet="vGeoServerRegion">
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
-          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
-          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-          <ScalarProperty Name="RegionLocation" ColumnName="RegionLocation" />
-          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

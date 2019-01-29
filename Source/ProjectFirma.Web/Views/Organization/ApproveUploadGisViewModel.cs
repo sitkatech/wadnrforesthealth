@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Organization
 {
@@ -14,7 +15,7 @@ namespace ProjectFirma.Web.Views.Organization
 
         public void UpdateModel(Models.Organization organization)
         {
-            organization.OrganizationBoundary = DbGeometry.FromText(OrganizationBoundaryWkt);
+            organization.OrganizationBoundary = DbGeometry.FromText(OrganizationBoundaryWkt, FirmaWebConfiguration.GeoSpatialReferenceID);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

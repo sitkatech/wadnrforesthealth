@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Views.ProjectRegion
             TypeAheadInputId = "regionSearch";
             RegionNameByID = regionsInViewModel.ToDictionary(x => x.RegionID, x => x.RegionName);
             RegionMapServiceLayerName = FirmaWebConfiguration.GetRegionWmsLayerName();
-            MapServiceUrl = FirmaWebConfiguration.GetMapServiceUrl();
+            MapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
         }
     }
 }

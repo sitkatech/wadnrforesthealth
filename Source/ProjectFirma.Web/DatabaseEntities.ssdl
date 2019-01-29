@@ -104,24 +104,6 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="vGeoServerPriorityArea" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityArea" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityArea">
-      <DefiningQuery>SELECT 
-[vGeoServerPriorityArea].[PriorityAreaID] AS [PriorityAreaID], 
-[vGeoServerPriorityArea].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerPriorityArea].[PriorityAreaName] AS [PriorityAreaName], 
-[vGeoServerPriorityArea].[PriorityAreaLocation] AS [PriorityAreaLocation], 
-[vGeoServerPriorityArea].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerPriorityArea] AS [vGeoServerPriorityArea]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="vGeoServerRegion" EntityType="ProjectFirma.Web.Models.Store.vGeoServerRegion" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerRegion">
-      <DefiningQuery>SELECT 
-[vGeoServerRegion].[RegionID] AS [RegionID], 
-[vGeoServerRegion].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerRegion].[RegionName] AS [RegionName], 
-[vGeoServerRegion].[RegionLocation] AS [RegionLocation], 
-[vGeoServerRegion].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerRegion] AS [vGeoServerRegion]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementType_AgreementTypeID">
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -1801,6 +1783,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ContactsComment" Type="varchar" MaxLength="1000" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="ProjectAttributesComment" Type="varchar" MaxLength="1000" />
+    <Property Name="ProjectAttributesDiffLog" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
@@ -1970,33 +1954,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does no
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerPriorityArea">
-    <Key>
-      <PropertyRef Name="PriorityAreaID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="PriorityAreaName" />
-    </Key>
-    <Property Name="PriorityAreaID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="PriorityAreaName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="PriorityAreaLocation" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationDetailed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationSimple' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerRegion">
-    <Key>
-      <PropertyRef Name="RegionID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="RegionName" />
-    </Key>
-    <Property Name="RegionID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="RegionLocation" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
   <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
     <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
@@ -4063,6 +4029,10 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
@@ -4109,5 +4079,14 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpGrantAllocationsFlatFil
   <Property Name="Match_Other" Type="nvarchar" MaxLength="50" />
   <Property Name="Match_Match" Type="nvarchar" MaxLength="50" />
   <Property Name="Notes" Type="nvarchar" MaxLength="50" />
+</EntityType>
+Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpWADNROrganizations' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpWADNROrganizations">
+  <Property Name="Name" Type="nvarchar" MaxLength="255" />
+  <Property Name="ShortName" Type="nvarchar" MaxLength="255" />
+  <Property Name="OrganizationType" Type="nvarchar" MaxLength="255" />
+  <Property Name="OrganizationTypeID" Type="int" />
 </EntityType>-->
 </Schema>

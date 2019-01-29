@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.FocusArea
 {
@@ -14,7 +15,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public void UpdateModel(Models.FocusArea focusArea)
         {
-            focusArea.FocusAreaLocation = DbGeometry.FromText(FocusAreaLocationWkt);
+            focusArea.FocusAreaLocation = DbGeometry.FromText(FocusAreaLocationWkt, FirmaWebConfiguration.GeoSpatialReferenceID);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -23,7 +24,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
             try
             {
-                DbGeometry.FromText(FocusAreaLocationWkt);
+                DbGeometry.FromText(FocusAreaLocationWkt, FirmaWebConfiguration.GeoSpatialReferenceID);
             }
             catch
             {

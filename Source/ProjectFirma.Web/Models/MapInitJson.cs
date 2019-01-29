@@ -22,7 +22,10 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.Linq;
 using GeoJSON.Net.Feature;
+using LtInfo.Common;
 using LtInfo.Common.GeoJson;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -58,8 +61,11 @@ namespace ProjectFirma.Web.Models
         {
             var layerGeoJsons = new List<LayerGeoJson>
             {
+                GetAllSimpleProjectLocations(),
+                GetAllDetailedProjectLocations(),
                 PriorityArea.GetPriorityAreaWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility),
                 Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, layerInitialVisibility)
+                
             };
             return layerGeoJsons;
         }
@@ -82,6 +88,20 @@ namespace ProjectFirma.Web.Models
             };
 
             return layerGeoJsons;
+        }
+
+        public static LayerGeoJson GetAllSimpleProjectLocations()
+        {
+            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Simple", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectLocationsSimpleWmsLayerName(), "orange", .2m,
+                LayerInitialVisibility.Hide);
+        }
+
+        public static LayerGeoJson GetAllDetailedProjectLocations()
+        {
+            return new LayerGeoJson($"All {FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()} - Detail", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetAllProjectLocationsDetailedWmsLayerName(), "orange", .2m,
+                LayerInitialVisibility.Hide);
         }
 
         public static List<LayerGeoJson> GetProjectLocationSimpleMapLayer(IProject project)

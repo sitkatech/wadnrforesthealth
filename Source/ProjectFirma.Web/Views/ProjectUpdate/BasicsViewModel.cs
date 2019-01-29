@@ -73,7 +73,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             CompletionDate = projectUpdate.CompletionDate;
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
-            ProjectCustomAttributes = new ProjectCustomAttributes(projectUpdate);
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -84,7 +83,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ApprovalStartDate = ApprovalStartDate;
             projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.FocusAreaID = FocusAreaID;
-            ProjectCustomAttributes?.UpdateModel(projectUpdate, currentPerson);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

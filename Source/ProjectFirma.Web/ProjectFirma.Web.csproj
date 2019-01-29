@@ -425,8 +425,6 @@
     <Compile Include="Models\Generated\TreatmentActivityStatusPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentType.Binding.cs" />
     <Compile Include="Models\Generated\TreatmentTypePrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\vGeoServerPriorityArea.Binding.cs" />
-    <Compile Include="Models\Generated\vGeoServerRegion.Binding.cs" />
     <Compile Include="Controllers\AgreementController.cs" />
     <Compile Include="Models\Agreement.cs" />
     <Compile Include="Models\AgreementModelExtensions.cs" />
@@ -565,7 +563,11 @@
     <Compile Include="Views\ProjectUpdate\ContactsValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ContactsViewModel.cs" />
+    <Compile Include="Views\ProjectUpdate\CustomAttributes.cs" />
+    <Compile Include="Views\ProjectUpdate\CustomAttributesViewData.cs" />
+    <Compile Include="Views\ProjectUpdate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreas.cs" />
+    <Compile Include="Views\ProjectUpdate\ProjectAttributeValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\Regions.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreasValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreasViewData.cs" />
@@ -587,6 +589,8 @@
     <Compile Include="Views\Region\IndexViewData.cs" />
     <Compile Include="Views\Region\MapTooltip.cs" />
     <Compile Include="Views\Region\MapTooltipViewData.cs" />
+    <Compile Include="Views\Shared\ProjectControls\ProjectAttributes.cs" />
+    <Compile Include="Views\Shared\ProjectControls\ProjectAttributesViewData.cs" />
     <Compile Include="Views\TreatmentActivity\Index.cs" />
     <Compile Include="Views\TreatmentActivity\IndexViewData.cs" />
     <Compile Include="Views\TreatmentActivity\TreatmentActivityIndexGridSpec.cs" />
@@ -1714,6 +1718,8 @@
     <Content Include="Views\PriorityArea\MapTooltip.cshtml" />
     <Content Include="Views\ProjectUpdate\PriorityAreas.cshtml" />
     <Content Include="Views\ProjectCreate\CustomAttributes.cshtml" />
+    <Content Include="Views\ProjectUpdate\CustomAttributes.cshtml" />
+    <Content Include="Views\Shared\ProjectControls\ProjectAttributes.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
