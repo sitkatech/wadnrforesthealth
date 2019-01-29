@@ -538,8 +538,6 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
             break;
         case "ProjectLocationGeometry":
         case "ProjectLocationPoint":
-            // https://wadnrforesthealth.qa.projectfirma.com/Project/ProjectMapPopup/12494
-            // ProjectID
             queryUrl = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
             labelText = "Project";
 
@@ -555,19 +553,18 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                     });
                 },
                 function(responses) {
-                    console.log("error getting wms feature info");
-                    //deferred.reject("error getting wms feature info");
+                    console.log("error getting project popup info: " + queryUrl);
                     deferred.resolve(null);
                 }
             );
             break;
         default:
-            //deferred.reject("layer not supported.");
-                deferred.resolve(null);
+                console.log("layer not configured for feature info: " + firstFeature.geometry_name);
+            deferred.resolve(null);
         }
 
     } else {
-        //deferred.reject("feature not found.");
+        console.log("json object contains no features. unexpected wms response.");
         deferred.resolve(null);
     }
     return deferred.promise();

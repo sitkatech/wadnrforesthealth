@@ -40,12 +40,10 @@ namespace ProjectFirma.Web.Models
             return DetailUrlTemplate.ParameterReplace(PriorityAreaID);
         }
 
-        public static readonly UrlTemplate<int> MapTooltipUrlTemplate = new UrlTemplate<int>(SitkaRoute<PriorityAreaController>.BuildUrlFromExpression(t => t.MapTooltip(UrlTemplate.Parameter1Int)));
-
         public static LayerGeoJson GetPriorityAreaWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
             return new LayerGeoJson("All Priority Areas", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetPriorityAreaWmsLayerName(), MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
+                FirmaWebConfiguration.GetPriorityAreaWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility);
         }
 

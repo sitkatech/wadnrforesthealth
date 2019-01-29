@@ -36,7 +36,6 @@ namespace ProjectFirma.Web.Models
         public readonly FeatureCollection GeoJsonFeatureCollection;
         public readonly string MapServerUrl;
         public readonly string MapServerLayerName;
-        public readonly string TooltipUrlTemplate;
         public readonly string LayerColor;
         public readonly decimal LayerOpacity;
         public readonly LayerInitialVisibility LayerInitialVisibility;
@@ -60,12 +59,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for LayerGeoJson with WMS Type
         /// </summary>
-        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string tooltipUrlTemplate, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
+        public LayerGeoJson(string layerName, string mapServerUrl, string mapServerLayerName, string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
             LayerName = layerName;
             MapServerUrl = mapServerUrl;
             MapServerLayerName = mapServerLayerName;
-            TooltipUrlTemplate = tooltipUrlTemplate;
             LayerColor = layerColor;
             LayerOpacity = layerOpacity;
             LayerInitialVisibility = layerInitialVisibility;
