@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using System.Linq;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
@@ -51,7 +52,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             project.DefaultBoundingBox = North.HasValue && South.HasValue && East.HasValue && West.HasValue
                 ? DbGeometry.FromText(
                     string.Format("POLYGON(({0} {1}, {0} {2}, {3} {2}, {3} {1}, {0} {1}))", West, North, South, East),
-                    4326)
+                    FirmaWebConfiguration.GeoSpatialReferenceID)
                 : null;
         }
 

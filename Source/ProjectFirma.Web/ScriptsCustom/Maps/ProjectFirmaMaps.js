@@ -420,7 +420,7 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
                 info_format: 'application/json'
             };
 
-        geospatialAreaWMSParams['x'] = point.x;
+        geospatialAreaWMSParams['x'] = point.x; //lat: 47.53442142660092, lng: -120.49188936129215
         geospatialAreaWMSParams['y'] = point.y;
 
         var ajaxCalls = [];
@@ -432,7 +432,11 @@ ProjectFirmaMaps.Map.prototype.htmlPopupContents = function (allLayers) {
 
             var query = layer._url + L.Util.getParamString(geospatialAreaWMSParams, null, true);            
             ajaxCalls.push(jQuery.when(jQuery.ajax({ url: query }))
-                .then(function (response) { return self.formatGeospatialAreaResponse(ajaxCalls, response); }));
+                .then(function(response) {
+                    return self.formatGeospatialAreaResponse(response).then(function(status) {
+                            return status;
+                        });
+                }));
      
         }        
 
@@ -501,50 +505,70 @@ ProjectFirmaMaps.Map.prototype.removeDuplicatesFromArray = function (originalArr
 
 
 
-ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (ajaxCalls, json) {
-        var vectorLayerInfoHtmlForPopup = null;
-        if (json.features.length > 0) {
+ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
+        var deferred = new jQuery.Deferred();
+    if (typeof json.features !== "undefined" && json.features.length > 0) {
 
-            var firstFeature = json.features[0];
+        var firstFeature = json.features[0];
 
-            var url = "";
-            var linkText = "";
-            var labelText = "";
-            var linkHtml = "";
-            switch (firstFeature.geometry_name) {
-                case "RegionLocation":
-                    url = "/Region/Detail/" + firstFeature.properties.RegionID;
-                    linkText = firstFeature.properties.RegionName;
-                    linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
-                    labelText = "Region";
-                    break;
-                case "PriorityAreaLocation":
-                    url = "/PriorityArea/Detail/" + firstFeature.properties.PriorityAreaID;
-                    linkText = firstFeature.properties.PriorityAreaName;
-                    linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
-                    labelText = "Priority Area";
-                    break;
-                case "ProjectLocationGeometry":
-                case "ProjectLocationPoint":
-                    // https://wadnrforesthealth.qa.projectfirma.com/Project/ProjectMapPopup/12494
-                    // ProjectID
-                    url = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
-                    labelText = "Project";
-
-                    jQuery.ajax({
-                            url: url,
-                            async: false,
-                            success: function(response) {
-                                linkHtml = response;
-                            }
-                        }
-                    );
-            }
-
-            vectorLayerInfoHtmlForPopup = {
+        var url = "";
+        var linkText = "";
+        var labelText = "";
+        var linkHtml = "";
+        switch (firstFeature.geometry_name) {
+        case "RegionLocation":
+            url = "/Region/Detail/" + firstFeature.properties.RegionID;
+            linkText = firstFeature.properties.RegionName;
+            linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
+            labelText = "Region";
+            deferred.resolve({
                 label: labelText,
                 link: linkHtml
-            }
+            });
+            break;
+        case "PriorityAreaLocation":
+            url = "/PriorityArea/Detail/" + firstFeature.properties.PriorityAreaID;
+            linkText = firstFeature.properties.PriorityAreaName;
+            linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
+            labelText = "Priority Area";
+            deferred.resolve({
+                label: labelText,
+                link: linkHtml
+            });
+            break;
+        case "ProjectLocationGeometry":
+        case "ProjectLocationPoint":
+            // https://wadnrforesthealth.qa.projectfirma.com/Project/ProjectMapPopup/12494
+            // ProjectID
+            queryUrl = "/Project/ProjectMapPopup/" + firstFeature.properties.ProjectID;
+            labelText = "Project";
+
+            var mapPopupAjaxCall = [];
+            mapPopupAjaxCall.push(jQuery.when(jQuery.ajax({ url: queryUrl }))
+                .then(function(response) { return response; }));
+
+            this.carryOutPromises(mapPopupAjaxCall).then(
+                function(responses) {
+                    linkHtml = deferred.resolve({
+                        label: labelText,
+                        link: responses[0]
+                    });
+                },
+                function(responses) {
+                    console.log("error getting wms feature info");
+                    //deferred.reject("error getting wms feature info");
+                    deferred.resolve(null);
+                }
+            );
+            break;
+        default:
+            //deferred.reject("layer not supported.");
+                deferred.resolve(null);
         }
-    return vectorLayerInfoHtmlForPopup;
+
+    } else {
+        //deferred.reject("feature not found.");
+        deferred.resolve(null);
+    }
+    return deferred.promise();
 };

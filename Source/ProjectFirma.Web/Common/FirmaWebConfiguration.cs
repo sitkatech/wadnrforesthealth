@@ -48,6 +48,8 @@ namespace ProjectFirma.Web.Common
 
         public static readonly string CanonicalHostName = SitkaConfiguration.GetRequiredAppSetting("CanonicalHostName");
 
+        public static readonly int GeoSpatialReferenceID = 4326;
+
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
         {
             return CanonicalHostName;
@@ -70,12 +72,12 @@ namespace ProjectFirma.Web.Common
 
         public static string GetAllProjectLocationsSimpleWmsLayerName()
         {
-            return "WADNRForestHealth:vGeoServerProjectLocationSimple";//todo: move layer name to web config
+            return "WADNRForestHealth:ProjectLocationSimple";//todo: move layer name to web config
         }
 
         public static string GetAllProjectLocationsDetailedWmsLayerName()
         {
-            return "WADNRForestHealth:vGeoServerProjectLocationDetailed";//todo: move layer name to web config
+            return "WADNRForestHealth:ProjectLocationDetailed";//todo: move layer name to web config
         }
 
         public static string GetMapServiceUrl()

@@ -10,7 +10,7 @@ select
 	pl.ProjectLocationID,
 	p.ProjectName,
 	pl.Annotation,
-	pl.ProjectLocationGeometry as Ogr_Geometry
+	pl.ProjectLocationGeometry
 from
 	dbo.Project as p join dbo.ProjectLocation as pl on p.ProjectID = pl.ProjectID
 where pl.ProjectLocationGeometry is not null
