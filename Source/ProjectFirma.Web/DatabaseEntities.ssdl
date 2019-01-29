@@ -1783,6 +1783,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ContactsComment" Type="varchar" MaxLength="1000" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
+    <Property Name="ProjectAttributesComment" Type="varchar" MaxLength="1000" />
+    <Property Name="ProjectAttributesDiffLog" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>

@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public bool IsLocationDetailUpdated { get; }
         public bool IsRegionsUpdated { get; }
         public bool IsPriorityAreasUpdated { get; }
+        public bool IsProjectAttributesUpdated { get; }
         public bool IsExternalLinksUpdated { get; }
         public bool IsNotesUpdated { get; }
         public bool IsOrganizationsUpdated { get; }
@@ -44,6 +45,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             bool isPhotosUpdated,
             bool isLocationSimpleUpdated,
             bool isLocationDetailUpdated,
+            bool isProjectAttributesUpdated,
             bool isPriorityAreasUpdated,
             bool isRegionsUpdated,
             bool isExternalLinksUpdated,
@@ -59,6 +61,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             IsPhotosUpdated = isPhotosUpdated;
             IsLocationSimpleUpdated = isLocationSimpleUpdated;
             IsLocationDetailUpdated = isLocationDetailUpdated;
+            IsProjectAttributesUpdated = isProjectAttributesUpdated;
             IsPriorityAreasUpdated = isPriorityAreasUpdated;
             IsRegionsUpdated = isRegionsUpdated;
             IsExternalLinksUpdated = isExternalLinksUpdated;

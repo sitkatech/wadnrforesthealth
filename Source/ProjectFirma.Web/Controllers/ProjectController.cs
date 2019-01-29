@@ -184,10 +184,12 @@ namespace ProjectFirma.Web.Controllers
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
+            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, new ProjectCustomAttributes(project).Attributes);
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,
                 projectBasicsViewData,
+                projectAttributesViewData,
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
                 performanceMeasureExpectedsSummaryViewData,
@@ -218,8 +220,7 @@ namespace ProjectFirma.Web.Controllers
                 userCanEditProposal,
                 projectOrganizationsDetailViewData,
                 classificationSystems,
-                ProjectLocationController.EditProjectBoundingBoxFormID,
-                projectCustomAttributeTypes, projectPeopleDetailViewData,
+                ProjectLocationController.EditProjectBoundingBoxFormID, projectPeopleDetailViewData,
                 treamentActivityGridSpec, treatmentActivityGridDataUrl, editProjectRegionUrl, editProjectPriorityAreaUrl
                 );
             return RazorView<Detail, DetailViewData>(viewData);

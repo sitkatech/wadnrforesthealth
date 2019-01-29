@@ -716,11 +716,7 @@ namespace ProjectFirma.Web.Models
 
         public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProject()
         {
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
-                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
-                                .Select(y => y.ProjectTypeID).Contains(this.ProjectTypeID)).ToList();
-            return projectCustomAttributeTypesForThisProject;
+            return ProjectType.GetProjectCustomAttributeTypesForThisProjectType();
         }
 
         public string GetPlannedDate()

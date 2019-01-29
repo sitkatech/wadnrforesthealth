@@ -24,6 +24,7 @@ using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using LtInfo.Common;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -43,6 +44,14 @@ namespace ProjectFirma.Web.Models
             return requiredProjectTypeIDs;
         }
 
+        public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProjectType()
+        {
+            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
+            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
+                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
+                                .Select(y => y.ProjectTypeID).Contains(this.ProjectTypeID)).ToList();
+            return projectCustomAttributeTypesForThisProject;
+        }
 
         public int? SortOrder
         {
