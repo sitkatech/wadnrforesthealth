@@ -75,6 +75,7 @@
     <EntitySet Name="ProjectLocation" EntityType="ProjectFirma.Web.Models.Store.ProjectLocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationStaging" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationStagingUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationStagingUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectLocationType" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectNote" EntityType="ProjectFirma.Web.Models.Store.ProjectNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectNoteUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectNoteUpdate" store:Type="Tables" Schema="dbo" />
@@ -578,6 +579,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_ProjectLocation_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocation_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectLocations" EntitySet="ProjectLocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID">
+      <End Role="ProjectLocationType" EntitySet="ProjectLocationType" />
       <End Role="ProjectLocations" EntitySet="ProjectLocation" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationStaging_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationStaging_Person_PersonID">
@@ -1570,6 +1575,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationGeometry" Type="geometry" Nullable="false" />
     <Property Name="Annotation" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
+    <Property Name="ProjectLocationName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>
@@ -1594,6 +1601,14 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
     <Property Name="SelectedProperty" Type="varchar" MaxLength="255" />
     <Property Name="ShouldImport" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectLocationType">
+    <Key>
+      <PropertyRef Name="ProjectLocationTypeID" />
+    </Key>
+    <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
+    <Property Name="ProjectLocationTypeName" Type="varchar" MaxLength="50" />
+    <Property Name="ProjectLocationTypeDisplayName" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ProjectLocationUpdate">
     <Key>
@@ -3386,6 +3401,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="ProjectLocations">
         <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID">
+    <End Role="ProjectLocationType" Type="ProjectFirma.Web.Models.Store.ProjectLocationType" Multiplicity="1" />
+    <End Role="ProjectLocations" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectLocationType">
+        <PropertyRef Name="ProjectLocationTypeID" />
+      </Principal>
+      <Dependent Role="ProjectLocations">
+        <PropertyRef Name="ProjectLocationTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

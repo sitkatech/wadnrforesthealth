@@ -837,6 +837,8 @@
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="ProjectLocationGeometry" ColumnName="ProjectLocationGeometry" />
           <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+          <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
+          <ScalarProperty Name="ProjectLocationName" ColumnName="ProjectLocationName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -863,6 +865,15 @@
           <ScalarProperty Name="GeoJson" ColumnName="GeoJson" />
           <ScalarProperty Name="SelectedProperty" ColumnName="SelectedProperty" />
           <ScalarProperty Name="ShouldImport" ColumnName="ShouldImport" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectLocationType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectLocationType">
+        <MappingFragment StoreEntitySet="ProjectLocationType">
+          <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
+          <ScalarProperty Name="ProjectLocationTypeName" ColumnName="ProjectLocationTypeName" />
+          <ScalarProperty Name="ProjectLocationTypeDisplayName" ColumnName="ProjectLocationTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

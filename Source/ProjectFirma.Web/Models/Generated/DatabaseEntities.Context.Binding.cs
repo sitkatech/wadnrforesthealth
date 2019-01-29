@@ -101,6 +101,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectLocation> ProjectLocations { get; set; }
         public virtual DbSet<ProjectLocationStaging> ProjectLocationStagings { get; set; }
         public virtual DbSet<ProjectLocationStagingUpdate> ProjectLocationStagingUpdates { get; set; }
+        public virtual DbSet<ProjectLocationType> ProjectLocationTypes { get; set; }
         public virtual DbSet<ProjectLocationUpdate> ProjectLocationUpdates { get; set; }
         public virtual DbSet<ProjectNote> ProjectNotes { get; set; }
         public virtual DbSet<ProjectNoteUpdate> ProjectNoteUpdates { get; set; }
@@ -469,6 +470,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ProjectLocationStagingUpdate":
                     return ProjectLocationStagingUpdates.GetProjectLocationStagingUpdate(primaryKey);
+
+                case "ProjectLocationType":
+                    return ProjectLocationTypes.GetProjectLocationType(primaryKey);
 
                 case "ProjectLocationUpdate":
                     return ProjectLocationUpdates.GetProjectLocationUpdate(primaryKey);
