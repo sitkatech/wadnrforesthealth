@@ -61,13 +61,11 @@ namespace ProjectFirma.Web.Models
             return DetailUrlTemplate.ParameterReplace(RegionID);
         }
 
-        public static readonly UrlTemplate<int> MapTooltipUrlTemplate = new UrlTemplate<int>(SitkaRoute<RegionController>.BuildUrlFromExpression(t => t.MapTooltip(UrlTemplate.Parameter1Int)));
-
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("Regions", FirmaWebConfiguration.GetMapServiceUrl(),
-                FirmaWebConfiguration.GetRegionWmsLayerName(), MapTooltipUrlTemplate.UrlTemplateString, layerColor, layerOpacity,
-                layerInitialVisibility);//todo: move service url and layer name to web.config
+            return new LayerGeoJson("All Regions", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetRegionWmsLayerName(), layerColor, layerOpacity,
+                layerInitialVisibility);
         }
 
         public static List<LayerGeoJson> GetRegionAndAssociatedProjectLayers(Region region, List<Project> projects)

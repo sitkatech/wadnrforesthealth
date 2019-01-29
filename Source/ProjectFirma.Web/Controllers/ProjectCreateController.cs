@@ -640,7 +640,7 @@ namespace ProjectFirma.Web.Controllers
             var mapPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.EditLocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationSimpleFormID(project);
             var wmsLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
-            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, wmsLayerNames, null, mapPostUrl, mapFormID, FirmaWebConfiguration.GetMapServiceUrl());
+            var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJson, wmsLayerNames, null, mapPostUrl, mapFormID, FirmaWebConfiguration.WebMapServiceUrl);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsProjectLocationSimpleSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsProjectLocationSimpleSectionComplete;
@@ -820,7 +820,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
                 {
-                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt), wktAndAnnotation.Annotation));
+                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
                 }
             }
         }
