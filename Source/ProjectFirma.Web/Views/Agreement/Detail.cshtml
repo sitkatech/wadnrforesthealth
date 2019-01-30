@@ -137,26 +137,31 @@
                                         <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType</span>
                                     </div>
                                 </div>
-                                <div class="row">
+                                @*<div class="row">
                                     <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.FundingSource)
                                     </div>
                                     <div class="col-sm-9">
                                         <span id="AgreementType">@ViewDataTyped.Agreement.FundingSource</span>
                                     </div>
+                                </div>*@
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementAmount)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementAmount.ToStringCurrency()</span>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementNotes)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType</span>
+                                        <span id="AgreementType">@ViewDataTyped.Agreement.Notes</span>
                                     </div>
                                 </div>
                                 @*  
-                                    FundingSource -- How is funding source tied to Agreements (i.e., how are projects and agreements related?)
-                                    Amount
-                                    Notes
                                     Agreement File
                                 *@
                             </div>
