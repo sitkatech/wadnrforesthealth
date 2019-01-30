@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[ProjectLocationType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,93 +16,144 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectLocationType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProjectLocationType]")]
-    public partial class ProjectLocationType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class ProjectLocationType : IHavePrimaryKey
     {
+        public static readonly ProjectLocationTypeProjectArea ProjectArea = ProjectLocationTypeProjectArea.Instance;
+        public static readonly ProjectLocationTypeTreatmentActivity TreatmentActivity = ProjectLocationTypeTreatmentActivity.Instance;
+        public static readonly ProjectLocationTypeResearchPlot ResearchPlot = ProjectLocationTypeResearchPlot.Instance;
+        public static readonly ProjectLocationTypeTestSite TestSite = ProjectLocationTypeTestSite.Instance;
+        public static readonly ProjectLocationTypeOther Other = ProjectLocationTypeOther.Instance;
+
+        public static readonly List<ProjectLocationType> All;
+        public static readonly ReadOnlyDictionary<int, ProjectLocationType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected ProjectLocationType()
+        static ProjectLocationType()
         {
-            this.ProjectLocations = new HashSet<ProjectLocation>();
-            this.ProjectLocationUpdates = new HashSet<ProjectLocationUpdate>();
+            All = new List<ProjectLocationType> { ProjectArea, TreatmentActivity, ResearchPlot, TestSite, Other };
+            AllLookupDictionary = new ReadOnlyDictionary<int, ProjectLocationType>(All.ToDictionary(x => x.ProjectLocationTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public ProjectLocationType(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : this()
+        protected ProjectLocationType(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName)
         {
-            this.ProjectLocationTypeID = projectLocationTypeID;
-            this.ProjectLocationTypeName = projectLocationTypeName;
-            this.ProjectLocationTypeDisplayName = projectLocationTypeDisplayName;
-        }
-
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static ProjectLocationType CreateNewBlank()
-        {
-            return new ProjectLocationType();
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return ProjectLocations.Any() || ProjectLocationUpdates.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocationType).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationUpdate).Name};
-
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            dbContext.ProjectLocationTypes.Remove(this);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in ProjectLocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in ProjectLocationUpdates.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            ProjectLocationTypeID = projectLocationTypeID;
+            ProjectLocationTypeName = projectLocationTypeName;
+            ProjectLocationTypeDisplayName = projectLocationTypeDisplayName;
         }
 
         [Key]
-        public int ProjectLocationTypeID { get; set; }
-        public string ProjectLocationTypeName { get; set; }
-        public string ProjectLocationTypeDisplayName { get; set; }
+        public int ProjectLocationTypeID { get; private set; }
+        public string ProjectLocationTypeName { get; private set; }
+        public string ProjectLocationTypeDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectLocationTypeID; } set { ProjectLocationTypeID = value; } }
+        public int PrimaryKey { get { return ProjectLocationTypeID; } }
 
-        public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }
-        public virtual ICollection<ProjectLocationUpdate> ProjectLocationUpdates { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(ProjectLocationType other)
         {
-            public const int ProjectLocationTypeName = 50;
-            public const int ProjectLocationTypeDisplayName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.ProjectLocationTypeID == ProjectLocationTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ProjectLocationType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return ProjectLocationTypeID;
+        }
+
+        public static bool operator ==(ProjectLocationType left, ProjectLocationType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ProjectLocationType left, ProjectLocationType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public ProjectLocationTypeEnum ToEnum { get { return (ProjectLocationTypeEnum)GetHashCode(); } }
+
+        public static ProjectLocationType ToType(int enumValue)
+        {
+            return ToType((ProjectLocationTypeEnum)enumValue);
+        }
+
+        public static ProjectLocationType ToType(ProjectLocationTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case ProjectLocationTypeEnum.Other:
+                    return Other;
+                case ProjectLocationTypeEnum.ProjectArea:
+                    return ProjectArea;
+                case ProjectLocationTypeEnum.ResearchPlot:
+                    return ResearchPlot;
+                case ProjectLocationTypeEnum.TestSite:
+                    return TestSite;
+                case ProjectLocationTypeEnum.TreatmentActivity:
+                    return TreatmentActivity;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum ProjectLocationTypeEnum
+    {
+        ProjectArea = 1,
+        TreatmentActivity = 2,
+        ResearchPlot = 3,
+        TestSite = 4,
+        Other = 5
+    }
+
+    public partial class ProjectLocationTypeProjectArea : ProjectLocationType
+    {
+        private ProjectLocationTypeProjectArea(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
+        public static readonly ProjectLocationTypeProjectArea Instance = new ProjectLocationTypeProjectArea(1, @"ProjectArea", @"Project Area");
+    }
+
+    public partial class ProjectLocationTypeTreatmentActivity : ProjectLocationType
+    {
+        private ProjectLocationTypeTreatmentActivity(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
+        public static readonly ProjectLocationTypeTreatmentActivity Instance = new ProjectLocationTypeTreatmentActivity(2, @"TreatmentActivity", @"Treatment Activity");
+    }
+
+    public partial class ProjectLocationTypeResearchPlot : ProjectLocationType
+    {
+        private ProjectLocationTypeResearchPlot(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
+        public static readonly ProjectLocationTypeResearchPlot Instance = new ProjectLocationTypeResearchPlot(3, @"ResearchPlot", @"Research Plot");
+    }
+
+    public partial class ProjectLocationTypeTestSite : ProjectLocationType
+    {
+        private ProjectLocationTypeTestSite(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
+        public static readonly ProjectLocationTypeTestSite Instance = new ProjectLocationTypeTestSite(4, @"TestSite", @"Test Site");
+    }
+
+    public partial class ProjectLocationTypeOther : ProjectLocationType
+    {
+        private ProjectLocationTypeOther(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
+        public static readonly ProjectLocationTypeOther Instance = new ProjectLocationTypeOther(5, @"Other", @"Other");
     }
 }

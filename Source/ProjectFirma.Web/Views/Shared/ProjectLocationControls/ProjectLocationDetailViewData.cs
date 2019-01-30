@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string PostUrl { get; }
         public string UploadGisUrl { get; }
         public string BasicsPageUrl { get; }
-        private ProjectLocationDetailGridSpec ProjectLocationDetailGridSpec { get; }
+        //private ProjectLocationDetailGridSpec ProjectLocationDetailGridSpec { get; }
         private string ProjectLocationDetailGridDataUrl { get; }
 
 
@@ -79,7 +79,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
             ProjectID = project.ProjectID;
             ProjectLocationLayerGeoJson = projectLocationLayerGeoJson;
-            IsInCompletedReview = ProjectExtension.isCompletedReviewProject(project);
+            //IsInCompletedReview = ProjectExtension.isCompletedReviewProject(project);
         }
     }
 }

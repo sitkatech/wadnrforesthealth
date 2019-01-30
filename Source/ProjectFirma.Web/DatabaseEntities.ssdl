@@ -75,7 +75,6 @@
     <EntitySet Name="ProjectLocation" EntityType="ProjectFirma.Web.Models.Store.ProjectLocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationStaging" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationStagingUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationStagingUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectLocationType" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectLocationUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectNote" EntityType="ProjectFirma.Web.Models.Store.ProjectNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectNoteUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectNoteUpdate" store:Type="Tables" Schema="dbo" />
@@ -581,10 +580,6 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectLocations" EntitySet="ProjectLocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID">
-      <End Role="ProjectLocationType" EntitySet="ProjectLocationType" />
-      <End Role="ProjectLocations" EntitySet="ProjectLocation" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationStaging_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationStaging_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="ProjectLocationStagings" EntitySet="ProjectLocationStaging" />
@@ -600,10 +595,6 @@
     <AssociationSet Name="FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationStagingUpdates" EntitySet="ProjectLocationStagingUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID">
-      <End Role="ProjectLocationType" EntitySet="ProjectLocationType" />
-      <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
@@ -1605,14 +1596,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
     <Property Name="SelectedProperty" Type="varchar" MaxLength="255" />
     <Property Name="ShouldImport" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ProjectLocationType">
-    <Key>
-      <PropertyRef Name="ProjectLocationTypeID" />
-    </Key>
-    <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
-    <Property Name="ProjectLocationTypeName" Type="varchar" MaxLength="50" />
-    <Property Name="ProjectLocationTypeDisplayName" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ProjectLocationUpdate">
     <Key>
@@ -3410,18 +3393,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID">
-    <End Role="ProjectLocationType" Type="ProjectFirma.Web.Models.Store.ProjectLocationType" Multiplicity="1" />
-    <End Role="ProjectLocations" Type="ProjectFirma.Web.Models.Store.ProjectLocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectLocationType">
-        <PropertyRef Name="ProjectLocationTypeID" />
-      </Principal>
-      <Dependent Role="ProjectLocations">
-        <PropertyRef Name="ProjectLocationTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectLocationStaging_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="ProjectLocationStagings" Type="ProjectFirma.Web.Models.Store.ProjectLocationStaging" Multiplicity="*" />
@@ -3467,18 +3438,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="ProjectLocationStagingUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID">
-    <End Role="ProjectLocationType" Type="ProjectFirma.Web.Models.Store.ProjectLocationType" Multiplicity="1" />
-    <End Role="ProjectLocationUpdates" Type="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectLocationType">
-        <PropertyRef Name="ProjectLocationTypeID" />
-      </Principal>
-      <Dependent Role="ProjectLocationUpdates">
-        <PropertyRef Name="ProjectLocationTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

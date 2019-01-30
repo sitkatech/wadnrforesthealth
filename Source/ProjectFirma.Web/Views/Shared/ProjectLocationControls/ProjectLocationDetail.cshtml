@@ -72,7 +72,7 @@
 <div layout:fragment="WizardContent" data-ng-app="ProjectLocationDetailApp" data-ng-controller="ProjectLocationDetailController">
 
 
-    <form method="POST" id="projectLocationsForm" name="projectLocationsForm" th:action="@ViewDataTyped.PostUrl" th:object="@ViewModel" data-ng-submit="reprojectGeometries()">
+    <form method="POST" id="projectLocationsForm" name="projectLocationsForm" th:action="@ViewDataTyped.PostUrl" @*th:object="@ViewModel"*@ data-ng-submit="reprojectGeometries()">
         <div>
             <table class="table table-bordered table-projectLocations">
                 <thead>
@@ -138,7 +138,7 @@
 
 
         <div class="alert alert-danger" role="alert" data-ng-repeat="projectLocationJson in getProjectLocationsWithProjectLocationTypesNotAlignedWithGeometryType()">
-            For ProjectLocation "{{projectLocationJson.projectLocationName}}", you indicated you have a "{{getProjectLocationTypeName(projectLocationJson.projectLocationTypeID)}}" ProjectLocation Type, yet represented it using a {{projectLocationJson.projectLocationGeometryType}}. While this is allowed, please make sure this is what you want to do.
+            For Project Location "{{projectLocationJson.projectLocationName}}", you indicated you have a "{{getProjectLocationTypeName(projectLocationJson.projectLocationTypeID)}}" Project Location Type, yet represented it using a {{projectLocationJson.projectLocationGeometryType}}. While this is allowed, please make sure this is what you want to do.
         </div>
 
         <div class="projectComment">
@@ -165,50 +165,7 @@
         </div>
     </form>
 
-    <div id="uploadGisModal" class="modal fade kevin-modal" tabindex="-1" role="dialog">
-        <form id="uploadGisForm" th:action="@ViewDataTyped.UploadGisUrl" enctype="multipart/form-data" class="">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">Upload GIS File</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            Select the type of GIS File to upload from the list of supported formats.
-                        </p>
-                        <div class="form-group">
-                            <label for="uploadGisInputType" style="width: 100%;">GIS File Type</label>
-                            <select name="uploadGisType" id="uploadGisInputType" class="form-control" style="width: auto;">
-                                <option value="">-- Select Type --</option>
-                                <option th:each="type:@ViewDataTyped.UploadGisTypes" th:value="$type.ordinal()" th:text="$type.displayName"></option>
-                            </select>
-                        </div>
-                        <div class="form-group uploadGidInputFileGroup">
-                            <label for="uploadGisInputFile">GIS File</label>
-                            <input id="uploadGisInputFile" name="gisFile" type="file" class="file" style="margin-bottom: 10px;">
-                            <div class="uploadGisInputFileHelpBlock" th:each="type:@ViewDataTyped.UploadGisTypes" th:attr="data-uploadgistypeid=$type.ordinal()">
-                                <p class="help-text">
-                                    Supported extensions:
-                                    <em th:text="${#strings.arrayJoin(type.supportedExtensions,', ')}"></em>
-                                </p>
-                                <p class="help-text" th:text="$type.instructionText"></p>
-                            </div>
-                        </div>
-                        <div class="progress" style="display: none;">
-                            <div class="progress-bar progress-bar-striped active" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary uploadGisSubmit" data-ng-click="uploadGisFile()">Upload</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+
 
     <div th:replace="proposedProject/ProjectAndProjectLocationType :: projectAndProjectLocationType"></div>
 </div>
@@ -223,7 +180,7 @@
     <script type="text/javascript" th:inline="javascript">
         angular.module("ProjectLocationDetailApp").factory("angularModelAndViewData", function () {
             return {
-                AngularModel: [[@ViewModel]], AngularViewData: [[@ViewDataTyped.AngularViewData]]
+                AngularModel: [[@*@ViewModel*@]], AngularViewData: [[@ViewDataTyped.AngularViewData]]
             };
         });
         jQuery(function () {

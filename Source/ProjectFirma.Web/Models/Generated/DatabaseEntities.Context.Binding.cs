@@ -101,7 +101,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectLocation> ProjectLocations { get; set; }
         public virtual DbSet<ProjectLocationStaging> ProjectLocationStagings { get; set; }
         public virtual DbSet<ProjectLocationStagingUpdate> ProjectLocationStagingUpdates { get; set; }
-        public virtual DbSet<ProjectLocationType> ProjectLocationTypes { get; set; }
         public virtual DbSet<ProjectLocationUpdate> ProjectLocationUpdates { get; set; }
         public virtual DbSet<ProjectNote> ProjectNotes { get; set; }
         public virtual DbSet<ProjectNoteUpdate> ProjectNoteUpdates { get; set; }
@@ -472,7 +471,9 @@ namespace ProjectFirma.Web.Models
                     return ProjectLocationStagingUpdates.GetProjectLocationStagingUpdate(primaryKey);
 
                 case "ProjectLocationType":
-                    return ProjectLocationTypes.GetProjectLocationType(primaryKey);
+                    var projectLocationType = ProjectLocationType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(projectLocationType, "ProjectLocationType", primaryKey);
+                    return projectLocationType;
 
                 case "ProjectLocationUpdate":
                     return ProjectLocationUpdates.GetProjectLocationUpdate(primaryKey);

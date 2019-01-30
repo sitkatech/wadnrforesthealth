@@ -66,8 +66,6 @@ namespace ProjectFirma.Web.Models
             projectUpdateBatch.ProjectLocationUpdates.Add(this);
             this.ProjectLocationUpdateGeometry = projectLocationUpdateGeometry;
             this.ProjectLocationTypeID = projectLocationType.ProjectLocationTypeID;
-            this.ProjectLocationType = projectLocationType;
-            projectLocationType.ProjectLocationUpdates.Add(this);
             this.ProjectLocationUpdateName = projectLocationUpdateName;
         }
 
@@ -114,7 +112,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProjectLocationUpdateID; } set { ProjectLocationUpdateID = value; } }
 
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
-        public virtual ProjectLocationType ProjectLocationType { get; set; }
+        public ProjectLocationType ProjectLocationType { get { return ProjectLocationType.AllLookupDictionary[ProjectLocationTypeID]; } }
 
         public static class FieldLengths
         {

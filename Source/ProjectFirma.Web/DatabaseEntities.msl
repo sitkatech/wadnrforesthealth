@@ -868,15 +868,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectLocationType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectLocationType">
-        <MappingFragment StoreEntitySet="ProjectLocationType">
-          <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
-          <ScalarProperty Name="ProjectLocationTypeName" ColumnName="ProjectLocationTypeName" />
-          <ScalarProperty Name="ProjectLocationTypeDisplayName" ColumnName="ProjectLocationTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ProjectLocationUpdate">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectLocationUpdate">
         <MappingFragment StoreEntitySet="ProjectLocationUpdate">
