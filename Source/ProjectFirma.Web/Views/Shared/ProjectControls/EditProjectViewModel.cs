@@ -67,8 +67,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public int? OldProjectStageID { get; set; }
 
-        public ProjectCustomAttributes ProjectCustomAttributes { get; set; }
-
         public int? FocusAreaID { get; set; }
 
 
@@ -93,7 +91,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             EstimatedTotalCost = project.EstimatedTotalCost;
             HasExistingProjectUpdate = hasExistingProjectUpdate;
             FocusAreaID = project.FocusAreaID;
-            ProjectCustomAttributes = new ProjectCustomAttributes(project);
         }
 
         public void UpdateModel(Models.Project project, Person currentPerson)
@@ -107,8 +104,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
-
-            ProjectCustomAttributes?.UpdateModel(project, currentPerson);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

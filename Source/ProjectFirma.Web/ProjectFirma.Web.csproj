@@ -589,6 +589,9 @@
     <Compile Include="Views\Region\IndexViewData.cs" />
     <Compile Include="Views\Region\MapTooltip.cs" />
     <Compile Include="Views\Region\MapTooltipViewData.cs" />
+    <Compile Include="Views\Shared\ProjectControls\EditProjectAttributes.cs" />
+    <Compile Include="Views\Shared\ProjectControls\EditProjectAttributesViewData.cs" />
+    <Compile Include="Views\Shared\ProjectControls\EditProjectAttributesViewModel.cs" />
     <Compile Include="Views\Shared\ProjectControls\ProjectAttributes.cs" />
     <Compile Include="Views\Shared\ProjectControls\ProjectAttributesViewData.cs" />
     <Compile Include="Views\TreatmentActivity\Index.cs" />
@@ -1720,6 +1723,7 @@
     <Content Include="Views\ProjectCreate\CustomAttributes.cshtml" />
     <Content Include="Views\ProjectUpdate\CustomAttributes.cshtml" />
     <Content Include="Views\Shared\ProjectControls\ProjectAttributes.cshtml" />
+    <Content Include="Views\Shared\ProjectControls\EditProjectAttributes.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
