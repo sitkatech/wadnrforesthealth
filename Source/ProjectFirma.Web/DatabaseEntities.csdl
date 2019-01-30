@@ -725,6 +725,10 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationStagingUpdates" EntitySet="ProjectLocationStagingUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID" Association="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID">
+      <End Role="ProjectLocationType" EntitySet="ProjectLocationType" />
+      <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
@@ -1863,6 +1867,7 @@
     <Property Name="ProjectLocationTypeName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="ProjectLocationTypeDisplayName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectLocations" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID" FromRole="ProjectLocationType" ToRole="ProjectLocations" />
+    <NavigationProperty Name="ProjectLocationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID" FromRole="ProjectLocationType" ToRole="ProjectLocationUpdates" />
   </EntityType>
   <EntityType Name="ProjectLocationUpdate">
     <Key>
@@ -1872,6 +1877,9 @@
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="ProjectLocationUpdateGeometry" Type="Geometry" Nullable="false" />
     <Property Name="Annotation" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectLocationTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectLocationUpdateName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="ProjectLocationType" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID" FromRole="ProjectLocationUpdates" ToRole="ProjectLocationType" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectLocationUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectNote">
@@ -4151,6 +4159,18 @@
       </Principal>
       <Dependent Role="ProjectLocationStagingUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID">
+    <End Role="ProjectLocationType" Type="ProjectFirma.Web.Models.ProjectLocationType" Multiplicity="1" />
+    <End Role="ProjectLocationUpdates" Type="ProjectFirma.Web.Models.ProjectLocationUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectLocationType">
+        <PropertyRef Name="ProjectLocationTypeID" />
+      </Principal>
+      <Dependent Role="ProjectLocationUpdates">
+        <PropertyRef Name="ProjectLocationTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

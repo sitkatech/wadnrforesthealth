@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected ProjectLocationType()
         {
             this.ProjectLocations = new HashSet<ProjectLocation>();
+            this.ProjectLocationUpdates = new HashSet<ProjectLocationUpdate>();
         }
 
         /// <summary>
@@ -53,13 +54,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProjectLocations.Any();
+            return ProjectLocations.Any() || ProjectLocationUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocationType).Name, typeof(ProjectLocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectLocationType).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationUpdate).Name};
 
 
         /// <summary>
@@ -80,6 +81,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in ProjectLocationUpdates.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -90,6 +96,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return ProjectLocationTypeID; } set { ProjectLocationTypeID = value; } }
 
         public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }
+        public virtual ICollection<ProjectLocationUpdate> ProjectLocationUpdates { get; set; }
 
         public static class FieldLengths
         {

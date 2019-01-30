@@ -601,6 +601,10 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationStagingUpdates" EntitySet="ProjectLocationStagingUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID">
+      <End Role="ProjectLocationType" EntitySet="ProjectLocationType" />
+      <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectLocationUpdates" EntitySet="ProjectLocationUpdate" />
@@ -1618,6 +1622,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationUpdateGeometry" Type="geometry" Nullable="false" />
     <Property Name="Annotation" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
+    <Property Name="ProjectLocationUpdateName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="ProjectNote">
     <Key>
@@ -3461,6 +3467,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="ProjectLocationStagingUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID">
+    <End Role="ProjectLocationType" Type="ProjectFirma.Web.Models.Store.ProjectLocationType" Multiplicity="1" />
+    <End Role="ProjectLocationUpdates" Type="ProjectFirma.Web.Models.Store.ProjectLocationUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectLocationType">
+        <PropertyRef Name="ProjectLocationTypeID" />
+      </Principal>
+      <Dependent Role="ProjectLocationUpdates">
+        <PropertyRef Name="ProjectLocationTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

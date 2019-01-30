@@ -884,6 +884,8 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ProjectLocationUpdateGeometry" ColumnName="ProjectLocationUpdateGeometry" />
           <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+          <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
+          <ScalarProperty Name="ProjectLocationUpdateName" ColumnName="ProjectLocationUpdateName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

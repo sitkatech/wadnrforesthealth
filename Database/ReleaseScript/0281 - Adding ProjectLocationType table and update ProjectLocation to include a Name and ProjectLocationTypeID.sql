@@ -10,3 +10,10 @@ Alter table dbo.ProjectLocation add
 	ProjectLocationName varchar(100) not null 
 		constraint AK_ProjectLocation_ProjectID_ProjectLocationName unique(ProjectID, ProjectLocationName);
 
+
+Alter table dbo.ProjectLocationUpdate add 
+	ProjectLocationTypeID int not null 
+		constraint FK_ProjectLocationUpdate_ProjectLocationType_ProjectLocationTypeID foreign key references dbo.ProjectLocationType(ProjectLocationTypeID),
+	ProjectLocationUpdateName varchar(100) not null 
+		constraint AK_ProjectLocationUpdate_ProjectUpdateBatchID_ProjectLocationUpdateName unique(ProjectUpdateBatchID, ProjectLocationUpdateName);
+

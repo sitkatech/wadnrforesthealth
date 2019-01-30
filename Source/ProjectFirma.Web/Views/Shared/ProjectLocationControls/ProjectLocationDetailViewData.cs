@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views;
 
@@ -25,15 +27,25 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
     public class ProjectLocationDetailViewData : FirmaUserControlViewData
     {
-        public readonly int ProjectID;
-        public readonly bool HasProjectLocationPoint;
-        public readonly MapInitJson MapInitJson;
-        public readonly LayerGeoJson EditableLayerGeoJson;
-        public readonly string UploadGisFileUrl;
-        public readonly string MapFormID;
-        public readonly string SaveFeatureCollectionUrl;
-        public readonly int AnnotationMaxLength;
-        public readonly string SimplePointMarkerImg;
+        public int ProjectID { get; }
+        public bool HasProjectLocationPoint { get; }
+        public MapInitJson MapInitJson { get; }
+        public LayerGeoJson EditableLayerGeoJson { get; }
+        public string UploadGisFileUrl { get; }
+        public string MapFormID { get; }
+        public string SaveFeatureCollectionUrl { get; }
+        public int AnnotationMaxLength { get; }
+        public string SimplePointMarkerImg { get; }
+
+        //new parameters from java/kevin
+        public AngularViewDataForProjectLocationTypes AngularViewData { get; }
+        public string PostUrl { get; }
+        public string UploadGisUrl { get; }
+        public string BasicsPageUrl { get; }
+        private ProjectLocationDetailGridSpec ProjectLocationDetailGridSpec { get; }
+        private string ProjectLocationDetailGridDataUrl { get; }
+
+
 
         public ProjectLocationDetailViewData(int projectID, MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, string uploadGisFileUrl, string mapFormID, string saveFeatureCollectionUrl, int annotationMaxLength, bool hasProjectLocationPoint)
         {
@@ -47,6 +59,27 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             HasProjectLocationPoint = hasProjectLocationPoint;
 
             SimplePointMarkerImg = "https://api.tiles.mapbox.com/v3/marker/pin-s-marker+838383.png";
+        }
+    }
+
+    public class AngularViewDataForProjectLocationTypes
+    {
+        public MapInitJson ProjectLocationMapInitJson { get; set; }
+        public List<ProjectLocationType> ProjectLocationTypeJsons { get; set; }
+
+        public int ProjectID { get; set; }
+        public LayerGeoJson ProjectLocationLayerGeoJson { get; set; }
+        public bool IsInCompletedReview { get; set; }
+
+        public AngularViewDataForProjectLocationTypes(MapInitJson projectLocationMapInitJson,
+            List<ProjectLocationType> projectLocationTypeJsons, Models.Project project, LayerGeoJson projectLocationLayerGeoJson)
+        {
+            ProjectLocationMapInitJson = projectLocationMapInitJson;
+            ProjectLocationTypeJsons = projectLocationTypeJsons;
+
+            ProjectID = project.ProjectID;
+            ProjectLocationLayerGeoJson = projectLocationLayerGeoJson;
+            IsInCompletedReview = ProjectExtension.isCompletedReviewProject(project);
         }
     }
 }
