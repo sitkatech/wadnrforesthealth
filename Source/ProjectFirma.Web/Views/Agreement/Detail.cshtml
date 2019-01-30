@@ -84,9 +84,42 @@
                                     <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementTitle)
                                     </div>
+                                
                                     <div class="col-sm-9">
                                         <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementNumber)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementTitle">@ViewDataTyped.Agreement.AgreementNumber</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.Organization)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="Organization">@ViewDataTyped.Agreement.Organization.OrganizationName</span>
+                                    </div>
+                                </div>
+                                @*  AgreementStatus 
+                                    AgreementType
+                                    FundingSource
+                                    Amount
+                                    StartDate
+                                    EndDate
+                                    Notes
+                                    Agreement File
+                                *@
+                                    @*<div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementStatus)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
