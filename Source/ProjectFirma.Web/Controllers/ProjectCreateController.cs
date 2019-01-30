@@ -816,11 +816,13 @@ namespace ProjectFirma.Web.Controllers
                 projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             project.ProjectLocations.Clear();
-            if (viewModel.WktAndAnnotations != null)
+            if (viewModel.ProjectLocationDetailSimples != null)
             {
-                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
+                foreach (var projectLocationDetailSimple in viewModel.ProjectLocationDetailSimples)
                 {
-                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+                    var projectLocationType = ProjectLocationType.All.FirstOrDefault(x =>
+                        x.ProjectLocationTypeID == projectLocationDetailSimple.ProjectLocationTypeID);
+                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(projectLocationDetailSimple.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), projectLocationType, projectLocationDetailSimple.ProjectLocationName, projectLocationDetailSimple.Annotation));
                 }
             }
         }

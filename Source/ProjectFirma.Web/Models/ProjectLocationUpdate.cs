@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectLocationUpdates =
                 project.ProjectLocations.Select(
-                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.Annotation)).ToList();
+                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.ProjectLocationType, projectLocationToClone.ProjectLocationName, projectLocationToClone.Annotation)).ToList();
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectLocation> allProjectLocations)
@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Models
                 // Completely rebuild the list
                 projectUpdateBatch.ProjectLocationUpdates.ToList().ForEach(x =>
                 {
-                    var projectLocation = new ProjectLocation(project, x.ProjectLocationGeometry, x.Annotation);
+                    var projectLocation = new ProjectLocation(project, x.ProjectLocationGeometry, x.ProjectLocationType, x.ProjectLocationUpdateName, x.Annotation);
                     allProjectLocations.Add(projectLocation);
                 });
             }

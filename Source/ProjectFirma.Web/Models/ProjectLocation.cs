@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectLocation : IAuditableEntity, IProjectLocation, IHaveSqlGeometry
     {
-        public ProjectLocation(Project project, DbGeometry projectLocationGeometry, string annotation) : this(project, projectLocationGeometry)
+        public ProjectLocation(Project project, DbGeometry projectLocationGeometry, ProjectLocationType projectLocationType, string projectLocationName, string annotation) : this(project, projectLocationGeometry, projectLocationType, projectLocationName)
         {
             Annotation = annotation;
         }

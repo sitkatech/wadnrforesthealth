@@ -33,7 +33,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
     };
 
     var reprojectGeometryAndAddProjectLocationIDToFeature = function (feature, projectLocationID) {
-        feature.geometry = kevinMap.reprojectGeoJSONFeatureFrom32100to4326(feature.geometry).geometry;
+        feature.geometry = projectLocationMap.reprojectGeoJSONFeatureFrom32100to4326(feature.geometry).geometry;
         feature.properties = { projectLocationID: projectLocationID };
     };
 
@@ -66,10 +66,10 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
             onEachFeature: function (feature, layer) {
                 if (layer.getLayers) {
                     layer.getLayers().forEach(function (l) {
-                        kevinMap.editableFeatureGroup.addLayer(l);
+                        projectLocationMap.editableFeatureGroup.addLayer(l);
                     });
                 } else {
-                    kevinMap.editableFeatureGroup.addLayer(layer);
+                    projectLocationMap.editableFeatureGroup.addLayer(layer);
                 }
                 bindProjectLocationSelectClickEvent(feature, layer);
             }
@@ -92,17 +92,17 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
     };
 
     var initializeLeafletMap = function () {
-        kevinMap.editableFeatureGroup = new L.FeatureGroup();
+        projectLocationMap.editableFeatureGroup = new L.FeatureGroup();
 
         // initialize and draw the projectLocations on the map
         loadExistingProjectLocationsToEditableFeatureGroup();
-        if (!$scope.AngularViewData.isInCompletedReview) {
-            L.drawLocal.draw.toolbar.buttons.polyline = "Draw a projectLocation as a line – good for roads, fences, pipelines, etc.";
-            L.drawLocal.draw.toolbar.buttons.polygon = "Draw a projectLocation as a polygon – good for buildings, crops, yards, areas, etc.";
-            L.drawLocal.edit.toolbar.buttons.edit = "Edit projectLocation geometries";
-            L.drawLocal.edit.toolbar.buttons.editDisabled = "No projectLocation geometries to edit";
-            L.drawLocal.edit.toolbar.buttons.remove = "Remove projectLocation geometries";
-            L.drawLocal.edit.toolbar.buttons.editRemove = "No projectLocation geometries to remove";
+        if (!$scope.AngularViewData.IsInCompletedReview) {
+            L.drawLocal.draw.toolbar.buttons.polyline = "Draw a project location as a line – good for roads, fences, pipelines, etc.";
+            L.drawLocal.draw.toolbar.buttons.polygon = "Draw a project location as a polygon – good for buildings, crops, yards, areas, etc.";
+            L.drawLocal.edit.toolbar.buttons.edit = "Edit project location geometries";
+            L.drawLocal.edit.toolbar.buttons.editDisabled = "No project location geometries to edit";
+            L.drawLocal.edit.toolbar.buttons.remove = "Remove project location geometries";
+            L.drawLocal.edit.toolbar.buttons.editRemove = "No project location geometries to remove";
 
             var polylineOptions = {
                 shapeOptions: {
@@ -123,10 +123,10 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
             var drawOptions = {
                 position: 'topleft',
                 draw: {
-                    polyline: _.some(angularModelAndViewData.AngularViewData.projectLocationTypeJsons, function (f) {
+                    polyline: _.some(angularModelAndViewData.AngularViewData.ProjectLocationTypeJsons, function (f) {
                         return f.geometryTypeName === "Line"
                     }) ? polylineOptions : false,
-                    polygon: _.some(angularModelAndViewData.AngularViewData.projectLocationTypeJsons, function (f) {
+                    polygon: _.some(angularModelAndViewData.AngularViewData.ProjectLocationTypeJsons, function (f) {
                         return f.geometryTypeName === "Polygon"
                     }) ? polygonOptions : false,
                     circle: false, // Turns off this drawing tool
@@ -134,7 +134,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
                     marker: false
                 },
                 edit: {
-                    featureGroup: kevinMap.editableFeatureGroup,
+                    featureGroup: projectLocationMap.editableFeatureGroup,
                     edit: {
                         maintainColor: true,
                         opacity: 0.3
@@ -143,15 +143,15 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
                 }
             };
             var drawControl = new L.Control.Draw(drawOptions);
-            kevinMap.map.addControl(drawControl);
+            projectLocationMap.map.addControl(drawControl);
 
             // when user draws a point via leaflet, we need to add to our json model and redraw
-            kevinMap.map.on('draw:created', function (e) {
+            projectLocationMap.map.on('draw:created', function (e) {
                 var newLayer = e.layer;
-                kevinMap.editableFeatureGroup.addLayer(newLayer);
+                projectLocationMap.editableFeatureGroup.addLayer(newLayer);
                 var newProjectLocationJson = $scope.addProjectLocationRow(newLayer.toGeoJSON().geometry);
                 var leafletID = newLayer._leaflet_id;
-                var layer = kevinMap.editableFeatureGroup._layers[leafletID];
+                var layer = projectLocationMap.editableFeatureGroup._layers[leafletID];
                 layer.feature = createGeoJSONFeature(null);
                 var feature = layer.feature;
                 feature.properties.projectLocationID = newProjectLocationJson.projectLocationID;
@@ -163,7 +163,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
 
             // when user edits a point via leaflet, we need to ensure that the new latlng of the point is in the acceptable bounds (i.e. Columbia River Basin)
             // and update the lat lng in the json model
-            kevinMap.map.on('draw:edited', function (e) {
+            projectLocationMap.map.on('draw:edited', function (e) {
                 var layers = e.layers;
                 layers.eachLayer(function (layer) {
                     var projectLocationID = layer.feature.properties.projectLocationID;
@@ -179,7 +179,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
 
             // when user deletes a point via leaflet, we need to remove from the json model
             // if the point deleted is the selected one, we need to change the selected point to be the first point in the grid
-            kevinMap.map.on('draw:deleted', function (e) {
+            projectLocationMap.map.on('draw:deleted', function (e) {
                 var layers = e.layers;
                 var projectLocationIDsDeleted = [];
                 layers.eachLayer(function (layer) {
@@ -193,7 +193,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
                 $scope.$apply();
             });
         }
-        kevinMap.map.addLayer(kevinMap.editableFeatureGroup);
+        projectLocationMap.map.addLayer(projectLocationMap.editableFeatureGroup);
 
         var selectedProjectLocationID = $scope.AngularModel.projectLocationJsons.length > 0 ? $scope.AngularModel.projectLocationJsons[0].projectLocationID : null;
         $scope.$apply(function () {
@@ -205,7 +205,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
 
     $scope.toggleProjectLocations = function (projectLocationID) {
         $scope.selectedProjectLocationID = projectLocationID;
-        kevinMap.editableFeatureGroup.eachLayer(function (layer) {
+        projectLocationMap.editableFeatureGroup.eachLayer(function (layer) {
             var currentProjectLocationID = layer.feature.properties.projectLocationID;
             if ($scope.selectedProjectLocationID == currentProjectLocationID) {
                 layer.setStyle({
@@ -251,12 +251,12 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
     };
 
     $scope.deleteProjectLocationRowAndRefreshMap = function (projectLocation) {
-        if (!$scope.AngularViewData.isInCompletedReview) {
+        if (!$scope.AngularViewData.IsInCompletedReview) {
             var projectLocationID = projectLocation.projectLocationID;
             deleteProjectLocationRow(projectLocationID);
-            kevinMap.editableFeatureGroup.eachLayer(function (layer) {
+            projectLocationMap.editableFeatureGroup.eachLayer(function (layer) {
                 if (projectLocationID == layer.feature.properties.projectLocationID) {
-                    kevinMap.editableFeatureGroup.removeLayer(layer);
+                    projectLocationMap.editableFeatureGroup.removeLayer(layer);
                 }
             });
 
@@ -282,14 +282,14 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
     };
 
     $scope.getSelectableProjectLocationTypes = function (projectLocation) {
-        return $scope.AngularViewData.projectLocationTypeJsons;
-        // return _.filter($scope.AngularViewData.projectLocationTypeJsons, function (f) {
+        return $scope.AngularViewData.ProjectLocationTypeJsons;
+        // return _.filter($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
         //     return f.geometryTypeName == projectLocation.projectLocationGeometryType;
         // });
     };
 
     $scope.getProjectLocationTypeName = function (projectLocationTypeID) {
-        var projectLocationType = _.find($scope.AngularViewData.projectLocationTypeJsons, function (f) {
+        var projectLocationType = _.find($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
             return parseInt(f.projectLocationTypeID) == parseInt(projectLocationTypeID);
         });
         if (projectLocationType != null) {
@@ -299,7 +299,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
     };
 
     $scope.isProjectLocationTypeValidForGeometryType = function (projectLocationTypeID, geometryType) {
-        return _.find($scope.AngularViewData.projectLocationTypeJsons, function (f) {
+        return _.find($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
             return f.geometryTypeName == geometryType && parseInt(f.projectLocationTypeID) == parseInt(projectLocationTypeID);
         });
     };
@@ -368,9 +368,9 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
 
     $scope.getReprojectedGeoJSON = function (projectLocation) {
         var geoJSONReprojected = null;
-        kevinMap.editableFeatureGroup.eachLayer(function (layer) {
+        projectLocationMap.editableFeatureGroup.eachLayer(function (layer) {
             if (projectLocation.projectLocationID == layer.feature.properties.projectLocationID) {
-                geoJSONReprojected = kevinMap.reprojectGeoJSONFeatureFrom4326to32100(layer.toGeoJSON()).geometry;
+                geoJSONReprojected = projectLocationMap.reprojectGeoJSONFeatureFrom4326to32100(layer.toGeoJSON()).geometry;
             }
         });
         return geoJSONReprojected;
@@ -393,28 +393,14 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
     };
 
     // this is the call that initializes the map and worksites
-    var kevinMap = new KevinMaps.Map($scope.AngularViewData.projectLocationMapInitJson);
-    var previewMap = new KevinMaps.Map($scope.AngularViewData.previewMapInitJson);
-    var previewMapDiv = jQuery("#" + $scope.AngularViewData.previewMapInitJson.MapDivID);
-    kevinMap.loadMapLayers(function () {
-        previewMap.orderedLayers = kevinMap.orderedLayers;
-        previewMap.loadMapLayersImpl();
+    var projectLocationMap = new ProjectFirmaMaps.Map($scope.AngularViewData.ProjectLocationMapInitJson);
 
-        var previewMapLayerGroups = [];
-        _.forEach([
-            $scope.AngularViewData.projectLocationLayerGeoJson,
-            $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson
-            //, $scope.AngularViewData.distanceToNearestLekLayerGeoJson
-        ], function (layer) {
-            previewMapLayerGroups.push(previewMap.addSingleVectorLayer(layer));
-        });
+    projectLocationMap.loadMapLayers(function () {
+
+
+
         initializeLeafletMap();
-        if ($scope.AngularViewData.hidePreviewMapOnLoad) {
-            previewMapDiv.hide();
-        } else {
-            $scope.resetBoundsToExtentOfLayerGroups(previewMap.map, previewMapLayerGroups);
-        }
-        $scope.resetBoundsToExtentOfLayerGroups(kevinMap.map, [kevinMap.editableFeatureGroup]);
+        $scope.resetBoundsToExtentOfLayerGroups(projectLocationMap.map, [projectLocationMap.editableFeatureGroup]);
     });
 
     $scope.resetBoundsToExtentOfLayerGroups = function (map, layerGroups) {
@@ -437,100 +423,89 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
         previewMapDiv.css("display", "");
         previewMapDiv.addClass("hiddenWhileLoading");
 
-        var postData = { "projectID": $scope.AngularViewData.projectID };
+        var postData = { "projectID": $scope.AngularViewData.ProjectID };
         for (var i = 0; i < $scope.AngularModel.projectLocationJsons.length; i++) {
             var projectLocationJson = $scope.AngularModel.projectLocationJsons[i];
             postData['previewProjectLocations[' + i + '].projectLocationGeometry'] = JSON.stringify($scope.getReprojectedGeoJSON(projectLocationJson));
             postData['previewProjectLocations[' + i + '].width'] = projectLocationJson.width;
         }
 
-        jQuery.ajax($scope.AngularViewData.previewDdctUrl, {
-            "method": "POST",
-            "data": postData,
-            "success": function (data) {
-                if (data.errors) {
-                    handlePreviewDdctError(data.errors);
-                    return;
-                }
+        //jQuery.ajax($scope.AngularViewData.previewDdctUrl, {
+        //    "method": "POST",
+        //    "data": postData,
+        //    "success": function (data) {
+        //        if (data.errors) {
+        //            handlePreviewDdctError(data.errors);
+        //            return;
+        //        }
 
-                jQuery(".ddctResultsContainer").html(jQuery(data.ddctTableHtml));
-                var previewMapLayerGroups = [];
-                var projectLocationsLayerGeoJson = previewMap.addSingleVectorLayer(
-                    // Recreate layer using incoming geometry data
-                    new LayerForProjectLocationPage(
-                        $scope.AngularViewData.projectLocationLayerGeoJson.LayerName,
-                        data.projectLocationsGeoJSON,
-                        $scope.AngularViewData.projectLocationLayerGeoJson.FeatureStyle,
-                        $scope.AngularViewData.projectLocationLayerGeoJson.LayerInitialVisibility,
-                        $scope.AngularViewData.projectLocationLayerGeoJson.DisplayOrder,
-                        $scope.AngularViewData.projectLocationLayerGeoJson.PopupLabel));
-                previewMapLayerGroups.push(projectLocationsLayerGeoJson);
-                if (data.ddctAnalysisAreaGeoJson.features && data.ddctAnalysisAreaGeoJson.features.length) {
-                    var ddctAnalysisAreaLayerGeoJson = previewMap.addSingleVectorLayer(
-                        // Recreate layer using incoming geometry data
-                        new LayerForProjectLocationPage(
-                            $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerName,
-                            data.ddctAnalysisAreaGeoJson,
-                            $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.FeatureStyle,
-                            $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerInitialVisibility,
-                            $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.DisplayOrder,
-                            $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.PopupLabel));
-                    previewMapLayerGroups.push(ddctAnalysisAreaLayerGeoJson);
-                }
-                else {
-                    previewMap.removeSingleVectorLayer(new LayerForProjectLocationPage(
-                        $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerName,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null));
-                }
-                // if (data.distanceToNearestLekLayerGeoJson.features && data.distanceToNearestLekLayerGeoJson.features.length) {
-                //     var distanceToNearestLekLayerAsLayerGeoJson = previewMap.addSingleVectorLayer(
-                //         // Recreate layer using incoming geometry data
-                //         new LayerForProjectLocationPage(
-                //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerName,
-                //             data.distanceToNearestLekLayerGeoJson,
-                //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.FeatureStyle,
-                //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerInitialVisibility,
-                //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.DisplayOrder,
-                //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.PopupLabel));
-                //     previewMapLayerGroups.push(distanceToNearestLekLayerAsLayerGeoJson);
-                // }
-                // else {
-                //     previewMap.removeSingleVectorLayer(new LayerForProjectLocationPage(
-                //         $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerName,
-                //         null,
-                //         null,
-                //         null,
-                //         null,
-                //         null));
-                // }
-                $scope.resetBoundsToExtentOfLayerGroups(previewMap.map, previewMapLayerGroups);
-            },
-            "error": function () {
-                handlePreviewDdctError(["There was a problem fetching Preview of DDCT Results."]);
-                jQuery(".ddctResultContent").show();
-            },
-            "complete": function () {
-                $scope.previewTriggered = false;
-                $scope.$apply();
-                previewMapDiv.removeClass("hiddenWhileLoading");
-                jQuery(".ddctResultLoading").hide();
-            }
-        });
-    };
-
-    var handlePreviewDdctError = function (errors) {
-        var alertElement = jQuery(
-            "<div class=\"alert alert-danger alert-dismissable previewDdctAlert\">" +
-            "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">" +
-            "<span aria-hidden=\"true\">&times;</span>" +
-            "</button>" +
-            _.join(errors, "<br>") +
-            "</div>");
-        jQuery(".previewDdctSubHeader").append(alertElement);
+        //        jQuery(".ddctResultsContainer").html(jQuery(data.ddctTableHtml));
+        //        var previewMapLayerGroups = [];
+        //        var projectLocationsLayerGeoJson = previewMap.addSingleVectorLayer(
+        //            // Recreate layer using incoming geometry data
+        //            new LayerForProjectLocationPage(
+        //                $scope.AngularViewData.projectLocationLayerGeoJson.LayerName,
+        //                data.projectLocationsGeoJSON,
+        //                $scope.AngularViewData.projectLocationLayerGeoJson.FeatureStyle,
+        //                $scope.AngularViewData.projectLocationLayerGeoJson.LayerInitialVisibility,
+        //                $scope.AngularViewData.projectLocationLayerGeoJson.DisplayOrder,
+        //                $scope.AngularViewData.projectLocationLayerGeoJson.PopupLabel));
+        //        previewMapLayerGroups.push(projectLocationsLayerGeoJson);
+        //        if (data.ddctAnalysisAreaGeoJson.features && data.ddctAnalysisAreaGeoJson.features.length) {
+        //            var ddctAnalysisAreaLayerGeoJson = previewMap.addSingleVectorLayer(
+        //                // Recreate layer using incoming geometry data
+        //                new LayerForProjectLocationPage(
+        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerName,
+        //                    data.ddctAnalysisAreaGeoJson,
+        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.FeatureStyle,
+        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerInitialVisibility,
+        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.DisplayOrder,
+        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.PopupLabel));
+        //            previewMapLayerGroups.push(ddctAnalysisAreaLayerGeoJson);
+        //        }
+        //        else {
+        //            previewMap.removeSingleVectorLayer(new LayerForProjectLocationPage(
+        //                $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerName,
+        //                null,
+        //                null,
+        //                null,
+        //                null,
+        //                null));
+        //        }
+        //        // if (data.distanceToNearestLekLayerGeoJson.features && data.distanceToNearestLekLayerGeoJson.features.length) {
+        //        //     var distanceToNearestLekLayerAsLayerGeoJson = previewMap.addSingleVectorLayer(
+        //        //         // Recreate layer using incoming geometry data
+        //        //         new LayerForProjectLocationPage(
+        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerName,
+        //        //             data.distanceToNearestLekLayerGeoJson,
+        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.FeatureStyle,
+        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerInitialVisibility,
+        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.DisplayOrder,
+        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.PopupLabel));
+        //        //     previewMapLayerGroups.push(distanceToNearestLekLayerAsLayerGeoJson);
+        //        // }
+        //        // else {
+        //        //     previewMap.removeSingleVectorLayer(new LayerForProjectLocationPage(
+        //        //         $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerName,
+        //        //         null,
+        //        //         null,
+        //        //         null,
+        //        //         null,
+        //        //         null));
+        //        // }
+        //        $scope.resetBoundsToExtentOfLayerGroups(previewMap.map, previewMapLayerGroups);
+        //    },
+        //    "error": function () {
+        //        handlePreviewDdctError(["There was a problem fetching Preview of DDCT Results."]);
+        //        jQuery(".ddctResultContent").show();
+        //    },
+        //    "complete": function () {
+        //        $scope.previewTriggered = false;
+        //        $scope.$apply();
+        //        previewMapDiv.removeClass("hiddenWhileLoading");
+        //        jQuery(".ddctResultLoading").hide();
+        //    }
+        //});
     };
 
     var genericUploadGisErrorMessage = "";
@@ -564,10 +539,6 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
                     handleUploadGisFileError(_.join(response.errors, '<br>'));
                 } else if (!(response.uploadedFeatureCollection && response.uploadedFeatureCollection.features && response.uploadedFeatureCollection.features.length)) {
                     handleUploadGisFileError("No features were found in the uploaded file.");
-                } else if (response.uploadedFeatureCollection.features.length + $scope.AngularModel.projectLocationJsons.length > $scope.AngularViewData.maxNumberOfProjectLocations) {
-                    handleUploadGisFileError(
-                        "<p>You may only have up to " + $scope.AngularViewData.maxNumberOfProjectLocations + " projectLocations on a given project. " +
-                        "Please simplify your project’s projectLocations and try again, or contact <a href=\"mailto:sagegrouse@mt.gov\">support</a> for help.</p>");
                 } else {
                     var featuresReprojectedTo4326 = [];
                     _.forEach(response.uploadedFeatureCollection.features, function (feature) {
@@ -577,7 +548,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
                         featuresReprojectedTo4326.push(newFeature);
                     });
                     addFeatureCollectionToEditableFeatureGroup(featuresReprojectedTo4326);
-                    $scope.resetBoundsToExtentOfLayerGroups(kevinMap.map, [kevinMap.editableFeatureGroup]);
+                    $scope.resetBoundsToExtentOfLayerGroups(projectLocationMap.map, [projectLocationMap.editableFeatureGroup]);
                     $scope.$apply();
                     jQuery("#uploadGisInputFile").val("");
                     var uploadGisInputType = jQuery("#uploadGisInputType");
