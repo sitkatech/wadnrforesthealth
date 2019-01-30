@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [Required]
         public int? ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.StartApprovalDate)]
         [Required]
         public DateTime? PlannedDate { get; set; }
         

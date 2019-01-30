@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
         public DateTime? ExpirationDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.StartApprovalDate)]
         public DateTime? PlannedDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]

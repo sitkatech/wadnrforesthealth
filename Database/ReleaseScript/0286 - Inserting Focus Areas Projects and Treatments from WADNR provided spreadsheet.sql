@@ -281,6 +281,25 @@ from
     dbo.Project p
 	join dbo.FocusArea fa on p.FocusAreaID = fa.FocusAreaID
 
+go
+
+update dbo.Project
+set PrimaryContactPersonID = 5250
+where PrimaryContactPersonID is null
+
+go
+
+insert into dbo.ProjectPerson(
+	ProjectID,
+	PersonID,
+	ProjectPersonRelationshipTypeID)
+select
+	p.ProjectID,
+	p.PrimaryContactPersonID,
+	1
+from
+    dbo.Project p
+
 
 go
 

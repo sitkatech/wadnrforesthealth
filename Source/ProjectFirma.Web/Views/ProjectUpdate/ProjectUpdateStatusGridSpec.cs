@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 x => x.GetPrimaryContact() == null ? ViewUtilities.NoneString.ToHTMLFormattedString() : x.GetPrimaryContact().GetFullNameFirstLastAndOrgShortNameAsUrl(),
                 95);
             Add(Models.FieldDefinition.ProjectStage.ToGridHeaderString(), x => x.ProjectStage.ProjectStageDisplayName, 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.PlannedDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.StartApprovalDate.ToGridHeaderString(), x => x.GetPlannedDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.GetExpirationDateFormatted(), 115, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.GetCompletionDateFormatted(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.EstimatedTotalCost, 100, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);

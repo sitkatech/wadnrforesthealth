@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionReportedExpenditure ReportedExpenditure = FieldDefinitionReportedExpenditure.Instance;
         public static readonly FieldDefinitionApplication Application = FieldDefinitionApplication.Instance;
         public static readonly FieldDefinitionSpendingAssociatedWithPM SpendingAssociatedWithPM = FieldDefinitionSpendingAssociatedWithPM.Instance;
-        public static readonly FieldDefinitionPlannedDate PlannedDate = FieldDefinitionPlannedDate.Instance;
+        public static readonly FieldDefinitionStartApprovalDate StartApprovalDate = FieldDefinitionStartApprovalDate.Instance;
         public static readonly FieldDefinitionAssociatedTaxonomyBranches AssociatedTaxonomyBranches = FieldDefinitionAssociatedTaxonomyBranches.Instance;
         public static readonly FieldDefinitionExternalLinks ExternalLinks = FieldDefinitionExternalLinks.Instance;
         public static readonly FieldDefinitionCurrentYearForPVCalculations CurrentYearForPVCalculations = FieldDefinitionCurrentYearForPVCalculations.Instance;
@@ -150,7 +150,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, PlannedDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, GrantTitle, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, GrantTitle, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -376,8 +376,6 @@ namespace ProjectFirma.Web.Models
                     return PhotoCredit;
                 case FieldDefinitionEnum.PhotoTiming:
                     return PhotoTiming;
-                case FieldDefinitionEnum.PlannedDate:
-                    return PlannedDate;
                 case FieldDefinitionEnum.PrimaryContact:
                     return PrimaryContact;
                 case FieldDefinitionEnum.PriorityArea:
@@ -450,6 +448,8 @@ namespace ProjectFirma.Web.Models
                     return ShowLeadImplementerLogoOnFactSheet;
                 case FieldDefinitionEnum.SpendingAssociatedWithPM:
                     return SpendingAssociatedWithPM;
+                case FieldDefinitionEnum.StartApprovalDate:
+                    return StartApprovalDate;
                 case FieldDefinitionEnum.StatewideVendorNumber:
                     return StatewideVendorNumber;
                 case FieldDefinitionEnum.TagDescription:
@@ -527,7 +527,7 @@ namespace ProjectFirma.Web.Models
         ReportedExpenditure = 80,
         Application = 81,
         SpendingAssociatedWithPM = 85,
-        PlannedDate = 86,
+        StartApprovalDate = 86,
         AssociatedTaxonomyBranches = 87,
         ExternalLinks = 88,
         CurrentYearForPVCalculations = 91,
@@ -877,10 +877,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionSpendingAssociatedWithPM Instance = new FieldDefinitionSpendingAssociatedWithPM(85, @"SpendingAssociatedWithPM", @"Spending Associated with PM", @"<p>The estimated spending allotted to the Performance Measure.</p>");
     }
 
-    public partial class FieldDefinitionPlannedDate : FieldDefinition
+    public partial class FieldDefinitionStartApprovalDate : FieldDefinition
     {
-        private FieldDefinitionPlannedDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionPlannedDate Instance = new FieldDefinitionPlannedDate(86, @"PlannedDate", @"Planned Date", @"<p>The date on which project planning and design began. All projects should have a Planned Date and it may not be a date in the future. Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>");
+        private FieldDefinitionStartApprovalDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionStartApprovalDate Instance = new FieldDefinitionStartApprovalDate(86, @"StartApprovalDate", @"Start/Approval Date", @"<p>The date on which project began.  Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>");
     }
 
     public partial class FieldDefinitionAssociatedTaxonomyBranches : FieldDefinition

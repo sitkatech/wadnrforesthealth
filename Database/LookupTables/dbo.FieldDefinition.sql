@@ -48,7 +48,7 @@ VALUES
 (80, N'ReportedExpenditure', N'Reported Expenditure', N'<p>An expenditure, tied to a Funding Source, as reported by the project implementer.</p>'),
 (81, N'Application', N'Application', N'<p>A project suggested by an program partner that will be reviewed for inclusion in the program. The system administrators are responsible for reviewing, and if appropriate, approving proposals.</p>'),
 (85, N'SpendingAssociatedWithPM', N'Spending Associated with PM', N'<p>The estimated spending allotted to the Performance Measure.</p>'),
-(86, N'PlannedDate', N'Planned Date', N'<p>The date on which project planning and design began. All projects should have a Planned Date and it may not be a date in the future. Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
+(86, N'StartApprovalDate', N'Start/Approval Date', N'<p>The date on which project began.  Contrast with &quot;Approval/Start Date.&quot; For more detailed information, see the definition for &quot;Stage&quot;.</p>'),
 (87, N'AssociatedTaxonomyBranches', N'Associated Taxonomy Branches', N'<p>External&nbsp;programs that are related to the content you are reviewing. You may wish to look up these programs to learn more.</p>'),
 (88, N'ExternalLinks', N'External Links', N'<p>Links to external web pages where you might find additional information.</p>'),
 (91, N'CurrentYearForPVCalculations', N'Current Year for PV Calculations', N'<p>The year to use as the starting point for inflation calculations.</p>'),
