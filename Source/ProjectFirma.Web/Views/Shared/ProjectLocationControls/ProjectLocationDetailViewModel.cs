@@ -25,14 +25,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
     public class ProjectLocationDetailViewModel : FormViewModel
     {
-        public List<ProjectLocationDetailSimple> ProjectLocationDetailSimples { get; set; }
+        public List<WktAndAnnotation> WktAndAnnotations { get; set; }
     }
 
-    public class ProjectLocationDetailSimple
+    public class WktAndAnnotation
     {
         public string Wkt { get; set; }
         public string Annotation { get; set; }
-        public int ProjectLocationTypeID { get; set; }
-        public string ProjectLocationName { get; set; }
     }
 }
