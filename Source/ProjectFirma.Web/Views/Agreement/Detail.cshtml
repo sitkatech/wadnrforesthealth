@@ -121,36 +121,36 @@
                                         <span id="AgreementEndDate">@ViewDataTyped.Agreement.EndDateDisplay</span>
                                     </div>
                                 </div>
-                                @*<div class="row">
+                                <div class="row">
                                     <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementStatus)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementEndDate">@ViewDataTyped.Agreement.AgreementStatus</span>
+                                        <span id="AgreementStatus">@ViewDataTyped.Agreement.AgreementStatus.AgreementStatusName</span>
                                     </div>
-                                </div>*@
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType</span>
+                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType.AgreementTypeName</span>
                                     </div>
                                 </div>
-                                @*<div class="row">
+                                <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.FundingSource)
+                                        @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementType">@ViewDataTyped.Agreement.FundingSource</span>
+                                        <span id="AgreementFundingSource">@ViewDataTyped.Agreement.Grant.GrantNumber</span>
                                     </div>
-                                </div>*@
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementAmount)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementAmount.ToStringCurrency()</span>
+                                        <span id="AgreementAmount">@ViewDataTyped.Agreement.AgreementAmount.ToStringCurrency()</span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -158,12 +158,17 @@
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementNotes)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementType">@ViewDataTyped.Agreement.Notes</span>
+                                        <span id="AgreementNotes">@ViewDataTyped.Agreement.Notes</span>
                                     </div>
                                 </div>
-                                @*  
-                                    Agreement File
-                                *@
+                                @*<div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementFile)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementFile">@ViewDataTyped.Agreement.AgreementFile</span>
+                                    </div>
+                                </div>*@
                             </div>
                             </div>
                         </div>

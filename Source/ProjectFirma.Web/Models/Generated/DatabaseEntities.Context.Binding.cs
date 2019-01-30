@@ -30,6 +30,7 @@ namespace ProjectFirma.Web.Models
         }
         public virtual DbSet<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
+        public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
@@ -146,6 +147,9 @@ namespace ProjectFirma.Web.Models
 
                 case "Agreement":
                     return Agreements.GetAgreement(primaryKey);
+
+                case "AgreementStatus":
+                    return AgreementStatuses.GetAgreementStatus(primaryKey);
 
                 case "AgreementType":
                     return AgreementTypes.GetAgreementType(primaryKey);

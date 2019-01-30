@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int grantID) : this()
+        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int grantID, int? agreementStatusID) : this()
         {
             this.AgreementID = agreementID;
             this.TmpAgreementID = tmpAgreementID;
@@ -47,6 +47,7 @@ namespace ProjectFirma.Web.Models
             this.AgreementTitle = agreementTitle;
             this.OrganizationID = organizationID;
             this.GrantID = grantID;
+            this.AgreementStatusID = agreementStatusID;
         }
 
         /// <summary>
@@ -137,6 +138,7 @@ namespace ProjectFirma.Web.Models
         public string AgreementTitle { get; set; }
         public int OrganizationID { get; set; }
         public int GrantID { get; set; }
+        public int? AgreementStatusID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
@@ -145,6 +147,7 @@ namespace ProjectFirma.Web.Models
         public virtual Region Region { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Grant Grant { get; set; }
+        public virtual AgreementStatus AgreementStatus { get; set; }
 
         public static class FieldLengths
         {

@@ -3,6 +3,7 @@
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Store.Classification" store:Type="Tables" Schema="dbo" />
@@ -104,6 +105,10 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
+      <End Role="AgreementStatus" EntitySet="AgreementStatus" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementType_AgreementTypeID">
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -808,6 +813,7 @@
     <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="AgreementStatusID" Type="int" />
   </EntityType>
   <EntityType Name="AgreementProjectCode">
     <Key>
@@ -816,6 +822,13 @@
     <Property Name="AgreementProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="ProjectCodeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AgreementStatus">
+    <Key>
+      <PropertyRef Name="AgreementStatusID" />
+    </Key>
+    <Property Name="AgreementStatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementStatusName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="AgreementType">
     <Key>
@@ -1963,6 +1976,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
+    <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.Store.AgreementStatus" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementStatus">
+        <PropertyRef Name="AgreementStatusID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="AgreementStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
     <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
