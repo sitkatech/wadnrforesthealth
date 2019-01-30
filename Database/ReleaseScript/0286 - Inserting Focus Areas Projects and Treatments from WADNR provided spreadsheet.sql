@@ -264,6 +264,10 @@ from
 
 go
 
+delete from dbo.ProjectOrganization
+
+go
+
 insert into dbo.ProjectOrganization(
 	ProjectID, 
 	OrganizationID, 
