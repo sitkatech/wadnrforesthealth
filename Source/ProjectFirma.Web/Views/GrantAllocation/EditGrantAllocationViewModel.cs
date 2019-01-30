@@ -89,11 +89,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             OrganizationID = grantAllocation.Grant.OrganizationID;
             GrantStatusID = grantAllocation.Grant.GrantStatusID;
             GrantTypeID = grantAllocation.Grant.GrantTypeID;
-            GrantID = grantAllocation.Grant.GrantID;
-            ProgramIndexID = grantAllocation.ProgramIndex.ProgramIndexID;
+            GrantID = grantAllocation.GrantID;
+            ProgramIndexID = grantAllocation.ProgramIndexID;
             CFDANumber = grantAllocation.Grant.CFDANumber;
             ProjectCodeIDs = grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeID).ToList();
-            FederalFundCodeID = grantAllocation.FederalFundCode.FederalFundCodeID;
+            FederalFundCodeID = grantAllocation.FederalFundCodeID;
             RegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
             StartDate = grantAllocation.StartDate;
@@ -116,7 +116,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.Grant.GrantStatusID = GrantStatusID;
             grantAllocation.Grant.GrantTypeID = GrantTypeID;
             grantAllocation.GrantID = GrantID;
-            //grantAllocation.ProgramIndex.ProgramIndexAbbrev = ProgramIndex != null ? ProgramIndex : String.Empty;
             grantAllocation.ProgramIndexID = ProgramIndexID;
             grantAllocation.Grant.CFDANumber = CFDANumber;
             grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
