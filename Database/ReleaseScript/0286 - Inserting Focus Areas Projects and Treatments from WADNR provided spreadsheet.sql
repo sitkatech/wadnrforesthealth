@@ -231,6 +231,12 @@ values
 
 go
 
+update dbo.Project
+set ProjectApprovalStatusID = 1
+where ProjectApprovalStatusID = 2
+
+go
+
 insert into dbo.AuditLog(
 	PersonID, 
 	AuditLogDate, 
