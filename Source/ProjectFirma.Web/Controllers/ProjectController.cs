@@ -87,7 +87,6 @@ namespace ProjectFirma.Web.Controllers
             var projectTypes = HttpRequestStorage.DatabaseEntities.ProjectTypes.ToList().OrderBy(ap => ap.DisplayName).ToList();
             var primaryContactPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var viewData = new EditProjectViewData(editProjectType,
                 projectTypeDisplayName,
@@ -96,10 +95,43 @@ namespace ProjectFirma.Web.Controllers
                 defaultPrimaryContact,
                 totalExpenditures,
                 projectTypes,
-                projectCustomAttributeTypes,
                 focusAreas
             );
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public PartialViewResult EditProjectAttributes(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var latestNotApprovedUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+            var viewModel = new EditProjectAttributesViewModel(project, latestNotApprovedUpdateBatch != null);
+            return ViewEditProjectAttributes(viewModel, project,EditProjectAttributesType.ExistingProject, project.ProjectType.DisplayName);
+        }
+
+        [HttpPost]
+        [ProjectEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditProjectAttributes(ProjectPrimaryKey projectPrimaryKey, EditProjectAttributesViewModel viewModel)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditProjectAttributes(viewModel, project,EditProjectAttributesType.ExistingProject, project.ProjectType.DisplayName);
+            }
+            viewModel.UpdateModel(project, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditProjectAttributes(EditProjectAttributesViewModel viewModel, Project project, EditProjectAttributesType editProjectAttributesType, string projectTypeDisplayName)
+        {
+            var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
+            var viewData = new EditProjectAttributesViewData(editProjectAttributesType,
+                projectTypeDisplayName,
+                projectCustomAttributeTypes
+            );
+            return RazorPartialView<EditProjectAttributes, EditProjectAttributesViewData, EditProjectAttributesViewModel>(viewData, viewModel);
         }
 
         [CrossAreaRoute]
@@ -184,10 +216,12 @@ namespace ProjectFirma.Web.Controllers
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
+            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, new ProjectCustomAttributes(project).Attributes, false);
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,
                 projectBasicsViewData,
+                projectAttributesViewData,
                 projectLocationSummaryViewData,
                 projectFundingDetailViewData,
                 performanceMeasureExpectedsSummaryViewData,
@@ -218,8 +252,7 @@ namespace ProjectFirma.Web.Controllers
                 userCanEditProposal,
                 projectOrganizationsDetailViewData,
                 classificationSystems,
-                ProjectLocationController.EditProjectBoundingBoxFormID,
-                projectCustomAttributeTypes, projectPeopleDetailViewData,
+                ProjectLocationController.EditProjectBoundingBoxFormID, projectPeopleDetailViewData,
                 treamentActivityGridSpec, treatmentActivityGridDataUrl, editProjectRegionUrl, editProjectPriorityAreaUrl
                 );
             return RazorView<Detail, DetailViewData>(viewData);

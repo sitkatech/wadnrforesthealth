@@ -15,7 +15,9 @@ namespace ProjectFirma.Web.Models
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
         public string ProgramIndexDisplay => ProgramIndexID.HasValue ? ProgramIndex.ProgramIndexAbbrev : string.Empty;
+        // ReSharper disable once InconsistentNaming
         public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID: -1;
+        public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
 
         [NotNull]
         public List<ProjectCode> ProjectCodes
@@ -61,6 +63,7 @@ namespace ProjectFirma.Web.Models
                     convertedProjectCodes.Add(HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == desiredProjectCodeId));
                 }
             }
+            // Deal with null case
             return convertedProjectCodes;
         }
     }

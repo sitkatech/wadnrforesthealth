@@ -589,7 +589,6 @@
           <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
           <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
-          <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
           <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
@@ -611,6 +610,7 @@
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1030,7 +1030,6 @@
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ProjectStageID" ColumnName="ProjectStageID" />
           <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
-          <ScalarProperty Name="ApprovalStartDate" ColumnName="ApprovalStartDate" />
           <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
           <ScalarProperty Name="EstimatedTotalCost" ColumnName="EstimatedTotalCost" />
           <ScalarProperty Name="ProjectLocationPoint" ColumnName="ProjectLocationPoint" />
@@ -1039,6 +1038,7 @@
           <ScalarProperty Name="ProjectLocationSimpleTypeID" ColumnName="ProjectLocationSimpleTypeID" />
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1073,6 +1073,8 @@
           <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
+          <ScalarProperty Name="ProjectAttributesComment" ColumnName="ProjectAttributesComment" />
+          <ScalarProperty Name="ProjectAttributesDiffLog" ColumnName="ProjectAttributesDiffLog" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1244,6 +1246,7 @@
           <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+          <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

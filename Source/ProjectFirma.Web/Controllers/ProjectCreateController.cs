@@ -235,7 +235,7 @@ namespace ProjectFirma.Web.Controllers
             }
             viewModel.UpdateModel(project, CurrentPerson);
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabelPluralized()} successfully saved.");
-            return GoToNextSection(viewModel, project, ProjectCreateSection.ProjectCustomAttributes.ProjectCreateSectionDisplayName);
+            return GoToNextSection(viewModel, project, ProjectCreateSection.ProjectAttributes.ProjectCreateSectionDisplayName);
         }
 
         [HttpGet]

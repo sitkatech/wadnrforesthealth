@@ -65,7 +65,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public IEnumerable<ValidationResult> GetValidationResults()
         {
-            return ProjectCustomAttributes.GetValidationResults();
+            var warnings = new List<string>();
+            return ProjectCustomAttributes.GetValidationResults(out warnings);
         }
     }
 }

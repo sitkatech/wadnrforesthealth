@@ -31,6 +31,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionContacts Contacts = ProjectUpdateSectionContacts.Instance;
         public static readonly ProjectUpdateSectionRegions Regions = ProjectUpdateSectionRegions.Instance;
         public static readonly ProjectUpdateSectionPriorityAreas PriorityAreas = ProjectUpdateSectionPriorityAreas.Instance;
+        public static readonly ProjectUpdateSectionProjectAttributes ProjectAttributes = ProjectUpdateSectionProjectAttributes.Instance;
 
         public static readonly List<ProjectUpdateSection> All;
         public static readonly ReadOnlyDictionary<int, ProjectUpdateSection> AllLookupDictionary;
@@ -40,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Expenditures, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Expenditures, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -140,6 +141,8 @@ namespace ProjectFirma.Web.Models
                     return Photos;
                 case ProjectUpdateSectionEnum.PriorityAreas:
                     return PriorityAreas;
+                case ProjectUpdateSectionEnum.ProjectAttributes:
+                    return ProjectAttributes;
                 case ProjectUpdateSectionEnum.Regions:
                     return Regions;
                 default:
@@ -162,7 +165,8 @@ namespace ProjectFirma.Web.Models
         Organizations = 12,
         Contacts = 13,
         Regions = 14,
-        PriorityAreas = 15
+        PriorityAreas = 15,
+        ProjectAttributes = 16
     }
 
     public partial class ProjectUpdateSectionBasics : ProjectUpdateSection
@@ -241,5 +245,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectUpdateSectionPriorityAreas(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectUpdateSectionPriorityAreas Instance = new ProjectUpdateSectionPriorityAreas(15, @"PriorityAreas", @"Priority Areas", 45, true, 2);
+    }
+
+    public partial class ProjectUpdateSectionProjectAttributes : ProjectUpdateSection
+    {
+        private ProjectUpdateSectionProjectAttributes(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectUpdateSectionProjectAttributes Instance = new ProjectUpdateSectionProjectAttributes(16, @"ProjectAttributes", @"Project Attributes", 22, true, 1);
     }
 }

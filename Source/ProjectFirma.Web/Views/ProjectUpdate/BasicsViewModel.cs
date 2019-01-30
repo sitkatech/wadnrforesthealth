@@ -40,11 +40,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
         public int ProjectStageID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.PlannedDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.StartApprovalDate)]
         public DateTime? PlannedDate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ApprovalStartDate)]
-        public DateTime? ApprovalStartDate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
+        public DateTime? ExpirationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
         public DateTime? CompletionDate { get; set; }
@@ -69,11 +69,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ProjectDescription = projectUpdate.ProjectDescription;
             ProjectStageID = projectUpdate.ProjectStageID;
             PlannedDate = projectUpdate.PlannedDate;
-            ApprovalStartDate = projectUpdate.ApprovalStartDate;
+            ExpirationDate = projectUpdate.ExpirationDate;
             CompletionDate = projectUpdate.CompletionDate;
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
-            ProjectCustomAttributes = new ProjectCustomAttributes(projectUpdate);
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -81,22 +80,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.ProjectDescription = ProjectDescription;
             projectUpdate.ProjectStageID = ProjectStageID;
             projectUpdate.PlannedDate = PlannedDate;
-            projectUpdate.ApprovalStartDate = ApprovalStartDate;
+            projectUpdate.ExpirationDate = ExpirationDate;
             projectUpdate.CompletionDate = CompletionDate;
             projectUpdate.FocusAreaID = FocusAreaID;
-            ProjectCustomAttributes?.UpdateModel(projectUpdate, currentPerson);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ApprovalStartDate < PlannedDate)
-            {
-                yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
-                    FirmaValidationMessages.ImplementationStartYearGreaterThanPlannedDate,
-                    m => m.ApprovalStartDate);
-            }
-
-            if (CompletionDate < ApprovalStartDate)
+            if (CompletionDate < PlannedDate)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear,

@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Models
             AssertFutureYearsCreatedCorrectly(projectUpdateBatch.PerformanceMeasureActualUpdates, project.PerformanceMeasureExpecteds, yearsExpected);
 
             // Set start year
-            project.ApprovalStartDate = new DateTime(2010,1,1);
+            project.PlannedDate = new DateTime(2010,1,1);
             yearsExpected = Enumerable.Range(project.GetImplementationStartYear().Value, currentYear - project.GetImplementationStartYear().Value + 1);
             // we expect the PM expected values to be copied from Start Year to current year
             PerformanceMeasureActualUpdate.CreateFromProject(projectUpdateBatch);

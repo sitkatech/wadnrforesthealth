@@ -16,4 +16,4 @@ values
 (16, 'Contacts', 'Contacts', 26, 1, 1),
 (17, 'Regions', 'Regions', 50, 1, 2),
 (18, 'PriorityAreas', 'Priority Areas', 45, 1, 2),
-(19, 'ProjectCustomAttributes', 'Project Custom Attributes', 22, 1, 1)
+(19, 'ProjectAttributes', 'Project Attributes', 22, 1, 1)

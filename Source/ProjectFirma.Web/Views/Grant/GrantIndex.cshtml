@@ -61,7 +61,7 @@
         // Get current selected grant number from Parent grid for a given rowId
         function getCurrentSelectedGrantNumberInParentGrid(rowId)
         {
-            //console.log('grantGrid onRowSelect - entering');
+            //console.log('getCurrentSelectedGrantNumberInParentGrid('+ rowId +')');
             var grantNumberColumnIndexForParentGrantGrid = grantGrid.getColumnIndexByName('@GrantGridSpec.GrantNumberHiddenColumnName');
             var currentSelectedGrantNumberInParentGrantGrid = grantGrid.grid.cells(rowId, grantNumberColumnIndexForParentGrantGrid).getValue();
             //console.log('grantNumberColumnIndexForParentGrantGrid: ' + grantNumberColumnIndexForParentGrantGrid);
@@ -76,16 +76,18 @@
             var grantAllocationGrid = Sitka.@ViewDataTyped.GrantAllocationGridName;
             var grantNumberColumnIndexForChildGrantGrid = grantAllocationGrid.getColumnIndexByName('@ProjectFirma.Web.Models.FieldDefinition.GrantNumber.FieldDefinitionName');
             //console.log('Grant allocation child grid grant column index: ' + grantNumberColumnIndexForChildGrantGrid);
-            grantAllocationGrid.grid.filterBy(grantNumberColumnIndexForChildGrantGrid, currentSelectedGrantNumberInParentGrantGrid);
             var grantNumberFilterForChildGrantGrid = grantAllocationGrid.grid.getFilterElement(grantNumberColumnIndexForChildGrantGrid);
             //console.log('Got filter element for child grantNumberColumnIndex: ' + grantNumberColumnIndexForChildGrantGrid);
             //console.log('Filter element for child grantNumberColumnIndex: ' + grantNumberFilterForChildGrantGrid);
             grantNumberFilterForChildGrantGrid.value = currentSelectedGrantNumberInParentGrantGrid;
+            grantAllocationGrid.grid.filterByAll();
+
             //console.log('grantGrid onRowSelect - exiting');
         }
 
         grantGrid.grid.attachEvent("onRowSelect", function (rowId)
         {
+            //console.log('grantGrid - onRowSelect - RowID: ' + rowId);
             var currentSelectedGrantNumberInParentGrid = getCurrentSelectedGrantNumberInParentGrid(rowId);
             selectGivenGrantNumberFilterInChildGrid(currentSelectedGrantNumberInParentGrid);
         });

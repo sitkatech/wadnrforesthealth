@@ -101,17 +101,27 @@
     </div>
     <br/>
     <div class="form-horizontal">
-        <div class="form-group no-margin-top col-md-10 col-md-offset-2">
-            <div class="col-sm-4 text-right control-label">
+        <div class="form-group no-margin-top col-md-6">
+            <div class="col-sm-7 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityFootprintAcres)
             </div>
-            <div class="input-group col-sm-3">
+            <div class="input-group col-sm-5">
                 @Html.TextBoxFor(m => m.TreatmentActivityFootprintAcres, new { @class = "form-control", style = "width:100%" })
                 <div class="input-group-addon"><span class="input-group-text">acres</span></div>
                 @Html.ValidationMessageFor(m => m.TreatmentActivityFootprintAcres)
+
             </div>
         </div>
-
+        <div class="form-group no-margin-top col-md-6">
+            <div class="col-sm-7 text-right control-label">
+                @Html.LabelWithSugarFor(m => m.TreatmentActivitySlashAcres)
+            </div>
+            <div class="input-group col-sm-5">
+                @Html.TextBoxFor(m => m.TreatmentActivitySlashAcres, new { @class = "form-control", style = "width:100%" })
+                <div class="input-group-addon"><span class="input-group-text">acres</span></div>
+                @Html.ValidationMessageFor(m => m.TreatmentActivitySlashAcres)
+            </div>
+        </div>
         <div class="form-group no-margin-top col-md-6">
             <div class="col-sm-7 text-right control-label">
                 @Html.LabelWithSugarFor(m => m.TreatmentActivityChippingAcres)

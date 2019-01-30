@@ -51,9 +51,6 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
         {
         }
 
-        /// <summary>
-        /// Needed by the ModelBinder
-        /// </summary>
         public EditViewModel(List<ProjectTypeJson> projectTypeJsonList)
         {
             ProjectTypeJsonList = projectTypeJsonList;
@@ -199,6 +196,14 @@ namespace ProjectFirma.Web.Views.ProjectCustomAttributeType
                 if (options.Select(x => x.ToLower()).HasDuplicates())
                 {
                     yield return new ValidationResult("Options must be unique, remove duplicates.");
+                }
+            }
+
+            if (!(ApplyToAllProjectTypes ?? false))
+            {
+                if (ProjectTypeJsonList.All(x => !x.Selected))
+                {
+                    yield return new ValidationResult("You must choose at least one Project Type if you set Apply to All Project Types to \"No\"");
                 }
             }
         }

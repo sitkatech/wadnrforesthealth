@@ -716,11 +716,7 @@ namespace ProjectFirma.Web.Models
 
         public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProject()
         {
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
-            var projectCustomAttributeTypesForThisProject = projectCustomAttributeTypes
-                .Where(x => x.ApplyToAllProjectTypes || x.ProjectTypeProjectCustomAttributeTypes
-                                .Select(y => y.ProjectTypeID).Contains(this.ProjectTypeID)).ToList();
-            return projectCustomAttributeTypesForThisProject;
+            return ProjectType.GetProjectCustomAttributeTypesForThisProjectType();
         }
 
         public string GetPlannedDate()
@@ -733,14 +729,14 @@ namespace ProjectFirma.Web.Models
             return CompletionDate?.ToShortDateString();
         }
 
-        public string GetApprovalStartDateFormatted()
+        public string GetExpirationDateFormatted()
         {
-            return ApprovalStartDate?.ToShortDateString();
+            return ExpirationDate?.ToShortDateString();
         }
 
         public int? GetImplementationStartYear()
         {
-            return ApprovalStartDate?.Year;
+            return PlannedDate?.Year;
         }
 
         public int? GetCompletionYear()

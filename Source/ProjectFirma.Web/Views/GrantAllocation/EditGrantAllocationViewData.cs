@@ -55,7 +55,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
             GrantNumbers = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
             Regions = regions.ToSelectListWithEmptyFirstRow(x => x.RegionID.ToString(CultureInfo.InvariantCulture), y => y.RegionName);
-            ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
+            //ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
+            ProjectCodes = projectCodes.ToSelectList(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
             ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(
                 x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => y.ProgramIndexAbbrev);
             CFDANumbers = MakeDistinctListOfCFDANumbersGivenGrants(cfdaNumbers).ToSelectListWithEmptyFirstRow(x => x.CFDANumber.ToString(CultureInfo.InvariantCulture), y => y.CFDANumber);

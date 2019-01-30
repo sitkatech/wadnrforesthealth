@@ -164,9 +164,9 @@ namespace ProjectFirma.Web.Controllers
         }
        
         [GrantsViewFeature]
-        public ViewResult GrantDetail(int grantID)
+        public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
         {
-            var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == grantID);
+            var grant = grantPrimaryKey.EntityObject;
             var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant);
             return RazorView<Detail, DetailViewData>(viewData);
         }
