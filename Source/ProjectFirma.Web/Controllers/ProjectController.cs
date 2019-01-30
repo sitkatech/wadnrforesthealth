@@ -88,6 +88,7 @@ namespace ProjectFirma.Web.Controllers
             var primaryContactPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             var defaultPrimaryContact = project?.GetPrimaryContact() ?? CurrentPerson.Organization.PrimaryContactPerson;
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
+            var projectTypeHasBeenSet = true;
             var viewData = new EditProjectViewData(editProjectType,
                 projectTypeDisplayName,
                 ProjectStage.All.Except(new[] {ProjectStage.Application}), organizations,
@@ -95,7 +96,8 @@ namespace ProjectFirma.Web.Controllers
                 defaultPrimaryContact,
                 totalExpenditures,
                 projectTypes,
-                focusAreas
+                focusAreas,
+                projectTypeHasBeenSet
             );
             return RazorPartialView<EditProject, EditProjectViewData, EditProjectViewModel>(viewData, viewModel);
         }

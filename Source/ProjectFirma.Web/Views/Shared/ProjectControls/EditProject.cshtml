@@ -37,6 +37,10 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes, string.Format("Select a {0}", MultiTenantHelpers.GetProjectTypeDisplayNameForProject()))
             @Html.ValidationMessageFor(m => m.ProjectTypeID)
         </div>
+        @if (ViewDataTyped.ProjectTypeHasBeenSet)
+        {
+            <div class="col-xs-12 col-sm-offset-4 col-sm-8"> <em>Warning: Changing the Project Type may delete previously entered data that doesn't apply to a different Project Type.</em></div>
+        }
     </div>
     <div class="form-group">
         <div class="col-xs-4 control-label">
