@@ -113,8 +113,6 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.ValidationMessageFor(m => m.CompletionDate)
         </div>
     </div>
-
-    @Html.EditorFor(m => m.ProjectCustomAttributes, new { ProjectCustomAttributes = ViewDataTyped.ProjectCustomAttributeTypes, colLeft = 4, colRight = 8 })
 </div>
     @Html.HiddenFor(m => m.ProjectID)
     @Html.HiddenFor(m => m.HasExistingProjectUpdate)

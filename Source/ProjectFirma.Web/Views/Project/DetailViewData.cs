@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Views.Project
         public bool UserHasPerformanceMeasureActualManagePermissions { get; }
 
         public string EditProjectUrl { get; }
+        public string EditProjectAttributesUrl { get; }
         public string EditProjectOrganizationsUrl { get; }
         public string EditSimpleProjectLocationUrl { get; }
         public string EditDetailedProjectLocationUrl { get; }
@@ -140,6 +141,9 @@ namespace ProjectFirma.Web.Views.Project
             ProjectStages = projectStages;
 
             EditProjectUrl = project.GetEditUrl();
+
+            EditProjectAttributesUrl = project.GetEditProjectAttributesUrl();
+
             UserHasProjectAdminPermissions = userHasProjectAdminPermissions;
             UserHasEditProjectPermissions = userHasEditProjectPermissions;
             UserHasPerformanceMeasureActualManagePermissions = userHasPerformanceMeasureActualManagePermissions;

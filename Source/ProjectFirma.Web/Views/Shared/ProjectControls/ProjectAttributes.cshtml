@@ -26,26 +26,30 @@ Source code is available upon request via <support@sitkatech.com>.
 @inherits ProjectAttributes
 
 
-<dl class="dl-horizontal">
+<div class="basicsLayout">
     @foreach (var projectCustomAttributeType in ViewDataTyped.ProjectCustomAttributeTypes)
     {
         var projectCustomAttribute = ViewDataTyped.ProjectCustomAttributeSimples.SingleOrDefault(x => x.ProjectCustomAttributeTypeID == projectCustomAttributeType.ProjectCustomAttributeTypeID);
-        <dt style="white-space: normal;">
-            @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
-            {
-                @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
-            }
-            @projectCustomAttributeType.ProjectCustomAttributeTypeName
-        </dt>
-        <dd>
-            @if (projectCustomAttribute != null)
-            {
-               @projectCustomAttribute.ProjectCustomAttributeValueDisplayString
-            }
-            else
-            {
-                <em class="text-muted">None</em>
-            }
-        </dd>
+        <div class="row">
+            <div class="col-sm-3" style="white-space: normal;">
+                @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
+                {
+                    @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
+                }
+                <label>@projectCustomAttributeType.ProjectCustomAttributeTypeName</label>
+            </div>
+            <div class="col-sm-9">
+
+                @if (projectCustomAttribute != null)
+                {
+                    @projectCustomAttribute.ProjectCustomAttributeValueDisplayString
+                }
+                else
+                {
+                    <em class="text-muted">None</em>
+                }
+            </div>
+
+        </div>
     }
-</dl>
+</div>
