@@ -119,7 +119,6 @@
                     @Html.LabelWithSugarFor(m => m.ProjectCodeIDs)
                 </div>
                 <div class="col-xs-2">
-                    @*TODO*@
                     @Html.SearchableMultiSelectDropDownListFor(m => m.ProjectCodeIDs, ViewDataTyped.ProjectCodes, new { @class = "form-control selectpicker" })
                     @Html.ValidationMessageFor(m => m.ProjectCodeIDs)
                 </div>

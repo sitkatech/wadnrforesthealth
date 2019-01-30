@@ -732,14 +732,14 @@ namespace ProjectFirma.Web.Models
             return CompletionDate?.ToShortDateString();
         }
 
-        public string GetApprovalStartDateFormatted()
+        public string GetExpirationDateFormatted()
         {
-            return ApprovalStartDate?.ToShortDateString();
+            return ExpirationDate?.ToShortDateString();
         }
 
         public int? GetImplementationStartYear()
         {
-            return ApprovalStartDate?.Year;
+            return PlannedDate?.Year;
         }
 
         public int? GetCompletionYear()

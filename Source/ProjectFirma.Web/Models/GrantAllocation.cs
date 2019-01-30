@@ -63,6 +63,7 @@ namespace ProjectFirma.Web.Models
                     convertedProjectCodes.Add(HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == desiredProjectCodeId));
                 }
             }
+            // Deal with null case
             return convertedProjectCodes;
         }
     }
