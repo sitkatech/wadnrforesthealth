@@ -43,7 +43,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public decimal? TotalExpenditures { get; }
         public string DefaultPrimaryContactPersonName { get; }
         public bool HasThreeTierTaxonomy { get; }
-        public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
 
 
         public EditProjectViewData(EditProjectType editProjectType,
@@ -54,7 +53,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             Person defaultPrimaryContactPerson,
             decimal? totalExpenditures,
             List<Models.ProjectType> projectTypes,
-            IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes,
             IEnumerable<Models.FocusArea> focusAreas)
         {
             EditProjectType = editProjectType;
@@ -72,7 +70,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             CompletionDateRange = FirmaDateUtilities.YearsForUserInput().ToSelectListWithEmptyFirstRow(x => x.CalendarYear.ToString(CultureInfo.InvariantCulture), x => x.CalendarYearDisplay);
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
             DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
-            ProjectCustomAttributeTypes = projectCustomAttributeTypes;
             FocusAreas = focusAreas.OrderBy(x => x.FocusAreaName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);
         }
     }

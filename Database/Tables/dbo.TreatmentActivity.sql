@@ -25,6 +25,7 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[TreatmentActivityNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProgramIndexID] [int] NULL,
 	[ProjectCodeID] [int] NULL,
+	[TreatmentActivitySlashAcres] [decimal](18, 0) NOT NULL,
  CONSTRAINT [PK_TreatmentActivity_TreatmentActivityID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentActivityID] ASC

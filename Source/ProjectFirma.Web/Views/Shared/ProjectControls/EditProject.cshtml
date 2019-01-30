@@ -96,11 +96,11 @@ Source code is available upon request via <support@sitkatech.com>.
 
     <div class="form-group">
         <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ApprovalStartDate)
+            @Html.LabelWithSugarFor(m => m.ExpirationDate)
         </div>
         <div class="col-xs-8">
-            @Html.EditorFor(m => m.ApprovalStartDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-            @Html.ValidationMessageFor(m => m.ApprovalStartDate)
+            @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+            @Html.ValidationMessageFor(m => m.ExpirationDate)
         </div>
     </div>
 
@@ -113,8 +113,6 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.ValidationMessageFor(m => m.CompletionDate)
         </div>
     </div>
-
-    @Html.EditorFor(m => m.ProjectCustomAttributes, new { ProjectCustomAttributes = ViewDataTyped.ProjectCustomAttributeTypes, colLeft = 4, colRight = 8 })
 </div>
     @Html.HiddenFor(m => m.ProjectID)
     @Html.HiddenFor(m => m.HasExistingProjectUpdate)

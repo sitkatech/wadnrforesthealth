@@ -366,7 +366,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var basicsValidationResult = projectUpdate.ProjectUpdateBatch.ValidateProjectAttributes();
             var updateStatus = GetUpdateStatus(projectUpdate.ProjectUpdateBatch); // note, the way the diff for the basics section is built, it will actually "commit" the updated values to the project, so it needs to be done last, or we need to change the current approach
-            var projectCustomAttributeTypes = HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.ToList();
+            var projectCustomAttributeTypes = projectUpdate.ProjectUpdateBatch.Project.ProjectType
+                .GetProjectCustomAttributeTypesForThisProjectType();
             var viewData = new CustomAttributesViewData(CurrentPerson, projectUpdate, updateStatus, basicsValidationResult, projectCustomAttributeTypes);
             return RazorView<CustomAttributes, CustomAttributesViewData, CustomAttributesViewModel>(viewData, viewModel);
         }
@@ -2601,7 +2602,7 @@ namespace ProjectFirma.Web.Controllers
             var projectType = HttpRequestStorage.DatabaseEntities.ProjectTypes.Single(x =>
                 x.ProjectTypeID == projectCustomAttributes.ProjectTypeIDForCustomAttributes);
             var viewData = new ProjectAttributesViewData(projectType.GetProjectCustomAttributeTypesForThisProjectType(),
-                projectCustomAttributes.Attributes);
+                projectCustomAttributes.Attributes, true);
             var partialViewToString = RenderPartialViewToString(ProjectAttributesPartialViewPath, viewData);
             return partialViewToString;
         }

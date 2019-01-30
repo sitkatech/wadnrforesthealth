@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models
             ProjectDescription = project.ProjectDescription;
             ProjectStageID = project.ProjectStageID;
             PlannedDate = project.PlannedDate;
-            ApprovalStartDate = project.ApprovalStartDate;
+            ExpirationDate = project.ExpirationDate;
             CompletionDate = project.CompletionDate;
             FocusAreaID = project.FocusAreaID;
             EstimatedTotalCost = project.EstimatedTotalCost;
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Models
             project.ProjectDescription = ProjectDescription;
             project.ProjectStageID = ProjectStageID;
             project.PlannedDate = PlannedDate;
-            project.ApprovalStartDate = ApprovalStartDate;
+            project.ExpirationDate = ExpirationDate;
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
@@ -159,7 +159,7 @@ namespace ProjectFirma.Web.Models
 
         public int? GetImplementationStartYear()
         {
-            return ApprovalStartDate?.Year;
+            return PlannedDate?.Year;
         }
 
         public int? GetCompletionYear()
@@ -171,9 +171,9 @@ namespace ProjectFirma.Web.Models
             return CompletionDate?.ToShortDateString();
         }
 
-        public string GetApprovalStartDateFormatted()
+        public string GetExpirationDateFormatted()
         {
-            return ApprovalStartDate?.ToShortDateString();
+            return ExpirationDate?.ToShortDateString();
         }
     }
 }

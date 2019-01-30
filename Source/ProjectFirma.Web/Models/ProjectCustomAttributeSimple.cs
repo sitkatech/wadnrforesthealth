@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
             else
             {
                 ProjectCustomAttributeValueDisplayString =
-                    string.Join(", ", projectCustomAttribute.Values.Select(x => x.AttributeValue));
+                    string.Join(", ", projectCustomAttribute.Values.Select(x => x.AttributeValue).OrderBy(x => x));
             }
         }
     }

@@ -8,7 +8,6 @@ CREATE TABLE [dbo].[Project](
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectName] [varchar](140) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ApprovalStartDate] [datetime] NULL,
 	[CompletionDate] [datetime] NULL,
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,
@@ -30,6 +29,7 @@ CREATE TABLE [dbo].[Project](
 	[FocusAreaID] [int] NULL,
 	[NoRegionsExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[NoPriorityAreasExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ExpirationDate] [datetime] NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC
@@ -77,17 +77,9 @@ REFERENCES [dbo].[ProjectType] ([ProjectTypeID])
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_ProjectType_ProjectTypeID]
 GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ApprovalStartDateLessThanEqualToCompletionDate] CHECK  (([ApprovalStartDate] IS NULL OR [CompletionDate] IS NULL OR [CompletionDate]>=[ApprovalStartDate]))
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_ApprovalStartDateLessThanEqualToCompletionDate]
-GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation] CHECK  ((([ProjectStageID]=(8) OR [ProjectStageID]=(4)) AND [CompletionDate] IS NOT NULL OR NOT ([ProjectStageID]=(8) OR [ProjectStageID]=(4))))
 GO
 ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_CompletionDateHasToBeSetWhenStageIsInCompletedOrPostImplementation]
-GO
-ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_PlannedDateLessThanEqualToImplementationDate] CHECK  (([PlannedDate] IS NULL OR [ApprovalStartDate] IS NULL OR [ApprovalStartDate]>=[PlannedDate]))
-GO
-ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [CK_Project_PlannedDateLessThanEqualToImplementationDate]
 GO
 ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [CK_Project_ProjectCannotHaveProjectStageProposalAndApprovalStatusApproved] CHECK  (([ProjectStageID]<>(1) OR [ProjectApprovalStatusID]<>(3)))
 GO
