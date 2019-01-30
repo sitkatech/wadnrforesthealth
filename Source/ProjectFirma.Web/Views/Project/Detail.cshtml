@@ -146,6 +146,7 @@
                             <div class="panel panelFirma">
                                 <div class="panel-heading panelTitle">
                                     <h3>
+                                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditProjectAttributesUrl, string.Format("Edit {0}", FieldDefinition.ProjectCustomAttribute.GetFieldDefinitionLabel()), 950, ViewDataTyped.UserHasEditProjectPermissions)
                                         @FieldDefinition.Project.FieldDefinitionDisplayName Attributes
                                     </h3>
                                 </div>

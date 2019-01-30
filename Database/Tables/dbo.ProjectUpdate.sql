@@ -7,7 +7,6 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[ProjectUpdateBatchID] [int] NOT NULL,
 	[ProjectStageID] [int] NOT NULL,
 	[ProjectDescription] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[ApprovalStartDate] [datetime] NULL,
 	[CompletionDate] [datetime] NULL,
 	[EstimatedTotalCost] [money] NULL,
 	[ProjectLocationPoint] [geometry] NULL,
@@ -16,6 +15,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
 	[PrimaryContactPersonID] [int] NULL,
 	[FocusAreaID] [int] NULL,
+	[ExpirationDate] [datetime] NULL,
  CONSTRAINT [PK_ProjectUpdate_ProjectUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateID] ASC

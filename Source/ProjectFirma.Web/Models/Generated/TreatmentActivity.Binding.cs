@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int treatmentActivityID, int projectID, DateTime? treatmentActivityStartDate, DateTime? treatmentActivityEndDate, int treatmentActivityStatusID, int? treatmentActivityContactID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, string treatmentActivityNotes, int? programIndexID, int? projectCodeID) : this()
+        public TreatmentActivity(int treatmentActivityID, int projectID, DateTime? treatmentActivityStartDate, DateTime? treatmentActivityEndDate, int treatmentActivityStatusID, int? treatmentActivityContactID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, string treatmentActivityNotes, int? programIndexID, int? projectCodeID, decimal treatmentActivitySlashAcres) : this()
         {
             this.TreatmentActivityID = treatmentActivityID;
             this.ProjectID = projectID;
@@ -54,12 +54,13 @@ namespace ProjectFirma.Web.Models
             this.TreatmentActivityNotes = treatmentActivityNotes;
             this.ProgramIndexID = programIndexID;
             this.ProjectCodeID = projectCodeID;
+            this.TreatmentActivitySlashAcres = treatmentActivitySlashAcres;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int projectID, int treatmentActivityStatusID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres) : this()
+        public TreatmentActivity(int projectID, int treatmentActivityStatusID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, decimal treatmentActivitySlashAcres) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -79,12 +80,13 @@ namespace ProjectFirma.Web.Models
             this.TreatmentActivityHandPileBurnAcres = treatmentActivityHandPileBurnAcres;
             this.TreatmentActivityMachinePileBurnAcres = treatmentActivityMachinePileBurnAcres;
             this.TreatmentActivityOtherTreatmentAcres = treatmentActivityOtherTreatmentAcres;
+            this.TreatmentActivitySlashAcres = treatmentActivitySlashAcres;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public TreatmentActivity(Project project, TreatmentActivityStatus treatmentActivityStatus, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres) : this()
+        public TreatmentActivity(Project project, TreatmentActivityStatus treatmentActivityStatus, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, decimal treatmentActivitySlashAcres) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.TreatmentActivityID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -105,6 +107,7 @@ namespace ProjectFirma.Web.Models
             this.TreatmentActivityHandPileBurnAcres = treatmentActivityHandPileBurnAcres;
             this.TreatmentActivityMachinePileBurnAcres = treatmentActivityMachinePileBurnAcres;
             this.TreatmentActivityOtherTreatmentAcres = treatmentActivityOtherTreatmentAcres;
+            this.TreatmentActivitySlashAcres = treatmentActivitySlashAcres;
         }
 
         /// <summary>
@@ -112,7 +115,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static TreatmentActivity CreateNewBlank(Project project, TreatmentActivityStatus treatmentActivityStatus)
         {
-            return new TreatmentActivity(project, treatmentActivityStatus, default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal));
+            return new TreatmentActivity(project, treatmentActivityStatus, default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal), default(decimal));
         }
 
         /// <summary>
@@ -162,6 +165,7 @@ namespace ProjectFirma.Web.Models
         public string TreatmentActivityNotes { get; set; }
         public int? ProgramIndexID { get; set; }
         public int? ProjectCodeID { get; set; }
+        public decimal TreatmentActivitySlashAcres { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentActivityID; } set { TreatmentActivityID = value; } }
 
