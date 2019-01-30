@@ -31,14 +31,14 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         var projectCustomAttribute = ViewDataTyped.ProjectCustomAttributeSimples.SingleOrDefault(x => x.ProjectCustomAttributeTypeID == projectCustomAttributeType.ProjectCustomAttributeTypeID);
         <div class="row">
-            <div class="col-sm-3" style="white-space: normal;">
+            <div class="@ViewDataTyped.GetClassStringLabel()" style="white-space: normal;">
                 @if (!string.IsNullOrWhiteSpace(projectCustomAttributeType.ProjectCustomAttributeTypeDescription))
                 {
                     @LabelWithSugarForExtensions.GenerateHelpIconImgTag(projectCustomAttributeType.ProjectCustomAttributeTypeName, projectCustomAttributeType.ProjectCustomAttributeTypeDescription.ToHTMLFormattedString(), projectCustomAttributeType.GetDescriptionUrl(), 300, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly).ToHTMLFormattedString()
                 }
                 <label>@projectCustomAttributeType.ProjectCustomAttributeTypeName</label>
             </div>
-            <div class="col-sm-9">
+            <div class="@ViewDataTyped.GetClassStringDisplay()">
 
                 @if (projectCustomAttribute != null)
                 {

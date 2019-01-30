@@ -216,7 +216,7 @@ namespace ProjectFirma.Web.Controllers
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
-            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, new ProjectCustomAttributes(project).Attributes);
+            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, new ProjectCustomAttributes(project).Attributes, false);
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,

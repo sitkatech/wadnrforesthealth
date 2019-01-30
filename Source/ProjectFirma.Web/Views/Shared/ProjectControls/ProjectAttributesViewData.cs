@@ -7,11 +7,23 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
     {
         public IEnumerable<Models.ProjectCustomAttributeType> ProjectCustomAttributeTypes { get; }
         public IList<ProjectCustomAttributeSimple> ProjectCustomAttributeSimples { get; }
+        public bool InDiffMode { get; }
 
-        public ProjectAttributesViewData( IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, IList<ProjectCustomAttributeSimple> projectCustomAttributeSimples)
+        public ProjectAttributesViewData( IEnumerable<Models.ProjectCustomAttributeType> projectCustomAttributeTypes, IList<ProjectCustomAttributeSimple> projectCustomAttributeSimples, bool inDiffMode)
         {
             ProjectCustomAttributeTypes = projectCustomAttributeTypes;
             ProjectCustomAttributeSimples = projectCustomAttributeSimples;
+            InDiffMode = inDiffMode;
+        }
+
+        public string GetClassStringLabel()
+        {
+            return InDiffMode ? "col-sm-4" : "col-sm-3";
+        }
+
+        public string GetClassStringDisplay()
+        {
+            return InDiffMode ? "col-sm-8" : "col-sm-9";
         }
     }
 }
