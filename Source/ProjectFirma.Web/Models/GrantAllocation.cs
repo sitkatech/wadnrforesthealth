@@ -60,9 +60,15 @@ namespace ProjectFirma.Web.Models
             {
                 foreach (var desiredProjectCodeId in desiredProjectCodeIDs)
                 {
+                    // Occurs when user selects <Choose one> from multiselect dropdown. Want to ignore this as a value.
+                    if (desiredProjectCodeId == 0)
+                    {
+                        continue;
+                    }
                     convertedProjectCodes.Add(HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(c => c.ProjectCodeID == desiredProjectCodeId));
                 }
             }
+            // Deal with null case
             return convertedProjectCodes;
         }
     }
