@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.Agreement
             EntityName = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}";
             EditAgreementUrl = agreement.GetEditUrl();
             UserHasEditAgreementPermissions = true;
-            BackToAgreementsText = "Back to all Grant Allocations";
+            BackToAgreementsText = "Back to all Agreements";
             AgreementsListUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(c => c.Index());
         }
     }

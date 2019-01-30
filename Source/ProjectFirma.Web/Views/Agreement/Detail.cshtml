@@ -84,7 +84,7 @@
                                     <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementTitle)
                                     </div>
-                                
+
                                     <div class="col-sm-9">
                                         <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
                                     </div>
@@ -105,22 +105,61 @@
                                         <span id="Organization">@ViewDataTyped.Agreement.Organization.OrganizationName</span>
                                     </div>
                                 </div>
-                                @*  AgreementStatus 
-                                    AgreementType
-                                    FundingSource
-                                    Amount
-                                    StartDate
-                                    EndDate
-                                    Notes
-                                    Agreement File
-                                *@
-                                    @*<div class="col-sm-3">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementStartDate)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementStartDate">@ViewDataTyped.Agreement.StartDateDisplay</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementEndDate)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementEndDate">@ViewDataTyped.Agreement.EndDateDisplay</span>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                    <div class="col-sm-3">
                                         @Html.LabelWithSugarFor(FieldDefinition.AgreementStatus)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
-                                    </div>*@
+                                        <span id="AgreementEndDate">@ViewDataTyped.Agreement.AgreementStatus</span>
+                                    </div>
+                                </div>*@
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType</span>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.FundingSource)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementType">@ViewDataTyped.Agreement.FundingSource</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType</span>
+                                    </div>
+                                </div>
+                                @*  
+                                    FundingSource -- How is funding source tied to Agreements (i.e., how are projects and agreements related?)
+                                    Amount
+                                    Notes
+                                    Agreement File
+                                *@
+                            </div>
                             </div>
                         </div>
                     </div>
