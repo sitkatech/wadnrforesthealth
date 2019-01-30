@@ -12,5 +12,17 @@ namespace ProjectFirma.Web.Models
             return DeleteUrlTemplate.ParameterReplace(agreement.PrimaryKey);
         }
 
+        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.AgreementDetail(UrlTemplate.Parameter1Int)));
+        public static string GetDetailUrl(this Agreement agreement)
+        {
+            return DetailUrlTemplate.ParameterReplace(agreement.AgreementID);
+        }
+
+        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
+        public static string GetEditUrl(this Agreement agreement)
+        {
+            return EditUrlTemplate.ParameterReplace(agreement.AgreementID);
+        }
+
     }
 }
