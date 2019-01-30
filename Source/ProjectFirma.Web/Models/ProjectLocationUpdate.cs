@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectLocationUpdate : IAuditableEntity, IProjectLocation, IHaveSqlGeometry
     {
-        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, ProjectLocationType projectLocationType, string projectLocationName, string annotation) : this(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationName)
+        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, string annotation) : this(projectUpdateBatch, projectLocationGeometry, ProjectLocationType.Other, string.Empty)//todo: tomk fix this ProjectLocationType and Name to actuals
         {
             Annotation = annotation;
         }
@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectLocationUpdates =
                 project.ProjectLocations.Select(
-                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.ProjectLocationType, projectLocationToClone.ProjectLocationName, projectLocationToClone.Annotation)).ToList();
+                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.Annotation)).ToList();
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectLocation> allProjectLocations)
@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Models
                 // Completely rebuild the list
                 projectUpdateBatch.ProjectLocationUpdates.ToList().ForEach(x =>
                 {
-                    var projectLocation = new ProjectLocation(project, x.ProjectLocationGeometry, x.ProjectLocationType, x.ProjectLocationUpdateName, x.Annotation);
+                    var projectLocation = new ProjectLocation(project, x.ProjectLocationGeometry, x.Annotation);
                     allProjectLocations.Add(projectLocation);
                 });
             }

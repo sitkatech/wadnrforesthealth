@@ -1066,13 +1066,11 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates.ToList();
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdates);
             projectUpdateBatch.ProjectLocationUpdates.Clear();
-            if (viewModel.ProjectLocationDetailSimples != null)
+            if (viewModel.WktAndAnnotations != null)
             {
-                foreach (var projectLocationDetailSimple in viewModel.ProjectLocationDetailSimples)
+                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
                 {
-                    var projectLocationType =
-                        ProjectLocationType.All.FirstOrDefault(x => x.ProjectLocationTypeID == projectLocationDetailSimple.ProjectLocationTypeID);
-                    projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(projectLocationDetailSimple.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), projectLocationType, projectLocationDetailSimple.ProjectLocationName, projectLocationDetailSimple.Annotation));
+                    projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
                 }
             }
         }
