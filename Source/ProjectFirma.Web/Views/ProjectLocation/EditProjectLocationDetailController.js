@@ -3,7 +3,7 @@
 // is automatically written to the projectLocationJsons model and will redraw the points on the leaflet map if necessary
 // when making edits via leaflet, leaflet will update the projectLocationJsons model and then if necessary redraw
 // When saving, we simply post the projectLocationJsons model
-var app = angular.module("EditProjectLocationDetailApp", ["ngTextTruncate"]);
+var app = angular.module("EditProjectLocationDetailApp", []);
 
 var controller = app.controller("EditProjectLocationDetailController", function ($scope, $http, angularModelAndViewData) {
     var squareMetersToAcresMultiplier = 0.0002471053821147119;
@@ -96,103 +96,103 @@ var controller = app.controller("EditProjectLocationDetailController", function 
 
         // initialize and draw the projectLocations on the map
         loadExistingProjectLocationsToEditableFeatureGroup();
-        if (!$scope.AngularViewData.IsInCompletedReview) {
-            L.drawLocal.draw.toolbar.buttons.polyline = "Draw a project location as a line – good for roads, fences, pipelines, etc.";
-            L.drawLocal.draw.toolbar.buttons.polygon = "Draw a project location as a polygon – good for buildings, crops, yards, areas, etc.";
-            L.drawLocal.edit.toolbar.buttons.edit = "Edit project location geometries";
-            L.drawLocal.edit.toolbar.buttons.editDisabled = "No project location geometries to edit";
-            L.drawLocal.edit.toolbar.buttons.remove = "Remove project location geometries";
-            L.drawLocal.edit.toolbar.buttons.editRemove = "No project location geometries to remove";
+        //if (!$scope.AngularViewData.IsInCompletedReview) {
+        //    L.drawLocal.draw.toolbar.buttons.polyline = "Draw a project location as a line – good for roads, fences, pipelines, etc.";
+        //    L.drawLocal.draw.toolbar.buttons.polygon = "Draw a project location as a polygon – good for buildings, crops, yards, areas, etc.";
+        //    L.drawLocal.edit.toolbar.buttons.edit = "Edit project location geometries";
+        //    L.drawLocal.edit.toolbar.buttons.editDisabled = "No project location geometries to edit";
+        //    L.drawLocal.edit.toolbar.buttons.remove = "Remove project location geometries";
+        //    L.drawLocal.edit.toolbar.buttons.editRemove = "No project location geometries to remove";
 
-            var polylineOptions = {
-                shapeOptions: {
-                    color: '#02ffff'
-                }
-            };
-            var polygonOptions = {
-                allowIntersection: false, // Restricts shapes to simple polygons
-                drawError: {
-                    color: '#e1e100', // Color the shape will turn when intersects
-                    message: 'Self-intersecting polygons are not allowed.' // Message that will show when intersect
-                },
-                shapeOptions: {
-                    color: '#02ffff'
-                }
-            };
+        //    var polylineOptions = {
+        //        shapeOptions: {
+        //            color: '#02ffff'
+        //        }
+        //    };
+        //    var polygonOptions = {
+        //        allowIntersection: false, // Restricts shapes to simple polygons
+        //        drawError: {
+        //            color: '#e1e100', // Color the shape will turn when intersects
+        //            message: 'Self-intersecting polygons are not allowed.' // Message that will show when intersect
+        //        },
+        //        shapeOptions: {
+        //            color: '#02ffff'
+        //        }
+        //    };
 
-            var drawOptions = {
-                position: 'topleft',
-                draw: {
-                    polyline: _.some(angularModelAndViewData.AngularViewData.ProjectLocationTypeJsons, function (f) {
-                        return f.geometryTypeName === "Line"
-                    }) ? polylineOptions : false,
-                    polygon: _.some(angularModelAndViewData.AngularViewData.ProjectLocationTypeJsons, function (f) {
-                        return f.geometryTypeName === "Polygon"
-                    }) ? polygonOptions : false,
-                    circle: false, // Turns off this drawing tool
-                    rectangle: false,
-                    marker: false
-                },
-                edit: {
-                    featureGroup: projectLocationMap.editableFeatureGroup,
-                    edit: {
-                        maintainColor: true,
-                        opacity: 0.3
-                    },
-                    remove: true
-                }
-            };
-            var drawControl = new L.Control.Draw(drawOptions);
-            projectLocationMap.map.addControl(drawControl);
+        //    var drawOptions = {
+        //        position: 'topleft',
+        //        draw: {
+        //            polyline: _.some(angularModelAndViewData.AngularViewData.ProjectLocationTypeJsons, function (f) {
+        //                return f.geometryTypeName === "Line"
+        //            }) ? polylineOptions : false,
+        //            polygon: _.some(angularModelAndViewData.AngularViewData.ProjectLocationTypeJsons, function (f) {
+        //                return f.geometryTypeName === "Polygon"
+        //            }) ? polygonOptions : false,
+        //            circle: false, // Turns off this drawing tool
+        //            rectangle: false,
+        //            marker: false
+        //        },
+        //        edit: {
+        //            featureGroup: projectLocationMap.editableFeatureGroup,
+        //            edit: {
+        //                maintainColor: true,
+        //                opacity: 0.3
+        //            },
+        //            remove: true
+        //        }
+        //    };
+        //    var drawControl = new L.Control.Draw(drawOptions);
+        //    projectLocationMap.map.addControl(drawControl);
 
-            // when user draws a point via leaflet, we need to add to our json model and redraw
-            projectLocationMap.map.on('draw:created', function (e) {
-                var newLayer = e.layer;
-                projectLocationMap.editableFeatureGroup.addLayer(newLayer);
-                var newProjectLocationJson = $scope.addProjectLocationRow(newLayer.toGeoJSON().geometry);
-                var leafletID = newLayer._leaflet_id;
-                var layer = projectLocationMap.editableFeatureGroup._layers[leafletID];
-                layer.feature = createGeoJSONFeature(null);
-                var feature = layer.feature;
-                feature.properties.projectLocationID = newProjectLocationJson.projectLocationID;
-                newProjectLocationJson.area = $scope.getAreaAndLengthAndGeospatialAttributes(newProjectLocationJson);
-                $scope.toggleProjectLocations(newProjectLocationJson.projectLocationID);
-                bindProjectLocationSelectClickEvent(feature, layer);
-                $scope.$apply();
-            });
+        //    // when user draws a point via leaflet, we need to add to our json model and redraw
+        //    projectLocationMap.map.on('draw:created', function (e) {
+        //        var newLayer = e.layer;
+        //        projectLocationMap.editableFeatureGroup.addLayer(newLayer);
+        //        var newProjectLocationJson = $scope.addProjectLocationRow(newLayer.toGeoJSON().geometry);
+        //        var leafletID = newLayer._leaflet_id;
+        //        var layer = projectLocationMap.editableFeatureGroup._layers[leafletID];
+        //        layer.feature = createGeoJSONFeature(null);
+        //        var feature = layer.feature;
+        //        feature.properties.projectLocationID = newProjectLocationJson.projectLocationID;
+        //        newProjectLocationJson.area = $scope.getAreaAndLengthAndGeospatialAttributes(newProjectLocationJson);
+        //        $scope.toggleProjectLocations(newProjectLocationJson.projectLocationID);
+        //        bindProjectLocationSelectClickEvent(feature, layer);
+        //        $scope.$apply();
+        //    });
 
-            // when user edits a point via leaflet, we need to ensure that the new latlng of the point is in the acceptable bounds (i.e. Columbia River Basin)
-            // and update the lat lng in the json model
-            projectLocationMap.map.on('draw:edited', function (e) {
-                var layers = e.layers;
-                layers.eachLayer(function (layer) {
-                    var projectLocationID = layer.feature.properties.projectLocationID;
-                    var projectLocationJson = getProjectLocationFromProjectLocationJsonsByProjectLocationID(projectLocationID);
-                    var projectLocationGeometry = layer.toGeoJSON().geometry;
-                    projectLocationJson.projectLocationGeometry = JSON.stringify(projectLocationGeometry);
-                    projectLocationJson.projectLocationGeometryType = displayUserFriendlyGeometryType(projectLocationGeometry);
-                    projectLocationJson.area = $scope.getAreaAndLengthAndGeospatialAttributes(projectLocationJson);
-                    $scope.toggleProjectLocations(projectLocationID);
-                });
-                $scope.$apply();
-            });
+        //    // when user edits a point via leaflet, we need to ensure that the new latlng of the point is in the acceptable bounds (i.e. Columbia River Basin)
+        //    // and update the lat lng in the json model
+        //    projectLocationMap.map.on('draw:edited', function (e) {
+        //        var layers = e.layers;
+        //        layers.eachLayer(function (layer) {
+        //            var projectLocationID = layer.feature.properties.projectLocationID;
+        //            var projectLocationJson = getProjectLocationFromProjectLocationJsonsByProjectLocationID(projectLocationID);
+        //            var projectLocationGeometry = layer.toGeoJSON().geometry;
+        //            projectLocationJson.projectLocationGeometry = JSON.stringify(projectLocationGeometry);
+        //            projectLocationJson.projectLocationGeometryType = displayUserFriendlyGeometryType(projectLocationGeometry);
+        //            projectLocationJson.area = $scope.getAreaAndLengthAndGeospatialAttributes(projectLocationJson);
+        //            $scope.toggleProjectLocations(projectLocationID);
+        //        });
+        //        $scope.$apply();
+        //    });
 
-            // when user deletes a point via leaflet, we need to remove from the json model
-            // if the point deleted is the selected one, we need to change the selected point to be the first point in the grid
-            projectLocationMap.map.on('draw:deleted', function (e) {
-                var layers = e.layers;
-                var projectLocationIDsDeleted = [];
-                layers.eachLayer(function (layer) {
-                    var projectLocationID = layer.feature.properties.projectLocationID;
-                    projectLocationIDsDeleted.push(projectLocationID);
-                    deleteProjectLocationRow(projectLocationID);
-                });
-                if (_.indexOf(projectLocationIDsDeleted, $scope.selectedProjectLocationID) >= 0) {
-                    $scope.toggleProjectLocations($scope.AngularModel.projectLocationJsons.length > 0 ? $scope.AngularModel.projectLocationJsons[0].projectLocationID : null);
-                }
-                $scope.$apply();
-            });
-        }
+        //    // when user deletes a point via leaflet, we need to remove from the json model
+        //    // if the point deleted is the selected one, we need to change the selected point to be the first point in the grid
+        //    projectLocationMap.map.on('draw:deleted', function (e) {
+        //        var layers = e.layers;
+        //        var projectLocationIDsDeleted = [];
+        //        layers.eachLayer(function (layer) {
+        //            var projectLocationID = layer.feature.properties.projectLocationID;
+        //            projectLocationIDsDeleted.push(projectLocationID);
+        //            deleteProjectLocationRow(projectLocationID);
+        //        });
+        //        if (_.indexOf(projectLocationIDsDeleted, $scope.selectedProjectLocationID) >= 0) {
+        //            $scope.toggleProjectLocations($scope.AngularModel.projectLocationJsons.length > 0 ? $scope.AngularModel.projectLocationJsons[0].projectLocationID : null);
+        //        }
+        //        $scope.$apply();
+        //    });
+        //}
         projectLocationMap.map.addLayer(projectLocationMap.editableFeatureGroup);
 
         var selectedProjectLocationID = $scope.AngularModel.projectLocationJsons.length > 0 ? $scope.AngularModel.projectLocationJsons[0].projectLocationID : null;
@@ -251,20 +251,20 @@ var controller = app.controller("EditProjectLocationDetailController", function 
     };
 
     $scope.deleteProjectLocationRowAndRefreshMap = function (projectLocation) {
-        if (!$scope.AngularViewData.IsInCompletedReview) {
-            var projectLocationID = projectLocation.projectLocationID;
-            deleteProjectLocationRow(projectLocationID);
-            projectLocationMap.editableFeatureGroup.eachLayer(function (layer) {
-                if (projectLocationID == layer.feature.properties.projectLocationID) {
-                    projectLocationMap.editableFeatureGroup.removeLayer(layer);
-                }
-            });
+        //if (!$scope.AngularViewData.IsInCompletedReview) {
+        //    var projectLocationID = projectLocation.projectLocationID;
+        //    deleteProjectLocationRow(projectLocationID);
+        //    projectLocationMap.editableFeatureGroup.eachLayer(function (layer) {
+        //        if (projectLocationID == layer.feature.properties.projectLocationID) {
+        //            projectLocationMap.editableFeatureGroup.removeLayer(layer);
+        //        }
+        //    });
 
-            if (projectLocationID == $scope.selectedProjectLocationID) {
-                $scope.selectedProjectLocationID = $scope.AngularModel.projectLocationJsons.length > 0 ? $scope.AngularModel.projectLocationJsons[0].projectLocationID : null;
-            }
-            $scope.toggleProjectLocations($scope.selectedProjectLocationID);
-        }
+        //    if (projectLocationID == $scope.selectedProjectLocationID) {
+        //        $scope.selectedProjectLocationID = $scope.AngularModel.projectLocationJsons.length > 0 ? $scope.AngularModel.projectLocationJsons[0].projectLocationID : null;
+        //    }
+        //    $scope.toggleProjectLocations($scope.selectedProjectLocationID);
+        //}
     };
 
     $scope.isSelectedProjectLocation = function (projectLocation) {
@@ -282,16 +282,16 @@ var controller = app.controller("EditProjectLocationDetailController", function 
     };
 
     $scope.getSelectableProjectLocationTypes = function (projectLocation) {
-        return $scope.AngularViewData.ProjectLocationTypeJsons;
+        return null; //$scope.AngularViewData.ProjectLocationTypeJsons;
         // return _.filter($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
         //     return f.geometryTypeName == projectLocation.projectLocationGeometryType;
         // });
     };
 
     $scope.getProjectLocationTypeName = function (projectLocationTypeID) {
-        var projectLocationType = _.find($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
-            return parseInt(f.projectLocationTypeID) == parseInt(projectLocationTypeID);
-        });
+        //var projectLocationType = _.find($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
+        //    return parseInt(f.projectLocationTypeID) == parseInt(projectLocationTypeID);
+        //});
         if (projectLocationType != null) {
             return projectLocationType.projectLocationTypeName;
         }
@@ -299,9 +299,10 @@ var controller = app.controller("EditProjectLocationDetailController", function 
     };
 
     $scope.isProjectLocationTypeValidForGeometryType = function (projectLocationTypeID, geometryType) {
-        return _.find($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
-            return f.geometryTypeName == geometryType && parseInt(f.projectLocationTypeID) == parseInt(projectLocationTypeID);
-        });
+        return null;
+        //_.find($scope.AngularViewData.ProjectLocationTypeJsons, function (f) {
+        //    return f.geometryTypeName == geometryType && parseInt(f.projectLocationTypeID) == parseInt(projectLocationTypeID);
+        //});
     };
 
     $scope.getProjectLocationsWithProjectLocationTypesNotAlignedWithGeometryType = function () {
@@ -393,15 +394,12 @@ var controller = app.controller("EditProjectLocationDetailController", function 
     };
 
     // this is the call that initializes the map and worksites
-    var projectLocationMap = new ProjectFirmaMaps.Map($scope.AngularViewData.ProjectLocationMapInitJson);
+    var projectLocationMap = new ProjectFirmaMaps.Map($scope.AngularViewData.EditProjectLocationDetailMapInitJson, null);
 
-    projectLocationMap.loadMapLayers(function () {
-
-
-
-        initializeLeafletMap();
-        $scope.resetBoundsToExtentOfLayerGroups(projectLocationMap.map, [projectLocationMap.editableFeatureGroup]);
-    });
+    //projectLocationMap.loadMapLayers(function () {
+    //    initializeLeafletMap();
+    //    $scope.resetBoundsToExtentOfLayerGroups(projectLocationMap.map, [projectLocationMap.editableFeatureGroup]);
+    //});
 
     $scope.resetBoundsToExtentOfLayerGroups = function (map, layerGroups) {
         if (layerGroups.length > 0) {

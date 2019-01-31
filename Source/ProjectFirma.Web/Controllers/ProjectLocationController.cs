@@ -32,6 +32,8 @@ using LtInfo.Common.DbSpatial;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Map;
 using ProjectFirma.Web.Views.ProjectLocation;
+using System;
+using GeoJSON.Net.Feature;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -76,11 +78,48 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult EditProjectLocationDetail(ProjectPrimaryKey projectPrimaryKey)//todo story 1444
         {
             var project = projectPrimaryKey.EntityObject;
+            var mapDivID = $"projectLocationDetailMap_{project.EntityID}";
             var viewModel = new EditProjectLocationDetailViewModel();
+            
+            
+            var gridDataUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(x => x.EditProjectLocationDetailGridJsonData());
+
+
+            var detailedLocationGeoJsonFeatureCollection = project.DetailedLocationToGeoJsonFeatureCollection();
+            var editableLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
+            var layers = MapInitJson.GetProjectLocationSimpleMapLayer(project);
+            //layers.Add(editableLayerGeoJson);
+            var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, boundingBox);
+
+            var editLayer = new LayerGeoJson("EditProjectLocationDetailLayer", new FeatureCollection(),
+                FirmaHelpers.DefaultColorRange.FirstOrDefault(), 0.8m, LayerInitialVisibility.Show);
+
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
-            var viewData = new EditProjectLocationDetailViewData(CurrentPerson, string.Empty, string.Empty, string.Empty, string.Empty, firmaPage);
+            var viewData = new EditProjectLocationDetailViewData(CurrentPerson, firmaPage, gridDataUrl, projectPrimaryKey.PrimaryKeyValue, mapInitJson, editLayer);
             return RazorView<EditProjectLocationDetail, EditProjectLocationDetailViewData, EditProjectLocationDetailViewModel>(viewData, viewModel);
         }
+
+        public GridJsonNetJObjectResult<ProjectLocation> EditProjectLocationDetailGridJsonData()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [ProjectEditAsAdminFeature]
+        public ViewResult EditProjectLocationDetail(ProjectPrimaryKey projectPrimaryKey, EditProjectLocationDetailViewModel viewModel)//todo story 1444
+        {
+            throw new System.NotImplementedException();
+
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public ViewResult UploadGisFile(int projectId)
+        {
+            throw new System.NotImplementedException();
+        }
+
 
         [HttpGet]
         [ProjectEditAsAdminFeature]

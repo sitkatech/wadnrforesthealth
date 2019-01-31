@@ -32,9 +32,6 @@ Source code is available upon request via <support@sitkatech.com>.
 
     }
 
-
-    <script type="text/javascript" src="~/Content/angular/angular.min.js"></script>
-
     <script type="text/javascript" src="~/Content/angular/angular-sanitize.min.js"></script>
     @*<script type="text/javascript" src="/ng-text-truncate-master/ng-text-truncate.js"></script>*@
 
@@ -44,26 +41,26 @@ Source code is available upon request via <support@sitkatech.com>.
     <script type="text/javascript" th:inline="javascript">
             angular.module("EditProjectLocationDetailApp").factory("angularModelAndViewData", function () {
                 return {
-                    AngularModel: [[@Html.Raw(JObject.FromObject(Model))]],
-                    AngularViewData: [[@Html.Raw(JObject.FromObject(ViewDataTyped.AngularViewData))]]
+                    AngularModel: @Html.Raw(JObject.FromObject(Model)),
+                    AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.AngularViewData))
                 };
             });
             jQuery(function () {
                 // Override Dhtmlxgrid reset button to work in modal
-                Sitka.projectAndProjectLocationTypeGrid.clearAllCookies = function () {
-                    this.grid.clearConfigCookie();
-                    this.clearSavedFilterValues();
-                    Sitka.Methods.eraseCookie(this.getGridCookieName() + "filterVisible");
+                //Sitka.projectAndProjectLocationTypeGrid.clearAllCookies = function () {
+                //    this.grid.clearConfigCookie();
+                //    this.clearSavedFilterValues();
+                //    Sitka.Methods.eraseCookie(this.getGridCookieName() + "filterVisible");
 
-                    jQuery(this.grid.entBox).find(".filter :input").val("").trigger("keydown").trigger("change");
-                };
+                //    jQuery(this.grid.entBox).find(".filter :input").val("").trigger("keydown").trigger("change");
+                //};
                 var uploadGisInputTypeInput = jQuery("#uploadGisInputType");
                 uploadGisInputTypeInput.on("change", function (event) {
                     jQuery(".uploadGisInputFileHelpBlock").hide();
                     var selectedInputType = jQuery(event.target).val();
                     if (!Sitka.Methods.isUndefinedNullOrEmpty(selectedInputType)) {
                         jQuery(".uploadGidInputFileGroup").show();
-                        jQuery(".uploadGisInputFileHelpBlock[data-uploadgistypeid=" + selectedInputType + "]").show()
+                        jQuery(".uploadGisInputFileHelpBlock[data-uploadgistypeid=" + selectedInputType + "]").show();
                         jQuery(".uploadGisSubmit").prop("disabled", false);
                     } else {
                         jQuery(".uploadGidInputFileGroup").hide();
@@ -103,7 +100,9 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
 
         <div class="clearfix"></div>
+
         <div id="@ViewDataTyped.AngularViewData.EditProjectLocationDetailMapInitJson.MapDivID" class="editMap"></div>
+
     </div>
 
     <form method="POST" id="projectLocationsForm" name="projectLocationsForm" action="@ViewDataTyped.PostUrl" @*th:object="@ViewModel"*@ data-ng-submit="reprojectGeometries()">
@@ -112,7 +111,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <table class="table table-bordered table-projectLocations">
                 <thead>
                     <tr>
-                        <th data-ng-if="!AngularViewData.IsInCompletedReview"></th>
+                        <th @*data-ng-if="!AngularViewData.IsInCompletedReview"*@></th>
                         <th style="width: 150px">Feature Name</th>
                         <th>Feature</th>
                         <th>Location Type</th>
@@ -124,7 +123,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
                     data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)">
                     @* trash icon for deleting *@
-                    <td data-ng-if="!AngularViewData.isInCompletedReview">
+                    <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
                         <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation)">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
@@ -133,10 +132,10 @@ Source code is available upon request via <support@sitkatech.com>.
                     <td style="width: 150px">
                         <input type="text" name="projectLocationJsons[{{$index}}].projectLocationName"
                                data-ng-model="projectLocation.projectLocationName" style="width: 100%" required maxlength="200"/>
-                        <div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
-                        </div>
+                        </div>*@
                         <input type="hidden" name="projectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}"/>
                     </td>
                     @* feature (line, point, poly) *@
@@ -155,18 +154,18 @@ Source code is available upon request via <support@sitkatech.com>.
                                 {{projectLocationType.projectLocationTypeName}}
                             </option>
                         </select>
-                        <div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>
-                        </div>
+                        </div>*@
                     </td>
                     @* notes/annotation *@
                     <td style="width: 250px">
                         <input type="text" name="projectLocationJsons[{{$index}}].notes" data-ng-model="projectLocation.notes" style="width: 100%" maxlength="500"/>
-                        <div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
-                        </div>
+                        </div>*@
                     </td>
                 </tr>
             </table>
@@ -174,24 +173,10 @@ Source code is available upon request via <support@sitkatech.com>.
                 *Enter Width of proposed construction area. The DDCT calculation will use this width.
                 <span ng-show="AngularModel.projectLocationJsons.length !== 0">
                     <br />ProjectLocation Type you're looking for not listed? Make sure you selected the most appropriate Project Type on the
-                    <a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a> page.
+                    @*<a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a>*@ page.
                 </span>
             </p>
         </div>
-
-        <div class="wizardSubHeader previewDdctSubHeader">
-            <h2>Preliminary ProjectLocation Density Calculation Tool (DDCT) Results</h2>
-            <button @*th:if="@!ViewData.angularViewData.isInCompletedReview"*@ class="btn btn-primary previewButton"
-                    type="button" data-ng-click="fetchDdctPreview()"
-                    data-ng-disabled="previewTriggered|| !AngularModel.projectLocationJsons.length">
-                <i class="glyphicon glyphicon-refresh"></i>
-                Refresh DDCT Preview
-            </button>
-        </div>
-
-
-
-
 
         @*<div class="alert alert-danger" role="alert" data-ng-repeat="projectLocationJson in getProjectLocationsWithProjectLocationTypesNotAlignedWithGeometryType()">
             For ProjectLocation "{{projectLocationJson.projectLocationName}}", you indicated you have a "{{getProjectLocationTypeName(projectLocationJson.projectLocationTypeID)}}" ProjectLocation Type, yet represented it using a {{projectLocationJson.projectLocationGeometryType}}. While this is allowed, please make sure this is what you want to do.
@@ -270,8 +255,6 @@ Source code is available upon request via <support@sitkatech.com>.
 
     @*<div th:replace="proposedProject/ProjectAndProjectLocationType :: projectAndProjectLocationType"></div>*@
 </div>
-<div layout:fragment="javascriptWizard" th:remove="tag">
 
-</div>
 
 

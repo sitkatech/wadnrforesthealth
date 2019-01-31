@@ -1,24 +1,23 @@
-﻿using ProjectFirma.Web.Models;
+﻿using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProjectLocation
 {
     public class EditProjectLocationDetailViewData : FirmaViewData
     {
-        public EditProjectLocationDetailViewData(Person currentPerson, string postUrl, string uploadGisUrl,
-            string basicsPageUrl, string editProjectLocationDetailGridDataUrl, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public EditProjectLocationDetailViewData(Person currentPerson, Models.FirmaPage firmaPage, string editProjectLocationDetailGridDataUrl, int projectId, MapInitJson mapInitJson, LayerGeoJson editProjectLocationLayerGeoJson) : base(currentPerson, firmaPage)
         {
-            PostUrl = postUrl;
-            UploadGisUrl = uploadGisUrl;
-            BasicsPageUrl = basicsPageUrl;
+            PostUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(x => x.EditProjectLocationDetail(projectId));//todo actually hit the httpPost action
+            UploadGisUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(x => x.UploadGisFile(projectId));
             EditProjectLocationDetailGridDataUrl = editProjectLocationDetailGridDataUrl;
-            
+            AngularViewData = new AngularViewDataForEditProjectLocationDetail(mapInitJson, projectId, editProjectLocationLayerGeoJson);
 
         }
 
         public AngularViewDataForEditProjectLocationDetail AngularViewData { get; set; }
         public string PostUrl { get; set; }
         public string UploadGisUrl { get; set; }
-        public string BasicsPageUrl { get; set; }
         private string EditProjectLocationDetailGridDataUrl { get; set; }
     }
 
@@ -33,13 +32,13 @@ namespace ProjectFirma.Web.Views.ProjectLocation
 
 
         public AngularViewDataForEditProjectLocationDetail(MapInitJson editProjectLocationDetailMapInitJson,
-            /*List<ProjectLocationTypeJson> projectLocationTypeJsons,*/ Models.Project project,
+            /*List<ProjectLocationTypeJson> projectLocationTypeJsons,*/ int projectId,
             LayerGeoJson editProjectLocationDetailLayerGeoJson)
         {
             EditProjectLocationDetailMapInitJson = editProjectLocationDetailMapInitJson;
             //ProjectLocationTypeJsons = projectLocationTypeJsons;
 
-            ProjectID = project.ProjectID;
+            ProjectID = projectId;
             EditProjectLocationDetailLayerGeoJson = editProjectLocationDetailLayerGeoJson;
 
         }
