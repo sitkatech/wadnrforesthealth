@@ -43,6 +43,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
         public decimal? TotalExpenditures { get; }
         public string DefaultPrimaryContactPersonName { get; }
         public bool HasThreeTierTaxonomy { get; }
+        public bool ProjectTypeHasBeenSet { get; }
 
 
         public EditProjectViewData(EditProjectType editProjectType,
@@ -53,7 +54,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             Person defaultPrimaryContactPerson,
             decimal? totalExpenditures,
             List<Models.ProjectType> projectTypes,
-            IEnumerable<Models.FocusArea> focusAreas)
+            IEnumerable<Models.FocusArea> focusAreas,
+            bool projectTypeHasBeenSet)
         {
             EditProjectType = editProjectType;
             ProjectTypeDisplayName = projectTypeDisplayName;
@@ -71,6 +73,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             HasThreeTierTaxonomy = MultiTenantHelpers.IsTaxonomyLevelTrunk();
             DefaultPrimaryContactPersonName = DefaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
             FocusAreas = focusAreas.OrderBy(x => x.FocusAreaName).ToSelectListWithEmptyFirstRow(x => x.FocusAreaID.ToString(CultureInfo.InvariantCulture), y => y.FocusAreaName);
+            ProjectTypeHasBeenSet = projectTypeHasBeenSet;
         }
     }
 }
