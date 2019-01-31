@@ -29,6 +29,8 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using DetailViewData = ProjectFirma.Web.Views.GrantAllocation.DetailViewData;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -143,7 +145,9 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation);
+            var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
+            var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, taxonomyLevel);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
     }

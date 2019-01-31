@@ -32,6 +32,7 @@
 @using LtInfo.Common.ModalDialog
 @using MoreLinq
 @using ProjectFirma.Web.Views.ProjectFunding
+@using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @using ProjectFirma.Web.Views.Shared.ProjectDocument
 @using ProjectFirma.Web.Views.Shared.ProjectOrganization
 @using ProjectFirma.Web.Views.Shared.ProjectPerson
@@ -91,113 +92,7 @@
                             </h3>
                         </div>
                         <div class="panel-body">
-                            <div class="basicsLayout">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="Name">Name</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="Name">@ViewDataTyped.GrantAllocation.ProjectName</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="ShortName">Short Name</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="ShortName"></span>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="Status">Status</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="Status">@ViewDataTyped.GrantAllocation.Grant.GrantStatus.GrantStatusName</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="Type">Type</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="Type">@ViewDataTyped.GrantAllocation.Grant.GrantTypeDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="GrantNumber">Grant Number</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="GrantNumber">@ViewDataTyped.GrantAllocation.Grant.GrantNumber</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="ProgramIndex">Program Index (PI)</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="ProgramIndex">@ViewDataTyped.GrantAllocation.ProgramIndexDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="CFDA">CFDA</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="CFDA">@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="ProjectCode">Project Code</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodesAsCsvString</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="Region">Region</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="Region">@ViewDataTyped.GrantAllocation.RegionNameDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="AllocationAmount">Allocation Amount</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AllocationAmount">@ViewDataTyped.GrantAllocation.AllocationAmount.ToStringCurrency()</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="StartDate">Start Date</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="StartDate">@ViewDataTyped.GrantAllocation.StartDateDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="EndDate">End Date</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="EndDate">@ViewDataTyped.GrantAllocation.EndDateDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label for="FederalFundCode">Federal Fund Code</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="FederalFundCode">@ViewDataTyped.GrantAllocation.FederalFundCodeDisplay</span>
-                                    </div>
-                                </div>
-                            </div>
+                            @{ GrantAllocationBasics.RenderPartialView(Html, ViewDataTyped.GrantAllocationBasicsViewData);}
                         </div>
                     </div>
                 </div>

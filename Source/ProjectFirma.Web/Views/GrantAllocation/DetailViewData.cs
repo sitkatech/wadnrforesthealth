@@ -37,16 +37,20 @@ using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using ProjectFirma.Web.Views.Shared.TextControls;
 using ProjectFirma.Web.Views.TreatmentActivity;
+using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class DetailViewData : GrantAllocationViewData
     {
-        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation)
+        public GrantAllocationBasicsViewData GrantAllocationBasicsViewData { get; }
+        
+        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation, GrantAllocationBasicsViewData grantAllocationBasicsViewData)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.ProjectName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
+            GrantAllocationBasicsViewData = grantAllocationBasicsViewData;
         }
     }
 }
