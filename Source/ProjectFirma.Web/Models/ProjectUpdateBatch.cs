@@ -289,6 +289,8 @@ namespace ProjectFirma.Web.Models
 
         public void DeleteProjectAttributeUpdates()
         {
+            var values = ProjectCustomAttributeUpdates.SelectMany(x => x.ProjectCustomAttributeUpdateValues).ToList();
+            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdateValues.DeleteProjectCustomAttributeUpdateValue(values);
             HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeUpdates.DeleteProjectCustomAttributeUpdate(ProjectCustomAttributeUpdates);
             RefreshFromDatabase(ProjectCustomAttributeUpdates);
         }

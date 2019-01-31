@@ -104,6 +104,20 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             project.CompletionDate = CompletionDate;
             project.EstimatedTotalCost = EstimatedTotalCost;
             project.FocusAreaID = FocusAreaID;
+            var projectType =
+                HttpRequestStorage.DatabaseEntities.ProjectTypes.SingleOrDefault(x =>
+                    x.ProjectTypeID == project.ProjectTypeID);
+            var appropriateTypesOfProjectAttributes = projectType != null
+                ? projectType.GetProjectCustomAttributeTypesForThisProjectType()
+                : HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeTypes.Where(x => x.ApplyToAllProjectTypes)
+                    .ToList();
+            var badProjectAttributes = project.ProjectCustomAttributes.Where(pca =>
+                !appropriateTypesOfProjectAttributes.Select(x => x.ProjectCustomAttributeTypeID)
+                    .Contains(pca.ProjectCustomAttributeTypeID)).ToList();
+            var values = badProjectAttributes.SelectMany(x => x.ProjectCustomAttributeValues).ToList();
+            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributeValues.DeleteProjectCustomAttributeValue(values);
+            HttpRequestStorage.DatabaseEntities.ProjectCustomAttributes.DeleteProjectCustomAttribute(badProjectAttributes);
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
