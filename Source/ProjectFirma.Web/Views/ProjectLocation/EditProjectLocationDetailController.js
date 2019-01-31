@@ -3,9 +3,9 @@
 // is automatically written to the projectLocationJsons model and will redraw the points on the leaflet map if necessary
 // when making edits via leaflet, leaflet will update the projectLocationJsons model and then if necessary redraw
 // When saving, we simply post the projectLocationJsons model
-var app = angular.module("ProjectLocationDetailApp", ["ngTextTruncate"]);
+var app = angular.module("EditProjectLocationDetailApp", ["ngTextTruncate"]);
 
-var controller = app.controller("ProjectLocationDetailController", function ($scope, $http, angularModelAndViewData) {
+var controller = app.controller("EditProjectLocationDetailController", function ($scope, $http, angularModelAndViewData) {
     var squareMetersToAcresMultiplier = 0.0002471053821147119;
     var feetToMetersMultiplier = 0.3048;
 
@@ -414,99 +414,7 @@ var controller = app.controller("ProjectLocationDetailController", function ($sc
         }
     };
 
-    $scope.fetchDdctPreview = function () {
-        jQuery(".previewDdctAlert").alert("close");
-        $scope.previewTriggered = true;
 
-        jQuery(".ddctResultContent").hide();
-        jQuery(".ddctResultLoading").show();
-        previewMapDiv.css("display", "");
-        previewMapDiv.addClass("hiddenWhileLoading");
-
-        var postData = { "projectID": $scope.AngularViewData.ProjectID };
-        for (var i = 0; i < $scope.AngularModel.projectLocationJsons.length; i++) {
-            var projectLocationJson = $scope.AngularModel.projectLocationJsons[i];
-            postData['previewProjectLocations[' + i + '].projectLocationGeometry'] = JSON.stringify($scope.getReprojectedGeoJSON(projectLocationJson));
-            postData['previewProjectLocations[' + i + '].width'] = projectLocationJson.width;
-        }
-
-        //jQuery.ajax($scope.AngularViewData.previewDdctUrl, {
-        //    "method": "POST",
-        //    "data": postData,
-        //    "success": function (data) {
-        //        if (data.errors) {
-        //            handlePreviewDdctError(data.errors);
-        //            return;
-        //        }
-
-        //        jQuery(".ddctResultsContainer").html(jQuery(data.ddctTableHtml));
-        //        var previewMapLayerGroups = [];
-        //        var projectLocationsLayerGeoJson = previewMap.addSingleVectorLayer(
-        //            // Recreate layer using incoming geometry data
-        //            new LayerForProjectLocationPage(
-        //                $scope.AngularViewData.projectLocationLayerGeoJson.LayerName,
-        //                data.projectLocationsGeoJSON,
-        //                $scope.AngularViewData.projectLocationLayerGeoJson.FeatureStyle,
-        //                $scope.AngularViewData.projectLocationLayerGeoJson.LayerInitialVisibility,
-        //                $scope.AngularViewData.projectLocationLayerGeoJson.DisplayOrder,
-        //                $scope.AngularViewData.projectLocationLayerGeoJson.PopupLabel));
-        //        previewMapLayerGroups.push(projectLocationsLayerGeoJson);
-        //        if (data.ddctAnalysisAreaGeoJson.features && data.ddctAnalysisAreaGeoJson.features.length) {
-        //            var ddctAnalysisAreaLayerGeoJson = previewMap.addSingleVectorLayer(
-        //                // Recreate layer using incoming geometry data
-        //                new LayerForProjectLocationPage(
-        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerName,
-        //                    data.ddctAnalysisAreaGeoJson,
-        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.FeatureStyle,
-        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerInitialVisibility,
-        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.DisplayOrder,
-        //                    $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.PopupLabel));
-        //            previewMapLayerGroups.push(ddctAnalysisAreaLayerGeoJson);
-        //        }
-        //        else {
-        //            previewMap.removeSingleVectorLayer(new LayerForProjectLocationPage(
-        //                $scope.AngularViewData.ddctAnalysisAreaLayerGeoJson.LayerName,
-        //                null,
-        //                null,
-        //                null,
-        //                null,
-        //                null));
-        //        }
-        //        // if (data.distanceToNearestLekLayerGeoJson.features && data.distanceToNearestLekLayerGeoJson.features.length) {
-        //        //     var distanceToNearestLekLayerAsLayerGeoJson = previewMap.addSingleVectorLayer(
-        //        //         // Recreate layer using incoming geometry data
-        //        //         new LayerForProjectLocationPage(
-        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerName,
-        //        //             data.distanceToNearestLekLayerGeoJson,
-        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.FeatureStyle,
-        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerInitialVisibility,
-        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.DisplayOrder,
-        //        //             $scope.AngularViewData.distanceToNearestLekLayerGeoJson.PopupLabel));
-        //        //     previewMapLayerGroups.push(distanceToNearestLekLayerAsLayerGeoJson);
-        //        // }
-        //        // else {
-        //        //     previewMap.removeSingleVectorLayer(new LayerForProjectLocationPage(
-        //        //         $scope.AngularViewData.distanceToNearestLekLayerGeoJson.LayerName,
-        //        //         null,
-        //        //         null,
-        //        //         null,
-        //        //         null,
-        //        //         null));
-        //        // }
-        //        $scope.resetBoundsToExtentOfLayerGroups(previewMap.map, previewMapLayerGroups);
-        //    },
-        //    "error": function () {
-        //        handlePreviewDdctError(["There was a problem fetching Preview of DDCT Results."]);
-        //        jQuery(".ddctResultContent").show();
-        //    },
-        //    "complete": function () {
-        //        $scope.previewTriggered = false;
-        //        $scope.$apply();
-        //        previewMapDiv.removeClass("hiddenWhileLoading");
-        //        jQuery(".ddctResultLoading").hide();
-        //    }
-        //});
-    };
 
     var genericUploadGisErrorMessage = "";
     $scope.uploadGisFile = function () {

@@ -31,6 +31,8 @@
 @using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
 @using MoreLinq
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Views.ProjectFunding
 @using ProjectFirma.Web.Views.Shared.ProjectDocument
 @using ProjectFirma.Web.Views.Shared.ProjectOrganization
@@ -175,7 +177,8 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="editLocationDropdownButton" style="top: 36px; left: auto;">
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Simple", ViewDataTyped.EditSimpleProjectLocationUrl, string.Format("Edit {0} - Simple", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
-                                        <li>@ModalDialogFormHelper.ModalDialogFormLink("Detailed", ViewDataTyped.EditDetailedProjectLocationUrl, string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
+                                        <li><a href="@ViewDataTyped.EditDetailedProjectLocationUrl">@string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel())</a></li>
+                                       
 
                                         <li>
                                             @ModalDialogFormHelper.ModalDialogFormLink("Priority Areas", ViewDataTyped.EditProjectPriorityAreaUrl, "Edit Priority Areas", 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectPriorityAreaFormID)

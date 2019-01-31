@@ -31,6 +31,7 @@ using LtInfo.Common;
 using LtInfo.Common.DbSpatial;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Map;
+using ProjectFirma.Web.Views.ProjectLocation;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -68,6 +69,17 @@ namespace ProjectFirma.Web.Controllers
             }
             viewModel.UpdateModel(projectPrimaryKey.EntityObject);
             return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [ProjectEditAsAdminFeature]
+        public ViewResult EditProjectLocationDetail(ProjectPrimaryKey projectPrimaryKey)//todo story 1444
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var viewModel = new EditProjectLocationDetailViewModel();
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
+            var viewData = new EditProjectLocationDetailViewData(CurrentPerson, string.Empty, string.Empty, string.Empty, string.Empty, firmaPage);
+            return RazorView<EditProjectLocationDetail, EditProjectLocationDetailViewData, EditProjectLocationDetailViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
