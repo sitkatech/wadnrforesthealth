@@ -44,13 +44,17 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     public class DetailViewData : GrantAllocationViewData
     {
         public GrantAllocationBasicsViewData GrantAllocationBasicsViewData { get; }
-        
+        public string NewGrantAllocationNoteUrl { get; set; }
+
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation, GrantAllocationBasicsViewData grantAllocationBasicsViewData)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.ProjectName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
+
             GrantAllocationBasicsViewData = grantAllocationBasicsViewData;
+
+            NewGrantAllocationNoteUrl = grantAllocation.GetNewNoteUrl();
         }
     }
 }

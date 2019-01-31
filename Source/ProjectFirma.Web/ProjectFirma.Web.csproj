@@ -514,6 +514,9 @@
     <Compile Include="Views\GrantAllocation\EditGrantAllocation.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationViewModel.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationViewData.cs" />
+    <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteViewModel.cs" />
+    <Compile Include="Views\GrantAllocation\EditGrantAllocationNote.cs" />
+    <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\Grant\Detail.cs" />
     <Compile Include="Views\Grant\DetailViewData.cs" />
@@ -1134,6 +1137,7 @@
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocation.cshtml" />
+    <Content Include="Views\GrantAllocation\EditGrantAllocationNote.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

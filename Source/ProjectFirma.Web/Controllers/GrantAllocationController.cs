@@ -70,6 +70,38 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult NewGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var viewModel = new EditGrantAllocationNoteViewModel();
+            return ViewEditNote(viewModel, EditGrantAllocationNoteType.NewNote);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationNoteViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNote(viewModel, EditGrantAllocationNoteType.NewNote);
+            }
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationNote = GrantAllocationNote.CreateNewBlank(grantAllocation, CurrentPerson);
+            viewModel.UpdateModel(grantAllocationNote, CurrentPerson, EditGrantAllocationNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.GrantAllocationNotes.Add(grantAllocationNote);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult ViewEditNote(EditGrantAllocationNoteViewModel viewModel, EditGrantAllocationNoteType editGrantAllocationNoteType)
+        {
+            var viewData = new EditGrantAllocationNoteViewData(editGrantAllocationNoteType);
+            return RazorPartialView<EditGrantAllocationNote, EditGrantAllocationNoteViewData, EditGrantAllocationNoteViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
         public PartialViewResult Edit(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
