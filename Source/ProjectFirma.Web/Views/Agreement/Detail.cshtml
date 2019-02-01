@@ -142,7 +142,7 @@
                                         @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="AgreementFundingSource">@ViewDataTyped.Agreement.Grant.GrantNumber</span>
+                                        <span id="AgreementFundingSource">@ViewDataTyped.Agreement.GrantNumberDisplay</span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -161,14 +161,30 @@
                                         <span id="AgreementNotes">@ViewDataTyped.Agreement.Notes</span>
                                     </div>
                                 </div>
-                                @*<div class="row">
+                                <div class="row">
                                     <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementFile)
+                                        <label>Agreement File</label>
                                     </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementFile">@ViewDataTyped.Agreement.AgreementFile</span>
-                                    </div>
-                                </div>*@
+                                    @if (ViewDataTyped.Agreement.AgreementFileResource != null)
+                                    {
+                                        <div class="col-sm-9">
+                                            <a href="@ViewDataTyped.Agreement.AgreementFileResource.FileResourceUrl" target="_blank">
+                                                Download
+                                                @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-download")
+                                            </a>
+                                        </div>
+                                    }
+                                    
+                                </div>
+                                
+                                @*<div class="row">
+            <div class="col-sm-3">
+                @Html.LabelWithSugarFor(FieldDefinition.AgreementFile)
+            </div>
+            <div class="col-sm-9">
+                <span id="AgreementFile">@ViewDataTyped.Agreement.AgreementFile</span>
+            </div>
+        </div>*@
                             </div>
                         </div>
                     </div>

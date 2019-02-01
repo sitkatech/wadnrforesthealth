@@ -13,6 +13,52 @@ namespace ProjectFirma.Web.Controllers
 {
     public class AgreementController : FirmaBaseController
     {
+
+
+        [HttpGet]
+        [AgreementCreateFeature]
+        public PartialViewResult New()
+        {
+
+            var viewModel = new EditAgreementViewModel();
+            return ViewEdit(viewModel, EditAgreementType.NewAgreement);
+        }
+
+        [HttpPost]
+        [AgreementCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditAgreementViewModel viewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditAgreementType.NewAgreement);
+            }
+           
+            var agreementOrganization =
+                HttpRequestStorage.DatabaseEntities.Organizations.Single(g =>
+                    g.OrganizationID == viewModel.OrganizationID);
+            var agreement = Agreement.CreateNewBlank(agreementOrganization);
+            viewModel.UpdateModel(agreement, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEdit(EditAgreementViewModel viewModel, EditAgreementType editAgreementType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
+            var agreementStatuses = HttpRequestStorage.DatabaseEntities.AgreementStatuses;
+            var grants = HttpRequestStorage.DatabaseEntities.Grants;
+
+            var viewData = new EditAgreementViewData(editAgreementType,
+                organizations,
+                grants,
+                agreementTypes,
+                agreementStatuses
+            );
+            return RazorPartialView<EditAgreement, EditAgreementViewData, EditAgreementViewModel>(viewData, viewModel);
+        }
+
         [AgreementsViewFullListFeature]
         public ViewResult Index()
         {
@@ -120,17 +166,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, EditAgreementType.ExistingAgreement);
             }
-            //viewModel.UpdateModel(agreement, CurrentPerson);
+            viewModel.UpdateModel(agreement, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
-
-        private PartialViewResult ViewEdit(EditAgreementViewModel viewModel, EditAgreementType editAgreementType)
-        {
-            //var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-
-            var viewData = new EditAgreementViewData(editAgreementType);
-            return RazorPartialView<EditAgreement, EditAgreementViewData, EditAgreementViewModel>(viewData, viewModel);
-        }
-
     }
 }

@@ -20,23 +20,63 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
     public class EditAgreementViewModel : FormViewModel, IValidatableObject
     {
         public int AgreementID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementTitle)]
+        [Required]
+        [StringLength(Models.Agreement.FieldLengths.AgreementTitle)]
         public string AgreementTitle { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementNumber)]
+        [Required]
+        [StringLength(Models.Agreement.FieldLengths.AgreementNumber)]
+        public string AgreementNumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
         [Required]
-        public int OrganizationID { get; set; }
+        public int? OrganizationID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementStatus)]
+        [Required]
+        public int? AgreemeentStatusID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementType)]
+        [Required]
+        public int? AgreementTypeID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
+        public int? GrantID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementAmount)]
+        public Money? AgreementAmount { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementStartDate)]
+        public DateTime? AgreementStartDate { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementEndDate)]
+        public DateTime? AgreementEndDate { get; set; }
+
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementNotes)]
+        public string AgreementNotes { get; set; }
+
+        [DisplayName("Agreement File Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase AgreementFileResourceData { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -48,14 +88,58 @@ namespace ProjectFirma.Web.Views.Agreement
         public EditAgreementViewModel(Models.Agreement agreement)
         {
             AgreementTitle = agreement.AgreementTitle;
+            AgreementNumber = agreement.AgreementNumber;
+            OrganizationID = agreement.OrganizationID;
+            AgreemeentStatusID = agreement.AgreementStatusID;
+            AgreementTypeID = agreement.AgreementTypeID;
+            GrantID = agreement.GrantID;
+            AgreementAmount = agreement.AgreementAmount;
+            AgreementStartDate = agreement.StartDate;
+            AgreementEndDate = agreement.EndDate;
+            AgreementNotes = agreement.Notes;
+        }
+
+        public void UpdateModel(Models.Agreement agreement, Person currentPerson)
+        {
+            agreement.AgreementTitle = AgreementTitle;
+            agreement.AgreementNumber = AgreementNumber;
+            agreement.OrganizationID = OrganizationID.Value;
+            agreement.AgreementStatusID = AgreemeentStatusID.Value;
+            agreement.AgreementTypeID = AgreementTypeID;
+            agreement.GrantID = GrantID;
+            agreement.AgreementAmount = AgreementAmount;
+            agreement.StartDate = AgreementStartDate;
+            agreement.EndDate = AgreementEndDate;
+            agreement.Notes = AgreementNotes;
+            if (AgreementFileResourceData != null)
+            {
+                var currentAgreementFileResource = agreement.AgreementFileResource;
+                agreement.AgreementFileResource = null;
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+                HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                agreement.AgreementFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(AgreementFileResourceData, currentPerson);
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (OrganizationID == 0)
+            var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
+            var mouAgreementType = agreementTypes.SingleOrDefault(x => string.Equals(x.AgreementTypeAbbrev, "MOU"));
+
+            if (GrantID.HasValue && mouAgreementType != null && AgreementTypeID == mouAgreementType.AgreementTypeID)
             {
-                yield return new SitkaValidationResult<EditAgreementViewModel, int>(
-                    FirmaValidationMessages.OrganizationNameUnique, m => m.OrganizationID);
+                yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
+                    $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Grant must be blank", m => m.GrantID);
+            }
+            if (AgreementAmount.HasValue && mouAgreementType != null && AgreementTypeID == mouAgreementType.AgreementTypeID)
+            {
+                yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
+                    $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Agreement Amount must be blank", m => m.AgreementAmount);
+            }
+            if (!GrantID.HasValue && (mouAgreementType == null || !AgreementTypeID.HasValue || AgreementTypeID != mouAgreementType.AgreementTypeID))
+            {
+                yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
+                    $"A Grant must be selected if the Agreement Type is not MOU", m => m.AgreementAmount);
             }
         }
     }
