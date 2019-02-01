@@ -14,6 +14,54 @@ namespace ProjectFirma.Web.Controllers
 {
     public class AgreementController : FirmaBaseController
     {
+
+
+        [HttpGet]
+        [AgreementCreateFeature]
+        public PartialViewResult New()
+        {
+
+            var viewModel = new EditAgreementViewModel();
+            return ViewEdit(viewModel, EditAgreementType.NewAgreement);
+        }
+
+        [HttpPost]
+        [AgreementCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditAgreementViewModel viewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditAgreementType.NewAgreement);
+            }
+           
+
+            var grant =
+                HttpRequestStorage.DatabaseEntities.Grants.Single(
+                    g => g.GrantID == viewModel.GrantID);
+            var agreementOrganization =
+                HttpRequestStorage.DatabaseEntities.Organizations.Single(g =>
+                    g.OrganizationID == viewModel.OrganizationID);
+            var agreement = Agreement.CreateNewBlank(agreementOrganization, grant);
+            viewModel.UpdateModel(agreement, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEdit(EditAgreementViewModel viewModel, EditAgreementType editAgreementType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
+            var grants = HttpRequestStorage.DatabaseEntities.Grants;
+
+            var viewData = new EditAgreementViewData(editAgreementType,
+                organizations,
+                grants,
+                agreementTypes
+            );
+            return RazorPartialView<EditAgreement, EditAgreementViewData, EditAgreementViewModel>(viewData, viewModel);
+        }
+
         [AgreementsViewFullListFeature]
         public ViewResult Index()
         {

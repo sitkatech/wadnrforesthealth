@@ -1,0 +1,112 @@
+﻿@*-----------------------------------------------------------------------
+<copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+<author>Sitka Technology Group</author>
+</copyright>
+
+<license>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+Source code is available upon request via <support@sitkatech.com>.
+</license>
+-----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
+@inherits ProjectFirma.Web.Views.Agreement.EditAgreement
+
+@Html.Raw(ViewDataTyped.EditAgreementType.IntroductoryText)
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm())
+{
+<div class="col-xs-11">
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementTitle)
+                </div>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(m => m.AgreementTitle, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementTitle)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementNumber)
+                </div>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(m => m.AgreementNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementNumber)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.OrganizationID)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.OrganizationID, ViewDataTyped.OrganizationList, new { style = "width: 100%;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.OrganizationID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementTypeID)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.AgreementTypeID, ViewDataTyped.AgreementTypeList, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementTypeID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.GrantID)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.GrantID, ViewDataTyped.GrantList, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.GrantID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementAmount)
+                </div>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(m => m.AgreementAmount, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementAmount)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementStartDate)
+                </div>
+                <div class="col-xs-8">
+                    @Html.EditorFor(m => m.AgreementStartDate, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementStartDate)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementEndDate)
+                </div>
+                <div class="col-xs-8">
+                    @Html.EditorFor(m => m.AgreementEndDate, new { style = "width: auto;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementEndDate)
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+    @Html.HiddenFor(m => m.GrantID)
+}
