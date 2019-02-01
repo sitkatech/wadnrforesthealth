@@ -816,7 +816,7 @@
     <Property Name="Notes" Type="varchar(max)" />
     <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" />
     <Property Name="AgreementStatusID" Type="int" />
     <Property Name="AgreementFileResourceID" Type="int" />
   </EntityType>
@@ -2019,7 +2019,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Agreement_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Grant">

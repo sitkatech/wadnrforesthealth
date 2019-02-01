@@ -823,7 +823,7 @@
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="AgreementTitle" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="GrantID" Type="Int32" />
     <Property Name="AgreementStatusID" Type="Int32" />
     <Property Name="AgreementFileResourceID" Type="Int32" />
     <NavigationProperty Name="AgreementStatus" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID" FromRole="Agreements" ToRole="AgreementStatus" />
@@ -2339,7 +2339,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Agreement_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="1" />
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Grant">

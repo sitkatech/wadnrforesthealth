@@ -35,14 +35,10 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEdit(viewModel, EditAgreementType.NewAgreement);
             }
            
-
-            var grant =
-                HttpRequestStorage.DatabaseEntities.Grants.Single(
-                    g => g.GrantID == viewModel.GrantID);
             var agreementOrganization =
                 HttpRequestStorage.DatabaseEntities.Organizations.Single(g =>
                     g.OrganizationID == viewModel.OrganizationID);
-            var agreement = Agreement.CreateNewBlank(agreementOrganization, grant);
+            var agreement = Agreement.CreateNewBlank(agreementOrganization);
             viewModel.UpdateModel(agreement, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
