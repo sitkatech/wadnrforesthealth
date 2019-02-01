@@ -47,6 +47,12 @@ namespace ProjectFirma.Web.Views.Agreement
         {
         }
 
+        public EditAgreementPersonViewModel(int agreementId)
+        {
+            AgreementID = agreementId;
+        }
+
+
         public EditAgreementPersonViewModel(Models.AgreementPerson agreementPerson)
         {
             AgreementPersonID = agreementPerson.AgreementPersonID;

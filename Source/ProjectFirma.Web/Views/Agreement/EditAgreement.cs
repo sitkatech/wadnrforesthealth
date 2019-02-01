@@ -40,24 +40,24 @@ namespace ProjectFirma.Web.Views.Agreement
         public static readonly EditAgreementTypeExistingAgreement ExistingAgreement = EditAgreementTypeExistingAgreement.Instance;
     }
 
-    public class EditAgreementTypeNewAgreement : EditAgreementType
-    {
-        private EditAgreementTypeNewAgreement(string introductoryText) : base(introductoryText)
-        {
-        }
-
-        public static readonly EditAgreementTypeNewAgreement Instance = new EditAgreementTypeNewAgreement(
-            $"<p>Enter basic information about the {Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}.</p>");
-    }
-
     public class EditAgreementTypeExistingAgreement : EditAgreementType
     {
         private EditAgreementTypeExistingAgreement(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditAgreementTypeExistingAgreement Instance =
-            new EditAgreementTypeExistingAgreement(
+        public static readonly EditAgreementTypeExistingAgreement Instance = new EditAgreementTypeExistingAgreement(
+            $"<p>Enter basic information about the {Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}.</p>");
+    }
+
+    public class EditAgreementTypeNewAgreement : EditAgreementType
+    {
+        private EditAgreementTypeNewAgreement(string introductoryText) : base(introductoryText)
+        {
+        }
+
+        public static readonly EditAgreementTypeNewAgreement Instance =
+            new EditAgreementTypeNewAgreement(
                 $"<p>Update this {Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}'s information.</p>");
     }
 

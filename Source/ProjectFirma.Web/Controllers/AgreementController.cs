@@ -14,6 +14,52 @@ namespace ProjectFirma.Web.Controllers
 {
     public class AgreementController : FirmaBaseController
     {
+
+
+        [HttpGet]
+        [AgreementCreateFeature]
+        public PartialViewResult New()
+        {
+
+            var viewModel = new EditAgreementViewModel();
+            return ViewEdit(viewModel, EditAgreementType.NewAgreement);
+        }
+
+        [HttpPost]
+        [AgreementCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditAgreementViewModel viewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditAgreementType.NewAgreement);
+            }
+           
+            var agreementOrganization =
+                HttpRequestStorage.DatabaseEntities.Organizations.Single(g =>
+                    g.OrganizationID == viewModel.OrganizationID);
+            var agreement = Agreement.CreateNewBlank(agreementOrganization);
+            viewModel.UpdateModel(agreement, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEdit(EditAgreementViewModel viewModel, EditAgreementType editAgreementType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
+            var agreementStatuses = HttpRequestStorage.DatabaseEntities.AgreementStatuses;
+            var grants = HttpRequestStorage.DatabaseEntities.Grants;
+
+            var viewData = new EditAgreementViewData(editAgreementType,
+                organizations,
+                grants,
+                agreementTypes,
+                agreementStatuses
+            );
+            return RazorPartialView<EditAgreement, EditAgreementViewData, EditAgreementViewModel>(viewData, viewModel);
+        }
+
         [AgreementsViewFullListFeature]
         public ViewResult Index()
         {
@@ -179,23 +225,23 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult NewAgreementPerson()
+        public PartialViewResult NewAgreementPerson(int agreementID)
         {
-            var viewModel = new EditAgreementPersonViewModel();
+            var viewModel = new EditAgreementPersonViewModel(agreementID);
             return ViewEditAgreementPerson(viewModel);
         }
 
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewAgreementPerson(EditAgreementPersonViewModel viewModel)
+        public ActionResult NewAgreementPerson(int agreementID, EditAgreementPersonViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return ViewEditAgreementPerson(viewModel);
             }
 
-            var agreementPerson = new AgreementPerson(viewModel.AgreementID, viewModel.PersonID,
+            var agreementPerson = new AgreementPerson(agreementID, viewModel.PersonID,
                 viewModel.AgreementPersonRoleID);
             viewModel.UpdateModel(agreementPerson);
             HttpRequestStorage.DatabaseEntities.AgreementPeople.Add(agreementPerson);
@@ -206,9 +252,11 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [AgreementsViewFeature]
-        public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(Agreement agreement)
+        public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(int agreementID)
         {
             var gridSpec = new AgreementPersonGridSpec(CurrentPerson);
+            var agreement =
+                HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(x => x.AgreementID == agreementID);
             var agreementPeople = agreement.AgreementPeople.OrderBy(x => x.Person.LastName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<AgreementPerson>(agreementPeople, gridSpec);
             return gridJsonNetJObjectResult;
@@ -235,17 +283,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, EditAgreementType.ExistingAgreement);
             }
-            //viewModel.UpdateModel(agreement, CurrentPerson);
+            viewModel.UpdateModel(agreement, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
-
-        private PartialViewResult ViewEdit(EditAgreementViewModel viewModel, EditAgreementType editAgreementType)
-        {
-            //var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-
-            var viewData = new EditAgreementViewData(editAgreementType);
-            return RazorPartialView<EditAgreement, EditAgreementViewData, EditAgreementViewModel>(viewData, viewModel);
-        }
-
     }
 }

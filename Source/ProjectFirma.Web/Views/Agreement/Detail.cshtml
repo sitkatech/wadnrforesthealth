@@ -24,13 +24,16 @@
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
 @inherits ProjectFirma.Web.Views.Agreement.Detail
 
 @section JavascriptAndStylesContent
 {
 
-
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <link href="~/Content/bootstrap-tags/bootstrap-tags.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
@@ -167,7 +170,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
@@ -183,15 +186,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-    <script type="text/javascript">
-        jQuery(document)
-            .ready(function () {
-                jQuery("#home-tab").click();
-            });
-    </script>
-
