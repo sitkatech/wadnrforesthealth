@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using LtInfo.Common;
+using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -41,11 +42,32 @@ namespace ProjectFirma.Web.Views.Agreement
 {
     public class DetailViewData : AgreementViewData
     {
+
+        public AgreementPersonGridSpec AgreementPersonGridSpec { get; }
+        public string AgreementPersonGridName { get; }
+        public string AgreementPersonGridDataUrl { get; }
+
+
         public DetailViewData(Person currentPerson, Models.Agreement agreement)
             : base(currentPerson, agreement)
         {
             PageTitle = agreement.AgreementTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} Detail";
+
+            AgreementPersonGridSpec = new AgreementPersonGridSpec(currentPerson) { ObjectNameSingular = "Agreement Contact", ObjectNamePlural = "Agreement Contacts", SaveFiltersInCookie = true };
+            var hasAgreementEditPermissions =
+                new AgreementEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+
+
+            if (hasAgreementEditPermissions)
+            {
+                var contentUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.NewAgreementPerson(agreement.AgreementID));
+                AgreementPersonGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Agreement Contact");
+            }
+
+
+            AgreementPersonGridName = "agreementPersonGrid";
+            AgreementPersonGridDataUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(ac => ac.AgreementPersonGridJsonData(agreement.AgreementID));
         }
     }
 }

@@ -2,6 +2,7 @@
 <Schema Namespace="ProjectFirma.Web.Models" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Agreement" />
+    <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.AgreementPerson" />
     <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.AgreementProjectCode" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.AgreementStatus" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.AgreementType" />
@@ -129,9 +130,17 @@
       <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
+    <AssociationSet Name="FK_AgreementPerson_Agreement_AgreementID" Association="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID">
+      <End Role="Agreement" EntitySet="Agreement" />
+      <End Role="AgreementPeople" EntitySet="AgreementPerson" />
+    </AssociationSet>
     <AssociationSet Name="FK_AgreementProjectCode_Agreement_AgreementID" Association="ProjectFirma.Web.Models.FK_AgreementProjectCode_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
       <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="AgreementPeople" EntitySet="AgreementPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
       <End Role="ProjectCode" EntitySet="ProjectCode" />
@@ -832,7 +841,19 @@
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID" FromRole="Agreements" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Agreements" ToRole="Organization" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Agreements" ToRole="Region" />
+    <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementPeople" />
     <NavigationProperty Name="AgreementProjectCodes" Relationship="ProjectFirma.Web.Models.FK_AgreementProjectCode_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementProjectCodes" />
+  </EntityType>
+  <EntityType Name="AgreementPerson">
+    <Key>
+      <PropertyRef Name="AgreementPersonID" />
+    </Key>
+    <Property Name="AgreementPersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementID" Type="Int32" Nullable="false" />
+    <Property Name="PersonID" Type="Int32" Nullable="false" />
+    <Property Name="AgreementPersonRoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Agreement" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID" FromRole="AgreementPeople" ToRole="Agreement" />
+    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="AgreementPeople" ToRole="Person" />
   </EntityType>
   <EntityType Name="AgreementProjectCode">
     <Key>
@@ -1449,6 +1470,7 @@
     <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="PersonAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="AddedByPersonID" Type="Int32" />
+    <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheProgramManagerPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID" FromRole="ProgramManagerPerson" ToRole="GrantAllocationsWhereYouAreTheProgramManagerPerson" />
@@ -2374,6 +2396,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_AgreementPerson_Agreement_AgreementID">
+    <End Role="Agreement" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="1" />
+    <End Role="AgreementPeople" Type="ProjectFirma.Web.Models.AgreementPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agreement">
+        <PropertyRef Name="AgreementID" />
+      </Principal>
+      <Dependent Role="AgreementPeople">
+        <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AgreementProjectCode_Agreement_AgreementID">
     <End Role="Agreement" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="1" />
     <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.AgreementProjectCode" Multiplicity="*" />
@@ -2383,6 +2417,18 @@
       </Principal>
       <Dependent Role="AgreementProjectCodes">
         <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementPerson_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="AgreementPeople" Type="ProjectFirma.Web.Models.AgreementPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="AgreementPeople">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
