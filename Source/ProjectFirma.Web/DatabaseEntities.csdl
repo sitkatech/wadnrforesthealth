@@ -113,6 +113,10 @@
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
+    <AssociationSet Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
+      <End Role="AgreementFileResource" EntitySet="FileResource" />
+      <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -821,8 +825,10 @@
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
     <Property Name="GrantID" Type="Int32" Nullable="false" />
     <Property Name="AgreementStatusID" Type="Int32" />
+    <Property Name="AgreementFileResourceID" Type="Int32" />
     <NavigationProperty Name="AgreementStatus" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID" FromRole="Agreements" ToRole="AgreementStatus" />
     <NavigationProperty Name="AgreementType" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID" FromRole="Agreements" ToRole="AgreementType" />
+    <NavigationProperty Name="AgreementFileResource" Relationship="ProjectFirma.Web.Models.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" FromRole="AgreementsWhereYouAreTheAgreementFileResource" ToRole="AgreementFileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID" FromRole="Agreements" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Agreements" ToRole="Organization" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Agreements" ToRole="Region" />
@@ -990,6 +996,7 @@
     <Property Name="FileResourceData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
     <Property Name="CreatePersonID" Type="Int32" Nullable="false" />
     <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="AgreementsWhereYouAreTheAgreementFileResource" Relationship="ProjectFirma.Web.Models.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" FromRole="AgreementFileResource" ToRole="AgreementsWhereYouAreTheAgreementFileResource" />
     <NavigationProperty Name="ClassificationsWhereYouAreTheKeyImageFileResource" Relationship="ProjectFirma.Web.Models.FK_Classification_FileResource_KeyImageFileResourceID_FileResourceID" FromRole="KeyImageFileResource" ToRole="ClassificationsWhereYouAreTheKeyImageFileResource" />
     <NavigationProperty Name="CustomPageImages" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="CustomPageImages" />
     <NavigationProperty Name="FieldDefinitionDataImages" Relationship="ProjectFirma.Web.Models.FK_FieldDefinitionDataImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FieldDefinitionDataImages" />
@@ -2316,6 +2323,18 @@
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="AgreementTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
+    <End Role="AgreementFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
+    <End Role="AgreementsWhereYouAreTheAgreementFileResource" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="AgreementsWhereYouAreTheAgreementFileResource">
+        <PropertyRef Name="AgreementFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

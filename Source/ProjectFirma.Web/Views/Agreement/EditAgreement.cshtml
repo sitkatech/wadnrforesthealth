@@ -60,6 +60,15 @@ Source code is available upon request via <support@sitkatech.com>.
             </div>
             <div class="form-group">
                 <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreemeentStatusID)
+                </div>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(m => m.AgreemeentStatusID, ViewDataTyped.AgreementStatusList, new { style = "width: 100%;", @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreemeentStatusID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
                     @Html.LabelWithSugarFor(m => m.AgreementTypeID)
                 </div>
                 <div class="col-xs-8">
@@ -102,6 +111,27 @@ Source code is available upon request via <support@sitkatech.com>.
                 <div class="col-xs-8">
                     @Html.EditorFor(m => m.AgreementEndDate, new { style = "width: auto;", @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.AgreementEndDate)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 control-label">
+                    @Html.LabelWithSugarFor(m => m.AgreementNotes)
+                </div>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(m => m.AgreementNotes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AgreementNotes)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(x => x.AgreementFileResourceData)
+                </div>
+                <div class="col-sm-9">
+                    @Html.EditorFor(x => x.AgreementFileResourceData)
+                    @*<span class="smallExplanationText">
+                        Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                    </span>*@
+                    @Html.ValidationMessageFor(x => x.AgreementFileResourceData)
                 </div>
             </div>
         </div>

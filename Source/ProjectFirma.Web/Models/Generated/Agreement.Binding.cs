@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int grantID, int? agreementStatusID) : this()
+        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int grantID, int? agreementStatusID, int? agreementFileResourceID) : this()
         {
             this.AgreementID = agreementID;
             this.TmpAgreementID = tmpAgreementID;
@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Models
             this.OrganizationID = organizationID;
             this.GrantID = grantID;
             this.AgreementStatusID = agreementStatusID;
+            this.AgreementFileResourceID = agreementFileResourceID;
         }
 
         /// <summary>
@@ -139,6 +140,7 @@ namespace ProjectFirma.Web.Models
         public int OrganizationID { get; set; }
         public int GrantID { get; set; }
         public int? AgreementStatusID { get; set; }
+        public int? AgreementFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
@@ -148,6 +150,7 @@ namespace ProjectFirma.Web.Models
         public virtual Organization Organization { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual AgreementStatus AgreementStatus { get; set; }
+        public virtual FileResource AgreementFileResource { get; set; }
 
         public static class FieldLengths
         {

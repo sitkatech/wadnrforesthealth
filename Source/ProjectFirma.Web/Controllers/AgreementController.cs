@@ -51,12 +51,14 @@ namespace ProjectFirma.Web.Controllers
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
+            var agreementStatuses = HttpRequestStorage.DatabaseEntities.AgreementStatuses;
             var grants = HttpRequestStorage.DatabaseEntities.Grants;
 
             var viewData = new EditAgreementViewData(editAgreementType,
                 organizations,
                 grants,
-                agreementTypes
+                agreementTypes,
+                agreementStatuses
             );
             return RazorPartialView<EditAgreement, EditAgreementViewData, EditAgreementViewModel>(viewData, viewModel);
         }
@@ -168,7 +170,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, EditAgreementType.ExistingAgreement);
             }
-            //viewModel.UpdateModel(agreement, CurrentPerson);
+            viewModel.UpdateModel(agreement, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
     }

@@ -19,6 +19,7 @@ CREATE TABLE [dbo].[Agreement](
 	[OrganizationID] [int] NOT NULL,
 	[GrantID] [int] NOT NULL,
 	[AgreementStatusID] [int] NULL,
+	[AgreementFileResourceID] [int] NULL,
  CONSTRAINT [PK_Agreement_AgreementID] PRIMARY KEY CLUSTERED 
 (
 	[AgreementID] ASC
@@ -45,6 +46,11 @@ ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Agreemen
 REFERENCES [dbo].[AgreementType] ([AgreementTypeID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_AgreementType_AgreementTypeID]
+GO
+ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID] FOREIGN KEY([AgreementFileResourceID])
+REFERENCES [dbo].[FileResource] ([FileResourceID])
+GO
+ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Grant_GrantID] FOREIGN KEY([GrantID])
 REFERENCES [dbo].[Grant] ([GrantID])

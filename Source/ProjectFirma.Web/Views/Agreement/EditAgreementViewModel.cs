@@ -20,12 +20,15 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -47,6 +50,10 @@ namespace ProjectFirma.Web.Views.Agreement
         [Required]
         public int? OrganizationID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementStatus)]
+        [Required]
+        public int? AgreemeentStatusID { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementType)]
         [Required]
         public int? AgreementTypeID { get; set; }
@@ -64,9 +71,13 @@ namespace ProjectFirma.Web.Views.Agreement
         [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementEndDate)]
         public DateTime? AgreementEndDate { get; set; }
 
-       
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementNotes)]
+        public string AgreementNotes { get; set; }
 
+        [DisplayName("Agreement File Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase AgreementFileResourceData { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -80,11 +91,13 @@ namespace ProjectFirma.Web.Views.Agreement
             AgreementTitle = agreement.AgreementTitle;
             AgreementNumber = agreement.AgreementNumber;
             OrganizationID = agreement.OrganizationID;
+            AgreemeentStatusID = agreement.AgreementStatusID;
             AgreementTypeID = agreement.AgreementTypeID;
             GrantID = agreement.GrantID;
             AgreementAmount = agreement.AgreementAmount;
             AgreementStartDate = agreement.StartDate;
             AgreementEndDate = agreement.EndDate;
+            AgreementNotes = agreement.Notes;
         }
 
         public void UpdateModel(Models.Agreement agreement, Person currentPerson)
@@ -92,11 +105,21 @@ namespace ProjectFirma.Web.Views.Agreement
             agreement.AgreementTitle = AgreementTitle;
             agreement.AgreementNumber = AgreementNumber;
             agreement.OrganizationID = OrganizationID.Value;
+            agreement.AgreementStatusID = AgreemeentStatusID.Value;
             agreement.AgreementTypeID = AgreementTypeID;
             agreement.GrantID = GrantID.Value;
             agreement.AgreementAmount = AgreementAmount;
             agreement.StartDate = AgreementStartDate;
             agreement.EndDate = AgreementEndDate;
+            agreement.Notes = AgreementNotes;
+            if (AgreementFileResourceData != null)
+            {
+                var currentAgreementFileResource = agreement.AgreementFileResource;
+                agreement.AgreementFileResource = null;
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+                HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                agreement.AgreementFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(AgreementFileResourceData, currentPerson);
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

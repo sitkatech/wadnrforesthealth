@@ -20,6 +20,7 @@
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
+          <ScalarProperty Name="AgreementFileResourceID" ColumnName="AgreementFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

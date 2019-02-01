@@ -113,6 +113,10 @@
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
+    <AssociationSet Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
+      <End Role="AgreementFileResource" EntitySet="FileResource" />
+      <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -814,6 +818,7 @@
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="AgreementStatusID" Type="int" />
+    <Property Name="AgreementFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="AgreementProjectCode">
     <Key>
@@ -1998,6 +2003,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="AgreementTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
+    <End Role="AgreementFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="AgreementsWhereYouAreTheAgreementFileResource" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="AgreementsWhereYouAreTheAgreementFileResource">
+        <PropertyRef Name="AgreementFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
