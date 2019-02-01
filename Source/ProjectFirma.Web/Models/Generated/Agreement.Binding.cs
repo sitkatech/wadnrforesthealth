@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Agreement()
         {
+            this.AgreementPeople = new HashSet<AgreementPerson>();
             this.AgreementProjectCodes = new HashSet<AgreementProjectCode>();
         }
 
@@ -93,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementProjectCodes.Any();
+            return AgreementPeople.Any() || AgreementProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementPerson).Name, typeof(AgreementProjectCode).Name};
 
 
         /// <summary>
@@ -115,6 +116,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in AgreementPeople.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in AgreementProjectCodes.ToList())
             {
@@ -142,6 +148,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
+        public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }
         public virtual Region Region { get; set; }

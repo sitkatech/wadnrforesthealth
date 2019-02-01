@@ -20,14 +20,16 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Views
 @inherits ProjectFirma.Web.Views.Agreement.Detail
 
 @section JavascriptAndStylesContent
 {
-    
+
 
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <link href="~/Content/bootstrap-tags/bootstrap-tags.min.css" rel="stylesheet" type="text/css" />
@@ -42,136 +44,140 @@
         margin-right: 0;
     }
 
-    .basicsLayout .row div {
-        padding-left: 0;
-        padding-right: 5px;
-    }
+        .basicsLayout .row div {
+            padding-left: 0;
+            padding-right: 5px;
+        }
 
     .basicsLayout hr {
         margin-top: 5px;
         margin-bottom: 5px;
     }
-
-     
 </style>
 
 <div>
     <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.AgreementsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToAgreementsText</a>
 </div>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Overview</a>
-    </li>
-   
-</ul>
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="col-sm-12 col-md-9 col-lg-10">
-            <h2 class="sectionHeader">@FieldDefinition.Agreement.GetFieldDefinitionLabel() Overview</h2>
-            <div class="row">
-                <div class="col-sm-12" style="padding: 0px;">
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementUrl, string.Format("Edit {0}", ViewDataTyped.Agreement.AgreementTitle), 950, ViewDataTyped.UserHasEditAgreementPermissions)
-                                Basics
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="basicsLayout">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementTitle)
-                                    </div>
 
-                                    <div class="col-sm-9">
-                                        <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementNumber)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementTitle">@ViewDataTyped.Agreement.AgreementNumber</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.Organization)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="Organization">@ViewDataTyped.Agreement.Organization.OrganizationName</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementStartDate)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementStartDate">@ViewDataTyped.Agreement.StartDateDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementEndDate)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementEndDate">@ViewDataTyped.Agreement.EndDateDisplay</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementStatus)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementStatus">@ViewDataTyped.Agreement.AgreementStatus.AgreementStatusName</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType.AgreementTypeName</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementFundingSource">@ViewDataTyped.Agreement.Grant.GrantNumber</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementAmount)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementAmount">@ViewDataTyped.Agreement.AgreementAmount.ToStringCurrency()</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementNotes)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementNotes">@ViewDataTyped.Agreement.Notes</span>
-                                    </div>
-                                </div>
-                                @*<div class="row">
-                                    <div class="col-sm-3">
-                                        @Html.LabelWithSugarFor(FieldDefinition.AgreementFile)
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <span id="AgreementFile">@ViewDataTyped.Agreement.AgreementFile</span>
-                                    </div>
-                                </div>*@
+
+<div class="col-sm-12 col-md-9 col-lg-10">
+    <div class="row">
+        <div class="col-sm-12" style="padding: 0px;">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementUrl, string.Format("Edit {0}", ViewDataTyped.Agreement.AgreementTitle), 950, ViewDataTyped.UserHasEditAgreementPermissions)
+                        Basics
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="basicsLayout">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementTitle)
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementNumber)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementTitle">@ViewDataTyped.Agreement.AgreementNumber</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.Organization)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="Organization">@ViewDataTyped.Agreement.Organization.OrganizationName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementStartDate)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementStartDate">@ViewDataTyped.Agreement.StartDateDisplay</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementEndDate)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementEndDate">@ViewDataTyped.Agreement.EndDateDisplay</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementStatus)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementStatus">@ViewDataTyped.Agreement.AgreementStatus.AgreementStatusName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType.AgreementTypeName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementFundingSource">@ViewDataTyped.Agreement.Grant.GrantNumber</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementAmount)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementAmount">@ViewDataTyped.Agreement.AgreementAmount.ToStringCurrency()</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.AgreementNotes)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="AgreementNotes">@ViewDataTyped.Agreement.Notes</span>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                                <div class="col-sm-3">
+                                    @Html.LabelWithSugarFor(FieldDefinition.AgreementFile)
+                                </div>
+                                <div class="col-sm-9">
+                                    <span id="AgreementFile">@ViewDataTyped.Agreement.AgreementFile</span>
+                                </div>
+                            </div>*@
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12" style="padding: 0px;">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @FieldDefinition.Agreement.GetFieldDefinitionLabel() Contacts
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.AgreementPersonGridSpec, ViewDataTyped.AgreementPersonGridName, ViewDataTyped.AgreementPersonGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>
@@ -182,13 +188,10 @@
 
 
 
-
-
-
-<script type="text/javascript">
-                jQuery(document)
-                    .ready(function () {
-                        jQuery("#home-tab").click();
-                    });
-</script>
+    <script type="text/javascript">
+        jQuery(document)
+            .ready(function () {
+                jQuery("#home-tab").click();
+            });
+    </script>
 

@@ -2,6 +2,7 @@
 <Schema Namespace="ProjectFirma.Web.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
@@ -124,6 +125,14 @@
     <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementPerson_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Agreement_AgreementID">
+      <End Role="Agreement" EntitySet="Agreement" />
+      <End Role="AgreementPeople" EntitySet="AgreementPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="AgreementPeople" EntitySet="AgreementPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementProjectCode_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
@@ -814,6 +823,15 @@
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="GrantID" Type="int" Nullable="false" />
     <Property Name="AgreementStatusID" Type="int" />
+  </EntityType>
+  <EntityType Name="AgreementPerson">
+    <Key>
+      <PropertyRef Name="AgreementPersonID" />
+    </Key>
+    <Property Name="AgreementPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="AgreementPersonRoleID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementProjectCode">
     <Key>
@@ -2034,6 +2052,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementPerson_Agreement_AgreementID">
+    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
+    <End Role="AgreementPeople" Type="ProjectFirma.Web.Models.Store.AgreementPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agreement">
+        <PropertyRef Name="AgreementID" />
+      </Principal>
+      <Dependent Role="AgreementPeople">
+        <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementPerson_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="AgreementPeople" Type="ProjectFirma.Web.Models.Store.AgreementPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="AgreementPeople">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
