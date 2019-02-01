@@ -19,9 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -105,6 +107,23 @@ namespace ProjectFirma.Web.Views.Organization
                 var errorMessage = $"Logo is too large - must be less than {FileUtility.FormatBytes(MaxLogoSizeInBytes)}. Your logo was {FileUtility.FormatBytes(LogoFileResourceData.ContentLength)}.";
                 yield return new SitkaValidationResult<EditViewModel, HttpPostedFileBase>(errorMessage,
                     x => x.LogoFileResourceData);
+            }
+
+            // Get org name and short name
+            var existingOrganizationsWithSameName = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.OrganizationName == OrganizationName && o.OrganizationID != OrganizationID).ToList();
+            if (existingOrganizationsWithSameName.Any())
+            {
+                var errorMessage = $"This organization name {OrganizationName} is taken already.";
+                yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
+                    x => x.OrganizationName);
+            }
+            // Get org ShortName and short ShortName
+            var existingOrganizationsWithSameShortName = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.OrganizationShortName == OrganizationShortName && o.OrganizationID != OrganizationID).ToList();
+            if (existingOrganizationsWithSameShortName.Any())
+            {
+                var errorMessage = $"This organization short name {OrganizationShortName} is taken already.";
+                yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
+                    x => x.OrganizationShortName);
             }
         }
     }
