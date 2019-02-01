@@ -24,7 +24,6 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Views.Shared;
@@ -37,24 +36,16 @@ using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using ProjectFirma.Web.Views.Shared.TextControls;
 using ProjectFirma.Web.Views.TreatmentActivity;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 
-namespace ProjectFirma.Web.Views.GrantAllocation
+namespace ProjectFirma.Web.Views.Agreement
 {
-    public class DetailViewData : GrantAllocationViewData
+    public class DetailViewData : AgreementViewData
     {
-        public GrantAllocationBasicsViewData GrantAllocationBasicsViewData { get; }
-        public string NewGrantAllocationNoteUrl { get; set; }
-
-        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation, GrantAllocationBasicsViewData grantAllocationBasicsViewData)
-            : base(currentPerson, grantAllocation)
+        public DetailViewData(Person currentPerson, Models.Agreement agreement)
+            : base(currentPerson, agreement)
         {
-            PageTitle = grantAllocation.ProjectName.ToEllipsifiedStringClean(110);
-            BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
-
-            GrantAllocationBasicsViewData = grantAllocationBasicsViewData;
-
-            NewGrantAllocationNoteUrl = grantAllocation.GetNewNoteUrl();
+            PageTitle = agreement.AgreementTitle.ToEllipsifiedStringClean(110);
+            BreadCrumbTitle = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} Detail";
         }
     }
 }

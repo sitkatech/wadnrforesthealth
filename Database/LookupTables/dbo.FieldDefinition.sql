@@ -125,4 +125,7 @@ VALUES
 (301, N'AgreementStartDate', 'Agreement Start Date', '<p>The start date of the Agreement.</p>'),
 (302, N'AgreementEndDate', 'Agreement End Date', '<p>The end date of the Agreement.</p>'),
 (303, N'AgreementAmount', 'Agreement Amount', '<p>The amount of the Agreement.</p>'),
-(304, N'ProgramManager', 'Program Manager', 'Placeholder for Program Manager.')
+(304, N'ProgramManager', 'Program Manager', 'Placeholder for Program Manager.'),
+(305, N'AgreementNotes', 'Agreement Notes', 'Placeholder for Agreement Notes.'),
+(306, N'AgreementStatus', 'Agreement Status', 'Placeholder for Agreement Status.'),
+(307, N'GrantAllocationNote', 'Grant Allocation Note', 'Placeholder for Grant Allocation Notes.')

@@ -7,7 +7,6 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Agreement;
-using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
@@ -70,6 +69,13 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<AgreementIndex, AgreementIndexViewData>(viewData);
         }
 
+        [AgreementsViewFeature]
+        public ViewResult AgreementDetail(AgreementPrimaryKey agreementPrimaryKey)
+        {
+            var agreement = agreementPrimaryKey.EntityObject;
+            var viewData = new Views.Agreement.DetailViewData(CurrentPerson, agreement);
+            return RazorView<Detail, DetailViewData>(viewData);
+        }
 
         [AgreementsViewFullListFeature]
         public GridJsonNetJObjectResult<Agreement> AgreementGridJsonData()
@@ -143,5 +149,27 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [AgreementEditAsAdminFeature]
+        public PartialViewResult Edit(AgreementPrimaryKey agreementPrimaryKey)
+        {
+            var agreement = agreementPrimaryKey.EntityObject;
+            var viewModel = new EditAgreementViewModel(agreement);
+            return ViewEdit(viewModel, EditAgreementType.ExistingAgreement);
+        }
+
+        [HttpPost]
+        [AgreementEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Edit(AgreementPrimaryKey agreementPrimaryKey, EditAgreementViewModel viewModel)
+        {
+            var agreement = agreementPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditAgreementType.ExistingAgreement);
+            }
+            //viewModel.UpdateModel(agreement, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
     }
 }

@@ -81,7 +81,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.LabelWithSugarFor(m => m.AgreementAmount)
                 </div>
                 <div class="col-xs-8">
-                    @Html.TextBoxFor(m => m.AgreementAmount, new { @class = "form-control" })
+                    @Html.EditorFor(m => m.AgreementAmount)
                     @Html.ValidationMessageFor(m => m.AgreementAmount)
                 </div>
             </div>
@@ -108,5 +108,5 @@ Source code is available upon request via <support@sitkatech.com>.
 
     </div>
 </div>
-    @Html.HiddenFor(m => m.GrantID)
+    @Html.HiddenFor(m => m.AgreementID)
 }

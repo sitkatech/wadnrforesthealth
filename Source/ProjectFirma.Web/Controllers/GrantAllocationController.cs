@@ -29,6 +29,8 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using DetailViewData = ProjectFirma.Web.Views.GrantAllocation.DetailViewData;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -65,6 +67,38 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+
+        [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult NewGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var viewModel = new EditGrantAllocationNoteViewModel();
+            return ViewEditNote(viewModel, EditGrantAllocationNoteType.NewNote);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationNoteViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNote(viewModel, EditGrantAllocationNoteType.NewNote);
+            }
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationNote = GrantAllocationNote.CreateNewBlank(grantAllocation, CurrentPerson);
+            viewModel.UpdateModel(grantAllocationNote, CurrentPerson, EditGrantAllocationNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.GrantAllocationNotes.Add(grantAllocationNote);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult ViewEditNote(EditGrantAllocationNoteViewModel viewModel, EditGrantAllocationNoteType editGrantAllocationNoteType)
+        {
+            var viewData = new EditGrantAllocationNoteViewData(editGrantAllocationNoteType);
+            return RazorPartialView<EditGrantAllocationNote, EditGrantAllocationNoteViewData, EditGrantAllocationNoteViewModel>(viewData, viewModel);
+        }
+
 
         [HttpGet]
         [GrantAllocationEditAsAdminFeature]
@@ -143,7 +177,9 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation);
+            var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
+            var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, taxonomyLevel);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
     }
