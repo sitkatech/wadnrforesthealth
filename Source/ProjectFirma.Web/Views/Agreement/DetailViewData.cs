@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public AgreementPersonGridSpec AgreementPersonGridSpec { get; }
         public string AgreementPersonGridName { get; }
         public string AgreementPersonGridDataUrl { get; }
+        public bool ShowDownload { get; }
 
 
         public DetailViewData(Person currentPerson, Models.Agreement agreement)
@@ -52,6 +53,8 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             PageTitle = agreement.AgreementTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} Detail";
+            // Used for creating file download link, if file available
+            ShowDownload = agreement.AgreementFileResource != null;
 
             AgreementPersonGridSpec = new AgreementPersonGridSpec(currentPerson) { ObjectNameSingular = "Agreement Contact", ObjectNamePlural = "Agreement Contacts", SaveFiltersInCookie = true };
             var hasAgreementEditPermissions =
