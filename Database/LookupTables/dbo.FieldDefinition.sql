@@ -128,4 +128,5 @@ VALUES
 (304, N'ProgramManager', 'Program Manager', 'Placeholder for Program Manager.'),
 (305, N'AgreementNotes', 'Agreement Notes', 'Placeholder for Agreement Notes.'),
 (306, N'AgreementStatus', 'Agreement Status', 'Placeholder for Agreement Status.'),
-(307, N'GrantAllocationNote', 'Grant Allocation Note', 'Placeholder for Grant Allocation Notes.')
+(307, N'GrantAllocationNote', 'Grant Allocation Note', 'Placeholder for Grant Allocation Notes.'),
+(308, N'FileResource', 'File Resource', 'Placeholder for File Resource.')

@@ -42,7 +42,6 @@ namespace ProjectFirma.Web.Views.Agreement
 {
     public class DetailViewData : AgreementViewData
     {
-
         public AgreementPersonGridSpec AgreementPersonGridSpec { get; }
         public string AgreementPersonGridName { get; }
         public string AgreementPersonGridDataUrl { get; }

@@ -115,8 +115,12 @@ namespace ProjectFirma.Web.Views.Agreement
             {
                 var currentAgreementFileResource = agreement.AgreementFileResource;
                 agreement.AgreementFileResource = null;
-                HttpRequestStorage.DatabaseEntities.SaveChanges();
-                HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                // Delete old Agreement file, if present
+                if (currentAgreementFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentAgreementFileResource);
+                }
                 agreement.AgreementFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(AgreementFileResourceData, currentPerson);
             }
         }
