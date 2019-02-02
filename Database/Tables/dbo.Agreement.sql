@@ -17,7 +17,9 @@ CREATE TABLE [dbo].[Agreement](
 	[Notes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AgreementTitle] [varchar](256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[OrganizationID] [int] NOT NULL,
-	[GrantID] [int] NOT NULL,
+	[GrantID] [int] NULL,
+	[AgreementStatusID] [int] NULL,
+	[AgreementFileResourceID] [int] NULL,
  CONSTRAINT [PK_Agreement_AgreementID] PRIMARY KEY CLUSTERED 
 (
 	[AgreementID] ASC
@@ -35,10 +37,20 @@ CREATE UNIQUE NONCLUSTERED INDEX [UNIQUE_INDEX_Agreement_AgreementNumber] ON [db
 WHERE ([AgreementNumber] IS NOT NULL)
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_AgreementStatus_AgreementStatusID] FOREIGN KEY([AgreementStatusID])
+REFERENCES [dbo].[AgreementStatus] ([AgreementStatusID])
+GO
+ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_AgreementStatus_AgreementStatusID]
+GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_AgreementType_AgreementTypeID] FOREIGN KEY([AgreementTypeID])
 REFERENCES [dbo].[AgreementType] ([AgreementTypeID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_AgreementType_AgreementTypeID]
+GO
+ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID] FOREIGN KEY([AgreementFileResourceID])
+REFERENCES [dbo].[FileResource] ([FileResourceID])
+GO
+ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Grant_GrantID] FOREIGN KEY([GrantID])
 REFERENCES [dbo].[Grant] ([GrantID])

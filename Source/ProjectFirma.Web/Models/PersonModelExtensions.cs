@@ -63,6 +63,16 @@ namespace ProjectFirma.Web.Models
             return new HtmlString($"{userString} - {orgUrl}");
         }
 
+        public static HtmlString GetFirstNameAsUrl(this Person person)
+        {
+            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FirstName);
+        }
+
+        public static HtmlString GetLastNameAsUrl(this Person person)
+        {
+            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.LastName);
+        }
+
         public static string GetEditUrl(this Person person)
         {
             return SitkaRoute<UserController>.BuildUrlFromExpression(t => t.EditRoles(person));

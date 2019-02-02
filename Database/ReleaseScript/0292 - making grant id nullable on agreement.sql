@@ -1,0 +1,1 @@
+ALTER TABLE dbo.Agreement ALTER column GrantID int null

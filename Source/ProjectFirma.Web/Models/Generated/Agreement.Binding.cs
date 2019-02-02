@@ -24,13 +24,14 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Agreement()
         {
+            this.AgreementPeople = new HashSet<AgreementPerson>();
             this.AgreementProjectCodes = new HashSet<AgreementProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int grantID) : this()
+        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? grantID, int? agreementStatusID, int? agreementFileResourceID) : this()
         {
             this.AgreementID = agreementID;
             this.TmpAgreementID = tmpAgreementID;
@@ -47,25 +48,26 @@ namespace ProjectFirma.Web.Models
             this.AgreementTitle = agreementTitle;
             this.OrganizationID = organizationID;
             this.GrantID = grantID;
+            this.AgreementStatusID = agreementStatusID;
+            this.AgreementFileResourceID = agreementFileResourceID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(string agreementTitle, int organizationID, int grantID) : this()
+        public Agreement(string agreementTitle, int organizationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.AgreementTitle = agreementTitle;
             this.OrganizationID = organizationID;
-            this.GrantID = grantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Agreement(string agreementTitle, Organization organization, Grant grant) : this()
+        public Agreement(string agreementTitle, Organization organization) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -73,17 +75,14 @@ namespace ProjectFirma.Web.Models
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
             organization.Agreements.Add(this);
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.Agreements.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Agreement CreateNewBlank(Organization organization, Grant grant)
+        public static Agreement CreateNewBlank(Organization organization)
         {
-            return new Agreement(default(string), organization, grant);
+            return new Agreement(default(string), organization);
         }
 
         /// <summary>
@@ -92,13 +91,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementProjectCodes.Any();
+            return AgreementPeople.Any() || AgreementProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementPerson).Name, typeof(AgreementProjectCode).Name};
 
 
         /// <summary>
@@ -114,6 +113,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in AgreementPeople.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in AgreementProjectCodes.ToList())
             {
@@ -136,15 +140,20 @@ namespace ProjectFirma.Web.Models
         public string Notes { get; set; }
         public string AgreementTitle { get; set; }
         public int OrganizationID { get; set; }
-        public int GrantID { get; set; }
+        public int? GrantID { get; set; }
+        public int? AgreementStatusID { get; set; }
+        public int? AgreementFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
+        public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }
         public virtual Region Region { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Grant Grant { get; set; }
+        public virtual AgreementStatus AgreementStatus { get; set; }
+        public virtual FileResource AgreementFileResource { get; set; }
 
         public static class FieldLengths
         {
