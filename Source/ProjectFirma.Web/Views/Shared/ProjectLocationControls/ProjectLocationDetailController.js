@@ -1,11 +1,12 @@
-﻿angular.module("ProjectFirmaApp")
+﻿
+angular.module("ProjectFirmaApp")
     .controller("ProjectLocationDetailController",
-        function ($scope, angularModelAndViewData) {
+    function ($scope, angularModelAndViewData) {
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
-            $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapSericeLayerNames.length > 0;
-            $scope.GeospatialAreaMapSericeLayerNamesCommaSeparated =
-                $scope.AngularViewData.GeospatialAreaMapSericeLayerNames.join(",");
+            $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.length > 0;
+            $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated =
+                $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
 
 
             $scope.selectedStyle = {
@@ -119,4 +120,7 @@
             alert("hello world!");
             initializeMap();
 
-        });
+    });
+
+
+

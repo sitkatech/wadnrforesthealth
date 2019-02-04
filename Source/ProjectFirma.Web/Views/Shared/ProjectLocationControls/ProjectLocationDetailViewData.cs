@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using GeoJSON.Net.Feature;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views;
 
@@ -58,11 +59,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
     {
         public MapInitJson MapInitJson { get; }
         public LayerGeoJson EditableLayerGeoJson { get; }
+        public List<string> GeospatialAreaMapServiceLayerNames { get; }
 
         public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson)
         {
             MapInitJson = mapInitJson;
             EditableLayerGeoJson = editableLayerGeoJson;
+            GeospatialAreaMapServiceLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
         }
     }
 
