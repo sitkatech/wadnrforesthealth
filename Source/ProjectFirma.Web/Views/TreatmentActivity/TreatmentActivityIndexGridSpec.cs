@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
         {
 
             Add("Project Name", a => UrlTemplate.MakeHrefString(a.GetProjectDetailUrl(), a.GetProjectName()), 150, DhtmlxGridColumnFilterType.Html);
-            Add("Focus Area", a => a.GetFocusAreaText(), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Focus Area", a => a.GetFocusAreaText(), 150, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.Region.ToGridHeaderString(), a => a.GetProjectRegions(), 150, DhtmlxGridColumnFilterType.Text);
             Add("Contact", a => a.GetContactText(), 125, DhtmlxGridColumnFilterType.Text);
             Add("Status", a => a.GetStatusDisplayName(), 75, DhtmlxGridColumnFilterType.Text);
