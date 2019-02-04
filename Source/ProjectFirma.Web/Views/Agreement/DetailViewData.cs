@@ -46,6 +46,8 @@ namespace ProjectFirma.Web.Views.Agreement
         public string AgreementPersonGridName { get; }
         public string AgreementPersonGridDataUrl { get; }
         public bool ShowDownload { get; }
+        public string NewAgreementProjectRelationshipUrl { get; }
+        public bool CanCreateNewProjectAgreementRelationship { get; }
 
 
         public DetailViewData(Person currentPerson, Models.Agreement agreement)
@@ -67,7 +69,7 @@ namespace ProjectFirma.Web.Views.Agreement
                 AgreementPersonGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Agreement Contact");
             }
 
-
+            CanCreateNewProjectAgreementRelationship = hasAgreementEditPermissions;
             AgreementPersonGridName = "agreementPersonGrid";
             AgreementPersonGridDataUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(ac => ac.AgreementPersonGridJsonData(agreement.AgreementID));
         }

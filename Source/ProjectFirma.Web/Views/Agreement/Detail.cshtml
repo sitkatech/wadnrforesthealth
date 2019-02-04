@@ -186,9 +186,16 @@
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects
-                    </h3>
+                    @*@Html.LabelWithSugarFor(FieldDefinition.FundingSource, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly)*@
+                    @*<a href="@ViewDataTyped.ManageFundingSourcesUrl"> @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects</a>*@
+
+
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementUrl, string.Format("Edit {0}", ViewDataTyped.Agreement.AgreementTitle), 950, ViewDataTyped.UserHasEditAgreementPermissions)
+                    @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects
+
+                    <span class="pull-right">
+                        @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewAgreementProjectRelationshipUrl, string.Format("Create a new relationship between {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.Project.GetFieldDefinitionLabel()), new List<string>(), ViewDataTyped.CanCreateNewProjectAgreementRelationship)
+                    </span>
                 </div>
                 <div class="panel-body">
                     TO DO WHEN RELATIONSHIP BETWEEN PROJECTS AND AGREEMENTS IS IRONED OUT
