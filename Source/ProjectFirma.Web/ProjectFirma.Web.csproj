@@ -812,6 +812,7 @@
     <Compile Include="Views\ProjectUpdate\ExpectedFundingValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewData.cs" />
     <Compile Include="Views\ProjectUpdate\ExpectedFundingViewModel.cs" />
+    <Content Include="Views\ProjectLocation\EditProjectLocationDetailController.js" />
     <Content Include="Views\ProjectPriorityArea\EditProjectPriorityAreasController.js" />
     <Content Include="Views\ProjectRegion\EditProjectRegionsController.js" />
     <Content Include="Views\ProjectUpdate\Contacts.cshtml" />
@@ -1115,7 +1116,8 @@
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
     <Content Include="Views\Project\ContractorTimeActivityController.js" />
-    <Content Include="Views\ProjectLocation\EditProjectLocationDetailController.js" />
+    <None Include="Views\ProjectLocation\EditProjectLocationDetailController.js.temp" />
+    <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailController.js" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />

@@ -18,6 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+using GeoJSON.Net.Feature;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views;
 
@@ -25,28 +28,42 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
     public class ProjectLocationDetailViewData : FirmaUserControlViewData
     {
-        public readonly int ProjectID;
-        public readonly bool HasProjectLocationPoint;
-        public readonly MapInitJson MapInitJson;
-        public readonly LayerGeoJson EditableLayerGeoJson;
-        public readonly string UploadGisFileUrl;
-        public readonly string MapFormID;
-        public readonly string SaveFeatureCollectionUrl;
-        public readonly int AnnotationMaxLength;
-        public readonly string SimplePointMarkerImg;
+        public int ProjectId { get; }
+        public bool HasProjectLocationPoint { get; }
+        public MapInitJson InitJson { get; }
+        public LayerGeoJson EditableLayerGeoJson { get; }
+        public string UploadGisFileUrl { get; }
+        public string MapFormId { get; }
+        public string SaveFeatureCollectionUrl { get; }
+        public int AnnotationMaxLength { get; }
+        public string SimplePointMarkerImg { get; }
+        public ProjectLocationDetailViewDataForAngular ViewDataForAngular { get; }
 
         public ProjectLocationDetailViewData(int projectID, MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, string uploadGisFileUrl, string mapFormID, string saveFeatureCollectionUrl, int annotationMaxLength, bool hasProjectLocationPoint)
         {
-            ProjectID = projectID;
-            MapInitJson = mapInitJson;
+            ProjectId = projectID;
+            InitJson = mapInitJson;
             EditableLayerGeoJson = editableLayerGeoJson;
             UploadGisFileUrl = uploadGisFileUrl;
-            MapFormID = mapFormID;
+            MapFormId = mapFormID;
             SaveFeatureCollectionUrl = saveFeatureCollectionUrl;
             AnnotationMaxLength = annotationMaxLength;
             HasProjectLocationPoint = hasProjectLocationPoint;
-
+            ViewDataForAngular = new ProjectLocationDetailViewDataForAngular(mapInitJson, editableLayerGeoJson);
             SimplePointMarkerImg = "https://api.tiles.mapbox.com/v3/marker/pin-s-marker+838383.png";
         }
     }
+
+    public class ProjectLocationDetailViewDataForAngular
+    {
+        public MapInitJson MapInitJson { get; }
+        public LayerGeoJson EditableLayerGeoJson { get; }
+
+        public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson)
+        {
+            MapInitJson = mapInitJson;
+            EditableLayerGeoJson = editableLayerGeoJson;
+        }
+    }
+
 }

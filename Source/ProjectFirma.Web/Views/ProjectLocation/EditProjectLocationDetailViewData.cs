@@ -12,6 +12,7 @@ namespace ProjectFirma.Web.Views.ProjectLocation
             UploadGisUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(x => x.UploadGisFile(projectId));
             EditProjectLocationDetailGridDataUrl = editProjectLocationDetailGridDataUrl;
             AngularViewData = new AngularViewDataForEditProjectLocationDetail(mapInitJson, projectId, editProjectLocationLayerGeoJson);
+            AnnotationMaxLength = 255;
 
         }
 
@@ -19,6 +20,7 @@ namespace ProjectFirma.Web.Views.ProjectLocation
         public string PostUrl { get; set; }
         public string UploadGisUrl { get; set; }
         private string EditProjectLocationDetailGridDataUrl { get; set; }
+        public int AnnotationMaxLength { get; set; }
     }
 
 
@@ -28,6 +30,8 @@ namespace ProjectFirma.Web.Views.ProjectLocation
         //public List<ProjectLocationTypeJson> ProjectLocationTypeJsons { get; set; }
         public int ProjectID { get; set; }
         public LayerGeoJson EditProjectLocationDetailLayerGeoJson { get; set; }
+
+        public bool IsMapEditable { get; set; }
 
 
 
@@ -40,6 +44,8 @@ namespace ProjectFirma.Web.Views.ProjectLocation
 
             ProjectID = projectId;
             EditProjectLocationDetailLayerGeoJson = editProjectLocationDetailLayerGeoJson;
+
+            IsMapEditable = true;
 
         }
     }

@@ -25,6 +25,22 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Models
 @inherits ProjectFirma.Web.Views.Shared.ProjectLocationControls.ProjectLocationDetail
 
+<script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationDetailController.js")"></script>
+<script type="text/javascript">
+    // <![CDATA[
+    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+        function() {
+            return {
+                "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
+                "AngularViewData":
+                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None)),
+            };
+        });
+    angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationDetailController\"]"), ["ProjectFirmaApp"]);
+    // ]]>
+</script>
+
+
 <style>
     .mapEditor textarea {
         resize: none;
@@ -55,12 +71,12 @@ Source code is available upon request via <support@sitkatech.com>.
         new List<string>(){"btn", "btn-sm", "btn-firma"},
         null,
         null,
-        ViewDataTyped.MapFormID,
+        ViewDataTyped.MapFormId,
         null)
 </p>
 
 
-<div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 500px">
+<div id="@ViewDataTyped.InitJson.MapDivID" style="height: 500px">
 </div>
 @if (ViewDataTyped.HasProjectLocationPoint)
 {
@@ -68,6 +84,104 @@ Source code is available upon request via <support@sitkatech.com>.
         <img style="margin-top: 10px; margin-right: 5px;" src="@ViewDataTyped.SimplePointMarkerImg"> Simple @FieldDefinition.Project.GetFieldDefinitionLabel() location (for reference)
     </div>
 }
+
+
+
+        <div>
+
+            <table class="table table-bordered table-projectLocations">
+                <thead>
+                    <tr>
+                        <th @*data-ng-if="!AngularViewData.IsInCompletedReview"*@></th>
+                        <th style="width: 150px">Feature Name</th>
+                        <th>Feature</th>
+                        <th>Location Type</th>
+
+                        <th style="width: 250px">Notes</th>
+                    </tr>
+                </thead>
+                <tr data-ng-repeat="projectLocation in AngularModel.projectLocationJsons" class="clickable-row"
+                    data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
+                    data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)">
+                    @* trash icon for deleting *@
+                    <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
+                        <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                    @* feature name *@
+                    <td style="width: 150px">
+                        <input type="text" name="projectLocationJsons[{{$index}}].projectLocationName"
+                               data-ng-model="projectLocation.projectLocationName" style="width: 100%" required maxlength="200" />
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
+                        </div>*@
+                        <input type="hidden" name="projectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
+                    </td>
+                    @* feature (line, point, poly) *@
+                    <td>
+                        <span data-ng-bind="projectLocation.projectLocationGeometryType"></span>
+                        <input type="hidden" name="projectLocationJsons[{{$index}}].projectLocationGeometry"
+                               value="{{projectLocation.projectLocationGeometry}}" />
+                    </td>
+                    @* location type (ProjectLocationType table) *@
+                    <td>
+                        <select name="projectLocationJsons[{{$index}}].projectLocationTypeID"
+                                data-ng-model="projectLocation.projectLocationTypeID" required>
+                            <option value="">-- Select type --</option>
+                            <option data-ng-repeat="projectLocationType in getSelectableProjectLocationTypes(projectLocation)"
+                                    value="{{projectLocationType.projectLocationTypeID}}">
+                                {{projectLocationType.projectLocationTypeName}}
+                            </option>
+                        </select>
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>
+                        </div>*@
+                    </td>
+                    @* notes/annotation *@
+                    <td style="width: 250px">
+                        <input type="text" name="projectLocationJsons[{{$index}}].notes" data-ng-model="projectLocation.notes" style="width: 100%" maxlength="500" />
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
+                        </div>*@
+                    </td>
+                </tr>
+            </table>
+            <p class="systemText">
+                *Enter Width of proposed construction area. The DDCT calculation will use this width.
+                <span ng-show="AngularModel.projectLocationJsons.length !== 0">
+                    <br />ProjectLocation Type you're looking for not listed? Make sure you selected the most appropriate Project Type on the
+                    @*<a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a>*@ page.
+                </span>
+            </p>
+        </div>
+
+        @*<div class="alert alert-danger" role="alert" data-ng-repeat="projectLocationJson in getProjectLocationsWithProjectLocationTypesNotAlignedWithGeometryType()">
+            For ProjectLocation "{{projectLocationJson.projectLocationName}}", you indicated you have a "{{getProjectLocationTypeName(projectLocationJson.projectLocationTypeID)}}" ProjectLocation Type, yet represented it using a {{projectLocationJson.projectLocationGeometryType}}. While this is allowed, please make sure this is what you want to do.
+        </div>*@
+
+        @*<div th:if="@ViewDataTyped.inDueDiligence()" class="projectComment">
+            <hr>
+            <h4>Review Comments</h4>
+            <textarea class="form-control" th:field="*{comments}" maxlength="1000"></textarea>
+            <div class="alert alert-danger field-validation-error" role="alert"
+                 th:if="${#fields.hasErrors('comments')}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span th:errors="*{comments}"></span>
+            </div>
+        </div>*@
+
+        
+
+
+
+
+
 
 
 <script type="text/javascript">
@@ -123,101 +237,7 @@ Source code is available upon request via <support@sitkatech.com>.
     var projectFirmaMap;
     jQuery(document).ready(function()
     {
-        var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.MapInitJson).ToString(Formatting.None));
-        var editableFeatureJsonObject = @Html.Raw(JObject.FromObject(ViewDataTyped.EditableLayerGeoJson).ToString(Formatting.None));
-        projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
-
-        projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
-
-        var bindAnnotationPopup = function(layer, feature)
-        {
-            var leafletId = layer._leaflet_id;
-            var popupOptions = {
-                minWidth: 200
-            };
-            layer.bindPopup("", popupOptions);
-            layer.on('click', function(f)
-            {
-                if(layer.editing.enabled())
-                {
-                    f.target.closePopup();
-                    return;
-                }
-                var popup = f.target._popup;
-                var annotation = Sitka.Methods.isUndefinedNullOrEmpty(feature) ? "" : Sitka.Methods.isUndefinedNullOrEmpty(feature.properties.Info) ? "" : feature.properties.Info;
-                var annotationMaxLength = @ViewDataTyped.AnnotationMaxLength;
-                var charsRemaining = annotationMaxLength - annotation.length;
-                var textareaId = projectFirmaMap.getTextAreaId(leafletId);
-                var charRemainingForTextareaId = "CharactersRemaining_" + textareaId;
-                var popupContent = "<b>Notes:</b> <br />" +
-                    "<textarea id=\"" + textareaId + "\" " +
-                    "onkeyup=\"Sitka.Methods.keepTextAreaWithinMaxLength(this, " + annotationMaxLength + ", 20, '" + charRemainingForTextareaId + "', 'Characters Remaining: ');\" " +
-                    "onkeydown=\"Sitka.Methods.keepTextAreaWithinMaxLength(this, " + annotationMaxLength + ", 20, '" + charRemainingForTextareaId +  "', 'Characters Remaining: ');\">" +
-                    annotation + "</textarea>" +
-                    "<div id=\"" + charRemainingForTextareaId + "\" style=\"text-align:right;color:#666666;\">Characters Remaining: " + charsRemaining + "</div><br />" +
-                    "<button id=\"buttonFor" + leafletId + "\" class=\"button btn-xs btn-info\" onclick=\"savePopupAnnotationEditor(" + leafletId + ")\">Save</button>";
-                popup.setContent(popupContent);
-                popup.update();
-
-                jQuery("#textboxFor" + leafletId).focus();
-            });
-        };
-
-        var layerGroup = L.geoJson(editableFeatureJsonObject.GeoJsonFeatureCollection, {
-            onEachFeature: function(feature, layer)
-            {
-                if (layer.getLayers)
-                {
-                    layer.getLayers().forEach(function(l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });
-                }
-                else
-                {
-                    projectFirmaMap.editableFeatureGroup.addLayer(layer);
-                }
-                bindAnnotationPopup(layer, feature);
-            }
-        });
-
-        var drawOptions = getDrawOptions(projectFirmaMap.editableFeatureGroup);
-        var drawControl = new L.Control.Draw(drawOptions);
-        projectFirmaMap.map.addControl(drawControl);
-        projectFirmaMap.map.addLayer(projectFirmaMap.editableFeatureGroup);
-
-        projectFirmaMap.map.on('draw:created', function(e)
-        {
-            var layer = e.layer;
-            projectFirmaMap.editableFeatureGroup.addLayer(layer);
-            var leafletId = layer._leaflet_id;
-            projectFirmaMap.editableFeatureGroup._layers[leafletId].feature = new Object();
-            projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.properties = new Object();
-            projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.type = "Feature";
-            var feature = projectFirmaMap.editableFeatureGroup._layers[leafletId].feature;
-            bindAnnotationPopup(layer, feature);
-            updateFeatureCollectionJson();
-        });
-        projectFirmaMap.map.on('draw:edited', function(e)
-        {
-            updateFeatureCollectionJson();
-        });
-
-        projectFirmaMap.map.on('draw:deleted', function(e)
-        {
-            updateFeatureCollectionJson();
-        });
-
-        updateFeatureCollectionJson();
-
-        var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
-        if(!Sitka.Methods.isUndefinedNullOrEmpty(saveButton))
-        {
-            saveButton.text("Save");
-        }
-
-        var modalTitle = jQuery(".ui-dialog-title");
-        if(!Sitka.Methods.isUndefinedNullOrEmpty(modalTitle))
-        {
-            modalTitle.html("@(string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()))");
-        }
+       
     });
 
     ProjectFirmaMaps.Map.prototype.getTextAreaId = function(featureId) { return "textareaFor" + featureId; };
@@ -234,7 +254,7 @@ Source code is available upon request via <support@sitkatech.com>.
     function updateFeatureCollectionJson()
     {
         var geoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
-        var mapForm = jQuery("#" + "@ViewDataTyped.MapFormID");
+        var mapForm = jQuery("#" + "@ViewDataTyped.MapFormId");
         mapForm.html("");
         var hiddens = [];
         for(var i = 0; i < geoJson.features.length; ++i)
@@ -248,4 +268,4 @@ Source code is available upon request via <support@sitkatech.com>.
     }
 </script>
 
-<form method="POST" id="@ViewDataTyped.MapFormID" action="@ViewDataTyped.SaveFeatureCollectionUrl"></form>
+<form method="POST" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl"></form>
