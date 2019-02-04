@@ -5,7 +5,7 @@ using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 
-namespace ProjectFirma.Web.Views.ProjectCreate
+namespace ProjectFirma.Web.Views.Grant
 {
     public class GrantCreateHelper
     {

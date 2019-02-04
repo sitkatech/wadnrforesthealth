@@ -2,7 +2,9 @@
 <Schema Namespace="ProjectFirma.Web.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Store.Classification" store:Type="Tables" Schema="dbo" />
@@ -104,9 +106,17 @@
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
+      <End Role="AgreementStatus" EntitySet="AgreementStatus" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_AgreementType_AgreementTypeID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementType_AgreementTypeID">
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
+      <End Role="AgreementFileResource" EntitySet="FileResource" />
+      <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -119,6 +129,14 @@
     <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementPerson_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Agreement_AgreementID">
+      <End Role="Agreement" EntitySet="Agreement" />
+      <End Role="AgreementPeople" EntitySet="AgreementPerson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="AgreementPeople" EntitySet="AgreementPerson" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementProjectCode_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
@@ -807,7 +825,18 @@
     <Property Name="Notes" Type="varchar(max)" />
     <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" />
+    <Property Name="AgreementStatusID" Type="int" />
+    <Property Name="AgreementFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="AgreementPerson">
+    <Key>
+      <PropertyRef Name="AgreementPersonID" />
+    </Key>
+    <Property Name="AgreementPersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="AgreementPersonRoleID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementProjectCode">
     <Key>
@@ -816,6 +845,13 @@
     <Property Name="AgreementProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="ProjectCodeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AgreementStatus">
+    <Key>
+      <PropertyRef Name="AgreementStatusID" />
+    </Key>
+    <Property Name="AgreementStatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementStatusName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="AgreementType">
     <Key>
@@ -1968,6 +2004,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
+    <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.Store.AgreementStatus" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementStatus">
+        <PropertyRef Name="AgreementStatusID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="AgreementStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
     <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
@@ -1980,8 +2028,20 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
+    <End Role="AgreementFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="AgreementsWhereYouAreTheAgreementFileResource" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AgreementFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="AgreementsWhereYouAreTheAgreementFileResource">
+        <PropertyRef Name="AgreementFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Agreement_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Grant">
@@ -2013,6 +2073,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementPerson_Agreement_AgreementID">
+    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
+    <End Role="AgreementPeople" Type="ProjectFirma.Web.Models.Store.AgreementPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agreement">
+        <PropertyRef Name="AgreementID" />
+      </Principal>
+      <Dependent Role="AgreementPeople">
+        <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementPerson_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="AgreementPeople" Type="ProjectFirma.Web.Models.Store.AgreementPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="AgreementPeople">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

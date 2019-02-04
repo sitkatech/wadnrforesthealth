@@ -19,6 +19,18 @@
           <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
+          <ScalarProperty Name="AgreementFileResourceID" ColumnName="AgreementFileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgreementPerson">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementPerson">
+        <MappingFragment StoreEntitySet="AgreementPerson">
+          <ScalarProperty Name="AgreementPersonID" ColumnName="AgreementPersonID" />
+          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="AgreementPersonRoleID" ColumnName="AgreementPersonRoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -28,6 +40,14 @@
           <ScalarProperty Name="AgreementProjectCodeID" ColumnName="AgreementProjectCodeID" />
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgreementStatus">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementStatus">
+        <MappingFragment StoreEntitySet="AgreementStatus">
+          <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
+          <ScalarProperty Name="AgreementStatusName" ColumnName="AgreementStatusName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

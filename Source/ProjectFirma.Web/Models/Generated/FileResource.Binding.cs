@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected FileResource()
         {
+            this.AgreementsWhereYouAreTheAgreementFileResource = new HashSet<Agreement>();
             this.ClassificationsWhereYouAreTheKeyImageFileResource = new HashSet<Classification>();
             this.CustomPageImages = new HashSet<CustomPageImage>();
             this.FieldDefinitionDataImages = new HashSet<FieldDefinitionDataImage>();
@@ -102,13 +103,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
+            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -124,6 +125,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in AgreementsWhereYouAreTheAgreementFileResource.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in ClassificationsWhereYouAreTheKeyImageFileResource.ToList())
             {
@@ -198,6 +204,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return FileResourceID; } set { FileResourceID = value; } }
 
+        public virtual ICollection<Agreement> AgreementsWhereYouAreTheAgreementFileResource { get; set; }
         public virtual ICollection<Classification> ClassificationsWhereYouAreTheKeyImageFileResource { get; set; }
         public virtual ICollection<CustomPageImage> CustomPageImages { get; set; }
         public virtual ICollection<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
