@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         public static string GetProjectRegions(this Models.TreatmentActivity treatmentActivity)
         {            
             var result = treatmentActivity.Project.GetProjectRegions().OrderBy(x => x.RegionName).Select(x => x.RegionName).Distinct();
-            return string.Join(",",result);
+            return string.Join(", ",result);
         }
 
         public static string GetContactUrl(this Models.TreatmentActivity treatmentActivity)
