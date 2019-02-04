@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public int AnnotationMaxLength { get; }
         public string SimplePointMarkerImg { get; }
         public ProjectLocationDetailViewDataForAngular ViewDataForAngular { get; }
-
+        
         public ProjectLocationDetailViewData(int projectID, MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, string uploadGisFileUrl, string mapFormID, string saveFeatureCollectionUrl, int annotationMaxLength, bool hasProjectLocationPoint)
         {
             ProjectId = projectID;
@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             SaveFeatureCollectionUrl = saveFeatureCollectionUrl;
             AnnotationMaxLength = annotationMaxLength;
             HasProjectLocationPoint = hasProjectLocationPoint;
-            ViewDataForAngular = new ProjectLocationDetailViewDataForAngular(mapInitJson, editableLayerGeoJson);
+            ViewDataForAngular = new ProjectLocationDetailViewDataForAngular(mapInitJson, editableLayerGeoJson, annotationMaxLength);
             SimplePointMarkerImg = "https://api.tiles.mapbox.com/v3/marker/pin-s-marker+838383.png";
         }
     }
@@ -60,11 +60,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public MapInitJson MapInitJson { get; }
         public LayerGeoJson EditableLayerGeoJson { get; }
         public List<string> GeospatialAreaMapServiceLayerNames { get; }
+        public int AnnotationMaxLength { get; }
 
-        public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson)
+        public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, int annotationMaxLength)
         {
             MapInitJson = mapInitJson;
             EditableLayerGeoJson = editableLayerGeoJson;
+            AnnotationMaxLength = annotationMaxLength;
             GeospatialAreaMapServiceLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
         }
     }

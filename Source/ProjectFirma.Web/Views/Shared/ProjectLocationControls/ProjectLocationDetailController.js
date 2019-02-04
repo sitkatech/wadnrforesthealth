@@ -104,20 +104,10 @@ angular.module("ProjectFirmaApp")
 
                 updateFeatureCollectionJson();
 
-                var saveButton = jQuery("#" + $scope.AngularViewData.SaveButtonID);
-                if (!Sitka.Methods.isUndefinedNullOrEmpty(saveButton)) {
-                    saveButton.text("Save");
-                }
-
-                var modalTitle = jQuery(".ui-dialog-title");
-                if (!Sitka.Methods.isUndefinedNullOrEmpty(modalTitle)) {
-                    modalTitle.html($scope.AngularViewData.ModalTitle);
-                }
-
 
 
             };
-            alert("hello world!");
+
             initializeMap();
 
     });
