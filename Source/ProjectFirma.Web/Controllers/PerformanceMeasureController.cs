@@ -188,7 +188,7 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [PerformanceMeasureManageFeature]
-        public ContentResult SaveChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, int performanceMeasureSubcategoryID)
+        public ContentResult SaveChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, PerformanceMeasureSubcategoryPrimaryKey performanceMeasureSubcategoryPrimaryKey)
         {
             return new ContentResult();
         }
@@ -196,9 +196,10 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [PerformanceMeasureManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult SaveChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, int performanceMeasureSubcategoryID, GoogleChartConfigurationViewModel viewModel)
+        public ActionResult SaveChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, PerformanceMeasureSubcategoryPrimaryKey performanceMeasureSubcategoryPrimaryKey, GoogleChartConfigurationViewModel viewModel)
         {
             var performanceMeasure = performanceMeasurePrimaryKey.EntityObject;
+            var performanceMeasureSubcategoryID = performanceMeasureSubcategoryPrimaryKey.EntityObject.PerformanceMeasureSubcategoryID; 
 
             if (!ModelState.IsValid)
             {
@@ -213,9 +214,10 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [PerformanceMeasureManageFeature]
-        public PartialViewResult ResetChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, int performanceMeasureSubcategoryID)
+        public PartialViewResult ResetChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, PerformanceMeasureSubcategoryPrimaryKey performanceMeasureSubcategoryPrimaryKey)
         {
             var performanceMeasure = performanceMeasurePrimaryKey.EntityObject;
+            var performanceMeasureSubcategory = performanceMeasureSubcategoryPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(performanceMeasure.PerformanceMeasureID);
             return ViewResetChartConfiguration(performanceMeasure, viewModel);
         }
@@ -231,9 +233,10 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [PerformanceMeasureManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult ResetChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, int performanceMeasureSubcategoryID, ConfirmDialogFormViewModel viewModel)
+        public ActionResult ResetChartConfiguration(PerformanceMeasurePrimaryKey performanceMeasurePrimaryKey, PerformanceMeasureSubcategoryPrimaryKey performanceMeasureSubcategoryPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var performanceMeasure = performanceMeasurePrimaryKey.EntityObject;
+            var performanceMeasureSubcategoryID = performanceMeasureSubcategoryPrimaryKey.EntityObject.PerformanceMeasureSubcategoryID;
             if (!ModelState.IsValid)
             {
                 SetErrorForDisplay("Error resetting chart configuration.");

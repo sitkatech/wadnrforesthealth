@@ -225,8 +225,9 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult NewAgreementPerson(int agreementID)
+        public PartialViewResult NewAgreementPerson(AgreementPrimaryKey agreementPrimaryKey)
         {
+            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
             var viewModel = new EditAgreementPersonViewModel(agreementID);
             return ViewEditAgreementPerson(viewModel);
         }
@@ -234,8 +235,9 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewAgreementPerson(int agreementID, EditAgreementPersonViewModel viewModel)
+        public ActionResult NewAgreementPerson(AgreementPrimaryKey agreementPrimaryKey, EditAgreementPersonViewModel viewModel)
         {
+            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
             if (!ModelState.IsValid)
             {
                 return ViewEditAgreementPerson(viewModel);
@@ -252,8 +254,9 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [AgreementsViewFeature]
-        public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(int agreementID)
+        public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(AgreementPrimaryKey agreementPrimaryKey)
         {
+            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
             var gridSpec = new AgreementPersonGridSpec(CurrentPerson);
             var agreement =
                 HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(x => x.AgreementID == agreementID);
