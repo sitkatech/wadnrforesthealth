@@ -111,6 +111,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             Project = null;
             ProposalSectionsStatus = new ProposalSectionsStatus();
 
+            InstructionsPageUrl = proposalInstructionsUrl;
             ProposalInstructionsUrl = proposalInstructionsUrl;
             ProposalBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(true));
             HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));            
