@@ -517,8 +517,11 @@
     <Compile Include="Views\Agreement\Detail.cs" />
     <Compile Include="Views\Agreement\DetailViewData.cs" />
     <Compile Include="Views\Agreement\AgreementViewData.cs" />
+    <Compile Include="Views\Agreement\EditAgreementGrantAllocation.cs" />
     <Compile Include="Views\Agreement\EditAgreementPerson.cs" />
+    <Compile Include="Views\Agreement\EditAgreementGrantAllocationViewData.cs" />
     <Compile Include="Views\Agreement\EditAgreementPersonViewData.cs" />
+    <Compile Include="Views\Agreement\EditAgreementGrantAllocationViewModel.cs" />
     <Compile Include="Views\Agreement\EditAgreementPersonViewModel.cs" />
     <Compile Include="Views\Agreement\EditAgreementViewModel.cs" />
     <Compile Include="Views\Agreement\EditAgreement.cs" />
@@ -672,6 +675,7 @@
     <Content Include="Views\FocusArea\ApproveUploadGis.cshtml" />
     <Content Include="Views\Agreement\AgreementIndex.cshtml" />
     <Content Include="Views\Agreement\EditAgreement.cshtml" />
+    <Content Include="Views\Agreement\EditAgreementGrantAllocation.cshtml" />
     <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\Agreement\Detail.cshtml" />
     <Content Include="Views\Agreement\EditAgreementPerson.cshtml" />

@@ -250,6 +250,74 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [AgreementEditAsAdminFeature]
+        public PartialViewResult EditAgreementGrantAllocation(AgreementPersonPrimaryKey agreementPersonPrimaryKey)
+        {
+            var agreementPerson = agreementPersonPrimaryKey.EntityObject;
+            var viewModel = new EditAgreementGrantAllocationViewModel(agreementPerson);
+            return ViewEditAgreementGrantAllocation(viewModel);
+        }
+
+        [HttpPost]
+        [AgreementEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditAgreementGrantAllocation(AgreementPersonPrimaryKey agreementPersonPrimaryKey, EditAgreementGrantAllocationViewModel viewModel)
+        {
+            var agreementPerson = agreementPersonPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditAgreementGrantAllocation(viewModel);
+            }
+            viewModel.UpdateModel(agreementPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditAgreementGrantAllocation(EditAgreementPersonViewModel viewModel)
+        {
+            var agreementPersonRoles = AgreementPersonRole.All.ToSelectListWithEmptyFirstRow(k => k.AgreementPersonRoleID.ToString(), v => v.AgreementPersonRoleDisplayName);
+            var allPeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
+            if (!allPeople.Contains(CurrentPerson))
+            {
+                allPeople.Add(CurrentPerson);
+            }
+
+            var contacts = allPeople.OrderBy(x => x.LastName)
+                .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
+
+            var viewData = new EditAgreementPersonViewData(agreementPersonRoles, contacts);
+            return RazorPartialView<EditAgreementGrantAllocation, EditAgreementGrantAllocationViewData, EditAgreementGrantAllocationViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [AgreementEditAsAdminFeature]
+        public PartialViewResult NewAgreementGrantAllocationRelationship(AgreementPrimaryKey agreementPrimaryKey)
+        {
+            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
+            var viewModel = new EditAgreementGrantAllocationViewModel(agreementID);
+            return ViewEditAgreementGrantAllocation(viewModel);
+        }
+
+        [HttpPost]
+        [AgreementEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewAgreementGrantAllocationRelationship(AgreementPrimaryKey agreementPrimaryKey, EditAgreementGrantAllocationViewModel viewModel)
+        {
+            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditAgreementGrantAllocation(viewModel);
+            }
+
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(ga => ga.GrantAllocationID == viewModel.GrantAllocationID); 
+            viewModel.UpdateModel(grantAllocation);
+            HttpRequestStorage.DatabaseEntities.AgreementPeople.Add(agreementPerson);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            SetMessageForDisplay($"Grant Allocation '{grantAllocation.ProjectName}' successfully added to this agreement.");
+
+            return new ModalDialogFormJsonResult();
+        }
+
         [AgreementsViewFeature]
         public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(AgreementPrimaryKey agreementPrimaryKey)
         {
@@ -261,8 +329,6 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<AgreementPerson>(agreementPeople, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
-
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
