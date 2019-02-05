@@ -27,13 +27,23 @@ angular.module("ProjectFirmaApp")
                 stroke: true
         };
 
-        var addFeatureToGrid = function(feature) {
-            //todo: add feature to grid
-
-            $scope.AngularModel.ProjectLocationJsons.add(); 
-
+        var createProjectLocationJson = function (wellKnownText, projectLocationId, featureType, locationTypeId, locationName, locationTypeName, locationNotes) {
+            return {
+                ProjectLocationGeometryWellKnownText: wellKnownText,
+                ProjectLocationID: projectLocationId,
+                ProjectLocationFeatureType: featureType,
+                ProjectLocationTypeID: locationTypeId,
+                ProjectLocationName: locationName,
+                ProjectLocationTypeName: locationTypeName,
+                ProjectLocationNotes: locationNotes
+            };
         };
 
+        var addFeatureToGrid = function(feature) {
+            //debugger;
+            var locationJson = createProjectLocationJson('wellknowntexthere', -1, 'Polygon', 0, 'locationnamehere', 'locationTypeHere', 'NotesShouldBeBlankUltimately');
+            $scope.AngularModel.ProjectLocationJsons.push(locationJson); 
+        };
 
 
             var initializeMap = function () {
@@ -42,8 +52,6 @@ angular.module("ProjectFirmaApp")
                 projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
 
                 projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
-
-
 
                 var layerGroup = L.geoJson(editableFeatureJsonObject.GeoJsonFeatureCollection, {
                     onEachFeature: function (feature, layer) {
@@ -74,6 +82,7 @@ angular.module("ProjectFirmaApp")
                     addFeatureToGrid(feature);
                     updateFeatureCollectionJson();
                 });
+
                 projectFirmaMap.map.on('draw:edited', function (e) {
                     updateFeatureCollectionJson();
                 });

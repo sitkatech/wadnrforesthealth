@@ -265,19 +265,22 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
-            foreach (var projectLocation in project.ProjectLocations)
+            var currentProjectLocations = project.ProjectLocations.ToList();
+            foreach (var currentProjectLocation in currentProjectLocations)
             {
-                projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             project.ProjectLocations.Clear();
             //todo save project locations
-            //if (viewModel.WktAndAnnotations != null)
-            //{
-            //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
-            //    {
-            //        project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
-            //    }
-            //}
+            if (viewModel.ProjectLocationJsons != null)
+            {
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
+                {
+                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);   
+                    var projectLocation = new ProjectLocation(project, projectLocationGeometry, projectLocationJson.ProjectLocationNotes);
+                    project.ProjectLocations.Add(projectLocation);
+                }
+            }
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)
