@@ -52,6 +52,9 @@
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Agreement.Binding.cs" />
     <Compile Include="Models\Generated\Agreement.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\AgreementGrantAllocation.Binding.cs" />
+    <Compile Include="Models\Generated\AgreementGrantAllocation.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\AgreementGrantAllocationPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\AgreementPerson.Binding.cs" />
     <Compile Include="Models\Generated\AgreementPerson.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\AgreementPersonPrimaryKey.Binding.cs" />

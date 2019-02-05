@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.Models
         {
             throw new UnintentionalCodeFirstException();
         }
+        public virtual DbSet<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual DbSet<AgreementPerson> AgreementPeople { get; set; }
         public virtual DbSet<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
@@ -142,6 +143,9 @@ namespace ProjectFirma.Web.Models
                     var activityType = ActivityType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(activityType, "ActivityType", primaryKey);
                     return activityType;
+
+                case "AgreementGrantAllocation":
+                    return AgreementGrantAllocations.GetAgreementGrantAllocation(primaryKey);
 
                 case "AgreementPerson":
                     return AgreementPeople.GetAgreementPerson(primaryKey);

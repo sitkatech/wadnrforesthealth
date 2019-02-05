@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantAllocation()
         {
+            this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
         }
@@ -84,13 +85,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationNotes.Any() || GrantAllocationProjectCodes.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationProjectCode).Name};
 
 
         /// <summary>
@@ -106,6 +107,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in AgreementGrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in GrantAllocationNotes.ToList())
             {
@@ -134,6 +140,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
+        public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual Grant Grant { get; set; }
