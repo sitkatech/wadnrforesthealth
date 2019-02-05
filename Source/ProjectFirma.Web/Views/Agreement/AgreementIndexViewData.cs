@@ -35,11 +35,11 @@ namespace ProjectFirma.Web.Views.Agreement
         public readonly string AgreementGridDataUrl;
 
 
-        public AgreementIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public AgreementIndexViewData(Person currentPerson, Models.FirmaPage firmaPage, bool atLeastOneAgreementHasFile) : base(currentPerson, firmaPage)
         {
             PageTitle = $"Full Agreement List";
 
-            AgreementGridSpec = new AgreementGridSpec(currentPerson);
+            AgreementGridSpec = new AgreementGridSpec(currentPerson, atLeastOneAgreementHasFile);
             AgreementGridName = "agreementsGridName";
             AgreementGridDataUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(tc => tc.AgreementGridJsonData());
         }
