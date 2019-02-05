@@ -39,6 +39,7 @@ namespace LtInfo.Common.DhtmlWrappers
         public static readonly HtmlString PlusIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus-sign gi-1x blue");
         public static readonly HtmlString UndoIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-regular undo gi-1x blue");
         public static readonly HtmlString EditIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit gi-1x blue");
+        public static readonly HtmlString FileIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-file gi-1x blue");
         public static readonly HtmlString DeleteIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue");
         public static readonly HtmlString OkCircleIconBootstrap = BootstrapHtmlHelpers.MakeGlyphIconWithHiddenText("glyphicon-ok-circle gi-1x blue", "Yes");
 
@@ -548,6 +549,14 @@ namespace LtInfo.Common.DhtmlWrappers
             return MakeEditIconAsHyperlinkBootstrap(editUrl, true);
         }
 
+        public static HtmlString MakeFileDownloadIconAsHyperlinkBootstrap(string fileDownloadUrl)
+        {
+            var dictionary = new Dictionary<string,string>();
+            dictionary.Add("target", "_blank");
+            return !string.IsNullOrEmpty(fileDownloadUrl) ? UrlTemplate.MakeHrefString(fileDownloadUrl,
+                $"{FileIconBootstrap}<span style=\"display:none\">Download agreement file</span>", "Download agreement file", dictionary) : new HtmlString(string.Empty);
+        }
+
         /// <summary>
         /// For making an edit icon on the grid with an editor in a jquery ui dialog
         /// If insufficient permissions, returns empty string
@@ -656,6 +665,7 @@ namespace LtInfo.Common.DhtmlWrappers
                 : BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x disabled").ToString();
             return ModalDialogFormHelper.MakeDeleteLink(deleteIcon, deleteDialogUrl, new List<string>(), userHasDeletePermission);
         }
+
     }
 
     public enum DhtmlxGridResizeType

@@ -24,5 +24,18 @@ namespace ProjectFirma.Web.Models
             return EditUrlTemplate.ParameterReplace(agreement.AgreementID);
         }
 
+        public static string GetFileDownloadUrl(this Agreement agreement)
+        {
+            if (agreement.AgreementFileResource != null)
+            {
+                var url = FileResource.FileResourceByGuidUrlTemplate;
+                return url.ParameterReplace(agreement.AgreementFileResource.FileResourceGUIDAsString);
+            }
+
+            return string.Empty;
+        }
+            
+         
+
     }
 }

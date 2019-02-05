@@ -64,7 +64,8 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullAgreementList);
-            var viewData = new AgreementIndexViewData(CurrentPerson, firmaPage);
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
+            var viewData = new AgreementIndexViewData(CurrentPerson, firmaPage, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             return RazorView<AgreementIndex, AgreementIndexViewData>(viewData);
         }
 
@@ -79,8 +80,8 @@ namespace ProjectFirma.Web.Controllers
         [AgreementsViewFullListFeature]
         public GridJsonNetJObjectResult<Agreement> AgreementGridJsonData()
         {
-            var gridSpec = new AgreementGridSpec(CurrentPerson);
             var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
+            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
