@@ -26,10 +26,13 @@ namespace ProjectFirma.Web.Views.Agreement
 {
     public class EditAgreementGrantAllocationViewModel : FormViewModel
     {
-        public int AgreementID { get; set; }
+        public int AgreementGrantAllocationId { get; }
         
         [DisplayName("Grant Allocations")]
-        public int GrantAllocationID { get; set; }
+        public int GrantAllocationId { get; set; }
+        
+        public int AgreementId { get; set; }
+        public int GrantId { get; }
 
 
         /// <summary>
@@ -41,22 +44,22 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public EditAgreementGrantAllocationViewModel(int agreementId)
         {
-            AgreementID = agreementId;
+            AgreementId = agreementId;
         }
 
 
-        public EditAgreementGrantAllocationViewModel(int agreementId, Models.GrantAllocation grantAllocation)
+        public EditAgreementGrantAllocationViewModel(Models.AgreementGrantAllocation agreementGrantAllocation)
         {
-            //AgreementID = agreementId;
-            //GrantAllocationID = grantAllocation.GrantAllocationID;
+            AgreementGrantAllocationId = agreementGrantAllocation.AgreementGrantAllocationID;
+            AgreementId = agreementGrantAllocation.AgreementID;
+            GrantAllocationId = agreementGrantAllocation.GrantAllocationID;
         }
 
-        public void UpdateModel(Models.Agreement agreement)
+        public void UpdateModel(Models.AgreementGrantAllocation agreementGrantAllocation)
         {
-            //agreement.AgreementPersonID = AgreementPersonID;
-            //agreementPerson.PersonID = PersonID;
-            //agreementPerson.AgreementPersonRoleID = AgreementPersonRoleID;
-            //agreementPerson.AgreementID = AgreementID;
+            agreementGrantAllocation.AgreementGrantAllocationID = AgreementGrantAllocationId;
+            agreementGrantAllocation.AgreementID = AgreementId;
+            agreementGrantAllocation.GrantAllocationID = AgreementGrantAllocationId;
         }
     }
 }

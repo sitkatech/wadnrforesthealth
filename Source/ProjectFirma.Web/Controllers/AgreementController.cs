@@ -252,40 +252,34 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult EditAgreementGrantAllocation(AgreementPersonPrimaryKey agreementPersonPrimaryKey)
+        public PartialViewResult EditAgreementGrantAllocation(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey)
         {
-            var agreementPerson = agreementPersonPrimaryKey.EntityObject;
-            var viewModel = new EditAgreementGrantAllocationViewModel(agreementPerson);
+            var agreementGrantAllocation = agreementGrantAllocationPrimaryKey.EntityObject;
+            var viewModel = new EditAgreementGrantAllocationViewModel(agreementGrantAllocation);
             return ViewEditAgreementGrantAllocation(viewModel);
         }
 
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditAgreementGrantAllocation(AgreementPersonPrimaryKey agreementPersonPrimaryKey, EditAgreementGrantAllocationViewModel viewModel)
+        public ActionResult EditAgreementGrantAllocation(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey, EditAgreementGrantAllocationViewModel viewModel)
         {
-            var agreementPerson = agreementPersonPrimaryKey.EntityObject;
+            var agreementGrantAllocation = agreementGrantAllocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
                 return ViewEditAgreementGrantAllocation(viewModel);
             }
-            viewModel.UpdateModel(agreementPerson);
+            viewModel.UpdateModel(agreementGrantAllocation);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditAgreementGrantAllocation(EditAgreementPersonViewModel viewModel)
+        private PartialViewResult ViewEditAgreementGrantAllocation(EditAgreementGrantAllocationViewModel viewModel)
         {
-            var agreementPersonRoles = AgreementPersonRole.All.ToSelectListWithEmptyFirstRow(k => k.AgreementPersonRoleID.ToString(), v => v.AgreementPersonRoleDisplayName);
-            var allPeople = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
-            if (!allPeople.Contains(CurrentPerson))
-            {
-                allPeople.Add(CurrentPerson);
-            }
+            var relatedGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantID == viewModel.GrantId);
+            var selectableGrantAllocations = relatedGrantAllocations.OrderBy(x => x.ProjectName)
+                .ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);
 
-            var contacts = allPeople.OrderBy(x => x.LastName)
-                .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
-
-            var viewData = new EditAgreementPersonViewData(agreementPersonRoles, contacts);
+            var viewData = new EditAgreementGrantAllocationViewData(selectableGrantAllocations);
             return RazorPartialView<EditAgreementGrantAllocation, EditAgreementGrantAllocationViewData, EditAgreementGrantAllocationViewModel>(viewData, viewModel);
         }
 
@@ -309,11 +303,11 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEditAgreementGrantAllocation(viewModel);
             }
 
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(ga => ga.GrantAllocationID == viewModel.GrantAllocationID); 
-            viewModel.UpdateModel(grantAllocation);
-            HttpRequestStorage.DatabaseEntities.AgreementPeople.Add(agreementPerson);
+            var agreementGrantAllocation = HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == viewModel.GrantAllocationId); 
+            viewModel.UpdateModel(agreementGrantAllocation);
+            HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.Add(agreementGrantAllocation);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Grant Allocation '{grantAllocation.ProjectName}' successfully added to this agreement.");
+            SetMessageForDisplay($"Grant Allocation '{agreementGrantAllocation.GrantAllocation.ProjectName}' successfully added to this agreement.");
 
             return new ModalDialogFormJsonResult();
         }
