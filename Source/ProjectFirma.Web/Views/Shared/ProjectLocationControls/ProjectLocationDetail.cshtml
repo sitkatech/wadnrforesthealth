@@ -88,7 +88,7 @@
         </thead>
         <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
             data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-            data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)">
+            @*data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)"*@>
             @* trash icon for deleting *@
             <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
                 <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation)">
@@ -243,17 +243,19 @@
     function updateFeatureCollectionJson()
     {
         console.log('ProjectLocationDetail.cshtml - updateFeatureCollectionJson');
-
+        
         var geoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
         var mapForm = jQuery("#" + "@ViewDataTyped.MapFormId");
         mapForm.html("");
         var hiddens = [];
-        for(var i = 0; i < geoJson.features.length; ++i)
-        {
-            @*var currentWktName = "name=\"@Html.NameFor(x => x.WktAndAnnotations[0].Wkt)\"".replace("0", i);
-            var currentWktAnnotation = "name=\"@Html.NameFor(x => x.WktAndAnnotations[0].Annotation)\"".replace("0", i);
-            hiddens.push("<input type=\"hidden\" " + currentWktName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
-            hiddens.push("<input type=\"hidden\" " + currentWktAnnotation + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties.Info) + "\" />");*@
+        for(var i = 0; i < geoJson.features.length; ++i) {
+            debugger;
+            var currentGeometryName = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationGeometryWellKnownText)\"".replace("0", i);
+            hiddens.push("<input type=\"hidden\" " + currentGeometryName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
+            var currentNotes = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationNotes)\"".replace("0", i);
+            hiddens.push("<input type=\"hidden\" " + currentNotes + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties.Info) + "\" />");
+            var currentLocationType = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationName)\"".replace("0", i);
+            hiddens.push("<input type=\"hidden\" " + currentLocationType + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties["Hover Name"]) + "\" />");
         }
         mapForm.html(hiddens.join("\r\n"));
     }

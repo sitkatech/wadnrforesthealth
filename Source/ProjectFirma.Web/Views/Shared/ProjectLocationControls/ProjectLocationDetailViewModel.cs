@@ -49,7 +49,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
     public class ProjectLocationJson
     {
-       
+        public ProjectLocationJson()
+        {
+        }
 
         public ProjectLocationJson(Models.ProjectLocation x)
         {
@@ -62,15 +64,15 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
         }
 
-        public string ProjectLocationGeometryWellKnownText { get; }
+        public string ProjectLocationGeometryWellKnownText { get; set; }
 
-        public int ProjectLocationID { get; }
-        public string ProjectLocationFeatureType { get; }
+        public int ProjectLocationID { get; set; }
+        public string ProjectLocationFeatureType { get; set; }
 
-        public int ProjectLocationTypeID { get; }
+        public int ProjectLocationTypeID { get; set; }
 
-        public string ProjectLocationName { get; }
-        public string ProjectLocationTypeName { get; }
-        public string ProjectLocationNotes { get; }
+        public string ProjectLocationName { get; set; }
+        public string ProjectLocationTypeName { get; set; }
+        public string ProjectLocationNotes { get; set; }
     }
 }
