@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using ProjectFirma.Web.Models;
@@ -35,6 +37,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         /// Needed by the ModelBinder
         /// </summary>
         public LocationDetailedViewModel()
+        {
+        }
+
+        public LocationDetailedViewModel(ICollection<Models.ProjectLocation> projectLocations) : base(projectLocations)
         {
         }
 

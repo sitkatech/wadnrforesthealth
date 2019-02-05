@@ -1019,7 +1019,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            var viewModel = new ProjectLocationDetailViewModel();
+            var viewModel = new ProjectLocationDetailViewModel(project.ProjectLocations);
             return ViewApproveGisUpload(projectUpdateBatch, viewModel);
         }
 
@@ -1066,13 +1066,14 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates.ToList();
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdates);
             projectUpdateBatch.ProjectLocationUpdates.Clear();
-            if (viewModel.WktAndAnnotations != null)
-            {
-                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
-                {
-                    projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
-                }
-            }
+            //todo save project locations
+            //if (viewModel.WktAndAnnotations != null)
+            //{
+            //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
+            //    {
+            //        projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+            //    }
+            //}
         }
 
         #region Region functions

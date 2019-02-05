@@ -4,6 +4,14 @@ create table dbo.ProjectLocationType (
 	ProjectLocationTypeDisplayName varchar(50) constraint AK_ProjectLocationType_ProjectLocationTypeDisplayName unique
 );
 
+insert dbo.ProjectLocationType (ProjectLocationTypeID, ProjectLocationTypeName, ProjectLocationTypeDisplayName) 
+values 
+(1, 'ProjectArea', 'Project Area'),
+(2, 'TreatmentActivity', 'Treatment Activity'),
+(3, 'ResearchPlot', 'Research Plot'),
+(4, 'TestSite', 'Test Site'),
+(5, 'Other', 'Other')
+
 Alter table dbo.ProjectLocation add 
 	ProjectLocationTypeID int not null 
 		constraint FK_ProjectLocation_ProjectLocationType_ProjectLocationTypeID foreign key references dbo.ProjectLocationType(ProjectLocationTypeID),

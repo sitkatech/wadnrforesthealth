@@ -18,6 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+using DocumentFormat.OpenXml.Math;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
@@ -27,7 +30,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public LocationDetailedViewModel()
+        public LocationDetailedViewModel(ICollection<Models.ProjectLocation> projectLocations) : base(projectLocations)
         {
         }
     }

@@ -73,6 +73,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        #region "pulled from Kevin"
         [HttpGet]
         [ProjectEditAsAdminFeature]
         public ViewResult EditProjectLocationDetail(ProjectPrimaryKey projectPrimaryKey)//todo story 1444
@@ -119,6 +120,7 @@ namespace ProjectFirma.Web.Controllers
         {
             throw new System.NotImplementedException();
         }
+        #endregion
 
 
         [HttpGet]
@@ -126,7 +128,8 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult EditProjectLocationDetailed(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ProjectLocationDetailViewModel();
+            var projectLocationsDetailed = project.ProjectLocations;
+            var viewModel = new ProjectLocationDetailViewModel(projectLocationsDetailed);
             return ViewEditProjectLocationDetailed(project, viewModel);
         }
 
@@ -219,7 +222,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult ApproveGisUpload(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ProjectLocationDetailViewModel();
+            var viewModel = new ProjectLocationDetailViewModel(project.ProjectLocations);
             return ViewApproveGisUpload(project, viewModel);
         }
 
@@ -267,13 +270,14 @@ namespace ProjectFirma.Web.Controllers
                 projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             project.ProjectLocations.Clear();
-            if (viewModel.WktAndAnnotations != null)
-            {
-                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
-                {
-                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
-                }
-            }
+            //todo save project locations
+            //if (viewModel.WktAndAnnotations != null)
+            //{
+            //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
+            //    {
+            //        project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+            //    }
+            //}
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)

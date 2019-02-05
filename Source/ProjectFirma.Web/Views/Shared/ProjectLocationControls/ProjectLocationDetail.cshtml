@@ -86,7 +86,7 @@
                 <th style="width: 250px">Notes</th>
             </tr>
         </thead>
-        <tr data-ng-repeat="projectLocation in AngularModel.projectLocationJsons" class="clickable-row"
+        <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
             data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
             data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)">
             @* trash icon for deleting *@
@@ -97,28 +97,28 @@
             </td>
             @* feature name *@
             <td style="width: 150px">
-                <input type="text" name="projectLocationJsons[{{$index}}].projectLocationName"
-                       data-ng-model="projectLocation.projectLocationName" style="width: 100%" required maxlength="200" />
+                <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
+                       data-ng-model="projectLocation.ProjectLocationName" style="width: 100%" required maxlength="200" />
                 @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
                     </div>*@
-                <input type="hidden" name="projectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
+                <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
             </td>
             @* feature (line, point, poly) *@
             <td>
-                <span data-ng-bind="projectLocation.projectLocationGeometryType"></span>
-                <input type="hidden" name="projectLocationJsons[{{$index}}].projectLocationGeometry"
-                       value="{{projectLocation.projectLocationGeometry}}" />
+                <span data-ng-bind="projectLocation.ProjectLocationFeatureType"></span>
+                <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationGeometry"
+                       value="{{projectLocation.ProjectLocationGeometry}}" />
             </td>
             @* location type (ProjectLocationType table) *@
             <td>
-                <select name="projectLocationJsons[{{$index}}].projectLocationTypeID"
-                        data-ng-model="projectLocation.projectLocationTypeID" required>
+                <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
+                        data-ng-model="projectLocation.ProjectLocationTypeID" required>
                     <option value="">-- Select type --</option>
-                    <option data-ng-repeat="projectLocationType in getSelectableProjectLocationTypes(projectLocation)"
-                            value="{{projectLocationType.projectLocationTypeID}}">
-                        {{projectLocationType.projectLocationTypeName}}
+                    <option data-ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
+                            value="{{projectLocationType.ProjectLocationTypeID}}">
+                        {{projectLocationType.ProjectLocationTypeDisplayName}}
                     </option>
                 </select>
                 @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
@@ -128,7 +128,7 @@
             </td>
             @* notes/annotation *@
             <td style="width: 250px">
-                <input type="text" name="projectLocationJsons[{{$index}}].notes" data-ng-model="projectLocation.notes" style="width: 100%" maxlength="500" />
+                <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationNote" data-ng-model="projectLocation.ProjectLocationNote" style="width: 100%" maxlength="500" />
                 @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
@@ -138,7 +138,7 @@
     </table>
     <p class="systemText">
         *Enter Width of proposed construction area. The DDCT calculation will use this width.
-        <span ng-show="AngularModel.projectLocationJsons.length !== 0">
+        <span ng-show="AngularModel.ProjectLocationJsons.length !== 0">
             <br />ProjectLocation Type you're looking for not listed? Make sure you selected the most appropriate Project Type on the
             @*<a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a>*@ page.
         </span>
@@ -249,10 +249,10 @@
         var hiddens = [];
         for(var i = 0; i < geoJson.features.length; ++i)
         {
-            var currentWktName = "name=\"@Html.NameFor(x => x.WktAndAnnotations[0].Wkt)\"".replace("0", i);
+            @*var currentWktName = "name=\"@Html.NameFor(x => x.WktAndAnnotations[0].Wkt)\"".replace("0", i);
             var currentWktAnnotation = "name=\"@Html.NameFor(x => x.WktAndAnnotations[0].Annotation)\"".replace("0", i);
             hiddens.push("<input type=\"hidden\" " + currentWktName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
-            hiddens.push("<input type=\"hidden\" " + currentWktAnnotation + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties.Info) + "\" />");
+            hiddens.push("<input type=\"hidden\" " + currentWktAnnotation + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties.Info) + "\" />");*@
         }
         mapForm.html(hiddens.join("\r\n"));
     }

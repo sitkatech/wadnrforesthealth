@@ -212,7 +212,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
         updateFeatureCollectionJson();
 
-        var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
+        @*var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
         if(!Sitka.Methods.isUndefinedNullOrEmpty(saveButton))
         {
             saveButton.text("Save");
@@ -222,7 +222,7 @@ Source code is available upon request via <support@sitkatech.com>.
         if(!Sitka.Methods.isUndefinedNullOrEmpty(modalTitle))
         {
             modalTitle.html("@(string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()))");
-        }
+        }*@
     });
 
     ProjectFirmaMaps.Map.prototype.getTextAreaId = function(featureId) { return "textareaFor" + featureId; };
@@ -238,7 +238,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
     function updateFeatureCollectionJson()
     {
-        var geoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
+        @*var geoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
         var mapForm = jQuery("#" + "@ViewDataTyped.MapFormID");
         mapForm.html("");
         var hiddens = [];
@@ -249,7 +249,7 @@ Source code is available upon request via <support@sitkatech.com>.
             hiddens.push("<input type=\"hidden\" " + currentWktName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
             hiddens.push("<input type=\"hidden\" " + currentWktAnnotation + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties.Info) + "\" />");
         }
-        mapForm.html(hiddens.join("\r\n"));
+        mapForm.html(hiddens.join("\r\n"));*@
     }
 
     </script>

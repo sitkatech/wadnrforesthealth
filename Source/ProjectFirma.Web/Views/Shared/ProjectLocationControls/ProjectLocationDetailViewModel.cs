@@ -19,18 +19,58 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.Linq;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
     public class ProjectLocationDetailViewModel : FormViewModel
     {
-        public List<WktAndAnnotation> WktAndAnnotations { get; set; }
+
+        public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
+
+        /// <summary>
+        /// Needed by the ModelBinder
+        /// </summary>
+        public ProjectLocationDetailViewModel()
+        {
+        }
+
+        public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocation> projectLocations)
+        {
+            ProjectLocationJsons = projectLocations.Select(x => new ProjectLocationJson(x)).ToList();
+        }
+
+
+
     }
 
-    public class WktAndAnnotation
+    public class ProjectLocationJson
     {
-        public string Wkt { get; set; }
-        public string Annotation { get; set; }
+       
+
+        public ProjectLocationJson(Models.ProjectLocation x)
+        {
+            ProjectLocationName = x.ProjectLocationName;
+            ProjectLocationNotes = x.Annotation;
+            ProjectLocationTypeID = x.ProjectLocationTypeID;
+            ProjectLocationTypeName = x.ProjectLocationType.ProjectLocationTypeDisplayName;
+            ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName;
+            ProjectLocationID = x.ProjectLocationID;
+            ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
+        }
+
+        public string ProjectLocationGeometryWellKnownText { get; }
+
+        public int ProjectLocationID { get; }
+        public string ProjectLocationFeatureType { get; }
+
+        public int ProjectLocationTypeID { get; }
+
+        public string ProjectLocationName { get; }
+        public string ProjectLocationTypeName { get; }
+        public string ProjectLocationNotes { get; }
     }
 }

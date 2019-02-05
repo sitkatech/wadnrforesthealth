@@ -25,7 +25,15 @@ angular.module("ProjectFirmaApp")
                 color: "#405d74",
                 weight: 1,
                 stroke: true
-            };
+        };
+
+        var addFeatureToGrid = function(feature) {
+            //todo: add feature to grid
+
+            $scope.AngularModel.ProjectLocationJsons.add(); 
+
+        };
+
 
 
             var initializeMap = function () {
@@ -35,36 +43,7 @@ angular.module("ProjectFirmaApp")
 
                 projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
 
-                var bindAnnotationPopup = function (layer, feature) {
-                    var leafletId = layer._leaflet_id;
-                    var popupOptions = {
-                        minWidth: 200
-                    };
-                    layer.bindPopup("", popupOptions);
-                    layer.on('click', function (f) {
-                        if (layer.editing.enabled()) {
-                            f.target.closePopup();
-                            return;
-                        }
-                        var popup = f.target._popup;
-                        var annotation = Sitka.Methods.isUndefinedNullOrEmpty(feature) ? "" : Sitka.Methods.isUndefinedNullOrEmpty(feature.properties.Info) ? "" : feature.properties.Info;
-                        var annotationMaxLength = $scope.AngularViewData.AnnotationMaxLength;
-                        var charsRemaining = annotationMaxLength - annotation.length;
-                        var textareaId = projectFirmaMap.getTextAreaId(leafletId);
-                        var charRemainingForTextareaId = "CharactersRemaining_" + textareaId;
-                        var popupContent = "<b>Notes:</b> <br />" +
-                            "<textarea id=\"" + textareaId + "\" " +
-                            "onkeyup=\"Sitka.Methods.keepTextAreaWithinMaxLength(this, " + annotationMaxLength + ", 20, '" + charRemainingForTextareaId + "', 'Characters Remaining: ');\" " +
-                            "onkeydown=\"Sitka.Methods.keepTextAreaWithinMaxLength(this, " + annotationMaxLength + ", 20, '" + charRemainingForTextareaId + "', 'Characters Remaining: ');\">" +
-                            annotation + "</textarea>" +
-                            "<div id=\"" + charRemainingForTextareaId + "\" style=\"text-align:right;color:#666666;\">Characters Remaining: " + charsRemaining + "</div><br />" +
-                            "<button id=\"buttonFor" + leafletId + "\" class=\"button btn-xs btn-info\" onclick=\"savePopupAnnotationEditor(" + leafletId + ")\">Save</button>";
-                        popup.setContent(popupContent);
-                        popup.update();
 
-                        jQuery("#textboxFor" + leafletId).focus();
-                    });
-                };
 
                 var layerGroup = L.geoJson(editableFeatureJsonObject.GeoJsonFeatureCollection, {
                     onEachFeature: function (feature, layer) {
@@ -74,7 +53,7 @@ angular.module("ProjectFirmaApp")
                         else {
                             projectFirmaMap.editableFeatureGroup.addLayer(layer);
                         }
-                        bindAnnotationPopup(layer, feature);
+                       
                     }
                 });
 
@@ -91,7 +70,8 @@ angular.module("ProjectFirmaApp")
                     projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.properties = new Object();
                     projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.type = "Feature";
                     var feature = projectFirmaMap.editableFeatureGroup._layers[leafletId].feature;
-                    bindAnnotationPopup(layer, feature);
+                    //update grid with new drawing
+                    addFeatureToGrid(feature);
                     updateFeatureCollectionJson();
                 });
                 projectFirmaMap.map.on('draw:edited', function (e) {

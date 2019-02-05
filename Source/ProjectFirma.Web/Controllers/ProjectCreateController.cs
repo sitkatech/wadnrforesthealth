@@ -676,7 +676,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult EditLocationDetailed(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new LocationDetailedViewModel();
+            var viewModel = new LocationDetailedViewModel(project.ProjectLocations);
             return ViewEditLocationDetailed(project, viewModel);
         }
 
@@ -767,7 +767,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult ApproveGisUpload(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ProjectLocationDetailViewModel();
+            var viewModel = new ProjectLocationDetailViewModel(project.ProjectLocations);
             return ViewApproveGisUpload(project, viewModel);
         }
 
@@ -816,13 +816,14 @@ namespace ProjectFirma.Web.Controllers
                 projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             project.ProjectLocations.Clear();
-            if (viewModel.WktAndAnnotations != null)
-            {
-                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
-                {
-                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
-                }
-            }
+            //todo save project locations
+            //if (viewModel.WktAndAnnotations != null)
+            //{
+            //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
+            //    {
+            //        project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+            //    }
+            //}
         }
 
         public static string GenerateEditProjectLocationFormID(int projectID)

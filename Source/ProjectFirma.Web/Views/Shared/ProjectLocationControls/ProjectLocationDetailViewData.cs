@@ -40,6 +40,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string SimplePointMarkerImg { get; }
         public ProjectLocationDetailViewDataForAngular ViewDataForAngular { get; }
         
+        
         public ProjectLocationDetailViewData(int projectID, MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, string uploadGisFileUrl, string mapFormID, string saveFeatureCollectionUrl, int annotationMaxLength, bool hasProjectLocationPoint)
         {
             ProjectId = projectID;
@@ -61,6 +62,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public LayerGeoJson EditableLayerGeoJson { get; }
         public List<string> GeospatialAreaMapServiceLayerNames { get; }
         public int AnnotationMaxLength { get; }
+        public List<ProjectLocationTypeJson> ProjectLocationTypeJsons { get; }
 
         public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, int annotationMaxLength)
         {
@@ -68,7 +70,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             EditableLayerGeoJson = editableLayerGeoJson;
             AnnotationMaxLength = annotationMaxLength;
             GeospatialAreaMapServiceLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
+            ProjectLocationTypeJsons = ProjectLocationType.GetAllProjectLocationTypeJsons();
         }
     }
+
+    
 
 }
