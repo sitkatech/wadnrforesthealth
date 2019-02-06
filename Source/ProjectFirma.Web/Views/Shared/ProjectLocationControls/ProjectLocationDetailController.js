@@ -61,6 +61,28 @@ angular.module("ProjectFirmaApp")
         };
 
 
+        /*
+         * ToDo for JJV / whomever
+         *
+         * - Delete is only partly working. It works in the all-new case we think, but not the existing case. We have yet to figure out how to get
+         * the LeafletID associcated with the ProjectLocationJson for existing features. See below in the initalizeMap function.
+         *
+         * - addFeatureToAngularModel does not need dummy values like "locationtypehere" long term, but they have been very helpful in the short for testing. Removed
+         * when they get in your way.
+         *
+         * - Have yet to touch upload GDB yet at all. It might be working already, we just haven't tested at all. From the card "Uploading a GDB
+         * should append features, not delete and replace the features"
+         *
+         * - Highlighting selected grid row and associated feature with same color needs to happen
+         *
+         * - Need to load the feature name ("line", "point", "poly") for existing features. Should work properly for new.
+         *
+         * -- TK & SLG -- 2/5/2019 - 5:20 PM
+         * 
+         *
+         */
+
+
 
         var initializeMap = function () {
                 console.log('initializeMap');
