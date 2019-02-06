@@ -1605,7 +1605,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationGeometry" Type="geometry" Nullable="false" />
-    <Property Name="Annotation" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="255" />
     <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
@@ -1640,7 +1640,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationUpdateGeometry" Type="geometry" Nullable="false" />
-    <Property Name="Annotation" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationUpdateNotes" Type="varchar" MaxLength="255" />
     <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationUpdateName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>

@@ -72,77 +72,80 @@
 }
 
 
+    <form method="POST" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl">
+        <div>
+            @Html.ValidationSummary()
+            <table class="table table-bordered table-projectLocations">
+                <thead>
+                    <tr>
+                        <th @*data-ng-if="!AngularViewData.IsInCompletedReview"*@></th>
+                        <th style="width: 150px">Feature Name</th>
+                        <th>Feature</th>
+                        <th>Location Type</th>
 
-<div>
-
-    <table class="table table-bordered table-projectLocations">
-        <thead>
-            <tr>
-                <th @*data-ng-if="!AngularViewData.IsInCompletedReview"*@></th>
-                <th style="width: 150px">Feature Name</th>
-                <th>Feature</th>
-                <th>Location Type</th>
-
-                <th style="width: 250px">Notes</th>
-            </tr>
-        </thead>
-        <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
-            data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-            @*data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)"*@>
-            @* trash icon for deleting *@
-            <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
-                <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation)">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
-            </td>
-            @* feature name *@
-            <td style="width: 150px">
-                <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
-                       data-ng-model="projectLocation.ProjectLocationName" style="width: 100%" required maxlength="200" />
-                @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
-                    </div>*@
-                <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
-            </td>
-            @* feature (line, point, poly) *@
-            <td>
-                <span data-ng-bind="projectLocation.ProjectLocationFeatureType"></span>
-                <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationGeometry"
-                       value="{{projectLocation.ProjectLocationGeometry}}" />
-            </td>
-            @* location type (ProjectLocationType table) *@
-            <td>
-                <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
-                        data-ng-model="projectLocation.ProjectLocationTypeID" required>
-                    <option value="">-- Select type --</option>
-                    <option data-ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
-                            value="{{projectLocationType.ProjectLocationTypeID}}">
-                        {{projectLocationType.ProjectLocationTypeDisplayName}}
-                    </option>
-                </select>
-                @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>
-                    </div>*@
-            </td>
-            @* notes/annotation *@
-            <td style="width: 250px">
-                <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationNote" data-ng-model="projectLocation.ProjectLocationNote" style="width: 100%" maxlength="500" />
-                @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
-                    </div>*@
-            </td>
-        </tr>
-    </table>
-    <p class="systemText">
-        <span ng-show="AngularModel.ProjectLocationJsons.length !== 0">
-            <br />ProjectLocation Type you're looking for not listed? Make sure you selected the most appropriate Project Type on the
-            @*<a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a>*@ page.
-        </span>
-    </p>
-</div>
+                        <th style="width: 250px">Notes</th>
+                    </tr>
+                </thead>
+                <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
+                    data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
+                    @*data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)"*@>
+                    @* trash icon for deleting *@
+                    <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
+                        <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                    @* feature name *@
+                    <td style="width: 200px">
+                        <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
+                               data-ng-model="projectLocation.ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
+                        </div>*@
+                        <span ng-if="projectLocation.projectLocationID != null">
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
+                        </span>
+                    </td>
+                    @* feature (line, point, poly) *@
+                    <td>
+                        <span data-ng-bind="projectLocation.ProjectLocationFeatureType"></span>
+                        <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationGeometryWellKnownText"
+                               value="{{projectLocation.ProjectLocationGeometryWellKnownText}}" />
+                    </td>
+                    @* location type (ProjectLocationType table) *@
+                    <td>
+                        <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
+                                data-ng-model="projectLocation.ProjectLocationTypeID" required>
+                            <option value="-1">-- Select type --</option>
+                            <option data-ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
+                                    value="{{projectLocationType.ProjectLocationTypeID}}" ng-selected="projectLocationType.ProjectLocationTypeID === projectLocation.ProjectLocationTypeID">
+                                {{projectLocationType.ProjectLocationTypeDisplayName}}
+                            </option>
+                        </select>
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>
+                        </div>*@
+                    </td>
+                    @* notes/annotation *@
+                    <td style="width: 250px">
+                        <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocation.ProjectLocationNotes" style="width: 100%" maxlength="500" />
+                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
+                        </div>*@
+                    </td>
+                </tr>
+            </table>
+            <p class="systemText">
+                <span ng-show="AngularModel.ProjectLocationJsons.length !== 0">
+                    <br />ProjectLocation Type you're looking for not listed? Make sure you selected the most appropriate Project Type on the
+                    @*<a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a>*@ page.
+                </span>
+            </p>
+        </div>
+    </form>
 
 @*<div class="alert alert-danger" role="alert" data-ng-repeat="projectLocationJson in getProjectLocationsWithProjectLocationTypesNotAlignedWithGeometryType()">
         For ProjectLocation "{{projectLocationJson.projectLocationName}}", you indicated you have a "{{getProjectLocationTypeName(projectLocationJson.projectLocationTypeID)}}" ProjectLocation Type, yet represented it using a {{projectLocationJson.projectLocationGeometryType}}. While this is allowed, please make sure this is what you want to do.
@@ -166,12 +169,6 @@
 </div>
 
 
-
-
-
-
-
-<form method="POST" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl"></form>
 
 <script type="text/javascript">
     getDrawOptions = function(editableFeatureGroup)
@@ -232,33 +229,6 @@
     ProjectFirmaMaps.Map.prototype.getTextAreaId = function(featureId) { return "textareaFor" + featureId; };
 
 
-    function savePopupAnnotationEditor(featureId)
-    {
-        var textBoxForPopup = jQuery("#" + projectFirmaMap.getTextAreaId(featureId));
-        projectFirmaMap.editableFeatureGroup._layers[featureId].feature.properties.Info = textBoxForPopup.val();
-        projectFirmaMap.map.closePopup();
-        updateFeatureCollectionJson();
-    }
-
-    function updateFeatureCollectionJson()
-    {
-        console.log('ProjectLocationDetail.cshtml - updateFeatureCollectionJson');
-        
-        var geoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
-        var mapForm = jQuery("#" + "@ViewDataTyped.MapFormId");
-        mapForm.html("");
-        var hiddens = [];
-        for(var i = 0; i < geoJson.features.length; ++i) {
-            debugger;
-            var currentGeometryName = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationGeometryWellKnownText)\"".replace("0", i);
-            hiddens.push("<input type=\"hidden\" " + currentGeometryName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
-            var currentNotes = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationNotes)\"".replace("0", i);
-            hiddens.push("<input type=\"hidden\" " + currentNotes + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties.Info) + "\" />");
-            var currentLocationType = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationName)\"".replace("0", i);
-            hiddens.push("<input type=\"hidden\" " + currentLocationType + " value=\"" + Sitka.Methods.htmlEncode(geoJson.features[i].properties["Hover Name"]) + "\" />");
-        }
-        mapForm.html(hiddens.join("\r\n"));
-    }
 </script>
 
 <script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationDetailController.js")"></script>

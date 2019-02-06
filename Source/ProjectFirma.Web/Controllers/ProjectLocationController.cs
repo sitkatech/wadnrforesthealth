@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Controllers
 
             var hasSimpleLocationPoint = project.ProjectLocationPoint != null;
 
-            var viewData = new ProjectLocationDetailViewData(project.EntityID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.Annotation, hasSimpleLocationPoint);
+            var viewData = new ProjectLocationDetailViewData(project.EntityID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.ProjectLocationNotes, hasSimpleLocationPoint);
             return RazorPartialView<ProjectLocationDetail, ProjectLocationDetailViewData, ProjectLocationDetailViewModel>(viewData, viewModel);
         }
 
@@ -226,8 +226,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
                 {
-                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);   
-                    var projectLocation = new ProjectLocation(project, projectLocationGeometry, projectLocationJson.ProjectLocationNotes);
+                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
+                    var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName, projectLocationGeometry, projectLocationJson.ProjectLocationTypeID, projectLocationJson.ProjectLocationNotes);
                     project.ProjectLocations.Add(projectLocation);
                 }
             }

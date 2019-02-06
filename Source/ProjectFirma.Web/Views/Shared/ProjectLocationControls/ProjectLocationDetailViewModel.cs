@@ -19,14 +19,16 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
-    public class ProjectLocationDetailViewModel : FormViewModel
+    public class ProjectLocationDetailViewModel : FormViewModel, IValidatableObject
     {
 
         public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
@@ -44,7 +46,27 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         }
 
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
 
+            foreach (var plj in ProjectLocationJsons)
+            {
+                if (LtInfo.Common.GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(plj.ProjectLocationName))
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Project Location Name must not be blank.", x => x.ProjectLocationName));
+                }
+
+                if (plj.ProjectLocationTypeID == -1)
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Project Location Type must be selected.", x => x.ProjectLocationTypeID));
+                }
+            }
+
+            
+
+            return results;
+        }
     }
 
     public class ProjectLocationJson
@@ -56,7 +78,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public ProjectLocationJson(Models.ProjectLocation x)
         {
             ProjectLocationName = x.ProjectLocationName;
-            ProjectLocationNotes = x.Annotation;
+            ProjectLocationNotes = x.ProjectLocationNotes;
             ProjectLocationTypeID = x.ProjectLocationTypeID;
             ProjectLocationTypeName = x.ProjectLocationType.ProjectLocationTypeDisplayName;
             ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName;

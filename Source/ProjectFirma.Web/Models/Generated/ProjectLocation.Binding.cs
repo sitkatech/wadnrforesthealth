@@ -30,12 +30,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string annotation, int projectLocationTypeID, string projectLocationName) : this()
+        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName) : this()
         {
             this.ProjectLocationID = projectLocationID;
             this.ProjectID = projectID;
             this.ProjectLocationGeometry = projectLocationGeometry;
-            this.Annotation = annotation;
+            this.ProjectLocationNotes = projectLocationNotes;
             this.ProjectLocationTypeID = projectLocationTypeID;
             this.ProjectLocationName = projectLocationName;
         }
@@ -105,7 +105,7 @@ namespace ProjectFirma.Web.Models
         public int ProjectLocationID { get; set; }
         public int ProjectID { get; set; }
         public DbGeometry ProjectLocationGeometry { get; set; }
-        public string Annotation { get; set; }
+        public string ProjectLocationNotes { get; set; }
         public int ProjectLocationTypeID { get; set; }
         public string ProjectLocationName { get; set; }
         [NotMapped]
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-            public const int Annotation = 255;
+            public const int ProjectLocationNotes = 255;
             public const int ProjectLocationName = 100;
         }
     }

@@ -39,14 +39,20 @@ angular.module("ProjectFirmaApp")
             };
         };
 
-        var addFeatureToGrid = function(feature) {
+        var addFeatureToAngularModel = function (newestGeoJson) {
+            console.log('addFeatureToAngularModel');
             //debugger;
-            var locationJson = createProjectLocationJson('wellknowntexthere', -1, 'Polygon', 0, 'locationnamehere', 'locationTypeHere', 'NotesShouldBeBlankUltimately');
-            $scope.AngularModel.ProjectLocationJsons.push(locationJson); 
+            //Terraformer.WKT.convert(geoJson.features[i].geometry)
+            //var wkt = Terraformer.WKT.convert(feature.geometry);
+            var locationJson = createProjectLocationJson(newestGeoJson, -1, 'Polygon', -1, 'locationnamehere', 'locationTypeHere', 'NotesShouldBeBlankUltimately');
+            $scope.AngularModel.ProjectLocationJsons.push(locationJson);
+            $scope.$apply();
         };
 
 
-            var initializeMap = function () {
+
+        var initializeMap = function () {
+                console.log('initializeMap');
                 var mapInitJson = $scope.AngularViewData.MapInitJson;
                 var editableFeatureJsonObject = $scope.AngularViewData.EditableLayerGeoJson;
                 projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
@@ -71,27 +77,33 @@ angular.module("ProjectFirmaApp")
                 projectFirmaMap.map.addLayer(projectFirmaMap.editableFeatureGroup);
 
                 projectFirmaMap.map.on('draw:created', function (e) {
+                    console.log('draw:created called');
                     var layer = e.layer;
                     projectFirmaMap.editableFeatureGroup.addLayer(layer);
                     var leafletId = layer._leaflet_id;
                     projectFirmaMap.editableFeatureGroup._layers[leafletId].feature = new Object();
                     projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.properties = new Object();
                     projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.type = "Feature";
-                    var feature = projectFirmaMap.editableFeatureGroup._layers[leafletId].feature;
+
+                    var allGeoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
+                    var newestGeoJson = Terraformer.WKT.convert(allGeoJson.features[allGeoJson.features.length - 1].geometry);
+
+                    //var feature = projectFirmaMap.editableFeatureGroup._layers[leafletId].feature;
                     //update grid with new drawing
-                    addFeatureToGrid(feature);
-                    updateFeatureCollectionJson();
+                    addFeatureToAngularModel(newestGeoJson);
+                    
+                    
                 });
 
                 projectFirmaMap.map.on('draw:edited', function (e) {
-                    updateFeatureCollectionJson();
+                    
                 });
 
                 projectFirmaMap.map.on('draw:deleted', function (e) {
-                    updateFeatureCollectionJson();
+                    
                 });
 
-                updateFeatureCollectionJson();
+                
 
 
 

@@ -25,3 +25,8 @@ Alter table dbo.ProjectLocationUpdate add
 	ProjectLocationUpdateName varchar(100) not null 
 		constraint AK_ProjectLocationUpdate_ProjectUpdateBatchID_ProjectLocationUpdateName unique(ProjectUpdateBatchID, ProjectLocationUpdateName);
 
+
+
+exec sp_rename 'dbo.ProjectLocation.Annotation', 'ProjectLocationNotes', 'COLUMN'
+
+exec sp_rename 'dbo.ProjectLocationUpdate.Annotation', 'ProjectLocationUpdateNotes', 'COLUMN'

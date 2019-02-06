@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[ProjectLocation](
 	[ProjectLocationID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
 	[ProjectLocationGeometry] [geometry] NOT NULL,
-	[Annotation] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectLocationNotes] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectLocationTypeID] [int] NOT NULL,
 	[ProjectLocationName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_ProjectLocation_ProjectLocationID] PRIMARY KEY CLUSTERED 

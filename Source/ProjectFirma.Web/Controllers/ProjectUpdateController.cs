@@ -924,7 +924,7 @@ namespace ProjectFirma.Web.Controllers
                 uploadGisFileUrl,
                 mapFormID,
                 saveFeatureCollectionUrl,
-                ProjectLocationUpdate.FieldLengths.Annotation,
+                ProjectLocationUpdate.FieldLengths.ProjectLocationUpdateNotes,
                 hasSimpleLocationPoint);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new LocationDetailedViewData(CurrentPerson, projectUpdateBatch, projectLocationDetailViewData, uploadGisFileUrl, updateStatus);
@@ -1071,7 +1071,7 @@ namespace ProjectFirma.Web.Controllers
             //{
             //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
             //    {
-            //        projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+            //        projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.ProjectLocationNotes));
             //    }
             //}
         }
@@ -2419,8 +2419,8 @@ namespace ProjectFirma.Web.Controllers
             if (originalLocationDetailed.Count != updatedLocationDetailed.Count)
                 return true;
 
-            var originalLocationAsListOfStrings = originalLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.Annotation).ToList();
-            var updatedLocationAsListOfStrings = updatedLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.Annotation).ToList();
+            var originalLocationAsListOfStrings = originalLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.ProjectLocationNotes).ToList();
+            var updatedLocationAsListOfStrings = updatedLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.ProjectLocationUpdateNotes).ToList();
 
             var enumerable = originalLocationAsListOfStrings.Except(updatedLocationAsListOfStrings);
             return enumerable.Any();

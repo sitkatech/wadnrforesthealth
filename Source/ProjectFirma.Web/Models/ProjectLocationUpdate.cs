@@ -28,9 +28,9 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectLocationUpdate : IAuditableEntity, IProjectLocation, IHaveSqlGeometry
     {
-        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, string annotation) : this(projectUpdateBatch, projectLocationGeometry, ProjectLocationType.Other, string.Empty)//todo: tomk fix this ProjectLocationType and Name to actuals
+        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, string projectLocationNotes) : this(projectUpdateBatch, projectLocationGeometry, ProjectLocationType.Other, string.Empty)//todo: tomk fix this ProjectLocationType and Name to actuals
         {
-            Annotation = annotation;
+            ProjectLocationUpdateNotes = projectLocationNotes;
         }
 
         public string AuditDescriptionString
@@ -45,6 +45,12 @@ namespace ProjectFirma.Web.Models
         {
             get { return ProjectLocationUpdateGeometry; }
             set { ProjectLocationUpdateGeometry = value; }
+        }
+
+        public string ProjectLocationNotes
+        {
+            get { return ProjectLocationUpdateNotes; }
+            set { ProjectLocationUpdateNotes = value; }
         }
 
         public DbGeometry DbGeometry
@@ -63,7 +69,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectLocationUpdates =
                 project.ProjectLocations.Select(
-                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.Annotation)).ToList();
+                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.ProjectLocationNotes)).ToList();
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectLocation> allProjectLocations)
@@ -81,7 +87,7 @@ namespace ProjectFirma.Web.Models
                 // Completely rebuild the list
                 projectUpdateBatch.ProjectLocationUpdates.ToList().ForEach(x =>
                 {
-                    var projectLocation = new ProjectLocation(project, x.ProjectLocationGeometry, x.Annotation);
+                    var projectLocation = new ProjectLocation(project, x.ProjectLocationUpdateName, x.ProjectLocationUpdateGeometry, x.ProjectLocationType, x.ProjectLocationUpdateNotes);
                     allProjectLocations.Add(projectLocation);
                 });
             }

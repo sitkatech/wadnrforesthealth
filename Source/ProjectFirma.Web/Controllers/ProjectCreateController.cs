@@ -698,7 +698,7 @@ namespace ProjectFirma.Web.Controllers
             var hasSimpleLocationPoint = project.ProjectLocationPoint != null;
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            var projectLocationDetailViewData = new ProjectLocationDetailViewData(project.ProjectID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.Annotation, hasSimpleLocationPoint);
+            var projectLocationDetailViewData = new ProjectLocationDetailViewData(project.ProjectID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.ProjectLocationNotes, hasSimpleLocationPoint);
             var viewData = new LocationDetailedViewData(CurrentPerson, project, proposalSectionsStatus, projectLocationDetailViewData);
             return RazorView<LocationDetailed, LocationDetailedViewData, LocationDetailedViewModel>(viewData, viewModel);
         }
@@ -821,7 +821,7 @@ namespace ProjectFirma.Web.Controllers
             //{
             //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
             //    {
-            //        project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+            //        project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.ProjectLocationNotes));
             //    }
             //}
         }

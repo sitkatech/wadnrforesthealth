@@ -26,9 +26,22 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectLocation : IAuditableEntity, IProjectLocation, IHaveSqlGeometry
     {
-        public ProjectLocation(Project project, DbGeometry projectLocationGeometry, string annotation) : this(project, projectLocationGeometry, ProjectLocationType.Other, string.Empty)//todo tomk fix this ProjectLocationType and Name to actuals
+        public ProjectLocation(Project project, string projectlocationName, DbGeometry projectLocationGeometry, ProjectLocationType projectLocationType, string projectLocationNotes)
         {
-            Annotation = annotation;
+            ProjectLocationNotes = projectLocationNotes;
+            ProjectLocationName = projectlocationName;
+            ProjectLocationGeometry = projectLocationGeometry;
+            ProjectLocationTypeID = projectLocationType.ProjectLocationTypeID;
+            ProjectID = project.PrimaryKey;
+        }
+
+        public ProjectLocation(Project project, string projectlocationName, DbGeometry projectLocationGeometry, int projectLocationTypeID, string projectLocationNotes)
+        {
+            ProjectLocationNotes = projectLocationNotes;
+            ProjectLocationName = projectlocationName;
+            ProjectLocationGeometry = projectLocationGeometry;
+            ProjectLocationTypeID = projectLocationTypeID;
+            ProjectID = project.PrimaryKey;
         }
 
         public string AuditDescriptionString
