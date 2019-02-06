@@ -51,9 +51,13 @@ angular.module("ProjectFirmaApp")
         };
 
         $scope.deleteProjectLocationRowAndRefreshMap = function (projectLocation) {
-            debugger;
+            //debugger;
             var layer = projectFirmaMap.editableFeatureGroup.getLayer(projectLocation.ProjectLocationLeafletID);
-            projectFirmaMap.editableFeatureGroup.removeLayer(layer);
+            projectFirmaMap.editableFeatureGroup.removeLayer(layer);//remove from map
+
+            _.remove($scope.AngularModel.ProjectLocationJsons, function(n) {
+                return n.ProjectLocationLeafletID === projectLocation.ProjectLocationLeafletID;
+            }); 
         };
 
 
