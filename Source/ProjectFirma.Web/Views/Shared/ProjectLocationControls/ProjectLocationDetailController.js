@@ -27,7 +27,7 @@ angular.module("ProjectFirmaApp")
                 stroke: true
         };
 
-        var createProjectLocationJson = function (wellKnownText, projectLocationId, featureType, locationTypeId, locationName, locationTypeName, locationNotes) {
+        var createProjectLocationJson = function (wellKnownText, projectLocationId, featureType, locationTypeId, locationName, locationTypeName, locationNotes, leafletID) {
             return {
                 ProjectLocationGeometryWellKnownText: wellKnownText,
                 ProjectLocationID: projectLocationId,
@@ -35,18 +35,25 @@ angular.module("ProjectFirmaApp")
                 ProjectLocationTypeID: locationTypeId,
                 ProjectLocationName: locationName,
                 ProjectLocationTypeName: locationTypeName,
-                ProjectLocationNotes: locationNotes
+                ProjectLocationNotes: locationNotes,
+                ProjectLocationLeafletID: leafletID
             };
         };
 
-        var addFeatureToAngularModel = function (newestGeoJson) {
+        var addFeatureToAngularModel = function (newestGeoJson, newestLeafletID) {
             console.log('addFeatureToAngularModel');
             //debugger;
             //Terraformer.WKT.convert(geoJson.features[i].geometry)
             //var wkt = Terraformer.WKT.convert(feature.geometry);
-            var locationJson = createProjectLocationJson(newestGeoJson, -1, 'Polygon', -1, 'locationnamehere', 'locationTypeHere', 'NotesShouldBeBlankUltimately');
+            var locationJson = createProjectLocationJson(newestGeoJson, -1, 'Polygon', -1, 'locationnamehere', 'locationTypeHere', 'NotesShouldBeBlankUltimately', newestLeafletID);
             $scope.AngularModel.ProjectLocationJsons.push(locationJson);
             $scope.$apply();
+        };
+
+        $scope.deleteProjectLocationRowAndRefreshMap = function (projectLocation) {
+            debugger;
+            var layer = projectFirmaMap.editableFeatureGroup.getLayer(projectLocation.ProjectLocationLeafletID);
+            projectFirmaMap.editableFeatureGroup.removeLayer(layer);
         };
 
 
@@ -90,7 +97,7 @@ angular.module("ProjectFirmaApp")
 
                     //var feature = projectFirmaMap.editableFeatureGroup._layers[leafletId].feature;
                     //update grid with new drawing
-                    addFeatureToAngularModel(newestGeoJson);
+                    addFeatureToAngularModel(newestGeoJson, leafletId);
                     
                     
                 });
