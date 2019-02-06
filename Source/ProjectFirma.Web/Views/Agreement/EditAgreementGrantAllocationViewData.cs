@@ -25,11 +25,11 @@ namespace ProjectFirma.Web.Views.Agreement
 {
     public class EditAgreementGrantAllocationViewData : FirmaUserControlViewData
     {
-        public readonly IEnumerable<SelectListItem> GrantAllocations;
+        public readonly IEnumerable<SelectListItem> GrantAllocationSelectListItems;
 
-        public EditAgreementGrantAllocationViewData(IEnumerable<SelectListItem> grantAllocations)
+        public EditAgreementGrantAllocationViewData(IEnumerable<SelectListItem> grantAllocationSelectListItems)
         {
-            GrantAllocations = grantAllocations;
+            GrantAllocationSelectListItems = grantAllocationSelectListItems;
         }
     }
 }

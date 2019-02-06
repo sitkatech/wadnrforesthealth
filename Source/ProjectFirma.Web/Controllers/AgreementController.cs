@@ -276,6 +276,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditAgreementGrantAllocation(EditAgreementGrantAllocationViewModel viewModel)
         {
+            
             var relatedGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantID == viewModel.GrantId);
             var selectableGrantAllocations = relatedGrantAllocations.OrderBy(x => x.ProjectName)
                 .ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);

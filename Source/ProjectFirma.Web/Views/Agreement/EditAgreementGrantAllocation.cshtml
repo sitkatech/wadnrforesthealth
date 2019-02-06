@@ -19,9 +19,9 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
-@inherits ProjectFirma.Web.Views.Agreement.EditAgreement
+@inherits ProjectFirma.Web.Views.Agreement.EditAgreementGrantAllocation
 
-@Html.Raw(ViewDataTyped.EditAgreementType.IntroductoryText)
+@*@Html.Raw(ViewDataTyped.EditAgreementType.IntroductoryText)*@
 
 @Html.ValidationSummary()
 
@@ -34,14 +34,14 @@
             <div class="form-group">
                 <div class="form-group">
                     <div class="col-xs-4 control-label">
-                        @Html.LabelWithSugarFor(m => m.AgreementTitle)
+                        @Html.LabelWithSugarFor(m => m.GrantAllocationId)
                     </div>
                     <div class="col-xs-8">
-                        @Html.TextBoxFor(m => m.AgreementTitle, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.AgreementTitle)
+                        @Html.DropDownListFor(m => m.GrantAllocationId, ViewDataTyped.GrantAllocationSelectListItems, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.GrantAllocationId)
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementNumber)
                     </div>
@@ -49,17 +49,17 @@
                         @Html.TextBoxFor(m => m.AgreementNumber, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.AgreementNumber)
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
-    @Html.HiddenFor(m => m.AgreementID)
+    @Html.HiddenFor(m => m.AgreementGrantAllocationId)
 }
 
 
 
 <script type="text/javascript">
-                jQuery(document)
+                @*jQuery(document)
                     .ready(function () {
                         var mouAgreementTypeId = @ViewDataTyped.MOUAgreementTypeID;
                         var mouAgreementTypeIdHasValue = '@ViewDataTyped.MOUAgreementTypeID.HasValue';
@@ -90,5 +90,5 @@
                                 updateDisabledFieldsIfMouIsSelected(mouAgreementTypeId);
                             });
                         }
-                    });
+                    });*@
 </script>

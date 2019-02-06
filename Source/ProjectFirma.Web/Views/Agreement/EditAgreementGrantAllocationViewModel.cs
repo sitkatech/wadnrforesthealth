@@ -21,6 +21,9 @@ Source code is available upon request via <support@sitkatech.com>.
 using LtInfo.Common.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -32,7 +35,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public int GrantAllocationId { get; set; }
         
         public int AgreementId { get; set; }
-        public int GrantId { get; }
+        public int? GrantId { get; }
 
 
         /// <summary>
@@ -45,6 +48,8 @@ namespace ProjectFirma.Web.Views.Agreement
         public EditAgreementGrantAllocationViewModel(int agreementId)
         {
             AgreementId = agreementId;
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(a => a.AgreementID == agreementId);
+            GrantId = agreement.GrantID;
         }
 
 
