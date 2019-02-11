@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectPersonController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditAgreementGrantAllocationsController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -20,7 +20,8 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsController", function($scope,
     angularModelAndViewData) {
-    $scope.PersonToAdd = null;
+
+    console.log('start of EditAgreementGrantAllocationsController');
 
     $scope.$watch(function() {
         jQuery(".selectpicker").selectpicker("refresh");

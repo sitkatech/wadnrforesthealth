@@ -1,5 +1,4 @@
-﻿
-@*-----------------------------------------------------------------------
+﻿@*-----------------------------------------------------------------------
     <copyright file="EditPeople.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
     Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
     <author>Sitka Technology Group</author>
@@ -23,6 +22,9 @@
 @using ProjectFirma.Web.Models
 @using Newtonsoft.Json.Linq
 @inherits ProjectFirma.Web.Views.Agreement.EditAgreementGrantAllocations
+
+<script type="text/javascript" src="@Url.Content("~/Views/Agreement/EditAgreementGrantAllocationsController.js")"></script>
+
 <script type="text/javascript">
     // <![CDATA[
     angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
@@ -46,8 +48,8 @@
 </script>
 
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
-
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+
 <style>
 
     .table > tbody > tr.subRelationships > td {
@@ -68,8 +70,8 @@
             <p>Select the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Agreement.GetFieldDefinitionLabel(). </p>
         </div>
     </div>
-    
-     <div class="row">
+
+    <div class="row">
         <div class="col-md-9 col-md-pull-3">
             <div class="row">
                 @*Selectpicker*@
@@ -108,7 +110,7 @@
 
         </div>
     </div>
-    
+
 
     @using (Html.BeginForm())
     {
