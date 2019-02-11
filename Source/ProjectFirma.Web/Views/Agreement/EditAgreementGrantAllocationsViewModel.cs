@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
 using LtInfo.Common.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -27,44 +29,38 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
-    public class EditAgreementGrantAllocationViewModel : FormViewModel
+    public class EditAgreementGrantAllocationsViewModel : FormViewModel
     {
-        public int AgreementGrantAllocationId { get; }
-        
-        [DisplayName("Grant Allocations")]
-        public int GrantAllocationId { get; set; }
-        
         public int AgreementId { get; set; }
-        public int? GrantId { get; }
 
+        //public int AgreementGrantAllocationId { get; }
+
+        //[DisplayName("Grant Allocations")]
+        //public int GrantAllocationId { get; set; }
+        //public int? GrantId { get; }
+
+        // GrantAllocationIDs for the relevant agreement
+        public List<int> GrantAllocationIDs { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditAgreementGrantAllocationViewModel()
+        public EditAgreementGrantAllocationsViewModel()
         {
         }
 
-        public EditAgreementGrantAllocationViewModel(int agreementId)
+        public EditAgreementGrantAllocationsViewModel(Models.Agreement agreement)
         {
-            AgreementId = agreementId;
-            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(a => a.AgreementID == agreementId);
-            GrantId = agreement.GrantID;
+            AgreementId = agreement.AgreementID;
+            GrantAllocationIDs = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocationID).ToList();
         }
 
-
-        public EditAgreementGrantAllocationViewModel(Models.AgreementGrantAllocation agreementGrantAllocation)
+        public void UpdateModel(Models.Agreement agreement)
         {
-            AgreementGrantAllocationId = agreementGrantAllocation.AgreementGrantAllocationID;
-            AgreementId = agreementGrantAllocation.AgreementID;
-            GrantAllocationId = agreementGrantAllocation.GrantAllocationID;
-        }
+            //agreementGrantAllocation.AgreementID = AgreementId;
+            //agreementGrantAllocation.AgreementGrantAllocationID = AgreementGrantAllocationId;
 
-        public void UpdateModel(Models.AgreementGrantAllocation agreementGrantAllocation)
-        {
-            agreementGrantAllocation.AgreementGrantAllocationID = AgreementGrantAllocationId;
-            agreementGrantAllocation.AgreementID = AgreementId;
-            agreementGrantAllocation.GrantAllocationID = AgreementGrantAllocationId;
+            //agreementGrantAllocation.GrantAllocationID = AgreementGrantAllocationId;
         }
     }
 }

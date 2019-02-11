@@ -194,7 +194,7 @@
                     @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects
 
                     <span class="pull-right">
-                        @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewAgreementProjectRelationshipUrl, string.Format("Create a new relationship between {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()), new List<string>(), ViewDataTyped.UserHasEditAgreementPermissions)
+                        @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewAgreementGrantAllocationRelationshipUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), new List<string>(), ViewDataTyped.UserHasEditAgreementPermissions)
                     </span>
                 </div>
                 <div class="panel-body">

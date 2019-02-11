@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditAgreementPersonViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProject.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,18 +18,12 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Web.Mvc;
+using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Views.Shared.ProjectControls;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
-    public class EditAgreementGrantAllocationViewData : FirmaUserControlViewData
+    public abstract class EditAgreementGrantAllocations : TypedWebPartialViewPage<EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>
     {
-        public readonly IEnumerable<SelectListItem> GrantAllocationSelectListItems;
-
-        public EditAgreementGrantAllocationViewData(IEnumerable<SelectListItem> grantAllocationSelectListItems)
-        {
-            GrantAllocationSelectListItems = grantAllocationSelectListItems;
-        }
     }
 }

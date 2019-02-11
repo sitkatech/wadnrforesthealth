@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
@@ -253,59 +254,97 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult EditAgreementGrantAllocation(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey)
+        public PartialViewResult EditAgreementGrantAllocations(AgreementPrimaryKey agreementPrimaryKey)
         {
-            var agreementGrantAllocation = agreementGrantAllocationPrimaryKey.EntityObject;
-            var viewModel = new EditAgreementGrantAllocationViewModel(agreementGrantAllocation);
-            return ViewEditAgreementGrantAllocation(viewModel);
+            var agreement = agreementPrimaryKey.EntityObject;
+            var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
+            return ViewEditAgreementGrantAllocations(viewModel);
         }
 
+        /*
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditAgreementGrantAllocation(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey, EditAgreementGrantAllocationViewModel viewModel)
+        public ActionResult EditAgreementGrantAllocations(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
         {
             var agreementGrantAllocation = agreementGrantAllocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEditAgreementGrantAllocation(viewModel);
+                return ViewEditAgreementGrantAllocations(viewModel);
             }
-            viewModel.UpdateModel(agreementGrantAllocation);
-            return new ModalDialogFormJsonResult();
+            //viewModel.UpdateModel(agreementGrantAllocation);
+            //return new ModalDialogFormJsonResult();
         }
+        */
 
-        private PartialViewResult ViewEditAgreementGrantAllocation(EditAgreementGrantAllocationViewModel viewModel)
+        private PartialViewResult ViewEditAgreementGrantAllocations(EditAgreementGrantAllocationsViewModel viewModel)
         {
-            
-            var relatedGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.GrantID == viewModel.GrantId);
-            var selectableGrantAllocations = relatedGrantAllocations.OrderBy(x => x.ProjectName)
-                .ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == viewModel.AgreementId);
+            // Every single possible Grant Allocation we could associate
+            var allPossibleGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            // All the existing associations (if any) this Agreement already has
+            var existingAssociatedGrantAllocationsForAgreement = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocation).ToList();
+            // All the Grant Allocations to show in the picker, for new associations.
+            var grantAllocationsThatCanBeSelectedForNewAssociations = allPossibleGrantAllocations.Except(existingAssociatedGrantAllocationsForAgreement).ToList();
+            // Build select list
+            var selectableGrantAllocations = grantAllocationsThatCanBeSelectedForNewAssociations.OrderBy(x => x.ProjectName).ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);
 
-            var viewData = new EditAgreementGrantAllocationViewData(selectableGrantAllocations);
-            return RazorPartialView<EditAgreementGrantAllocation, EditAgreementGrantAllocationViewData, EditAgreementGrantAllocationViewModel>(viewData, viewModel);
+            var viewData = new EditAgreementGrantAllocationsViewData(selectableGrantAllocations);
+            return RazorPartialView<EditAgreementGrantAllocations, EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult NewAgreementGrantAllocationRelationship(AgreementPrimaryKey agreementPrimaryKey)
+        public PartialViewResult NewAgreementGrantAllocationRelationship(int agreementId)
         {
-            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
-            var viewModel = new EditAgreementGrantAllocationViewModel(agreementID);
-            return ViewEditAgreementGrantAllocation(viewModel);
+            //var agreement = agreementPrimaryKey.EntityObject;
+            //var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
+            //var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == grantAllocationId);
+            Check.EnsureNotNull(agreement);
+            //Check.EnsureNotNull(grantAllocation);
+
+            /*
+            // Is there already an association for this Agreement and GrantAllocation? If so, handle it gracefully, and just load it for editing.
+            var agreementGrantAllocation = HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.FirstOrDefault(
+                ag => ag.GrantAllocationID == grantAllocation.GrantAllocationID &&
+                      ag.AgreementID == agreement.AgreementID);
+
+            // If there is not already an allocation, create one
+            // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
+            if (agreementGrantAllocation == null)
+            {
+                // CAUTION: Does this save to the DB automatically?
+                agreementGrantAllocation = new AgreementGrantAllocation(agreement, grantAllocation);
+            }
+            */
+
+            var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
+            return ViewEditAgreementGrantAllocations(viewModel);
         }
 
+        /*
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewAgreementGrantAllocationRelationship(AgreementPrimaryKey agreementPrimaryKey, EditAgreementGrantAllocationViewModel viewModel)
+        //public ActionResult NewAgreementGrantAllocationRelationship(AgreementPrimaryKey agreementPrimaryKey, GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
+        public ActionResult NewAgreementGrantAllocationRelationship(int agreementId, int  grantAllocationId, EditAgreementGrantAllocationsViewModel viewModel)
         {
-            var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == grantAllocationId);
+            Check.EnsureNotNull(agreement);
+            Check.EnsureNotNull(grantAllocation);
+
             if (!ModelState.IsValid)
             {
-                return ViewEditAgreementGrantAllocation(viewModel);
+                return ViewEditAgreementGrantAllocations(viewModel);
             }
 
-            var agreementGrantAllocation = HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == viewModel.GrantAllocationId); 
+            var agreementGrantAllocation = HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == viewModel.GrantAllocationId);
+            if (agreementGrantAllocation == null)
+            {
+                agreementGrantAllocation = new AgreementGrantAllocation(agreementId, viewModel.GrantAllocationId);
+            }
             viewModel.UpdateModel(agreementGrantAllocation);
             HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.Add(agreementGrantAllocation);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -313,6 +352,7 @@ namespace ProjectFirma.Web.Controllers
 
             return new ModalDialogFormJsonResult();
         }
+        */
 
         [AgreementsViewFeature]
         public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(AgreementPrimaryKey agreementPrimaryKey)

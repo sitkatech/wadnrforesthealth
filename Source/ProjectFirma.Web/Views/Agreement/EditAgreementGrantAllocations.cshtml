@@ -19,7 +19,7 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
-@inherits ProjectFirma.Web.Views.Agreement.EditAgreementGrantAllocation
+@inherits ProjectFirma.Web.Views.Agreement.EditAgreementGrantAllocations
 
 @*@Html.Raw(ViewDataTyped.EditAgreementType.IntroductoryText)*@
 
@@ -33,13 +33,33 @@
 
             <div class="form-group">
                 <div class="form-group">
-                    <div class="col-xs-4 control-label">
-                        @Html.LabelWithSugarFor(m => m.GrantAllocationId)
+                    <div class="col-xs-2 control-label">
+                        @*@Html.LabelWithSugarFor(m => m.GrantAllocationId)*@
+                        Grant Allocation:
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DropDownListFor(m => m.GrantAllocationId, ViewDataTyped.GrantAllocationSelectListItems, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.GrantAllocationId)
-                    </div>
+                    <div class="col-xs-10">
+                        @*WRONG WRONG WRONG*@
+                        @*
+                        @Html.DropDownListFor(m => m.GrantAllocationId, ViewDataTyped.GrantAllocationSelectListItems, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.AgreementId)
+                        *@
+                        
+                        <span style="display: inline;">
+                            <span class="col-xs-11">
+                                <select class="form-control" id="SelectedGrantAllocationId" name="SelectedGrantAllocationId">
+                                    @foreach (var currentSelectItem in ViewDataTyped.GrantAllocationSelectListItems)
+                                    {
+                                        <option value="@currentSelectItem.Value">@currentSelectItem.Text</option>
+                                    }
+                                </select>
+                            </span>
+                            <button id="btnCollapseLevel" class="btn btn-sm btn-primary">Add</button>
+
+                        </span>
+
+
+                             
+</div>
                 </div>
                 @*<div class="form-group">
                     <div class="col-xs-4 control-label">
@@ -53,7 +73,8 @@
             </div>
         </div>
     </div>
-    @Html.HiddenFor(m => m.AgreementGrantAllocationId)
+    //WRONG WRONG 
+    @Html.HiddenFor(m => m.AgreementId)
 }
 
 
