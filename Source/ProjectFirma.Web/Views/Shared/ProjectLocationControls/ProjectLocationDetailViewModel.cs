@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationNotes = x.ProjectLocationNotes;
             ProjectLocationTypeID = x.ProjectLocationTypeID;
             ProjectLocationTypeName = x.ProjectLocationType.ProjectLocationTypeDisplayName;
-            ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName;
+            ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
         }

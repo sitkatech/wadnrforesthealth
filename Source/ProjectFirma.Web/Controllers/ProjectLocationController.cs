@@ -118,7 +118,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectLocationDetailed(project, viewModel);
             }
-            SaveProjectDetailedLocations(viewModel, project);
+            SaveProjectDetailedLocationsWithDelete(viewModel, project);
             return new ModalDialogFormJsonResult();
         }
 
@@ -213,7 +213,7 @@ namespace ProjectFirma.Web.Controllers
             return EditProjectLocationDetailed(projectPrimaryKey);
         }
 
-        private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
+        private static void SaveProjectDetailedLocationsWithDelete(ProjectLocationDetailViewModel viewModel, Project project)
         {
             var currentProjectLocations = project.ProjectLocations.ToList();
             foreach (var currentProjectLocation in currentProjectLocations)
@@ -221,7 +221,13 @@ namespace ProjectFirma.Web.Controllers
                 currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             project.ProjectLocations.Clear();
-            //todo save project locations
+
+            SaveProjectDetailedLocations(viewModel, project);
+        }
+
+        private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
+        {
+            
             if (viewModel.ProjectLocationJsons != null)
             {
                 foreach (var projectLocationJson in viewModel.ProjectLocationJsons)

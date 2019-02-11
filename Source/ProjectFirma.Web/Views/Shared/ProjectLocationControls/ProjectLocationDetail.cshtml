@@ -91,7 +91,7 @@
                     @*data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)"*@>
                     @* trash icon for deleting *@
                     <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
-                        <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation)">
+                        <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>
