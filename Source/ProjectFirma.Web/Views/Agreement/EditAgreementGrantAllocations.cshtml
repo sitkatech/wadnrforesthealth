@@ -61,65 +61,74 @@
         width: 100%;
     }
 </style>
-<div class="validationError">
-    @Html.ValidationSummary()
-</div>
-<div id="EditAgreementGrantAllocationsAngularApp" ng-controller="EditAgreementGrantAllocationsController">
-    <div class="row">
-        <div class="col-md-12">
-            <p>Select the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Agreement.GetFieldDefinitionLabel(). </p>
-        </div>
+
+@*We need to add some extra space here because the select dropdown will appear inside the 
+  region of the dialog, and needs space to grow.*@
+<div id="WrappingDivForAllContent" style="min-height: 350px;">
+    <div class="validationError">
+        @Html.ValidationSummary()
     </div>
 
-    <div class="row">
-        <div class="col-md-9 col-md-pull-3">
-            <div class="row">
-                @*Selectpicker*@
-                <div class="col-md-12">
-                    <div class="input-group" style="width: 100%;">
-                        <select class="selectpicker" @*id="todo{{AngularViewData.ProjectPersonRelationshipTypeID}}"*@ 
-                                @*ng-model="selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]"*@ 
-                                ng-model="selectedGrantAllocationID" 
-                                @*ng-change="console.log('selection changed')"*@ 
-                                data-width="100%" data-live-search="true" data-size="8">
-                            <option value="" disabled selected ng-bind="dropdownDefaultOption()">Select one</option>
-                            <option ng-repeat="grantAllocation in getAvailableGrantAllocationsForAgreement()"
-                                    ng-bind="grantAllocation.GrantAllocationID"
-                                    ng-value="grantAllocation.ProjectName"
-                                    ng-selected="isOptionSelected(grantAllocation)"></option>
-                        </select>
-                        <button type="button" class="btn btn-sm btn-firma" ng-click="addGrantAllocation(selectedGrantAllocationID)" @*ng-disabled="!selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-show="!projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject"*@>
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Add
-                        </button>
+    <div id="EditAgreementGrantAllocationsAngularApp" ng-controller="EditAgreementGrantAllocationsController">
+        <div class="row">
+            <div class="col-md-12">
+                <p>Select the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Agreement.GetFieldDefinitionLabel(). </p>
+            </div>
+        </div>
+
+        <div class="row">
+            @*<div class="col-md-9 col-md-pull-3">*@
+            <div class="col-md-9">
+                <div class="row">
+                    @*Selectpicker*@
+                    <div class="col-md-12">
+                        <div class="input-group" style="width: 100%;">
+                            <select class="selectpicker" @*id="todo{{AngularViewData.ProjectPersonRelationshipTypeID}}"*@
+                                    ng-model="selectedGrantAllocationID"
+                                    @*ng-change="console.log('selection changed')"*@
+                                    data-width="100%" data-live-search="true" data-size="8">
+                                <option value="" disabled selected ng-bind="dropdownDefaultOption()">Select one</option>
+                                <option ng-repeat="grantAllocation in getAvailableGrantAllocationsForAgreement()"
+                                        ng-bind="grantAllocation.ProjectName"
+                                        ng-value="grantAllocation.GrantAllocationID"
+                                        ng-selected="isOptionSelected(grantAllocation)"></option>
+                            </select>
+                            <button type="button" class="btn btn-sm btn-firma" ng-click="addGrantAllocation(selectedGrantAllocationID)" @*ng-disabled="!selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-show="!projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject"*@>
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Add
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row" ng-repeat="currentGrantAllocationJson in $scope.AngularModel.GrantAllocationJsons)" sstyle="margin-top: 5px;">
-                @*Selections*@
+        <div class="row">
+            Currently Selected Grant Allocations:
+            <div class="row" ng-repeat="currentGrantAllocationJson in AngularModel.GrantAllocationJsons" style="margin-top: 5px;">
                 <div class="col-md-12">
                     <span>
                         @*<a href="#" ng-click="removeProjectPersonSimple(person.PersonID, projectPersonRelationshipType.ProjectPersonRelationshipTypeID); $event.preventDefault();">
-                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
-                        </a>*@
-                    </span><span ng-bind="currentGrantAllocationJson.ProjectName"></span>
+                                <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
+                            </a>*@
+                    </span>
+                    <span ng-bind="currentGrantAllocationJson.ProjectName"></span>
                 </div>
             </div>
-            
-
         </div>
+
+
+        @using (Html.BeginForm())
+        {
+            <div ng-repeat="grantAllocationJson in AngularModel.GrantAllocationJsons">
+                <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.GrantAllocationID}}" />
+                <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].ProjectName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.ProjectName}}" />
+            </div>
+        }
     </div>
 
-
-    @using (Html.BeginForm())
-    {
-        <div ng-repeat="grantAllocationJson in AngularModel.GrantAllocationJsons">
-            <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.GrantAllocationID}}" />
-            <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].ProjectName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.ProjectName}}" />
-        </div>
-    }
 </div>
+
 
 
 

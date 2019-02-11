@@ -32,8 +32,12 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
 
     $scope.getAvailableGrantAllocationsForAgreement = function ()
     {
+        console.log('getAvailableGrantAllocationsForAgreement');
+
+        //debugger;
+
         // This will probably not work yet
-        return $scope.AngularViewData.AllPossibleGrantAllocations;
+        return $scope.AngularViewData.AllPossibleGrantAllocationJsons;
 
         //var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
 
@@ -89,10 +93,19 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
     $scope.addGrantAllocation = function (grantAllocationId)
     {
         console.log('addGrantAllocation');
-        //$scope.AngularModel.ProjectPersonSimples.push({
-        //    PersonID: Number(personID),
-        //    ProjectPersonRelationshipTypeID: projectPersonProjectPersonRelationshipTypeID
-        //});
+        var allRelevantGrantAllocationJsons = _.filter($scope.AngularViewData.AllPossibleGrantAllocationJsons,
+            function(f) {
+                return f.GrantAllocationID === Number(grantAllocationId);
+            });
+        var grantAllocationJson = allRelevantGrantAllocationJsons[0];
+
+        //debugger;
+        console.log('grantAllocationJson: ' + grantAllocationJson);
+
+        $scope.AngularModel.GrantAllocationJsons.push({
+            GrantAllocationID: Number(grantAllocationJson.GrantAllocationID),
+            ProjectName: grantAllocationJson.ProjectName
+        });
         //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
     };
 

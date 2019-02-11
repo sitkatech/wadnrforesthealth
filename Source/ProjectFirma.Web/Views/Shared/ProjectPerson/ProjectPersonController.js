@@ -63,7 +63,7 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
     $scope.chosenPeopleForProjectPersonRelationshipType = function(projectPersonProjectPersonRelationshipTypeID) {
         var chosenPersonSimples = _.filter($scope.AngularModel.ProjectPersonSimples,
             function(s) {
-                return s.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipTypeID;
+                return s.ProjectPersonRelationshipTypeID === projectPersonProjectPersonRelationshipTypeID;
             });
 
         var people = _.map(chosenPersonSimples,
@@ -88,7 +88,7 @@ angular.module("ProjectFirmaApp").controller("ProjectPersonController", function
     $scope.removeProjectPersonSimple = function(personID, projectPersonProjectPersonRelationshipTypeID) {
         _.remove($scope.AngularModel.ProjectPersonSimples,
             function(pos) {
-                return pos.PersonID == personID && pos.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipTypeID;
+                return pos.PersonID == personID && pos.ProjectPersonRelationshipTypeID === projectPersonProjectPersonRelationshipTypeID;
             });
     };
 
