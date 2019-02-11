@@ -64,7 +64,8 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullAgreementList);
-            var viewData = new AgreementIndexViewData(CurrentPerson, firmaPage);
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
+            var viewData = new AgreementIndexViewData(CurrentPerson, firmaPage, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             return RazorView<AgreementIndex, AgreementIndexViewData>(viewData);
         }
 
@@ -79,8 +80,8 @@ namespace ProjectFirma.Web.Controllers
         [AgreementsViewFullListFeature]
         public GridJsonNetJObjectResult<Agreement> AgreementGridJsonData()
         {
-            var gridSpec = new AgreementGridSpec(CurrentPerson);
             var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
+            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -120,8 +121,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteAgreement(Agreement agreement, ConfirmDialogFormViewModel viewModel)
         {
-            //TODO use AgreementTitle
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.Agreement.GetFieldDefinitionLabel()} '{"AgreementTitleGoesHere"}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.Agreement.GetFieldDefinitionLabel()} '{agreement.AgreementTitle}'?";
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
@@ -138,11 +138,9 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteAgreement(agreement, viewModel);
             }
 
-            //TODO use AgreementTitle
-            var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{"AgreementTitleGoesHere"}\" successfully deleted.";
+            var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{agreement.AgreementTitle}\" successfully deleted.";
 
-            //TODO actually delete the agreement
-            //agreement.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            agreement.DeleteFull(HttpRequestStorage.DatabaseEntities);
 
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();

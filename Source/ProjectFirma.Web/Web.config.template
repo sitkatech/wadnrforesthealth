@@ -120,8 +120,8 @@
       </layout>
     </appender>
     <appender name="SmtpAppender" type="LtInfo.Common.SmtpAppenderWithPathAndExceptionTypeInSubject, LtInfo.Common">
-      <to value="AppAlerts-LT@sitkatech.com" />
-      <from value="Application Alerts LT Info &lt;AppAlerts-LT@sitkatech.com&gt;" />
+      <to value="appalerts-wadnrforesthealthtracker@sitkatech.com" />
+      <from value="Application Alerts WA DNR Forest Health Tracker &lt;appalerts-wadnrforesthealthtracker@sitkatech.com&gt;" />
       <subject value="WADNRForestHealth Alert: ${environment} application error" />
       <smtpHost value="${smtp-server}" />
       <bufferSize value="1" />

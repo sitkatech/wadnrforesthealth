@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Agreement
     {
         public static string AgreementIDHiddenColumn = "AgreementIDHiddenColumnName";
 
-        public AgreementGridSpec(Models.Person currentPerson)
+        public AgreementGridSpec(Models.Person currentPerson, bool agreementFileExistsOnAtLeastOne)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()}";
@@ -55,6 +55,11 @@ namespace ProjectFirma.Web.Views.Agreement
             if (userHasDeletePermissions)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true), 30, DhtmlxGridColumnFilterType.None);
+            }
+
+            if (agreementFileExistsOnAtLeastOne)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl()), 30, DhtmlxGridColumnFilterType.None);
             }
             Add(Models.FieldDefinition.AgreementType.ToGridHeaderString("Type"), x => x.AgreementType?.AgreementTypeAbbrev, 70, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.AgreementNumber.ToGridHeaderString("Number"), x => x.AgreementNumber, 100, DhtmlxGridColumnFilterType.Html);

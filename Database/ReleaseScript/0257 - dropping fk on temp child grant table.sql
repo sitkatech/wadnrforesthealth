@@ -1,3 +1,0 @@
-alter table dbo.tmpChildrenGrantsInGrantsTab
-
-drop  FK_tmpChildrenGrantsInGrantsTab_GrantAllocation_GrantAllocationID_GrantAllocationID
