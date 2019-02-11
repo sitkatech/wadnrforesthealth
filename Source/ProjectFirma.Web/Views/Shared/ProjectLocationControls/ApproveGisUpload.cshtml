@@ -81,10 +81,12 @@ Source code is available upon request via <support@sitkatech.com>.
                     var geoJson = currentLayer.GeoJsonFeatureCollection;
                     for (var i = 0; i < geoJson.features.length; ++i)
                     {
-                        var currentWktName = "name=\"@Html.NameFor(x => x.ProjectLocationDetailSimples[0].Wkt)\"".replace("0", i);
+                        var currentWktName = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationGeometryWellKnownText)\"".replace("0", i);
                         hiddens.push("<input type=\"hidden\" " + currentWktName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
-                        var currentWktAnnotation = "name=\"@Html.NameFor(x => x.ProjectLocationDetailSimples[0].Annotation)\"".replace("0", i);
-                        hiddens.push("<input type=\"hidden\" " + currentWktAnnotation + " value=\"" + geoJson.features[i].properties[jQuery("#SelectedProperty_" + projectLocationStagingId).val()] + "\" />");
+                        var currentName = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationName)\"".replace("0", i);
+                        hiddens.push("<input type=\"hidden\" " + currentName + " value=\"" + geoJson.features[i].properties[jQuery("#SelectedProperty_" + projectLocationStagingId).val()] + i + "\" />");
+                        var currentTypeID = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationTypeID)\"".replace("0", i);
+                        hiddens.push("<input type=\"hidden\" " + currentTypeID + " value=\"5\" />");
                     }
                 }
             }
