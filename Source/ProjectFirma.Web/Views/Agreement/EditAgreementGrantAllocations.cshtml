@@ -1,5 +1,6 @@
-﻿@*-----------------------------------------------------------------------
-    <copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+﻿
+@*-----------------------------------------------------------------------
+    <copyright file="EditPeople.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
     Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
     <author>Sitka Technology Group</author>
     </copyright>
@@ -18,98 +19,106 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
-@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.BootstrapWrappers
+@using ProjectFirma.Web.Models
+@using Newtonsoft.Json.Linq
 @inherits ProjectFirma.Web.Views.Agreement.EditAgreementGrantAllocations
+<script type="text/javascript">
+    // <![CDATA[
+    angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
+    {
+        return {
+            AngularModel: @Html.Raw(JObject.FromObject(Model)),
+            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
+        };
+    });
+    jQuery(document).ready(function ()
+    {
+        angular.bootstrap(jQuery("#EditAgreementGrantAllocationsAngularApp"), ["ProjectFirmaApp"]);
 
-@*@Html.Raw(ViewDataTyped.EditAgreementType.IntroductoryText)*@
+        jQuery(".selectpicker").selectpicker("refresh");
+        jQuery(".modal").on("hidden.bs.modal",
+            function() {
+                jQuery(".bootstrap-select.open").removeClass("open");
+            });
+    });
+    // ]]>
+</script>
 
-@Html.ValidationSummary()
+<script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 
-@using (Html.BeginForm())
-{
-    //TODO
-    <div class="col-xs-11">
-        <div class="form-horizontal">
+<link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+<style>
 
-            <div class="form-group">
-                <div class="form-group">
-                    <div class="col-xs-2 control-label">
-                        @*@Html.LabelWithSugarFor(m => m.GrantAllocationId)*@
-                        Grant Allocation:
-                    </div>
-                    <div class="col-xs-10">
-                        @*WRONG WRONG WRONG*@
-                        @*
-                        @Html.DropDownListFor(m => m.GrantAllocationId, ViewDataTyped.GrantAllocationSelectListItems, new {@class = "form-control"})
-                        @Html.ValidationMessageFor(m => m.AgreementId)
-                        *@
-                        
-                        <span style="display: inline;">
-                            <span class="col-xs-11">
-                                <select class="form-control" id="SelectedGrantAllocationId" name="SelectedGrantAllocationId">
-                                    @foreach (var currentSelectItem in ViewDataTyped.GrantAllocationSelectListItems)
-                                    {
-                                        <option value="@currentSelectItem.Value">@currentSelectItem.Text</option>
-                                    }
-                                </select>
-                            </span>
-                            <button id="btnCollapseLevel" class="btn btn-sm btn-primary">Add</button>
+    .table > tbody > tr.subRelationships > td {
+        border-top: none;
+        padding-top: 0;
+    }
 
-                        </span>
-
-
-                             
+    .col-xs-5.personIdSelectGroup div.bootstrap-select.btn-group {
+        width: 100%;
+    }
+</style>
+<div class="validationError">
+    @Html.ValidationSummary()
 </div>
-                </div>
-                @*<div class="form-group">
-                    <div class="col-xs-4 control-label">
-                        @Html.LabelWithSugarFor(m => m.AgreementNumber)
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.TextBoxFor(m => m.AgreementNumber, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.AgreementNumber)
-                    </div>
-                </div>*@
-            </div>
+<div id="EditAgreementGrantAllocationsAngularApp" ng-controller="EditAgreementGrantAllocationsController">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Select the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Agreement.GetFieldDefinitionLabel(). </p>
         </div>
     </div>
-    //WRONG WRONG 
-    @Html.HiddenFor(m => m.AgreementId)
-}
+    
+     <div class="row">
+        <div class="col-md-9 col-md-pull-3">
+            <div class="row">
+                @*Selectpicker*@
+                <div class="col-md-12">
+                    <div class="input-group" style="width: 100%;">
+                        <select class="selectpicker" @*id="todo{{AngularViewData.ProjectPersonRelationshipTypeID}}"*@ 
+                                @*ng-model="selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]"*@ 
+                                ng-model="selectedGrantAllocationID" 
+                                @*ng-change="console.log('selection changed')"*@ 
+                                data-width="100%" data-live-search="true" data-size="8">
+                            <option value="" disabled selected ng-bind="dropdownDefaultOption()">Select one</option>
+                            <option ng-repeat="grantAllocation in getAvailableGrantAllocationsForAgreement()"
+                                    ng-bind="grantAllocation.GrantAllocationID"
+                                    ng-value="grantAllocation.ProjectName"
+                                    ng-selected="isOptionSelected(grantAllocation)"></option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-firma" ng-click="addGrantAllocation(selectedGrantAllocationID)" @*ng-disabled="!selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-show="!projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject"*@>
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-repeat="currentGrantAllocationJson in $scope.AngularModel.GrantAllocationJsons)" sstyle="margin-top: 5px;">
+                @*Selections*@
+                <div class="col-md-12">
+                    <span>
+                        @*<a href="#" ng-click="removeProjectPersonSimple(person.PersonID, projectPersonRelationshipType.ProjectPersonRelationshipTypeID); $event.preventDefault();">
+                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
+                        </a>*@
+                    </span><span ng-bind="currentGrantAllocationJson.ProjectName"></span>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+    
+
+    @using (Html.BeginForm())
+    {
+        <div ng-repeat="grantAllocationJson in AngularModel.GrantAllocationJsons">
+            <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.GrantAllocationID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].ProjectName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.ProjectName}}" />
+        </div>
+    }
+</div>
 
 
 
-<script type="text/javascript">
-                @*jQuery(document)
-                    .ready(function () {
-                        var mouAgreementTypeId = @ViewDataTyped.MOUAgreementTypeID;
-                        var mouAgreementTypeIdHasValue = '@ViewDataTyped.MOUAgreementTypeID.HasValue';
 
-
-
-                        function updateDisabledFieldsIfMouIsSelected(mouAgreementTypeIdVar)
-                        {
-                            var selectionIsMou = jQuery("#@Html.IdFor(m => m.AgreementTypeID)").val().toString() === mouAgreementTypeIdVar.toString();
-                            var agreementAmountInput =
-                                jQuery("#@Html.IdFor(m => m.AgreementAmount)" + ".sitkaCurrency");
-                            var grantIdInput = jQuery("#@Html.IdFor(m => m.GrantID)");
-                            if (selectionIsMou) {
-                                grantIdInput.attr('disabled', 'disabled');
-                                grantIdInput.val("");
-                                agreementAmountInput.attr('disabled', 'disabled');
-                                agreementAmountInput.val("");
-                            } else {
-                                grantIdInput.removeAttr('disabled');
-                                agreementAmountInput.removeAttr('disabled');
-                            }
-                        }
-
-
-                        if (mouAgreementTypeIdHasValue == 'True' || mouAgreementTypeIdHasValue == 'true') {
-                            updateDisabledFieldsIfMouIsSelected(mouAgreementTypeId);
-                            jQuery("#@Html.IdFor(m => m.AgreementTypeID)").change(function() {
-                                updateDisabledFieldsIfMouIsSelected(mouAgreementTypeId);
-                            });
-                        }
-                    });*@
-</script>

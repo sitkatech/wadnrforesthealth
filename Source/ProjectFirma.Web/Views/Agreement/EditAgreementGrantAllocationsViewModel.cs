@@ -29,6 +29,19 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
+
+    public class GrantAllocationJson
+    {
+        public int GrantAllocationID;
+        public string ProjectName;
+
+        public GrantAllocationJson(Models.GrantAllocation grantAllocation)
+        {
+            this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            this.ProjectName = grantAllocation.ProjectName;
+        }
+    }
+
     public class EditAgreementGrantAllocationsViewModel : FormViewModel
     {
         public int AgreementId { get; set; }
@@ -40,7 +53,10 @@ namespace ProjectFirma.Web.Views.Agreement
         //public int? GrantId { get; }
 
         // GrantAllocationIDs for the relevant agreement
-        public List<int> GrantAllocationIDs { get; set; }
+        //public List<int> GrantAllocationIDs { get; set; }
+
+        public List<GrantAllocationJson> GrantAllocationJsons;
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -51,8 +67,8 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public EditAgreementGrantAllocationsViewModel(Models.Agreement agreement)
         {
-            AgreementId = agreement.AgreementID;
-            GrantAllocationIDs = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocationID).ToList();
+            AgreementId = agreement.AgreementID;            
+            GrantAllocationJsons = agreement.AgreementGrantAllocations.Select(aga => new GrantAllocationJson(aga.GrantAllocation)).ToList();
         }
 
         public void UpdateModel(Models.Agreement agreement)
