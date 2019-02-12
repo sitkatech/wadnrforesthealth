@@ -122,7 +122,7 @@ namespace LtInfo.Common.DhtmlWrappers
                     m =>
                     {
                         var contentUrl = string.Format("{0}/DeleteAction/{1}", TestControllerName, m.PrimaryKey);
-                        var deleteLink = DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(contentUrl, true);
+                        var deleteLink = DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(contentUrl, true, true);
                         return deleteLink;
                     },
                     35);
@@ -160,7 +160,7 @@ namespace LtInfo.Common.DhtmlWrappers
                     m =>
                     {
                         var contentUrl = string.Format("{0}/DeleteAction/{1}", TestControllerName, m.PrimaryKey);
-                        var deleteLink = DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(contentUrl, true);
+                        var deleteLink = DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(contentUrl, true, true);
                         return deleteLink;
                     },
                     35);

@@ -274,6 +274,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                    @ViewDataTyped.Organization.OrganizationName is associated with the following @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() 
+                                </p>
+                                
+                                @Html.DhtmlxGrid(ViewDataTyped.AgreementOrganizationsGridSpec, ViewDataTyped.AgreementOrganizationsGridName, ViewDataTyped.AgreementOrganizationsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @if (ViewDataTyped.ShowProposals)
                 {
                     <div class="row">

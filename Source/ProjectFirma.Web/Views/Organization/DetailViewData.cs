@@ -25,6 +25,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.PerformanceMeasure;
 using ProjectFirma.Web.Views.Shared;
 
@@ -41,6 +42,10 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
         public readonly string ProjectOrganizationsGridName;
         public readonly string ProjectOrganizationsGridDataUrl;
+
+        public readonly AgreementGridSpec AgreementOrganizationsGridSpec;
+        public readonly string AgreementOrganizationsGridName;
+        public readonly string AgreementOrganizationsGridDataUrl;
 
         public readonly ProjectsIncludingLeadImplementingGridSpec ProposalsGridSpec;
         public readonly string ProposalsGridName;
@@ -84,7 +89,8 @@ namespace ProjectFirma.Web.Views.Organization
             bool hasSpatialData,
             List<Models.PerformanceMeasure> performanceMeasures, 
             ViewGoogleChartViewData expendituresDirectlyFromOrganizationViewGoogleChartViewData,
-            ViewGoogleChartViewData expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData) : base(currentPerson)
+            ViewGoogleChartViewData expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData,
+            bool atLeastOneAgreementHasFile) : base(currentPerson)
         {
             Organization = organization;
             PageTitle = organization.DisplayName;
@@ -105,11 +111,21 @@ namespace ProjectFirma.Web.Views.Organization
                     ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
                     SaveFiltersInCookie = true
                 };
+            AgreementOrganizationsGridSpec = new AgreementGridSpec(CurrentPerson, atLeastOneAgreementHasFile, false, false)
+            {
+                CustomExcelDownloadUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.AgreementsExcelDownload(organization.PrimaryKey))
+            };
+
 
             ProjectOrganizationsGridName = "projectOrganizationsFromOrganizationGrid";
             ProjectOrganizationsGridDataUrl =
                 SitkaRoute<OrganizationController>.BuildUrlFromExpression(
                     tc => tc.ProjectsIncludingLeadImplementingGridJsonData(organization));
+
+            AgreementOrganizationsGridName = "agreementOrganizationsFromOrganizationGrid";
+            AgreementOrganizationsGridDataUrl =
+                SitkaRoute<OrganizationController>.BuildUrlFromExpression(
+                    tc => tc.AgreementOrganizationGridJsonData(organization));
 
             ProjectStewardOrLeadImplementorFieldDefinitionName = MultiTenantHelpers.HasCanStewardProjectsOrganizationRelationship()
                 ? Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.GetFieldDefinitionLabel()

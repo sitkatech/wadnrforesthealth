@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             PageTitle = $"Full Agreement List";
 
-            AgreementGridSpec = new AgreementGridSpec(currentPerson, atLeastOneAgreementHasFile);
+            AgreementGridSpec = new AgreementGridSpec(currentPerson, atLeastOneAgreementHasFile, true, true);
             AgreementGridName = "agreementsGridName";
             AgreementGridDataUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(tc => tc.AgreementGridJsonData());
         }

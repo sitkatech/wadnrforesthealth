@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.ProjectType
             if (new ProjectTypeManageFeature().HasPermissionByPerson(currentPerson))
             {
                 Add(string.Empty,
-                    x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, !x.HasDependentObjects()),
+                    x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, !x.HasDependentObjects(), true),
                     30, DhtmlxGridColumnFilterType.None);
             }
 
