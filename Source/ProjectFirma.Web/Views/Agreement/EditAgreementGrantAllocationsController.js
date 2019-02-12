@@ -30,40 +30,50 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
         jQuery("form").trigger("input");
     });
 
-    $scope.getAvailableGrantAllocationsForAgreement = function ()
-    {
-        console.log('getAvailableGrantAllocationsForAgreement');
+    $scope.getAvailableGrantAllocationsForAgreement = function() {
+        var allPossibleGrantAllocationJsons = $scope.AngularViewData.AllPossibleGrantAllocationJsons;
+        var usedGrantAllocations = $scope.AngularModel.GrantAllocationJsons;
+        var usedGrantAllocationIds = _.map(usedGrantAllocations,
+            function(f) {
+                return f.GrantAllocationID;
+            });
 
-        //debugger;
+        var filteredGrantAllocationSelectList = _.filter(allPossibleGrantAllocationJsons,
+            function(f) {
+                return !_.includes(usedGrantAllocationIds, f.GrantAllocationID)
+            });
 
-        // This will probably not work yet
-        return $scope.AngularViewData.AllPossibleGrantAllocationJsons;
-
-        //var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
-
-        //if (projectPersonProjectPersonRelationshipType.IsRequired)
-        //{
-        //    return peopleForProjectPersonRelationshipType;
-        //}
-        //else
-        //{
-        //    var usedPeople = _.filter($scope.AngularModel.ProjectPersonSimples,
-        //        function(f) {
-        //            return f.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
-        //        });
-        //    var usedPersonIDs = _.map(usedPeople,
-        //        function (f) {
-        //            return f.PersonID;
-        //        });
-
-        //    var filteredList = _.filter(peopleForProjectPersonRelationshipType,
-        //        function (f) {
-        //            return !_.includes(usedPersonIDs, f.PersonID);
-        //        });
-
-        //    return filteredList;
-        //}
+        return filteredGrantAllocationSelectList;
     };
+
+    //debugger;
+
+    // This will probably not work yet
+
+    //var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
+
+    //if (projectPersonProjectPersonRelationshipType.IsRequired)
+    //{
+    //    return peopleForProjectPersonRelationshipType;
+    //}
+    //else
+    //{
+    //    var usedPeople = _.filter($scope.AngularModel.ProjectPersonSimples,
+    //        function(f) {
+    //            return f.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
+    //        });
+    //    var usedPersonIDs = _.map(usedPeople,
+    //        function (f) {
+    //            return f.PersonID;
+    //        });
+
+    //    var filteredList = _.filter(peopleForProjectPersonRelationshipType,
+    //        function (f) {
+    //            return !_.includes(usedPersonIDs, f.PersonID);
+    //        });
+
+    //    return filteredList;
+    //}
 
     //$scope.personIsValidForProjectPersonRelationshipType = function(person, projectPersonProjectPersonRelationshipType) {
     //    var validProjectPersonRelationshipTypeIDs = _.map($scope.validProjectPersonRelationshipTypes(person.PersonID),
@@ -92,7 +102,6 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
 
     $scope.addGrantAllocation = function (grantAllocationId)
     {
-        console.log('addGrantAllocation');
         var allRelevantGrantAllocationJsons = _.filter($scope.AngularViewData.AllPossibleGrantAllocationJsons,
             function(f) {
                 return f.GrantAllocationID === Number(grantAllocationId);
@@ -100,13 +109,12 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
         var grantAllocationJson = allRelevantGrantAllocationJsons[0];
 
         //debugger;
-        console.log('grantAllocationJson: ' + grantAllocationJson);
 
         $scope.AngularModel.GrantAllocationJsons.push({
             GrantAllocationID: Number(grantAllocationJson.GrantAllocationID),
             ProjectName: grantAllocationJson.ProjectName
         });
-        //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
+        $scope.resetSelectedGrantAllocationID();
     };
 
     $scope.removeSelectedGrantAllocation = function(grantAllocationID) {
@@ -116,9 +124,9 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
             });
     };
 
-    //$scope.resetSelectedPersonID = function(projectPersonProjectPersonRelationshipTypeID) {
-    //    $scope.selectedPersonID[projectPersonProjectPersonRelationshipTypeID] = "";
-    //};
+    $scope.resetSelectedGrantAllocationID = function() {
+        $scope.selectedGrantAllocationID = "";
+    };
 
     $scope.isOptionSelected = function (grantAllocation)
     {
