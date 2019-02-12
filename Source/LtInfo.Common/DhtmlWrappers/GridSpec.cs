@@ -142,12 +142,17 @@ namespace LtInfo.Common.DhtmlWrappers
 
         public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType)
         {
-            return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, DhtmlxGridColumnAlignType.Left);
+            return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, DhtmlxGridColumnAlignType.Left, false);
+        }
+
+        public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType, bool hiddenColumnForCsv)
+        {
+            return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, DhtmlxGridColumnAlignType.Left, hiddenColumnForCsv);
         }
 
         public ColumnSpec<T> Add(string columnName, Func<T, HtmlString> valueFunction, int gridWidth, DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType, DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType)
         {
-            return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, dhtmlxGridColumnAlignType);
+            return Add(columnName, valueFunction, null, gridWidth, null, dhtmlxGridColumnFilterType, null, dhtmlxGridColumnAlignType, false);
         }
 
         private ColumnSpec<T> Add(string columnName,
@@ -157,11 +162,12 @@ namespace LtInfo.Common.DhtmlWrappers
             Func<T, string> titleFunction,
             DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType,
             DhtmlxGridColumnAggregationType dhtmlxGridColumnAggregationType,
-            DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType)
+            DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType,
+            bool hiddenColumnForCsv)
         {
             var columnSpec = new ColumnSpec<T>(columnName, valueFunction, gridWidth,
                 DhtmlxGridColumnDataType.ReadOnlyHtmlText, DhtmlxGridColumnFormatType.None,
-                dhtmlxGridColumnAlignType, new DhtmlxGridColumnSortType("htmlstring"), dhtmlxGridColumnFilterType, dhtmlxGridColumnAggregationType, cssClassFunction, titleFunction);
+                dhtmlxGridColumnAlignType, new DhtmlxGridColumnSortType("htmlstring"), dhtmlxGridColumnFilterType, dhtmlxGridColumnAggregationType, cssClassFunction, titleFunction, hiddenColumnForCsv);
             Add(columnSpec);
             return columnSpec;
         }

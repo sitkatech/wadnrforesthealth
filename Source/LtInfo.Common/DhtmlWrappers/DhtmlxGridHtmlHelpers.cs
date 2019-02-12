@@ -645,10 +645,11 @@ namespace LtInfo.Common.DhtmlWrappers
         /// </summary>
         /// <param name="deleteDialogUrl"></param>
         /// <param name="userHasDeletePermission"></param>
+        /// <param name="addDeleteSpan">Is a delete possible for the given object?</param>
         /// <returns></returns>
-        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission)
+        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission, bool addDeleteSpan)
         {
-            return MakeDeleteIconAndLinkBootstrap(deleteDialogUrl, userHasDeletePermission, true);
+            return MakeDeleteIconAndLinkBootstrap(deleteDialogUrl, userHasDeletePermission, true, addDeleteSpan);
         }
 
         /// <summary>
@@ -658,10 +659,15 @@ namespace LtInfo.Common.DhtmlWrappers
         /// <param name="deleteDialogUrl"></param>
         /// <param name="userHasDeletePermission">Does the given user have permission to perform a delete?</param>
         /// <param name="deletePossibleForObject">Is a delete possible for the given object?</param>
+        /// <param name="addDeleteSpan">Is a delete possible for the given object?</param>
         /// <returns></returns>
-        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission, bool deletePossibleForObject)
+        public static HtmlString MakeDeleteIconAndLinkBootstrap(string deleteDialogUrl, bool userHasDeletePermission, bool deletePossibleForObject, bool addDeleteSpan)
         {
-            var deleteIcon = deletePossibleForObject ? $"{DeleteIconBootstrap}<span style=\"display:none\">Delete</span>"
+            var deleteSpan = addDeleteSpan ? "<span style=\"display:none\">Delete</span>" : string.Empty;
+            var deleteIconToUse = addDeleteSpan
+                ? DeleteIconBootstrap
+                : BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue", "Delete");
+            var deleteIcon = deletePossibleForObject ? $"{deleteIconToUse}{deleteSpan}"
                 : BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x disabled").ToString();
             return ModalDialogFormHelper.MakeDeleteLink(deleteIcon, deleteDialogUrl, new List<string>(), userHasDeletePermission);
         }

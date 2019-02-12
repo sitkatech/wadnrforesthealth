@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Grant
 
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant.GrantNumber, GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CFDA.ToGridHeaderString(), x => x.Grant.CFDANumber, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);

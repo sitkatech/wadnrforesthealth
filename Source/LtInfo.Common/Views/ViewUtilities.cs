@@ -81,6 +81,10 @@ namespace LtInfo.Common.Views
         {
             return String.IsNullOrEmpty(value) ? value : HttpUtility.HtmlEncode(value);
         }
+        public static string HtmlDecode(this string value)
+        {
+            return String.IsNullOrEmpty(value) ? value : HttpUtility.HtmlDecode(value);
+        }
 
         public static string HtmlEncodeWithBreaks(this string value)
         {
