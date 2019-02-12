@@ -39,17 +39,19 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected ProjectLocationType(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName)
+        protected ProjectLocationType(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor)
         {
             ProjectLocationTypeID = projectLocationTypeID;
             ProjectLocationTypeName = projectLocationTypeName;
             ProjectLocationTypeDisplayName = projectLocationTypeDisplayName;
+            ProjectLocationTypeMapLayerColor = projectLocationTypeMapLayerColor;
         }
 
         [Key]
         public int ProjectLocationTypeID { get; private set; }
         public string ProjectLocationTypeName { get; private set; }
         public string ProjectLocationTypeDisplayName { get; private set; }
+        public string ProjectLocationTypeMapLayerColor { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationTypeID; } }
 
@@ -129,31 +131,31 @@ namespace ProjectFirma.Web.Models
 
     public partial class ProjectLocationTypeProjectArea : ProjectLocationType
     {
-        private ProjectLocationTypeProjectArea(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
-        public static readonly ProjectLocationTypeProjectArea Instance = new ProjectLocationTypeProjectArea(1, @"ProjectArea", @"Project Area");
+        private ProjectLocationTypeProjectArea(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
+        public static readonly ProjectLocationTypeProjectArea Instance = new ProjectLocationTypeProjectArea(1, @"ProjectArea", @"Project Area", @"#2c96c3");
     }
 
     public partial class ProjectLocationTypeTreatmentActivity : ProjectLocationType
     {
-        private ProjectLocationTypeTreatmentActivity(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
-        public static readonly ProjectLocationTypeTreatmentActivity Instance = new ProjectLocationTypeTreatmentActivity(2, @"TreatmentActivity", @"Treatment Activity");
+        private ProjectLocationTypeTreatmentActivity(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
+        public static readonly ProjectLocationTypeTreatmentActivity Instance = new ProjectLocationTypeTreatmentActivity(2, @"TreatmentActivity", @"Treatment Activity", @"#2b7ac3");
     }
 
     public partial class ProjectLocationTypeResearchPlot : ProjectLocationType
     {
-        private ProjectLocationTypeResearchPlot(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
-        public static readonly ProjectLocationTypeResearchPlot Instance = new ProjectLocationTypeResearchPlot(3, @"ResearchPlot", @"Research Plot");
+        private ProjectLocationTypeResearchPlot(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
+        public static readonly ProjectLocationTypeResearchPlot Instance = new ProjectLocationTypeResearchPlot(3, @"ResearchPlot", @"Research Plot", @"#2a44c3");
     }
 
     public partial class ProjectLocationTypeTestSite : ProjectLocationType
     {
-        private ProjectLocationTypeTestSite(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
-        public static readonly ProjectLocationTypeTestSite Instance = new ProjectLocationTypeTestSite(4, @"TestSite", @"Test Site");
+        private ProjectLocationTypeTestSite(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
+        public static readonly ProjectLocationTypeTestSite Instance = new ProjectLocationTypeTestSite(4, @"TestSite", @"Test Site", @"#3e29c3");
     }
 
     public partial class ProjectLocationTypeOther : ProjectLocationType
     {
-        private ProjectLocationTypeOther(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName) {}
-        public static readonly ProjectLocationTypeOther Instance = new ProjectLocationTypeOther(5, @"Other", @"Other");
+        private ProjectLocationTypeOther(int projectLocationTypeID, string projectLocationTypeName, string projectLocationTypeDisplayName, string projectLocationTypeMapLayerColor) : base(projectLocationTypeID, projectLocationTypeName, projectLocationTypeDisplayName, projectLocationTypeMapLayerColor) {}
+        public static readonly ProjectLocationTypeOther Instance = new ProjectLocationTypeOther(5, @"Other", @"Other", @"#6928c3");
     }
 }

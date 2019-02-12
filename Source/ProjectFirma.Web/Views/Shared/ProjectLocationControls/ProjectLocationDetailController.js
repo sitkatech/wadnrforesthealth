@@ -7,6 +7,13 @@ angular.module("ProjectFirmaApp")
             $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.length > 0;
             $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
             $scope.selectedLocationLeafletID = null;
+        
+            $scope.IconStyleDefault = new L.icon({
+                iconUrl: 'https://wadnrforesthealth.localhost.projectfirma.com/Content/leaflet/images/marker-icon.png'
+            });
+            $scope.IconStyleSelected = new L.icon({
+                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+fff200.png'
+            });
 
 
             $scope.selectedStyle = {
@@ -68,20 +75,20 @@ angular.module("ProjectFirmaApp")
             projectFirmaMap.editableFeatureGroup.eachLayer(function (layer) {
                 var currentLocationLeafletID = layer._leaflet_id;
                 if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
-                    layer.setStyle({
-                        color: '#fff200',
-                        fillColor: '#fff200',
-                        weight: 6,
-                        opacity: 0.6
-                    })
-                } else {
-                    if (currentLocationLeafletID < 0) {
+                    if (layer._icon) {
+                        layer.setIcon($scope.IconStyleSelected);
+                    } else {
                         layer.setStyle({
-                            color: '#02ffff',
-                            fillColor: '#02ffff',
-                            weight: 3,
+                            color: '#fff200',
+                            fillColor: '#fff200',
+                            weight: 6,
                             opacity: 0.6
                         });
+                    }
+                    
+                } else {
+                    if (layer._icon) {
+                        layer.setIcon($scope.IconStyleDefault);
                     } else {
                         layer.setStyle({
                             color: '#02ffff',

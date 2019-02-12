@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[ProjectLocationType](
 	[ProjectLocationTypeID] [int] NOT NULL,
 	[ProjectLocationTypeName] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ProjectLocationTypeDisplayName] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ProjectLocationTypeMapLayerColor] [varchar](20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_ProjectLocationType_ProjectLocationTypeID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectLocationTypeID] ASC

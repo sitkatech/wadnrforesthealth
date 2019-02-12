@@ -48,13 +48,16 @@ namespace ProjectFirma.Web.Views.Map
                 Layers.Add(new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple", project.SimpleLocationToGeoJsonFeatureCollection(addProjectProperties), "#ffff00", 1, HasDetailedLocation ? LayerInitialVisibility.Hide : LayerInitialVisibility.Show));
             }
 
-            var detailedLocationGeoJsonFeatureCollection = project.AllDetailedLocationsToGeoJsonFeatureCollection();
-            HasDetailedLocation = detailedLocationGeoJsonFeatureCollection.Features.Any();
-            if (HasDetailedLocation)
+            foreach (var locationType in ProjectLocationType.All)
             {
-                
-                Layers.Add(new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail", detailedLocationGeoJsonFeatureCollection, "blue", 1, LayerInitialVisibility.Show));
+                var detailedLocationsByTypeGeoJsonFeatureCollection =
+                    project.DetailedLocationsByTypeToGeoJsonFeatureCollection(locationType);
+                if (detailedLocationsByTypeGeoJsonFeatureCollection.Features.Any())
+                {
+                    Layers.Add(new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail - {locationType.ProjectLocationTypeDisplayName}", detailedLocationsByTypeGeoJsonFeatureCollection, locationType.ProjectLocationTypeMapLayerColor, 1, LayerInitialVisibility.Show));
+                }
             }
+
 
             var regionGeoJsonFeatureCollection = project.GetProjectRegions().ToGeoJsonFeatureCollection();
             HasRegions = (regionGeoJsonFeatureCollection != null);
