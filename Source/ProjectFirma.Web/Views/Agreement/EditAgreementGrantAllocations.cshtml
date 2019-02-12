@@ -60,11 +60,15 @@
     .col-xs-5.personIdSelectGroup div.bootstrap-select.btn-group {
         width: 100%;
     }
+
+    #WrappingDivForAllContent {
+        min-height: 300px;
+    }
+
 </style>
 
 @*We need to add some extra space here because the select dropdown will appear inside the 
   region of the dialog, and needs space to grow.*@
-<div id="WrappingDivForAllContent" style="min-height: 350px;">
     <div class="validationError">
         @Html.ValidationSummary()
     </div>
@@ -76,14 +80,14 @@
             </div>
         </div>
 
-        <div class="row">
+        <div id="WrappingDivForAllContent" class="row">
             @*<div class="col-md-9 col-md-pull-3">*@
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="row">
                     @*Selectpicker*@
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <div class="input-group" style="width: 100%;">
-                            <select class="selectpicker" @*id="todo{{AngularViewData.ProjectPersonRelationshipTypeID}}"*@
+                            <select class="selectpicker" id="todo{{AngularViewData.GrantAllocationId}}"
                                     ng-model="selectedGrantAllocationID"
                                     @*ng-change="console.log('selection changed')"*@
                                     data-width="100%" data-live-search="true" data-size="8">
@@ -93,30 +97,28 @@
                                         ng-value="grantAllocation.GrantAllocationID"
                                         ng-selected="isOptionSelected(grantAllocation)"></option>
                             </select>
-                            <button type="button" class="btn btn-sm btn-firma" ng-click="addGrantAllocation(selectedGrantAllocationID)" @*ng-disabled="!selectedPersonID[projectPersonRelationshipType.ProjectPersonRelationshipTypeID]" ng-show="!projectPersonRelationshipType.ProjectPersonRelationshipTypeCanOnlyBeRelatedOnceToAProject"*@>
+                            <button type="button" class="btn btn-sm btn-firma" ng-click="addGrantAllocation(selectedGrantAllocationID)">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Add
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            Currently Selected Grant Allocations:
-            <div class="row" ng-repeat="currentGrantAllocationJson in AngularModel.GrantAllocationJsons" style="margin-top: 5px;">
-                <div class="col-md-12">
-                    <span>
-                        @*<a href="#" ng-click="removeProjectPersonSimple(person.PersonID, projectPersonRelationshipType.ProjectPersonRelationshipTypeID); $event.preventDefault();">
-                                <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
-                            </a>*@
-                    </span>
-                    <span ng-bind="currentGrantAllocationJson.ProjectName"></span>
+                <br/>
+                <span>Currently Selected Grant Allocations:</span>
+                <div class="row" ng-repeat="currentGrantAllocationJson in AngularModel.GrantAllocationJsons" style="margin-top: 5px;">
+                    @*Selections*@
+                    <div class="col-md-12">
+                        <span>
+                            <a href="#" ng-click="console.log('TODO')">
+                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
+                        </a>
+                        </span>
+                        <span ng-bind="currentGrantAllocationJson.ProjectName"></span>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         @using (Html.BeginForm())
         {
@@ -126,9 +128,6 @@
             </div>
         }
     </div>
-
-</div>
-
 
 
 

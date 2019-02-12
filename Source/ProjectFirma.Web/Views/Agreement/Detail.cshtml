@@ -200,12 +200,8 @@
                     @*<a href="@ViewDataTyped.ManageFundingSourcesUrl"> @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects</a>*@
 
 
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementUrl, string.Format("Edit {0}", ViewDataTyped.Agreement.AgreementTitle), 950, ViewDataTyped.UserHasEditAgreementPermissions)
-                    @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects
-
-                    <span class="pull-right">
-                        @ModalDialogFormHelper.ModalDialogFormLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-plus").ToString(), ViewDataTyped.NewAgreementGrantAllocationRelationshipUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), new List<string>(), ViewDataTyped.UserHasEditAgreementPermissions)
-                    </span>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewAgreementGrantAllocationRelationshipUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 950, ViewDataTyped.UserHasEditAgreementPermissions)
+                    Grant Allocations associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
                     @foreach (var currentAgreementGrantAllocation in ViewDataTyped.Agreement.AgreementGrantAllocations.OrderBy(aga => aga.GrantAllocation.ProjectName))
