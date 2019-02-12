@@ -30,6 +30,9 @@
         resize: none;
         height: 60px;
     }
+    .selectedRow {
+        background-color: #FFF67F;
+    }
 </style>
 <div ng-app="ProjectFirmaApp" ng-controller="ProjectLocationDetailController">
     <p>
@@ -88,7 +91,7 @@
                 </thead>
                 <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
                     data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-                    @*data-ng-click="toggleProjectLocationDetails(projectLocation.projectLocationID)"*@>
+                    data-ng-click="toggleProjectLocationDetails(projectLocation.ProjectLocationLeafletID)">
                     @* trash icon for deleting *@
                     <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
                         <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
@@ -139,10 +142,7 @@
                 </tr>
             </table>
             <p class="systemText">
-                <span ng-show="AngularModel.ProjectLocationJsons.length !== 0">
-                    <br />ProjectLocation Type you're looking for not listed? Make sure you selected the most appropriate Project Type on the
-                    @*<a th:href="@ViewDataTyped.BasicsPageUrl">Basics</a>*@ page.
-                </span>
+
             </p>
         </div>
     </form>

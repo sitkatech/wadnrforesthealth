@@ -5,8 +5,8 @@ angular.module("ProjectFirmaApp")
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
             $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.length > 0;
-            $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated =
-                $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
+            $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
+            $scope.selectedLocationLeafletID = null;
 
 
             $scope.selectedStyle = {
@@ -61,21 +61,58 @@ angular.module("ProjectFirmaApp")
             $scope.$apply();//added because the grid would not update after delete on map was used.
         };
 
+        $scope.isSelectedProjectLocation = function(projectLocation) {
+            return $scope.selectedLocationLeafletID == projectLocation.ProjectLocationLeafletID;
+        };
 
-        /*
-         * ToDo for JJV / whomever
-         *
-         *
-         * - Have yet to touch upload GDB yet at all. It might be working already, we just haven't tested at all. From the card "Uploading a GDB
-         * should append features, not delete and replace the features"
-         *
-         * - Highlighting selected grid row and associated feature with same color needs to happen
-         *
-         *
-         * -- TK & SLG -- 2/5/2019 - 5:20 PM
-         * 
-         *
-         */
+        $scope.toggleProjectLocationDetails = function (locationLeafletID) {
+            $scope.selectedLocationLeafletID = locationLeafletID;
+            console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
+            projectFirmaMap.editableFeatureGroup.eachLayer(function (layer) {
+                console.log('toggle layer each');
+                console.log(layer);
+                var currentLocationLeafletID = layer._leaflet_id;
+                if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
+                    layer.setStyle({
+                        color: '#fff200',
+                        fillColor: '#fff200',
+                        weight: 6,
+                        opacity: 0.6
+                    })
+                } else {
+                    if (currentLocationLeafletID < 0) {
+                        layer.setStyle({
+                            color: '#02ffff',
+                            fillColor: '#02ffff',
+                            weight: 3,
+                            opacity: 0.6
+                        });
+                    } else {
+                        layer.setStyle({
+                            color: '#02ffff',
+                            fillColor: '#02ffff',
+                            weight: 3,
+                            opacity: 0.6
+                        });
+                    }
+                }
+            });
+        };
+
+        var bindProjectLocationSelectClickEvent = function (feature, layer) {
+            var leafletID = layer._leaflet_id;
+            console.log('bindProjectLocationSelectClickEvent leafletID: ' + leafletID)
+            layer.on('click', function (f) {
+                if (layer.editing.enabled()) {
+                    return;
+                }
+
+                $scope.$apply(function () {
+                    $scope.selectedLocationLeafletID = leafletID;
+                });
+                $scope.toggleProjectLocationDetails(leafletID);
+            });
+        };
 
 
 
@@ -97,6 +134,7 @@ angular.module("ProjectFirmaApp")
                         else {
                             projectFirmaMap.editableFeatureGroup.addLayer(layer);
                             $scope.AngularModel.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
+                            bindProjectLocationSelectClickEvent(feature, layer);
                             x++;
                         }
                        
@@ -127,6 +165,7 @@ angular.module("ProjectFirmaApp")
                     //var feature = projectFirmaMap.editableFeatureGroup._layers[leafletId].feature;
                     //update grid with new drawing
                     addFeatureToAngularModel(newestGeoJson, leafletId, tempFeature.geometry.type.replace("LineString", "Line"));
+                    bindProjectLocationSelectClickEvent(tempFeature, layer);
 
                     console.log('end of draw:created location jsons: ');
                     console.log($scope.AngularModel.ProjectLocationJsons);
