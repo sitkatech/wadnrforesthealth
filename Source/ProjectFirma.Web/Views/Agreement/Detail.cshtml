@@ -26,9 +26,19 @@
 @using LtInfo.Common.ModalDialog
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @inherits ProjectFirma.Web.Views.Agreement.Detail
+
+@functions {
+    private string GetAgreementGrantAllocationUrl(AgreementGrantAllocation currentAgreementGrantAllocation)
+    {
+        return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.GrantAllocation)));
+    }
+
+}
 
 @section JavascriptAndStylesContent
 {
@@ -186,12 +196,15 @@
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    <h3>
-                        @FieldDefinition.Agreement.GetFieldDefinitionLabel() Projects
-                    </h3>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewAgreementGrantAllocationRelationshipUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
+                    Grant Allocations associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    TO DO WHEN RELATIONSHIP BETWEEN PROJECTS AND AGREEMENTS IS IRONED OUT
+                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.Agreement.AgreementGrantAllocations.OrderBy(aga => aga.GrantAllocation.ProjectName))
+                    {
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
+                        <br />
+                    }
                 </div>
             </div>
         </div>

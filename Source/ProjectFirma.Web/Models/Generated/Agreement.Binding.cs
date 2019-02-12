@@ -24,6 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Agreement()
         {
+            this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.AgreementPeople = new HashSet<AgreementPerson>();
             this.AgreementProjectCodes = new HashSet<AgreementProjectCode>();
         }
@@ -91,13 +92,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementPeople.Any() || AgreementProjectCodes.Any();
+            return AgreementGrantAllocations.Any() || AgreementPeople.Any() || AgreementProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementPerson).Name, typeof(AgreementProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name, typeof(AgreementProjectCode).Name};
 
 
         /// <summary>
@@ -121,6 +122,11 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteChildren(DatabaseEntities dbContext)
         {
+
+            foreach(var x in AgreementGrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
 
             foreach(var x in AgreementPeople.ToList())
             {
@@ -154,6 +160,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
+        public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }

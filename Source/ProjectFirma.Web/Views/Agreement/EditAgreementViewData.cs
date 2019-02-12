@@ -34,7 +34,6 @@ namespace ProjectFirma.Web.Views.Agreement
         public IEnumerable<SelectListItem> AgreementTypeList { get; }
         public IEnumerable<SelectListItem> AgreementStatusList { get; }
         public IEnumerable<SelectListItem> GrantList { get; }
-
         public EditAgreementType EditAgreementType { get; set; }
 
         public int? MOUAgreementTypeID { get; set; }
@@ -49,7 +48,6 @@ namespace ProjectFirma.Web.Views.Agreement
             EditAgreementType = editAgreementType;
             MOUAgreementTypeID = agreementTypesAsList.SingleOrDefault(x => string.Equals(x.AgreementTypeAbbrev, "MOU"))
                 ?.AgreementTypeID;
-
         }
     }
 }

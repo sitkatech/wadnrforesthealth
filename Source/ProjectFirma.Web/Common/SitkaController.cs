@@ -140,7 +140,8 @@ namespace ProjectFirma.Web.Common
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            if ((filterContext.Exception == null || filterContext.ExceptionHandled) && IsSetToAutomaticallyCallEntityFrameworkSaveChangesAttribute(filterContext) && ModelState.IsValid)
+            bool isSetToAutomaticallyCallEntityFrameworkSaveChangesAttribute = IsSetToAutomaticallyCallEntityFrameworkSaveChangesAttribute(filterContext);
+            if ((filterContext.Exception == null || filterContext.ExceptionHandled) && isSetToAutomaticallyCallEntityFrameworkSaveChangesAttribute && ModelState.IsValid)
             {
                 // We have Configuration.AutoDetectChangesEnabled turned off by default instead of it being true out of the box
                 // We only need to detect changes when we know we are saving
