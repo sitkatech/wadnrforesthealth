@@ -297,62 +297,36 @@ namespace ProjectFirma.Web.Controllers
         [AgreementEditAsAdminFeature]
         public PartialViewResult NewAgreementGrantAllocationRelationship(int agreementId)
         {
-            //var agreement = agreementPrimaryKey.EntityObject;
-            //var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
-            //var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == grantAllocationId);
             Check.EnsureNotNull(agreement);
-            //Check.EnsureNotNull(grantAllocation);
-
-            /*
-            // Is there already an association for this Agreement and GrantAllocation? If so, handle it gracefully, and just load it for editing.
-            var agreementGrantAllocation = HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.FirstOrDefault(
-                ag => ag.GrantAllocationID == grantAllocation.GrantAllocationID &&
-                      ag.AgreementID == agreement.AgreementID);
-
-            // If there is not already an allocation, create one
-            // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
-            if (agreementGrantAllocation == null)
-            {
-                // CAUTION: Does this save to the DB automatically?
-                agreementGrantAllocation = new AgreementGrantAllocation(agreement, grantAllocation);
-            }
-            */
 
             var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
             return ViewEditAgreementGrantAllocations(viewModel);
         }
 
-        /*
+        
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult NewAgreementGrantAllocationRelationship(AgreementPrimaryKey agreementPrimaryKey, GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
-        public ActionResult NewAgreementGrantAllocationRelationship(int agreementId, int  grantAllocationId, EditAgreementGrantAllocationsViewModel viewModel)
+        public ActionResult NewAgreementGrantAllocationRelationship(int agreementId, EditAgreementGrantAllocationsViewModel viewModel)
         {
+            // Find relevant agreement
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == grantAllocationId);
             Check.EnsureNotNull(agreement);
-            Check.EnsureNotNull(grantAllocation);
 
             if (!ModelState.IsValid)
             {
                 return ViewEditAgreementGrantAllocations(viewModel);
             }
 
-            var agreementGrantAllocation = HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.FirstOrDefault(ag => ag.GrantAllocationID == viewModel.GrantAllocationId);
-            if (agreementGrantAllocation == null)
-            {
-                agreementGrantAllocation = new AgreementGrantAllocation(agreementId, viewModel.GrantAllocationId);
-            }
-            viewModel.UpdateModel(agreementGrantAllocation);
-            HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.Add(agreementGrantAllocation);
+            viewModel.UpdateModel(agreement);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Grant Allocation '{agreementGrantAllocation.GrantAllocation.ProjectName}' successfully added to this agreement.");
+            int agreementGrantAllocationCount = agreement.AgreementGrantAllocations.Count;
+            SetMessageForDisplay($"{agreementGrantAllocationCount} Grant Allocations successfully saved on Agreement {agreement.AgreementTitle}.");
 
             return new ModalDialogFormJsonResult();
         }
-        */
+        
 
         [AgreementsViewFeature]
         public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(AgreementPrimaryKey agreementPrimaryKey)

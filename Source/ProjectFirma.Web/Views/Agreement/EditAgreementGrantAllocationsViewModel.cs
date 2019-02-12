@@ -26,14 +26,20 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
 
     public class GrantAllocationJson
     {
-        public int GrantAllocationID;
-        public string ProjectName;
+        public int GrantAllocationID { get; set; }
+        public string ProjectName { get; set; }
+
+        // For use by model binder
+        public GrantAllocationJson()
+        {
+        }
 
         public GrantAllocationJson(Models.GrantAllocation grantAllocation)
         {
@@ -45,24 +51,14 @@ namespace ProjectFirma.Web.Views.Agreement
     public class EditAgreementGrantAllocationsViewModel : FormViewModel
     {
         public int AgreementId { get; set; }
-
-        //public int AgreementGrantAllocationId { get; }
-
-        //[DisplayName("Grant Allocations")]
-        //public int GrantAllocationId { get; set; }
-        //public int? GrantId { get; }
-
-        // GrantAllocationIDs for the relevant agreement
-        //public List<int> GrantAllocationIDs { get; set; }
-
-        public List<GrantAllocationJson> GrantAllocationJsons;
-
+        public List<GrantAllocationJson> GrantAllocationJsons { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
         public EditAgreementGrantAllocationsViewModel()
         {
+            GrantAllocationJsons = new List<GrantAllocationJson>();
         }
 
         public EditAgreementGrantAllocationsViewModel(Models.Agreement agreement)
@@ -73,10 +69,16 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public void UpdateModel(Models.Agreement agreement)
         {
-            //agreementGrantAllocation.AgreementID = AgreementId;
-            //agreementGrantAllocation.AgreementGrantAllocationID = AgreementGrantAllocationId;
+            // Clear out existing Agreement Grant Allocations
+            agreement.AgreementGrantAllocations.ToList().ForEach(aga => aga.DeleteFull(HttpRequestStorage.DatabaseEntities));
 
-            //agreementGrantAllocation.GrantAllocationID = AgreementGrantAllocationId;
+            // Create all-new Agreement Grant Allocations
+            var allPossibleGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            List<int> allSelectedGrantAllocationIds = GrantAllocationJsons.Select(gaj => gaj.GrantAllocationID).ToList();
+            var allSelectedGrantAllocations = allPossibleGrantAllocations.Where(ga => allSelectedGrantAllocationIds.Contains(ga.GrantAllocationID)).ToList();
+            agreement.AgreementGrantAllocations = allSelectedGrantAllocations.Select(ga => new AgreementGrantAllocation(agreement, ga)).ToList();
+
+            //HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.Add(agreement.AgreementGrantAllocations);
         }
     }
 }
