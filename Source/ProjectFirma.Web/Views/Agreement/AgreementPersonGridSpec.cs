@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Views.Agreement
             var userHasDeletePermissions = new AgreementDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
             Add("First Name", x => x.Person.GetFirstNameAsUrl(), 125, DhtmlxGridColumnFilterType.Text);
             Add("Last Name", x => x.Person.GetLastNameAsUrl(), 125, DhtmlxGridColumnFilterType.Text);

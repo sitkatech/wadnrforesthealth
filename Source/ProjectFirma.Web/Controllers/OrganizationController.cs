@@ -32,6 +32,7 @@ using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Organization;
 using ProjectFirma.Web.Views.Shared;
 using Detail = ProjectFirma.Web.Views.Organization.Detail;
@@ -144,9 +145,18 @@ namespace ProjectFirma.Web.Controllers
                 .Select(x => x.PerformanceMeasure).Distinct()
                 .OrderBy(x => x.PerformanceMeasureDisplayName)
                 .ToList();
-
-            var viewData = new DetailViewData(CurrentPerson, organization, mapInitJson, hasSpatialData, performanceMeasures, expendituresDirectlyFromOrganizationViewGoogleChartViewData, expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData);
+            var agreements = GetAgreementsByOrgPeople(organization);
+            var viewData = new DetailViewData(CurrentPerson, organization, mapInitJson, hasSpatialData, performanceMeasures, expendituresDirectlyFromOrganizationViewGoogleChartViewData, expendituresReceivedFromOtherOrganizationsViewGoogleChartViewData, agreements.Any(x => x.AgreementFileResourceID.HasValue));
             return RazorView<Detail, DetailViewData>(viewData);
+        }
+
+        [AgreementsViewFullListFeature]
+        public ExcelResult AgreementsExcelDownload(OrganizationPrimaryKey organizationPrimaryKey)
+        {
+            var organization = organizationPrimaryKey.EntityObject;
+            var agreements = GetAgreementsByOrgPeople(organization);
+            var workbookTitle = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} {FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for {organization.DisplayName}";
+            return AgreementController.AgreementsExcelDownloadImpl(agreements, workbookTitle);
         }
 
         private static MapInitJson GetMapInitJson(Organization organization, out bool hasSpatialData, Person person)
@@ -278,6 +288,30 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new ProjectsIncludingLeadImplementingGridSpec(organization, CurrentPerson, false);            
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(organization.GetAllActiveProjects(CurrentPerson), gridSpec);
             return gridJsonNetJObjectResult;
+        }
+
+        [OrganizationViewFeature]
+        public GridJsonNetJObjectResult<Agreement> AgreementOrganizationGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
+        {
+            var organization = organizationPrimaryKey.EntityObject;
+            var agreements = GetAgreementsByOrgPeople(organization);
+            var gridSpec = new AgreementGridSpec( CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue), false, false)
+            {
+                CustomExcelDownloadUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.AgreementsExcelDownload(organizationPrimaryKey))
+            };
+            
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        private static List<Agreement> GetAgreementsByOrgPeople(Organization organization)
+        {
+            var orgContacts = organization.People;
+            var orgContactAgreements =
+                orgContacts.SelectMany(x => x.AgreementPeople).Select(x => x.AgreementID).Distinct();
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements
+                .Where(a => orgContactAgreements.Contains(a.AgreementID)).OrderBy(a => a.AgreementNumber).ToList();
+            return agreements;
         }
 
         [OrganizationViewFeature]

@@ -50,6 +50,7 @@ namespace LtInfo.Common.DhtmlWrappers
         private readonly Func<T, string> _cssClassFunction;
         private readonly Func<T, string> _titleFunction;
         public readonly int GridWidth;
+        public readonly bool HiddenColumnForCsv;
         public readonly DhtmlxGridColumnSortType DhtmlxGridColumnSortType;
         public readonly DhtmlxGridColumnAlignType DhtmlxGridColumnAlignType;
         public readonly DhtmlxGridColumnDataType DhtmlxGridColumnDataType;
@@ -138,8 +139,29 @@ namespace LtInfo.Common.DhtmlWrappers
             DhtmlxGridColumnFormatType dhtmlxGridColumnFormatType, DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType,
             DhtmlxGridColumnSortType dhtmlxGridColumnSortType, DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType,
             DhtmlxGridColumnAggregationType dhtmlxGridColumnAggregationType, Func<T, string> cssClassFunction,
-            Func<T, string> titleFunction)
+            Func<T, string> titleFunction) : this(columnName
+            , gridWidth
+            , dhtmlxGridColumnDataType
+            , dhtmlxGridColumnFormatType
+            , dhtmlxGridColumnAlignType
+            , dhtmlxGridColumnSortType
+            , dhtmlxGridColumnFilterType
+            , dhtmlxGridColumnAggregationType
+            , cssClassFunction
+            , titleFunction
+            , false)
         {
+        }
+
+        public const string HideColumnText = "HideColumnText";
+
+        private ColumnSpec(string columnName, int gridWidth, DhtmlxGridColumnDataType dhtmlxGridColumnDataType,
+            DhtmlxGridColumnFormatType dhtmlxGridColumnFormatType, DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType,
+            DhtmlxGridColumnSortType dhtmlxGridColumnSortType, DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType,
+            DhtmlxGridColumnAggregationType dhtmlxGridColumnAggregationType, Func<T, string> cssClassFunction,
+            Func<T, string> titleFunction, bool hiddenColumnForCsv)
+        {
+            
             ColumnName = columnName;
             DhtmlxGridColumnDataType = dhtmlxGridColumnDataType;
             GridWidth = gridWidth;
@@ -150,7 +172,9 @@ namespace LtInfo.Common.DhtmlWrappers
             DhtmlxGridColumnAlignType = dhtmlxGridColumnAlignType;
             _cssClassFunction = cssClassFunction;
             _titleFunction = titleFunction;
+            HiddenColumnForCsv = hiddenColumnForCsv;
         }
+        
 
         public ColumnSpec(string columnName, Func<T, string> stringValueFunc, int gridWidth,
             DhtmlxGridColumnDataType dhtmlxGridColumnDataType, DhtmlxGridColumnFormatType dhtmlxGridColumnFormatType,
@@ -352,11 +376,11 @@ namespace LtInfo.Common.DhtmlWrappers
             DhtmlxGridColumnAlignType dhtmlxGridColumnAlignType, DhtmlxGridColumnSortType dhtmlxGridColumnSortType,
             DhtmlxGridColumnFilterType dhtmlxGridColumnFilterType,
             DhtmlxGridColumnAggregationType dhtmlxGridColumnAggregationType, Func<T, string> cssClassFunction,
-            Func<T, string> titleFunction)
+            Func<T, string> titleFunction, bool hiddenColumnForCsv)
             : this(
                 columnName, gridWidth, dhtmlxGridColumnDataType, dhtmlxGridColumnFormatType, dhtmlxGridColumnAlignType,
                 dhtmlxGridColumnSortType, dhtmlxGridColumnFilterType, dhtmlxGridColumnAggregationType, cssClassFunction,
-                titleFunction)
+                titleFunction, hiddenColumnForCsv)
         {
             _htmlStringValueFunc = htmlStringValueFunc;
             _funcType = FuncType.HtmlString;
