@@ -104,12 +104,20 @@ namespace ProjectFirma.Web.Models
 
 
         /// <summary>
-        /// Dependent type names of this entity
+        /// Delete just the entity 
+        /// </summary>
+        public void Delete(DatabaseEntities dbContext)
+        {
+            dbContext.AuditLogs.Remove(this);
+        }
+        
+        /// <summary>
+        /// Delete entity plus all children
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
             
-            dbContext.AuditLogs.Remove(this);
+            Delete(dbContext);
         }
 
         [Key]
