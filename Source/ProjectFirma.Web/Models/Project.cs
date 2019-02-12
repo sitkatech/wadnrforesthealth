@@ -157,7 +157,7 @@ namespace ProjectFirma.Web.Models
         }
 
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
-        public bool HasProjectLocationDetail => DetailedLocationToGeoJsonFeatureCollection().Features.Any();
+        public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
 
         private bool _hasCheckedProjectUpdateHistories;
         private List<ProjectUpdateHistory> _projectUpdateHistories;
@@ -373,10 +373,11 @@ namespace ProjectFirma.Web.Models
             return ProjectPriorityAreas.Select(x => x.PriorityArea);
         }
 
-        public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
+        public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()
         {
             return ProjectLocations.ToGeoJsonFeatureCollection();
         }
+
 
         public static FeatureCollection MappedPointsToGeoJsonFeatureCollection(List<Project> projects,
             bool addProjectProperties, bool useDetailedCustomPopup)

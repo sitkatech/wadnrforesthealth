@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditProjectLocationDetailed(IProject project, ProjectLocationDetailViewModel viewModel)
         {
             var mapDivID = $"project_{project.EntityID}_EditDetailedMap";
-            var detailedLocationGeoJsonFeatureCollection = project.DetailedLocationToGeoJsonFeatureCollection();
+            var detailedLocationGeoJsonFeatureCollection = project.AllDetailedLocationsToGeoJsonFeatureCollection();
             var editableLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
@@ -280,7 +280,7 @@ namespace ProjectFirma.Web.Controllers
                             FirmaHelpers.DefaultColorRange[1], 0.8m, LayerInitialVisibility.Show)
                         : null,
                     project.HasProjectLocationDetail
-                        ? new LayerGeoJson("Detailed Location", project.DetailedLocationToGeoJsonFeatureCollection(),
+                        ? new LayerGeoJson("Detailed Location", project.AllDetailedLocationsToGeoJsonFeatureCollection(),
                             FirmaHelpers.DefaultColorRange[1], 0.8m, LayerInitialVisibility.Show)
                         : null
                 }

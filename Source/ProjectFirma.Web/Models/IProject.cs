@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
         DbGeometry GetDefaultBoundingBox();
         IEnumerable<Region> GetProjectRegions();
         IEnumerable<PriorityArea> GetProjectPriorityAreas();
-        GeoJSON.Net.Feature.FeatureCollection DetailedLocationToGeoJsonFeatureCollection();
+        GeoJSON.Net.Feature.FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection();
         GeoJSON.Net.Feature.FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties);        
         
     }

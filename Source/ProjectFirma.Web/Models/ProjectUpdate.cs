@@ -89,7 +89,7 @@ namespace ProjectFirma.Web.Models
 
         public bool HasProjectLocationPoint => ProjectLocationPoint != null;
 
-        public bool HasProjectLocationDetail => DetailedLocationToGeoJsonFeatureCollection().Features.Any();
+        public bool HasProjectLocationDetail => AllDetailedLocationsToGeoJsonFeatureCollection().Features.Any();
 
         public IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes
         {
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectPriorityAreaUpdates.Select(x => x.PriorityArea);
         }
 
-        public FeatureCollection DetailedLocationToGeoJsonFeatureCollection()
+        public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()
         {
             return ProjectUpdateBatch.ProjectLocationUpdates.ToGeoJsonFeatureCollection();
         }
