@@ -377,7 +377,12 @@ namespace ProjectFirma.Web.Models
         {
             return ProjectLocations.ToGeoJsonFeatureCollection();
         }
-
+        public FeatureCollection DetailedLocationsByTypeToGeoJsonFeatureCollection(
+            ProjectLocationType projectLocationType)
+        {
+            return ProjectLocations.Where(x => x.ProjectLocationTypeID == projectLocationType.ProjectLocationTypeID)
+                .ToGeoJsonFeatureCollection();
+        }
 
         public static FeatureCollection MappedPointsToGeoJsonFeatureCollection(List<Project> projects,
             bool addProjectProperties, bool useDetailedCustomPopup)
