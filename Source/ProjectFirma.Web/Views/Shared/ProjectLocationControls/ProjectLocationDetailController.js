@@ -43,6 +43,7 @@ angular.module("ProjectFirmaApp")
 
             var locationJson = createProjectLocationJson(newestGeoJson, -1, featureTypeName, -1, '', newestLeafletID);
             $scope.AngularModel.ProjectLocationJsons.push(locationJson);
+            $scope.toggleProjectLocationDetails(newestLeafletID);
             $scope.$apply();
         };
 
@@ -93,6 +94,10 @@ angular.module("ProjectFirmaApp")
             });
         };
 
+        var getUserFriendlyGeometryType = function(geometry) {
+            return geometry.type.replace("LineString", "Line");
+        };
+
         var bindProjectLocationSelectClickEvent = function (feature, layer) {
             var leafletID = layer._leaflet_id;
             layer.on('click', function (f) {
@@ -104,6 +109,12 @@ angular.module("ProjectFirmaApp")
                     $scope.selectedLocationLeafletID = leafletID;
                 });
                 $scope.toggleProjectLocationDetails(leafletID);
+            });
+        };
+
+        var getProjectLocationFromProjectLocationJsonsByLeafletID = function (leafletID) {
+            return _.find($scope.AngularModel.ProjectLocationJsons, function (pl) {
+                return pl.ProjectLocationLeafletID == leafletID;
             });
         };
 
@@ -154,13 +165,22 @@ angular.module("ProjectFirmaApp")
                     var newestGeoJson = Terraformer.WKT.convert(tempFeature.geometry);
 
                     //update grid with new drawing
-                    addFeatureToAngularModel(newestGeoJson, leafletId, tempFeature.geometry.type.replace("LineString", "Line"));
+                    addFeatureToAngularModel(newestGeoJson, leafletId, getUserFriendlyGeometryType(tempFeature.geometry));
                     bindProjectLocationSelectClickEvent(tempFeature, layer);
 
                 });
 
                 projectFirmaMap.map.on('draw:edited', function (e) {
                     console.log('draw:edited called');
+                    var layers = e.layers;
+                    layers.eachLayer(function (layer) {
+                        var currentLeafletID = layer._leaflet_id;
+                        var projectLocationObject = getProjectLocationFromProjectLocationJsonsByLeafletID(currentLeafletID);
+                        var newGeometry = layer.toGeoJSON().geometry;
+                        projectLocationObject.ProjectLocationGeometryWellKnownText = Terraformer.WKT.convert(newGeometry);
+                        projectLocationObject.ProjectLocationFeatureType = getUserFriendlyGeometryType(newGeometry);
+                    });
+                    $scope.$apply();
                 });
 
                 projectFirmaMap.map.on('draw:deleted',
@@ -168,7 +188,6 @@ angular.module("ProjectFirmaApp")
                         console.log('draw:deleted called');
                         for (var layer in e.layers._layers) {
                             if (e.layers._layers.hasOwnProperty(layer)) {
-                                console.log(layer);
                                 $scope.deleteProjectLocationRowAndRefreshMap(layer);
                             }
                         }
