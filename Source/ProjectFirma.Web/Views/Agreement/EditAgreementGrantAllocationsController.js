@@ -46,60 +46,6 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
         return filteredGrantAllocationSelectList;
     };
 
-    //debugger;
-
-    // This will probably not work yet
-
-    //var peopleForProjectPersonRelationshipType = $scope.AngularViewData.AllPeople;
-
-    //if (projectPersonProjectPersonRelationshipType.IsRequired)
-    //{
-    //    return peopleForProjectPersonRelationshipType;
-    //}
-    //else
-    //{
-    //    var usedPeople = _.filter($scope.AngularModel.ProjectPersonSimples,
-    //        function(f) {
-    //            return f.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
-    //        });
-    //    var usedPersonIDs = _.map(usedPeople,
-    //        function (f) {
-    //            return f.PersonID;
-    //        });
-
-    //    var filteredList = _.filter(peopleForProjectPersonRelationshipType,
-    //        function (f) {
-    //            return !_.includes(usedPersonIDs, f.PersonID);
-    //        });
-
-    //    return filteredList;
-    //}
-
-    //$scope.personIsValidForProjectPersonRelationshipType = function(person, projectPersonProjectPersonRelationshipType) {
-    //    var validProjectPersonRelationshipTypeIDs = _.map($scope.validProjectPersonRelationshipTypes(person.PersonID),
-    //        function(rt) {
-    //            return rt.ProjectPersonRelationshipTypeID;
-    //        });
-    //    return _.includes(validProjectPersonRelationshipTypeIDs, projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID);
-    //};
-
-    //$scope.chosenPeopleForProjectPersonRelationshipType = function(projectPersonProjectPersonRelationshipTypeID) {
-    //    var chosenPersonSimples = _.filter($scope.AngularModel.ProjectPersonSimples,
-    //        function(s) {
-    //            return s.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipTypeID;
-    //        });
-
-    //    var people = _.map(chosenPersonSimples,
-    //        function(s) {
-    //            var person =
-    //                Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllPeople,
-    //                    "PersonID",
-    //                    s.PersonID);
-    //            return person;
-    //        });
-    //    return people;
-    //};
-
     $scope.addGrantAllocation = function (grantAllocationId)
     {
         var allRelevantGrantAllocationJsons = _.filter($scope.AngularViewData.AllPossibleGrantAllocationJsons,
@@ -131,15 +77,6 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
     $scope.isOptionSelected = function (grantAllocation)
     {
         return false;
-        //if (!projectPersonProjectPersonRelationshipType.IsRequired)
-        //{
-        //    return false;
-        //}
-        //return _.any($scope.AngularModel.ProjectPersonSimples,
-        //    function(pos) {
-        //        return pos.PersonID == person.PersonID &&
-        //            pos.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID;
-        //    });
     };
 
     $scope.dropdownDefaultOption = function ()
@@ -148,57 +85,6 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
         return "Add a " + 'Grant Allocation';
     };
 
-    //$scope.validProjectPersonRelationshipTypes = function(personID) {
-    //    var person =
-    //        Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllPeople,
-    //            "PersonID",
-    //            personID);
-
-    //    var valid = person == null ? [] : person.ValidProjectPersonRelationshipTypeSimples;
-    //    return valid;
-    //};
-
-    //$scope.getSelectedPrimaryContactPerson = function (projectPersonProjectPersonRelationshipType) {
-
-    //    var selectedPrimaryContactPersonID =
-    //        Sitka.Methods.findElementInJsonArray($scope.AngularModel.ProjectPersonSimples,
-    //            "ProjectPersonRelationshipTypeID",
-    //            projectPersonProjectPersonRelationshipType.ProjectPersonRelationshipTypeID).PersonID;
-
-    //    var selectedPrimaryContactPerson =
-    //        Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllPeople,
-    //            "PersonID",
-    //            selectedPrimaryContactPersonID);
-
-    //    return selectedPrimaryContactPerson;
-    //}
-
-    //$scope.primaryContactPersonHasNoPrimaryContact = function(projectPersonProjectPersonRelationshipType) {
-    //    return $scope.getSelectedPrimaryContactPerson(projectPersonProjectPersonRelationshipType).PrimaryContactPersonID == null;
-    //}
-
-    //$scope.primaryContactPerson = function (projectPersonProjectPersonRelationshipType) {
-    //    return $scope.getSelectedPrimaryContactPerson(projectPersonProjectPersonRelationshipType);
-    //}
-
-    //$scope.primaryContactPersonPersonDisplayName = function (projectPersonProjectPersonRelationshipType) {
-    //    if (projectPersonProjectPersonRelationshipType != null) {
-    //        return $scope.getSelectedPrimaryContactPerson(projectPersonProjectPersonRelationshipType).PrimaryContactPersonDisplayName;
-    //    }
-
-    //    return "nobody";
-    //}
-
-    //$scope.isPersonSelected = function (personID) {
-    //    var primaryContactPersonId = $scope.AngularModel.PrimaryContactPersonID;
-
-    //    return primaryContactPersonId === personID;
-    //};
-
-    //$scope.primaryContactPersonChange = function (personID) {
-    //    $scope.AngularModel.PrimaryContactPersonID = personID === "null" ? null : parseInt(personID);
-    //}
-
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
@@ -206,5 +92,4 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
     console.log($scope.AngularViewData);
 
     $scope.selectedGrantAllocationID = null;
-    //$scope.selectedPersonID = {};
 });
