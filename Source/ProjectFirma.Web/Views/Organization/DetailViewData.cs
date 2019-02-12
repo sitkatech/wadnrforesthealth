@@ -111,7 +111,11 @@ namespace ProjectFirma.Web.Views.Organization
                     ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} associated with {organization.DisplayName}",
                     SaveFiltersInCookie = true
                 };
-            AgreementOrganizationsGridSpec = new AgreementGridSpec(CurrentPerson, atLeastOneAgreementHasFile, false, false);
+            AgreementOrganizationsGridSpec = new AgreementGridSpec(CurrentPerson, atLeastOneAgreementHasFile, false, false)
+            {
+                CustomExcelDownloadUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.AgreementsExcelDownload(organization.PrimaryKey))
+            };
+
 
             ProjectOrganizationsGridName = "projectOrganizationsFromOrganizationGrid";
             ProjectOrganizationsGridDataUrl =

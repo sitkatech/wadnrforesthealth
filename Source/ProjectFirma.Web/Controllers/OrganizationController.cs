@@ -150,6 +150,15 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
+        [AgreementsViewFullListFeature]
+        public ExcelResult AgreementsExcelDownload(OrganizationPrimaryKey organizationPrimaryKey)
+        {
+            var organization = organizationPrimaryKey.EntityObject;
+            var agreements = GetAgreementsByOrgPeople(organization);
+            var workbookTitle = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} {FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for {organization.DisplayName}";
+            return AgreementController.AgreementsExcelDownloadImpl(agreements, workbookTitle);
+        }
+
         private static MapInitJson GetMapInitJson(Organization organization, out bool hasSpatialData, Person person)
         {
             hasSpatialData = false;
@@ -286,7 +295,11 @@ namespace ProjectFirma.Web.Controllers
         {
             var organization = organizationPrimaryKey.EntityObject;
             var agreements = GetAgreementsByOrgPeople(organization);
-            var gridSpec = new AgreementGridSpec( CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue), false, false);
+            var gridSpec = new AgreementGridSpec( CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue), false, false)
+            {
+                CustomExcelDownloadUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(tc => tc.AgreementsExcelDownload(organizationPrimaryKey))
+            };
+            
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
