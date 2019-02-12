@@ -36,8 +36,6 @@
 </style>
 <div ng-app="ProjectFirmaApp" ng-controller="ProjectLocationDetailController">
     <p>
-        @* //todo: remove HELLO WORLD! *@
-    HELLO WORLD!
     Create a drawing of your @FieldDefinition.Project.GetFieldDefinitionLabel()’s implementation (but not the full area affected by your @FieldDefinition.Project.GetFieldDefinitionLabel()).
     The detailed @FieldDefinition.ProjectLocation.GetFieldDefinitionLabel() information will appear on the @FieldDefinition.Project.GetFieldDefinitionLabel() Fact Sheet and @FieldDefinition.Project.GetFieldDefinitionLabel() summary page.
     <ul>
@@ -223,6 +221,17 @@
     var projectFirmaMap;
     jQuery(document).ready(function()
     {
+        var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
+        if(!Sitka.Methods.isUndefinedNullOrEmpty(saveButton))
+        {
+            saveButton.text("Save");
+        }
+
+        var modalTitle = jQuery(".modal-title");
+        if(!Sitka.Methods.isUndefinedNullOrEmpty(modalTitle))
+        {
+            modalTitle.html("@(string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()))");
+        }
 
     });
 
