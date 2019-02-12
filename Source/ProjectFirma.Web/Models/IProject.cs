@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Models
         IEnumerable<Region> GetProjectRegions();
         IEnumerable<PriorityArea> GetProjectPriorityAreas();
         GeoJSON.Net.Feature.FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection();
+        GeoJSON.Net.Feature.FeatureCollection DetailedLocationsByTypeToGeoJsonFeatureCollection(ProjectLocationType projectLocationType);
         GeoJSON.Net.Feature.FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties);        
         
     }

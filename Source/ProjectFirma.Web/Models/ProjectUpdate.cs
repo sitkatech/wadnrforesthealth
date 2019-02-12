@@ -122,6 +122,13 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectLocationUpdates.ToGeoJsonFeatureCollection();
         }
 
+        public FeatureCollection DetailedLocationsByTypeToGeoJsonFeatureCollection(
+            ProjectLocationType projectLocationType)
+        {
+            return ProjectUpdateBatch.ProjectLocationUpdates.Where(x => x.ProjectLocationTypeID == projectLocationType.ProjectLocationTypeID)
+                .ToGeoJsonFeatureCollection();
+        }
+
         public FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties)
         {
             var featureCollection = new FeatureCollection();
