@@ -109,12 +109,12 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
         //$scope.resetSelectedPersonID(projectPersonProjectPersonRelationshipTypeID);
     };
 
-    //$scope.removeProjectPersonSimple = function(personID, projectPersonProjectPersonRelationshipTypeID) {
-    //    _.remove($scope.AngularModel.ProjectPersonSimples,
-    //        function(pos) {
-    //            return pos.PersonID == personID && pos.ProjectPersonRelationshipTypeID == projectPersonProjectPersonRelationshipTypeID;
-    //        });
-    //};
+    $scope.removeSelectedGrantAllocation = function(grantAllocationID) {
+        _.remove($scope.AngularModel.GrantAllocationJsons,
+            function(pos) {
+                return pos.GrantAllocationID == grantAllocationID;
+            });
+    };
 
     //$scope.resetSelectedPersonID = function(projectPersonProjectPersonRelationshipTypeID) {
     //    $scope.selectedPersonID[projectPersonProjectPersonRelationshipTypeID] = "";
