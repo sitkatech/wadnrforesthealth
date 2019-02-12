@@ -26,9 +26,19 @@
 @using LtInfo.Common.ModalDialog
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @inherits ProjectFirma.Web.Views.Agreement.Detail
+
+@functions {
+    private string GetAgreementGrantAllocationUrl(AgreementGrantAllocation currentAgreementGrantAllocation)
+    {
+        return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.GrantAllocation)));
+    }
+
+}
 
 @section JavascriptAndStylesContent
 {
@@ -198,7 +208,11 @@
                     </span>
                 </div>
                 <div class="panel-body">
-                    TO DO WHEN RELATIONSHIP BETWEEN PROJECTS AND AGREEMENTS IS IRONED OUT
+                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.Agreement.AgreementGrantAllocations.OrderBy(aga => aga.GrantAllocation.ProjectName))
+                    {
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
+                        <br />
+                    }
                 </div>
             </div>
         </div>
