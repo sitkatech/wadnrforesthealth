@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Agreement> AgreementGridJsonData()
         {
             var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
-            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue));
+            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue), true, true);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
             return AgreementsExcelDownloadImpl(agreements, workbookTitle);
         }
 
-        private ExcelResult AgreementsExcelDownloadImpl(List<Agreement> agreements,  string workbookTitle)
+        public static ExcelResult AgreementsExcelDownloadImpl(List<Agreement> agreements,  string workbookTitle)
         {
             var workSheets = new List<IExcelWorkbookSheetDescriptor>();
 

@@ -373,6 +373,15 @@ Sitka.Grid.Class.Grid.prototype.setGridColumns = function (gridColumns) {
 Sitka.Grid.Class.Grid.prototype.getColumnIndexByName = function (columnName) {
     return this._columns.pluck("columnName").indexOf(columnName);
 };
+Sitka.Grid.Class.Grid.prototype.getColumnIndexByTitleContains = function(title) {
+    var columnsNow = this._columns.__wrapped__;
+    for (var i = 0; i < columnsNow.length; i++) {
+        if (columnsNow[i].title.indexOf(title) !== -1) {
+            return i;
+        }
+    }
+    return -1;
+};
 
 Sitka.Grid.Class.Grid.prototype.htmlFilter = function (t, i) {
     dhtmlXGridObject.prototype._in_header_text_filter.call(this, t, i);

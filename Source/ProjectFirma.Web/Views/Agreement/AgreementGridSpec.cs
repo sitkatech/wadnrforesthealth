@@ -34,15 +34,17 @@ namespace ProjectFirma.Web.Views.Agreement
     public class AgreementGridSpec : GridSpec<Models.Agreement>
     {
         public static string AgreementIDHiddenColumn = "AgreementIDHiddenColumnName";
+        public static string DeleteIDHiddenColumnName = "DeleteIDHiddenColumnName";
+        public static string DeleteColumnName = $"<span secret=\"{DeleteIDHiddenColumnName}\" style=\"display: none;\"></span>";
 
-        public AgreementGridSpec(Models.Person currentPerson, bool agreementFileExistsOnAtLeastOne)
+        public AgreementGridSpec(Models.Person currentPerson, bool agreementFileExistsOnAtLeastOne, bool showDeleteColumn, bool showCreateButton)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
             var userHasDeletePermissions = new AgreementDeleteFeature().HasPermissionByPerson(currentPerson);
             var userHasCreatePermissions = new AgreementCreateFeature().HasPermissionByPerson(currentPerson);
-            if (userHasCreatePermissions)
+            if (userHasCreatePermissions && showCreateButton)
             {
                 var contentUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.New());
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Agreement");
@@ -52,9 +54,9 @@ namespace ProjectFirma.Web.Views.Agreement
 
             // hidden column for agreement id for use by JavaScript
             Add(AgreementIDHiddenColumn, x => x.PrimaryKey, 0);
-            if (userHasDeletePermissions)
+            if (userHasDeletePermissions && showDeleteColumn)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true), 30, DhtmlxGridColumnFilterType.None);
+                Add(DeleteColumnName, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, false), 30, DhtmlxGridColumnFilterType.None, true);
             }
 
             if (agreementFileExistsOnAtLeastOne)
