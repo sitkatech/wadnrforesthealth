@@ -32,8 +32,11 @@ namespace ProjectFirma.Web.Models
         {
             if(projectLocationUpdatesToDelete.Any())
             {
-                var projectLocationUpdateIDList = projectLocationUpdatesToDelete.Select(x => x.ProjectLocationUpdateID).ToList();
-                projectLocationUpdates.Where(x => projectLocationUpdateIDList.Contains(x.ProjectLocationUpdateID)).Delete();
+                foreach (var projectLocationUpdateToDelete in projectLocationUpdatesToDelete)
+                {
+                    projectLocationUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
+
             }
         }
 

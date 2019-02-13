@@ -84,7 +84,7 @@ Source code is available upon request via <support@sitkatech.com>.
                         var currentWktName = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationGeometryWellKnownText)\"".replace("0", i);
                         hiddens.push("<input type=\"hidden\" " + currentWktName + " value=\"" + Terraformer.WKT.convert(geoJson.features[i].geometry) + "\" />");
                         var currentName = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationName)\"".replace("0", i);
-                        hiddens.push("<input type=\"hidden\" " + currentName + " value=\"" + geoJson.features[i].properties[jQuery("#SelectedProperty_" + projectLocationStagingId).val()] + i + "\" />");
+                        hiddens.push("<input type=\"hidden\" " + currentName + " value=\"" + geoJson.features[i].properties[jQuery("#SelectedProperty_" + projectLocationStagingId).val()] + ' ' + i + "\" />");
                         var currentTypeID = "name=\"@Html.NameFor(x => x.ProjectLocationJsons[0].ProjectLocationTypeID)\"".replace("0", i);
                         hiddens.push("<input type=\"hidden\" " + currentTypeID + " value=\"5\" />");
                     }

@@ -1057,14 +1057,22 @@ namespace ProjectFirma.Web.Controllers
                 return ViewApproveGisUpload(projectUpdateBatch, viewModel);
             }
             SaveProjectLocationUpdates(viewModel, projectUpdateBatch);
-            DbSpatialHelper.Reduce(new List<IHaveSqlGeometry>(projectUpdateBatch.ProjectLocationUpdates.ToList()));
+            var haveSqlGeometrys = new List<IHaveSqlGeometry>(projectUpdateBatch.ProjectLocationUpdates.ToList());
+            DbSpatialHelper.Reduce(haveSqlGeometrys);
             return new ModalDialogFormJsonResult();
         }
 
         private static void SaveProjectLocationUpdates(ProjectLocationDetailViewModel viewModel, ProjectUpdateBatch projectUpdateBatch)
         {
-            var projectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates.ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdates);
+            var projectLocationUpdatesToDelete = projectUpdateBatch.ProjectLocationUpdates.ToList();
+            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdatesToDelete);
+
+            /*
+            foreach (var projectLocationUpdateToDelete in projectLocationUpdatesToDelete)
+            {
+                projectLocationUpdateToDelete.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
+            */
             projectUpdateBatch.ProjectLocationUpdates.Clear();
 
             if (viewModel.ProjectLocationJsons != null)
@@ -1073,12 +1081,12 @@ namespace ProjectFirma.Web.Controllers
                 {
                     var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
                     var projectLocationType = ProjectLocationType.All.FirstOrDefault(x => x.ProjectLocationTypeID == projectLocationJson.ProjectLocationTypeID);
-                    var projectLocation = new ProjectLocationUpdate(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationJson.ProjectLocationName);
+                    var projectLocationUpdate = new ProjectLocationUpdate(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationJson.ProjectLocationName);
                     if (!string.IsNullOrEmpty(projectLocationJson.ProjectLocationNotes))
                     {
-                        projectLocation.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
+                        //projectLocationUpdate.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
                     }
-                    projectUpdateBatch.ProjectLocationUpdates.Add(projectLocation);
+                    //projectUpdateBatch.ProjectLocationUpdates.Add(projectLocationUpdate);
                 }
             }
         }
