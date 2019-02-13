@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Grant
             if (userHasCreatePermissions)
             {
                 var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.New());
-                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Grant Allocation");
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, "Create a new Grant Allocation");
             }
 
             CustomExcelDownloadUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantsExcelDownload());

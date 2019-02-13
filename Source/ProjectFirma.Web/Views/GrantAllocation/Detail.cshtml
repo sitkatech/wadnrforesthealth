@@ -55,99 +55,73 @@
         margin-right: 0;
     }
 
-    .basicsLayout .row div {
-        padding-left: 0;
-        padding-right: 5px;
-    }
+        .basicsLayout .row div {
+            padding-left: 0;
+            padding-right: 5px;
+        }
 
     .basicsLayout hr {
         margin-top: 5px;
         margin-bottom: 5px;
     }
-
-     
 </style>
 
 <div>
     <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.GrantAllocationsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToGrantAllocationsText</a>
 </div>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Overview</a>
-    </li>
-   
-</ul>
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="col-sm-12 col-md-9 col-lg-10">
-            <h2 class="sectionHeader">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Overview</h2>
-            <div class="row">
-                <div class="col-sm-12" style="padding: 0px;">
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
-                                Basics
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            @{ GrantAllocationBasics.RenderPartialView(Html, ViewDataTyped.GrantAllocationBasicsViewData);}
-                        </div>
-                    </div>
+
+<div class="col-sm-12 col-md-9 col-lg-10">
+
+    <div class="row">
+        <div class="col-sm-12" style="padding: 0px;">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
+                        Basics
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    @{ GrantAllocationBasics.RenderPartialView(Html, ViewDataTyped.GrantAllocationBasicsViewData);}
                 </div>
             </div>
-            
-            
-            <div class="row">
-                <div class="col-sm-12" style="padding: 0px;">
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewGrantAllocationNoteUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
-                                Notes
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="basicsLayout">
-                                
-                                @foreach (var grantAllocationNote in ViewDataTyped.GrantAllocation.GrantAllocationNotes)
-                                {
-                                    <div class="row">
-                                        <strong>@grantAllocationNote.CreatedDate @grantAllocationNote.CreatedByPerson.FullNameFirstLast</strong>
-                                    </div>
-                                    <div class="row">
-                                        @if (grantAllocationNote.GrantAllocationNoteText != "")
-                                        {
-                                            @grantAllocationNote.GrantAllocationNoteText
-                                        }
-                                        else
-                                        {
-                                            <p>No notes available.</p>
-                                        }
-                                    </div>
-                                }
+        </div>
+    </div>
 
+
+    <div class="row">
+        <div class="col-sm-12" style="padding: 0px;">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewGrantAllocationNoteUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
+                        Notes
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="basicsLayout">
+
+                        @foreach (var grantAllocationNote in ViewDataTyped.GrantAllocation.GrantAllocationNotes)
+                        {
+                            <div class="row">
+                                <strong>@grantAllocationNote.CreatedDate @grantAllocationNote.CreatedByPerson.FullNameFirstLast</strong>
                             </div>
-                        </div>
+                            <div class="row">
+                                @if (grantAllocationNote.GrantAllocationNoteText != "")
+                                {
+                                    @grantAllocationNote.GrantAllocationNoteText
+                                }
+                                else
+                                {
+                                    <p>No notes available.</p>
+                                }
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-                jQuery(document)
-                    .ready(function () {
-                        jQuery("#home-tab").click();
-                    });
-            </script>
-
