@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             GrantAllocationSelectListItems = grantAllocationSelectListItems;
             var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            AllPossibleGrantAllocationJsons = databaseEntitiesGrantAllocations.Select(ga => new GrantAllocationJson(ga)).ToList();
+            AllPossibleGrantAllocationJsons = databaseEntitiesGrantAllocations.OrderByDescending(ga => ga.Grant.GrantNumber.Split('-')[0]).Select(ga => new GrantAllocationJson(ga)).ToList();
         }
     }
 }
