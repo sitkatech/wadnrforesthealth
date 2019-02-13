@@ -140,7 +140,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementType">@ViewDataTyped.Agreement.AgreementType.AgreementTypeName</span>
+                                <span id="AgreementType">@(ViewDataTyped.Agreement.AgreementType != null ? ViewDataTyped.Agreement.AgreementType.AgreementTypeName : string.Format("No {0} selected", FieldDefinition.AgreementType.GetFieldDefinitionLabel()))</span>
                             </div>
                         </div>
                         <div class="row">
