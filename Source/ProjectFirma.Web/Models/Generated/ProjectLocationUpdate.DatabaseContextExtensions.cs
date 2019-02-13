@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         {
             if(projectLocationUpdatesToDelete.Any())
             {
-                foreach (var projectLocationUpdateToDelete in projectLocationUpdatesToDelete)
+                foreach (var projectLocationUpdateToDelete in projectLocationUpdatesToDelete.ToList())
                 {
                     projectLocationUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
                 }

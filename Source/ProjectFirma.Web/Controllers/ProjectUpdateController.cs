@@ -1066,13 +1066,6 @@ namespace ProjectFirma.Web.Controllers
         {
             var projectLocationUpdatesToDelete = projectUpdateBatch.ProjectLocationUpdates.ToList();
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdatesToDelete);
-
-            /*
-            foreach (var projectLocationUpdateToDelete in projectLocationUpdatesToDelete)
-            {
-                projectLocationUpdateToDelete.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            }
-            */
             projectUpdateBatch.ProjectLocationUpdates.Clear();
 
             if (viewModel.ProjectLocationJsons != null)
@@ -1084,9 +1077,9 @@ namespace ProjectFirma.Web.Controllers
                     var projectLocationUpdate = new ProjectLocationUpdate(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationJson.ProjectLocationName);
                     if (!string.IsNullOrEmpty(projectLocationJson.ProjectLocationNotes))
                     {
-                        //projectLocationUpdate.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
+                        projectLocationUpdate.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
                     }
-                    //projectUpdateBatch.ProjectLocationUpdates.Add(projectLocationUpdate);
+                    projectUpdateBatch.ProjectLocationUpdates.Add(projectLocationUpdate);
                 }
             }
         }
