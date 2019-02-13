@@ -200,10 +200,11 @@
                     Grant Allocations associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.Agreement.AgreementGrantAllocations.OrderBy(aga => aga.GrantAllocation.ProjectName))
+                    @*Display grant allocations in descending order according to grant number year*@
+                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.Agreement.AgreementGrantAllocations.OrderByDescending(aga => aga.GrantAllocation.Grant.GrantNumber.Split('-')[0]))
                     {
-                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
-                        <br />
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.Grant.GrantNumber @currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
+                        <br/>
                     }
                 </div>
             </div>

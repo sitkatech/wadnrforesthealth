@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Views.Agreement
     {
         public int GrantAllocationID { get; set; }
         public string ProjectName { get; set; }
+        public string GrantNumber { get; set; }
 
         // For use by model binder
         public GrantAllocationJson()
@@ -44,6 +45,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public GrantAllocationJson(Models.GrantAllocation grantAllocation)
         {
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            this.GrantNumber = grantAllocation.Grant.GrantNumber;
             this.ProjectName = grantAllocation.ProjectName;
         }
     }
@@ -63,8 +65,9 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public EditAgreementGrantAllocationsViewModel(Models.Agreement agreement)
         {
-            AgreementId = agreement.AgreementID;            
-            GrantAllocationJsons = agreement.AgreementGrantAllocations.Select(aga => new GrantAllocationJson(aga.GrantAllocation)).ToList();
+            AgreementId = agreement.AgreementID;
+            // Generate GrantAllocationJsons that are ordered descending by first part of GrantNumber 
+            GrantAllocationJsons = agreement.AgreementGrantAllocations.OrderByDescending(aga => aga.GrantAllocation.Grant.GrantNumber.Split('-')[0]).Select(aga => new GrantAllocationJson(aga.GrantAllocation)).ToList();
         }
 
         public void UpdateModel(Models.Agreement agreement)
@@ -77,8 +80,6 @@ namespace ProjectFirma.Web.Views.Agreement
             List<int> allSelectedGrantAllocationIds = GrantAllocationJsons.Select(gaj => gaj.GrantAllocationID).ToList();
             var allSelectedGrantAllocations = allPossibleGrantAllocations.Where(ga => allSelectedGrantAllocationIds.Contains(ga.GrantAllocationID)).ToList();
             agreement.AgreementGrantAllocations = allSelectedGrantAllocations.Select(ga => new AgreementGrantAllocation(agreement, ga)).ToList();
-
-            //HttpRequestStorage.DatabaseEntities.AgreementGrantAllocations.Add(agreement.AgreementGrantAllocations);
         }
     }
 }

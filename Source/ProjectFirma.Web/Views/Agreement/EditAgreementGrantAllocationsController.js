@@ -58,6 +58,7 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
 
         $scope.AngularModel.GrantAllocationJsons.push({
             GrantAllocationID: Number(grantAllocationJson.GrantAllocationID),
+            GrantNumber: grantAllocationJson.GrantNumber,
             ProjectName: grantAllocationJson.ProjectName
         });
         $scope.resetSelectedGrantAllocationID();
