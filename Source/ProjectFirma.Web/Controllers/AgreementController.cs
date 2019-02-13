@@ -73,8 +73,9 @@ namespace ProjectFirma.Web.Controllers
         [AgreementsViewFeature]
         public ViewResult AgreementDetail(AgreementPrimaryKey agreementPrimaryKey)
         {
+            var userHasAgreementAdminPermissions = new FirmaAdminFeature().HasPermissionByPerson(CurrentPerson);
             var agreement = agreementPrimaryKey.EntityObject;
-            var viewData = new Views.Agreement.DetailViewData(CurrentPerson, agreement);
+            var viewData = new Views.Agreement.DetailViewData(CurrentPerson, agreement, userHasAgreementAdminPermissions);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

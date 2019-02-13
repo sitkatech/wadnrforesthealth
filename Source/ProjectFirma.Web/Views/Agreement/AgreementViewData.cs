@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -29,7 +30,6 @@ namespace ProjectFirma.Web.Views.Agreement
     {
         public Models.Agreement Agreement { get; }
         public string EditAgreementUrl { get; set; }
-        public bool UserHasEditAgreementPermissions { get; set; }
 
         public string BackToAgreementsText { get; set; }
 
@@ -41,7 +41,6 @@ namespace ProjectFirma.Web.Views.Agreement
             HtmlPageTitle = agreement.AgreementTitle;
             EntityName = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}";
             EditAgreementUrl = agreement.GetEditUrl();
-            UserHasEditAgreementPermissions = true;
             BackToAgreementsText = "Back to all Agreements";
             AgreementsListUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(c => c.Index());
         }

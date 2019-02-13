@@ -45,29 +45,27 @@ namespace ProjectFirma.Web.Views.Agreement
         public AgreementPersonGridSpec AgreementPersonGridSpec { get; }
         public string AgreementPersonGridName { get; }
         public string AgreementPersonGridDataUrl { get; }
+        public bool UserHasEditAgreementPermissions { get; set; }
         public bool ShowDownload { get; }
         public string NewAgreementGrantAllocationRelationshipUrl { get; }
 
 
-        public DetailViewData(Person currentPerson, Models.Agreement agreement)
+        public DetailViewData(Person currentPerson, Models.Agreement agreement, bool userHasEditAgreementPermissions)
             : base(currentPerson, agreement)
         {
             PageTitle = agreement.AgreementTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} Detail";
+            UserHasEditAgreementPermissions = userHasEditAgreementPermissions;
             // Used for creating file download link, if file available
             ShowDownload = agreement.AgreementFileResource != null;
 
             AgreementPersonGridSpec = new AgreementPersonGridSpec(currentPerson) { ObjectNameSingular = "Agreement Contact", ObjectNamePlural = "Agreement Contacts", SaveFiltersInCookie = true };
-            var hasAgreementEditPermissions =
-                new AgreementEditAsAdminFeature().HasPermissionByPerson(currentPerson);
 
-
-            if (hasAgreementEditPermissions)
+            if (UserHasEditAgreementPermissions)
             {
                 var contentUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.NewAgreementPerson(agreement.AgreementID));
                 AgreementPersonGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Agreement Contact");
                 NewAgreementGrantAllocationRelationshipUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.NewAgreementGrantAllocationRelationship(agreement.AgreementID));
-                //NewAgreementGrantAllocationRelationshipUrl = "https://wadnrforesthealth.localhost.projectfirma.com";
             }
 
             AgreementPersonGridName = "agreementPersonGrid";
