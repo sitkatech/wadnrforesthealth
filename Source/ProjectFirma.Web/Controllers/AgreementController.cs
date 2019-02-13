@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
@@ -81,7 +82,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Agreement> AgreementGridJsonData()
         {
             var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList();
-            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue));
+            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue), true, true);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -94,7 +95,7 @@ namespace ProjectFirma.Web.Controllers
             return AgreementsExcelDownloadImpl(agreements, workbookTitle);
         }
 
-        private ExcelResult AgreementsExcelDownloadImpl(List<Agreement> agreements,  string workbookTitle)
+        public static ExcelResult AgreementsExcelDownloadImpl(List<Agreement> agreements,  string workbookTitle)
         {
             var workSheets = new List<IExcelWorkbookSheetDescriptor>();
 
@@ -251,6 +252,82 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [AgreementEditAsAdminFeature]
+        public PartialViewResult EditAgreementGrantAllocations(AgreementPrimaryKey agreementPrimaryKey)
+        {
+            var agreement = agreementPrimaryKey.EntityObject;
+            var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
+            return ViewEditAgreementGrantAllocations(viewModel);
+        }
+
+        /*
+        [HttpPost]
+        [AgreementEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditAgreementGrantAllocations(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
+        {
+            var agreementGrantAllocation = agreementGrantAllocationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditAgreementGrantAllocations(viewModel);
+            }
+            //viewModel.UpdateModel(agreementGrantAllocation);
+            //return new ModalDialogFormJsonResult();
+        }
+        */
+
+        private PartialViewResult ViewEditAgreementGrantAllocations(EditAgreementGrantAllocationsViewModel viewModel)
+        {
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == viewModel.AgreementId);
+            // Every single possible Grant Allocation we could associate
+            var allPossibleGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            // All the existing associations (if any) this Agreement already has
+            var existingAssociatedGrantAllocationsForAgreement = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocation).ToList();
+            // All the Grant Allocations to show in the picker, for new associations.
+            var grantAllocationsThatCanBeSelectedForNewAssociations = allPossibleGrantAllocations.Except(existingAssociatedGrantAllocationsForAgreement).ToList();
+            // Build select list
+            var selectableGrantAllocations = grantAllocationsThatCanBeSelectedForNewAssociations.OrderBy(x => x.ProjectName).ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);
+
+            var viewData = new EditAgreementGrantAllocationsViewData(selectableGrantAllocations);
+            return RazorPartialView<EditAgreementGrantAllocations, EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [AgreementEditAsAdminFeature]
+        public PartialViewResult NewAgreementGrantAllocationRelationship(int agreementId)
+        {
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
+            Check.EnsureNotNull(agreement);
+
+            var viewModel = new EditAgreementGrantAllocationsViewModel(agreement);
+            return ViewEditAgreementGrantAllocations(viewModel);
+        }
+
+        
+        [HttpPost]
+        [AgreementEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewAgreementGrantAllocationRelationship(int agreementId, EditAgreementGrantAllocationsViewModel viewModel)
+        {
+            // Find relevant agreement
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
+            Check.EnsureNotNull(agreement);
+
+            if (!ModelState.IsValid)
+            {
+                return ViewEditAgreementGrantAllocations(viewModel);
+            }
+
+            viewModel.UpdateModel(agreement);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            int agreementGrantAllocationCount = agreement.AgreementGrantAllocations.Count;
+            SetMessageForDisplay($"{agreementGrantAllocationCount} Grant Allocations successfully saved on Agreement {agreement.AgreementTitle}.");
+
+            return new ModalDialogFormJsonResult();
+        }
+        
+
         [AgreementsViewFeature]
         public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(AgreementPrimaryKey agreementPrimaryKey)
         {
@@ -262,8 +339,6 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<AgreementPerson>(agreementPeople, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
-
 
         [HttpGet]
         [AgreementEditAsAdminFeature]

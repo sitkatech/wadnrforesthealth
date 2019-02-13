@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.TaxonomyTrunk
         {
             if (new TaxonomyTrunkManageFeature().HasPermissionByPerson(person))
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects()), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, !x.HasDependentObjects(), true), 30, DhtmlxGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.TaxonomyTrunk.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.SummaryUrl, a.TaxonomyTrunkName), 240);

@@ -1,0 +1,19 @@
+﻿TableName	ColumnName	ParentTableName	ChildTableName	ConstraintName	ParentColumnName	ChildColumnName
+AggregatedCounter	Id					
+AuditLog	ProjectID					
+AuditLog	RecordID					
+Counter	Id					
+FocusAreaLocationStaging	FocusAreaLocationStaggingID					
+Hash	Id					
+Job	Id					
+Job	StateId					
+JobParameter	Id					
+JobQueue	Id					
+JobQueue	JobId					
+List	Id					
+Server	Id					
+Set	Id					
+State	Id					
+tmpChildrenGrantsInGrantsTab	ChildGrantID					
+tmpChildrenGrantsInGrantsTab	GrantAllocationID					
+tmpWADNROrganizations	OrganizationTypeID					

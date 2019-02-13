@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.Project
             {
                 var userHasDeletePermission = new ProjectDeleteProposalFeature().HasPermission(currentPerson, x).HasPermission;
                 return DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteProposalUrl(),
-                        userHasDeletePermission, true);
+                        userHasDeletePermission, true, true);
             }, 30, DhtmlxGridColumnFilterType.None);
             Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsHyperlinkBootstrap(x.GetProjectCreateUrl(), new ProjectCreateFeature().HasPermission(currentPerson, x).HasPermission), 30, DhtmlxGridColumnFilterType.None);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, DhtmlxGridColumnFilterType.Html);

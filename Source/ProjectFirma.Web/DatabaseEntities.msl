@@ -24,6 +24,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AgreementGrantAllocation">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementGrantAllocation">
+        <MappingFragment StoreEntitySet="AgreementGrantAllocation">
+          <ScalarProperty Name="AgreementGrantAllocationID" ColumnName="AgreementGrantAllocationID" />
+          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="AgreementPerson">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementPerson">
         <MappingFragment StoreEntitySet="AgreementPerson">

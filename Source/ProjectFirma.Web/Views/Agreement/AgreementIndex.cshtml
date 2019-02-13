@@ -24,6 +24,8 @@
 @using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.Views
+@using ProjectFirma.Web.Views.Agreement
 @using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.ProjectCreate
 @inherits ProjectFirma.Web.Views.Agreement.AgreementIndex
@@ -51,7 +53,9 @@
     // <![CDATA[
     jQuery(document).ready(function()
     {
-       
+        var agreementGrid = Sitka.@ViewDataTyped.AgreementGridName;
+        var deleteColIdx = agreementGrid.getColumnIndexByTitleContains('@AgreementGridSpec.DeleteIDHiddenColumnName');
+        agreementGrid.grid.attachEvent("onMouseOver", function (id, ind) { if (ind == deleteColIdx) { return false; } else { return true } });
     });
     // ]]>
 

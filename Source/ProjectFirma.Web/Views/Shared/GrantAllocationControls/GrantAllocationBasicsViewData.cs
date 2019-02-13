@@ -27,12 +27,14 @@ namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
     {
         public Models.GrantAllocation GrantAllocation { get; }
         public bool UserHasProjectBudgetManagePermissions { get; }
+        public string OrganizationDisplayName { get; }
         //public GrantAllocationTaxonomyViewData GrantAllocationTaxonomyViewData { get; }
 
         public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasProjectBudgetManagePermissions, TaxonomyLevel taxonomyLevel)
         {
             GrantAllocation = grantAllocation;
             UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
+            OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
             //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
         }        
     }

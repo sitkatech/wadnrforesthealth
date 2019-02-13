@@ -2,6 +2,7 @@
 <Schema Namespace="ProjectFirma.Web.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ProjectFirmaWebModelsStoreContainer">
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
@@ -129,6 +130,14 @@
     <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Agreement_AgreementID">
+      <End Role="Agreement" EntitySet="Agreement" />
+      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementPerson_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
@@ -828,6 +837,14 @@
     <Property Name="GrantID" Type="int" />
     <Property Name="AgreementStatusID" Type="int" />
     <Property Name="AgreementFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="AgreementGrantAllocation">
+    <Key>
+      <PropertyRef Name="AgreementGrantAllocationID" />
+    </Key>
+    <Property Name="AgreementGrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementPerson">
     <Key>
@@ -2073,6 +2090,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementGrantAllocation_Agreement_AgreementID">
+    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
+    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agreement">
+        <PropertyRef Name="AgreementID" />
+      </Principal>
+      <Dependent Role="AgreementGrantAllocations">
+        <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="AgreementGrantAllocations">
+        <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -25,13 +25,22 @@
 
 @Html.ValidationSummary()
 
+<style type="text/css">
+
+    form .form-group-tight {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+</style>
+
+
 @using (Html.BeginForm())
 {
     <div class="col-xs-11">
         <div class="form-horizontal">
 
-            <div class="form-group">
-                <div class="form-group">
+            <div class="form-group form-group-tight">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementTitle)
                     </div>
@@ -40,7 +49,7 @@
                         @Html.ValidationMessageFor(m => m.AgreementTitle)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementNumber)
                     </div>
@@ -49,7 +58,7 @@
                         @Html.ValidationMessageFor(m => m.AgreementNumber)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.OrganizationID)
                     </div>
@@ -58,7 +67,7 @@
                         @Html.ValidationMessageFor(m => m.OrganizationID)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreemeentStatusID)
                     </div>
@@ -67,7 +76,7 @@
                         @Html.ValidationMessageFor(m => m.AgreemeentStatusID)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementTypeID)
                     </div>
@@ -76,7 +85,7 @@
                         @Html.ValidationMessageFor(m => m.AgreementTypeID)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.GrantID)
                     </div>
@@ -85,7 +94,7 @@
                         @Html.ValidationMessageFor(m => m.GrantID)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementAmount)
                     </div>
@@ -95,7 +104,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementStartDate)
                     </div>
@@ -104,7 +113,7 @@
                         @Html.ValidationMessageFor(m => m.AgreementStartDate)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementEndDate)
                     </div>
@@ -113,7 +122,7 @@
                         @Html.ValidationMessageFor(m => m.AgreementEndDate)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-xs-4 control-label">
                         @Html.LabelWithSugarFor(m => m.AgreementNotes)
                     </div>
@@ -122,7 +131,7 @@
                         @Html.ValidationMessageFor(m => m.AgreementNotes)
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group form-group-tight">
                     <div class="col-sm-3 control-label">
                         @Html.LabelWithSugarFor(x => x.AgreementFileResourceData)
                     </div>
