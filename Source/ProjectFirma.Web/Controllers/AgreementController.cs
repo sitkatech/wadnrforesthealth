@@ -48,9 +48,9 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEdit(EditAgreementViewModel viewModel, EditAgreementType editAgreementType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
+            var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes.OrderBy(x => x.AgreementTypeName);
             var agreementStatuses = HttpRequestStorage.DatabaseEntities.AgreementStatuses;
-            var grants = HttpRequestStorage.DatabaseEntities.Grants;
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.GrantName);
 
             var viewData = new EditAgreementViewData(editAgreementType,
                 organizations,
