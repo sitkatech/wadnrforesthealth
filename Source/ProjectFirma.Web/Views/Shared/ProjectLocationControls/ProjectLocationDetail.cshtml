@@ -34,7 +34,7 @@
         background-color: #FFF67F;
     }
 </style>
-<div ng-app="ProjectFirmaApp" ng-controller="ProjectLocationDetailController">
+<div ng-controller="ProjectLocationDetailController">
     <p>
     Create a drawing of your @FieldDefinition.Project.GetFieldDefinitionLabel()’s implementation (but not the full area affected by your @FieldDefinition.Project.GetFieldDefinitionLabel()).
     The detailed @FieldDefinition.ProjectLocation.GetFieldDefinitionLabel() information will appear on the @FieldDefinition.Project.GetFieldDefinitionLabel() Fact Sheet and @FieldDefinition.Project.GetFieldDefinitionLabel() summary page.
@@ -117,13 +117,15 @@
                     @* location type (ProjectLocationType table) *@
                     <td>
                         <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
-                                data-ng-model="projectLocation.ProjectLocationTypeID" required>
-                            <option value="-1">-- Select type --</option>
-                            <option data-ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
+                                ng-model="projectLocation.ProjectLocationTypeID" required >
+                            <option value="">-- Select type --</option>
+                            <option ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
                                     value="{{projectLocationType.ProjectLocationTypeID}}" ng-selected="projectLocationType.ProjectLocationTypeID === projectLocation.ProjectLocationTypeID">
                                 {{projectLocationType.ProjectLocationTypeDisplayName}}
                             </option>
                         </select>
+                        
+
                         @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>

@@ -48,7 +48,7 @@ angular.module("ProjectFirmaApp")
         var addFeatureToAngularModel = function (newestGeoJson, newestLeafletID, featureTypeName) {
             console.log('addFeatureToAngularModel');
 
-            var locationJson = createProjectLocationJson(newestGeoJson, -1, featureTypeName, -1, '', newestLeafletID);
+            var locationJson = createProjectLocationJson(newestGeoJson, -1, featureTypeName, '', '', newestLeafletID);
             $scope.AngularModel.ProjectLocationJsons.push(locationJson);
             $scope.toggleProjectLocationDetails(newestLeafletID);
             $scope.$apply();

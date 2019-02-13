@@ -38,6 +38,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         /// </summary>
         public ProjectLocationDetailViewModel()
         {
+            ProjectLocationJsons = new List<ProjectLocationJson>();
         }
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocation> projectLocations)
@@ -45,6 +46,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationJsons = projectLocations.Select(x => new ProjectLocationJson(x)).ToList();
         }
 
+        public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocationUpdate> projectLocationUpdates)
+        {
+            ProjectLocationJsons = projectLocationUpdates.Select(x => new ProjectLocationJson(x)).ToList();
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -84,6 +89,17 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
+        }
+
+        public ProjectLocationJson(Models.ProjectLocationUpdate x)
+        {
+            ProjectLocationName = x.ProjectLocationUpdateName;
+            ProjectLocationNotes = x.ProjectLocationUpdateNotes;
+            ProjectLocationTypeID = x.ProjectLocationTypeID;
+            ProjectLocationTypeName = x.ProjectLocationType.ProjectLocationTypeDisplayName;
+            ProjectLocationFeatureType = x.ProjectLocationUpdateGeometry.SpatialTypeName.Replace("LineString", "Line");
+            ProjectLocationID = x.ProjectLocationUpdateID;
+            ProjectLocationGeometryWellKnownText = x.ProjectLocationUpdateGeometry.AsText();
         }
 
         public string ProjectLocationGeometryWellKnownText { get; set; }

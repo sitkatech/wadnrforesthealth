@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public LocationDetailedViewModel()
+        public LocationDetailedViewModel() : base()
         {
         }
 
@@ -45,6 +45,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public LocationDetailedViewModel(string comments)
+        {
+            Comments = comments;
+        }
+
+        public LocationDetailedViewModel(string comments, ICollection<Models.ProjectLocationUpdate> projectLocations) : base(projectLocations)
         {
             Comments = comments;
         }

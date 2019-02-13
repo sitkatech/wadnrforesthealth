@@ -30,6 +30,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
+        public LocationDetailedViewModel() : base()
+        {
+        }
+
         public LocationDetailedViewModel(ICollection<Models.ProjectLocation> projectLocations) : base(projectLocations)
         {
         }

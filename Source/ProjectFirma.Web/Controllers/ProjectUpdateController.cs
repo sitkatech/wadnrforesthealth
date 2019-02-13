@@ -870,7 +870,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
-            var viewModel = new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment);
+            var viewModel = new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment, projectUpdateBatch.ProjectLocationUpdates);
             return ViewLocationDetailed(projectUpdateBatch, viewModel);
         }
 
@@ -1066,14 +1066,21 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates.ToList();
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdates);
             projectUpdateBatch.ProjectLocationUpdates.Clear();
-            //todo save project locations
-            //if (viewModel.WktAndAnnotations != null)
-            //{
-            //    foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
-            //    {
-            //        projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.ProjectLocationNotes));
-            //    }
-            //}
+
+            if (viewModel.ProjectLocationJsons != null)
+            {
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
+                {
+                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
+                    var projectLocationType = ProjectLocationType.All.FirstOrDefault(x => x.ProjectLocationTypeID == projectLocationJson.ProjectLocationTypeID);
+                    var projectLocation = new ProjectLocationUpdate(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationJson.ProjectLocationName);
+                    if (!string.IsNullOrEmpty(projectLocationJson.ProjectLocationNotes))
+                    {
+                        projectLocation.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
+                    }
+                    projectUpdateBatch.ProjectLocationUpdates.Add(projectLocation);
+                }
+            }
         }
 
         #region Region functions
