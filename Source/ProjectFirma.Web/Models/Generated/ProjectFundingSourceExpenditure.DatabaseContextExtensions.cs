@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectFundingSourceExpenditure;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectFundingSourceExpenditure(this IQueryable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, List<int> projectFundingSourceExpenditureIDList)
         {
             if(projectFundingSourceExpenditureIDList.Any())
             {
-                projectFundingSourceExpenditures.Where(x => projectFundingSourceExpenditureIDList.Contains(x.ProjectFundingSourceExpenditureID)).Delete();
+                var projectFundingSourceExpendituresInSourceCollectionToDelete = projectFundingSourceExpenditures.Where(x => projectFundingSourceExpenditureIDList.Contains(x.ProjectFundingSourceExpenditureID));
+                foreach (var projectFundingSourceExpenditureToDelete in projectFundingSourceExpendituresInSourceCollectionToDelete.ToList())
+                {
+                    projectFundingSourceExpenditureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectFundingSourceExpenditure(this IQueryable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, ICollection<ProjectFundingSourceExpenditure> projectFundingSourceExpendituresToDelete)
         {
             if(projectFundingSourceExpendituresToDelete.Any())
             {
                 var projectFundingSourceExpenditureIDList = projectFundingSourceExpendituresToDelete.Select(x => x.ProjectFundingSourceExpenditureID).ToList();
-                projectFundingSourceExpenditures.Where(x => projectFundingSourceExpenditureIDList.Contains(x.ProjectFundingSourceExpenditureID)).Delete();
+                var projectFundingSourceExpendituresToDeleteFromSourceList = projectFundingSourceExpenditures.Where(x => projectFundingSourceExpenditureIDList.Contains(x.ProjectFundingSourceExpenditureID)).ToList();
+
+                foreach (var projectFundingSourceExpenditureToDelete in projectFundingSourceExpendituresToDeleteFromSourceList)
+                {
+                    projectFundingSourceExpenditureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

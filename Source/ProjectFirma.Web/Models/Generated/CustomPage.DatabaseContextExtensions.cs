@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return customPage;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteCustomPage(this IQueryable<CustomPage> customPages, List<int> customPageIDList)
         {
             if(customPageIDList.Any())
             {
-                customPages.Where(x => customPageIDList.Contains(x.CustomPageID)).Delete();
+                var customPagesInSourceCollectionToDelete = customPages.Where(x => customPageIDList.Contains(x.CustomPageID));
+                foreach (var customPageToDelete in customPagesInSourceCollectionToDelete.ToList())
+                {
+                    customPageToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteCustomPage(this IQueryable<CustomPage> customPages, ICollection<CustomPage> customPagesToDelete)
         {
             if(customPagesToDelete.Any())
             {
                 var customPageIDList = customPagesToDelete.Select(x => x.CustomPageID).ToList();
-                customPages.Where(x => customPageIDList.Contains(x.CustomPageID)).Delete();
+                var customPagesToDeleteFromSourceList = customPages.Where(x => customPageIDList.Contains(x.CustomPageID)).ToList();
+
+                foreach (var customPageToDelete in customPagesToDeleteFromSourceList)
+                {
+                    customPageToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

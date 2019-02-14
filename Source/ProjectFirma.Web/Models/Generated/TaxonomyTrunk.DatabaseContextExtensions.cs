@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return taxonomyTrunk;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteTaxonomyTrunk(this IQueryable<TaxonomyTrunk> taxonomyTrunks, List<int> taxonomyTrunkIDList)
         {
             if(taxonomyTrunkIDList.Any())
             {
-                taxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID)).Delete();
+                var taxonomyTrunksInSourceCollectionToDelete = taxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID));
+                foreach (var taxonomyTrunkToDelete in taxonomyTrunksInSourceCollectionToDelete.ToList())
+                {
+                    taxonomyTrunkToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteTaxonomyTrunk(this IQueryable<TaxonomyTrunk> taxonomyTrunks, ICollection<TaxonomyTrunk> taxonomyTrunksToDelete)
         {
             if(taxonomyTrunksToDelete.Any())
             {
                 var taxonomyTrunkIDList = taxonomyTrunksToDelete.Select(x => x.TaxonomyTrunkID).ToList();
-                taxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID)).Delete();
+                var taxonomyTrunksToDeleteFromSourceList = taxonomyTrunks.Where(x => taxonomyTrunkIDList.Contains(x.TaxonomyTrunkID)).ToList();
+
+                foreach (var taxonomyTrunkToDelete in taxonomyTrunksToDeleteFromSourceList)
+                {
+                    taxonomyTrunkToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

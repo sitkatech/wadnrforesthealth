@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return programIndex;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProgramIndex(this IQueryable<ProgramIndex> programIndices, List<int> programIndexIDList)
         {
             if(programIndexIDList.Any())
             {
-                programIndices.Where(x => programIndexIDList.Contains(x.ProgramIndexID)).Delete();
+                var programIndicesInSourceCollectionToDelete = programIndices.Where(x => programIndexIDList.Contains(x.ProgramIndexID));
+                foreach (var programIndexToDelete in programIndicesInSourceCollectionToDelete.ToList())
+                {
+                    programIndexToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProgramIndex(this IQueryable<ProgramIndex> programIndices, ICollection<ProgramIndex> programIndicesToDelete)
         {
             if(programIndicesToDelete.Any())
             {
                 var programIndexIDList = programIndicesToDelete.Select(x => x.ProgramIndexID).ToList();
-                programIndices.Where(x => programIndexIDList.Contains(x.ProgramIndexID)).Delete();
+                var programIndicesToDeleteFromSourceList = programIndices.Where(x => programIndexIDList.Contains(x.ProgramIndexID)).ToList();
+
+                foreach (var programIndexToDelete in programIndicesToDeleteFromSourceList)
+                {
+                    programIndexToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

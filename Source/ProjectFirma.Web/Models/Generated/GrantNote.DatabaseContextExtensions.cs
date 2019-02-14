@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return grantNote;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteGrantNote(this IQueryable<GrantNote> grantNotes, List<int> grantNoteIDList)
         {
             if(grantNoteIDList.Any())
             {
-                grantNotes.Where(x => grantNoteIDList.Contains(x.GrantNoteID)).Delete();
+                var grantNotesInSourceCollectionToDelete = grantNotes.Where(x => grantNoteIDList.Contains(x.GrantNoteID));
+                foreach (var grantNoteToDelete in grantNotesInSourceCollectionToDelete.ToList())
+                {
+                    grantNoteToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteGrantNote(this IQueryable<GrantNote> grantNotes, ICollection<GrantNote> grantNotesToDelete)
         {
             if(grantNotesToDelete.Any())
             {
                 var grantNoteIDList = grantNotesToDelete.Select(x => x.GrantNoteID).ToList();
-                grantNotes.Where(x => grantNoteIDList.Contains(x.GrantNoteID)).Delete();
+                var grantNotesToDeleteFromSourceList = grantNotes.Where(x => grantNoteIDList.Contains(x.GrantNoteID)).ToList();
+
+                foreach (var grantNoteToDelete in grantNotesToDeleteFromSourceList)
+                {
+                    grantNoteToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

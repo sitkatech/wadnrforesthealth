@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectLocationStaging;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectLocationStaging(this IQueryable<ProjectLocationStaging> projectLocationStagings, List<int> projectLocationStagingIDList)
         {
             if(projectLocationStagingIDList.Any())
             {
-                projectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID)).Delete();
+                var projectLocationStagingsInSourceCollectionToDelete = projectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID));
+                foreach (var projectLocationStagingToDelete in projectLocationStagingsInSourceCollectionToDelete.ToList())
+                {
+                    projectLocationStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectLocationStaging(this IQueryable<ProjectLocationStaging> projectLocationStagings, ICollection<ProjectLocationStaging> projectLocationStagingsToDelete)
         {
             if(projectLocationStagingsToDelete.Any())
             {
                 var projectLocationStagingIDList = projectLocationStagingsToDelete.Select(x => x.ProjectLocationStagingID).ToList();
-                projectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID)).Delete();
+                var projectLocationStagingsToDeleteFromSourceList = projectLocationStagings.Where(x => projectLocationStagingIDList.Contains(x.ProjectLocationStagingID)).ToList();
+
+                foreach (var projectLocationStagingToDelete in projectLocationStagingsToDeleteFromSourceList)
+                {
+                    projectLocationStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

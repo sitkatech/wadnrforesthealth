@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return auditLog;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteAuditLog(this IQueryable<AuditLog> auditLogs, List<int> auditLogIDList)
         {
             if(auditLogIDList.Any())
             {
-                auditLogs.Where(x => auditLogIDList.Contains(x.AuditLogID)).Delete();
+                var auditLogsInSourceCollectionToDelete = auditLogs.Where(x => auditLogIDList.Contains(x.AuditLogID));
+                foreach (var auditLogToDelete in auditLogsInSourceCollectionToDelete.ToList())
+                {
+                    auditLogToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteAuditLog(this IQueryable<AuditLog> auditLogs, ICollection<AuditLog> auditLogsToDelete)
         {
             if(auditLogsToDelete.Any())
             {
                 var auditLogIDList = auditLogsToDelete.Select(x => x.AuditLogID).ToList();
-                auditLogs.Where(x => auditLogIDList.Contains(x.AuditLogID)).Delete();
+                var auditLogsToDeleteFromSourceList = auditLogs.Where(x => auditLogIDList.Contains(x.AuditLogID)).ToList();
+
+                foreach (var auditLogToDelete in auditLogsToDeleteFromSourceList)
+                {
+                    auditLogToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

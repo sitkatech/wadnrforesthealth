@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return focusAreaLocationStaging;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, List<int> focusAreaLocationStaggingIDList)
         {
             if(focusAreaLocationStaggingIDList.Any())
             {
-                focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)).Delete();
+                var focusAreaLocationStagingsInSourceCollectionToDelete = focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID));
+                foreach (var focusAreaLocationStagingToDelete in focusAreaLocationStagingsInSourceCollectionToDelete.ToList())
+                {
+                    focusAreaLocationStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, ICollection<FocusAreaLocationStaging> focusAreaLocationStagingsToDelete)
         {
             if(focusAreaLocationStagingsToDelete.Any())
             {
                 var focusAreaLocationStaggingIDList = focusAreaLocationStagingsToDelete.Select(x => x.FocusAreaLocationStaggingID).ToList();
-                focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)).Delete();
+                var focusAreaLocationStagingsToDeleteFromSourceList = focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)).ToList();
+
+                foreach (var focusAreaLocationStagingToDelete in focusAreaLocationStagingsToDeleteFromSourceList)
+                {
+                    focusAreaLocationStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

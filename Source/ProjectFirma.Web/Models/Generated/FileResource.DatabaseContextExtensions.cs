@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return fileResource;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFileResource(this IQueryable<FileResource> fileResources, List<int> fileResourceIDList)
         {
             if(fileResourceIDList.Any())
             {
-                fileResources.Where(x => fileResourceIDList.Contains(x.FileResourceID)).Delete();
+                var fileResourcesInSourceCollectionToDelete = fileResources.Where(x => fileResourceIDList.Contains(x.FileResourceID));
+                foreach (var fileResourceToDelete in fileResourcesInSourceCollectionToDelete.ToList())
+                {
+                    fileResourceToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFileResource(this IQueryable<FileResource> fileResources, ICollection<FileResource> fileResourcesToDelete)
         {
             if(fileResourcesToDelete.Any())
             {
                 var fileResourceIDList = fileResourcesToDelete.Select(x => x.FileResourceID).ToList();
-                fileResources.Where(x => fileResourceIDList.Contains(x.FileResourceID)).Delete();
+                var fileResourcesToDeleteFromSourceList = fileResources.Where(x => fileResourceIDList.Contains(x.FileResourceID)).ToList();
+
+                foreach (var fileResourceToDelete in fileResourcesToDeleteFromSourceList)
+                {
+                    fileResourceToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

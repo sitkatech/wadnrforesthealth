@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectPriorityArea;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectPriorityArea(this IQueryable<ProjectPriorityArea> projectPriorityAreas, List<int> projectPriorityAreaIDList)
         {
             if(projectPriorityAreaIDList.Any())
             {
-                projectPriorityAreas.Where(x => projectPriorityAreaIDList.Contains(x.ProjectPriorityAreaID)).Delete();
+                var projectPriorityAreasInSourceCollectionToDelete = projectPriorityAreas.Where(x => projectPriorityAreaIDList.Contains(x.ProjectPriorityAreaID));
+                foreach (var projectPriorityAreaToDelete in projectPriorityAreasInSourceCollectionToDelete.ToList())
+                {
+                    projectPriorityAreaToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectPriorityArea(this IQueryable<ProjectPriorityArea> projectPriorityAreas, ICollection<ProjectPriorityArea> projectPriorityAreasToDelete)
         {
             if(projectPriorityAreasToDelete.Any())
             {
                 var projectPriorityAreaIDList = projectPriorityAreasToDelete.Select(x => x.ProjectPriorityAreaID).ToList();
-                projectPriorityAreas.Where(x => projectPriorityAreaIDList.Contains(x.ProjectPriorityAreaID)).Delete();
+                var projectPriorityAreasToDeleteFromSourceList = projectPriorityAreas.Where(x => projectPriorityAreaIDList.Contains(x.ProjectPriorityAreaID)).ToList();
+
+                foreach (var projectPriorityAreaToDelete in projectPriorityAreasToDeleteFromSourceList)
+                {
+                    projectPriorityAreaToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

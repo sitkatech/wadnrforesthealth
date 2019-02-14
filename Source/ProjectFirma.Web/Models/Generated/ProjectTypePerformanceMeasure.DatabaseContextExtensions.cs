@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectTypePerformanceMeasure;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectTypePerformanceMeasure(this IQueryable<ProjectTypePerformanceMeasure> projectTypePerformanceMeasures, List<int> projectTypePerformanceMeasureIDList)
         {
             if(projectTypePerformanceMeasureIDList.Any())
             {
-                projectTypePerformanceMeasures.Where(x => projectTypePerformanceMeasureIDList.Contains(x.ProjectTypePerformanceMeasureID)).Delete();
+                var projectTypePerformanceMeasuresInSourceCollectionToDelete = projectTypePerformanceMeasures.Where(x => projectTypePerformanceMeasureIDList.Contains(x.ProjectTypePerformanceMeasureID));
+                foreach (var projectTypePerformanceMeasureToDelete in projectTypePerformanceMeasuresInSourceCollectionToDelete.ToList())
+                {
+                    projectTypePerformanceMeasureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectTypePerformanceMeasure(this IQueryable<ProjectTypePerformanceMeasure> projectTypePerformanceMeasures, ICollection<ProjectTypePerformanceMeasure> projectTypePerformanceMeasuresToDelete)
         {
             if(projectTypePerformanceMeasuresToDelete.Any())
             {
                 var projectTypePerformanceMeasureIDList = projectTypePerformanceMeasuresToDelete.Select(x => x.ProjectTypePerformanceMeasureID).ToList();
-                projectTypePerformanceMeasures.Where(x => projectTypePerformanceMeasureIDList.Contains(x.ProjectTypePerformanceMeasureID)).Delete();
+                var projectTypePerformanceMeasuresToDeleteFromSourceList = projectTypePerformanceMeasures.Where(x => projectTypePerformanceMeasureIDList.Contains(x.ProjectTypePerformanceMeasureID)).ToList();
+
+                foreach (var projectTypePerformanceMeasureToDelete in projectTypePerformanceMeasuresToDeleteFromSourceList)
+                {
+                    projectTypePerformanceMeasureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

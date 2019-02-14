@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return fieldDefinitionData;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFieldDefinitionData(this IQueryable<FieldDefinitionData> fieldDefinitionDatas, List<int> fieldDefinitionDataIDList)
         {
             if(fieldDefinitionDataIDList.Any())
             {
-                fieldDefinitionDatas.Where(x => fieldDefinitionDataIDList.Contains(x.FieldDefinitionDataID)).Delete();
+                var fieldDefinitionDatasInSourceCollectionToDelete = fieldDefinitionDatas.Where(x => fieldDefinitionDataIDList.Contains(x.FieldDefinitionDataID));
+                foreach (var fieldDefinitionDataToDelete in fieldDefinitionDatasInSourceCollectionToDelete.ToList())
+                {
+                    fieldDefinitionDataToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFieldDefinitionData(this IQueryable<FieldDefinitionData> fieldDefinitionDatas, ICollection<FieldDefinitionData> fieldDefinitionDatasToDelete)
         {
             if(fieldDefinitionDatasToDelete.Any())
             {
                 var fieldDefinitionDataIDList = fieldDefinitionDatasToDelete.Select(x => x.FieldDefinitionDataID).ToList();
-                fieldDefinitionDatas.Where(x => fieldDefinitionDataIDList.Contains(x.FieldDefinitionDataID)).Delete();
+                var fieldDefinitionDatasToDeleteFromSourceList = fieldDefinitionDatas.Where(x => fieldDefinitionDataIDList.Contains(x.FieldDefinitionDataID)).ToList();
+
+                foreach (var fieldDefinitionDataToDelete in fieldDefinitionDatasToDeleteFromSourceList)
+                {
+                    fieldDefinitionDataToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
