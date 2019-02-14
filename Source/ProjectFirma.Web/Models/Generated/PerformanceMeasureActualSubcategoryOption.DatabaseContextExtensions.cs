@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureActualSubcategoryOption;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureActualSubcategoryOption(this IQueryable<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions, List<int> performanceMeasureActualSubcategoryOptionIDList)
         {
             if(performanceMeasureActualSubcategoryOptionIDList.Any())
             {
-                performanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID)).Delete();
+                var performanceMeasureActualSubcategoryOptionsInSourceCollectionToDelete = performanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID));
+                foreach (var performanceMeasureActualSubcategoryOptionToDelete in performanceMeasureActualSubcategoryOptionsInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureActualSubcategoryOptionToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureActualSubcategoryOption(this IQueryable<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions, ICollection<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptionsToDelete)
         {
             if(performanceMeasureActualSubcategoryOptionsToDelete.Any())
             {
                 var performanceMeasureActualSubcategoryOptionIDList = performanceMeasureActualSubcategoryOptionsToDelete.Select(x => x.PerformanceMeasureActualSubcategoryOptionID).ToList();
-                performanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID)).Delete();
+                var performanceMeasureActualSubcategoryOptionsToDeleteFromSourceList = performanceMeasureActualSubcategoryOptions.Where(x => performanceMeasureActualSubcategoryOptionIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionID)).ToList();
+
+                foreach (var performanceMeasureActualSubcategoryOptionToDelete in performanceMeasureActualSubcategoryOptionsToDeleteFromSourceList)
+                {
+                    performanceMeasureActualSubcategoryOptionToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

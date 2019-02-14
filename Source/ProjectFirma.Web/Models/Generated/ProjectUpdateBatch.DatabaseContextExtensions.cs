@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectUpdateBatch;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectUpdateBatch(this IQueryable<ProjectUpdateBatch> projectUpdateBatches, List<int> projectUpdateBatchIDList)
         {
             if(projectUpdateBatchIDList.Any())
             {
-                projectUpdateBatches.Where(x => projectUpdateBatchIDList.Contains(x.ProjectUpdateBatchID)).Delete();
+                var projectUpdateBatchesInSourceCollectionToDelete = projectUpdateBatches.Where(x => projectUpdateBatchIDList.Contains(x.ProjectUpdateBatchID));
+                foreach (var projectUpdateBatchToDelete in projectUpdateBatchesInSourceCollectionToDelete.ToList())
+                {
+                    projectUpdateBatchToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectUpdateBatch(this IQueryable<ProjectUpdateBatch> projectUpdateBatches, ICollection<ProjectUpdateBatch> projectUpdateBatchesToDelete)
         {
             if(projectUpdateBatchesToDelete.Any())
             {
                 var projectUpdateBatchIDList = projectUpdateBatchesToDelete.Select(x => x.ProjectUpdateBatchID).ToList();
-                projectUpdateBatches.Where(x => projectUpdateBatchIDList.Contains(x.ProjectUpdateBatchID)).Delete();
+                var projectUpdateBatchesToDeleteFromSourceList = projectUpdateBatches.Where(x => projectUpdateBatchIDList.Contains(x.ProjectUpdateBatchID)).ToList();
+
+                foreach (var projectUpdateBatchToDelete in projectUpdateBatchesToDeleteFromSourceList)
+                {
+                    projectUpdateBatchToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

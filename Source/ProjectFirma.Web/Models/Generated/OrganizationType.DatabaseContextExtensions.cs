@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return organizationType;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteOrganizationType(this IQueryable<OrganizationType> organizationTypes, List<int> organizationTypeIDList)
         {
             if(organizationTypeIDList.Any())
             {
-                organizationTypes.Where(x => organizationTypeIDList.Contains(x.OrganizationTypeID)).Delete();
+                var organizationTypesInSourceCollectionToDelete = organizationTypes.Where(x => organizationTypeIDList.Contains(x.OrganizationTypeID));
+                foreach (var organizationTypeToDelete in organizationTypesInSourceCollectionToDelete.ToList())
+                {
+                    organizationTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteOrganizationType(this IQueryable<OrganizationType> organizationTypes, ICollection<OrganizationType> organizationTypesToDelete)
         {
             if(organizationTypesToDelete.Any())
             {
                 var organizationTypeIDList = organizationTypesToDelete.Select(x => x.OrganizationTypeID).ToList();
-                organizationTypes.Where(x => organizationTypeIDList.Contains(x.OrganizationTypeID)).Delete();
+                var organizationTypesToDeleteFromSourceList = organizationTypes.Where(x => organizationTypeIDList.Contains(x.OrganizationTypeID)).ToList();
+
+                foreach (var organizationTypeToDelete in organizationTypesToDeleteFromSourceList)
+                {
+                    organizationTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

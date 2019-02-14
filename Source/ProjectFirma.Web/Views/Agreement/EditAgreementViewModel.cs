@@ -142,8 +142,8 @@ namespace ProjectFirma.Web.Views.Agreement
             }
             if (!GrantID.HasValue && (mouAgreementType == null || !AgreementTypeID.HasValue || AgreementTypeID != mouAgreementType.AgreementTypeID))
             {
-                yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
-                    $"A Grant must be selected if the Agreement Type is not MOU", m => m.AgreementAmount);
+                yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
+                    $"A Grant must be selected if the Agreement Type is not MOU", m => m.GrantID);
             }
         }
     }

@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectCustomAttributeUpdateValue;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectCustomAttributeUpdateValue(this IQueryable<ProjectCustomAttributeUpdateValue> projectCustomAttributeUpdateValues, List<int> projectCustomAttributeUpdateValueIDList)
         {
             if(projectCustomAttributeUpdateValueIDList.Any())
             {
-                projectCustomAttributeUpdateValues.Where(x => projectCustomAttributeUpdateValueIDList.Contains(x.ProjectCustomAttributeUpdateValueID)).Delete();
+                var projectCustomAttributeUpdateValuesInSourceCollectionToDelete = projectCustomAttributeUpdateValues.Where(x => projectCustomAttributeUpdateValueIDList.Contains(x.ProjectCustomAttributeUpdateValueID));
+                foreach (var projectCustomAttributeUpdateValueToDelete in projectCustomAttributeUpdateValuesInSourceCollectionToDelete.ToList())
+                {
+                    projectCustomAttributeUpdateValueToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectCustomAttributeUpdateValue(this IQueryable<ProjectCustomAttributeUpdateValue> projectCustomAttributeUpdateValues, ICollection<ProjectCustomAttributeUpdateValue> projectCustomAttributeUpdateValuesToDelete)
         {
             if(projectCustomAttributeUpdateValuesToDelete.Any())
             {
                 var projectCustomAttributeUpdateValueIDList = projectCustomAttributeUpdateValuesToDelete.Select(x => x.ProjectCustomAttributeUpdateValueID).ToList();
-                projectCustomAttributeUpdateValues.Where(x => projectCustomAttributeUpdateValueIDList.Contains(x.ProjectCustomAttributeUpdateValueID)).Delete();
+                var projectCustomAttributeUpdateValuesToDeleteFromSourceList = projectCustomAttributeUpdateValues.Where(x => projectCustomAttributeUpdateValueIDList.Contains(x.ProjectCustomAttributeUpdateValueID)).ToList();
+
+                foreach (var projectCustomAttributeUpdateValueToDelete in projectCustomAttributeUpdateValuesToDeleteFromSourceList)
+                {
+                    projectCustomAttributeUpdateValueToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

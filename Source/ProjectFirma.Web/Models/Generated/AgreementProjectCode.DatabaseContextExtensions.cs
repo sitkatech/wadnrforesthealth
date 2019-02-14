@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return agreementProjectCode;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteAgreementProjectCode(this IQueryable<AgreementProjectCode> agreementProjectCodes, List<int> agreementProjectCodeIDList)
         {
             if(agreementProjectCodeIDList.Any())
             {
-                agreementProjectCodes.Where(x => agreementProjectCodeIDList.Contains(x.AgreementProjectCodeID)).Delete();
+                var agreementProjectCodesInSourceCollectionToDelete = agreementProjectCodes.Where(x => agreementProjectCodeIDList.Contains(x.AgreementProjectCodeID));
+                foreach (var agreementProjectCodeToDelete in agreementProjectCodesInSourceCollectionToDelete.ToList())
+                {
+                    agreementProjectCodeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteAgreementProjectCode(this IQueryable<AgreementProjectCode> agreementProjectCodes, ICollection<AgreementProjectCode> agreementProjectCodesToDelete)
         {
             if(agreementProjectCodesToDelete.Any())
             {
                 var agreementProjectCodeIDList = agreementProjectCodesToDelete.Select(x => x.AgreementProjectCodeID).ToList();
-                agreementProjectCodes.Where(x => agreementProjectCodeIDList.Contains(x.AgreementProjectCodeID)).Delete();
+                var agreementProjectCodesToDeleteFromSourceList = agreementProjectCodes.Where(x => agreementProjectCodeIDList.Contains(x.AgreementProjectCodeID)).ToList();
+
+                foreach (var agreementProjectCodeToDelete in agreementProjectCodesToDeleteFromSourceList)
+                {
+                    agreementProjectCodeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

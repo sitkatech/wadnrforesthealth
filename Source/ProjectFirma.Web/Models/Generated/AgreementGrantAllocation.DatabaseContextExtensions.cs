@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return agreementGrantAllocation;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteAgreementGrantAllocation(this IQueryable<AgreementGrantAllocation> agreementGrantAllocations, List<int> agreementGrantAllocationIDList)
         {
             if(agreementGrantAllocationIDList.Any())
             {
-                agreementGrantAllocations.Where(x => agreementGrantAllocationIDList.Contains(x.AgreementGrantAllocationID)).Delete();
+                var agreementGrantAllocationsInSourceCollectionToDelete = agreementGrantAllocations.Where(x => agreementGrantAllocationIDList.Contains(x.AgreementGrantAllocationID));
+                foreach (var agreementGrantAllocationToDelete in agreementGrantAllocationsInSourceCollectionToDelete.ToList())
+                {
+                    agreementGrantAllocationToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteAgreementGrantAllocation(this IQueryable<AgreementGrantAllocation> agreementGrantAllocations, ICollection<AgreementGrantAllocation> agreementGrantAllocationsToDelete)
         {
             if(agreementGrantAllocationsToDelete.Any())
             {
                 var agreementGrantAllocationIDList = agreementGrantAllocationsToDelete.Select(x => x.AgreementGrantAllocationID).ToList();
-                agreementGrantAllocations.Where(x => agreementGrantAllocationIDList.Contains(x.AgreementGrantAllocationID)).Delete();
+                var agreementGrantAllocationsToDeleteFromSourceList = agreementGrantAllocations.Where(x => agreementGrantAllocationIDList.Contains(x.AgreementGrantAllocationID)).ToList();
+
+                foreach (var agreementGrantAllocationToDelete in agreementGrantAllocationsToDeleteFromSourceList)
+                {
+                    agreementGrantAllocationToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

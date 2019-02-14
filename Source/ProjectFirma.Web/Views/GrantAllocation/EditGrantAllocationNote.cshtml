@@ -28,18 +28,15 @@ Source code is available upon request via <support@sitkatech.com>.
 @using (Html.BeginForm())
 {
 <div class="form-horizontal">
-    
+
     <div class="form-group">
-        <div class="form-group">
-            <div class="col-xs-2 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantAllocationNoteText)
-            </div>
-            <div class="col-xs-10">
-                @Html.TextBoxFor(m => m.GrantAllocationNoteText, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantAllocationNoteText)
-            </div>
+        <div class="col-xs-2 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantAllocationNoteText)
         </div>
-        
+        <div class="col-xs-10">
+            @Html.TextBoxFor(m => m.GrantAllocationNoteText, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.GrantAllocationNoteText)
+        </div>
     </div>
 
 </div>

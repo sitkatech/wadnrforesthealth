@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return grantAllocationProjectCode;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteGrantAllocationProjectCode(this IQueryable<GrantAllocationProjectCode> grantAllocationProjectCodes, List<int> grantAllocationProjectCodeIDList)
         {
             if(grantAllocationProjectCodeIDList.Any())
             {
-                grantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID)).Delete();
+                var grantAllocationProjectCodesInSourceCollectionToDelete = grantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID));
+                foreach (var grantAllocationProjectCodeToDelete in grantAllocationProjectCodesInSourceCollectionToDelete.ToList())
+                {
+                    grantAllocationProjectCodeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteGrantAllocationProjectCode(this IQueryable<GrantAllocationProjectCode> grantAllocationProjectCodes, ICollection<GrantAllocationProjectCode> grantAllocationProjectCodesToDelete)
         {
             if(grantAllocationProjectCodesToDelete.Any())
             {
                 var grantAllocationProjectCodeIDList = grantAllocationProjectCodesToDelete.Select(x => x.GrantAllocationProjectCodeID).ToList();
-                grantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID)).Delete();
+                var grantAllocationProjectCodesToDeleteFromSourceList = grantAllocationProjectCodes.Where(x => grantAllocationProjectCodeIDList.Contains(x.GrantAllocationProjectCodeID)).ToList();
+
+                foreach (var grantAllocationProjectCodeToDelete in grantAllocationProjectCodesToDeleteFromSourceList)
+                {
+                    grantAllocationProjectCodeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

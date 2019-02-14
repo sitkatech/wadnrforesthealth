@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return agreementStatus;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteAgreementStatus(this IQueryable<AgreementStatus> agreementStatuses, List<int> agreementStatusIDList)
         {
             if(agreementStatusIDList.Any())
             {
-                agreementStatuses.Where(x => agreementStatusIDList.Contains(x.AgreementStatusID)).Delete();
+                var agreementStatusesInSourceCollectionToDelete = agreementStatuses.Where(x => agreementStatusIDList.Contains(x.AgreementStatusID));
+                foreach (var agreementStatusToDelete in agreementStatusesInSourceCollectionToDelete.ToList())
+                {
+                    agreementStatusToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteAgreementStatus(this IQueryable<AgreementStatus> agreementStatuses, ICollection<AgreementStatus> agreementStatusesToDelete)
         {
             if(agreementStatusesToDelete.Any())
             {
                 var agreementStatusIDList = agreementStatusesToDelete.Select(x => x.AgreementStatusID).ToList();
-                agreementStatuses.Where(x => agreementStatusIDList.Contains(x.AgreementStatusID)).Delete();
+                var agreementStatusesToDeleteFromSourceList = agreementStatuses.Where(x => agreementStatusIDList.Contains(x.AgreementStatusID)).ToList();
+
+                foreach (var agreementStatusToDelete in agreementStatusesToDeleteFromSourceList)
+                {
+                    agreementStatusToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

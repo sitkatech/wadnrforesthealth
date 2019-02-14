@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectExemptReportingYear;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectExemptReportingYear(this IQueryable<ProjectExemptReportingYear> projectExemptReportingYears, List<int> projectExemptReportingYearIDList)
         {
             if(projectExemptReportingYearIDList.Any())
             {
-                projectExemptReportingYears.Where(x => projectExemptReportingYearIDList.Contains(x.ProjectExemptReportingYearID)).Delete();
+                var projectExemptReportingYearsInSourceCollectionToDelete = projectExemptReportingYears.Where(x => projectExemptReportingYearIDList.Contains(x.ProjectExemptReportingYearID));
+                foreach (var projectExemptReportingYearToDelete in projectExemptReportingYearsInSourceCollectionToDelete.ToList())
+                {
+                    projectExemptReportingYearToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectExemptReportingYear(this IQueryable<ProjectExemptReportingYear> projectExemptReportingYears, ICollection<ProjectExemptReportingYear> projectExemptReportingYearsToDelete)
         {
             if(projectExemptReportingYearsToDelete.Any())
             {
                 var projectExemptReportingYearIDList = projectExemptReportingYearsToDelete.Select(x => x.ProjectExemptReportingYearID).ToList();
-                projectExemptReportingYears.Where(x => projectExemptReportingYearIDList.Contains(x.ProjectExemptReportingYearID)).Delete();
+                var projectExemptReportingYearsToDeleteFromSourceList = projectExemptReportingYears.Where(x => projectExemptReportingYearIDList.Contains(x.ProjectExemptReportingYearID)).ToList();
+
+                foreach (var projectExemptReportingYearToDelete in projectExemptReportingYearsToDeleteFromSourceList)
+                {
+                    projectExemptReportingYearToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

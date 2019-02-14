@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectTypeProjectCustomAttributeType;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectTypeProjectCustomAttributeType(this IQueryable<ProjectTypeProjectCustomAttributeType> projectTypeProjectCustomAttributeTypes, List<int> projectTypeProjectCustomAttributeTypeIDList)
         {
             if(projectTypeProjectCustomAttributeTypeIDList.Any())
             {
-                projectTypeProjectCustomAttributeTypes.Where(x => projectTypeProjectCustomAttributeTypeIDList.Contains(x.ProjectTypeProjectCustomAttributeTypeID)).Delete();
+                var projectTypeProjectCustomAttributeTypesInSourceCollectionToDelete = projectTypeProjectCustomAttributeTypes.Where(x => projectTypeProjectCustomAttributeTypeIDList.Contains(x.ProjectTypeProjectCustomAttributeTypeID));
+                foreach (var projectTypeProjectCustomAttributeTypeToDelete in projectTypeProjectCustomAttributeTypesInSourceCollectionToDelete.ToList())
+                {
+                    projectTypeProjectCustomAttributeTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectTypeProjectCustomAttributeType(this IQueryable<ProjectTypeProjectCustomAttributeType> projectTypeProjectCustomAttributeTypes, ICollection<ProjectTypeProjectCustomAttributeType> projectTypeProjectCustomAttributeTypesToDelete)
         {
             if(projectTypeProjectCustomAttributeTypesToDelete.Any())
             {
                 var projectTypeProjectCustomAttributeTypeIDList = projectTypeProjectCustomAttributeTypesToDelete.Select(x => x.ProjectTypeProjectCustomAttributeTypeID).ToList();
-                projectTypeProjectCustomAttributeTypes.Where(x => projectTypeProjectCustomAttributeTypeIDList.Contains(x.ProjectTypeProjectCustomAttributeTypeID)).Delete();
+                var projectTypeProjectCustomAttributeTypesToDeleteFromSourceList = projectTypeProjectCustomAttributeTypes.Where(x => projectTypeProjectCustomAttributeTypeIDList.Contains(x.ProjectTypeProjectCustomAttributeTypeID)).ToList();
+
+                foreach (var projectTypeProjectCustomAttributeTypeToDelete in projectTypeProjectCustomAttributeTypesToDeleteFromSourceList)
+                {
+                    projectTypeProjectCustomAttributeTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

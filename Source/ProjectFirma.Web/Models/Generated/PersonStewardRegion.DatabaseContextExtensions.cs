@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return personStewardRegion;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePersonStewardRegion(this IQueryable<PersonStewardRegion> personStewardRegions, List<int> personStewardRegionIDList)
         {
             if(personStewardRegionIDList.Any())
             {
-                personStewardRegions.Where(x => personStewardRegionIDList.Contains(x.PersonStewardRegionID)).Delete();
+                var personStewardRegionsInSourceCollectionToDelete = personStewardRegions.Where(x => personStewardRegionIDList.Contains(x.PersonStewardRegionID));
+                foreach (var personStewardRegionToDelete in personStewardRegionsInSourceCollectionToDelete.ToList())
+                {
+                    personStewardRegionToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePersonStewardRegion(this IQueryable<PersonStewardRegion> personStewardRegions, ICollection<PersonStewardRegion> personStewardRegionsToDelete)
         {
             if(personStewardRegionsToDelete.Any())
             {
                 var personStewardRegionIDList = personStewardRegionsToDelete.Select(x => x.PersonStewardRegionID).ToList();
-                personStewardRegions.Where(x => personStewardRegionIDList.Contains(x.PersonStewardRegionID)).Delete();
+                var personStewardRegionsToDeleteFromSourceList = personStewardRegions.Where(x => personStewardRegionIDList.Contains(x.PersonStewardRegionID)).ToList();
+
+                foreach (var personStewardRegionToDelete in personStewardRegionsToDeleteFromSourceList)
+                {
+                    personStewardRegionToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

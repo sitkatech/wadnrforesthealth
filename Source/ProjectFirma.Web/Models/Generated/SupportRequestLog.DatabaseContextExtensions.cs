@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return supportRequestLog;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteSupportRequestLog(this IQueryable<SupportRequestLog> supportRequestLogs, List<int> supportRequestLogIDList)
         {
             if(supportRequestLogIDList.Any())
             {
-                supportRequestLogs.Where(x => supportRequestLogIDList.Contains(x.SupportRequestLogID)).Delete();
+                var supportRequestLogsInSourceCollectionToDelete = supportRequestLogs.Where(x => supportRequestLogIDList.Contains(x.SupportRequestLogID));
+                foreach (var supportRequestLogToDelete in supportRequestLogsInSourceCollectionToDelete.ToList())
+                {
+                    supportRequestLogToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteSupportRequestLog(this IQueryable<SupportRequestLog> supportRequestLogs, ICollection<SupportRequestLog> supportRequestLogsToDelete)
         {
             if(supportRequestLogsToDelete.Any())
             {
                 var supportRequestLogIDList = supportRequestLogsToDelete.Select(x => x.SupportRequestLogID).ToList();
-                supportRequestLogs.Where(x => supportRequestLogIDList.Contains(x.SupportRequestLogID)).Delete();
+                var supportRequestLogsToDeleteFromSourceList = supportRequestLogs.Where(x => supportRequestLogIDList.Contains(x.SupportRequestLogID)).ToList();
+
+                foreach (var supportRequestLogToDelete in supportRequestLogsToDeleteFromSourceList)
+                {
+                    supportRequestLogToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureActualUpdate;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureActualUpdate(this IQueryable<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates, List<int> performanceMeasureActualUpdateIDList)
         {
             if(performanceMeasureActualUpdateIDList.Any())
             {
-                performanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID)).Delete();
+                var performanceMeasureActualUpdatesInSourceCollectionToDelete = performanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID));
+                foreach (var performanceMeasureActualUpdateToDelete in performanceMeasureActualUpdatesInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureActualUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureActualUpdate(this IQueryable<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates, ICollection<PerformanceMeasureActualUpdate> performanceMeasureActualUpdatesToDelete)
         {
             if(performanceMeasureActualUpdatesToDelete.Any())
             {
                 var performanceMeasureActualUpdateIDList = performanceMeasureActualUpdatesToDelete.Select(x => x.PerformanceMeasureActualUpdateID).ToList();
-                performanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID)).Delete();
+                var performanceMeasureActualUpdatesToDeleteFromSourceList = performanceMeasureActualUpdates.Where(x => performanceMeasureActualUpdateIDList.Contains(x.PerformanceMeasureActualUpdateID)).ToList();
+
+                foreach (var performanceMeasureActualUpdateToDelete in performanceMeasureActualUpdatesToDeleteFromSourceList)
+                {
+                    performanceMeasureActualUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

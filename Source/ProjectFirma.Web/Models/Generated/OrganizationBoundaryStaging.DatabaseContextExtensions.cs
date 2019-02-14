@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return organizationBoundaryStaging;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteOrganizationBoundaryStaging(this IQueryable<OrganizationBoundaryStaging> organizationBoundaryStagings, List<int> organizationBoundaryStagingIDList)
         {
             if(organizationBoundaryStagingIDList.Any())
             {
-                organizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID)).Delete();
+                var organizationBoundaryStagingsInSourceCollectionToDelete = organizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID));
+                foreach (var organizationBoundaryStagingToDelete in organizationBoundaryStagingsInSourceCollectionToDelete.ToList())
+                {
+                    organizationBoundaryStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteOrganizationBoundaryStaging(this IQueryable<OrganizationBoundaryStaging> organizationBoundaryStagings, ICollection<OrganizationBoundaryStaging> organizationBoundaryStagingsToDelete)
         {
             if(organizationBoundaryStagingsToDelete.Any())
             {
                 var organizationBoundaryStagingIDList = organizationBoundaryStagingsToDelete.Select(x => x.OrganizationBoundaryStagingID).ToList();
-                organizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID)).Delete();
+                var organizationBoundaryStagingsToDeleteFromSourceList = organizationBoundaryStagings.Where(x => organizationBoundaryStagingIDList.Contains(x.OrganizationBoundaryStagingID)).ToList();
+
+                foreach (var organizationBoundaryStagingToDelete in organizationBoundaryStagingsToDeleteFromSourceList)
+                {
+                    organizationBoundaryStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

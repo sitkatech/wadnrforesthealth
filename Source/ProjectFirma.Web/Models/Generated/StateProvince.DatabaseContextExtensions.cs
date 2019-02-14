@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return stateProvince;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteStateProvince(this IQueryable<StateProvince> stateProvinces, List<int> stateProvinceIDList)
         {
             if(stateProvinceIDList.Any())
             {
-                stateProvinces.Where(x => stateProvinceIDList.Contains(x.StateProvinceID)).Delete();
+                var stateProvincesInSourceCollectionToDelete = stateProvinces.Where(x => stateProvinceIDList.Contains(x.StateProvinceID));
+                foreach (var stateProvinceToDelete in stateProvincesInSourceCollectionToDelete.ToList())
+                {
+                    stateProvinceToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteStateProvince(this IQueryable<StateProvince> stateProvinces, ICollection<StateProvince> stateProvincesToDelete)
         {
             if(stateProvincesToDelete.Any())
             {
                 var stateProvinceIDList = stateProvincesToDelete.Select(x => x.StateProvinceID).ToList();
-                stateProvinces.Where(x => stateProvinceIDList.Contains(x.StateProvinceID)).Delete();
+                var stateProvincesToDeleteFromSourceList = stateProvinces.Where(x => stateProvinceIDList.Contains(x.StateProvinceID)).ToList();
+
+                foreach (var stateProvinceToDelete in stateProvincesToDeleteFromSourceList)
+                {
+                    stateProvinceToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

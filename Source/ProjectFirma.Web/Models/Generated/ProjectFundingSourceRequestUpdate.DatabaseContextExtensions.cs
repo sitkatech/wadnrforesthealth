@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectFundingSourceRequestUpdate;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectFundingSourceRequestUpdate(this IQueryable<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates, List<int> projectFundingSourceRequestUpdateIDList)
         {
             if(projectFundingSourceRequestUpdateIDList.Any())
             {
-                projectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID)).Delete();
+                var projectFundingSourceRequestUpdatesInSourceCollectionToDelete = projectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID));
+                foreach (var projectFundingSourceRequestUpdateToDelete in projectFundingSourceRequestUpdatesInSourceCollectionToDelete.ToList())
+                {
+                    projectFundingSourceRequestUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectFundingSourceRequestUpdate(this IQueryable<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates, ICollection<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdatesToDelete)
         {
             if(projectFundingSourceRequestUpdatesToDelete.Any())
             {
                 var projectFundingSourceRequestUpdateIDList = projectFundingSourceRequestUpdatesToDelete.Select(x => x.ProjectFundingSourceRequestUpdateID).ToList();
-                projectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID)).Delete();
+                var projectFundingSourceRequestUpdatesToDeleteFromSourceList = projectFundingSourceRequestUpdates.Where(x => projectFundingSourceRequestUpdateIDList.Contains(x.ProjectFundingSourceRequestUpdateID)).ToList();
+
+                foreach (var projectFundingSourceRequestUpdateToDelete in projectFundingSourceRequestUpdatesToDeleteFromSourceList)
+                {
+                    projectFundingSourceRequestUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
