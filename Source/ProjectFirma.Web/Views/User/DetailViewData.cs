@@ -101,11 +101,11 @@ namespace ProjectFirma.Web.Views.User
             EditContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.EditContact(personToView));
 
             ProjectsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
-                ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
+                ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is an {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
                 : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
 
             AgreementsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
-                ? $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
+                ? $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is an {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
                 : $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
 
             UserAgreementsGridSpec = new AgreementGridSpec(CurrentPerson, atLeastOneAgreementHasFile, false, false)
