@@ -57,6 +57,5 @@ namespace ProjectFirma.Web.Models
         {
             return NewNoteUrlTemplate.ParameterReplace(grant.GrantID);
         }
-
     }
 }

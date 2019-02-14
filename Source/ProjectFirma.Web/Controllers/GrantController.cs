@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.ExcelWorkbookUtilities;
@@ -29,6 +30,7 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared;
+using Z.EntityFramework.Plus;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -92,12 +94,71 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult EditGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey)
+        {
+            var grantNote = grantNotePrimaryKey.EntityObject;
+            var viewModel = new EditGrantNoteViewModel(grantNote);
+            return ViewEditNote(viewModel, EditGrantNoteType.ExistingNote);
+        }
+
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey, EditGrantNoteViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNote(viewModel, EditGrantNoteType.ExistingNote);
+            }
+
+            var grantNote = grantNotePrimaryKey.EntityObject;
+            viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.ExistingNote);
+            HttpRequestStorage.DatabaseEntities.GrantNotes.AddOrUpdate(grantNote);
+            return new ModalDialogFormJsonResult();
+        }
+
 
         private PartialViewResult ViewEditNote(EditGrantNoteViewModel viewModel, EditGrantNoteType editGrantNoteType)
         {
             var viewData = new EditGrantNoteViewData(editGrantNoteType);
             return RazorPartialView<EditGrantNote, EditGrantNoteViewData, EditGrantNoteViewModel>(viewData, viewModel);
         }
+
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantNotePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantNote(grantNotePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantNote(GrantNote grantNote, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNote.CreatedDate}' by '{grantNote.CreatedByPerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantNote = grantNotePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantNote(grantNote, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNote.CreatedDate}' by '{grantNote.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            grantNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+
 
         [HttpGet]
         [GrantEditAsAdminFeature]

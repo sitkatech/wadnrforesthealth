@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -451,6 +451,7 @@
     <Compile Include="Controllers\GrantAllocationController.cs" />
     <Compile Include="Common\ICanDeleteFull.cs" />
     <Compile Include="Models\FederalFundCode.cs" />
+    <Compile Include="Models\GrantNoteModelExtensions.cs" />
     <Compile Include="Models\GrantType.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />

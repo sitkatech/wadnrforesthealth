@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.Grant
         }
 
         public static readonly EditGrantNoteTypeNewNote NewNote = EditGrantNoteTypeNewNote.Instance;
-        public static readonly EditGrantTypeExistingGrant ExistingGrant = EditGrantTypeExistingGrant.Instance;
+        public static readonly EditGrantNoteTypeExistingNote ExistingNote = EditGrantNoteTypeExistingNote.Instance;
     }
 
     public class EditGrantNoteTypeNewNote : EditGrantNoteType
