@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.ExcelWorkbookUtilities;
@@ -99,6 +100,63 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditGrantAllocationNote, EditGrantAllocationNoteViewData, EditGrantAllocationNoteViewModel>(viewData, viewModel);
         }
 
+        [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult EditGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey)
+        {
+            var grantAllocationNote = grantAllocationNotePrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationNoteViewModel(grantAllocationNote);
+            return ViewEditNote(viewModel, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey, EditGrantAllocationNoteViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNote(viewModel, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
+            }
+
+            var grantAllocationNote = grantAllocationNotePrimaryKey.EntityObject;
+            viewModel.UpdateModel(grantAllocationNote, CurrentPerson, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
+            HttpRequestStorage.DatabaseEntities.GrantAllocationNotes.AddOrUpdate(grantAllocationNote);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult DeleteGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationNotePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantAllocationNote(grantAllocationNotePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantAllocationNote(GrantAllocationNote grantAllocationNote, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} created on '{grantAllocationNote.CreatedDate}' by '{grantAllocationNote.CreatedByPerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationNote = grantAllocationNotePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantAllocationNote(grantAllocationNote, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} created on '{grantAllocationNote.CreatedDate}' by '{grantAllocationNote.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            grantAllocationNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
 
         [HttpGet]
         [GrantAllocationEditAsAdminFeature]
