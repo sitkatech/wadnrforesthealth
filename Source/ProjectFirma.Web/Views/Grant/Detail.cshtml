@@ -23,6 +23,7 @@
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Views.Shared.TextControls
 @inherits ProjectFirma.Web.Views.Grant.Detail
 
 @section JavascriptAndStylesContent
@@ -158,29 +159,12 @@
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewGrantNoteUrl, string.Format("Add new note for {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
                                 Notes
                             </h3>
                         </div>
                         <div class="panel-body">
                             <div class="basicsLayout">
-
-                                @foreach (var grantNote in ViewDataTyped.Grant.GrantNotes.OrderByDescending(n => n.CreatedDate))
-                                {
-                                    <div class="row">
-                                        @ModalDialogFormHelper.MakeEditIconLink(grantNote.GetEditNoteUrl(ViewDataTyped.Grant), string.Format("Edit this note created by {0} on {1}", grantNote.CreatedByPerson.FullNameFirstLast, grantNote.CreatedDate), 950, ViewDataTyped.UserHasEditGrantPermissions)
-                                        @ModalDialogFormHelper.MakeDeleteLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue", "Delete").ToString(), grantNote.GetDeleteNoteUrl(ViewDataTyped.Grant), new List<string>(), ViewDataTyped.UserHasEditGrantPermissions)
-                                        @Html.Raw(grantNote.LastUpdatedDate != null ? string.Empty : "<strong>")
-                                        @string.Format("Created on {0} by {1}", grantNote.CreatedDate, grantNote.CreatedByPerson.FullNameFirstLast)
-                                        @Html.Raw(grantNote.LastUpdatedDate != null ? string.Empty : @"</strong>")
-                                        @Html.Raw(grantNote.LastUpdatedDate != null ? string.Format(" -- <strong>Last updated on {0} by {1}</strong>", grantNote.LastUpdatedDate, grantNote.LastUpdatedByPerson.FullNameFirstLast) : string.Empty)
-                                    </div>
-                                    <div class="row">
-                                        @grantNote.GrantNoteText
-                                    </div>
-                                }
-
-
+                                @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
 
                             </div>
                         </div>

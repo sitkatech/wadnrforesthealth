@@ -32,6 +32,7 @@ using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using DetailViewData = ProjectFirma.Web.Views.GrantAllocation.DetailViewData;
+using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -237,7 +238,14 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, taxonomyLevel);
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData);
+            var userHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
+            var grantNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantAllocation.GrantAllocationNotes)),
+                SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationNote(grantAllocationPrimaryKey)),
+                grantAllocation.ProjectName,
+                userHasEditGrantAllocationPermissions);
+
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantNotesViewData);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
     }

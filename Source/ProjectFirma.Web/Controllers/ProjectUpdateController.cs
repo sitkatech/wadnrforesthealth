@@ -2530,7 +2530,7 @@ namespace ProjectFirma.Web.Controllers
             // find the ones that are only in the modified set and add them and mark them as "added"
             externalLinksOriginal.AddRange(
                 externalLinksUpdated.Where(x => !urlsInOriginal.Contains(x.Note))
-                    .Select(x => new EntityNote(x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, HtmlDiffContainer.DisplayCssClassAddedElement))
+                    .Select(x => new EntityNote(x.Created, x.CreatedBy, x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, HtmlDiffContainer.DisplayCssClassAddedElement))
                     .ToList());
             // find the ones only in original and mark them as "deleted"
             externalLinksOriginal.Where(x => urlsOnlyInOriginal.Contains(x.Note)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
@@ -2584,7 +2584,7 @@ namespace ProjectFirma.Web.Controllers
             // find the ones that are only in the original set and add them and mark them as "deleted"
             externalLinksUpdated.AddRange(
                 externalLinksOriginal.Where(x => !urlsInUpdated.Contains(x.Note))
-                    .Select(x => new EntityNote(x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, HtmlDiffContainer.DisplayCssClassDeletedElement))
+                    .Select(x => new EntityNote(x.Created, x.CreatedBy, x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, HtmlDiffContainer.DisplayCssClassDeletedElement))
                     .ToList());
             externalLinksUpdated.Where(x => urlsOnlyInUpdated.Contains(x.Note)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
             return GeneratePartialViewForNotes(externalLinksUpdated);

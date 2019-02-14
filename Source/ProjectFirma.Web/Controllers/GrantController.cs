@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -227,7 +228,13 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
         {
             var grant = grantPrimaryKey.EntityObject;
-            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant);
+            var userHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
+            var grantNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNotes)),
+                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNote(grantPrimaryKey)),
+                grant.GrantName,
+                userHasEditGrantPermissions);
+            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

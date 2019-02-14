@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.Grant
 
         public string BackToGrantsText { get; set; }
 
-        public string GrantsListUrl { get; set; }
+        public string GrantsListUrl { get; set; }    
 
         protected GrantViewData(Person currentPerson, Models.Grant grant) : base(currentPerson, null)
         {

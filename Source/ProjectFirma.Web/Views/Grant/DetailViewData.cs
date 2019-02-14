@@ -20,18 +20,22 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using LtInfo.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Grant
 {
     public class DetailViewData : GrantViewData
     {
         public string NewGrantNoteUrl { get; set; }
-        public DetailViewData(Person currentPerson, Models.Grant grant)
+        public EntityNotesViewData GrantNotesViewData { get; set; }
+
+        public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData)
             : base(currentPerson, grant)
         {
             PageTitle = grant.GrantTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} Detail";
             NewGrantNoteUrl = grant.GetNewNoteUrl();
+            GrantNotesViewData = grantNotesViewData;
         }
     }
 }
