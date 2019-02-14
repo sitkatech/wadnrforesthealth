@@ -892,5 +892,15 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
                 return File(content, "application/pdf", fileName);
             }
         }
+
+        [HttpGet]
+        public ActionResult GetCostShareAgreementPdf(string fileName)
+        {
+            string filePath = "~/Content/files/" + fileName;
+            Response.AddHeader("Content-Disposition", "inline; filename=" + fileName);
+            
+            return File(filePath, "application/pdf");
+        }
+
     }
 }
