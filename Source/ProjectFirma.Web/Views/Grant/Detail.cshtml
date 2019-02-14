@@ -170,10 +170,10 @@
                                     <div class="row">
                                         @ModalDialogFormHelper.MakeEditIconLink(grantNote.GetEditNoteUrl(ViewDataTyped.Grant), string.Format("Edit this note created by {0} on {1}", grantNote.CreatedByPerson.FullNameFirstLast, grantNote.CreatedDate), 950, ViewDataTyped.UserHasEditGrantPermissions)
                                         @ModalDialogFormHelper.MakeDeleteLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash gi-1x blue", "Delete").ToString(), grantNote.GetDeleteNoteUrl(ViewDataTyped.Grant), new List<string>(), ViewDataTyped.UserHasEditGrantPermissions)
-                                        @(grantNote.LastUpdatedDate != null ? @"<strong>" : string.Empty)
+                                        @Html.Raw(grantNote.LastUpdatedDate != null ? string.Empty : "<strong>")
                                         @string.Format("Created on {0} by {1}", grantNote.CreatedDate, grantNote.CreatedByPerson.FullNameFirstLast)
-                                        @(grantNote.LastUpdatedDate != null ? @"</strong>" : string.Empty)
-                                        @(grantNote.LastUpdatedDate != null ? string.Format(" -- <strong>Last updated on {0} by {1}</strong>", grantNote.LastUpdatedDate, grantNote.LastUpdatedByPerson.FullNameFirstLast) : string.Empty)
+                                        @Html.Raw(grantNote.LastUpdatedDate != null ? string.Empty : @"</strong>")
+                                        @Html.Raw(grantNote.LastUpdatedDate != null ? string.Format(" -- <strong>Last updated on {0} by {1}</strong>", grantNote.LastUpdatedDate, grantNote.LastUpdatedByPerson.FullNameFirstLast) : string.Empty)
                                     </div>
                                     <div class="row">
                                         @grantNote.GrantNoteText

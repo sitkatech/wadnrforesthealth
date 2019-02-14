@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantEditAsAdminFeature]
-        public PartialViewResult EditGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey)
+        public PartialViewResult EditGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey)
         {
             var grantNote = grantNotePrimaryKey.EntityObject;
             var viewModel = new EditGrantNoteViewModel(grantNote);
@@ -106,7 +106,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [GrantEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey, EditGrantNoteViewModel viewModel)
+        public ActionResult EditGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey, EditGrantNoteViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantEditAsAdminFeature]
-        public PartialViewResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey)
+        public PartialViewResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantNotePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantNote(grantNotePrimaryKey.EntityObject, viewModel);
@@ -144,7 +144,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [GrantEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKey, GrantNotePrimaryKey grantNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var grantNote = grantNotePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
