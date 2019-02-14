@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectExternalLink;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectExternalLink(this IQueryable<ProjectExternalLink> projectExternalLinks, List<int> projectExternalLinkIDList)
         {
             if(projectExternalLinkIDList.Any())
             {
-                projectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID)).Delete();
+                var projectExternalLinksInSourceCollectionToDelete = projectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID));
+                foreach (var projectExternalLinkToDelete in projectExternalLinksInSourceCollectionToDelete.ToList())
+                {
+                    projectExternalLinkToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectExternalLink(this IQueryable<ProjectExternalLink> projectExternalLinks, ICollection<ProjectExternalLink> projectExternalLinksToDelete)
         {
             if(projectExternalLinksToDelete.Any())
             {
                 var projectExternalLinkIDList = projectExternalLinksToDelete.Select(x => x.ProjectExternalLinkID).ToList();
-                projectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID)).Delete();
+                var projectExternalLinksToDeleteFromSourceList = projectExternalLinks.Where(x => projectExternalLinkIDList.Contains(x.ProjectExternalLinkID)).ToList();
+
+                foreach (var projectExternalLinkToDelete in projectExternalLinksToDeleteFromSourceList)
+                {
+                    projectExternalLinkToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

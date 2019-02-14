@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectFundingSourceRequest;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectFundingSourceRequest(this IQueryable<ProjectFundingSourceRequest> projectFundingSourceRequests, List<int> projectFundingSourceRequestIDList)
         {
             if(projectFundingSourceRequestIDList.Any())
             {
-                projectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID)).Delete();
+                var projectFundingSourceRequestsInSourceCollectionToDelete = projectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID));
+                foreach (var projectFundingSourceRequestToDelete in projectFundingSourceRequestsInSourceCollectionToDelete.ToList())
+                {
+                    projectFundingSourceRequestToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectFundingSourceRequest(this IQueryable<ProjectFundingSourceRequest> projectFundingSourceRequests, ICollection<ProjectFundingSourceRequest> projectFundingSourceRequestsToDelete)
         {
             if(projectFundingSourceRequestsToDelete.Any())
             {
                 var projectFundingSourceRequestIDList = projectFundingSourceRequestsToDelete.Select(x => x.ProjectFundingSourceRequestID).ToList();
-                projectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID)).Delete();
+                var projectFundingSourceRequestsToDeleteFromSourceList = projectFundingSourceRequests.Where(x => projectFundingSourceRequestIDList.Contains(x.ProjectFundingSourceRequestID)).ToList();
+
+                foreach (var projectFundingSourceRequestToDelete in projectFundingSourceRequestsToDeleteFromSourceList)
+                {
+                    projectFundingSourceRequestToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

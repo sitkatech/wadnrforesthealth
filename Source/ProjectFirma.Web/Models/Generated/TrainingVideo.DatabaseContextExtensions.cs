@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return trainingVideo;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteTrainingVideo(this IQueryable<TrainingVideo> trainingVideos, List<int> trainingVideoIDList)
         {
             if(trainingVideoIDList.Any())
             {
-                trainingVideos.Where(x => trainingVideoIDList.Contains(x.TrainingVideoID)).Delete();
+                var trainingVideosInSourceCollectionToDelete = trainingVideos.Where(x => trainingVideoIDList.Contains(x.TrainingVideoID));
+                foreach (var trainingVideoToDelete in trainingVideosInSourceCollectionToDelete.ToList())
+                {
+                    trainingVideoToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteTrainingVideo(this IQueryable<TrainingVideo> trainingVideos, ICollection<TrainingVideo> trainingVideosToDelete)
         {
             if(trainingVideosToDelete.Any())
             {
                 var trainingVideoIDList = trainingVideosToDelete.Select(x => x.TrainingVideoID).ToList();
-                trainingVideos.Where(x => trainingVideoIDList.Contains(x.TrainingVideoID)).Delete();
+                var trainingVideosToDeleteFromSourceList = trainingVideos.Where(x => trainingVideoIDList.Contains(x.TrainingVideoID)).ToList();
+
+                foreach (var trainingVideoToDelete in trainingVideosToDeleteFromSourceList)
+                {
+                    trainingVideoToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

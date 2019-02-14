@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasure;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasure(this IQueryable<PerformanceMeasure> performanceMeasures, List<int> performanceMeasureIDList)
         {
             if(performanceMeasureIDList.Any())
             {
-                performanceMeasures.Where(x => performanceMeasureIDList.Contains(x.PerformanceMeasureID)).Delete();
+                var performanceMeasuresInSourceCollectionToDelete = performanceMeasures.Where(x => performanceMeasureIDList.Contains(x.PerformanceMeasureID));
+                foreach (var performanceMeasureToDelete in performanceMeasuresInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasure(this IQueryable<PerformanceMeasure> performanceMeasures, ICollection<PerformanceMeasure> performanceMeasuresToDelete)
         {
             if(performanceMeasuresToDelete.Any())
             {
                 var performanceMeasureIDList = performanceMeasuresToDelete.Select(x => x.PerformanceMeasureID).ToList();
-                performanceMeasures.Where(x => performanceMeasureIDList.Contains(x.PerformanceMeasureID)).Delete();
+                var performanceMeasuresToDeleteFromSourceList = performanceMeasures.Where(x => performanceMeasureIDList.Contains(x.PerformanceMeasureID)).ToList();
+
+                foreach (var performanceMeasureToDelete in performanceMeasuresToDeleteFromSourceList)
+                {
+                    performanceMeasureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

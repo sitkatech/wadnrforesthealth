@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureActual;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureActual(this IQueryable<PerformanceMeasureActual> performanceMeasureActuals, List<int> performanceMeasureActualIDList)
         {
             if(performanceMeasureActualIDList.Any())
             {
-                performanceMeasureActuals.Where(x => performanceMeasureActualIDList.Contains(x.PerformanceMeasureActualID)).Delete();
+                var performanceMeasureActualsInSourceCollectionToDelete = performanceMeasureActuals.Where(x => performanceMeasureActualIDList.Contains(x.PerformanceMeasureActualID));
+                foreach (var performanceMeasureActualToDelete in performanceMeasureActualsInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureActualToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureActual(this IQueryable<PerformanceMeasureActual> performanceMeasureActuals, ICollection<PerformanceMeasureActual> performanceMeasureActualsToDelete)
         {
             if(performanceMeasureActualsToDelete.Any())
             {
                 var performanceMeasureActualIDList = performanceMeasureActualsToDelete.Select(x => x.PerformanceMeasureActualID).ToList();
-                performanceMeasureActuals.Where(x => performanceMeasureActualIDList.Contains(x.PerformanceMeasureActualID)).Delete();
+                var performanceMeasureActualsToDeleteFromSourceList = performanceMeasureActuals.Where(x => performanceMeasureActualIDList.Contains(x.PerformanceMeasureActualID)).ToList();
+
+                foreach (var performanceMeasureActualToDelete in performanceMeasureActualsToDeleteFromSourceList)
+                {
+                    performanceMeasureActualToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

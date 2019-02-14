@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return focusArea;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFocusArea(this IQueryable<FocusArea> focusAreas, List<int> focusAreaIDList)
         {
             if(focusAreaIDList.Any())
             {
-                focusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID)).Delete();
+                var focusAreasInSourceCollectionToDelete = focusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID));
+                foreach (var focusAreaToDelete in focusAreasInSourceCollectionToDelete.ToList())
+                {
+                    focusAreaToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFocusArea(this IQueryable<FocusArea> focusAreas, ICollection<FocusArea> focusAreasToDelete)
         {
             if(focusAreasToDelete.Any())
             {
                 var focusAreaIDList = focusAreasToDelete.Select(x => x.FocusAreaID).ToList();
-                focusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID)).Delete();
+                var focusAreasToDeleteFromSourceList = focusAreas.Where(x => focusAreaIDList.Contains(x.FocusAreaID)).ToList();
+
+                foreach (var focusAreaToDelete in focusAreasToDeleteFromSourceList)
+                {
+                    focusAreaToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

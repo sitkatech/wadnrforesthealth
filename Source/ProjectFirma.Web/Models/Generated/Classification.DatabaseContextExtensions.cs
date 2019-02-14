@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return classification;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteClassification(this IQueryable<Classification> classifications, List<int> classificationIDList)
         {
             if(classificationIDList.Any())
             {
-                classifications.Where(x => classificationIDList.Contains(x.ClassificationID)).Delete();
+                var classificationsInSourceCollectionToDelete = classifications.Where(x => classificationIDList.Contains(x.ClassificationID));
+                foreach (var classificationToDelete in classificationsInSourceCollectionToDelete.ToList())
+                {
+                    classificationToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteClassification(this IQueryable<Classification> classifications, ICollection<Classification> classificationsToDelete)
         {
             if(classificationsToDelete.Any())
             {
                 var classificationIDList = classificationsToDelete.Select(x => x.ClassificationID).ToList();
-                classifications.Where(x => classificationIDList.Contains(x.ClassificationID)).Delete();
+                var classificationsToDeleteFromSourceList = classifications.Where(x => classificationIDList.Contains(x.ClassificationID)).ToList();
+
+                foreach (var classificationToDelete in classificationsToDeleteFromSourceList)
+                {
+                    classificationToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

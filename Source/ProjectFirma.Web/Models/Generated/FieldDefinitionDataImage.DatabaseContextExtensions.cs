@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return fieldDefinitionDataImage;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFieldDefinitionDataImage(this IQueryable<FieldDefinitionDataImage> fieldDefinitionDataImages, List<int> fieldDefinitionDataImageIDList)
         {
             if(fieldDefinitionDataImageIDList.Any())
             {
-                fieldDefinitionDataImages.Where(x => fieldDefinitionDataImageIDList.Contains(x.FieldDefinitionDataImageID)).Delete();
+                var fieldDefinitionDataImagesInSourceCollectionToDelete = fieldDefinitionDataImages.Where(x => fieldDefinitionDataImageIDList.Contains(x.FieldDefinitionDataImageID));
+                foreach (var fieldDefinitionDataImageToDelete in fieldDefinitionDataImagesInSourceCollectionToDelete.ToList())
+                {
+                    fieldDefinitionDataImageToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFieldDefinitionDataImage(this IQueryable<FieldDefinitionDataImage> fieldDefinitionDataImages, ICollection<FieldDefinitionDataImage> fieldDefinitionDataImagesToDelete)
         {
             if(fieldDefinitionDataImagesToDelete.Any())
             {
                 var fieldDefinitionDataImageIDList = fieldDefinitionDataImagesToDelete.Select(x => x.FieldDefinitionDataImageID).ToList();
-                fieldDefinitionDataImages.Where(x => fieldDefinitionDataImageIDList.Contains(x.FieldDefinitionDataImageID)).Delete();
+                var fieldDefinitionDataImagesToDeleteFromSourceList = fieldDefinitionDataImages.Where(x => fieldDefinitionDataImageIDList.Contains(x.FieldDefinitionDataImageID)).ToList();
+
+                foreach (var fieldDefinitionDataImageToDelete in fieldDefinitionDataImagesToDeleteFromSourceList)
+                {
+                    fieldDefinitionDataImageToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

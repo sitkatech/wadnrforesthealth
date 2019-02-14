@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectUpdate;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectUpdate(this IQueryable<ProjectUpdate> projectUpdates, List<int> projectUpdateIDList)
         {
             if(projectUpdateIDList.Any())
             {
-                projectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID)).Delete();
+                var projectUpdatesInSourceCollectionToDelete = projectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID));
+                foreach (var projectUpdateToDelete in projectUpdatesInSourceCollectionToDelete.ToList())
+                {
+                    projectUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectUpdate(this IQueryable<ProjectUpdate> projectUpdates, ICollection<ProjectUpdate> projectUpdatesToDelete)
         {
             if(projectUpdatesToDelete.Any())
             {
                 var projectUpdateIDList = projectUpdatesToDelete.Select(x => x.ProjectUpdateID).ToList();
-                projectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID)).Delete();
+                var projectUpdatesToDeleteFromSourceList = projectUpdates.Where(x => projectUpdateIDList.Contains(x.ProjectUpdateID)).ToList();
+
+                foreach (var projectUpdateToDelete in projectUpdatesToDeleteFromSourceList)
+                {
+                    projectUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

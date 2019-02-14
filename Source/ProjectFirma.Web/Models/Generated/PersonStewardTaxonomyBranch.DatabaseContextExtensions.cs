@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return personStewardTaxonomyBranch;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePersonStewardTaxonomyBranch(this IQueryable<PersonStewardTaxonomyBranch> personStewardTaxonomyBranches, List<int> personStewardTaxonomyBranchIDList)
         {
             if(personStewardTaxonomyBranchIDList.Any())
             {
-                personStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID)).Delete();
+                var personStewardTaxonomyBranchesInSourceCollectionToDelete = personStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID));
+                foreach (var personStewardTaxonomyBranchToDelete in personStewardTaxonomyBranchesInSourceCollectionToDelete.ToList())
+                {
+                    personStewardTaxonomyBranchToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePersonStewardTaxonomyBranch(this IQueryable<PersonStewardTaxonomyBranch> personStewardTaxonomyBranches, ICollection<PersonStewardTaxonomyBranch> personStewardTaxonomyBranchesToDelete)
         {
             if(personStewardTaxonomyBranchesToDelete.Any())
             {
                 var personStewardTaxonomyBranchIDList = personStewardTaxonomyBranchesToDelete.Select(x => x.PersonStewardTaxonomyBranchID).ToList();
-                personStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID)).Delete();
+                var personStewardTaxonomyBranchesToDeleteFromSourceList = personStewardTaxonomyBranches.Where(x => personStewardTaxonomyBranchIDList.Contains(x.PersonStewardTaxonomyBranchID)).ToList();
+
+                foreach (var personStewardTaxonomyBranchToDelete in personStewardTaxonomyBranchesToDeleteFromSourceList)
+                {
+                    personStewardTaxonomyBranchToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

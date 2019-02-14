@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return treatmentActivity;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteTreatmentActivity(this IQueryable<TreatmentActivity> treatmentActivities, List<int> treatmentActivityIDList)
         {
             if(treatmentActivityIDList.Any())
             {
-                treatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID)).Delete();
+                var treatmentActivitiesInSourceCollectionToDelete = treatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID));
+                foreach (var treatmentActivityToDelete in treatmentActivitiesInSourceCollectionToDelete.ToList())
+                {
+                    treatmentActivityToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteTreatmentActivity(this IQueryable<TreatmentActivity> treatmentActivities, ICollection<TreatmentActivity> treatmentActivitiesToDelete)
         {
             if(treatmentActivitiesToDelete.Any())
             {
                 var treatmentActivityIDList = treatmentActivitiesToDelete.Select(x => x.TreatmentActivityID).ToList();
-                treatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID)).Delete();
+                var treatmentActivitiesToDeleteFromSourceList = treatmentActivities.Where(x => treatmentActivityIDList.Contains(x.TreatmentActivityID)).ToList();
+
+                foreach (var treatmentActivityToDelete in treatmentActivitiesToDeleteFromSourceList)
+                {
+                    treatmentActivityToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

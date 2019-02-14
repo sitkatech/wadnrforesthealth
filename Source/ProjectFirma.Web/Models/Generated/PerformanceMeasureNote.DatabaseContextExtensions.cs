@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureNote;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureNote(this IQueryable<PerformanceMeasureNote> performanceMeasureNotes, List<int> performanceMeasureNoteIDList)
         {
             if(performanceMeasureNoteIDList.Any())
             {
-                performanceMeasureNotes.Where(x => performanceMeasureNoteIDList.Contains(x.PerformanceMeasureNoteID)).Delete();
+                var performanceMeasureNotesInSourceCollectionToDelete = performanceMeasureNotes.Where(x => performanceMeasureNoteIDList.Contains(x.PerformanceMeasureNoteID));
+                foreach (var performanceMeasureNoteToDelete in performanceMeasureNotesInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureNoteToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureNote(this IQueryable<PerformanceMeasureNote> performanceMeasureNotes, ICollection<PerformanceMeasureNote> performanceMeasureNotesToDelete)
         {
             if(performanceMeasureNotesToDelete.Any())
             {
                 var performanceMeasureNoteIDList = performanceMeasureNotesToDelete.Select(x => x.PerformanceMeasureNoteID).ToList();
-                performanceMeasureNotes.Where(x => performanceMeasureNoteIDList.Contains(x.PerformanceMeasureNoteID)).Delete();
+                var performanceMeasureNotesToDeleteFromSourceList = performanceMeasureNotes.Where(x => performanceMeasureNoteIDList.Contains(x.PerformanceMeasureNoteID)).ToList();
+
+                foreach (var performanceMeasureNoteToDelete in performanceMeasureNotesToDeleteFromSourceList)
+                {
+                    performanceMeasureNoteToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectCustomAttributeValue;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectCustomAttributeValue(this IQueryable<ProjectCustomAttributeValue> projectCustomAttributeValues, List<int> projectCustomAttributeValueIDList)
         {
             if(projectCustomAttributeValueIDList.Any())
             {
-                projectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID)).Delete();
+                var projectCustomAttributeValuesInSourceCollectionToDelete = projectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID));
+                foreach (var projectCustomAttributeValueToDelete in projectCustomAttributeValuesInSourceCollectionToDelete.ToList())
+                {
+                    projectCustomAttributeValueToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectCustomAttributeValue(this IQueryable<ProjectCustomAttributeValue> projectCustomAttributeValues, ICollection<ProjectCustomAttributeValue> projectCustomAttributeValuesToDelete)
         {
             if(projectCustomAttributeValuesToDelete.Any())
             {
                 var projectCustomAttributeValueIDList = projectCustomAttributeValuesToDelete.Select(x => x.ProjectCustomAttributeValueID).ToList();
-                projectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID)).Delete();
+                var projectCustomAttributeValuesToDeleteFromSourceList = projectCustomAttributeValues.Where(x => projectCustomAttributeValueIDList.Contains(x.ProjectCustomAttributeValueID)).ToList();
+
+                foreach (var projectCustomAttributeValueToDelete in projectCustomAttributeValuesToDeleteFromSourceList)
+                {
+                    projectCustomAttributeValueToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

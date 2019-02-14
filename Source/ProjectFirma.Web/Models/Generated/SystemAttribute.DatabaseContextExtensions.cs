@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return systemAttribute;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteSystemAttribute(this IQueryable<SystemAttribute> systemAttributes, List<int> systemAttributeIDList)
         {
             if(systemAttributeIDList.Any())
             {
-                systemAttributes.Where(x => systemAttributeIDList.Contains(x.SystemAttributeID)).Delete();
+                var systemAttributesInSourceCollectionToDelete = systemAttributes.Where(x => systemAttributeIDList.Contains(x.SystemAttributeID));
+                foreach (var systemAttributeToDelete in systemAttributesInSourceCollectionToDelete.ToList())
+                {
+                    systemAttributeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteSystemAttribute(this IQueryable<SystemAttribute> systemAttributes, ICollection<SystemAttribute> systemAttributesToDelete)
         {
             if(systemAttributesToDelete.Any())
             {
                 var systemAttributeIDList = systemAttributesToDelete.Select(x => x.SystemAttributeID).ToList();
-                systemAttributes.Where(x => systemAttributeIDList.Contains(x.SystemAttributeID)).Delete();
+                var systemAttributesToDeleteFromSourceList = systemAttributes.Where(x => systemAttributeIDList.Contains(x.SystemAttributeID)).ToList();
+
+                foreach (var systemAttributeToDelete in systemAttributesToDeleteFromSourceList)
+                {
+                    systemAttributeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

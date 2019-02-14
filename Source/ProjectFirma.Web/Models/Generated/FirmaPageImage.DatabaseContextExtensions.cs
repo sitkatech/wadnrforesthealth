@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return firmaPageImage;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFirmaPageImage(this IQueryable<FirmaPageImage> firmaPageImages, List<int> firmaPageImageIDList)
         {
             if(firmaPageImageIDList.Any())
             {
-                firmaPageImages.Where(x => firmaPageImageIDList.Contains(x.FirmaPageImageID)).Delete();
+                var firmaPageImagesInSourceCollectionToDelete = firmaPageImages.Where(x => firmaPageImageIDList.Contains(x.FirmaPageImageID));
+                foreach (var firmaPageImageToDelete in firmaPageImagesInSourceCollectionToDelete.ToList())
+                {
+                    firmaPageImageToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFirmaPageImage(this IQueryable<FirmaPageImage> firmaPageImages, ICollection<FirmaPageImage> firmaPageImagesToDelete)
         {
             if(firmaPageImagesToDelete.Any())
             {
                 var firmaPageImageIDList = firmaPageImagesToDelete.Select(x => x.FirmaPageImageID).ToList();
-                firmaPageImages.Where(x => firmaPageImageIDList.Contains(x.FirmaPageImageID)).Delete();
+                var firmaPageImagesToDeleteFromSourceList = firmaPageImages.Where(x => firmaPageImageIDList.Contains(x.FirmaPageImageID)).ToList();
+
+                foreach (var firmaPageImageToDelete in firmaPageImagesToDeleteFromSourceList)
+                {
+                    firmaPageImageToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return tag;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteTag(this IQueryable<Tag> tags, List<int> tagIDList)
         {
             if(tagIDList.Any())
             {
-                tags.Where(x => tagIDList.Contains(x.TagID)).Delete();
+                var tagsInSourceCollectionToDelete = tags.Where(x => tagIDList.Contains(x.TagID));
+                foreach (var tagToDelete in tagsInSourceCollectionToDelete.ToList())
+                {
+                    tagToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteTag(this IQueryable<Tag> tags, ICollection<Tag> tagsToDelete)
         {
             if(tagsToDelete.Any())
             {
                 var tagIDList = tagsToDelete.Select(x => x.TagID).ToList();
-                tags.Where(x => tagIDList.Contains(x.TagID)).Delete();
+                var tagsToDeleteFromSourceList = tags.Where(x => tagIDList.Contains(x.TagID)).ToList();
+
+                foreach (var tagToDelete in tagsToDeleteFromSourceList)
+                {
+                    tagToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return fundingSource;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFundingSource(this IQueryable<FundingSource> fundingSources, List<int> fundingSourceIDList)
         {
             if(fundingSourceIDList.Any())
             {
-                fundingSources.Where(x => fundingSourceIDList.Contains(x.FundingSourceID)).Delete();
+                var fundingSourcesInSourceCollectionToDelete = fundingSources.Where(x => fundingSourceIDList.Contains(x.FundingSourceID));
+                foreach (var fundingSourceToDelete in fundingSourcesInSourceCollectionToDelete.ToList())
+                {
+                    fundingSourceToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFundingSource(this IQueryable<FundingSource> fundingSources, ICollection<FundingSource> fundingSourcesToDelete)
         {
             if(fundingSourcesToDelete.Any())
             {
                 var fundingSourceIDList = fundingSourcesToDelete.Select(x => x.FundingSourceID).ToList();
-                fundingSources.Where(x => fundingSourceIDList.Contains(x.FundingSourceID)).Delete();
+                var fundingSourcesToDeleteFromSourceList = fundingSources.Where(x => fundingSourceIDList.Contains(x.FundingSourceID)).ToList();
+
+                foreach (var fundingSourceToDelete in fundingSourcesToDeleteFromSourceList)
+                {
+                    fundingSourceToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

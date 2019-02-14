@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return federalFundCode;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteFederalFundCode(this IQueryable<FederalFundCode> federalFundCodes, List<int> federalFundCodeIDList)
         {
             if(federalFundCodeIDList.Any())
             {
-                federalFundCodes.Where(x => federalFundCodeIDList.Contains(x.FederalFundCodeID)).Delete();
+                var federalFundCodesInSourceCollectionToDelete = federalFundCodes.Where(x => federalFundCodeIDList.Contains(x.FederalFundCodeID));
+                foreach (var federalFundCodeToDelete in federalFundCodesInSourceCollectionToDelete.ToList())
+                {
+                    federalFundCodeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteFederalFundCode(this IQueryable<FederalFundCode> federalFundCodes, ICollection<FederalFundCode> federalFundCodesToDelete)
         {
             if(federalFundCodesToDelete.Any())
             {
                 var federalFundCodeIDList = federalFundCodesToDelete.Select(x => x.FederalFundCodeID).ToList();
-                federalFundCodes.Where(x => federalFundCodeIDList.Contains(x.FederalFundCodeID)).Delete();
+                var federalFundCodesToDeleteFromSourceList = federalFundCodes.Where(x => federalFundCodeIDList.Contains(x.FederalFundCodeID)).ToList();
+
+                foreach (var federalFundCodeToDelete in federalFundCodesToDeleteFromSourceList)
+                {
+                    federalFundCodeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

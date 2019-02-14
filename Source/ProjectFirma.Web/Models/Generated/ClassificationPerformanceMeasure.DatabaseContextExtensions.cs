@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return classificationPerformanceMeasure;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteClassificationPerformanceMeasure(this IQueryable<ClassificationPerformanceMeasure> classificationPerformanceMeasures, List<int> classificationPerformanceMeasureIDList)
         {
             if(classificationPerformanceMeasureIDList.Any())
             {
-                classificationPerformanceMeasures.Where(x => classificationPerformanceMeasureIDList.Contains(x.ClassificationPerformanceMeasureID)).Delete();
+                var classificationPerformanceMeasuresInSourceCollectionToDelete = classificationPerformanceMeasures.Where(x => classificationPerformanceMeasureIDList.Contains(x.ClassificationPerformanceMeasureID));
+                foreach (var classificationPerformanceMeasureToDelete in classificationPerformanceMeasuresInSourceCollectionToDelete.ToList())
+                {
+                    classificationPerformanceMeasureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteClassificationPerformanceMeasure(this IQueryable<ClassificationPerformanceMeasure> classificationPerformanceMeasures, ICollection<ClassificationPerformanceMeasure> classificationPerformanceMeasuresToDelete)
         {
             if(classificationPerformanceMeasuresToDelete.Any())
             {
                 var classificationPerformanceMeasureIDList = classificationPerformanceMeasuresToDelete.Select(x => x.ClassificationPerformanceMeasureID).ToList();
-                classificationPerformanceMeasures.Where(x => classificationPerformanceMeasureIDList.Contains(x.ClassificationPerformanceMeasureID)).Delete();
+                var classificationPerformanceMeasuresToDeleteFromSourceList = classificationPerformanceMeasures.Where(x => classificationPerformanceMeasureIDList.Contains(x.ClassificationPerformanceMeasureID)).ToList();
+
+                foreach (var classificationPerformanceMeasureToDelete in classificationPerformanceMeasuresToDeleteFromSourceList)
+                {
+                    classificationPerformanceMeasureToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
