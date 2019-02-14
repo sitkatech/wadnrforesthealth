@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectCustomAttribute;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectCustomAttribute(this IQueryable<ProjectCustomAttribute> projectCustomAttributes, List<int> projectCustomAttributeIDList)
         {
             if(projectCustomAttributeIDList.Any())
             {
-                projectCustomAttributes.Where(x => projectCustomAttributeIDList.Contains(x.ProjectCustomAttributeID)).Delete();
+                var projectCustomAttributesInSourceCollectionToDelete = projectCustomAttributes.Where(x => projectCustomAttributeIDList.Contains(x.ProjectCustomAttributeID));
+                foreach (var projectCustomAttributeToDelete in projectCustomAttributesInSourceCollectionToDelete.ToList())
+                {
+                    projectCustomAttributeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectCustomAttribute(this IQueryable<ProjectCustomAttribute> projectCustomAttributes, ICollection<ProjectCustomAttribute> projectCustomAttributesToDelete)
         {
             if(projectCustomAttributesToDelete.Any())
             {
                 var projectCustomAttributeIDList = projectCustomAttributesToDelete.Select(x => x.ProjectCustomAttributeID).ToList();
-                projectCustomAttributes.Where(x => projectCustomAttributeIDList.Contains(x.ProjectCustomAttributeID)).Delete();
+                var projectCustomAttributesToDeleteFromSourceList = projectCustomAttributes.Where(x => projectCustomAttributeIDList.Contains(x.ProjectCustomAttributeID)).ToList();
+
+                foreach (var projectCustomAttributeToDelete in projectCustomAttributesToDeleteFromSourceList)
+                {
+                    projectCustomAttributeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

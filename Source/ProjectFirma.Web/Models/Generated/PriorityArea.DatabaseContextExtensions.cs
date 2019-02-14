@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return priorityArea;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePriorityArea(this IQueryable<PriorityArea> priorityAreas, List<int> priorityAreaIDList)
         {
             if(priorityAreaIDList.Any())
             {
-                priorityAreas.Where(x => priorityAreaIDList.Contains(x.PriorityAreaID)).Delete();
+                var priorityAreasInSourceCollectionToDelete = priorityAreas.Where(x => priorityAreaIDList.Contains(x.PriorityAreaID));
+                foreach (var priorityAreaToDelete in priorityAreasInSourceCollectionToDelete.ToList())
+                {
+                    priorityAreaToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePriorityArea(this IQueryable<PriorityArea> priorityAreas, ICollection<PriorityArea> priorityAreasToDelete)
         {
             if(priorityAreasToDelete.Any())
             {
                 var priorityAreaIDList = priorityAreasToDelete.Select(x => x.PriorityAreaID).ToList();
-                priorityAreas.Where(x => priorityAreaIDList.Contains(x.PriorityAreaID)).Delete();
+                var priorityAreasToDeleteFromSourceList = priorityAreas.Where(x => priorityAreaIDList.Contains(x.PriorityAreaID)).ToList();
+
+                foreach (var priorityAreaToDelete in priorityAreasToDeleteFromSourceList)
+                {
+                    priorityAreaToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

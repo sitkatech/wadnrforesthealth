@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return taxonomyBranch;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteTaxonomyBranch(this IQueryable<TaxonomyBranch> taxonomyBranches, List<int> taxonomyBranchIDList)
         {
             if(taxonomyBranchIDList.Any())
             {
-                taxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID)).Delete();
+                var taxonomyBranchesInSourceCollectionToDelete = taxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID));
+                foreach (var taxonomyBranchToDelete in taxonomyBranchesInSourceCollectionToDelete.ToList())
+                {
+                    taxonomyBranchToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteTaxonomyBranch(this IQueryable<TaxonomyBranch> taxonomyBranches, ICollection<TaxonomyBranch> taxonomyBranchesToDelete)
         {
             if(taxonomyBranchesToDelete.Any())
             {
                 var taxonomyBranchIDList = taxonomyBranchesToDelete.Select(x => x.TaxonomyBranchID).ToList();
-                taxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID)).Delete();
+                var taxonomyBranchesToDeleteFromSourceList = taxonomyBranches.Where(x => taxonomyBranchIDList.Contains(x.TaxonomyBranchID)).ToList();
+
+                foreach (var taxonomyBranchToDelete in taxonomyBranchesToDeleteFromSourceList)
+                {
+                    taxonomyBranchToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

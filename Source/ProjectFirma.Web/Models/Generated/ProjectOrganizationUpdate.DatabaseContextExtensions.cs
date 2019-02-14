@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectOrganizationUpdate;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectOrganizationUpdate(this IQueryable<ProjectOrganizationUpdate> projectOrganizationUpdates, List<int> projectOrganizationUpdateIDList)
         {
             if(projectOrganizationUpdateIDList.Any())
             {
-                projectOrganizationUpdates.Where(x => projectOrganizationUpdateIDList.Contains(x.ProjectOrganizationUpdateID)).Delete();
+                var projectOrganizationUpdatesInSourceCollectionToDelete = projectOrganizationUpdates.Where(x => projectOrganizationUpdateIDList.Contains(x.ProjectOrganizationUpdateID));
+                foreach (var projectOrganizationUpdateToDelete in projectOrganizationUpdatesInSourceCollectionToDelete.ToList())
+                {
+                    projectOrganizationUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectOrganizationUpdate(this IQueryable<ProjectOrganizationUpdate> projectOrganizationUpdates, ICollection<ProjectOrganizationUpdate> projectOrganizationUpdatesToDelete)
         {
             if(projectOrganizationUpdatesToDelete.Any())
             {
                 var projectOrganizationUpdateIDList = projectOrganizationUpdatesToDelete.Select(x => x.ProjectOrganizationUpdateID).ToList();
-                projectOrganizationUpdates.Where(x => projectOrganizationUpdateIDList.Contains(x.ProjectOrganizationUpdateID)).Delete();
+                var projectOrganizationUpdatesToDeleteFromSourceList = projectOrganizationUpdates.Where(x => projectOrganizationUpdateIDList.Contains(x.ProjectOrganizationUpdateID)).ToList();
+
+                foreach (var projectOrganizationUpdateToDelete in projectOrganizationUpdatesToDeleteFromSourceList)
+                {
+                    projectOrganizationUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

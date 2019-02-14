@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectLocationStagingUpdate;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectLocationStagingUpdate(this IQueryable<ProjectLocationStagingUpdate> projectLocationStagingUpdates, List<int> projectLocationStagingUpdateIDList)
         {
             if(projectLocationStagingUpdateIDList.Any())
             {
-                projectLocationStagingUpdates.Where(x => projectLocationStagingUpdateIDList.Contains(x.ProjectLocationStagingUpdateID)).Delete();
+                var projectLocationStagingUpdatesInSourceCollectionToDelete = projectLocationStagingUpdates.Where(x => projectLocationStagingUpdateIDList.Contains(x.ProjectLocationStagingUpdateID));
+                foreach (var projectLocationStagingUpdateToDelete in projectLocationStagingUpdatesInSourceCollectionToDelete.ToList())
+                {
+                    projectLocationStagingUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectLocationStagingUpdate(this IQueryable<ProjectLocationStagingUpdate> projectLocationStagingUpdates, ICollection<ProjectLocationStagingUpdate> projectLocationStagingUpdatesToDelete)
         {
             if(projectLocationStagingUpdatesToDelete.Any())
             {
                 var projectLocationStagingUpdateIDList = projectLocationStagingUpdatesToDelete.Select(x => x.ProjectLocationStagingUpdateID).ToList();
-                projectLocationStagingUpdates.Where(x => projectLocationStagingUpdateIDList.Contains(x.ProjectLocationStagingUpdateID)).Delete();
+                var projectLocationStagingUpdatesToDeleteFromSourceList = projectLocationStagingUpdates.Where(x => projectLocationStagingUpdateIDList.Contains(x.ProjectLocationStagingUpdateID)).ToList();
+
+                foreach (var projectLocationStagingUpdateToDelete in projectLocationStagingUpdatesToDeleteFromSourceList)
+                {
+                    projectLocationStagingUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

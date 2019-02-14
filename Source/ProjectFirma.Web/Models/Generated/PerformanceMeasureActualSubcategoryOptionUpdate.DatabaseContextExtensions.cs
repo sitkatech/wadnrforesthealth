@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureActualSubcategoryOptionUpdate;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureActualSubcategoryOptionUpdate(this IQueryable<PerformanceMeasureActualSubcategoryOptionUpdate> performanceMeasureActualSubcategoryOptionUpdates, List<int> performanceMeasureActualSubcategoryOptionUpdateIDList)
         {
             if(performanceMeasureActualSubcategoryOptionUpdateIDList.Any())
             {
-                performanceMeasureActualSubcategoryOptionUpdates.Where(x => performanceMeasureActualSubcategoryOptionUpdateIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionUpdateID)).Delete();
+                var performanceMeasureActualSubcategoryOptionUpdatesInSourceCollectionToDelete = performanceMeasureActualSubcategoryOptionUpdates.Where(x => performanceMeasureActualSubcategoryOptionUpdateIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionUpdateID));
+                foreach (var performanceMeasureActualSubcategoryOptionUpdateToDelete in performanceMeasureActualSubcategoryOptionUpdatesInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureActualSubcategoryOptionUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureActualSubcategoryOptionUpdate(this IQueryable<PerformanceMeasureActualSubcategoryOptionUpdate> performanceMeasureActualSubcategoryOptionUpdates, ICollection<PerformanceMeasureActualSubcategoryOptionUpdate> performanceMeasureActualSubcategoryOptionUpdatesToDelete)
         {
             if(performanceMeasureActualSubcategoryOptionUpdatesToDelete.Any())
             {
                 var performanceMeasureActualSubcategoryOptionUpdateIDList = performanceMeasureActualSubcategoryOptionUpdatesToDelete.Select(x => x.PerformanceMeasureActualSubcategoryOptionUpdateID).ToList();
-                performanceMeasureActualSubcategoryOptionUpdates.Where(x => performanceMeasureActualSubcategoryOptionUpdateIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionUpdateID)).Delete();
+                var performanceMeasureActualSubcategoryOptionUpdatesToDeleteFromSourceList = performanceMeasureActualSubcategoryOptionUpdates.Where(x => performanceMeasureActualSubcategoryOptionUpdateIDList.Contains(x.PerformanceMeasureActualSubcategoryOptionUpdateID)).ToList();
+
+                foreach (var performanceMeasureActualSubcategoryOptionUpdateToDelete in performanceMeasureActualSubcategoryOptionUpdatesToDeleteFromSourceList)
+                {
+                    performanceMeasureActualSubcategoryOptionUpdateToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

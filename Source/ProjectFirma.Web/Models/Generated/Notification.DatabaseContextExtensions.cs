@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return notification;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteNotification(this IQueryable<Notification> notifications, List<int> notificationIDList)
         {
             if(notificationIDList.Any())
             {
-                notifications.Where(x => notificationIDList.Contains(x.NotificationID)).Delete();
+                var notificationsInSourceCollectionToDelete = notifications.Where(x => notificationIDList.Contains(x.NotificationID));
+                foreach (var notificationToDelete in notificationsInSourceCollectionToDelete.ToList())
+                {
+                    notificationToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteNotification(this IQueryable<Notification> notifications, ICollection<Notification> notificationsToDelete)
         {
             if(notificationsToDelete.Any())
             {
                 var notificationIDList = notificationsToDelete.Select(x => x.NotificationID).ToList();
-                notifications.Where(x => notificationIDList.Contains(x.NotificationID)).Delete();
+                var notificationsToDeleteFromSourceList = notifications.Where(x => notificationIDList.Contains(x.NotificationID)).ToList();
+
+                foreach (var notificationToDelete in notificationsToDeleteFromSourceList)
+                {
+                    notificationToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

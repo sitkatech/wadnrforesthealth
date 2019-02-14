@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureSubcategory;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureSubcategory(this IQueryable<PerformanceMeasureSubcategory> performanceMeasureSubcategories, List<int> performanceMeasureSubcategoryIDList)
         {
             if(performanceMeasureSubcategoryIDList.Any())
             {
-                performanceMeasureSubcategories.Where(x => performanceMeasureSubcategoryIDList.Contains(x.PerformanceMeasureSubcategoryID)).Delete();
+                var performanceMeasureSubcategoriesInSourceCollectionToDelete = performanceMeasureSubcategories.Where(x => performanceMeasureSubcategoryIDList.Contains(x.PerformanceMeasureSubcategoryID));
+                foreach (var performanceMeasureSubcategoryToDelete in performanceMeasureSubcategoriesInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureSubcategoryToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureSubcategory(this IQueryable<PerformanceMeasureSubcategory> performanceMeasureSubcategories, ICollection<PerformanceMeasureSubcategory> performanceMeasureSubcategoriesToDelete)
         {
             if(performanceMeasureSubcategoriesToDelete.Any())
             {
                 var performanceMeasureSubcategoryIDList = performanceMeasureSubcategoriesToDelete.Select(x => x.PerformanceMeasureSubcategoryID).ToList();
-                performanceMeasureSubcategories.Where(x => performanceMeasureSubcategoryIDList.Contains(x.PerformanceMeasureSubcategoryID)).Delete();
+                var performanceMeasureSubcategoriesToDeleteFromSourceList = performanceMeasureSubcategories.Where(x => performanceMeasureSubcategoryIDList.Contains(x.PerformanceMeasureSubcategoryID)).ToList();
+
+                foreach (var performanceMeasureSubcategoryToDelete in performanceMeasureSubcategoriesToDeleteFromSourceList)
+                {
+                    performanceMeasureSubcategoryToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

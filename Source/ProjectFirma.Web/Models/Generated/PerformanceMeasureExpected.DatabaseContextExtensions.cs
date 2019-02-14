@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return performanceMeasureExpected;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeletePerformanceMeasureExpected(this IQueryable<PerformanceMeasureExpected> performanceMeasureExpecteds, List<int> performanceMeasureExpectedIDList)
         {
             if(performanceMeasureExpectedIDList.Any())
             {
-                performanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID)).Delete();
+                var performanceMeasureExpectedsInSourceCollectionToDelete = performanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID));
+                foreach (var performanceMeasureExpectedToDelete in performanceMeasureExpectedsInSourceCollectionToDelete.ToList())
+                {
+                    performanceMeasureExpectedToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeletePerformanceMeasureExpected(this IQueryable<PerformanceMeasureExpected> performanceMeasureExpecteds, ICollection<PerformanceMeasureExpected> performanceMeasureExpectedsToDelete)
         {
             if(performanceMeasureExpectedsToDelete.Any())
             {
                 var performanceMeasureExpectedIDList = performanceMeasureExpectedsToDelete.Select(x => x.PerformanceMeasureExpectedID).ToList();
-                performanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID)).Delete();
+                var performanceMeasureExpectedsToDeleteFromSourceList = performanceMeasureExpecteds.Where(x => performanceMeasureExpectedIDList.Contains(x.PerformanceMeasureExpectedID)).ToList();
+
+                foreach (var performanceMeasureExpectedToDelete in performanceMeasureExpectedsToDeleteFromSourceList)
+                {
+                    performanceMeasureExpectedToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

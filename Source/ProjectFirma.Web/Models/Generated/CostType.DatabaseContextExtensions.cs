@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return costType;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteCostType(this IQueryable<CostType> costTypes, List<int> costTypeIDList)
         {
             if(costTypeIDList.Any())
             {
-                costTypes.Where(x => costTypeIDList.Contains(x.CostTypeID)).Delete();
+                var costTypesInSourceCollectionToDelete = costTypes.Where(x => costTypeIDList.Contains(x.CostTypeID));
+                foreach (var costTypeToDelete in costTypesInSourceCollectionToDelete.ToList())
+                {
+                    costTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteCostType(this IQueryable<CostType> costTypes, ICollection<CostType> costTypesToDelete)
         {
             if(costTypesToDelete.Any())
             {
                 var costTypeIDList = costTypesToDelete.Select(x => x.CostTypeID).ToList();
-                costTypes.Where(x => costTypeIDList.Contains(x.CostTypeID)).Delete();
+                var costTypesToDeleteFromSourceList = costTypes.Where(x => costTypeIDList.Contains(x.CostTypeID)).ToList();
+
+                foreach (var costTypeToDelete in costTypesToDeleteFromSourceList)
+                {
+                    costTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

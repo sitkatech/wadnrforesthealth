@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return relationshipType;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteRelationshipType(this IQueryable<RelationshipType> relationshipTypes, List<int> relationshipTypeIDList)
         {
             if(relationshipTypeIDList.Any())
             {
-                relationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID)).Delete();
+                var relationshipTypesInSourceCollectionToDelete = relationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID));
+                foreach (var relationshipTypeToDelete in relationshipTypesInSourceCollectionToDelete.ToList())
+                {
+                    relationshipTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteRelationshipType(this IQueryable<RelationshipType> relationshipTypes, ICollection<RelationshipType> relationshipTypesToDelete)
         {
             if(relationshipTypesToDelete.Any())
             {
                 var relationshipTypeIDList = relationshipTypesToDelete.Select(x => x.RelationshipTypeID).ToList();
-                relationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID)).Delete();
+                var relationshipTypesToDeleteFromSourceList = relationshipTypes.Where(x => relationshipTypeIDList.Contains(x.RelationshipTypeID)).ToList();
+
+                foreach (var relationshipTypeToDelete in relationshipTypesToDeleteFromSourceList)
+                {
+                    relationshipTypeToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 

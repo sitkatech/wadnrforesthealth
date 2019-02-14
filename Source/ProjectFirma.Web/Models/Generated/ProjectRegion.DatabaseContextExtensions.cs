@@ -20,20 +20,31 @@ namespace ProjectFirma.Web.Models
             return projectRegion;
         }
 
+        // Delete using an IDList (WADNR style)
         public static void DeleteProjectRegion(this IQueryable<ProjectRegion> projectRegions, List<int> projectRegionIDList)
         {
             if(projectRegionIDList.Any())
             {
-                projectRegions.Where(x => projectRegionIDList.Contains(x.ProjectRegionID)).Delete();
+                var projectRegionsInSourceCollectionToDelete = projectRegions.Where(x => projectRegionIDList.Contains(x.ProjectRegionID));
+                foreach (var projectRegionToDelete in projectRegionsInSourceCollectionToDelete.ToList())
+                {
+                    projectRegionToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
+        // Delete using an object list (WADNR style)
         public static void DeleteProjectRegion(this IQueryable<ProjectRegion> projectRegions, ICollection<ProjectRegion> projectRegionsToDelete)
         {
             if(projectRegionsToDelete.Any())
             {
                 var projectRegionIDList = projectRegionsToDelete.Select(x => x.ProjectRegionID).ToList();
-                projectRegions.Where(x => projectRegionIDList.Contains(x.ProjectRegionID)).Delete();
+                var projectRegionsToDeleteFromSourceList = projectRegions.Where(x => projectRegionIDList.Contains(x.ProjectRegionID)).ToList();
+
+                foreach (var projectRegionToDelete in projectRegionsToDeleteFromSourceList)
+                {
+                    projectRegionToDelete.Delete(HttpRequestStorage.DatabaseEntities);
+                }
             }
         }
 
