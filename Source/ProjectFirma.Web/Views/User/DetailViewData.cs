@@ -24,6 +24,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.User
@@ -50,6 +51,11 @@ namespace ProjectFirma.Web.Views.User
         public bool PersonIsMereContact { get; }
         public string EditContactUrl { get; }
         public string ProjectsForWhichUserIsAContactGridTitle { get; }
+        public string AgreementsForWhichUserIsAContactGridTitle { get; }
+
+        public readonly AgreementGridSpec UserAgreementsGridSpec;
+        public readonly string UserAgreementsGridName;
+        public readonly string UserAgreementsGridDataUrl;
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -59,7 +65,8 @@ namespace ProjectFirma.Web.Views.User
             UserNotificationGridSpec userNotificationGridSpec,
             string userNotificationGridName,
             string userNotificationGridDataUrl,
-            string activateInactivateUrl)
+            string activateInactivateUrl,
+            bool atLeastOneAgreementHasFile)
             : base(currentPerson)
         {
             Person = personToView;
@@ -96,6 +103,19 @@ namespace ProjectFirma.Web.Views.User
             ProjectsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
                 ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
                 : $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
+
+            AgreementsForWhichUserIsAContactGridTitle = personToView.IsFullUser()
+                ? $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()}"
+                : $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
+
+            UserAgreementsGridSpec = new AgreementGridSpec(CurrentPerson, atLeastOneAgreementHasFile, false, false)
+            {
+                CustomExcelDownloadUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.UserAgreementsExcelDownload(personToView.PrimaryKey))
+            };
+            UserAgreementsGridName = "userAgreementsFromUserGrid";
+            UserAgreementsGridDataUrl =
+                SitkaRoute<UserController>.BuildUrlFromExpression(
+                    tc => tc.UserAgreementsGridJsonData(personToView));
         }
 
         public readonly HtmlString EditRolesLink;
