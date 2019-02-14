@@ -39,6 +39,10 @@ namespace ProjectFirma.Web.Views.Grant
         public readonly string GrantAllocationGridName;
         public readonly string GrantAllocationGridDataUrl;
 
+        public readonly GrantAllocationGridSpec GrantAllocationNoDataGridSpec;
+        public readonly string GrantAllocationNoDataGridName;
+        public readonly string GrantAllocationNoDataGridDataUrl;
+
         public GrantIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = $"Full Grant List";
@@ -50,6 +54,10 @@ namespace ProjectFirma.Web.Views.Grant
             GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);           
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonData());
+
+            GrantAllocationNoDataGridSpec = new GrantAllocationGridSpec(currentPerson);
+            GrantAllocationNoDataGridName = "grantAllocationsNoDataGridName";
+            GrantAllocationNoDataGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridWithoutAnyJsonData());
         }
     }
 }
