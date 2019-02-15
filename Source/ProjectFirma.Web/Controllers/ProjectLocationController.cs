@@ -70,9 +70,6 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-
-
-
         [HttpGet]
         [ProjectEditAsAdminFeature]
         public PartialViewResult EditProjectLocationDetailed(ProjectPrimaryKey projectPrimaryKey)
