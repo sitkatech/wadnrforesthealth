@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public string AgreementPersonGridDataUrl { get; }
         public bool UserHasEditAgreementPermissions { get; set; }
         public bool ShowDownload { get; }
-        public string NewAgreementGrantAllocationRelationshipUrl { get; }
+        public string EditAgreementGrantAllocationRelationshipsUrl { get; }
 
 
         public DetailViewData(Person currentPerson, Models.Agreement agreement, bool userHasEditAgreementPermissions)
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Views.Agreement
             {
                 var contentUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.NewAgreementPerson(agreement.AgreementID));
                 AgreementPersonGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Agreement Contact");
-                NewAgreementGrantAllocationRelationshipUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.NewAgreementGrantAllocationRelationship(agreement.AgreementID));
+                EditAgreementGrantAllocationRelationshipsUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.EditAgreementGrantAllocationRelationships(agreement.AgreementID));
             }
 
             AgreementPersonGridName = "agreementPersonGrid";

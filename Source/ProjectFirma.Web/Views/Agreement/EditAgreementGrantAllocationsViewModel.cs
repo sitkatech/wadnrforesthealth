@@ -21,10 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using LtInfo.Common.Models;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -48,6 +45,15 @@ namespace ProjectFirma.Web.Views.Agreement
             this.GrantNumber = grantAllocation.Grant.GrantNumber;
             this.ProjectName = grantAllocation.ProjectName;
         }
+
+        public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.GrantAllocation> grantAllocations)
+        {
+            // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
+            var outgoingGrantAllocations = Models.GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+            return outgoingGrantAllocations.Select(ga => new GrantAllocationJson(ga)).ToList();
+        }
+
+
     }
 
     public class EditAgreementGrantAllocationsViewModel : FormViewModel
@@ -67,7 +73,8 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             AgreementId = agreement.AgreementID;
             // Generate GrantAllocationJsons that are ordered descending by first part of GrantNumber 
-            GrantAllocationJsons = agreement.AgreementGrantAllocations.OrderByDescending(aga => aga.GrantAllocation.Grant.GrantNumber.Split('-')[0]).Select(aga => new GrantAllocationJson(aga.GrantAllocation)).ToList();
+            var grantAllocations = agreement.AgreementGrantAllocations.Select(x => x.GrantAllocation).ToList();
+            GrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(grantAllocations);
         }
 
         public void UpdateModel(Models.Agreement agreement)
@@ -79,6 +86,7 @@ namespace ProjectFirma.Web.Views.Agreement
             var allPossibleGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             List<int> allSelectedGrantAllocationIds = GrantAllocationJsons.Select(gaj => gaj.GrantAllocationID).ToList();
             var allSelectedGrantAllocations = allPossibleGrantAllocations.Where(ga => allSelectedGrantAllocationIds.Contains(ga.GrantAllocationID)).ToList();
+
             agreement.AgreementGrantAllocations = allSelectedGrantAllocations.Select(ga => new AgreementGrantAllocation(agreement, ga)).ToList();
         }
     }

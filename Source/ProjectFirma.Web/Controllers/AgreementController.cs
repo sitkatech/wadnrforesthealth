@@ -75,7 +75,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var userHasAgreementAdminPermissions = new FirmaAdminFeature().HasPermissionByPerson(CurrentPerson);
             var agreement = agreementPrimaryKey.EntityObject;
-            var viewData = new Views.Agreement.DetailViewData(CurrentPerson, agreement, userHasAgreementAdminPermissions);
+            var viewData = new DetailViewData(CurrentPerson, agreement, userHasAgreementAdminPermissions);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
@@ -262,22 +262,6 @@ namespace ProjectFirma.Web.Controllers
             return ViewEditAgreementGrantAllocations(viewModel);
         }
 
-        /*
-        [HttpPost]
-        [AgreementEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditAgreementGrantAllocations(AgreementGrantAllocationPrimaryKey agreementGrantAllocationPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
-        {
-            var agreementGrantAllocation = agreementGrantAllocationPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditAgreementGrantAllocations(viewModel);
-            }
-            //viewModel.UpdateModel(agreementGrantAllocation);
-            //return new ModalDialogFormJsonResult();
-        }
-        */
-
         private PartialViewResult ViewEditAgreementGrantAllocations(EditAgreementGrantAllocationsViewModel viewModel)
         {
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == viewModel.AgreementId);
@@ -296,7 +280,7 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult NewAgreementGrantAllocationRelationship(int agreementId)
+        public PartialViewResult EditAgreementGrantAllocationRelationships(int agreementId)
         {
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
             Check.EnsureNotNull(agreement);
@@ -305,11 +289,10 @@ namespace ProjectFirma.Web.Controllers
             return ViewEditAgreementGrantAllocations(viewModel);
         }
 
-        
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewAgreementGrantAllocationRelationship(int agreementId, EditAgreementGrantAllocationsViewModel viewModel)
+        public ActionResult EditAgreementGrantAllocationRelationships(int agreementId, EditAgreementGrantAllocationsViewModel viewModel)
         {
             // Find relevant agreement
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
@@ -323,19 +306,17 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(agreement);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             int agreementGrantAllocationCount = agreement.AgreementGrantAllocations.Count;
-            SetMessageForDisplay($"{agreementGrantAllocationCount} Grant Allocations successfully saved on Agreement {agreement.AgreementTitle}.");
+            SetMessageForDisplay($"{agreementGrantAllocationCount} Grant Allocations successfully saved on Agreement \"{agreement.AgreementTitle}\".");
 
             return new ModalDialogFormJsonResult();
         }
-        
 
         [AgreementsViewFeature]
         public GridJsonNetJObjectResult<AgreementPerson> AgreementPersonGridJsonData(AgreementPrimaryKey agreementPrimaryKey)
         {
             var agreementID = agreementPrimaryKey.EntityObject.AgreementID;
             var gridSpec = new AgreementPersonGridSpec(CurrentPerson);
-            var agreement =
-                HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(x => x.AgreementID == agreementID);
+            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(x => x.AgreementID == agreementID);
             var agreementPeople = agreement.AgreementPeople.OrderBy(x => x.Person.LastName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<AgreementPerson>(agreementPeople, gridSpec);
             return gridJsonNetJObjectResult;

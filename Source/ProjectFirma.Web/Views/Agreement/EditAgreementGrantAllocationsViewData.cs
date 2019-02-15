@@ -30,12 +30,12 @@ namespace ProjectFirma.Web.Views.Agreement
         public readonly IEnumerable<SelectListItem> GrantAllocationSelectListItems;
         public readonly List<GrantAllocationJson> AllPossibleGrantAllocationJsons;
 
-
         public EditAgreementGrantAllocationsViewData(IEnumerable<SelectListItem> grantAllocationSelectListItems)
         {
             GrantAllocationSelectListItems = grantAllocationSelectListItems;
             var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            AllPossibleGrantAllocationJsons = databaseEntitiesGrantAllocations.OrderByDescending(ga => ga.Grant.GrantNumber.Split('-')[0]).Select(ga => new GrantAllocationJson(ga)).ToList();
+            AllPossibleGrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(databaseEntitiesGrantAllocations);
         }
+
     }
 }
