@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using LtInfo.Common;
-using MoreLinq;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
@@ -66,5 +63,43 @@ namespace ProjectFirma.Web.Models
             // Deal with null case
             return convertedProjectCodes;
         }
+
+        public static List<GrantAllocation> OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<GrantAllocation> grantAllocations)
+        {
+            // Find all the GrantAllocations that have a proper year prefix ("2016-....")
+            var allGrantAllocationsPrefixedWithGrantYear =
+                grantAllocations.Where(ga => GetGrantYearPrefixIfPresent(ga) != null).ToList();
+            var allGrantAllocationIDSPrefixedWithGrantYear =
+                allGrantAllocationsPrefixedWithGrantYear.Select(ga => ga.GrantAllocationID).ToList();
+
+            // Start out showing properly prefixed year entries, with most recent on top
+            List<Models.GrantAllocation> outgoingGrantAllocations = new List<Models.GrantAllocation>();
+            outgoingGrantAllocations.AddRange(
+                allGrantAllocationsPrefixedWithGrantYear.OrderByDescending(x => GetGrantYearPrefixIfPresent(x)));
+
+            // Then show everything else, alpha sorted.
+            var grantAllocationsWithoutYears = grantAllocations
+                .Where(ga => !allGrantAllocationIDSPrefixedWithGrantYear.Contains(ga.GrantAllocationID)).ToList();
+            outgoingGrantAllocations.AddRange(grantAllocationsWithoutYears.OrderBy(x => x.Grant.GrantNumber));
+            return outgoingGrantAllocations;
+        }
+
+        private static string GetGrantYearPrefixIfPresent(GrantAllocation ga)
+        {
+            const string yearMatchPattern = @"^(?<year>[1-9][0-9][0-9][0-9])-";
+
+            var grantYearRegex = new Regex(yearMatchPattern);
+            MatchCollection matches = grantYearRegex.Matches(ga.Grant.GrantNumber);
+            if (matches.Count > 0)
+            {
+                var firstMatch = matches[0];
+                // Grant year prefix
+                return firstMatch.Groups["year"].Value;
+            }
+
+            // No grant year prefix
+            return null;
+        }
+
     }
 }
