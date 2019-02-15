@@ -32,9 +32,14 @@ namespace LtInfo.Common
     {
         private static readonly TimeSpan MaxTimeout = TimeSpan.FromMinutes(10);
 
+        public static string ConjoinCommandLineArguments(List<string> commandLineArguments)
+        {
+            return string.Join(" ", commandLineArguments.Select(EncodeArgumentForCommandLine).ToList());
+        }
+
         public static ProcessUtilityResult ShellAndWaitImpl(string workingDirectory, string exeFileName, List<string> commandLineArguments, bool redirectStdErrAndStdOut, int? maxTimeoutMs)
         {
-            var argumentsAsString = string.Join(" ", commandLineArguments.Select(EncodeArgumentForCommandLine).ToList());
+            var argumentsAsString = ConjoinCommandLineArguments(commandLineArguments);
             var stdErrAndStdOut = string.Empty;
 
             // Start the indicated program and wait for it
