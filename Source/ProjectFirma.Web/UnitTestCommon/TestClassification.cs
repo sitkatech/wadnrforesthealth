@@ -31,8 +31,8 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var classification = Classification.CreateNewBlank(ClassificationSystem.CreateNewBlank());
                 classification.ClassificationDescription = MakeTestName("New ClassificationDescription");
                 classification.ThemeColor = "blue";
-                classification.DisplayName = "Test Classification Display Name";
-                classification.ClassificationSystem.ClassificationSystemName = "Fake Test Name for ClassificationSystem object";
+                classification.DisplayName = MakeTestName("Test Classification Display Name", 50);
+                classification.ClassificationSystem.ClassificationSystemName = MakeTestName("Fake Test Name for ClassificationSystem object");
                 return classification;
             }
 
