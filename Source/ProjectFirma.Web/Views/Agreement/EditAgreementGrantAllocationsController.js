@@ -46,20 +46,21 @@ angular.module("ProjectFirmaApp").controller("EditAgreementGrantAllocationsContr
         return filteredGrantAllocationSelectList;
     };
 
-    $scope.addGrantAllocation = function (grantAllocationId)
-    {
+    $scope.addGrantAllocation = function (grantAllocationId) {
         var allRelevantGrantAllocationJsons = _.filter($scope.AngularViewData.AllPossibleGrantAllocationJsons,
             function(f) {
                 return f.GrantAllocationID === Number(grantAllocationId);
             });
         var grantAllocationJson = allRelevantGrantAllocationJsons[0];
 
-        //debugger;
-
-        $scope.AngularModel.GrantAllocationJsons.push({
-            GrantAllocationID: Number(grantAllocationJson.GrantAllocationID),
-            ProjectName: grantAllocationJson.ProjectName
-        });
+        if (grantAllocationJson !== undefined)
+        {
+            $scope.AngularModel.GrantAllocationJsons.push({
+                GrantAllocationID: Number(grantAllocationJson.GrantAllocationID),
+                GrantNumber: grantAllocationJson.GrantNumber,
+                ProjectName: grantAllocationJson.ProjectName
+            });
+        }
         $scope.resetSelectedGrantAllocationID();
     };
 

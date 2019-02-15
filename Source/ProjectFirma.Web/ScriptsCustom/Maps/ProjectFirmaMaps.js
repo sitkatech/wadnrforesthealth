@@ -141,7 +141,7 @@ ProjectFirmaMaps.Map.prototype.addWmsLayer = function (currentLayer, overlayLaye
     if (currentLayer.LayerInitialVisibility === 1) {
         layerGroup.addTo(this.map);
     }
-    console.log("Hi");
+
     wmsLayer.on("click", function (e) { self.getFeatureInfo(e); });
 
     overlayLayers[currentLayer.LayerName] = layerGroup;

@@ -870,7 +870,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
-            var viewModel = new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment);
+            var viewModel = new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment, projectUpdateBatch.ProjectLocationUpdates);
             return ViewLocationDetailed(projectUpdateBatch, viewModel);
         }
 
@@ -905,7 +905,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectUpdateBatch.Project;
 
             var mapDivID = $"project_{project.ProjectID}_EditDetailedMap";
-            var detailedLocationGeoJsonFeatureCollection = projectUpdate.DetailedLocationToGeoJsonFeatureCollection();
+            var detailedLocationGeoJsonFeatureCollection = projectUpdate.AllDetailedLocationsToGeoJsonFeatureCollection();
             var editableLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
@@ -924,7 +924,7 @@ namespace ProjectFirma.Web.Controllers
                 uploadGisFileUrl,
                 mapFormID,
                 saveFeatureCollectionUrl,
-                ProjectLocationUpdate.FieldLengths.Annotation,
+                ProjectLocationUpdate.FieldLengths.ProjectLocationUpdateNotes,
                 hasSimpleLocationPoint);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new LocationDetailedViewData(CurrentPerson, projectUpdateBatch, projectLocationDetailViewData, uploadGisFileUrl, updateStatus);
@@ -1019,7 +1019,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            var viewModel = new ProjectLocationDetailViewModel();
+            var viewModel = new ProjectLocationDetailViewModel(project.ProjectLocations);
             return ViewApproveGisUpload(projectUpdateBatch, viewModel);
         }
 
@@ -1057,20 +1057,29 @@ namespace ProjectFirma.Web.Controllers
                 return ViewApproveGisUpload(projectUpdateBatch, viewModel);
             }
             SaveProjectLocationUpdates(viewModel, projectUpdateBatch);
-            DbSpatialHelper.Reduce(new List<IHaveSqlGeometry>(projectUpdateBatch.ProjectLocationUpdates.ToList()));
+            var haveSqlGeometrys = new List<IHaveSqlGeometry>(projectUpdateBatch.ProjectLocationUpdates.ToList());
+            DbSpatialHelper.Reduce(haveSqlGeometrys);
             return new ModalDialogFormJsonResult();
         }
 
         private static void SaveProjectLocationUpdates(ProjectLocationDetailViewModel viewModel, ProjectUpdateBatch projectUpdateBatch)
         {
-            var projectLocationUpdates = projectUpdateBatch.ProjectLocationUpdates.ToList();
-            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdates);
+            var projectLocationUpdatesToDelete = projectUpdateBatch.ProjectLocationUpdates.ToList();
+            HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdatesToDelete);
             projectUpdateBatch.ProjectLocationUpdates.Clear();
-            if (viewModel.WktAndAnnotations != null)
+
+            if (viewModel.ProjectLocationJsons != null)
             {
-                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
                 {
-                    projectUpdateBatch.ProjectLocationUpdates.Add(new ProjectLocationUpdate(projectUpdateBatch, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
+                    var projectLocationType = ProjectLocationType.All.FirstOrDefault(x => x.ProjectLocationTypeID == projectLocationJson.ProjectLocationTypeID);
+                    var projectLocationUpdate = new ProjectLocationUpdate(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationJson.ProjectLocationName);
+                    if (!string.IsNullOrEmpty(projectLocationJson.ProjectLocationNotes))
+                    {
+                        projectLocationUpdate.ProjectLocationUpdateNotes = projectLocationJson.ProjectLocationNotes;
+                    }
+                    projectUpdateBatch.ProjectLocationUpdates.Add(projectLocationUpdate);
                 }
             }
         }
@@ -2418,8 +2427,8 @@ namespace ProjectFirma.Web.Controllers
             if (originalLocationDetailed.Count != updatedLocationDetailed.Count)
                 return true;
 
-            var originalLocationAsListOfStrings = originalLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.Annotation).ToList();
-            var updatedLocationAsListOfStrings = updatedLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.Annotation).ToList();
+            var originalLocationAsListOfStrings = originalLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.ProjectLocationNotes).ToList();
+            var updatedLocationAsListOfStrings = updatedLocationDetailed.Select(x => x.ProjectLocationGeometry.ToString() + x.ProjectLocationUpdateNotes).ToList();
 
             var enumerable = originalLocationAsListOfStrings.Except(updatedLocationAsListOfStrings);
             return enumerable.Any();
