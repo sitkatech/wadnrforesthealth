@@ -29,7 +29,6 @@ namespace ProjectFirma.Web.Views.Agreement
     {
         public Models.Agreement Agreement { get; }
         public string EditAgreementUrl { get; set; }
-        public bool UserHasEditAgreementPermissions { get; set; }
 
         public string BackToAgreementsText { get; set; }
 
@@ -41,7 +40,6 @@ namespace ProjectFirma.Web.Views.Agreement
             HtmlPageTitle = agreement.AgreementTitle;
             EntityName = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}";
             EditAgreementUrl = agreement.GetEditUrl();
-            UserHasEditAgreementPermissions = true;
             BackToAgreementsText = "Back to all Agreements";
             AgreementsListUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(c => c.Index());
         }

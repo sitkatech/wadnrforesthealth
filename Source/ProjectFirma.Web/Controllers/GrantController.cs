@@ -266,6 +266,19 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [GrantsViewFullListFeature]
+        /// <summary>
+        /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected. Trying to make clear to user which grants don't have associated grantAllocations yet.  
+        /// </summary>
+        /// <returns>An empty dataset for grid population</returns>
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
+        {
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.Grant.GrantNumber == "").ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantsViewFullListFeature]
         public ExcelResult GrantsExcelDownload()
         {
             var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();

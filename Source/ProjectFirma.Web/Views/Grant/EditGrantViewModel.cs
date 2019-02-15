@@ -62,6 +62,7 @@ namespace ProjectFirma.Web.Views.Grant
         public string CFDANumber { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.TotalAwardAmount)]
+        [Required]
         public Money? TotalAwardAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]

@@ -19,18 +19,98 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Spatial;
+using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
-    public class ProjectLocationDetailViewModel : FormViewModel
+    public class ProjectLocationDetailViewModel : FormViewModel, IValidatableObject
     {
-        public List<WktAndAnnotation> WktAndAnnotations { get; set; }
+
+        public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
+
+        /// <summary>
+        /// Needed by the ModelBinder
+        /// </summary>
+        public ProjectLocationDetailViewModel()
+        {
+            ProjectLocationJsons = new List<ProjectLocationJson>();
+        }
+
+        public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocation> projectLocations)
+        {
+            ProjectLocationJsons = projectLocations.Select(x => new ProjectLocationJson(x)).ToList();
+        }
+
+        public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocationUpdate> projectLocationUpdates)
+        {
+            ProjectLocationJsons = projectLocationUpdates.Select(x => new ProjectLocationJson(x)).ToList();
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+
+            foreach (var plj in ProjectLocationJsons)
+            {
+                if (LtInfo.Common.GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(plj.ProjectLocationName))
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Project Location Name must not be blank.", x => x.ProjectLocationName));
+                }
+
+                if (plj.ProjectLocationTypeID == -1)
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Project Location Type must be selected.", x => x.ProjectLocationTypeID));
+                }
+            }
+
+            
+
+            return results;
+        }
     }
 
-    public class WktAndAnnotation
+    public class ProjectLocationJson
     {
-        public string Wkt { get; set; }
-        public string Annotation { get; set; }
+        public ProjectLocationJson()
+        {
+        }
+
+        public ProjectLocationJson(Models.ProjectLocation x)
+        {
+            ProjectLocationName = x.ProjectLocationName;
+            ProjectLocationNotes = x.ProjectLocationNotes;
+            ProjectLocationTypeID = x.ProjectLocationTypeID;
+            ProjectLocationTypeName = x.ProjectLocationType.ProjectLocationTypeDisplayName;
+            ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName.Replace("LineString", "Line");
+            ProjectLocationID = x.ProjectLocationID;
+            ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
+        }
+
+        public ProjectLocationJson(Models.ProjectLocationUpdate x)
+        {
+            ProjectLocationName = x.ProjectLocationUpdateName;
+            ProjectLocationNotes = x.ProjectLocationUpdateNotes;
+            ProjectLocationTypeID = x.ProjectLocationTypeID;
+            ProjectLocationTypeName = x.ProjectLocationType.ProjectLocationTypeDisplayName;
+            ProjectLocationFeatureType = x.ProjectLocationUpdateGeometry.SpatialTypeName.Replace("LineString", "Line");
+            ProjectLocationID = x.ProjectLocationUpdateID;
+            ProjectLocationGeometryWellKnownText = x.ProjectLocationUpdateGeometry.AsText();
+        }
+
+        public string ProjectLocationGeometryWellKnownText { get; set; }
+
+        public int ProjectLocationID { get; set; }
+        public string ProjectLocationFeatureType { get; set; }
+
+        public int ProjectLocationTypeID { get; set; }
+
+        public string ProjectLocationName { get; set; }
+        public string ProjectLocationTypeName { get; set; }
+        public string ProjectLocationNotes { get; set; }
     }
 }

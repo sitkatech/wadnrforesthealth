@@ -1881,7 +1881,9 @@
     <Property Name="ProjectLocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="ProjectLocationGeometry" Type="Geometry" Nullable="false" />
-    <Property Name="Annotation" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectLocationNotes" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectLocationTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectLocationName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="ProjectLocations" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
@@ -1919,7 +1921,9 @@
     <Property Name="ProjectLocationUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
     <Property Name="ProjectLocationUpdateGeometry" Type="Geometry" Nullable="false" />
-    <Property Name="Annotation" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectLocationUpdateNotes" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectLocationTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectLocationUpdateName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectLocationUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectNote">

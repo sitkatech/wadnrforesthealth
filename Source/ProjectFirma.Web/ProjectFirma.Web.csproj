@@ -326,6 +326,8 @@
     <Compile Include="Models\Generated\ProjectLocationStagingUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectLocationStagingUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectLocationStagingUpdatePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectLocationType.Binding.cs" />
+    <Compile Include="Models\Generated\ProjectLocationTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectLocationUpdate.Binding.cs" />
     <Compile Include="Models\Generated\ProjectLocationUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ProjectLocationUpdatePrimaryKey.Binding.cs" />
@@ -456,6 +458,7 @@
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
     <Compile Include="Models\ProgramIndex.cs" />
     <Compile Include="Models\ProjectCode.cs" />
+    <Compile Include="Models\ProjectLocationType.cs" />
     <Compile Include="Models\ProjectPriorityArea.cs" />
     <Compile Include="Models\ProjectPriorityAreaUpdate.cs" />
     <Compile Include="Models\ProjectRegion.cs" />
@@ -1054,12 +1057,6 @@
     <Content Include="Content\JQuery\jquery.mask.min.js" />
     <Content Include="Content\leaflet\leaflet.groupedlayercontrol\leaflet.groupedlayercontrol.min.css" />
     <Content Include="Content\leaflet\leaflet.groupedlayercontrol\leaflet.groupedlayercontrol.min.js" />
-    <Content Include="Content\qtip\jquery.qtip.es5.js">
-      <DependentUpon>jquery.qtip.js</DependentUpon>
-    </Content>
-    <Content Include="Content\qtip\jquery.qtip.es5.min.js">
-      <DependentUpon>jquery.qtip.es5.js</DependentUpon>
-    </Content>
     <Content Include="Content\qtip\jquery.qtip.validation.min.js">
       <DependentUpon>jquery.qtip.validation.js</DependentUpon>
     </Content>
@@ -1161,6 +1158,7 @@
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
     <Content Include="Views\Project\ContractorTimeActivityController.js" />
+    <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailController.js" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
     <Content Include="Views\Home\TrainingVideo.cshtml" />
