@@ -107,9 +107,12 @@ namespace LtInfo.Common.DbSpatial
 
         public static void Reduce(List<IHaveSqlGeometry> geometries)
         {
-            const int thresholdInFeet = 1;
-            var thresholdInDegrees = FeetToAverageLatLonDegree(geometries.First().DbGeometry, thresholdInFeet);
-            geometries.ForEach(x => x.DbGeometry = x.SqlGeometry.MakeValid().Reduce(thresholdInDegrees).ToDbGeometry());
+            if (geometries.Any())
+            {
+                const int thresholdInFeet = 1;
+                var thresholdInDegrees = FeetToAverageLatLonDegree(geometries.First().DbGeometry, thresholdInFeet);
+                geometries.ForEach(x => x.DbGeometry = x.SqlGeometry.MakeValid().Reduce(thresholdInDegrees).ToDbGeometry());
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
             return new GeoJSON.Net.Feature.FeatureCollection(projectLocations.Where(x => DbGeometryToGeoJsonHelper.CanParseGeometry(x.ProjectLocationGeometry)).Select(x =>
             {
                 var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(x.ProjectLocationGeometry);
-                feature.Properties.Add("Info", x.Annotation);
+                feature.Properties.Add("Info", x.ProjectLocationNotes);
                 return feature;
             }).ToList());
         }

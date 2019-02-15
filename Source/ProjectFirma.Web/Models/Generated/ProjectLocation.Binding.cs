@@ -30,30 +30,34 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string annotation) : this()
+        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName) : this()
         {
             this.ProjectLocationID = projectLocationID;
             this.ProjectID = projectID;
             this.ProjectLocationGeometry = projectLocationGeometry;
-            this.Annotation = annotation;
+            this.ProjectLocationNotes = projectLocationNotes;
+            this.ProjectLocationTypeID = projectLocationTypeID;
+            this.ProjectLocationName = projectLocationName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectID, DbGeometry projectLocationGeometry) : this()
+        public ProjectLocation(int projectID, DbGeometry projectLocationGeometry, int projectLocationTypeID, string projectLocationName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectLocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
             this.ProjectLocationGeometry = projectLocationGeometry;
+            this.ProjectLocationTypeID = projectLocationTypeID;
+            this.ProjectLocationName = projectLocationName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectLocation(Project project, DbGeometry projectLocationGeometry) : this()
+        public ProjectLocation(Project project, DbGeometry projectLocationGeometry, ProjectLocationType projectLocationType, string projectLocationName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectLocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -61,14 +65,16 @@ namespace ProjectFirma.Web.Models
             this.Project = project;
             project.ProjectLocations.Add(this);
             this.ProjectLocationGeometry = projectLocationGeometry;
+            this.ProjectLocationTypeID = projectLocationType.ProjectLocationTypeID;
+            this.ProjectLocationName = projectLocationName;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectLocation CreateNewBlank(Project project)
+        public static ProjectLocation CreateNewBlank(Project project, ProjectLocationType projectLocationType)
         {
-            return new ProjectLocation(project, default(DbGeometry));
+            return new ProjectLocation(project, default(DbGeometry), projectLocationType, default(string));
         }
 
         /// <summary>
@@ -107,15 +113,19 @@ namespace ProjectFirma.Web.Models
         public int ProjectLocationID { get; set; }
         public int ProjectID { get; set; }
         public DbGeometry ProjectLocationGeometry { get; set; }
-        public string Annotation { get; set; }
+        public string ProjectLocationNotes { get; set; }
+        public int ProjectLocationTypeID { get; set; }
+        public string ProjectLocationName { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationID; } set { ProjectLocationID = value; } }
 
         public virtual Project Project { get; set; }
+        public ProjectLocationType ProjectLocationType { get { return ProjectLocationType.AllLookupDictionary[ProjectLocationTypeID]; } }
 
         public static class FieldLengths
         {
-            public const int Annotation = 255;
+            public const int ProjectLocationNotes = 255;
+            public const int ProjectLocationName = 100;
         }
     }
 }
