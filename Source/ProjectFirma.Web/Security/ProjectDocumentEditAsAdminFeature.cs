@@ -26,8 +26,7 @@ namespace ProjectFirma.Web.Security
             var forbidAdmin = !HasPermissionByPerson(person) || isProjectDocumentStewardButCannotStewardThisProjectDocument;
             if (forbidAdmin)
             {
-                return new PermissionCheckResult(
-                    $"You don't have permission to edit documents for {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit documents for {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
 
             if (contextModelObject.Project.IsProposal() || contextModelObject.Project.IsPendingProject())
@@ -35,7 +34,7 @@ namespace ProjectFirma.Web.Security
                 return new ProjectCreateFeature().HasPermission(person, contextModelObject.Project);
             }
 
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }
 }

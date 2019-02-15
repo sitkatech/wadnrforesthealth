@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.DeleteGrantNote(GrantID, GrantNoteID)); }
+            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.DeleteGrantNote(GrantNoteID)); }
         }
 
         public string EditUrl

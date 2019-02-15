@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Grant
 {
@@ -41,7 +42,7 @@ namespace ProjectFirma.Web.Views.Grant
             HtmlPageTitle = grant.GrantTitle;
             EntityName = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}";
             EditGrantUrl = grant.GetEditUrl();
-            UserHasEditGrantPermissions = true;
+            UserHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             BackToGrantsText = "Back to all Grants";
             GrantsListUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
         }

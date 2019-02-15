@@ -47,10 +47,10 @@ namespace ProjectFirma.Web.Security
                              contextModelObject.CustomPageDisplayType == CustomPageDisplayType.Protected);
             if (isVisible)
             {
-                return new PermissionCheckResult();
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
-            return new PermissionCheckResult("Does not have custom page view privileges");
+            return PermissionCheckResult.MakeFailurePermissionCheckResult("Does not have custom page view privileges");
         }
     }
 }

@@ -18,15 +18,15 @@ namespace ProjectFirma.Web.Security
         {
             if (!HasPermissionByPerson(person))
             {
-                return new PermissionCheckResult($"You don't have permission to edit or delete {FieldDefinition.FundingSource.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit or delete {FieldDefinition.FundingSource.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
 
             if (person.RoleID == Role.ProjectSteward.RoleID && contextModelObject.OrganizationID != person.OrganizationID)
             {
-                return new PermissionCheckResult($"You don't have permission to edit or delete {FieldDefinition.FundingSource.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it does not belong to your {FieldDefinition.Organization.GetFieldDefinitionLabel()}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit or delete {FieldDefinition.FundingSource.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it does not belong to your {FieldDefinition.Organization.GetFieldDefinitionLabel()}");
             }
 
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
 
         public void DemandPermission(Person person, FundingSource contextModelObject)

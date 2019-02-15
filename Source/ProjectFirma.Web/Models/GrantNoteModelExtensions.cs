@@ -12,10 +12,10 @@ namespace ProjectFirma.Web.Models
             return EditNoteUrlTemplate.ParameterReplace(grant.GrantID, grantNote.GrantNoteID);
         }
 
-        public static readonly UrlTemplate<int, int> DeleteNoteUrlTemplate = new UrlTemplate<int, int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.DeleteGrantNote(UrlTemplate.Parameter1Int, UrlTemplate.Parameter2Int)));
-        public static string GetDeleteNoteUrl(this GrantNote grantNote, Grant grant)
+        public static readonly UrlTemplate<int> DeleteNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.DeleteGrantNote(UrlTemplate.Parameter1Int)));
+        public static string GetDeleteNoteUrl(this GrantNote grantNote)
         {
-            return DeleteNoteUrlTemplate.ParameterReplace(grant.GrantID, grantNote.GrantNoteID);
+            return DeleteNoteUrlTemplate.ParameterReplace(grantNote.GrantNoteID);
         }
     }
 }

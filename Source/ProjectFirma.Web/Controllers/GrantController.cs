@@ -127,8 +127,8 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantEditAsAdminFeature]
-        public PartialViewResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey)
+        [GrantNoteEditAsAdminFeature]
+        public PartialViewResult DeleteGrantNote(GrantNotePrimaryKey grantNotePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantNotePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantNote(grantNotePrimaryKey.EntityObject, viewModel);
@@ -142,9 +142,9 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantEditAsAdminFeature]
+        [GrantNoteEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteGrantNote(GrantNotePrimaryKey grantNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var grantNote = grantNotePrimaryKey.EntityObject;
             if (!ModelState.IsValid)
