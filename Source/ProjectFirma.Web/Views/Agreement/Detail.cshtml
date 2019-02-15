@@ -24,8 +24,6 @@
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
-@using Newtonsoft.Json
-@using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Views
@@ -36,6 +34,12 @@
     private string GetAgreementGrantAllocationUrl(AgreementGrantAllocation currentAgreementGrantAllocation)
     {
         return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.GrantAllocation)));
+    }
+
+    private List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder()
+    {
+        List<AgreementGrantAllocation> agreementGrantAllocations = ViewDataTyped.Agreement.AgreementGrantAllocations.ToList();
+        return AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocations);
     }
 
 }
@@ -108,7 +112,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.Organization)
                             </div>
                             <div class="col-sm-9">
-                                <span id="Organization">@ViewDataTyped.Agreement.Organization.OrganizationName</span>
+                                <span id="Organization">@UrlTemplate.MakeHrefString(ViewDataTyped.Agreement.GetOrganizationDetailUrl(), ViewDataTyped.Agreement.Organization.DisplayName)</span>
                             </div>
                         </div>
                         <div class="row">
@@ -148,7 +152,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementFundingSource">@ViewDataTyped.Agreement.Grant.GrantNumber</span>
+                                <span id="AgreementFundingSource">@UrlTemplate.MakeHrefString(ViewDataTyped.Agreement.GetGrantDetailUrl(), ViewDataTyped.Agreement.GrantNumberDisplay)</span>
                             </div>
                         </div>
                         <div class="row">
@@ -169,7 +173,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
-                                @Html.LabelWithSugarFor(FieldDefinition.FileResource)
+                                @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Agreement File")
                             </div>
                             <div class="col-sm-9">
                                 <span id="AgreementFile">
@@ -196,14 +200,15 @@
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewAgreementGrantAllocationRelationshipUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementGrantAllocationRelationshipsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)
                     Grant Allocations associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.Agreement.AgreementGrantAllocations.OrderBy(aga => aga.GrantAllocation.ProjectName))
+                    @*Display grant allocations in descending order according to grant number year*@
+                    @foreach (var currentAgreementGrantAllocation in CurrentAgreementGrantAllocationsInSortedOrder())
                     {
-                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
-                        <br />
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.Grant.GrantNumber @currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
+                        <br/>
                     }
                 </div>
             </div>

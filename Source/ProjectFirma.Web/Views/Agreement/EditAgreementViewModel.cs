@@ -145,6 +145,14 @@ namespace ProjectFirma.Web.Views.Agreement
                 yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
                     $"A Grant must be selected if the Agreement Type is not MOU", m => m.GrantID);
             }
+            if (AgreementAmount.HasValue && AgreementAmount > 2147483646 )
+            {
+                yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
+                    $"The Agreement Amount you entered exceeds the maximum. Please enter an amount less than $2,147,483,646", m => m.AgreementAmount);
+            }
+
+
+            
         }
     }
 }

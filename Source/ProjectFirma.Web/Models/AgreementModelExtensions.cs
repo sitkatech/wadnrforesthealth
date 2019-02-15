@@ -18,6 +18,24 @@ namespace ProjectFirma.Web.Models
             return DetailUrlTemplate.ParameterReplace(agreement.AgreementID);
         }
 
+        public static readonly UrlTemplate<int> OrganizationDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<OrganizationController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
+        public static string GetOrganizationDetailUrl(this Agreement agreement)
+        {
+            return OrganizationDetailUrlTemplate.ParameterReplace(agreement.OrganizationID);
+        }
+
+        public static readonly UrlTemplate<int> GrantDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
+        public static string GetGrantDetailUrl(this Agreement agreement)
+        {
+            if (agreement.GrantID.HasValue)
+            {
+                return GrantDetailUrlTemplate.ParameterReplace(agreement.GrantID.Value);
+            }
+
+            return string.Empty;
+
+        }
+
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
         public static string GetEditUrl(this Agreement agreement)
         {

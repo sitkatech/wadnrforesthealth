@@ -865,7 +865,9 @@
           <ScalarProperty Name="ProjectLocationID" ColumnName="ProjectLocationID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
           <ScalarProperty Name="ProjectLocationGeometry" ColumnName="ProjectLocationGeometry" />
-          <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+          <ScalarProperty Name="ProjectLocationNotes" ColumnName="ProjectLocationNotes" />
+          <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
+          <ScalarProperty Name="ProjectLocationName" ColumnName="ProjectLocationName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -901,7 +903,9 @@
           <ScalarProperty Name="ProjectLocationUpdateID" ColumnName="ProjectLocationUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
           <ScalarProperty Name="ProjectLocationUpdateGeometry" ColumnName="ProjectLocationUpdateGeometry" />
-          <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+          <ScalarProperty Name="ProjectLocationUpdateNotes" ColumnName="ProjectLocationUpdateNotes" />
+          <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
+          <ScalarProperty Name="ProjectLocationUpdateName" ColumnName="ProjectLocationUpdateName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

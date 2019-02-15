@@ -487,6 +487,11 @@ namespace ProjectFirma.Web.Models
                 case "ProjectLocationStagingUpdate":
                     return ProjectLocationStagingUpdates.GetProjectLocationStagingUpdate(primaryKey);
 
+                case "ProjectLocationType":
+                    var projectLocationType = ProjectLocationType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(projectLocationType, "ProjectLocationType", primaryKey);
+                    return projectLocationType;
+
                 case "ProjectLocationUpdate":
                     return ProjectLocationUpdates.GetProjectLocationUpdate(primaryKey);
 

@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Models
             {
                 layerGeoJsons.AddRange(GetProjectLocationSimpleMapLayer(project));                
             }
-            var detailedLocationGeoJsonFeatureCollection = project.DetailedLocationToGeoJsonFeatureCollection();
+            var detailedLocationGeoJsonFeatureCollection = project.AllDetailedLocationsToGeoJsonFeatureCollection();
             if (detailedLocationGeoJsonFeatureCollection.Features.Any())
             {
                 layerGeoJsons.Add(new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail", detailedLocationGeoJsonFeatureCollection, "#838383", 1, LayerInitialVisibility.Show));
