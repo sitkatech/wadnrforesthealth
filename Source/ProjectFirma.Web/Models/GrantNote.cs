@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Models
 
         public string EditUrl
         {
-            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.EditGrantNote(GrantID, GrantNoteID)); }
+            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.EditGrantNote(GrantNoteID)); }
         }
         public string AuditDescriptionString
         {

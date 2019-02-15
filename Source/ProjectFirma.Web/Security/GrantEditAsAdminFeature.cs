@@ -4,7 +4,7 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
 
-    [SecurityFeatureDescription("Edit GrantNote")]
+    [SecurityFeatureDescription("Edit Grant Note")]
     public class GrantNoteEditAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantNote>
     {
         private readonly FirmaFeatureWithContextImpl<GrantNote> _firmaFeatureWithContextImpl;

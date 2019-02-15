@@ -102,8 +102,8 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantAllocationEditAsAdminFeature]
-        public PartialViewResult EditGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey)
+        [GrantAllocationNoteEditAsAdminFeature]
+        public PartialViewResult EditGrantAllocationNote(GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey)
         {
             var grantAllocationNote = grantAllocationNotePrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationNoteViewModel(grantAllocationNote);
@@ -111,9 +111,9 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationEditAsAdminFeature]
+        [GrantAllocationNoteEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey, EditGrantAllocationNoteViewModel viewModel)
+        public ActionResult EditGrantAllocationNote(GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey, EditGrantAllocationNoteViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -128,8 +128,8 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantAllocationEditAsAdminFeature]
-        public PartialViewResult DeleteGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey)
+        [GrantAllocationNoteEditAsAdminFeature]
+        public PartialViewResult DeleteGrantAllocationNote(GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantAllocationNotePrimaryKey.PrimaryKeyValue);
             return ViewDeleteGrantAllocationNote(grantAllocationNotePrimaryKey.EntityObject, viewModel);
@@ -143,9 +143,9 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationEditAsAdminFeature]
+        [GrantAllocationNoteEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteGrantAllocationNote(GrantAllocationPrimaryKey grantAllocationPrimaryKeyForSecurityPermissions, GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteGrantAllocationNote(GrantAllocationNotePrimaryKey grantAllocationNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var grantAllocationNote = grantAllocationNotePrimaryKey.EntityObject;
             if (!ModelState.IsValid)

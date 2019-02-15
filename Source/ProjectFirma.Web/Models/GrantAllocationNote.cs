@@ -45,12 +45,12 @@ namespace ProjectFirma.Web.Models
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.DeleteGrantAllocationNote(GrantAllocationID, GrantAllocationNoteID)); }
+            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.DeleteGrantAllocationNote(GrantAllocationNoteID)); }
         }
 
         public string EditUrl
         {
-            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.EditGrantAllocationNote(GrantAllocationID, GrantAllocationNoteID)); }
+            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.EditGrantAllocationNote(GrantAllocationNoteID)); }
         }
 
         public string AuditDescriptionString

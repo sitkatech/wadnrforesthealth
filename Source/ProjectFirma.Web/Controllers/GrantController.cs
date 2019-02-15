@@ -95,8 +95,8 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantEditAsAdminFeature]
-        public PartialViewResult EditGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey)
+        [GrantNoteEditAsAdminFeature]
+        public PartialViewResult EditGrantNote(GrantNotePrimaryKey grantNotePrimaryKey)
         {
             var grantNote = grantNotePrimaryKey.EntityObject;
             var viewModel = new EditGrantNoteViewModel(grantNote);
@@ -104,9 +104,9 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantEditAsAdminFeature]
+        [GrantNoteEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditGrantNote(GrantPrimaryKey grantPrimaryKeyForSecurityPermissions, GrantNotePrimaryKey grantNotePrimaryKey, EditGrantNoteViewModel viewModel)
+        public ActionResult EditGrantNote(GrantNotePrimaryKey grantNotePrimaryKey, EditGrantNoteViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
