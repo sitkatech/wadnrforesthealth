@@ -1239,22 +1239,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tmpAgreementContact">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreementContact">
-        <MappingFragment StoreEntitySet="tmpAgreementContact">
-          <ScalarProperty Name="AgreementContactID" ColumnName="AgreementContactID" />
-          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="Organization" ColumnName="Organization" />
-          <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
-          <ScalarProperty Name="F8" ColumnName="F8" />
-          <ScalarProperty Name="F9" ColumnName="F9" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TrainingVideo">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TrainingVideo">
         <MappingFragment StoreEntitySet="TrainingVideo">
