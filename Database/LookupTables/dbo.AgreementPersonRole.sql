@@ -5,4 +5,6 @@ insert dbo.AgreementPersonRole (AgreementPersonRoleID, AgreementPersonRoleName, 
 values 
 (1, 'ContractManager', 'Contract Manager'),
 (2, 'ProjectManager', 'Project Manager'),
-(3, 'ProjectCoordinator', 'Project Coordinator')
+(3, 'ProjectCoordinator', 'Project Coordinator'),
+(4, 'Signer', 'Signer'),
+(5, 'TechnicalContact', 'Technical Contact')

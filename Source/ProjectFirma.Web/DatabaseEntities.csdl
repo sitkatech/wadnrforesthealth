@@ -105,6 +105,7 @@
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Tag" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.TaxonomyBranch" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
+    <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.tmpAgreementContact" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
@@ -2306,6 +2307,21 @@
     <Property Name="TaxonomyTrunkCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="TaxonomyTrunkSortOrder" Type="Int32" />
     <NavigationProperty Name="TaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" FromRole="TaxonomyTrunk" ToRole="TaxonomyBranches" />
+  </EntityType>
+  <EntityType Name="tmpAgreementContact">
+    <Key>
+      <PropertyRef Name="AgreementContactID" />
+    </Key>
+    <Property Name="AgreementContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementNumber" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="Organization" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="AgreementRole" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="F8" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="F9" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>
