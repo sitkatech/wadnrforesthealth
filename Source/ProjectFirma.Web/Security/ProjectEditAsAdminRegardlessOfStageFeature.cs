@@ -26,10 +26,9 @@ namespace ProjectFirma.Web.Security
             var forbidAdmin = !HasPermissionByPerson(person) || isProjectStewardButCannotStewardThisProject;
             if (forbidAdmin)
             {
-                return new PermissionCheckResult(
-                    $"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }
 }

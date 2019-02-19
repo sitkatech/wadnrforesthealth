@@ -19,14 +19,9 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
-using LtInfo.Common.Models;
-using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -57,6 +52,5 @@ namespace ProjectFirma.Web.Models
         {
             return NewNoteUrlTemplate.ParameterReplace(grant.GrantID);
         }
-
     }
 }

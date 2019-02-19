@@ -34,7 +34,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(m => m.GrantNoteText)
         </div>
         <div class="col-xs-10">
-            @Html.TextBoxFor(m => m.GrantNoteText, new { @class = "form-control" })
+            @Html.TextAreaFor(m => m.GrantNoteText, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.GrantNoteText)
         </div>
     </div>

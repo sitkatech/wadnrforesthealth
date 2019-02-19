@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         }
 
         public static readonly EditGrantAllocationNoteTypeNewNote NewNote = EditGrantAllocationNoteTypeNewNote.Instance;
-        public static readonly EditGrantAllocationTypeExistingGrantAllocation ExistingGrantAllocation = EditGrantAllocationTypeExistingGrantAllocation.Instance;
+        public static readonly EditGrantAllocationNoteTypeExistingNote ExistingGrantAllocationNote = EditGrantAllocationNoteTypeExistingNote.Instance;
     }
 
     public class EditGrantAllocationNoteTypeNewNote : EditGrantAllocationNoteType

@@ -19,16 +19,18 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 using LtInfo.Common.ExcelWorkbookUtilities;
-using ProjectFirma.Web.Security;
+using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
-using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Web.Mvc;
+using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -92,12 +94,71 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [GrantNoteEditAsAdminFeature]
+        public PartialViewResult EditGrantNote(GrantNotePrimaryKey grantNotePrimaryKey)
+        {
+            var grantNote = grantNotePrimaryKey.EntityObject;
+            var viewModel = new EditGrantNoteViewModel(grantNote);
+            return ViewEditNote(viewModel, EditGrantNoteType.ExistingNote);
+        }
+
+        [HttpPost]
+        [GrantNoteEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantNote(GrantNotePrimaryKey grantNotePrimaryKey, EditGrantNoteViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNote(viewModel, EditGrantNoteType.ExistingNote);
+            }
+
+            var grantNote = grantNotePrimaryKey.EntityObject;
+            viewModel.UpdateModel(grantNote, CurrentPerson, EditGrantNoteType.ExistingNote);
+            HttpRequestStorage.DatabaseEntities.GrantNotes.AddOrUpdate(grantNote);
+            return new ModalDialogFormJsonResult();
+        }
+
 
         private PartialViewResult ViewEditNote(EditGrantNoteViewModel viewModel, EditGrantNoteType editGrantNoteType)
         {
             var viewData = new EditGrantNoteViewData(editGrantNoteType);
             return RazorPartialView<EditGrantNote, EditGrantNoteViewData, EditGrantNoteViewModel>(viewData, viewModel);
         }
+
+        [HttpGet]
+        [GrantNoteEditAsAdminFeature]
+        public PartialViewResult DeleteGrantNote(GrantNotePrimaryKey grantNotePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantNotePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantNote(grantNotePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantNote(GrantNote grantNote, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNote.CreatedDate}' by '{grantNote.CreatedByPerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantNoteEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantNote(GrantNotePrimaryKey grantNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantNote = grantNotePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantNote(grantNote, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNote.CreatedDate}' by '{grantNote.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            grantNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+
 
         [HttpGet]
         [GrantEditAsAdminFeature]
@@ -167,7 +228,13 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
         {
             var grant = grantPrimaryKey.EntityObject;
-            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant);
+            var userHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
+            var grantNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNotes)),
+                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNote(grantPrimaryKey)),
+                grant.GrantName,
+                userHasEditGrantPermissions);
+            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

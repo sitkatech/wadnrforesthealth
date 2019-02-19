@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Security
         {
             if (!HasPermissionByPerson(person))
             {
-                return new PermissionCheckResult($"You don't have permission to view {contextModelObject.DisplayName}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to view {contextModelObject.DisplayName}");
             }
 
             if (contextModelObject.IsProposal() && person.IsAnonymousUser)
@@ -53,17 +53,17 @@ namespace ProjectFirma.Web.Security
                 // do not allow if user is anonymous and do not show proposals to public
                 if (!MultiTenantHelpers.ShowApplicationsToThePublic())
                 {
-                    return new PermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
+                    return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
                 }
                 // do not allow if user is anonymous and show proposals to public and stage a stage other than pending 
                 if (MultiTenantHelpers.ShowApplicationsToThePublic() && contextModelObject.ProjectApprovalStatus != ProjectApprovalStatus.PendingApproval)
                 {
-                    return new PermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
+                    return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not visible to you.");
                 }                
             }
 
             // Allowed
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }
 }

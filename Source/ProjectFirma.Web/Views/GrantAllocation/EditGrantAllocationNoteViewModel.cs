@@ -18,14 +18,13 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using LtInfo.Common;
+using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Models;
-using LtInfo.Common;
-using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {

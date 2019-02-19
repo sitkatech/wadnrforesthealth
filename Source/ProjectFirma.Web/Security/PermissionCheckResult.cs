@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 
 namespace ProjectFirma.Web.Security
@@ -27,17 +29,35 @@ namespace ProjectFirma.Web.Security
         public readonly bool HasPermission;
         public readonly string PermissionDeniedMessage;
 
-        public PermissionCheckResult(string permissionDeniedMessage)
+        public PermissionCheckResult(bool hasPermission, string permissionDeniedMessage)
         {
-            Check.RequireNotNullNotEmptyNotWhitespace(permissionDeniedMessage, "Should have a message on why permission is denied!");
+            Check.Ensure(hasPermission || !GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(permissionDeniedMessage), "Should have a message on why permission is denied!");
+
+            HasPermission = hasPermission;
             PermissionDeniedMessage = permissionDeniedMessage;
-            HasPermission = false;
         }
 
-        public PermissionCheckResult()
+        public static PermissionCheckResult MakeSuccessPermissionCheckResult()
         {
-            HasPermission = true;
-            PermissionDeniedMessage = string.Empty;
+            return new PermissionCheckResult(true, string.Empty);
+        }
+
+        public static PermissionCheckResult MakeFailurePermissionCheckResult(string permissionDeniedMessage)
+        {
+            return new PermissionCheckResult(false, permissionDeniedMessage);
+        }
+
+        /// <param name="hasPermission"></param>
+        /// <param name="possiblePermissionDeniedMessage">If hasPermission is false, this will be used, otherwise ignored.</param>
+        /// <returns></returns>
+        public static PermissionCheckResult MakeConditionalPermissionCheckResult(bool hasPermission, string possiblePermissionDeniedMessage)
+        {
+            if (hasPermission)
+            {
+                return MakeSuccessPermissionCheckResult();
+            }
+
+            return MakeFailurePermissionCheckResult(possiblePermissionDeniedMessage);
         }
     }
 }

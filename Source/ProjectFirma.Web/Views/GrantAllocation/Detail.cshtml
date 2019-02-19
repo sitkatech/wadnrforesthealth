@@ -18,24 +18,13 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
-@using LtInfo.Common
-@using LtInfo.Common.HtmlHelperExtensions
-@using ProjectFirma.Web.Models
-@using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls
-@using ProjectFirma.Web.Views.Shared.ProjectControls
-@using ProjectFirma.Web.Views.Shared.ProjectLocationControls
-@using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared
-@using ProjectFirma.Web.Views.Shared.TextControls
 @using LtInfo.Common.BootstrapWrappers
-@using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
-@using MoreLinq
-@using ProjectFirma.Web.Views.ProjectFunding
+@using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
-@using ProjectFirma.Web.Views.Shared.ProjectDocument
-@using ProjectFirma.Web.Views.Shared.ProjectOrganization
-@using ProjectFirma.Web.Views.Shared.ProjectPerson
+@using ProjectFirma.Web.Views.Shared.TextControls
+
 @inherits ProjectFirma.Web.Views.GrantAllocation.Detail
 
 @section JavascriptAndStylesContent
@@ -95,29 +84,13 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewGrantAllocationNoteUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.ProjectName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
                         Notes
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div class="basicsLayout">
 
-                        @foreach (var grantAllocationNote in ViewDataTyped.GrantAllocation.GrantAllocationNotes)
-                        {
-                            <div class="row">
-                                <strong>@grantAllocationNote.CreatedDate @grantAllocationNote.CreatedByPerson.FullNameFirstLast</strong>
-                            </div>
-                            <div class="row">
-                                @if (grantAllocationNote.GrantAllocationNoteText != "")
-                                {
-                                    @grantAllocationNote.GrantAllocationNoteText
-                                }
-                                else
-                                {
-                                    <p>No notes available.</p>
-                                }
-                            </div>
-                        }
+                        @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantAllocationNotesViewData); }
 
                     </div>
                 </div>

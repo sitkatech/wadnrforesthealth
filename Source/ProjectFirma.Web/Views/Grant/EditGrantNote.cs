@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Views.Shared.ProjectControls;
 
 namespace ProjectFirma.Web.Views.Grant
 {
@@ -37,7 +36,7 @@ namespace ProjectFirma.Web.Views.Grant
         }
 
         public static readonly EditGrantNoteTypeNewNote NewNote = EditGrantNoteTypeNewNote.Instance;
-        public static readonly EditGrantTypeExistingGrant ExistingGrant = EditGrantTypeExistingGrant.Instance;
+        public static readonly EditGrantNoteTypeExistingNote ExistingNote = EditGrantNoteTypeExistingNote.Instance;
     }
 
     public class EditGrantNoteTypeNewNote : EditGrantNoteType

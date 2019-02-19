@@ -24,6 +24,8 @@ namespace ProjectFirma.Web.Models
 {
     public interface IEntityNote
     {
+        DateTime Created { get; }
+        string CreatedBy { get; }
         DateTime LastUpdated { get; }
         string LastUpdatedBy { get; }
         string DeleteUrl { get; }

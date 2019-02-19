@@ -485,6 +485,7 @@
                             <strong>Public Notes</strong>
                         }
                         @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.ProjectNotesViewData); }
+
                         @if (ViewDataTyped.UserHasEditProjectPermissions)
                         {
                             <hr />

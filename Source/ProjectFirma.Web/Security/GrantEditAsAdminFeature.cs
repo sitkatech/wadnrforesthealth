@@ -9,7 +9,7 @@ namespace ProjectFirma.Web.Security
         private readonly FirmaFeatureWithContextImpl<Grant> _firmaFeatureWithContextImpl;
 
         public GrantEditAsAdminFeature()
-            : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward })
+            : base(new List<Role> { Role.SitkaAdmin, Role.Admin})
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Grant>(this);
             ActionFilter = _firmaFeatureWithContextImpl;
@@ -22,7 +22,13 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Grant contextModelObject)
         {
-            return new PermissionCheckResult();
+            bool userHasPermision = HasPermissionByPerson(person);
+            if (userHasPermision)
+            {
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
+            }
+
+            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have access to Grant {contextModelObject.GrantName}");
         }
     }
 }
