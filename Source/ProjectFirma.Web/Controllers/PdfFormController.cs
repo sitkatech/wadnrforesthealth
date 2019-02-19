@@ -21,11 +21,13 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using iText.Forms;
 using iText.Forms.Fields;
 using iText.Kernel.Pdf;
 using LtInfo.Common;
+using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Controllers
@@ -34,38 +36,53 @@ namespace ProjectFirma.Web.Controllers
     {
 
         [AnonymousUnclassifiedFeature]
-        public FileContentResult DoStuffWithPdf()
+        public FileContentResult CostShareAgreementPdf(ProjectPrimaryKey projectPrimaryKey)
         {
             // TODO: Permissions checks?
 
-            //string filePath = Server.MapPath(Url.Content("~/Content/Images/Image.jpg"));
             string blankCostSharePdfFilePath = Server.MapPath(Url.Content("~/Content/documents/CostShareBlankFormFields.pdf"));
-            //string pdfInputFilename = "c:\\temp\\SampleHealth.pdf";
-            //string pdfOutputFilename = "c:\\temp\\SampleHealthOutput2.pdf";
-
             byte[] binaryContentsOfOutputPdfFile;
+            var outputFileName = "CostShareAgreementBlank.pdf";
+
+            var project = projectPrimaryKey.EntityObject;
+            var landOwnerContacts = project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType.ToEnum == ProjectPersonRelationshipTypeEnum.Landowner);
+
+            // If no landowners, return empty default PDF file
+            if (!landOwnerContacts.Any())
+            {
+                binaryContentsOfOutputPdfFile = System.IO.File.ReadAllBytes(blankCostSharePdfFilePath);
+                return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
+            }
+
+            if (landOwnerContacts.Count() > 1)
+            {
+                throw new Exception("Too many landowners");
+            }
+
+            var landowner = landOwnerContacts.Single();
+
             using (var outputPdfFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".pdf"))
             {
-                string outputFileName = outputPdfFile.FileInfo.FullName;
+                outputFileName = outputPdfFile.FileInfo.FullName;
 
                 PdfDocument pdf = new PdfDocument(new PdfReader(blankCostSharePdfFilePath), new PdfWriter(outputFileName));
                 PdfAcroForm form = PdfAcroForm.GetAcroForm(pdf, true);
                 IDictionary<String, PdfFormField> fields = form.GetFormFields();
 
                 fields.TryGetValue("Names", out var nameToSet);
-                nameToSet.SetValue("Name Goes Here");
+                nameToSet.SetValue(landowner.Person.FullNameFirstLast);
 
                 fields.TryGetValue("Address1", out var address1);
-                address1.SetValue("Address 1 goes here");
+                address1.SetValue(landowner.Person.PersonAddress);
 
                 fields.TryGetValue("Address2", out var address2);
-                address2.SetValue("Address 2 goes here");
+                address2.SetValue(string.Empty);
 
                 fields.TryGetValue("PhoneNumber", out var phoneToSet);
-                phoneToSet.SetValue("Phone # goes here");
+                phoneToSet.SetValue(landowner.Person.Phone);
 
                 fields.TryGetValue("Email", out var emailToSet);
-                emailToSet.SetValue("Email goes here");
+                emailToSet.SetValue(landowner.Person.Email);
 
                 form.FlattenFields();
                 pdf.Close();
