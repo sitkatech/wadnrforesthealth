@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Security
         {
             if (contextModelObject == null)
             {
-                return new PermissionCheckResult("The Person whose details you are requesting to see doesn't exist.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult("The Person whose details you are requesting to see doesn't exist.");
             }
             var userHasEditPermission = new UserEditBasicsFeature().HasPermissionByPerson(person);
             var userHasManagePermission = new ContactManageFeature().HasPermissionByPerson(person);
@@ -56,21 +56,21 @@ namespace ProjectFirma.Web.Security
             #pragma warning restore 612
             if (!userHasAppropriateRole)
             {
-                return new PermissionCheckResult("You don't permissions to view user details. If you aren't logged in, do that and try again.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult("You don't permissions to view user details. If you aren't logged in, do that and try again.");
             }
 
             //Only SitkaAdmin users should be able to see other SitkaAdmin users
             if (person.Role != Role.SitkaAdmin && contextModelObject.Role == Role.SitkaAdmin)
             {
-                return new PermissionCheckResult("You don\'t have permission to view this user.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult("You don\'t have permission to view this user.");
             }
 
             if (userViewingOwnPage || userHasEditPermission || userHasManagePermission)
             {
-                return new PermissionCheckResult();
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
-            return new PermissionCheckResult("You don\'t have permission to view this user.");
+            return PermissionCheckResult.MakeFailurePermissionCheckResult("You don\'t have permission to view this user.");
         }
 
         //This should only ever be called by HasPermission

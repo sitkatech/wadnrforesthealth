@@ -23,6 +23,7 @@
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Models
 @using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Views.Shared.TextControls
 @inherits ProjectFirma.Web.Views.Grant.Detail
 
 @section JavascriptAndStylesContent
@@ -158,24 +159,12 @@
                     <div class="panel panelFirma">
                         <div class="panel-heading panelTitle">
                             <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.NewGrantNoteUrl, string.Format("Add new note for {0}", ViewDataTyped.Grant.GrantTitle), 950, ViewDataTyped.UserHasEditGrantPermissions)
                                 Notes
                             </h3>
                         </div>
                         <div class="panel-body">
                             <div class="basicsLayout">
-
-                                @foreach (var grantNote in ViewDataTyped.Grant.GrantNotes.OrderByDescending(n => n.CreatedDate))
-                                {
-                                    <div class="row">
-                                        <strong>@grantNote.CreatedDate @grantNote.CreatedByPerson.FullNameFirstLast</strong>
-                                    </div>
-                                    <div class="row">
-                                        @grantNote.GrantNoteText
-                                    </div>
-                                }
-
-
+                                @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
 
                             </div>
                         </div>

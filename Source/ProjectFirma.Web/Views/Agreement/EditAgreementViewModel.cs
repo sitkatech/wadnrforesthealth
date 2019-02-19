@@ -28,7 +28,6 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
-using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -56,7 +55,7 @@ namespace ProjectFirma.Web.Views.Agreement
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementType)]
         [Required]
-        public int? AgreementTypeID { get; set; }
+        public int AgreementTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
         public int? GrantID { get; set; }
@@ -140,11 +139,19 @@ namespace ProjectFirma.Web.Views.Agreement
                 yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
                     $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Agreement Amount must be blank", m => m.AgreementAmount);
             }
-            if (!GrantID.HasValue && (mouAgreementType == null || !AgreementTypeID.HasValue || AgreementTypeID != mouAgreementType.AgreementTypeID))
+            if (!GrantID.HasValue && (mouAgreementType == null || AgreementTypeID != mouAgreementType.AgreementTypeID))
             {
                 yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
                     $"A Grant must be selected if the Agreement Type is not MOU", m => m.GrantID);
             }
+            if (AgreementAmount.HasValue && AgreementAmount > 2147483646 )
+            {
+                yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
+                    $"The Agreement Amount you entered exceeds the maximum. Please enter an amount less than $2,147,483,646", m => m.AgreementAmount);
+            }
+
+
+            
         }
     }
 }

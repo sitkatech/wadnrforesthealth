@@ -28,6 +28,24 @@ namespace ProjectFirma.Web.Models
 {
     public partial class PerformanceMeasureNote : IAuditableEntity, IEntityNote
     {
+
+        public DateTime Created
+        {
+            get { return CreateDate; }
+        }
+
+        public string CreatedBy
+        {
+            get
+            {
+                if (CreatePersonID.HasValue)
+                {
+                    return CreatePerson.FullNameFirstLast;
+                }
+                return "System";
+            }
+        }
+
         public DateTime LastUpdated
         {
             get { return UpdateDate ?? CreateDate; }
@@ -41,11 +59,7 @@ namespace ProjectFirma.Web.Models
                 {
                     return UpdatePerson.FullNameFirstLast;
                 }
-                if (CreatePersonID.HasValue)
-                {
-                    return CreatePerson.FullNameFirstLast;
-                }
-                return "System";
+                return string.Empty;
             }
         }
 
@@ -59,10 +73,7 @@ namespace ProjectFirma.Web.Models
             get { return SitkaRoute<PerformanceMeasureNoteController>.BuildUrlFromExpression(c => c.Edit(PerformanceMeasureNoteID)); }
         }
 
-        public string CreatePersonName
-        {
-            get { return CreatePersonID.HasValue ? CreatePerson.FullNameFirstLast : string.Empty; }
-        }
+
 
         public string AuditDescriptionString
         {

@@ -20,15 +20,16 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Project contextModelObject)
         {
-            var permissionDeniedMessage = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} is not deletable by you";
+            var possiblePermissionDeniedMessage = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} is not deletable by you";
             if (new ProjectDeleteFeature().HasPermission(person, contextModelObject).HasPermission)
             {
-                return new PermissionCheckResult();
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
-            return contextModelObject.IsMyProject(person) && (contextModelObject.ProjectApprovalStatus == ProjectApprovalStatus.Draft || contextModelObject.ProjectApprovalStatus == ProjectApprovalStatus.Rejected)
-                ? new PermissionCheckResult()
-                : new PermissionCheckResult(permissionDeniedMessage);
+            bool userHasPermission = contextModelObject.IsMyProject(person) 
+                                     && (contextModelObject.ProjectApprovalStatus == ProjectApprovalStatus.Draft || contextModelObject.ProjectApprovalStatus == ProjectApprovalStatus.Rejected);
+           
+            return PermissionCheckResult.MakeConditionalPermissionCheckResult(userHasPermission, possiblePermissionDeniedMessage);
         }
     }
 }

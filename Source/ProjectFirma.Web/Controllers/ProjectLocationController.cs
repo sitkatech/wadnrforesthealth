@@ -18,19 +18,19 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using LtInfo.Common;
+using LtInfo.Common.DbSpatial;
+using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Map;
+using ProjectFirma.Web.Views.Shared.ProjectControls;
+using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web.Mvc;
-using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Shared.ProjectControls;
-using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
-using LtInfo.Common;
-using LtInfo.Common.DbSpatial;
-using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.Map;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -75,14 +75,15 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult EditProjectLocationDetailed(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ProjectLocationDetailViewModel();
+            var projectLocationsDetailed = project.ProjectLocations;
+            var viewModel = new ProjectLocationDetailViewModel(projectLocationsDetailed);
             return ViewEditProjectLocationDetailed(project, viewModel);
         }
 
         private PartialViewResult ViewEditProjectLocationDetailed(IProject project, ProjectLocationDetailViewModel viewModel)
         {
             var mapDivID = $"project_{project.EntityID}_EditDetailedMap";
-            var detailedLocationGeoJsonFeatureCollection = project.DetailedLocationToGeoJsonFeatureCollection();
+            var detailedLocationGeoJsonFeatureCollection = project.AllDetailedLocationsToGeoJsonFeatureCollection();
             var editableLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
@@ -100,7 +101,7 @@ namespace ProjectFirma.Web.Controllers
 
             var hasSimpleLocationPoint = project.ProjectLocationPoint != null;
 
-            var viewData = new ProjectLocationDetailViewData(project.EntityID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.Annotation, hasSimpleLocationPoint);
+            var viewData = new ProjectLocationDetailViewData(project.EntityID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.ProjectLocationNotes, hasSimpleLocationPoint);
             return RazorPartialView<ProjectLocationDetail, ProjectLocationDetailViewData, ProjectLocationDetailViewModel>(viewData, viewModel);
         }
 
@@ -114,7 +115,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditProjectLocationDetailed(project, viewModel);
             }
-            SaveProjectDetailedLocations(viewModel, project);
+            SaveProjectDetailedLocationsWithDelete(viewModel, project);
             return new ModalDialogFormJsonResult();
         }
 
@@ -153,7 +154,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 var gdbFile = disposableTempFile.FileInfo;
                 httpPostedFileBase.SaveAs(gdbFile.FullName);
-                foreach (var projectLocationStaging in project.ProjectLocationStagings)
+                var pls = project.ProjectLocationStagings.ToList();
+                foreach (var projectLocationStaging in pls)
                 {
                     projectLocationStaging.DeleteFull(HttpRequestStorage.DatabaseEntities);
                 }
@@ -168,7 +170,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult ApproveGisUpload(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ProjectLocationDetailViewModel();
+            var viewModel = new ProjectLocationDetailViewModel(project.ProjectLocations);
             return ViewApproveGisUpload(project, viewModel);
         }
 
@@ -209,18 +211,28 @@ namespace ProjectFirma.Web.Controllers
             return EditProjectLocationDetailed(projectPrimaryKey);
         }
 
-        private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
+        private static void SaveProjectDetailedLocationsWithDelete(ProjectLocationDetailViewModel viewModel, Project project)
         {
-            foreach (var projectLocation in project.ProjectLocations)
+            var currentProjectLocations = project.ProjectLocations.ToList();
+            foreach (var currentProjectLocation in currentProjectLocations)
             {
-                projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
             project.ProjectLocations.Clear();
-            if (viewModel.WktAndAnnotations != null)
+
+            SaveProjectDetailedLocations(viewModel, project);
+        }
+
+        private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
+        {
+            
+            if (viewModel.ProjectLocationJsons != null)
             {
-                foreach (var wktAndAnnotation in viewModel.WktAndAnnotations)
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
                 {
-                    project.ProjectLocations.Add(new ProjectLocation(project, DbGeometry.FromText(wktAndAnnotation.Wkt, FirmaWebConfiguration.GeoSpatialReferenceID), wktAndAnnotation.Annotation));
+                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
+                    var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName, projectLocationGeometry, projectLocationJson.ProjectLocationTypeID, projectLocationJson.ProjectLocationNotes);
+                    project.ProjectLocations.Add(projectLocation);
                 }
             }
         }
@@ -265,7 +277,7 @@ namespace ProjectFirma.Web.Controllers
                             FirmaHelpers.DefaultColorRange[1], 0.8m, LayerInitialVisibility.Show)
                         : null,
                     project.HasProjectLocationDetail
-                        ? new LayerGeoJson("Detailed Location", project.DetailedLocationToGeoJsonFeatureCollection(),
+                        ? new LayerGeoJson("Detailed Location", project.AllDetailedLocationsToGeoJsonFeatureCollection(),
                             FirmaHelpers.DefaultColorRange[1], 0.8m, LayerInitialVisibility.Show)
                         : null
                 }

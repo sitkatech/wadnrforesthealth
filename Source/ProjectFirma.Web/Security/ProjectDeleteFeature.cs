@@ -45,10 +45,9 @@ namespace ProjectFirma.Web.Security
             var hasPermissionByPerson = HasPermissionByPerson(person);
             if (!hasPermissionByPerson)
             {
-                return new PermissionCheckResult(
-                    $"You don't have permission to delete {contextModelObject.DisplayName}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to delete {contextModelObject.DisplayName}");
             }
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }
 }

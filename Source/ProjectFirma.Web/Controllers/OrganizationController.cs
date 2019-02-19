@@ -150,7 +150,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
-        [AgreementsViewFullListFeature]
+        [OrganizationViewFeature]
         public ExcelResult AgreementsExcelDownload(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;

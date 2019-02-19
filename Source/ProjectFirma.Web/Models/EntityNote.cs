@@ -26,6 +26,8 @@ namespace ProjectFirma.Web.Models
 {
     public class EntityNote : IEntityNote
     {
+        public DateTime Created { get; private set; }
+        public string CreatedBy { get; private set; }
         public DateTime LastUpdated { get; private set; }
         public string LastUpdatedBy { get; private set; }
         public string DeleteUrl { get; private set; }
@@ -33,8 +35,10 @@ namespace ProjectFirma.Web.Models
         public string Note { get; set; }
         public string DisplayCssClass { get; set; }
 
-        public EntityNote(DateTime lastUpdated, string lastUpdatedBy, string deleteUrl, string editUrl, string note, string displayCssClass)
+        public EntityNote(DateTime created, string createdBy, DateTime lastUpdated, string lastUpdatedBy, string deleteUrl, string editUrl, string note, string displayCssClass)
         {
+            Created = created;
+            CreatedBy = createdBy;
             LastUpdated = lastUpdated;
             LastUpdatedBy = lastUpdatedBy;
             DeleteUrl = deleteUrl;
@@ -45,7 +49,7 @@ namespace ProjectFirma.Web.Models
 
         public static List<EntityNote> CreateFromEntityNote(List<IEntityNote> entityNotes)
         {
-            return entityNotes.Select(x => new EntityNote(x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, null)).ToList();
+            return entityNotes.Select(x => new EntityNote(x.Created, x.CreatedBy, x.LastUpdated, x.LastUpdatedBy, x.DeleteUrl, x.EditUrl, x.Note, null)).ToList();
         }
     }
 }

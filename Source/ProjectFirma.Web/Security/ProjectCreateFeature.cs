@@ -44,26 +44,26 @@ namespace ProjectFirma.Web.Security
         {
             if (!HasPermissionByPerson(person))
             {
-                return new PermissionCheckResult($"You don't have permission to edit {contextModelObject.DisplayName}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {contextModelObject.DisplayName}");
             }
 
             if (contextModelObject.ProjectApprovalStatus == ProjectApprovalStatus.Approved)
             {
-                return new PermissionCheckResult($"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} has been approved and can no longer be edited through this wizard.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} has been approved and can no longer be edited through this wizard.");
             }
 
             if (contextModelObject.ProjectApprovalStatus == ProjectApprovalStatus.Rejected)
             {
-                return new PermissionCheckResult($"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} has been rejected and can no longer be edited through this wizard.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"This {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} has been rejected and can no longer be edited through this wizard.");
             }
 
             var projectIsEditableByUser = contextModelObject.IsEditableToThisPerson(person);
             if (!projectIsEditableByUser)
             {
-                return new PermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not editable by you.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.ProjectID} is not editable by you.");
             }
 
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }
 }

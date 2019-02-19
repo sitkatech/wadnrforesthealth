@@ -132,6 +132,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TaxonomyBranch> TaxonomyBranches { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
+        public virtual DbSet<tmpAgreement2> tmpAgreement2s { get; set; }
+        public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
 
@@ -487,6 +489,11 @@ namespace ProjectFirma.Web.Models
                 case "ProjectLocationStagingUpdate":
                     return ProjectLocationStagingUpdates.GetProjectLocationStagingUpdate(primaryKey);
 
+                case "ProjectLocationType":
+                    var projectLocationType = ProjectLocationType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(projectLocationType, "ProjectLocationType", primaryKey);
+                    return projectLocationType;
+
                 case "ProjectLocationUpdate":
                     return ProjectLocationUpdates.GetProjectLocationUpdate(primaryKey);
 
@@ -615,6 +622,12 @@ namespace ProjectFirma.Web.Models
 
                 case "TaxonomyTrunk":
                     return TaxonomyTrunks.GetTaxonomyTrunk(primaryKey);
+
+                case "tmpAgreement2":
+                    return tmpAgreement2s.GettmpAgreement2(primaryKey);
+
+                case "tmpAgreementContact":
+                    return tmpAgreementContacts.GettmpAgreementContact(primaryKey);
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);

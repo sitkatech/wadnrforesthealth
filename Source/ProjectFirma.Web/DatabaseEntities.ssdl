@@ -105,6 +105,7 @@
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Store.Tag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
@@ -821,8 +822,7 @@
       <PropertyRef Name="AgreementID" />
     </Key>
     <Property Name="AgreementID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="TmpAgreementID" Type="int" />
-    <Property Name="AgreementTypeID" Type="int" />
+    <Property Name="AgreementTypeID" Type="int" Nullable="false" />
     <Property Name="AgreementNumber" Type="nvarchar" MaxLength="100" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
@@ -837,6 +837,7 @@
     <Property Name="GrantID" Type="int" />
     <Property Name="AgreementStatusID" Type="int" />
     <Property Name="AgreementFileResourceID" Type="int" />
+    <Property Name="tmpAgreement2ID" Type="int" />
   </EntityType>
   <EntityType Name="AgreementGrantAllocation">
     <Key>
@@ -1622,7 +1623,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationGeometry" Type="geometry" Nullable="false" />
-    <Property Name="Annotation" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationNotes" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
+    <Property Name="ProjectLocationName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
     <Key>
@@ -1655,7 +1658,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationUpdateGeometry" Type="geometry" Nullable="false" />
-    <Property Name="Annotation" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationUpdateNotes" Type="varchar" MaxLength="255" />
+    <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
+    <Property Name="ProjectLocationUpdateName" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="ProjectNote">
     <Key>
@@ -1961,6 +1966,27 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxonomyTrunkCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyTrunkSortOrder" Type="int" />
   </EntityType>
+  <EntityType Name="tmpAgreementContact">
+    <Key>
+      <PropertyRef Name="AgreementContactID" />
+    </Key>
+    <Property Name="AgreementContactID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementNumber" Type="nvarchar" MaxLength="255" />
+    <Property Name="Title" Type="nvarchar" MaxLength="255" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="Organization" Type="nvarchar" MaxLength="255" />
+    <Property Name="AgreementRole" Type="nvarchar" MaxLength="255" />
+    <Property Name="F8" Type="nvarchar" MaxLength="255" />
+    <Property Name="F9" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpFuzzyMatchingRegionsToGrants' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmpGrantsFlatFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
   <EntityType Name="TrainingVideo">
     <Key>
       <PropertyRef Name="TrainingVideoID" />
@@ -2024,7 +2050,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Agreement_AgreementType_AgreementTypeID">
-    <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="0..1" />
+    <End Role="AgreementType" Type="ProjectFirma.Web.Models.Store.AgreementType" Multiplicity="1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AgreementType">

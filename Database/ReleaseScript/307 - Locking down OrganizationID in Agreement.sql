@@ -1,0 +1,1 @@
+alter table dbo.Agreement alter column OrganizationID int not null

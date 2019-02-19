@@ -70,10 +70,10 @@ else
     @*This is intentionally down here because the document ready needs to be after the EditProjectLocation document ready*@
     <script type="text/javascript">
         // <![CDATA[
-        jQuery(document).ready(function () { HookupCheckIfFormIsDirty("#@ViewDataTyped.ProjectLocationDetailViewData.MapFormID", ".submitProject"); });
+        jQuery(document).ready(function () { HookupCheckIfFormIsDirty("#@ViewDataTyped.ProjectLocationDetailViewData.MapFormId", ".submitProject"); });
 
         function saveForm(autoAdvance) {
-            var form = jQuery("#@ViewDataTyped.ProjectLocationDetailViewData.MapFormID");
+            var form = jQuery("#@ViewDataTyped.ProjectLocationDetailViewData.MapFormId");
             // Do not submit if the form
             // does not pass client side validation
 

@@ -48,25 +48,25 @@ namespace ProjectFirma.Web.Security
 
             if (contextModelObject.PersonID == person.PersonID)
             {
-                return new PermissionCheckResult();
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
             if (string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier))
             {
                 if (hasContactManagePermissions)
                 {
-                    return new PermissionCheckResult();
+                    return PermissionCheckResult.MakeSuccessPermissionCheckResult();
                 }
             }
             else
             {
                 if (hasAdminPermissions)
                 {
-                    return new PermissionCheckResult();
+                    return PermissionCheckResult.MakeSuccessPermissionCheckResult();
                 }
             }
 
-            return new PermissionCheckResult($"You do not have permission to edit {contextModelObject.FullNameFirstLast}");
+            return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to edit {contextModelObject.FullNameFirstLast}");
         }
     }
 }

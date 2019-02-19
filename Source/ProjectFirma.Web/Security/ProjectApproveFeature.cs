@@ -40,17 +40,17 @@ namespace ProjectFirma.Web.Security
             var projectLabel = FieldDefinition.Project.GetFieldDefinitionLabel();
             if (!HasPermissionByPerson(person))
             {
-                return new PermissionCheckResult($"You do not have permission to approve this {projectLabel}.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel}.");
             }
 
             if (person.Role.RoleID == Role.ProjectSteward.RoleID &&
                 !person.CanStewardProject(contextModelObject))
             {
                 var organizationLabel = FieldDefinition.Organization.GetFieldDefinitionLabel();
-                return new PermissionCheckResult($"You do not have permission to approve this {projectLabel} based on your relationship to the {projectLabel}'s {organizationLabel}.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You do not have permission to approve this {projectLabel} based on your relationship to the {projectLabel}'s {organizationLabel}.");
             }
 
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
 
         public void DemandPermission(Person person, Project contextModelObject)

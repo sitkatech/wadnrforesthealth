@@ -44,9 +44,9 @@ namespace ProjectFirma.Web.Security
         {
             if (HasPermissionByPerson(person))
             {
-                return new PermissionCheckResult();
+                return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
-            return new PermissionCheckResult("Does not have administration privileges");
+            return PermissionCheckResult.MakeFailurePermissionCheckResult("Does not have administration privileges");
         }
     }
 }

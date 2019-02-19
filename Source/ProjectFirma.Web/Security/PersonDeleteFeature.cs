@@ -25,15 +25,14 @@ namespace ProjectFirma.Web.Security
             var hasPermissionByPerson = new ContactManageFeature().HasPermissionByPerson(person);
             if (!hasPermissionByPerson)
             {
-                return new PermissionCheckResult(
-                    $"You don't have permission to delete {contextModelObject.FullNameFirstLast}");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to delete {contextModelObject.FullNameFirstLast}");
             }
 
             if (!string.IsNullOrWhiteSpace(contextModelObject.PersonUniqueIdentifier))
             {
-                return new PermissionCheckResult($"{contextModelObject.FullNameFirstLast} cannot be deleted because they are a user with an account.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"{contextModelObject.FullNameFirstLast} cannot be deleted because they are a user with an account.");
             }
-            return new PermissionCheckResult();
+            return PermissionCheckResult.MakeSuccessPermissionCheckResult();
         }
     }
 }

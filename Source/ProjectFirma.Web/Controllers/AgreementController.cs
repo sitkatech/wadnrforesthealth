@@ -31,16 +31,14 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult New(EditAgreementViewModel viewModel)
         {
-
             if (!ModelState.IsValid)
             {
                 return ViewEdit(viewModel, EditAgreementType.NewAgreement);
             }
            
-            var agreementOrganization =
-                HttpRequestStorage.DatabaseEntities.Organizations.Single(g =>
-                    g.OrganizationID == viewModel.OrganizationID);
-            var agreement = Agreement.CreateNewBlank(agreementOrganization);
+            var agreementOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
+            var agreementType = HttpRequestStorage.DatabaseEntities.AgreementTypes.Single(at => at.AgreementTypeID == viewModel.AgreementTypeID);
+            var agreement = Agreement.CreateNewBlank(agreementType, agreementOrganization);
             viewModel.UpdateModel(agreement, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }

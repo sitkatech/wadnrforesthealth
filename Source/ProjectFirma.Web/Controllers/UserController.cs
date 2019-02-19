@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -31,7 +32,10 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Shared.UserStewardshipAreas;
+using Detail = ProjectFirma.Web.Views.User.Detail;
+using DetailViewData = ProjectFirma.Web.Views.User.DetailViewData;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -133,6 +137,7 @@ namespace ProjectFirma.Web.Controllers
             const string basicProjectInfoGridName = "userProjectListGrid";
             var basicProjectInfoGridDataUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(person));
             var activateInactivateUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.ActivateInactivatePerson(person));
+            var agreements = GetAgreementsByPerson(person);
             var viewData = new DetailViewData(CurrentPerson,
                 person,
                 basicProjectInfoGridSpec,
@@ -141,7 +146,8 @@ namespace ProjectFirma.Web.Controllers
                 userNotificationGridSpec,
                 "userNotifications",
                 userNotificationGridDataUrl,
-                activateInactivateUrl);
+                activateInactivateUrl,
+                agreements.Any(x => x.AgreementFileResourceID.HasValue));
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
@@ -362,6 +368,36 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay($"Successfully updated {person.GetFullNameFirstLastAsUrl()}");
 
             return new ModalDialogFormJsonResult();
+        }
+
+        [UserViewFeature]
+        public ExcelResult UserAgreementsExcelDownload(PersonPrimaryKey personPrimaryKey)
+        {
+            var person = personPrimaryKey.EntityObject;
+            var agreements = GetAgreementsByPerson(person);
+            var workbookTitle = $"{FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()} for {person.FullNameFirstLast}";
+            return AgreementController.AgreementsExcelDownloadImpl(agreements, workbookTitle);
+        }
+
+        private static List<Agreement> GetAgreementsByPerson(Person person)
+        {
+            var agreementContacts = person.AgreementPeople.Select(a => a.AgreementID).Distinct().ToList();
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements
+                .Where(a => agreementContacts.Contains(a.AgreementID)).OrderBy(a => a.AgreementNumber).ToList();
+            return agreements;
+        }
+
+        [UserViewFeature]
+        public GridJsonNetJObjectResult<Agreement> UserAgreementsGridJsonData(PersonPrimaryKey personPrimaryKey)
+        {
+            var person = personPrimaryKey.EntityObject;
+            var agreements = GetAgreementsByPerson(person);
+            var gridSpec = new AgreementGridSpec(CurrentPerson, agreements.Any(x => x.AgreementFileResourceID.HasValue), false, false)
+            {
+                CustomExcelDownloadUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.UserAgreementsExcelDownload(personPrimaryKey))
+            };
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
+            return gridJsonNetJObjectResult;
         }
     }
 }

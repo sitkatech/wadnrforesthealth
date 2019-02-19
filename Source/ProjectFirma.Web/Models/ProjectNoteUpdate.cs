@@ -29,6 +29,22 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectNoteUpdate : IEntityNote
     {
+        public DateTime Created
+        {
+            get { return CreateDate; }
+        }
+
+        public string CreatedBy
+        {
+            get
+            {
+                if (CreatePersonID.HasValue)
+                {
+                    return CreatePerson.FullNameFirstLast;
+                }
+                return "System";
+            }
+        }
         public DateTime LastUpdated
         {
             get { return UpdateDate ?? CreateDate; }
@@ -42,11 +58,7 @@ namespace ProjectFirma.Web.Models
                 {
                     return UpdatePerson.FullNameFirstLast;
                 }
-                if (CreatePersonID.HasValue)
-                {
-                    return CreatePerson.FullNameFirstLast;
-                }
-                return "System";
+                return string.Empty;
             }
         }
 

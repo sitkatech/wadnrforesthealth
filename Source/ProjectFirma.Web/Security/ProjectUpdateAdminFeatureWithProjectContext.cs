@@ -20,17 +20,15 @@ namespace ProjectFirma.Web.Security
         {
             if (contextModelObject.IsProposal())
             {
-                return new PermissionCheckResult($"{FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} cannot be updated through the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update process.");
+                return PermissionCheckResult.MakeFailurePermissionCheckResult($"{FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} cannot be updated through the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update process.");
             }
 
             var forbidAdmin = !HasPermissionByPerson(person) ||
                                        person.Role.RoleID == Role.ProjectSteward.RoleID &&
                                        !person.CanStewardProject(contextModelObject);
-            
-            return forbidAdmin
-                ? new PermissionCheckResult(
-                    $"You don't have permission to make Administrative actions on {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}")
-                : new PermissionCheckResult();
+
+            string possiblePermissionDeniedMessage = $"You don't have permission to make Administrative actions on {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}";
+            return PermissionCheckResult.MakeConditionalPermissionCheckResult(!forbidAdmin, possiblePermissionDeniedMessage);
         }
 
         public void DemandPermission(Person person, Project contextModelObject)

@@ -9,7 +9,6 @@ select
 	p.ProjectID as PrimaryKey,
 	pl.ProjectLocationID,
 	p.ProjectName,
-	pl.Annotation,
 	pl.ProjectLocationGeometry
 from
 	dbo.Project as p join dbo.ProjectLocation as pl on p.ProjectID = pl.ProjectID
