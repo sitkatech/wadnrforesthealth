@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LtInfo.Common;
+﻿using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Security;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectCostShare
 {
@@ -24,27 +23,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectCostShare
                 CostShareAgreementLinks.Add(urlString);
             }
         }
-
-        public ProjectCostShareViewData(Models.Project project, Person currentPerson, bool showNewButton) : this(project, currentPerson)
-        {
-            //UserHasProjectManagePermissions = UserHasProjectManagePermissions && showNewButton;
-        }
-
-        public ProjectCostShareViewData(List<EntityDocument> documents, string addDocumentUrl, string projectName, bool canEditDocuments)
-        {
-            //Documents = documents;
-            //AddDocumentUrl = addDocumentUrl;
-            //ProjectName = projectName;
-            //CanEditDocuments = canEditDocuments;
-            //ShowDownload = true;
-        }
-
-        public ProjectCostShareViewData(List<EntityDocument> documents, string addDocumentUrl, string projectName,
-            bool canEditDocuments, bool showDownload) : this(documents,addDocumentUrl,projectName,canEditDocuments)
-        {
-            //ShowDownload = showDownload;
-        }
-
 
     }
 }

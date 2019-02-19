@@ -19,10 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 using iText.Forms;
 using iText.Forms.Fields;
 using iText.Kernel.Pdf;
@@ -30,23 +26,14 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace ProjectFirma.Web.Controllers
 {
     public class PdfFormController : FirmaBaseController
     {
-
-        [AnonymousUnclassifiedFeature]
-        public FileContentResult BlankCostShareAgreementPdf()
-        {
-            string blankCostSharePdfFilePath = BlankCostSharePdfFilePath();
-            byte[] binaryContentsOfOutputPdfFile;
-            var outputFileName = BlankOutputFileName();
-
-            binaryContentsOfOutputPdfFile = System.IO.File.ReadAllBytes(blankCostSharePdfFilePath);
-            return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
-            
-        }
 
         private string BlankCostSharePdfFilePath()
         {
@@ -59,15 +46,24 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [AnonymousUnclassifiedFeature]
-        //public FileContentResult CostShareAgreementPdf(ProjectPrimaryKey projectPrimaryKey)
-        //{
+        public FileContentResult BlankCostShareAgreementPdf()
+        {
+            string blankCostSharePdfFilePath = BlankCostSharePdfFilePath();
+            var outputFileName = BlankOutputFileName();
+
+            var binaryContentsOfOutputPdfFile = System.IO.File.ReadAllBytes(blankCostSharePdfFilePath);
+            return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
+            
+        }
+
+        [AnonymousUnclassifiedFeature]
         public FileContentResult CostShareAgreementPdf(ProjectPersonPrimaryKey projectPersonPrimaryKey)
         {
             // TODO: Permissions checks?
 
             string blankCostSharePdfFilePath = BlankCostSharePdfFilePath();
             byte[] binaryContentsOfOutputPdfFile;
-            var outputFileName = BlankOutputFileName();
+            string outputFileName;
 
             ProjectPerson landownerProjectPerson = projectPersonPrimaryKey.EntityObject;
             Person landownerPerson = landownerProjectPerson.Person;
@@ -85,19 +81,19 @@ namespace ProjectFirma.Web.Controllers
                 outputFileName = $"CostShareAgreement-{landownerName.Replace(" ", "")}.pdf";
 
                 fields.TryGetValue("Names", out var nameToSet);
-                nameToSet.SetValue(landownerName);
+                nameToSet?.SetValue(landownerName);
 
                 fields.TryGetValue("Address1", out var address1);
-                address1.SetValue(landownerPerson.PersonAddress);
+                address1?.SetValue(landownerPerson.PersonAddress);
 
                 fields.TryGetValue("Address2", out var address2);
-                address2.SetValue(string.Empty);
+                address2?.SetValue(string.Empty);
 
                 fields.TryGetValue("PhoneNumber", out var phoneToSet);
-                phoneToSet.SetValue(landownerPerson.Phone);
+                phoneToSet?.SetValue(landownerPerson.Phone);
 
                 fields.TryGetValue("Email", out var emailToSet);
-                emailToSet.SetValue(landownerPerson.Email);
+                emailToSet?.SetValue(landownerPerson.Email);
 
                 form.FlattenFields();
                 pdf.Close();
