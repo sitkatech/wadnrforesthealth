@@ -10,3 +10,6 @@ go
 
 drop table dbo.tmpWADNROrganizations
 go
+
+drop table dbo.tmpChildrenGrantsInGrantsTab
+go
