@@ -278,8 +278,9 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [AgreementEditAsAdminFeature]
-        public PartialViewResult EditAgreementGrantAllocationRelationships(int agreementId)
+        public PartialViewResult EditAgreementGrantAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey)
         {
+            var agreementId = agreementPrimaryKey.EntityObject.AgreementID;
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
             Check.EnsureNotNull(agreement);
 
@@ -290,9 +291,10 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [AgreementEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditAgreementGrantAllocationRelationships(int agreementId, EditAgreementGrantAllocationsViewModel viewModel)
+        public ActionResult EditAgreementGrantAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
         {
             // Find relevant agreement
+            var agreementId = agreementPrimaryKey.EntityObject.AgreementID;
             var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
             Check.EnsureNotNull(agreement);
 

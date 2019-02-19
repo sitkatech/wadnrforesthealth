@@ -29,7 +29,11 @@ namespace ProjectFirma.Web.UnitTestCommon
         {
             public static OrganizationType Create()
             {
+                const string testColor = "red";
                 var organizationType = OrganizationType.CreateNewBlank();
+                organizationType.OrganizationTypeName = MakeTestName("Test Organization Type Name");
+                organizationType.OrganizationTypeAbbreviation = MakeTestName("TEST_ABBREV", 100);
+                organizationType.LegendColor = testColor;
                 return organizationType;
             }
 

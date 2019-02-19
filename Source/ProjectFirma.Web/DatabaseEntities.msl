@@ -1239,6 +1239,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tmpAgreement2">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreement2">
+        <MappingFragment StoreEntitySet="tmpAgreement2">
+          <ScalarProperty Name="TmpAgreement2ID" ColumnName="TmpAgreement2ID" />
+          <ScalarProperty Name="AgreementType" ColumnName="AgreementType" />
+          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="AgreementAmount" ColumnName="AgreementAmount" />
+          <ScalarProperty Name="ExpendedMoney" ColumnName="ExpendedMoney" />
+          <ScalarProperty Name="BalanceMoney" ColumnName="BalanceMoney" />
+          <ScalarProperty Name="FirstBillDueOn" ColumnName="FirstBillDueOn" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tmpAgreementContact">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreementContact">
         <MappingFragment StoreEntitySet="tmpAgreementContact">
