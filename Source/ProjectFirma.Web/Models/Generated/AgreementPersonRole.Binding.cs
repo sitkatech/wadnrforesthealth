@@ -21,6 +21,8 @@ namespace ProjectFirma.Web.Models
         public static readonly AgreementPersonRoleContractManager ContractManager = AgreementPersonRoleContractManager.Instance;
         public static readonly AgreementPersonRoleProjectManager ProjectManager = AgreementPersonRoleProjectManager.Instance;
         public static readonly AgreementPersonRoleProjectCoordinator ProjectCoordinator = AgreementPersonRoleProjectCoordinator.Instance;
+        public static readonly AgreementPersonRoleSigner Signer = AgreementPersonRoleSigner.Instance;
+        public static readonly AgreementPersonRoleTechnicalContact TechnicalContact = AgreementPersonRoleTechnicalContact.Instance;
 
         public static readonly List<AgreementPersonRole> All;
         public static readonly ReadOnlyDictionary<int, AgreementPersonRole> AllLookupDictionary;
@@ -30,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static AgreementPersonRole()
         {
-            All = new List<AgreementPersonRole> { ContractManager, ProjectManager, ProjectCoordinator };
+            All = new List<AgreementPersonRole> { ContractManager, ProjectManager, ProjectCoordinator, Signer, TechnicalContact };
             AllLookupDictionary = new ReadOnlyDictionary<int, AgreementPersonRole>(All.ToDictionary(x => x.AgreementPersonRoleID));
         }
 
@@ -106,6 +108,10 @@ namespace ProjectFirma.Web.Models
                     return ProjectCoordinator;
                 case AgreementPersonRoleEnum.ProjectManager:
                     return ProjectManager;
+                case AgreementPersonRoleEnum.Signer:
+                    return Signer;
+                case AgreementPersonRoleEnum.TechnicalContact:
+                    return TechnicalContact;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -116,7 +122,9 @@ namespace ProjectFirma.Web.Models
     {
         ContractManager = 1,
         ProjectManager = 2,
-        ProjectCoordinator = 3
+        ProjectCoordinator = 3,
+        Signer = 4,
+        TechnicalContact = 5
     }
 
     public partial class AgreementPersonRoleContractManager : AgreementPersonRole
@@ -135,5 +143,17 @@ namespace ProjectFirma.Web.Models
     {
         private AgreementPersonRoleProjectCoordinator(int agreementPersonRoleID, string agreementPersonRoleName, string agreementPersonRoleDisplayName) : base(agreementPersonRoleID, agreementPersonRoleName, agreementPersonRoleDisplayName) {}
         public static readonly AgreementPersonRoleProjectCoordinator Instance = new AgreementPersonRoleProjectCoordinator(3, @"ProjectCoordinator", @"Project Coordinator");
+    }
+
+    public partial class AgreementPersonRoleSigner : AgreementPersonRole
+    {
+        private AgreementPersonRoleSigner(int agreementPersonRoleID, string agreementPersonRoleName, string agreementPersonRoleDisplayName) : base(agreementPersonRoleID, agreementPersonRoleName, agreementPersonRoleDisplayName) {}
+        public static readonly AgreementPersonRoleSigner Instance = new AgreementPersonRoleSigner(4, @"Signer", @"Signer");
+    }
+
+    public partial class AgreementPersonRoleTechnicalContact : AgreementPersonRole
+    {
+        private AgreementPersonRoleTechnicalContact(int agreementPersonRoleID, string agreementPersonRoleName, string agreementPersonRoleDisplayName) : base(agreementPersonRoleID, agreementPersonRoleName, agreementPersonRoleDisplayName) {}
+        public static readonly AgreementPersonRoleTechnicalContact Instance = new AgreementPersonRoleTechnicalContact(5, @"TechnicalContact", @"Technical Contact");
     }
 }
