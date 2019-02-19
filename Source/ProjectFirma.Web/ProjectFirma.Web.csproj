@@ -499,6 +499,7 @@
     <Compile Include="Security\AgreementDeleteFeature.cs" />
     <Compile Include="Security\AgreementsViewFeature.cs" />
     <Compile Include="Security\AgreementsViewFullListFeature.cs" />
+    <Compile Include="Security\CostSharePDFFilledInFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationNoteEditAsAdminFeature.cs" />

@@ -5,6 +5,7 @@ using ProjectFirma.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectCostShare
 {
@@ -17,10 +18,14 @@ namespace ProjectFirma.Web.Views.Shared.ProjectCostShare
             var blankCostShareLink = SitkaRoute<PdfFormController>.BuildLinkFromExpression(c => c.BlankCostShareAgreementPdf(), $"Blank Cost Share Agreement").ToHTMLFormattedString();
             CostShareAgreementLinks.Add(blankCostShareLink);
 
-            foreach (Models.ProjectPerson landowner in project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType.ToEnum == ProjectPersonRelationshipTypeEnum.Landowner))
+            // Only offer links if user is authorized to see them
+            if (new CostSharePDFFilledInFeature().HasPermissionByPerson(currentPerson))
             {
-                var urlString = SitkaRoute<PdfFormController>.BuildLinkFromExpression(c => c.CostShareAgreementPdf(landowner.PrimaryKey), $"Cost Share Agreement for {landowner.Person.FullNameFirstLast}").ToHTMLFormattedString();
-                CostShareAgreementLinks.Add(urlString);
+                foreach (Models.ProjectPerson landowner in project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType.ToEnum == ProjectPersonRelationshipTypeEnum.Landowner))
+                {
+                    var urlString = SitkaRoute<PdfFormController>.BuildLinkFromExpression(c => c.CostShareAgreementPdf(landowner.PrimaryKey), $"Cost Share Agreement for {landowner.Person.FullNameFirstLast}").ToHTMLFormattedString();
+                    CostShareAgreementLinks.Add(urlString);
+                }
             }
         }
 

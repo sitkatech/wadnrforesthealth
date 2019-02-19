@@ -29,6 +29,7 @@ using ProjectFirma.Web.Security.Shared;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -56,11 +57,9 @@ namespace ProjectFirma.Web.Controllers
             
         }
 
-        [AnonymousUnclassifiedFeature]
+        [CostSharePDFFilledInFeature]
         public FileContentResult CostShareAgreementPdf(ProjectPersonPrimaryKey projectPersonPrimaryKey)
         {
-            // TODO: Permissions checks?
-
             string blankCostSharePdfFilePath = BlankCostSharePdfFilePath();
             byte[] binaryContentsOfOutputPdfFile;
             string outputFileName;
@@ -99,11 +98,9 @@ namespace ProjectFirma.Web.Controllers
                 pdf.Close();
 
                 binaryContentsOfOutputPdfFile = System.IO.File.ReadAllBytes(outputPdfFile.FileInfo.FullName);
-
             }
 
             return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
-
         }
 
     }
