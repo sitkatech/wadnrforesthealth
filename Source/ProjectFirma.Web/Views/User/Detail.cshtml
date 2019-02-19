@@ -28,7 +28,16 @@
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
+@using ProjectFirma.Web.Views.User
 @inherits ProjectFirma.Web.Views.User.Detail
+
+@functions 
+{
+    private string GetAddedByPersonFullName(DetailViewData viewDataTyped)
+    {
+        return viewDataTyped.Person.AddedByPerson != null ? viewDataTyped.Person.AddedByPerson.FullNameFirstLast : String.Empty;
+    }
+}
 
 @section JavascriptAndStylesContent
 {
@@ -129,7 +138,7 @@
                     {
                         <div class="row">
                             <div class="col-xs-5 fieldLabel text-right">Added By</div>
-                            <div class="col-xs-7">@ViewDataTyped.Person.AddedByPerson.FullNameFirstLast</div>
+                            <div class="col-xs-7">@GetAddedByPersonFullName(ViewDataTyped)</div>
                         </div>
                     }
                 }
