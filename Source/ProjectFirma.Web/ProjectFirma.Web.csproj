@@ -640,6 +640,8 @@
     <Compile Include="Views\Shared\ProjectControls\EditProjectAttributesViewModel.cs" />
     <Compile Include="Views\Shared\ProjectControls\ProjectAttributes.cs" />
     <Compile Include="Views\Shared\ProjectControls\ProjectAttributesViewData.cs" />
+    <Compile Include="Views\Shared\ProjectCostShare\ProjectCostShare.cs" />
+    <Compile Include="Views\Shared\ProjectCostShare\ProjectCostShareViewData.cs" />
     <Compile Include="Views\TreatmentActivity\Index.cs" />
     <Compile Include="Views\TreatmentActivity\IndexViewData.cs" />
     <Compile Include="Views\TreatmentActivity\TreatmentActivityIndexGridSpec.cs" />
@@ -1774,6 +1776,7 @@
     <Content Include="Views\Shared\ProjectControls\ProjectAttributes.cshtml" />
     <Content Include="Views\Shared\ProjectControls\EditProjectAttributes.cshtml" />
     <Content Include="Views\Shared\GrantAllocationControls\GrantAllocationBasics.cshtml" />
+    <Content Include="Views\Shared\ProjectCostShare\ProjectCostShare.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

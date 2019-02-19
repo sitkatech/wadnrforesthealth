@@ -27,6 +27,7 @@ using iText.Forms;
 using iText.Forms.Fields;
 using iText.Kernel.Pdf;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
 
@@ -36,53 +37,67 @@ namespace ProjectFirma.Web.Controllers
     {
 
         [AnonymousUnclassifiedFeature]
-        public FileContentResult CostShareAgreementPdf(ProjectPrimaryKey projectPrimaryKey)
+        public FileContentResult BlankCostShareAgreementPdf()
+        {
+            string blankCostSharePdfFilePath = BlankCostSharePdfFilePath();
+            byte[] binaryContentsOfOutputPdfFile;
+            var outputFileName = BlankOutputFileName();
+
+            binaryContentsOfOutputPdfFile = System.IO.File.ReadAllBytes(blankCostSharePdfFilePath);
+            return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
+            
+        }
+
+        private string BlankCostSharePdfFilePath()
+        {
+            return Server.MapPath(Url.Content("~/Content/documents/CostShareBlankFormFields.pdf"));
+        }
+
+        private string BlankOutputFileName()
+        {
+            return "CostShareAgreementBlank.pdf";
+        }
+
+        [AnonymousUnclassifiedFeature]
+        //public FileContentResult CostShareAgreementPdf(ProjectPrimaryKey projectPrimaryKey)
+        //{
+        public FileContentResult CostShareAgreementPdf(ProjectPersonPrimaryKey projectPersonPrimaryKey)
         {
             // TODO: Permissions checks?
 
-            string blankCostSharePdfFilePath = Server.MapPath(Url.Content("~/Content/documents/CostShareBlankFormFields.pdf"));
+            string blankCostSharePdfFilePath = BlankCostSharePdfFilePath();
             byte[] binaryContentsOfOutputPdfFile;
-            var outputFileName = "CostShareAgreementBlank.pdf";
+            var outputFileName = BlankOutputFileName();
 
-            var project = projectPrimaryKey.EntityObject;
-            var landOwnerContacts = project.ProjectPeople.Where(x => x.ProjectPersonRelationshipType.ToEnum == ProjectPersonRelationshipTypeEnum.Landowner);
+            ProjectPerson landownerProjectPerson = projectPersonPrimaryKey.EntityObject;
+            Person landownerPerson = landownerProjectPerson.Person;
 
-            // If no landowners, return empty default PDF file
-            if (!landOwnerContacts.Any())
-            {
-                binaryContentsOfOutputPdfFile = System.IO.File.ReadAllBytes(blankCostSharePdfFilePath);
-                return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
-            }
-
-            if (landOwnerContacts.Count() > 1)
-            {
-                throw new Exception("Too many landowners");
-            }
-
-            var landowner = landOwnerContacts.Single();
+            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.Landowner, "Only expecting Landowner contacts here");
 
             using (var outputPdfFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".pdf"))
             {
-                outputFileName = outputPdfFile.FileInfo.FullName;
 
-                PdfDocument pdf = new PdfDocument(new PdfReader(blankCostSharePdfFilePath), new PdfWriter(outputFileName));
+                PdfDocument pdf = new PdfDocument(new PdfReader(blankCostSharePdfFilePath), new PdfWriter(outputPdfFile.FileInfo.FullName));
                 PdfAcroForm form = PdfAcroForm.GetAcroForm(pdf, true);
                 IDictionary<String, PdfFormField> fields = form.GetFormFields();
 
+                var landownerName = landownerPerson.FullNameFirstLast;
+                outputFileName = $"CostShareAgreement-{landownerName.Replace(" ", "")}.pdf";
+
                 fields.TryGetValue("Names", out var nameToSet);
-                nameToSet.SetValue(landowner.Person.FullNameFirstLast);
+                nameToSet.SetValue(landownerName);
 
                 fields.TryGetValue("Address1", out var address1);
-                address1.SetValue(landowner.Person.PersonAddress);
+                address1.SetValue(landownerPerson.PersonAddress);
 
                 fields.TryGetValue("Address2", out var address2);
                 address2.SetValue(string.Empty);
 
                 fields.TryGetValue("PhoneNumber", out var phoneToSet);
-                phoneToSet.SetValue(landowner.Person.Phone);
+                phoneToSet.SetValue(landownerPerson.Phone);
 
                 fields.TryGetValue("Email", out var emailToSet);
-                emailToSet.SetValue(landowner.Person.Email);
+                emailToSet.SetValue(landownerPerson.Email);
 
                 form.FlattenFields();
                 pdf.Close();
@@ -91,7 +106,7 @@ namespace ProjectFirma.Web.Controllers
 
             }
 
-            return File(binaryContentsOfOutputPdfFile, "application/pdf", "CostShareSample.pdf");
+            return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
 
         }
 

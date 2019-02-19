@@ -30,6 +30,7 @@ using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectControls;
+using ProjectFirma.Web.Views.Shared.ProjectCostShare;
 using ProjectFirma.Web.Views.Shared.ProjectDocument;
 using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
@@ -105,6 +106,7 @@ namespace ProjectFirma.Web.Views.Project
         public List<string> ProjectAlerts { get; }
         public readonly ProjectOrganizationsDetailViewData ProjectOrganizationsDetailViewData;
         public List<Models.ClassificationSystem> ClassificationSystems { get; }
+        public ProjectCostShareViewData ProjectCostShareViewData { get; }
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
         public ProjectAttributesViewData ProjectAttributesViewData { get; }
         public string EditTreatmentActivityUrl { get; }
@@ -332,6 +334,8 @@ namespace ProjectFirma.Web.Views.Project
                     c.ProjectStewardCannotEditPendingApproval(project));
 
             ClassificationSystems = classificationSystems;
+
+            ProjectCostShareViewData = new ProjectCostShareViewData(project, currentPerson);
 
             ProjectDocumentsDetailViewData = new ProjectDocumentsDetailViewData(
                 EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(project.ProjectDocuments)),
