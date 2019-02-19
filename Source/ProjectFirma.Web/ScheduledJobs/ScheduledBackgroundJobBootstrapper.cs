@@ -66,17 +66,22 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // because the reminder configurations are tenant-specific and user-configurable, just schedule the job to run nightly and have it check whether it's time to send a remind for each tenant.
 
+            // Right now this job crashes, and we don't need it. Also, I can't get to Hangfire dashboard with /hangfire.
+            // Ray suggests re-porting our Hangfire work from Gemini which doesn't auto-restore database and fire off jobs, so we may want to 
+            // just re-port all of Gemini Hangfire rather than debug what's here in Wadnr/Firma already. -- SLG 2/19/2019
+            /*
             AddRecurringJob(ProjectUpdateReminderScheduledBackgroundJob.JobName,
                 () => ScheduledBackgroundJobLaunchHelper.RunProjectUpdateKickoffReminderScheduledBackgroundJob(),
                 MakeDailyUtcCronJobStringFromLocalTime(1,23),
                 recurringJobIds);
-
-            // Remove any jobs we haven't explicity scheduled
+            */
+            // Remove any jobs we haven't explicitly scheduled
             RemoveExtraneousJobs(recurringJobIds);
         }
 
-        private static void AddRecurringJob(string jobName, Expression<Action> methodCallExpression,
-            string cronExpression, List<string> recurringJobIds)
+        private static void AddRecurringJob(string jobName, 
+                                            Expression<Action> methodCallExpression,
+                                            string cronExpression, List<string> recurringJobIds)
         {
             RecurringJob.AddOrUpdate(jobName, methodCallExpression, cronExpression);
             recurringJobIds.Add(jobName);

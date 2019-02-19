@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Common
 
         public static IPrincipal GetHttpContextUserThroughOwin()
         {
-            return HttpContext.Current.GetOwinContext().Authentication.User;
+             return HttpContext.Current.GetOwinContext().Authentication.User;
         }
 
         public static Person Person
