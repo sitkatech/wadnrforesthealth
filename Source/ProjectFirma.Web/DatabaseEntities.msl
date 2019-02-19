@@ -5,7 +5,6 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Agreement">
         <MappingFragment StoreEntitySet="Agreement">
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
-          <ScalarProperty Name="TmpAgreementID" ColumnName="TmpAgreementID" />
           <ScalarProperty Name="AgreementTypeID" ColumnName="AgreementTypeID" />
           <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -21,6 +20,7 @@
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
           <ScalarProperty Name="AgreementFileResourceID" ColumnName="AgreementFileResourceID" />
+          <ScalarProperty Name="tmpAgreement2ID" ColumnName="tmpAgreement2ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1236,6 +1236,22 @@
           <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
           <ScalarProperty Name="TaxonomyTrunkCode" ColumnName="TaxonomyTrunkCode" />
           <ScalarProperty Name="TaxonomyTrunkSortOrder" ColumnName="TaxonomyTrunkSortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tmpAgreementContact">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreementContact">
+        <MappingFragment StoreEntitySet="tmpAgreementContact">
+          <ScalarProperty Name="AgreementContactID" ColumnName="AgreementContactID" />
+          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
+          <ScalarProperty Name="F8" ColumnName="F8" />
+          <ScalarProperty Name="F9" ColumnName="F9" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

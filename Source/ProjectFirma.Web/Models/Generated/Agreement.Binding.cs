@@ -32,10 +32,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int? tmpAgreementID, int? agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? grantID, int? agreementStatusID, int? agreementFileResourceID) : this()
+        public Agreement(int agreementID, int agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? grantID, int? agreementStatusID, int? agreementFileResourceID, int? tmpAgreement2ID) : this()
         {
             this.AgreementID = agreementID;
-            this.TmpAgreementID = tmpAgreementID;
             this.AgreementTypeID = agreementTypeID;
             this.AgreementNumber = agreementNumber;
             this.StartDate = startDate;
@@ -51,16 +50,18 @@ namespace ProjectFirma.Web.Models
             this.GrantID = grantID;
             this.AgreementStatusID = agreementStatusID;
             this.AgreementFileResourceID = agreementFileResourceID;
+            this.tmpAgreement2ID = tmpAgreement2ID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(string agreementTitle, int organizationID) : this()
+        public Agreement(int agreementTypeID, string agreementTitle, int organizationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
+            this.AgreementTypeID = agreementTypeID;
             this.AgreementTitle = agreementTitle;
             this.OrganizationID = organizationID;
         }
@@ -68,10 +69,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Agreement(string agreementTitle, Organization organization) : this()
+        public Agreement(AgreementType agreementType, string agreementTitle, Organization organization) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.AgreementTypeID = agreementType.AgreementTypeID;
+            this.AgreementType = agreementType;
+            agreementType.Agreements.Add(this);
             this.AgreementTitle = agreementTitle;
             this.OrganizationID = organization.OrganizationID;
             this.Organization = organization;
@@ -81,9 +85,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Agreement CreateNewBlank(Organization organization)
+        public static Agreement CreateNewBlank(AgreementType agreementType, Organization organization)
         {
-            return new Agreement(default(string), organization);
+            return new Agreement(agreementType, default(string), organization);
         }
 
         /// <summary>
@@ -141,8 +145,7 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int AgreementID { get; set; }
-        public int? TmpAgreementID { get; set; }
-        public int? AgreementTypeID { get; set; }
+        public int AgreementTypeID { get; set; }
         public string AgreementNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
@@ -157,6 +160,7 @@ namespace ProjectFirma.Web.Models
         public int? GrantID { get; set; }
         public int? AgreementStatusID { get; set; }
         public int? AgreementFileResourceID { get; set; }
+        public int? tmpAgreement2ID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return AgreementID; } set { AgreementID = value; } }
 
