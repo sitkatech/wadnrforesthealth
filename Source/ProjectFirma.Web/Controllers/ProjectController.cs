@@ -883,12 +883,12 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
                     outputFile.FileInfo,
                     pdfConversionSettings);
 
-                var fileContents = FileUtility.FileToString(outputFile.FileInfo);
+                string fileContents = FileUtility.FileToString(outputFile.FileInfo);
                 Check.Assert(fileContents.StartsWith("%PDF-"), "Should be a PDF file and have the starting bytes for PDF");
                 Check.Assert(fileContents.Contains("wkhtmltopdf") || fileContents.Contains("\0w\0k\0h\0t\0m\0l\0t\0o\0p\0d\0f"), "Should be a PDF file produced by wkhtmltopdf.");
 
                 var fileName = $"{project.ProjectName.ToLower().Replace(" ", "-")}-fact-sheet.pdf";
-                var content = System.IO.File.ReadAllBytes(outputFile.FileInfo.FullName);
+                byte[] content = System.IO.File.ReadAllBytes(outputFile.FileInfo.FullName);
                 return File(content, "application/pdf", fileName);
             }
         }
