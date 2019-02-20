@@ -79,19 +79,19 @@ namespace ProjectFirma.Web.Controllers
                 outputFileName = $"CostShareAgreement-{landownerName.Replace(" ", "")}.pdf";
 
                 fields.TryGetValue("Names", out var nameToSet);
-                nameToSet?.SetValue(landownerName);
+                nameToSet?.SetValue(MakeEmptyStringForNullString(landownerName));
 
                 fields.TryGetValue("Address1", out var address1);
-                address1?.SetValue(landownerPerson.PersonAddress);
+                address1?.SetValue(MakeEmptyStringForNullString(landownerPerson.PersonAddress));
 
                 fields.TryGetValue("Address2", out var address2);
-                address2?.SetValue(string.Empty);
+                address2?.SetValue(MakeEmptyStringForNullString(string.Empty));
 
                 fields.TryGetValue("PhoneNumber", out var phoneToSet);
-                phoneToSet?.SetValue(landownerPerson.Phone);
+                phoneToSet?.SetValue(MakeEmptyStringForNullString(landownerPerson.Phone));
 
                 fields.TryGetValue("Email", out var emailToSet);
-                emailToSet?.SetValue(landownerPerson.Email);
+                emailToSet?.SetValue(MakeEmptyStringForNullString(landownerPerson.Email));
 
                 form.FlattenFields();
                 pdf.Close();
@@ -101,6 +101,12 @@ namespace ProjectFirma.Web.Controllers
 
             return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
         }
+
+        private static string MakeEmptyStringForNullString(string inputString)
+        {
+            return inputString == null ? string.Empty : inputString;
+        }
+
 
     }
 }
