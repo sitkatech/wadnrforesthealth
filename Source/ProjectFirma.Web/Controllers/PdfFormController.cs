@@ -67,11 +67,10 @@ namespace ProjectFirma.Web.Controllers
             ProjectPerson landownerProjectPerson = projectPersonPrimaryKey.EntityObject;
             Person landownerPerson = landownerProjectPerson.Person;
 
-            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.Landowner, "Only expecting Landowner contacts here");
+            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.Landowner, $"Only expecting Landowner contacts here. {landownerProjectPerson.Person.FullNameFirstLast} is a {landownerProjectPerson.ProjectPersonRelationshipType} on Project {landownerProjectPerson.Project.DisplayName}.");
 
             using (var outputPdfFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".pdf"))
             {
-
                 PdfDocument pdf = new PdfDocument(new PdfReader(blankCostSharePdfFilePath), new PdfWriter(outputPdfFile.FileInfo.FullName));
                 PdfAcroForm form = PdfAcroForm.GetAcroForm(pdf, true);
                 IDictionary<String, PdfFormField> fields = form.GetFormFields();
