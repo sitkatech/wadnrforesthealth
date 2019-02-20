@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Web;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.ModalDialog;
@@ -33,10 +34,10 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
     {
         public TreatmentActivityProjectDetailGridSpec(Person currentPerson)
         {
-
-
-            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTreatmentActivityUrl(), new FirmaAdminFeature().HasPermissionByPerson(currentPerson), true, true), 30, DhtmlxGridColumnFilterType.None);
-            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl())), 30, DhtmlxGridColumnFilterType.None);
+            bool userHasEditTreatmentPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
+            int buttonGridWidth = 30;
+            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTreatmentActivityUrl(), userHasEditTreatmentPermissions, true, true), buttonGridWidth, DhtmlxGridColumnFilterType.None);
+            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl()), userHasEditTreatmentPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);
 
             Add("Contact", a => a.GetContactText(), 125, DhtmlxGridColumnFilterType.Html);
             Add("Status", a => a.GetStatusDisplayName(), 75, DhtmlxGridColumnFilterType.Text);

@@ -67,11 +67,10 @@ namespace ProjectFirma.Web.Controllers
             ProjectPerson landownerProjectPerson = projectPersonPrimaryKey.EntityObject;
             Person landownerPerson = landownerProjectPerson.Person;
 
-            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.Landowner, "Only expecting Landowner contacts here");
+            Check.Ensure(landownerProjectPerson.ProjectPersonRelationshipType == ProjectPersonRelationshipType.Landowner, $"Only expecting Landowner contacts here. {landownerProjectPerson.Person.FullNameFirstLast} is a {landownerProjectPerson.ProjectPersonRelationshipType} on Project {landownerProjectPerson.Project.DisplayName}.");
 
             using (var outputPdfFile = DisposableTempFile.MakeDisposableTempFileEndingIn(".pdf"))
             {
-
                 PdfDocument pdf = new PdfDocument(new PdfReader(blankCostSharePdfFilePath), new PdfWriter(outputPdfFile.FileInfo.FullName));
                 PdfAcroForm form = PdfAcroForm.GetAcroForm(pdf, true);
                 IDictionary<String, PdfFormField> fields = form.GetFormFields();
@@ -80,19 +79,19 @@ namespace ProjectFirma.Web.Controllers
                 outputFileName = $"CostShareAgreement-{landownerName.Replace(" ", "")}.pdf";
 
                 fields.TryGetValue("Names", out var nameToSet);
-                nameToSet?.SetValue(landownerName);
+                nameToSet?.SetValue(MakeEmptyStringForNullString(landownerName));
 
                 fields.TryGetValue("Address1", out var address1);
-                address1?.SetValue(landownerPerson.PersonAddress);
+                address1?.SetValue(MakeEmptyStringForNullString(landownerPerson.PersonAddress));
 
                 fields.TryGetValue("Address2", out var address2);
-                address2?.SetValue(string.Empty);
+                address2?.SetValue(MakeEmptyStringForNullString(string.Empty));
 
                 fields.TryGetValue("PhoneNumber", out var phoneToSet);
-                phoneToSet?.SetValue(landownerPerson.Phone);
+                phoneToSet?.SetValue(MakeEmptyStringForNullString(landownerPerson.Phone));
 
                 fields.TryGetValue("Email", out var emailToSet);
-                emailToSet?.SetValue(landownerPerson.Email);
+                emailToSet?.SetValue(MakeEmptyStringForNullString(landownerPerson.Email));
 
                 form.FlattenFields();
                 pdf.Close();
@@ -102,6 +101,12 @@ namespace ProjectFirma.Web.Controllers
 
             return File(binaryContentsOfOutputPdfFile, "application/pdf", outputFileName);
         }
+
+        private static string MakeEmptyStringForNullString(string inputString)
+        {
+            return inputString == null ? string.Empty : inputString;
+        }
+
 
     }
 }

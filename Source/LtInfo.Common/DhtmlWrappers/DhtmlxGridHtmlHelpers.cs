@@ -595,6 +595,20 @@ namespace LtInfo.Common.DhtmlWrappers
         }
 
         /// <summary>
+        /// For making an edit icon on the grid with an editor in a jquery ui dialog, but also supports permissions.
+        /// Returns empty HTML string if no permissions
+        /// </summary>
+        public static HtmlString MakeEditIconAsModalDialogLinkBootstrap(ModalDialogForm modalDialogForm, bool hasEditPermissions)
+        {
+            if (!hasEditPermissions)
+            {
+                return new HtmlString(string.Empty);
+            }
+
+            return MakeModalDialogLink($"{EditIconBootstrap}<span style=\"display:none\">Edit</span>", modalDialogForm.ContentUrl, modalDialogForm.DialogWidth, modalDialogForm.DialogTitle, modalDialogForm.OnJavascriptReadyFunction);
+        }
+
+        /// <summary>
         /// For making an edit icon on the grid with an editor in a jquery ui dialog
         /// </summary>
         public static HtmlString MakeLtInfoEditIconAsModalDialogLinkBootstrap(ModalDialogForm modalDialogForm)
