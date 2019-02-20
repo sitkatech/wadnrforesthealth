@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
     {
         public string FileResourceMimeTypeIconSmallAsImage
         {
-            get { return string.Format("<img src=\"{0}\" alt=\"Download {1}\" />", FileResourceMimeTypeIconSmallFilename, FileResourceMimeTypeDisplayName); }
+            get { return $"<img src=\"{FileResourceMimeTypeIconSmallFilename}\" alt=\"Download {FileResourceMimeTypeDisplayName}\" />"; }
         }
     }
 }

@@ -27,9 +27,11 @@ insert into dbo.FileResourceMimeType (FileResourceMimeTypeID, FileResourceMimeTy
 INSERT INTO dbo.FileResourceMimeType (FileResourceMimeTypeID, FileResourceMimeTypeContentTypeName, FileResourceMimeTypeName, FileResourceMimeTypeDisplayName, FileResourceMimeTypeIconSmallFilename, FileResourceMimeTypeIconNormalFilename) 
 values
 
-(22, 'application/zip', 'ZIP', 'ZIP', null, null),
+
 (17, 'application/x-zip-compressed', 'X-ZIP', 'X-ZIP', null, null),
 (18, 'application/gzip', 'GZIP', 'GZIP', null, null),
 (19, 'application/x-gzip', 'X-GZIP', 'X-GZIP', null, null),
 (20, 'application/x-compressed', 'TGZ', 'TGZ', null, null),
-(21, 'application/x-tar', 'TAR', 'TAR', null, null)
+(21, 'application/x-tar', 'TAR', 'TAR', null, null),
+(22, 'application/zip', 'ZIP', 'ZIP', null, null),
+(23, 'text/plain', 'TXT', 'TXT', null, null)

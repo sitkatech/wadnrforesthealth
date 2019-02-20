@@ -134,7 +134,7 @@ namespace ProjectFirma.Web.Models
         public static FileResourceMimeType GetFileResourceMimeTypeForFile(HttpPostedFileBase file)
         {
             var fileResourceMimeTypeForFile = FileResourceMimeType.All.SingleOrDefault(mt => mt.FileResourceMimeTypeContentTypeName == file.ContentType);
-            Check.RequireNotNull(fileResourceMimeTypeForFile, String.Format("Unhandled MIME type: {0}", file.ContentType));
+            Check.RequireNotNull(fileResourceMimeTypeForFile, $"Unhandled MIME type: {file.ContentType}");
             return fileResourceMimeTypeForFile;
         }
 

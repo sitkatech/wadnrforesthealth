@@ -40,6 +40,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FileResourceMimeTypeTGZ TGZ = FileResourceMimeTypeTGZ.Instance;
         public static readonly FileResourceMimeTypeTAR TAR = FileResourceMimeTypeTAR.Instance;
         public static readonly FileResourceMimeTypeZIP ZIP = FileResourceMimeTypeZIP.Instance;
+        public static readonly FileResourceMimeTypeTXT TXT = FileResourceMimeTypeTXT.Instance;
 
         public static readonly List<FileResourceMimeType> All;
         public static readonly ReadOnlyDictionary<int, FileResourceMimeType> AllLookupDictionary;
@@ -49,7 +50,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FileResourceMimeType()
         {
-            All = new List<FileResourceMimeType> { PDF, WordDOCX, ExcelXLSX, XPNG, PNG, TIFF, BMP, GIF, JPEG, PJPEG, PowerpointPPTX, PowerpointPPT, ExcelXLS, WordDOC, xExcelXLSX, CSS, XZIP, GZIP, XGZIP, TGZ, TAR, ZIP };
+            All = new List<FileResourceMimeType> { PDF, WordDOCX, ExcelXLSX, XPNG, PNG, TIFF, BMP, GIF, JPEG, PJPEG, PowerpointPPTX, PowerpointPPT, ExcelXLS, WordDOC, xExcelXLSX, CSS, XZIP, GZIP, XGZIP, TGZ, TAR, ZIP, TXT };
             AllLookupDictionary = new ReadOnlyDictionary<int, FileResourceMimeType>(All.ToDictionary(x => x.FileResourceMimeTypeID));
         }
 
@@ -155,6 +156,8 @@ namespace ProjectFirma.Web.Models
                     return TGZ;
                 case FileResourceMimeTypeEnum.TIFF:
                     return TIFF;
+                case FileResourceMimeTypeEnum.TXT:
+                    return TXT;
                 case FileResourceMimeTypeEnum.WordDOC:
                     return WordDOC;
                 case FileResourceMimeTypeEnum.WordDOCX:
@@ -198,7 +201,8 @@ namespace ProjectFirma.Web.Models
         XGZIP = 19,
         TGZ = 20,
         TAR = 21,
-        ZIP = 22
+        ZIP = 22,
+        TXT = 23
     }
 
     public partial class FileResourceMimeTypePDF : FileResourceMimeType
@@ -331,5 +335,11 @@ namespace ProjectFirma.Web.Models
     {
         private FileResourceMimeTypeZIP(int fileResourceMimeTypeID, string fileResourceMimeTypeName, string fileResourceMimeTypeDisplayName, string fileResourceMimeTypeContentTypeName, string fileResourceMimeTypeIconSmallFilename, string fileResourceMimeTypeIconNormalFilename) : base(fileResourceMimeTypeID, fileResourceMimeTypeName, fileResourceMimeTypeDisplayName, fileResourceMimeTypeContentTypeName, fileResourceMimeTypeIconSmallFilename, fileResourceMimeTypeIconNormalFilename) {}
         public static readonly FileResourceMimeTypeZIP Instance = new FileResourceMimeTypeZIP(22, @"ZIP", @"ZIP", @"application/zip", null, null);
+    }
+
+    public partial class FileResourceMimeTypeTXT : FileResourceMimeType
+    {
+        private FileResourceMimeTypeTXT(int fileResourceMimeTypeID, string fileResourceMimeTypeName, string fileResourceMimeTypeDisplayName, string fileResourceMimeTypeContentTypeName, string fileResourceMimeTypeIconSmallFilename, string fileResourceMimeTypeIconNormalFilename) : base(fileResourceMimeTypeID, fileResourceMimeTypeName, fileResourceMimeTypeDisplayName, fileResourceMimeTypeContentTypeName, fileResourceMimeTypeIconSmallFilename, fileResourceMimeTypeIconNormalFilename) {}
+        public static readonly FileResourceMimeTypeTXT Instance = new FileResourceMimeTypeTXT(23, @"TXT", @"TXT", @"text/plain", null, null);
     }
 }

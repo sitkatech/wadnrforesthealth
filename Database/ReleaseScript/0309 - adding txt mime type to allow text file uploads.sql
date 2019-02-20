@@ -1,0 +1,1 @@
+insert dbo.FileResourceMimeType (FileResourceMimeTypeID, FileResourceMimeTypeName, FileResourceMimeTypeDisplayName, FileResourceMimeTypeContentTypeName) values(23, 'TXT', 'TXT', 'text/plain') 
