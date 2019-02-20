@@ -34,6 +34,7 @@
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Views.ProjectFunding
+@using ProjectFirma.Web.Views.Shared.ProjectCostShare
 @using ProjectFirma.Web.Views.Shared.ProjectDocument
 @using ProjectFirma.Web.Views.Shared.ProjectOrganization
 @using ProjectFirma.Web.Views.Shared.ProjectPerson
@@ -466,8 +467,18 @@
 
                 }
 
-                <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() Details</h2>
-                <div class="panel panelFirma">
+            <h2 class="sectionHeader">@FieldDefinition.Project.GetFieldDefinitionLabel() Details</h2>
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>Cost Share</h3>
+                </div>
+                <div class="panel-body">
+                    @{ ProjectCostShare.RenderPartialView(Html, ViewDataTyped.ProjectCostShareViewData); }
+
+                </div>
+            </div>
+
+            <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h3>Documents</h3>
                     </div>

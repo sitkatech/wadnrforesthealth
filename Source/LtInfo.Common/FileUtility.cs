@@ -163,7 +163,7 @@ namespace LtInfo.Common
                 return path;
             }
 
-            throw new Exception(String.Format("unable to create temporary directory \"{0}\"", path));
+            throw new Exception($"unable to create temporary directory \"{path}\"");
         }
 
         public static List<string> CopyDirectory(string sourceDirectory, string targetDirectory)
