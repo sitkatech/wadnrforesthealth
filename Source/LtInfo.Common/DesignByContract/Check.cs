@@ -235,7 +235,9 @@ namespace LtInfo.Common.DesignByContract
         public static void Ensure(bool assertion, string message)
         {
             if (!assertion)
+            {
                 throw new PostconditionException(message);
+            }
         }
 
         public static void Ensure(bool assertion, string message, Exception inner)

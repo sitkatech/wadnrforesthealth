@@ -100,6 +100,7 @@ namespace ProjectFirma.Web.Views.Project
 
         public string ProjectUpdateButtonText { get; }
         public bool CanLaunchProjectOrProposalWizard { get; }
+        public bool CanViewProjectFactSheet { get; }
         public string ProjectWizardUrl { get; }
         public string ProjectListUrl { get; }
         public string BackToProjectsText { get; }
@@ -113,7 +114,6 @@ namespace ProjectFirma.Web.Views.Project
         public string EditProjectPeopleUrl { get; }
         
         public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
-
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData, ProjectLocationSummaryViewData projectLocationSummaryViewData,
@@ -145,6 +145,8 @@ namespace ProjectFirma.Web.Views.Project
             EditProjectUrl = project.GetEditUrl();
 
             EditProjectAttributesUrl = project.GetEditProjectAttributesUrl();
+
+            CanViewProjectFactSheet = ProjectController.FactSheetIsAvailable(project);
 
             UserHasProjectAdminPermissions = userHasProjectAdminPermissions;
             UserHasEditProjectPermissions = userHasEditProjectPermissions;
