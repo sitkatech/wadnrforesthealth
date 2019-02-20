@@ -110,7 +110,11 @@ namespace LtInfo.Common.DbSpatial
             if (geometries.Any())
             {
                 const int thresholdInFeet = 1;
-                var thresholdInDegrees = FeetToAverageLatLonDegree(geometries.First().DbGeometry, thresholdInFeet);
+                var firstGeometry = geometries.First();
+                // We need to get this first Geometry to be valid to figure out threshold, otherwise we can crash 
+                // with a complaint about MakeValid before we even get to the final MakeValid.
+                firstGeometry.DbGeometry = firstGeometry.SqlGeometry.MakeValid().ToDbGeometry();
+                var thresholdInDegrees = FeetToAverageLatLonDegree(firstGeometry.DbGeometry, thresholdInFeet);
                 geometries.ForEach(x => x.DbGeometry = x.SqlGeometry.MakeValid().Reduce(thresholdInDegrees).ToDbGeometry());
             }
         }
