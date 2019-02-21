@@ -263,12 +263,12 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
-        [GrantsViewFullListFeature]
         /// <summary>
-        /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected. Trying to make clear to user which grants don't have associated grantAllocations yet.  
+        /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.
+        /// Trying to make clear to user which grants don't have associated grantAllocations yet.
         /// </summary>
         /// <returns>An empty dataset for grid population</returns>
+        [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
         {
             var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
