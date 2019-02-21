@@ -328,11 +328,19 @@ namespace ProjectFirma.Web.Controllers
             return activeProjectStages;
         }
 
+        public static bool FactSheetIsAvailable(Project project)
+        {
+            // Available for everything except cancelled. Inherited from
+            // Firma, not sure if this works for us at all.
+            return project.ProjectStage != ProjectStage.Cancelled;
+        }
+
         [ProjectsViewFullListFeature]
         public ViewResult FactSheet(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            Check.Assert(project.ProjectStage != ProjectStage.Cancelled, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()} because it has been terminated.");
+            bool factSheetIsAvailable = FactSheetIsAvailable(project);
+            Check.Assert(factSheetIsAvailable, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()}.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
         private ViewResult ViewBackwardLookingFactSheet(Project project)

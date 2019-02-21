@@ -61,13 +61,17 @@ namespace LtInfo.Common.DesignByContract
         public static void RequireThrowNotAuthorized(bool assertion, string message)
         {
             if (!assertion)
+            {
                 ThrowThisException(new SitkaRecordNotAuthorizedException(message));
+            }
         }
 
         public static void Require(bool assertion)
         {
             if (!assertion)
+            {
                 ThrowThisException(new PreconditionException());
+            }
         }
 
         public static void Require(bool assertion, string message)
@@ -79,62 +83,82 @@ namespace LtInfo.Common.DesignByContract
         public static void Require(bool assertion, string message, Exception inner)
         {
             if (!assertion)
+            {
                 ThrowThisException(new PreconditionException(message, inner));
+            }
         }
 
         public static void Require(bool assertion, Exception ex)
         {
             if (!assertion)
+            {
                 throw ex;
+            }
         }
 
         public static void Require(bool assertion, Func<Exception> func)
         {
             if (!assertion)
+            {
                 throw func();
+            }
         }
 
         public static void RequireGreaterThanZero(int value, string message)
         {
             if (value <= 0)
+            {
                 ThrowThisException(new PreconditionException(message));
+            }
         }
 
         public static void RequireNotDisposed(bool isDisposed, object thisObject)
         {
             if (isDisposed)
+            {
                 ThrowThisException(new ObjectDisposedException(thisObject.GetType().ToString()));
+            }
         }
 
         public static void RequireNotNull(object thisObject)
         {
             if (thisObject == null)
+            {
                 ThrowThisException(new NullReferenceException());
+            }
         }
 
         public static void RequireNotNull(object thisObject, string message)
         {
             if (thisObject == null)
+            {
                 ThrowThisException(new NullReferenceException(message));
+            }
         }
 
         public static void RequireNotNull(object thisObject, Exception exception)
         {
             if (thisObject == null)
+            {
                 throw exception;
+            }
         }
 
         public static void RequireNotNull(object thisObject, Func<Exception> func)
         {
             if (thisObject == null)
+            {
                 throw func();
+            }
         }
 
         public static void RequireNotNullNotEmpty(string stringToCheck, string message)
         {
             RequireNotNull(stringToCheck, message);
             if (string.IsNullOrEmpty(stringToCheck))
+            {
                 ThrowThisException(new ArgumentException(message + " String is empty, expected non-empty string."));
+            }
         }
 
         public static void RequireNotNullNotEmpty<T>(IEnumerable<T> itemsToCheck, string message)
@@ -150,7 +174,9 @@ namespace LtInfo.Common.DesignByContract
         {
             RequireNotNull(stringToCheck, message);
             if (GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(stringToCheck))
+            {
                 ThrowThisException(new ArgumentException(message + " String is empty or only blank, expected non-empty string with some non-whitespace characters."));
+            }
         }
 
         public static void RequireNoWhitespace(string stringToExamine, string message)
@@ -229,25 +255,33 @@ namespace LtInfo.Common.DesignByContract
         public static void Ensure(bool assertion)
         {
             if (!assertion)
+            {
                 throw new PostconditionException();
+            }
         }
 
         public static void Ensure(bool assertion, string message)
         {
             if (!assertion)
+            {
                 throw new PostconditionException(message);
+            }
         }
 
         public static void Ensure(bool assertion, string message, Exception inner)
         {
             if (!assertion)
+            {
                 throw new PostconditionException(message, inner);
+            }
         }
 
         public static void Ensure(bool assertion, Exception ex)
         {
             if (!assertion)
+            {
                 throw ex;
+            }
         }
 
         public static void EnsureNotNull(object thisObject)
@@ -294,8 +328,7 @@ namespace LtInfo.Common.DesignByContract
 
         public static void EnsureFileExists(FileInfo[] files)
         {
-            string problem;
-            if (!FileExists(files, out problem))
+            if (!FileExists(files, out var problem))
             {
                 throw new FileNotFoundException(problem);
             }
@@ -303,8 +336,7 @@ namespace LtInfo.Common.DesignByContract
 
         public static void EnsureFileExists(string file)
         {
-            string problem;
-            if (!FileExists(new FileInfo(file), out problem))
+            if (!FileExists(new FileInfo(file), out var problem))
             {
                 throw new FileNotFoundException(problem);
             }
@@ -312,8 +344,7 @@ namespace LtInfo.Common.DesignByContract
 
         public static void EnsureFileExists(string file, string message)
         {
-            string problem;
-            if (!FileExists(new FileInfo(file), out problem))
+            if (!FileExists(new FileInfo(file), out var problem))
             {
                 throw new FileNotFoundException(message + "\r\n" + problem, file);
             }
@@ -359,7 +390,9 @@ namespace LtInfo.Common.DesignByContract
         public static void Assert(bool assertion)
         {
             if (!assertion)
+            {
                 ThrowThisException(new AssertionException());
+            }
         }
 
         public static void Assert(bool assertion, string message)
@@ -373,13 +406,17 @@ namespace LtInfo.Common.DesignByContract
         public static void Assert(bool assertion, string message, Exception inner)
         {
             if (!assertion)
+            {
                 ThrowThisException(new AssertionException(message, inner));
+            }
         }
 
         public static void Assert(bool assertion, Exception ex)
         {
             if (!assertion)
+            {
                 throw ex;
+            }
         }
 
         #endregion
@@ -474,7 +511,7 @@ namespace LtInfo.Common.DesignByContract
             else if (!File.Exists(file.FullName))
             {
                 exists = false;
-                problem = String.Format("File \"{0}\" not found.\n", file.FullName);
+                problem = $"File \"{file.FullName}\" not found.\n";
             }
             return exists;
         }
@@ -491,7 +528,7 @@ namespace LtInfo.Common.DesignByContract
             else if (!Directory.Exists(dirName))
             {
                 exists = false;
-                problem = String.Format("Directory \"{0}\" not found.\n", dirName);
+                problem = $"Directory \"{dirName}\" not found.\n";
             }
             return exists;
         }
@@ -517,7 +554,7 @@ namespace LtInfo.Common.DesignByContract
             string fullMessage = String.Format("Expected object of type {0} but got type {1}", typeof(T).Name, objectRequiringType.GetType().Name);
             if (!(String.IsNullOrEmpty(message)))
             {
-                fullMessage = string.Format("{0} {1}", message, fullMessage);
+                fullMessage = $"{message} {fullMessage}";
             }
             Require(objectRequiringType is T, fullMessage);
         }

@@ -44,6 +44,7 @@ using LtInfo.Common.Models;
 using LtInfo.Common.MvcResults;
 using MoreLinq;
 using ProjectFirma.Web.ScheduledJobs;
+using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectPriorityArea;
 using ProjectFirma.Web.Views.ProjectRegion;
@@ -3143,19 +3144,20 @@ namespace ProjectFirma.Web.Controllers
         public class ProjectOrganizationEqualityComparer : EqualityComparerByProperty<IProjectOrganization>
         {
             public ProjectOrganizationEqualityComparer() : base(x => new {x.Organization.OrganizationID, x.RelationshipType.RelationshipTypeID})
-            {                
+            {
             }
         }
 
         public class ProjectPersonEqualityComparer : EqualityComparerByProperty<IProjectPerson>
         {
             public ProjectPersonEqualityComparer() : base(x => new {x.Person.PersonID, x.ProjectPersonRelationshipType.ProjectPersonRelationshipTypeID})
-            {                
+            {
             }
         }
 
         // BootstrapHtmlHelper's alert modal dialog method isn't great at dealing with near-arbitrary HTML like we expect these "Intro Content" strings to be, so we're using the From Url version instead, which seems to work better.
 
+        [AnonymousUnclassifiedFeature]
         public ContentResult KickOffIntroPreview()
         {
             return new ContentResult
@@ -3164,6 +3166,7 @@ namespace ProjectFirma.Web.Controllers
             };
         }
 
+        [AnonymousUnclassifiedFeature]
         public ContentResult ReminderIntroPreview()
         {
             return new ContentResult
@@ -3172,6 +3175,7 @@ namespace ProjectFirma.Web.Controllers
             };
         }
 
+        [AnonymousUnclassifiedFeature]
         public ContentResult CloseOutIntroPreview()
         {
             return new ContentResult

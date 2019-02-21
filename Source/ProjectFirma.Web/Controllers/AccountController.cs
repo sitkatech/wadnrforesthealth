@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Login, LoginViewData>(viewData);
         }
 
-        [AllowAnonymous]
+        [AnonymousUnclassifiedFeature]
         [HttpPost]
         public ActionResult SAWPost(string returnUrl)
         {
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Controllers
             return new RedirectResult(HomeUrl);
         }
 
-        [AllowAnonymous]
+        [AnonymousUnclassifiedFeature]
         [HttpPost]
         public ActionResult ADFSPost(string returnUrl)
         {

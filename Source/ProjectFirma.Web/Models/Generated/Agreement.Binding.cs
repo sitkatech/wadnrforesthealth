@@ -173,7 +173,6 @@ namespace ProjectFirma.Web.Models
         public virtual Grant Grant { get; set; }
         public virtual AgreementStatus AgreementStatus { get; set; }
         public virtual FileResource AgreementFileResource { get; set; }
-        public virtual tmpAgreement2 tmpAgreement2 { get; set; }
 
         public static class FieldLengths
         {
