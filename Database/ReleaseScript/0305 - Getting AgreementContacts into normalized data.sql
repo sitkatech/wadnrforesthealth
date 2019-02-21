@@ -1,3 +1,17 @@
+
+-- Adding a constraint that we need to observe first
+alter table AgreementPerson
+add CONSTRAINT [AK_AgreementPerson_AgreementID_PersonID_AgreementPersonRoleID] UNIQUE NONCLUSTERED 
+(
+    AgreementID ASC,
+    PersonID ASC,
+    AgreementPersonRoleID ASC
+)
+GO
+
+
+
+
 insert into dbo.Person (FirstName, LastName, RoleID, CreateDate, IsActive, ReceiveSupportEmails)
 
 select distinct x.FirstName, x.LastName , 7, GetDate(), 1, 0
@@ -23,6 +37,7 @@ go
 insert into dbo.AgreementPerson (AgreementID, PersonID, AgreementPersonRoleID)
 
 select 
+distinct
 a.AgreementID,
 p.PersonID,
 r.AgreementPersonRoleID
