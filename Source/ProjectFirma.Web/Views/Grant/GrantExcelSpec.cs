@@ -20,7 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common.ExcelWorkbookUtilities;
-using LtInfo.Common.HtmlHelperExtensions;
 
 namespace ProjectFirma.Web.Views.Grant
 {
