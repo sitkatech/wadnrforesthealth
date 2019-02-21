@@ -105,7 +105,6 @@
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Store.Tag" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tmpAgreement2" EntityType="ProjectFirma.Web.Models.Store.tmpAgreement2" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
@@ -131,10 +130,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Agreement_tmpAgreement2_tmpAgreement2ID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_tmpAgreement2_tmpAgreement2ID">
-      <End Role="tmpAgreement2" EntitySet="tmpAgreement2" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Agreement_AgreementID">
@@ -1971,23 +1966,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxonomyTrunkCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyTrunkSortOrder" Type="int" />
   </EntityType>
-  <EntityType Name="tmpAgreement2">
-    <Key>
-      <PropertyRef Name="TmpAgreement2ID" />
-    </Key>
-    <Property Name="TmpAgreement2ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="AgreementType" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="AgreementNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Organization" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="AgreementTitle" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="StartDate" Type="datetime2" Nullable="false" />
-    <Property Name="EndDate" Type="datetime2" Nullable="false" />
-    <Property Name="AgreementAmount" Type="money" />
-    <Property Name="ExpendedMoney" Type="money" />
-    <Property Name="BalanceMoney" Type="money" />
-    <Property Name="FirstBillDueOn" Type="money" />
-    <Property Name="Notes" Type="nvarchar(max)" />
-  </EntityType>
   <EntityType Name="tmpAgreementContact">
     <Key>
       <PropertyRef Name="AgreementContactID" />
@@ -2122,18 +2100,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="RegionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agreement_tmpAgreement2_tmpAgreement2ID">
-    <End Role="tmpAgreement2" Type="ProjectFirma.Web.Models.Store.tmpAgreement2" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tmpAgreement2">
-        <PropertyRef Name="TmpAgreement2ID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="tmpAgreement2ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

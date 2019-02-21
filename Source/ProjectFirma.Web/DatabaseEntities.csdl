@@ -105,7 +105,6 @@
     <EntitySet Name="Tag" EntityType="ProjectFirma.Web.Models.Tag" />
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.TaxonomyBranch" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
-    <EntitySet Name="tmpAgreement2" EntityType="ProjectFirma.Web.Models.tmpAgreement2" />
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.tmpAgreementContact" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
@@ -131,10 +130,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Agreement_tmpAgreement2_tmpAgreement2ID" Association="ProjectFirma.Web.Models.FK_Agreement_tmpAgreement2_tmpAgreement2ID">
-      <End Role="tmpAgreement2" EntitySet="tmpAgreement2" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID">
@@ -856,7 +851,6 @@
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID" FromRole="Agreements" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Agreements" ToRole="Organization" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Agreements" ToRole="Region" />
-    <NavigationProperty Name="tmpAgreement2" Relationship="ProjectFirma.Web.Models.FK_Agreement_tmpAgreement2_tmpAgreement2ID" FromRole="Agreements" ToRole="tmpAgreement2" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementPeople" />
     <NavigationProperty Name="AgreementProjectCodes" Relationship="ProjectFirma.Web.Models.FK_AgreementProjectCode_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementProjectCodes" />
@@ -2314,24 +2308,6 @@
     <Property Name="TaxonomyTrunkSortOrder" Type="Int32" />
     <NavigationProperty Name="TaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" FromRole="TaxonomyTrunk" ToRole="TaxonomyBranches" />
   </EntityType>
-  <EntityType Name="tmpAgreement2">
-    <Key>
-      <PropertyRef Name="TmpAgreement2ID" />
-    </Key>
-    <Property Name="TmpAgreement2ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="AgreementType" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="AgreementNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="Organization" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="AgreementTitle" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" />
-    <Property Name="EndDate" Type="DateTime" Nullable="false" />
-    <Property Name="AgreementAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="ExpendedMoney" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="BalanceMoney" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="FirstBillDueOn" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_tmpAgreement2_tmpAgreement2ID" FromRole="tmpAgreement2" ToRole="Agreements" />
-  </EntityType>
   <EntityType Name="tmpAgreementContact">
     <Key>
       <PropertyRef Name="AgreementContactID" />
@@ -2458,18 +2434,6 @@
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="RegionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agreement_tmpAgreement2_tmpAgreement2ID">
-    <End Role="tmpAgreement2" Type="ProjectFirma.Web.Models.tmpAgreement2" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tmpAgreement2">
-        <PropertyRef Name="TmpAgreement2ID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="tmpAgreement2ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
