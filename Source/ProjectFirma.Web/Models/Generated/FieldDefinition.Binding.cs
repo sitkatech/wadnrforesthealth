@@ -130,7 +130,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionGrantEndDate GrantEndDate = FieldDefinitionGrantEndDate.Instance;
         public static readonly FieldDefinitionGrantNote GrantNote = FieldDefinitionGrantNote.Instance;
         public static readonly FieldDefinitionPriorityArea PriorityArea = FieldDefinitionPriorityArea.Instance;
-        public static readonly FieldDefinitionGrantTitle GrantTitle = FieldDefinitionGrantTitle.Instance;
+        public static readonly FieldDefinitionPLACEHOLDERDONOTUSE PLACEHOLDERDONOTUSE = FieldDefinitionPLACEHOLDERDONOTUSE.Instance;
         public static readonly FieldDefinitionAgreement Agreement = FieldDefinitionAgreement.Instance;
         public static readonly FieldDefinitionFederalFundCode FederalFundCode = FieldDefinitionFederalFundCode.Instance;
         public static readonly FieldDefinitionAllocationAmount AllocationAmount = FieldDefinitionAllocationAmount.Instance;
@@ -154,7 +154,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, GrantTitle, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, FundingSource, IsPrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, SecuredFunding, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, FundingSourceAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, PLACEHOLDERDONOTUSE, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -334,8 +334,6 @@ namespace ProjectFirma.Web.Models
                     return GrantStartDate;
                 case FieldDefinitionEnum.GrantStatus:
                     return GrantStatus;
-                case FieldDefinitionEnum.GrantTitle:
-                    return GrantTitle;
                 case FieldDefinitionEnum.GrantType:
                     return GrantType;
                 case FieldDefinitionEnum.IsPrimaryContactOrganization:
@@ -388,6 +386,8 @@ namespace ProjectFirma.Web.Models
                     return PhotoCredit;
                 case FieldDefinitionEnum.PhotoTiming:
                     return PhotoTiming;
+                case FieldDefinitionEnum.PLACEHOLDERDONOTUSE:
+                    return PLACEHOLDERDONOTUSE;
                 case FieldDefinitionEnum.PrimaryContact:
                     return PrimaryContact;
                 case FieldDefinitionEnum.PriorityArea:
@@ -606,7 +606,7 @@ namespace ProjectFirma.Web.Models
         GrantEndDate = 291,
         GrantNote = 292,
         PriorityArea = 293,
-        GrantTitle = 294,
+        PLACEHOLDERDONOTUSE = 294,
         Agreement = 295,
         FederalFundCode = 296,
         AllocationAmount = 297,
@@ -1232,7 +1232,7 @@ namespace ProjectFirma.Web.Models
     public partial class FieldDefinitionGrantName : FieldDefinition
     {
         private FieldDefinitionGrantName(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantName Instance = new FieldDefinitionGrantName(283, @"GrantName", @"Name", @"<p>The name of a grant. Grant names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>");
+        public static readonly FieldDefinitionGrantName Instance = new FieldDefinitionGrantName(283, @"GrantName", @"Grant Name", @"<p>The name of a grant. Grant names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>");
     }
 
     public partial class FieldDefinitionGrantShortName : FieldDefinition
@@ -1295,10 +1295,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionPriorityArea Instance = new FieldDefinitionPriorityArea(293, @"PriorityArea", @"Priority Area", @"Placeholder definition for Priority Area");
     }
 
-    public partial class FieldDefinitionGrantTitle : FieldDefinition
+    public partial class FieldDefinitionPLACEHOLDERDONOTUSE : FieldDefinition
     {
-        private FieldDefinitionGrantTitle(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
-        public static readonly FieldDefinitionGrantTitle Instance = new FieldDefinitionGrantTitle(294, @"GrantTitle", @"Title", @"<p>{GrantName} ({GrantShortName})</p>");
+        private FieldDefinitionPLACEHOLDERDONOTUSE(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionPLACEHOLDERDONOTUSE Instance = new FieldDefinitionPLACEHOLDERDONOTUSE(294, @"PLACEHOLDERDONOTUSE", @"PLACEHOLDER", @"Placeholder");
     }
 
     public partial class FieldDefinitionAgreement : FieldDefinition

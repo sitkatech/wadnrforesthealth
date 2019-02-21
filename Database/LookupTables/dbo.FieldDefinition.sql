@@ -104,7 +104,7 @@ VALUES
 (280, N'ProjectCode', 'Project Code', 'Placeholder definition for Project Code.'),
 (281, N'GrantAllocationProjectCode', 'Grant Allocation Project Code', 'Placeholder definition for Grant Allocation Project Code.'),
 (282, N'ProgramIndex', 'Program Index', 'Placeholder definition for Program Index.'),
-(283, N'GrantName', 'Name', N'<p>The name of a grant. Grant names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>'),
+(283, N'GrantName', 'Grant Name', N'<p>The name of a grant. Grant names should generally include a reference to 1) the location of the grant, 2) the primary implementation activity, and 3) the grant year</p>'),
 (284, N'GrantShortName', 'Short Name', N'<p>The short hand name to reference a grant</p>'),
 (285, N'GrantStatus', 'Status', N'<p>The status of a grant. This can be Active, Pending, Planned, or Closeout</p>'),
 (286, N'GrantType', 'Type', N'<p>The type of grant. This can either be Stand Alone, or CPG. </p>'),
@@ -115,7 +115,8 @@ VALUES
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
 (292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
 (293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
-(294, N'GrantTitle', 'Title', N'<p>{GrantName} ({GrantShortName})</p>'),
+-- On the next field addition, feel free to replace this Placeholder with something real -- SLG
+(294, N'PLACEHOLDERDONOTUSE', 'PLACEHOLDER', N'Placeholder'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
 (297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.'),

@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantGridName = "grantsGridName";
             GrantGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantGridJsonData());
 
-            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);           
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonData());
 

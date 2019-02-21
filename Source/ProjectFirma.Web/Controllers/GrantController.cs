@@ -246,7 +246,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<GrantIndex, GrantIndexViewData>(viewData);
         }
 
-
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
         {
