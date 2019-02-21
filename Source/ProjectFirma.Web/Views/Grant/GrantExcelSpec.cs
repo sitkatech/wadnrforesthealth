@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common.ExcelWorkbookUtilities;
+using LtInfo.Common.HtmlHelperExtensions;
 
 namespace ProjectFirma.Web.Views.Grant
 {
@@ -27,11 +28,10 @@ namespace ProjectFirma.Web.Views.Grant
     {
         public GrantAllocationExcelSpec()
         {
-            // TODO: We likely need FieldDefinition labels here. 
-            AddColumn("Grant Number", x => x.Grant.GrantNumber);
-            AddColumn("Start Date", x => x.StartDate);
-            AddColumn("End Date", x => x.EndDate);
-            AddColumn("Allocation Amount", x => x.AllocationAmount);
+            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.Grant.GrantNumber);
+            AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
+            AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
+            AddColumn(Models.FieldDefinition.AllocationAmount.FieldDefinitionDisplayName, x => x.AllocationAmount);
         }
     }
 
@@ -39,11 +39,14 @@ namespace ProjectFirma.Web.Views.Grant
     {
         public GrantExcelSpec()
         {
-            // TODO: We likely need FieldDefinition labels here. 
-            AddColumn("Grant Number", x => x.GrantNumber);
-            AddColumn("Start Date", x => x.StartDate);
-            AddColumn("End Date", x => x.EndDate);
-            AddColumn("Awarded Funds", x => x.AwardedFunds);
+            AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.GrantNumber);
+            AddColumn(Models.FieldDefinition.CFDA.FieldDefinitionDisplayName, x => x.CFDANumber);
+            AddColumn(Models.FieldDefinition.GrantName.FieldDefinitionDisplayName, x => x.GrantName);
+            AddColumn(Models.FieldDefinition.TotalAwardAmount.FieldDefinitionDisplayName, x => x.AwardedFunds);
+            AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
+            AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
+            AddColumn(Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName, x => x.GrantStatus.GrantStatusName);
+            AddColumn(Models.FieldDefinition.GrantType.FieldDefinitionDisplayName, x => x.GrantTypeDisplay);
         }
     }
 }
