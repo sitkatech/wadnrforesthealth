@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Security
             {
                 return true; 
             }
-            return person.PersonID != Person.AnonymousPersonID && _grantedRoles.Any(x => x.RoleID == person.Role.RoleID);
+            return person != null && person.PersonID != Person.AnonymousPersonID && _grantedRoles.Any(x => x.RoleID == person.Role.RoleID);
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)

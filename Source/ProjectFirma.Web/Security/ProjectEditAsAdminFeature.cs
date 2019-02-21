@@ -42,19 +42,21 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Project contextModelObject)
         {
-            var isProposal = contextModelObject.IsProposal();
-            var isPending = contextModelObject.IsPendingProject();
+            bool isProposal = contextModelObject.IsProposal();
             if (isProposal)
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You cannot edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it is in the Proposal stage.");
             }
+
+            bool isPending = contextModelObject.IsPendingProject();
             if (isPending)
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You cannot edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName} because it is a Pending Project.");
             }
-            var isProjectStewardButCannotStewardThisProject = person.Role.RoleID == Role.ProjectSteward.RoleID && !person.CanStewardProject(contextModelObject);
-            var forbidAdmin = !HasPermissionByPerson(person) || isProjectStewardButCannotStewardThisProject;
-            if (forbidAdmin)
+
+            bool isProjectStewardButCannotStewardThisProject = person != null && person.Role.RoleID == Role.ProjectSteward.RoleID && !person.CanStewardProject(contextModelObject);
+            bool forbidEdit = !HasPermissionByPerson(person) || isProjectStewardButCannotStewardThisProject;
+            if (forbidEdit)
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to edit {FieldDefinition.Project.GetFieldDefinitionLabel()} {contextModelObject.DisplayName}");
             }
