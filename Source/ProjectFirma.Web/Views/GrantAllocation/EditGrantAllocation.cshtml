@@ -70,20 +70,11 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantStatusID)
+                @Html.LabelWithSugarFor(m => m.ProgramManagerID)
             </div>
             <div class="col-xs-6">
-                @Html.DropDownListFor(m => m.GrantStatusID, ViewDataTyped.GrantStatuses, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantStatusID)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantTypeID)
-            </div>
-            <div class="col-xs-6">
-                @Html.DropDownListFor(m => m.GrantTypeID, ViewDataTyped.GrantTypes, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantTypeID)
+                @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerID, ViewDataTyped.ProgramManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(m => m.ProgramManagerID)
             </div>
         </div>
         <div class="form-group">
@@ -95,26 +86,19 @@
                 @Html.ValidationMessageFor(m => m.ProgramIndexID)
             </div>
             <div class="col-xs-2 control-label">
-                @Html.LabelWithSugarFor(m => m.CFDANumber)
-            </div>
-            <div class="col-xs-2">
-                @Html.DropDownListFor(m => m.CFDANumber, ViewDataTyped.CFDANumbers, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CFDANumber)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.ProjectCodeIDs)
             </div>
             <div class="col-xs-2">
                 @Html.SearchableMultiSelectDropDownListFor(m => m.ProjectCodeIDs, ViewDataTyped.ProjectCodes, new { style = "width: auto;", @class = "form-control selectpicker" })
                 @Html.ValidationMessageFor(m => m.ProjectCodeIDs)
             </div>
-            <div class="col-xs-2 control-label">
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.FederalFundCodeID)
             </div>
-            <div class="col-xs-2">
-                @Html.DropDownListFor(m => m.FederalFundCodeID,  ViewDataTyped.FederalFundCodes, new { style = "width: auto;", @class = "form-control" })
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.FederalFundCodeID, ViewDataTyped.FederalFundCodes, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.FederalFundCodeID)
             </div>
         </div>
@@ -144,15 +128,16 @@
                 @Html.EditorFor(m => m.StartDate, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.StartDate)
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
+            <div class="col-xs-2 control-label">
                 @Html.LabelWithSugarFor(m => m.EndDate)
             </div>
             <div class="col-xs-2">
                 @Html.EditorFor(m => m.EndDate, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.EndDate)
             </div>
+        </div>
+        <div class="form-group">
+            
             @*<div class="form-group">
             <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.TotalAwardAmount)

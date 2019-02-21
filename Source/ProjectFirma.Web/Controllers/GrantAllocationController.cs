@@ -186,25 +186,25 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult GrantAllocationViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantAllocationStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
-            var grants = HttpRequestStorage.DatabaseEntities.Grants;
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
             var regions = HttpRequestStorage.DatabaseEntities.Regions;
             var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes;
             var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices;
-            var cfdaNumbers = HttpRequestStorage.DatabaseEntities.Grants;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
+            var programManagers =
+                HttpRequestStorage.DatabaseEntities.People.Where(x => x.RoleID == Role.ProjectSteward.RoleID);
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                 organizations,
-                grantStatuses,
                 grantTypes,
                 grants,
                 regions,
                 projectCodes,
                 programIndices,
-                cfdaNumbers,
-                federalFundCodes
+                federalFundCodes,
+                programManagers
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }
