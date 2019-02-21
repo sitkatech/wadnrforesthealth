@@ -30,9 +30,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public FocusAreaLocationStaging(int focusAreaLocationStaggingID, int focusAreaID, string featureClassName, string geoJson) : this()
+        public FocusAreaLocationStaging(int focusAreaLocationStagingID, int focusAreaID, string featureClassName, string geoJson) : this()
         {
-            this.FocusAreaLocationStaggingID = focusAreaLocationStaggingID;
+            this.FocusAreaLocationStagingID = focusAreaLocationStagingID;
             this.FocusAreaID = focusAreaID;
             this.FeatureClassName = featureClassName;
             this.GeoJson = geoJson;
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
         public FocusAreaLocationStaging(int focusAreaID, string featureClassName, string geoJson) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.FocusAreaLocationStaggingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.FocusAreaLocationStagingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.FocusAreaID = focusAreaID;
             this.FeatureClassName = featureClassName;
@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Models
         public FocusAreaLocationStaging(FocusArea focusArea, string featureClassName, string geoJson) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.FocusAreaLocationStaggingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.FocusAreaLocationStagingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.FocusAreaID = focusArea.FocusAreaID;
             this.FocusArea = focusArea;
             focusArea.FocusAreaLocationStagings.Add(this);
@@ -106,12 +106,12 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int FocusAreaLocationStaggingID { get; set; }
+        public int FocusAreaLocationStagingID { get; set; }
         public int FocusAreaID { get; set; }
         public string FeatureClassName { get; set; }
         public string GeoJson { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return FocusAreaLocationStaggingID; } set { FocusAreaLocationStaggingID = value; } }
+        public int PrimaryKey { get { return FocusAreaLocationStagingID; } set { FocusAreaLocationStagingID = value; } }
 
         public virtual FocusArea FocusArea { get; set; }
 

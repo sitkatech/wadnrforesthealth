@@ -242,7 +242,7 @@
     <EntitySetMapping Name="FocusAreaLocationStaging">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FocusAreaLocationStaging">
         <MappingFragment StoreEntitySet="FocusAreaLocationStaging">
-          <ScalarProperty Name="FocusAreaLocationStaggingID" ColumnName="FocusAreaLocationStaggingID" />
+          <ScalarProperty Name="FocusAreaLocationStagingID" ColumnName="FocusAreaLocationStagingID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="FeatureClassName" ColumnName="FeatureClassName" />
           <ScalarProperty Name="GeoJson" ColumnName="GeoJson" />

@@ -13,19 +13,19 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static FocusAreaLocationStaging GetFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, int focusAreaLocationStaggingID)
+        public static FocusAreaLocationStaging GetFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, int focusAreaLocationStagingID)
         {
-            var focusAreaLocationStaging = focusAreaLocationStagings.SingleOrDefault(x => x.FocusAreaLocationStaggingID == focusAreaLocationStaggingID);
-            Check.RequireNotNullThrowNotFound(focusAreaLocationStaging, "FocusAreaLocationStaging", focusAreaLocationStaggingID);
+            var focusAreaLocationStaging = focusAreaLocationStagings.SingleOrDefault(x => x.FocusAreaLocationStagingID == focusAreaLocationStagingID);
+            Check.RequireNotNullThrowNotFound(focusAreaLocationStaging, "FocusAreaLocationStaging", focusAreaLocationStagingID);
             return focusAreaLocationStaging;
         }
 
         // Delete using an IDList (WADNR style)
-        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, List<int> focusAreaLocationStaggingIDList)
+        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, List<int> focusAreaLocationStagingIDList)
         {
-            if(focusAreaLocationStaggingIDList.Any())
+            if(focusAreaLocationStagingIDList.Any())
             {
-                var focusAreaLocationStagingsInSourceCollectionToDelete = focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID));
+                var focusAreaLocationStagingsInSourceCollectionToDelete = focusAreaLocationStagings.Where(x => focusAreaLocationStagingIDList.Contains(x.FocusAreaLocationStagingID));
                 foreach (var focusAreaLocationStagingToDelete in focusAreaLocationStagingsInSourceCollectionToDelete.ToList())
                 {
                     focusAreaLocationStagingToDelete.Delete(HttpRequestStorage.DatabaseEntities);
@@ -38,8 +38,8 @@ namespace ProjectFirma.Web.Models
         {
             if(focusAreaLocationStagingsToDelete.Any())
             {
-                var focusAreaLocationStaggingIDList = focusAreaLocationStagingsToDelete.Select(x => x.FocusAreaLocationStaggingID).ToList();
-                var focusAreaLocationStagingsToDeleteFromSourceList = focusAreaLocationStagings.Where(x => focusAreaLocationStaggingIDList.Contains(x.FocusAreaLocationStaggingID)).ToList();
+                var focusAreaLocationStagingIDList = focusAreaLocationStagingsToDelete.Select(x => x.FocusAreaLocationStagingID).ToList();
+                var focusAreaLocationStagingsToDeleteFromSourceList = focusAreaLocationStagings.Where(x => focusAreaLocationStagingIDList.Contains(x.FocusAreaLocationStagingID)).ToList();
 
                 foreach (var focusAreaLocationStagingToDelete in focusAreaLocationStagingsToDeleteFromSourceList)
                 {
@@ -48,9 +48,9 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, int focusAreaLocationStaggingID)
+        public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, int focusAreaLocationStagingID)
         {
-            DeleteFocusAreaLocationStaging(focusAreaLocationStagings, new List<int> { focusAreaLocationStaggingID });
+            DeleteFocusAreaLocationStaging(focusAreaLocationStagings, new List<int> { focusAreaLocationStagingID });
         }
 
         public static void DeleteFocusAreaLocationStaging(this IQueryable<FocusAreaLocationStaging> focusAreaLocationStagings, FocusAreaLocationStaging focusAreaLocationStagingToDelete)

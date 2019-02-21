@@ -1035,9 +1035,9 @@
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
     <Key>
-      <PropertyRef Name="FocusAreaLocationStaggingID" />
+      <PropertyRef Name="FocusAreaLocationStagingID" />
     </Key>
-    <Property Name="FocusAreaLocationStaggingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FocusAreaLocationStagingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
