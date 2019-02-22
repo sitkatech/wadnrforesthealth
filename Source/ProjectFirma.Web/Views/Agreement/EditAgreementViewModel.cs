@@ -60,6 +60,12 @@ namespace ProjectFirma.Web.Views.Agreement
         [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
         public int? GrantID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
+        public List<ProgramIndex> ProgramIndices { get; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
+        public string ProjectCode { get; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.AgreementAmount)]
         public Money? AgreementAmount { get; set; }
 
@@ -86,12 +92,16 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public EditAgreementViewModel(Models.Agreement agreement)
         {
+            var agreementGrantAllocationsForThisAgreement = agreement.AgreementGrantAllocations;
+
             AgreementTitle = agreement.AgreementTitle;
             AgreementNumber = agreement.AgreementNumber;
             OrganizationID = agreement.OrganizationID;
             AgreemeentStatusID = agreement.AgreementStatusID;
             AgreementTypeID = agreement.AgreementTypeID;
             GrantID = agreement.GrantID;
+            //ProgramIndices = agreement.AgreementGrantAllocations
+            //ProjectCode = agreement.Grant.ProjectCode;
             AgreementAmount = agreement.AgreementAmount;
             AgreementStartDate = agreement.StartDate;
             AgreementEndDate = agreement.EndDate;
