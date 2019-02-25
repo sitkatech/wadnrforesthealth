@@ -498,6 +498,7 @@
     <Compile Include="Models\ProjectPersonSimple.cs" />
     <Compile Include="Models\ProjectPersonUpdate.cs" />
     <Compile Include="Models\TreatmentActivityModelExtensions.cs" />
+    <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorModelExtensions.cs" />
     <Compile Include="Security\AgreementCreateFeature.cs" />
     <Compile Include="Security\AgreementDeleteFeature.cs" />

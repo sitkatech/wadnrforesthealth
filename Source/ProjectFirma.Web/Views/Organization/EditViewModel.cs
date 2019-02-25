@@ -56,6 +56,9 @@ namespace ProjectFirma.Web.Views.Organization
         [FieldDefinitionDisplay(FieldDefinitionEnum.OrganizationPrimaryContact)]
         public int? PrimaryContactPersonID { get; set; }
 
+        [DisplayName("Vendor")]
+        public int? VendorID { get; set; }
+
         [Url]
         [DisplayName("Home Page")]
         public string OrganizationUrl { get; set; }
@@ -82,7 +85,7 @@ namespace ProjectFirma.Web.Views.Organization
             OrganizationTypeID = organization.OrganizationTypeID;
             PrimaryContactPersonID = organization.PrimaryContactPerson?.PersonID;
             OrganizationUrl = organization.OrganizationUrl;
-
+            VendorID = organization.VendorID;
             IsActive = organization.IsActive;
         }
 
@@ -94,6 +97,7 @@ namespace ProjectFirma.Web.Views.Organization
             organization.IsActive = IsActive;
             organization.PrimaryContactPersonID = PrimaryContactPersonID;
             organization.OrganizationUrl = OrganizationUrl;
+            organization.VendorID = VendorID;
             if (LogoFileResourceData != null)
             {
                 organization.LogoFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(LogoFileResourceData, currentPerson);    

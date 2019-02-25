@@ -126,8 +126,11 @@ namespace ProjectFirma.Web.Controllers
             }
             var people = activePeople.OrderBy(x => x.FullNameLastFirst).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                 x => x.FullNameFirstLastAndOrg);
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName)
+                .ToSelectListWithEmptyFirstRow(k => k.VendorID.ToString(CultureInfo.InvariantCulture),
+                    y => $"{y.VendorName} ({y.StatewideVendorNumberWithSuffix})");
             var isSitkaAdmin = new SitkaAdminFeature().HasPermissionByPerson(CurrentPerson);
-            var viewData = new EditViewData(organizationTypesAsSelectListItems, people, isInKeystone, SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.RequestOrganizationNameChange()), isSitkaAdmin);
+            var viewData = new EditViewData(organizationTypesAsSelectListItems, people, vendors, isInKeystone, SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.RequestOrganizationNameChange()), isSitkaAdmin);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
 
