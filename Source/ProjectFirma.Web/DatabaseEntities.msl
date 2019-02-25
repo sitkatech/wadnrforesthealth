@@ -383,6 +383,7 @@
           <ScalarProperty Name="LogoFileResourceID" ColumnName="LogoFileResourceID" />
           <ScalarProperty Name="OrganizationTypeID" ColumnName="OrganizationTypeID" />
           <ScalarProperty Name="OrganizationBoundary" ColumnName="OrganizationBoundary" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -559,10 +560,10 @@
           <ScalarProperty Name="WebServiceAccessToken" ColumnName="WebServiceAccessToken" />
           <ScalarProperty Name="LoginName" ColumnName="LoginName" />
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-          <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1292,6 +1293,16 @@
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
           <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vendor">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Vendor">
+        <MappingFragment StoreEntitySet="Vendor">
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+          <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
+          <ScalarProperty Name="VendorSuffix" ColumnName="VendorSuffix" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

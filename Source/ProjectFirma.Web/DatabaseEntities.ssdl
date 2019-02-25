@@ -108,6 +108,7 @@
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -320,6 +321,10 @@
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="OrganizationsWhereYouAreThePrimaryContactPerson" EntitySet="Organization" />
     </AssociationSet>
+    <AssociationSet Name="FK_Organization_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_Organization_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="Organizations" EntitySet="Organization" />
+    </AssociationSet>
     <AssociationSet Name="FK_OrganizationBoundaryStaging_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_OrganizationBoundaryStaging_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="OrganizationBoundaryStagings" EntitySet="OrganizationBoundaryStaging" />
@@ -431,6 +436,10 @@
     <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Person_Person_AddedByPersonID_PersonID">
       <End Role="AddedByPerson" EntitySet="Person" />
       <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_Person_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="People" EntitySet="Person" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardOrganization_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardOrganization_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -1167,6 +1176,7 @@
     <Property Name="LogoFileResourceID" Type="int" />
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
     <Property Name="OrganizationBoundary" Type="geometry" />
+    <Property Name="VendorID" Type="int" />
   </EntityType>
   <EntityType Name="OrganizationBoundaryStaging">
     <Key>
@@ -1344,10 +1354,10 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
     <Property Name="LoginName" Type="varchar" MaxLength="128" />
     <Property Name="MiddleName" Type="varchar" MaxLength="100" />
-    <Property Name="StatewideVendorNumber" Type="varchar" MaxLength="100" />
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
+    <Property Name="VendorID" Type="int" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">
     <Key>
@@ -2019,6 +2029,15 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectCodeID" Type="int" />
     <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
   </EntityType>
+  <EntityType Name="Vendor">
+    <Key>
+      <PropertyRef Name="VendorID" />
+    </Key>
+    <Property Name="VendorID" Type="int" Nullable="false" />
+    <Property Name="VendorName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="StatewideVendorNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="VendorSuffix" Type="varchar" Nullable="false" MaxLength="10" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -2667,6 +2686,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Organization_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Store.Vendor" Multiplicity="0..1" />
+    <End Role="Organizations" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="Organizations">
+        <PropertyRef Name="VendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_OrganizationBoundaryStaging_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
     <End Role="OrganizationBoundaryStagings" Type="ProjectFirma.Web.Models.Store.OrganizationBoundaryStaging" Multiplicity="*" />
@@ -3000,6 +3031,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
         <PropertyRef Name="AddedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Store.Vendor" Multiplicity="0..1" />
+    <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="People">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

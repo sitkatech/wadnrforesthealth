@@ -135,6 +135,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
 
         public object LoadType(Type type, int primaryKey)
         {
@@ -640,6 +641,9 @@ namespace ProjectFirma.Web.Models
                     var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(treatmentType, "TreatmentType", primaryKey);
                     return treatmentType;
+
+                case "Vendor":
+                    return Vendors.GetVendor(primaryKey);
                 default:
                     throw new NotImplementedException(string.Format("No loader for type \"{0}\"", type.FullName));
             }

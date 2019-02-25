@@ -2,7 +2,8 @@ create table dbo.Vendor (
 	VendorID int not null constraint PK_Vendor_VendorID primary key,
 	VendorName varchar(100) not null,
 	StatewideVendorNumber varchar(20) not null,
-	VendorSuffix varchar(10) not null
+	VendorSuffix varchar(10) not null,
+	CONSTRAINT AK_Vendor_StatewideVendorNumber_VendorSuffix UNIQUE (StatewideVendorNumber, VendorSuffix)
 );
 
 
@@ -18,3 +19,15 @@ values
 (8, 'Dept of Commerce', 'SWV0000116', '00'),
 (9, 'Dept of Commerce', 'SWV0000116', '01'),
 (10, 'DOC Petty Cash 001', 'SWV0003872', '59')
+
+
+
+alter table dbo.Person drop column StatewideVendorNumber;
+
+alter table dbo.Person 
+	add VendorID int null 
+		constraint FK_Person_Vendor_VendorID foreign key references dbo.Vendor(VendorID);
+
+alter table dbo.Organization
+	add VendorID int null 
+		constraint FK_Organization_Vendor_VendorID foreign key references dbo.Vendor(VendorID);

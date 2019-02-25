@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[Organization](
 	[LogoFileResourceID] [int] NULL,
 	[OrganizationTypeID] [int] NOT NULL,
 	[OrganizationBoundary] [geometry] NULL,
+	[VendorID] [int] NULL,
  CONSTRAINT [PK_Organization_OrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[OrganizationID] ASC
@@ -42,3 +43,8 @@ ALTER TABLE [dbo].[Organization]  WITH CHECK ADD  CONSTRAINT [FK_Organization_Pe
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[Organization] CHECK CONSTRAINT [FK_Organization_Person_PrimaryContactPersonID_PersonID]
+GO
+ALTER TABLE [dbo].[Organization]  WITH CHECK ADD  CONSTRAINT [FK_Organization_Vendor_VendorID] FOREIGN KEY([VendorID])
+REFERENCES [dbo].[Vendor] ([VendorID])
+GO
+ALTER TABLE [dbo].[Organization] CHECK CONSTRAINT [FK_Organization_Vendor_VendorID]
