@@ -115,7 +115,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
-                    <div class="col-xs-7">@ViewDataTyped.Person.StatewideVendorNumber</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Vendor.GetStatewideVendorNumberWithSuffix()</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Notes</div>

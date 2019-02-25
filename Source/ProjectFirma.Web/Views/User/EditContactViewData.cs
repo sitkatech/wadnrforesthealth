@@ -8,12 +8,17 @@ namespace ProjectFirma.Web.Views.User
     {
         public bool FullUpUser { get; }
 
-        public EditContactViewData(IEnumerable<SelectListItem> organizations, bool fullUpUser)
+        public EditContactViewData(IEnumerable<SelectListItem> organizations, IEnumerable<SelectListItem> vendors, bool fullUpUser)
         {
             Organizations = organizations;
+            Vendors = vendors;
             FullUpUser = fullUpUser;
         }
 
         public IEnumerable<SelectListItem> Organizations { get; }
+
+        public IEnumerable<SelectListItem> Vendors { get; }
+
+
     }
 }

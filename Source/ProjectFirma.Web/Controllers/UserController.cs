@@ -339,7 +339,10 @@ namespace ProjectFirma.Web.Controllers
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x=>x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
-            var viewData = new EditContactViewData(organizations, fullUpUser);
+            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName)
+                .ToSelectListWithEmptyFirstRow(k => k.VendorID.ToString(CultureInfo.InvariantCulture),
+                    y => $"{y.VendorName} ({y.GetStatewideVendorNumberWithSuffix()}", "No Vendor");
+            var viewData = new EditContactViewData(organizations, vendors, fullUpUser);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
 
