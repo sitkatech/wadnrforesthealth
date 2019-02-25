@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.User
             Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, DhtmlxGridColumnFilterType.Html);
             Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 100, DhtmlxGridColumnFilterType.Html);
             Add("Email", a => a.Email, 200);
-            Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => a.Organization.GetShortNameAsUrl(), 200);
+            Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => GetOrganizationShortNameUrl(a), 200);
             Add("Phone", a => a.Phone.ToPhoneNumberString(), 100);
             Add("Username", a => a.IsFullUser() ? a.LoginName?.ToString() : "N/A", 200);
             Add("Last Activity", a => a.IsFullUser() ? a.LastActivityDate : null, 120);
@@ -52,6 +52,21 @@ namespace ProjectFirma.Web.Views.User
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
             Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
             Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
+        }
+
+        private static HtmlString GetOrganizationShortNameUrl(Person person)
+        {
+            if (person == null)
+            {
+                return new HtmlString(string.Empty);
+            }
+
+            if (person.Organization == null)
+            {
+                return new HtmlString(string.Empty);
+            }
+
+            return person.Organization.GetShortNameAsUrl();
         }
     }
 }
