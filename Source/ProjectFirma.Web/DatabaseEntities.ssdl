@@ -4,7 +4,6 @@
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
@@ -138,10 +137,6 @@
       <End Role="Agreement" EntitySet="Agreement" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_AgreementGrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
-    </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
@@ -153,14 +148,6 @@
     <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AgreementPeople" EntitySet="AgreementPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementProjectCode_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_Agreement_AgreementID">
-      <End Role="Agreement" EntitySet="Agreement" />
-      <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
     </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -823,6 +810,9 @@
       <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+-->
   <EntityType Name="Agreement">
     <Key>
       <PropertyRef Name="AgreementID" />
@@ -862,14 +852,6 @@
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="AgreementPersonRoleID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AgreementProjectCode">
-    <Key>
-      <PropertyRef Name="AgreementProjectCodeID" />
-    </Key>
-    <Property Name="AgreementProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="AgreementID" Type="int" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementStatus">
     <Key>
@@ -1068,8 +1050,6 @@
     <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
-    <Property Name="ProgramIndex" Type="int" />
-    <Property Name="ProjectCode" Type="varchar" MaxLength="100" />
     <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
     <Property Name="ComplianceNotes" Type="varchar(max)" />
     <Property Name="AwardedFunds" Type="money" />
@@ -1080,6 +1060,9 @@
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+-->
   <EntityType Name="GrantAllocation">
     <Key>
       <PropertyRef Name="GrantAllocationID" />
@@ -2160,18 +2143,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AgreementGrantAllocation_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="AgreementGrantAllocations">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
@@ -2205,30 +2176,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="AgreementPeople">
         <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AgreementProjectCode_Agreement_AgreementID">
-    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
-    <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.Store.AgreementProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Agreement">
-        <PropertyRef Name="AgreementID" />
-      </Principal>
-      <Dependent Role="AgreementProjectCodes">
-        <PropertyRef Name="AgreementID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="1" />
-    <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.Store.AgreementProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="AgreementProjectCodes">
-        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

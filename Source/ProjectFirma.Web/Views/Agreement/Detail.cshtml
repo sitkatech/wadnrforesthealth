@@ -41,7 +41,6 @@
         List<AgreementGrantAllocation> agreementGrantAllocations = ViewDataTyped.Agreement.AgreementGrantAllocations.ToList();
         return AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocations);
     }
-
 }
 
 @section JavascriptAndStylesContent
@@ -153,6 +152,40 @@
                             </div>
                             <div class="col-sm-9">
                                 <span id="AgreementFundingSource">@UrlTemplate.MakeHrefString(ViewDataTyped.Agreement.GetGrantDetailUrl(), ViewDataTyped.Agreement.GrantNumberDisplay)</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="ProjectCodes">
+                                    @if (ViewDataTyped.ProjectCodes.Any())
+                                    {
+                                        @ViewDataTyped.ProjectCodes.ToDistinctOrderedCsvList()
+                                    }
+                                    else
+                                    {
+                                        <span>There aren't any Project Codes associated with this Agreement</span>
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.ProgramIndex)
+                            </div>
+                            <div class="col-sm-9">
+                                <span id="ProgramIndices">
+                                    @if (ViewDataTyped.ProgramIndices.Any())
+                                    {
+                                        @ViewDataTyped.ProgramIndices.ToDistinctOrderedCsvList()
+                                    }
+                                    else
+                                    {
+                                        <span>There aren't any Program Indices associated with this Agreement</span>
+                                    }
+                                </span>
                             </div>
                         </div>
                         <div class="row">

@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation, Grant grant) : this()
+        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation, int grantID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementGrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -64,17 +64,15 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.AgreementGrantAllocations.Add(this);
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.AgreementGrantAllocations.Add(this);
+            this.GrantID = grantID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, GrantAllocation grantAllocation, Grant grant)
+        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, GrantAllocation grantAllocation)
         {
-            return new AgreementGrantAllocation(agreement, grantAllocation, grant);
+            return new AgreementGrantAllocation(agreement, grantAllocation, default(int));
         }
 
         /// <summary>
@@ -119,7 +117,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual Agreement Agreement { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
-        public virtual Grant Grant { get; set; }
 
         public static class FieldLengths
         {
