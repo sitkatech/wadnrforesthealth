@@ -25,6 +25,15 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @inherits GrantAllocationBasics
 
+@functions 
+{
+    private string GetProgramMangerPersonFullName(GrantAllocationBasicsViewData viewDataTyped)
+    {
+        return ViewDataTyped.GrantAllocation.ProgramManagerPerson != null ? ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast : string.Empty;
+    }
+
+}
+
 <style>
     .basicsLayout .row {
         margin-left: 0;
@@ -66,7 +75,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <label for="ProgramManager">ProgramManager</label>
         </div>
         <div class="col-sm-9">
-            <span id="ProgramManager">@ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast</span>
+            <span id="ProgramManager">@GetProgramMangerPersonFullName(ViewDataTyped)</span>
         </div>
     </div>
     <div class="row">
