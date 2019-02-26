@@ -62,7 +62,14 @@ Source code is available upon request via <support@sitkatech.com>.
             <span id="Organization">@ViewDataTyped.OrganizationDisplayName</span>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="ProgramManager">ProgramManager</label>
+        </div>
+        <div class="col-sm-9">
+            <span id="ProgramManager">@ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast</span>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
@@ -85,6 +92,14 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
         <div class="col-sm-9">
             <span id="GrantNumber">@ViewDataTyped.GrantAllocation.Grant.GrantNumber</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="ProjectCode">Project Code</label>
+        </div>
+        <div class="col-sm-9">
+            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodesAsCsvString</span>
         </div>
     </div>
     <div class="row">
