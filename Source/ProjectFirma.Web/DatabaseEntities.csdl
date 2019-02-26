@@ -105,6 +105,7 @@
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.TaxonomyBranch" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.TaxonomyTrunk" />
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.tmpAgreementContact" />
+    <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
@@ -2301,6 +2302,19 @@
     <Property Name="AgreementRole" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
     <Property Name="F8" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
     <Property Name="F9" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tmpAgreementContactsImportTemplate">
+    <Key>
+      <PropertyRef Name="tmpAgreementContactsImportTemplateID" />
+    </Key>
+    <Property Name="tmpAgreementContactsImportTemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="Organization" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="AgreementRole" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>

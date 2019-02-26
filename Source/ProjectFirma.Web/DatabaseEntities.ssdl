@@ -105,6 +105,7 @@
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
@@ -1969,6 +1970,19 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="AgreementRole" Type="nvarchar" MaxLength="255" />
     <Property Name="F8" Type="nvarchar" MaxLength="255" />
     <Property Name="F9" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tmpAgreementContactsImportTemplate">
+    <Key>
+      <PropertyRef Name="tmpAgreementContactsImportTemplateID" />
+    </Key>
+    <Property Name="tmpAgreementContactsImportTemplateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="1" />
+    <Property Name="Organization" Type="nvarchar" MaxLength="100" />
+    <Property Name="AgreementRole" Type="nvarchar" Nullable="false" MaxLength="50" />
   </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>
