@@ -2033,10 +2033,26 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Key>
       <PropertyRef Name="VendorID" />
     </Key>
-    <Property Name="VendorID" Type="int" Nullable="false" />
+    <Property Name="VendorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="VendorName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="StatewideVendorNumber" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="VendorSuffix" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="StatewideVendorNumberSuffix" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="VendorType" Type="varchar" MaxLength="3" />
+    <Property Name="BillingAgency" Type="varchar" MaxLength="200" />
+    <Property Name="BillingSubAgency" Type="varchar" MaxLength="200" />
+    <Property Name="BillingFund" Type="varchar" MaxLength="200" />
+    <Property Name="BillingFundBreakout" Type="varchar" MaxLength="200" />
+    <Property Name="VendorAddressLine1" Type="varchar" MaxLength="200" />
+    <Property Name="VendorAddressLine2" Type="varchar" MaxLength="200" />
+    <Property Name="VendorAddressLine3" Type="varchar" MaxLength="200" />
+    <Property Name="VendorCity" Type="varchar" MaxLength="200" />
+    <Property Name="VendorState" Type="varchar" MaxLength="200" />
+    <Property Name="VendorZip" Type="varchar" MaxLength="200" />
+    <Property Name="Remarks" Type="varchar" MaxLength="200" />
+    <Property Name="VendorPhone" Type="varchar" MaxLength="200" />
+    <Property Name="VendorStatus" Type="varchar" MaxLength="200" />
+    <Property Name="TaxpayerIdNumber" Type="varchar" MaxLength="200" />
+    <Property Name="Email" Type="varchar" MaxLength="200" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -4215,6 +4231,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />
     <Parameter Name="LastName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="pVendorImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VendorListJsonFileName" Type="varchar" Mode="In" />
   </Function>
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />

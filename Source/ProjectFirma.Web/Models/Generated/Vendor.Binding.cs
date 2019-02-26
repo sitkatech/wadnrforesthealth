@@ -31,25 +31,41 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Vendor(int vendorID, string vendorName, string statewideVendorNumber, string vendorSuffix) : this()
+        public Vendor(int vendorID, string vendorName, string statewideVendorNumber, string statewideVendorNumberSuffix, string vendorType, string billingAgency, string billingSubAgency, string billingFund, string billingFundBreakout, string vendorAddressLine1, string vendorAddressLine2, string vendorAddressLine3, string vendorCity, string vendorState, string vendorZip, string remarks, string vendorPhone, string vendorStatus, string taxpayerIdNumber, string email) : this()
         {
             this.VendorID = vendorID;
             this.VendorName = vendorName;
             this.StatewideVendorNumber = statewideVendorNumber;
-            this.VendorSuffix = vendorSuffix;
+            this.StatewideVendorNumberSuffix = statewideVendorNumberSuffix;
+            this.VendorType = vendorType;
+            this.BillingAgency = billingAgency;
+            this.BillingSubAgency = billingSubAgency;
+            this.BillingFund = billingFund;
+            this.BillingFundBreakout = billingFundBreakout;
+            this.VendorAddressLine1 = vendorAddressLine1;
+            this.VendorAddressLine2 = vendorAddressLine2;
+            this.VendorAddressLine3 = vendorAddressLine3;
+            this.VendorCity = vendorCity;
+            this.VendorState = vendorState;
+            this.VendorZip = vendorZip;
+            this.Remarks = remarks;
+            this.VendorPhone = vendorPhone;
+            this.VendorStatus = vendorStatus;
+            this.TaxpayerIdNumber = taxpayerIdNumber;
+            this.Email = email;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Vendor(string vendorName, string statewideVendorNumber, string vendorSuffix) : this()
+        public Vendor(string vendorName, string statewideVendorNumber, string statewideVendorNumberSuffix) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.VendorID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.VendorName = vendorName;
             this.StatewideVendorNumber = statewideVendorNumber;
-            this.VendorSuffix = vendorSuffix;
+            this.StatewideVendorNumberSuffix = statewideVendorNumberSuffix;
         }
 
 
@@ -113,7 +129,23 @@ namespace ProjectFirma.Web.Models
         public int VendorID { get; set; }
         public string VendorName { get; set; }
         public string StatewideVendorNumber { get; set; }
-        public string VendorSuffix { get; set; }
+        public string StatewideVendorNumberSuffix { get; set; }
+        public string VendorType { get; set; }
+        public string BillingAgency { get; set; }
+        public string BillingSubAgency { get; set; }
+        public string BillingFund { get; set; }
+        public string BillingFundBreakout { get; set; }
+        public string VendorAddressLine1 { get; set; }
+        public string VendorAddressLine2 { get; set; }
+        public string VendorAddressLine3 { get; set; }
+        public string VendorCity { get; set; }
+        public string VendorState { get; set; }
+        public string VendorZip { get; set; }
+        public string Remarks { get; set; }
+        public string VendorPhone { get; set; }
+        public string VendorStatus { get; set; }
+        public string TaxpayerIdNumber { get; set; }
+        public string Email { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return VendorID; } set { VendorID = value; } }
 
@@ -124,7 +156,23 @@ namespace ProjectFirma.Web.Models
         {
             public const int VendorName = 100;
             public const int StatewideVendorNumber = 20;
-            public const int VendorSuffix = 10;
+            public const int StatewideVendorNumberSuffix = 10;
+            public const int VendorType = 3;
+            public const int BillingAgency = 200;
+            public const int BillingSubAgency = 200;
+            public const int BillingFund = 200;
+            public const int BillingFundBreakout = 200;
+            public const int VendorAddressLine1 = 200;
+            public const int VendorAddressLine2 = 200;
+            public const int VendorAddressLine3 = 200;
+            public const int VendorCity = 200;
+            public const int VendorState = 200;
+            public const int VendorZip = 200;
+            public const int Remarks = 200;
+            public const int VendorPhone = 200;
+            public const int VendorStatus = 200;
+            public const int TaxpayerIdNumber = 200;
+            public const int Email = 200;
         }
     }
 }

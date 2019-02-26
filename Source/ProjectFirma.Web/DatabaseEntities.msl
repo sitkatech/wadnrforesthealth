@@ -1302,7 +1302,23 @@
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
           <ScalarProperty Name="VendorName" ColumnName="VendorName" />
           <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
-          <ScalarProperty Name="VendorSuffix" ColumnName="VendorSuffix" />
+          <ScalarProperty Name="StatewideVendorNumberSuffix" ColumnName="StatewideVendorNumberSuffix" />
+          <ScalarProperty Name="VendorType" ColumnName="VendorType" />
+          <ScalarProperty Name="BillingAgency" ColumnName="BillingAgency" />
+          <ScalarProperty Name="BillingSubAgency" ColumnName="BillingSubAgency" />
+          <ScalarProperty Name="BillingFund" ColumnName="BillingFund" />
+          <ScalarProperty Name="BillingFundBreakout" ColumnName="BillingFundBreakout" />
+          <ScalarProperty Name="VendorAddressLine1" ColumnName="VendorAddressLine1" />
+          <ScalarProperty Name="VendorAddressLine2" ColumnName="VendorAddressLine2" />
+          <ScalarProperty Name="VendorAddressLine3" ColumnName="VendorAddressLine3" />
+          <ScalarProperty Name="VendorCity" ColumnName="VendorCity" />
+          <ScalarProperty Name="VendorState" ColumnName="VendorState" />
+          <ScalarProperty Name="VendorZip" ColumnName="VendorZip" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="VendorPhone" ColumnName="VendorPhone" />
+          <ScalarProperty Name="VendorStatus" ColumnName="VendorStatus" />
+          <ScalarProperty Name="TaxpayerIdNumber" ColumnName="TaxpayerIdNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

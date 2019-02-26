@@ -4,6 +4,6 @@
     {
         public string AuditDescriptionString => $"{VendorName} ({StatewideVendorNumberWithSuffix})";
 
-        public string StatewideVendorNumberWithSuffix => $"{StatewideVendorNumber}-{VendorSuffix}";
+        public string StatewideVendorNumberWithSuffix => $"{StatewideVendorNumber}-{StatewideVendorNumberSuffix}";
     }
 }

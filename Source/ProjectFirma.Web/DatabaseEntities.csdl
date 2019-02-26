@@ -2381,10 +2381,26 @@
     <Key>
       <PropertyRef Name="VendorID" />
     </Key>
-    <Property Name="VendorID" Type="Int32" Nullable="false" />
+    <Property Name="VendorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="VendorName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="StatewideVendorNumber" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-    <Property Name="VendorSuffix" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="StatewideVendorNumberSuffix" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="VendorType" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
+    <Property Name="BillingAgency" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="BillingSubAgency" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="BillingFund" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="BillingFundBreakout" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorAddressLine1" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorAddressLine2" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorAddressLine3" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorCity" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorState" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorZip" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorPhone" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorStatus" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="TaxpayerIdNumber" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
