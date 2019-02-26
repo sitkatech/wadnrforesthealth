@@ -1492,7 +1492,7 @@
     <Property Name="UpdateDate" Type="DateTime" />
     <Property Name="LastActivityDate" Type="DateTime" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="OrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="OrganizationID" Type="Int32" />
     <Property Name="ReceiveSupportEmails" Type="Boolean" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="Guid" />
     <Property Name="LoginName" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
@@ -3229,7 +3229,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="1" />
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Person" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">

@@ -1346,7 +1346,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="UpdateDate" Type="datetime" />
     <Property Name="LastActivityDate" Type="datetime" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
-    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" />
     <Property Name="ReceiveSupportEmails" Type="bit" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
     <Property Name="LoginName" Type="varchar" MaxLength="128" />
@@ -3037,7 +3037,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
