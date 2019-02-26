@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Models
         }
         public virtual DbSet<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual DbSet<AgreementPerson> AgreementPeople { get; set; }
-        public virtual DbSet<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
@@ -135,6 +134,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
 
         public object LoadType(Type type, int primaryKey)
         {
@@ -155,9 +155,6 @@ namespace ProjectFirma.Web.Models
                     var agreementPersonRole = AgreementPersonRole.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(agreementPersonRole, "AgreementPersonRole", primaryKey);
                     return agreementPersonRole;
-
-                case "AgreementProjectCode":
-                    return AgreementProjectCodes.GetAgreementProjectCode(primaryKey);
 
                 case "Agreement":
                     return Agreements.GetAgreement(primaryKey);
@@ -640,6 +637,9 @@ namespace ProjectFirma.Web.Models
                     var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(treatmentType, "TreatmentType", primaryKey);
                     return treatmentType;
+
+                case "Vendor":
+                    return Vendors.GetVendor(primaryKey);
                 default:
                     throw new NotImplementedException(string.Format("No loader for type \"{0}\"", type.FullName));
             }

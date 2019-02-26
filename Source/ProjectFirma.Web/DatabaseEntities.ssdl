@@ -4,7 +4,6 @@
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
@@ -108,6 +107,7 @@
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -136,10 +136,6 @@
       <End Role="Agreement" EntitySet="Agreement" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_AgreementGrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
-    </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
@@ -151,14 +147,6 @@
     <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AgreementPeople" EntitySet="AgreementPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementProjectCode_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_Agreement_AgreementID">
-      <End Role="Agreement" EntitySet="Agreement" />
-      <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
     </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -821,6 +809,9 @@
       <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+-->
   <EntityType Name="Agreement">
     <Key>
       <PropertyRef Name="AgreementID" />
@@ -860,14 +851,6 @@
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="AgreementPersonRoleID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AgreementProjectCode">
-    <Key>
-      <PropertyRef Name="AgreementProjectCodeID" />
-    </Key>
-    <Property Name="AgreementProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="AgreementID" Type="int" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementStatus">
     <Key>
@@ -1066,8 +1049,6 @@
     <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
-    <Property Name="ProgramIndex" Type="int" />
-    <Property Name="ProjectCode" Type="varchar" MaxLength="100" />
     <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
     <Property Name="ComplianceNotes" Type="varchar(max)" />
     <Property Name="AwardedFunds" Type="money" />
@@ -1078,6 +1059,9 @@
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+-->
   <EntityType Name="GrantAllocation">
     <Key>
       <PropertyRef Name="GrantAllocationID" />
@@ -2024,6 +2008,31 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectCodeID" Type="int" />
     <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
   </EntityType>
+  <EntityType Name="Vendor">
+    <Key>
+      <PropertyRef Name="VendorID" />
+    </Key>
+    <Property Name="VendorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="VendorName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="StatewideVendorNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="StatewideVendorNumberSuffix" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="VendorType" Type="varchar" MaxLength="3" />
+    <Property Name="BillingAgency" Type="varchar" MaxLength="200" />
+    <Property Name="BillingSubAgency" Type="varchar" MaxLength="200" />
+    <Property Name="BillingFund" Type="varchar" MaxLength="200" />
+    <Property Name="BillingFundBreakout" Type="varchar" MaxLength="200" />
+    <Property Name="VendorAddressLine1" Type="varchar" MaxLength="200" />
+    <Property Name="VendorAddressLine2" Type="varchar" MaxLength="200" />
+    <Property Name="VendorAddressLine3" Type="varchar" MaxLength="200" />
+    <Property Name="VendorCity" Type="varchar" MaxLength="200" />
+    <Property Name="VendorState" Type="varchar" MaxLength="200" />
+    <Property Name="VendorZip" Type="varchar" MaxLength="200" />
+    <Property Name="Remarks" Type="varchar" MaxLength="200" />
+    <Property Name="VendorPhone" Type="varchar" MaxLength="200" />
+    <Property Name="VendorStatus" Type="varchar" MaxLength="200" />
+    <Property Name="TaxpayerIdNumber" Type="varchar" MaxLength="200" />
+    <Property Name="Email" Type="varchar" MaxLength="200" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -2120,18 +2129,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AgreementGrantAllocation_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="AgreementGrantAllocations">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
@@ -2165,30 +2162,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="AgreementPeople">
         <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AgreementProjectCode_Agreement_AgreementID">
-    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
-    <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.Store.AgreementProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Agreement">
-        <PropertyRef Name="AgreementID" />
-      </Principal>
-      <Dependent Role="AgreementProjectCodes">
-        <PropertyRef Name="AgreementID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="1" />
-    <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.Store.AgreementProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="AgreementProjectCodes">
-        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4172,6 +4145,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="string" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="delimiter" Type="char" Mode="In" />
@@ -4193,6 +4167,36 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="TrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>

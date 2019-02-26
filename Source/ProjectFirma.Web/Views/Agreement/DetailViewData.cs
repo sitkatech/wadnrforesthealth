@@ -19,8 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using LtInfo.Common;
 using LtInfo.Common.ModalDialog;
+using MoreLinq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -40,7 +43,7 @@ using ProjectFirma.Web.Views.TreatmentActivity;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
-    public class DetailViewData : AgreementViewData
+    public class DetailViewData : FirmaViewData
     {
         public AgreementPersonGridSpec AgreementPersonGridSpec { get; }
         public string AgreementPersonGridName { get; }
@@ -48,16 +51,35 @@ namespace ProjectFirma.Web.Views.Agreement
         public bool UserHasEditAgreementPermissions { get; set; }
         public bool ShowDownload { get; }
         public string EditAgreementGrantAllocationRelationshipsUrl { get; }
+        [NotNull]
+        public List<ProjectCode> ProjectCodes { get; }
+        [NotNull]
+        public List<ProgramIndex> ProgramIndices { get; }
+        public Models.Agreement Agreement { get; }
+        public string EditAgreementUrl { get; set; }
+        public string BackToAgreementsText { get; set; }
+        public string AgreementsListUrl { get; set; }
 
 
         public DetailViewData(Person currentPerson, Models.Agreement agreement, bool userHasEditAgreementPermissions)
-            : base(currentPerson, agreement)
+            : base(currentPerson, null)
         {
+            Agreement = agreement;
+            HtmlPageTitle = agreement.AgreementTitle;
+            EntityName = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()}";
+            EditAgreementUrl = agreement.GetEditUrl();
+            BackToAgreementsText = "Back to all Agreements";
+            AgreementsListUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(c => c.Index());
+
             PageTitle = agreement.AgreementTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} Detail";
             UserHasEditAgreementPermissions = userHasEditAgreementPermissions;
             // Used for creating file download link, if file available
             ShowDownload = agreement.AgreementFileResource != null;
+            
+            ProgramIndices = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocation.ProgramIndex).ToList();
+
+            ProjectCodes = agreement.AgreementGrantAllocations.SelectMany(aga => aga.GrantAllocation.ProjectCodes).ToList();
 
             AgreementPersonGridSpec = new AgreementPersonGridSpec(currentPerson) { ObjectNameSingular = "Agreement Contact", ObjectNamePlural = "Agreement Contacts", SaveFiltersInCookie = true };
 

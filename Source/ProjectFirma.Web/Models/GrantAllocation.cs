@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
@@ -32,18 +34,6 @@ namespace ProjectFirma.Web.Models
                 this.GrantAllocationProjectCodes = value.Select(pc => new GrantAllocationProjectCode(this, pc)).ToList();
             }
         }
-
-        // List of ProjectCodes as a comma delimited string ("EEB, GMX" for example)
-        public string ProjectCodesAsCsvString
-        {
-            get
-            {
-                return string.Join($"{ProjectCodeSeparator} ", ProjectCodes.OrderBy(x => x.ProjectCodeAbbrev).Select(x => x.ProjectCodeAbbrev));
-            }
-        }
-
-        private const string ProjectCodeSeparator = ",";
-        
 
         public string AuditDescriptionString
         {

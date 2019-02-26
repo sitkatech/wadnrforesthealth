@@ -7,8 +7,6 @@ CREATE TABLE [dbo].[Grant](
 	[GrantNumber] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,
-	[ProgramIndex] [int] NULL,
-	[ProjectCode] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ConditionsAndRequirements] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ComplianceNotes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AwardedFunds] [money] NULL,

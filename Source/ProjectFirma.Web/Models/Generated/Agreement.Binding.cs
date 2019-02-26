@@ -26,7 +26,6 @@ namespace ProjectFirma.Web.Models
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.AgreementPeople = new HashSet<AgreementPerson>();
-            this.AgreementProjectCodes = new HashSet<AgreementProjectCode>();
         }
 
         /// <summary>
@@ -96,13 +95,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || AgreementPeople.Any() || AgreementProjectCodes.Any();
+            return AgreementGrantAllocations.Any() || AgreementPeople.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name, typeof(AgreementProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name};
 
 
         /// <summary>
@@ -136,11 +135,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in AgreementProjectCodes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -166,7 +160,6 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
-        public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }
         public virtual Region Region { get; set; }
         public virtual Organization Organization { get; set; }

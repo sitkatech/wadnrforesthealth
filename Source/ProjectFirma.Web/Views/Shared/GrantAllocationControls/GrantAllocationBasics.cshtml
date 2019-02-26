@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Views
+@using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @inherits GrantAllocationBasics
@@ -47,7 +48,7 @@ Source code is available upon request via <support@sitkatech.com>.
 <div class="basicsLayout">
     <div class="row">
         <div class="col-sm-3">
-            <label for="Name">Name</label>
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectName)
         </div>
         <div class="col-sm-9">
             <span id="Name">@ViewDataTyped.GrantAllocation.ProjectName</span>
@@ -55,7 +56,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="Organization">Organization</label>
+            @Html.LabelWithSugarFor(FieldDefinition.Organization)
         </div>
         <div class="col-sm-9">
             <span id="Organization">@ViewDataTyped.OrganizationDisplayName</span>
@@ -64,7 +65,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
     <div class="row">
         <div class="col-sm-3">
-            <label for="Status">Status</label>
+            @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
         </div>
         <div class="col-sm-9">
             <span id="Status">@ViewDataTyped.GrantAllocation.Grant.GrantStatus.GrantStatusName</span>
@@ -107,7 +108,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <label for="ProjectCode">Project Code</label>
         </div>
         <div class="col-sm-9">
-            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodesAsCsvString</span>
+            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
         </div>
     </div>
     <div class="row">
