@@ -108,6 +108,7 @@
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.tmpAgreementContact" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
+    <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -2371,6 +2372,31 @@
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="TreatmentActivities" ToRole="ProgramIndex" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID" FromRole="TreatmentActivities" ToRole="ProjectCode" />
+  </EntityType>
+  <EntityType Name="Vendor">
+    <Key>
+      <PropertyRef Name="VendorID" />
+    </Key>
+    <Property Name="VendorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VendorName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="StatewideVendorNumber" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="StatewideVendorNumberSuffix" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="VendorType" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
+    <Property Name="BillingAgency" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="BillingSubAgency" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="BillingFund" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="BillingFundBreakout" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorAddressLine1" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorAddressLine2" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorAddressLine3" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorCity" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorState" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorZip" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorPhone" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="VendorStatus" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="TaxpayerIdNumber" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
     <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.AgreementStatus" Multiplicity="0..1" />
