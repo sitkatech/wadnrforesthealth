@@ -36,12 +36,21 @@ set PersonUniqueIdentifier = 'DP4VD4DQ9PT2M-1PM3PL8QZ5-D1LW4VZ0FD-DF1ZQ5VZ3T', R
 where Email = 'stewart@sitkatech.com'
 
 update dbo.Person
+set PersonUniqueIdentifier = 'DP4VD4ZP8QQ6L-1PF0ZV2FF4-D1LW4VZ0FD-DW9QW8ZL9Q', RoleID = 8
+where Email = 'michael@sitkatech.com'
+
+update dbo.Person
+set PersonUniqueIdentifier = 'xxxxxx', RoleID = 8
+where Email = 'john.vivio@sitkatech.com'
+
+update dbo.Person
 set PersonUniqueIdentifier = 'DP4MT6TV3ZT7M-3QT5ZL6DM-DD7WV4ZZ8D-1FZ3DD4VZ4', RoleID = 8
 where Email = 'tom.kamin@sitkatech.com'
 
 update dbo.Person
 set PersonUniqueIdentifier = 'DP4MT6TZ6FZ7D-1QW0VV7DV5-D1LW4VZ0FD-DT7QT3LT1P', RoleID = 8
 where Email = 'ian.stavros@sitkatech.com'
+
 goto goodbye
 
 failed:
