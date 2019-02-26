@@ -30,6 +30,7 @@
           <ScalarProperty Name="AgreementGrantAllocationID" ColumnName="AgreementGrantAllocationID" />
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

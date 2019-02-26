@@ -137,6 +137,10 @@
       <End Role="Agreement" EntitySet="Agreement" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
     </AssociationSet>
+    <AssociationSet Name="FK_AgreementGrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
@@ -847,6 +851,7 @@
     <Property Name="AgreementGrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementPerson">
     <Key>
@@ -2138,6 +2143,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="AgreementGrantAllocations">
         <PropertyRef Name="AgreementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AgreementGrantAllocation_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="AgreementGrantAllocations">
+        <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

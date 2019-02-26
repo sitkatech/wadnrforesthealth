@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.SessionState;
+using LtInfo.Common.DesignByContract;
 
 namespace LtInfo.Common.Mvc
 {
@@ -94,11 +95,11 @@ namespace LtInfo.Common.Mvc
         // locks the record and sets a new LockId and LockDate. 
         // 
         private SessionStateStoreData GetSessionStoreItem(HttpContext context,
-            string sessionID,
-            out bool locked,
-            out TimeSpan lockAge,
-            out object lockId,
-            out SessionStateActions actionFlags)
+                                                          string sessionID,
+                                                          out bool locked,
+                                                          out TimeSpan lockAge,
+                                                          out object lockId,
+                                                          out SessionStateActions actionFlags)
         {
             // Initial values for return value and out parameters.
             lockAge = TimeSpan.Zero;
@@ -153,11 +154,19 @@ namespace LtInfo.Common.Mvc
             return new SessionStateStoreData(new SessionStateItemCollection(), SessionStateUtility.GetSessionStaticObjects(context), timeout);
         }
 
+        // ReSharper disable once InconsistentNaming
         public override void CreateUninitializedItem(HttpContext context, string sessionID, int timeout)
         {
+            // SLG 2/22/2019 - Getting some errors here I can't readily reproduce, adding some debugging code
+            // to see if I can't understand it better next time it recurs.
+            Check.EnsureNotNull(context, "Not expecting context to be null (although not used by function currently)");
+            Check.EnsureNotNull(sessionID, "Not expecting SessionID to be null");
+            Check.EnsureNotNull(_sessionItemsBySessionIdDict, "Session dict must not be null");
             if (!_sessionItemsBySessionIdDict.ContainsKey(sessionID))
             {
-                _sessionItemsBySessionIdDict.Add(sessionID, new SessionItemsWithExpiration(new SessionStateItemCollection(), timeout));
+                var sessionItemsWithExpiration = new SessionItemsWithExpiration(new SessionStateItemCollection(), timeout);
+                Check.EnsureNotNull(sessionItemsWithExpiration, "Newly created session items must not be null");
+                _sessionItemsBySessionIdDict.Add(sessionID, sessionItemsWithExpiration);
             }
         }
 

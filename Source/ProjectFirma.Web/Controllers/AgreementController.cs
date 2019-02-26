@@ -272,7 +272,7 @@ namespace ProjectFirma.Web.Controllers
             // Build select list
             var selectableGrantAllocations = grantAllocationsThatCanBeSelectedForNewAssociations.OrderBy(x => x.ProjectName).ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);
 
-            var viewData = new EditAgreementGrantAllocationsViewData(selectableGrantAllocations);
+            var viewData = new EditAgreementGrantAllocationsViewData(agreement, selectableGrantAllocations);
             return RazorPartialView<EditAgreementGrantAllocations, EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>(viewData, viewModel);
         }
 

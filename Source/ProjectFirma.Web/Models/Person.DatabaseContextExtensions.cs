@@ -49,6 +49,7 @@ namespace ProjectFirma.Web.Models
 
         public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier, bool requireRecordFound)
         {
+            Check.EnsureNotNull(personUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
             var person = people.SingleOrDefault(x => x.PersonUniqueIdentifier == personUniqueIdentifier);
             if (requireRecordFound)
             {
