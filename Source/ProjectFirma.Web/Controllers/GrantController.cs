@@ -36,8 +36,6 @@ namespace ProjectFirma.Web.Controllers
 {
     public class GrantController : FirmaBaseController
     {
-
-
         [HttpGet]
         [GrantDeleteFeature]
         public PartialViewResult DeleteGrant(GrantPrimaryKey grantPrimaryKey)

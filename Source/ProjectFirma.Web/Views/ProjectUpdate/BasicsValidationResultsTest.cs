@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             projectUpdate.PlannedDate = new DateTime(2010, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
-            Assert.That(warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
+            Assert.That(!warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.ImplementationStartYearIsRequired));
             Assert.That(!warningMessages.Contains(BasicsValidationResult.CompletionDateIsRequired));
             Assert.That(warningMessages.Contains(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear));
