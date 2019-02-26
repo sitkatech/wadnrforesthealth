@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.Models
             get { return this.GrantAllocation != null ? this.GrantAllocation.ProjectName : "NullGrantAllocation"; }
         }
 
-        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this(agreement, grantAllocation, grantAllocation.Grant)
+        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this(agreement, grantAllocation, grantAllocation.GrantID)
         {
             // Invariant
             EnsureGrantIDsAlign();
