@@ -67,7 +67,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <label for="ProgramManager">ProgramManager</label>
         </div>
         <div class="col-sm-9">
-            <span id="ProgramManager">@ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast</span>
+            <span id="ProgramManager">@ViewDataTyped.GrantAllocation.ProgramManagerPerson?.FullNameFirstLast</span>
         </div>
     </div>
     <div class="row">
@@ -99,7 +99,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <label for="ProjectCode">Project Code</label>
         </div>
         <div class="col-sm-9">
-            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodesAsCsvString</span>
+            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
         </div>
     </div>
     <div class="row">
