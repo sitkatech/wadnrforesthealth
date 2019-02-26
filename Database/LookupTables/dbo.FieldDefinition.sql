@@ -115,8 +115,7 @@ VALUES
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
 (292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
 (293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
--- On the next field addition, feel free to replace this Placeholder with something real -- SLG
-(294, N'PLACEHOLDERDONOTUSE', 'PLACEHOLDER', N'Placeholder'),
+(294, N'Vendor', 'Vendor', N'Vendor Placeholder'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
 (297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.'),

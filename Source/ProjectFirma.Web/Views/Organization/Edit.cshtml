@@ -23,6 +23,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Mvc
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Vendor
 @inherits ProjectFirma.Web.Views.Organization.Edit
 @using (Html.BeginForm())
 {
@@ -86,6 +87,21 @@ Source code is available upon request via <support@sitkatech.com>.
             </div>
             <div class="form-group">
                 <div class="col-sm-3 control-label">
+                    Vendor Search
+                </div>
+                <div class="col-sm-9">
+                    <input id="@VendorSearchResults.VendorSearchInputTextboxID" type="text" class="form-control"
+                           name="@VendorSearchResults.VendorSearchInputTextboxID" maxlength="200" onkeypress="return submitFormWithEnter(this, event, 1)"
+                           placeholder="@FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
+                           style="margin-right: -5px; max-width: 300px; margin-left: auto;"/>
+                    @*<button id="searchButton" type="button" class="btn btn-default">
+                        <span class="sr-only">Search</span>
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
                     @Html.LabelWithSugarFor(m => m.OrganizationUrl)
                 </div>
                 <div class="col-sm-9">
@@ -125,4 +141,25 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         HookupCheckIfFormIsDirty(undefined, ".submitProject");
     });
+</script>
+
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function ()
+    {
+
+        jQuery("#@VendorSearchResults.VendorSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(ViewDataTyped.VendorFindUrlTemplate)",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function (event, ui) {
+                    //set VenderID value
+                    //document.location = ui.item.value;
+                    event.preventDefault();
+                },
+                html: true
+            });
+    });
+    // ]]>
 </script>

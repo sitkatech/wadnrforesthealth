@@ -608,6 +608,8 @@ namespace ProjectFirma.Web.Controllers
             return SearchImpl(searchCriteria, projectsFound);
         }
 
+       
+
         private List<Project> GetViewableProjectsFromSearchCriteria(string searchCriteria)
         {
             var projectIDsFound = HttpRequestStorage.DatabaseEntities.Projects.GetProjectFindResultsForProjectNameAndDescriptionAndNumber(searchCriteria).Select(x => x.ProjectID);

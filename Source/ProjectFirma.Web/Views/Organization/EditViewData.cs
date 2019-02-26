@@ -20,6 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Organization
 {
@@ -31,15 +34,21 @@ namespace ProjectFirma.Web.Views.Organization
         public readonly bool IsInKeystone;
         public readonly string RequestOrganizationChangeUrl;
         public readonly bool IsSitkaAdmin;
+        public readonly string VendorFindUrlTemplate;
 
-        public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people, IEnumerable<SelectListItem> vendors, bool isInKeystone, string requestOrganizationChangeUrl, bool isSitkaAdmin)
+        public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people,
+            IEnumerable<SelectListItem> vendors, bool isInKeystone, bool isSitkaAdmin)
         {
             OrganizationTypes = organizationTypes;
             People = people;
             Vendors = vendors;
             IsInKeystone = isInKeystone;
-            RequestOrganizationChangeUrl = requestOrganizationChangeUrl;
+            RequestOrganizationChangeUrl =
+                SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.RequestOrganizationNameChange());
             IsSitkaAdmin = isSitkaAdmin;
+            VendorFindUrlTemplate =
+                SitkaRoute<VendorController>.BuildUrlFromExpression(x => x.FindVendor(string.Empty));
+
         }
     }
 }
