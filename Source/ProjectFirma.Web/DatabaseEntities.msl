@@ -1256,6 +1256,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tmpAgreementContactsImportTemplate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate">
+        <MappingFragment StoreEntitySet="tmpAgreementContactsImportTemplate">
+          <ScalarProperty Name="tmpAgreementContactsImportTemplateID" ColumnName="tmpAgreementContactsImportTemplateID" />
+          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TrainingVideo">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TrainingVideo">
         <MappingFragment StoreEntitySet="TrainingVideo">

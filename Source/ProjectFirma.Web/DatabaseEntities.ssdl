@@ -106,6 +106,7 @@
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
@@ -1345,7 +1346,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="UpdateDate" Type="datetime" />
     <Property Name="LastActivityDate" Type="datetime" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
-    <Property Name="OrganizationID" Type="int" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="ReceiveSupportEmails" Type="bit" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
     <Property Name="LoginName" Type="varchar" MaxLength="128" />
@@ -1986,6 +1987,19 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="AgreementRole" Type="nvarchar" MaxLength="255" />
     <Property Name="F8" Type="nvarchar" MaxLength="255" />
     <Property Name="F9" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tmpAgreementContactsImportTemplate">
+    <Key>
+      <PropertyRef Name="tmpAgreementContactsImportTemplateID" />
+    </Key>
+    <Property Name="tmpAgreementContactsImportTemplateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="1" />
+    <Property Name="Organization" Type="nvarchar" MaxLength="100" />
+    <Property Name="AgreementRole" Type="nvarchar" Nullable="false" MaxLength="50" />
   </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>
@@ -3023,7 +3037,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Person_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="0..1" />
+    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
     <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">

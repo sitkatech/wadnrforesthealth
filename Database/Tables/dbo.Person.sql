@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[Person](
 	[UpdateDate] [datetime] NULL,
 	[LastActivityDate] [datetime] NULL,
 	[IsActive] [bit] NOT NULL,
-	[OrganizationID] [int] NULL,
+	[OrganizationID] [int] NOT NULL,
 	[ReceiveSupportEmails] [bit] NOT NULL,
 	[WebServiceAccessToken] [uniqueidentifier] NULL,
 	[LoginName] [varchar](128) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
