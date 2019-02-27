@@ -1,0 +1,1 @@
+ALTER TABLE dbo.FocusArea ADD PlannedFootprintAcres int 

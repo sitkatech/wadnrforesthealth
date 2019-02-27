@@ -67,6 +67,24 @@ namespace ProjectFirma.Web.Models
             return project == null;
         }
 
+        public decimal TotalPlannedFootprintAcres
+        {
+            get
+            {
+                return TreatmentActivities.Where(x => x.TreatmentActivityStatus == TreatmentActivityStatus.Planned)
+                    .Select(x => x.TreatmentActivityFootprintAcres).Sum();
+            }
+        }
+
+        public decimal TotalCompletedFootprintAcres
+        {
+            get
+            {
+                return TreatmentActivities.Where(x => x.TreatmentActivityStatus == TreatmentActivityStatus.Completed)
+                    .Select(x => x.TreatmentActivityFootprintAcres).Sum();
+            }
+        }
+
         public Organization GetPrimaryContactOrganization()
         {
             return ProjectOrganizations.SingleOrDefault(x => x.RelationshipType.IsPrimaryContact)?.Organization;

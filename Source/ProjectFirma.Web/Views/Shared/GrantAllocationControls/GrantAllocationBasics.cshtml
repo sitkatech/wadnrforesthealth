@@ -73,7 +73,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="ProgramManager">ProgramManager</label>
+            @Html.LabelWithSugarFor(FieldDefinition.ProgramManager)
         </div>
         <div class="col-sm-9">
             <span id="ProgramManager">@GetProgramMangerPersonFullName(ViewDataTyped)</span>

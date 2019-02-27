@@ -1021,6 +1021,7 @@ warning 6035: The relationship 'FK_AgreementGrantAllocation_Agreement_AgreementI
     <Property Name="FocusAreaStatusID" Type="int" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="geometry" />
     <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="PlannedFootprintAcres" Type="decimal" />
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
     <Key>

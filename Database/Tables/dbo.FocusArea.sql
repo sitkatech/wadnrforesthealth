@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[FocusArea](
 	[FocusAreaStatusID] [int] NOT NULL,
 	[FocusAreaLocation] [geometry] NULL,
 	[RegionID] [int] NOT NULL,
+	[PlannedFootprintAcres] [decimal](18, 0) NULL,
  CONSTRAINT [PK_FocusArea_FocusAreaID] PRIMARY KEY CLUSTERED 
 (
 	[FocusAreaID] ASC
