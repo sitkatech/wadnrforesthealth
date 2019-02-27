@@ -119,6 +119,11 @@ namespace ProjectFirma.Web.Models
             return treatmentActivity.ProjectCode == null ? "" : treatmentActivity.ProjectCode.ProjectCodeAbbrev;
         }
 
+        public static string GetProjectTypeName(this Models.TreatmentActivity treatmentActivity)
+        {
+            return treatmentActivity.Project.ProjectType == null ? "": treatmentActivity.Project.ProjectType.ProjectTypeName;
+        }
+
         public static string GetDeleteTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)
         {
             return SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(pc => pc.DeleteTreatmentActivity(treatmentActivity));
