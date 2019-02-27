@@ -12,24 +12,25 @@ end
 
 -- update SAW logins for Sitka folks since SAW prod and SAW test have different identifiers for users
 update dbo.Person
-set PersonUniqueIdentifier = y.PersonUniqueIdentifier, RoleID = 8
+set PersonUniqueIdentifier = y.PersonUniqueIdentifier, RoleID = coalesce(y.RoleID, p.RoleID)
 from dbo.Person p
 join
 (
-    select x.Email, x.PersonUniqueIdentifier
+    select x.Email, x.PersonUniqueIdentifier, x.RoleID
     from
     (
-        select null as Email, null as PersonUniqueIdentifier
-        union all select 'brian.grass@sitkatech.com', 'C9E033A2-E53D-4A29-A368-037BF0518E38'
-        union all select 'dal.marsters@sitkatech.com', 'DP4LM5FL0TM6F-4PQ8VL4PQ-DD7WV4ZZ8D-9VL7MQ6QL'
-        union all select 'ian.stavros@sitkatech.com', 'DP4MT6TZ6FZ7D-1QW0VV7DV5-D1LW4VZ0FD-DT7QT3LT1P'
-        union all select 'john.vivio@sitkatech.com', 'xxxxxx'
-        union all select 'liz.christeleit@sitkatech.com', 'DP4VW0PV4LL0W-1TW0LT5VV8-D1LW4VZ0FD-FF8FP8MQ1'
-        union all select 'michael@sitkatech.com', 'DP4VD4ZP8QQ6L-1PF0ZV2FF4-D1LW4VZ0FD-DW9QW8ZL9Q'
-        union all select 'mike.jolliffe@sitkatech.com', 'DP4VD4WZ7PT5M-2ZT0ZP9VW-DD7WV4ZZ8D-3DF2DQ9MP'
-        union all select 'ray@sitkatech.com', 'DP3TP7WZ2MM7W-1DZ8DP4Q-1DL2VV0ZF1-D1FV3ZT5VM'
-        union all select 'stewart@sitkatech.com', 'DP4VD4DQ9PT2M-1PM3PL8QZ5-D1LW4VZ0FD-DF1ZQ5VZ3T'
-        union all select 'tom.kamin@sitkatech.com', 'DP4MT6TV3ZT7M-3QT5ZL6DM-DD7WV4ZZ8D-1FZ3DD4VZ4'
+        select null as Email, null as PersonUniqueIdentifier, null as RoleID
+        union all select 'brian.grass@sitkatech.com', 'C9E033A2-E53D-4A29-A368-037BF0518E38', 8
+        union all select 'dal.marsters@sitkatech.com', 'DP4LM5FL0TM6F-4PQ8VL4PQ-DD7WV4ZZ8D-9VL7MQ6QL', 8
+        union all select 'ian.stavros@sitkatech.com', 'DP4MT6TZ6FZ7D-1QW0VV7DV5-D1LW4VZ0FD-DT7QT3LT1P', 8
+        union all select 'john.vivio@sitkatech.com', 'xxxxxx', 8
+        union all select 'liz.christeleit@sitkatech.com', 'DP4VW0PV4LL0W-1TW0LT5VV8-D1LW4VZ0FD-FF8FP8MQ1', 8
+        union all select 'michael@sitkatech.com', 'DP4VD4ZP8QQ6L-1PF0ZV2FF4-D1LW4VZ0FD-DW9QW8ZL9Q', 8
+        union all select 'mike.jolliffe@sitkatech.com', 'DP4VD4WZ7PT5M-2ZT0ZP9VW-DD7WV4ZZ8D-3DF2DQ9MP', 8
+        union all select 'ray@sitkatech.com', 'DP3TP7WZ2MM7W-1DZ8DP4Q-1DL2VV0ZF1-D1FV3ZT5VM', 8
+        union all select 'stewart@sitkatech.com', 'DP4VD4DQ9PT2M-1PM3PL8QZ5-D1LW4VZ0FD-DF1ZQ5VZ3T', 8
+        union all select 'tom.kamin@sitkatech.com', 'DP4MT6TV3ZT7M-3QT5ZL6DM-DD7WV4ZZ8D-1FZ3DD4VZ4', 8
+        union all select 'jarett.cook@dnr.wa.gov', 'DP5DQ0DM7MT0Q-1ZV0VF9LV-DD7WV4ZZ8D-2ZW1TM6LM3', null
     ) x
     where x.Email is not null
 ) y on p.Email = y.Email

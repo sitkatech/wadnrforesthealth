@@ -112,13 +112,15 @@ namespace ProjectFirma.Web.Models
 
     public partial class ProjectWorkflowSectionGroupingAdditionalData
     {
-        public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
+        public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, 
+                                                                            bool ignoreStatus)
         {
             return GetProjectCreateSectionsImpl(project, ProjectCreateSections, ignoreStatus);
         }
 
         public override List<ProjectSectionSimple> GetProjectUpdateSections(ProjectUpdateBatch projectUpdateBatch,
-            UpdateStatus updateStatus, bool ignoreStatus)
+                                                                            UpdateStatus updateStatus, 
+                                                                            bool ignoreStatus)
         {
             return GetProjectUpdateSectionsImpl(projectUpdateBatch, ProjectUpdateSections, updateStatus, ignoreStatus);
         }
