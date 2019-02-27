@@ -228,6 +228,7 @@
           <ScalarProperty Name="FocusAreaStatusID" ColumnName="FocusAreaStatusID" />
           <ScalarProperty Name="FocusAreaLocation" ColumnName="FocusAreaLocation" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="PlannedFootprintAcres" ColumnName="PlannedFootprintAcres" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

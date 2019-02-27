@@ -49,6 +49,9 @@ namespace ProjectFirma.Web.Views.FocusArea
         [DisplayName("Region")]
         public int RegionID { get; set; }
 
+        [DisplayName("Planned Footprint Acres")]
+        public decimal? PlannedFootprintAcres { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -62,6 +65,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             FocusAreaName = focusArea.FocusAreaName;
             FocusAreaStatusID = focusArea.FocusAreaStatusID;
             RegionID = focusArea.RegionID;
+            PlannedFootprintAcres = focusArea.PlannedFootprintAcres;
         }
 
         public void UpdateModel(Models.FocusArea focusArea)
@@ -70,6 +74,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             focusArea.FocusAreaStatusID = FocusAreaStatusID;
             focusArea.RegionID = RegionID;
             focusArea.FocusAreaID = FocusAreaID;
+            focusArea.PlannedFootprintAcres = PlannedFootprintAcres;
         }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

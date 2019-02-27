@@ -1074,6 +1074,7 @@
     <Property Name="FocusAreaStatusID" Type="Int32" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="Geometry" />
     <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <Property Name="PlannedFootprintAcres" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="FocusAreas" ToRole="Region" />
     <NavigationProperty Name="FocusAreaLocationStagings" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="FocusAreaLocationStagings" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="Projects" />
