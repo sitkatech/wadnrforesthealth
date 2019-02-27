@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Models
         }
         public virtual DbSet<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual DbSet<AgreementPerson> AgreementPeople { get; set; }
-        public virtual DbSet<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
@@ -133,6 +132,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TaxonomyBranch> TaxonomyBranches { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
+        public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
@@ -156,9 +156,6 @@ namespace ProjectFirma.Web.Models
                     var agreementPersonRole = AgreementPersonRole.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(agreementPersonRole, "AgreementPersonRole", primaryKey);
                     return agreementPersonRole;
-
-                case "AgreementProjectCode":
-                    return AgreementProjectCodes.GetAgreementProjectCode(primaryKey);
 
                 case "Agreement":
                     return Agreements.GetAgreement(primaryKey);
@@ -625,6 +622,9 @@ namespace ProjectFirma.Web.Models
 
                 case "tmpAgreementContact":
                     return tmpAgreementContacts.GettmpAgreementContact(primaryKey);
+
+                case "tmpAgreementContactsImportTemplate":
+                    return tmpAgreementContactsImportTemplates.GettmpAgreementContactsImportTemplate(primaryKey);
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);

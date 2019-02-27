@@ -15,11 +15,6 @@ CREATE TABLE [dbo].[AgreementGrantAllocation](
 (
 	[AgreementID] ASC,
 	[GrantAllocationID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_AgreementGrantAllocation_GrantAllocationID_GrantID] UNIQUE NONCLUSTERED 
-(
-	[GrantAllocationID] ASC,
-	[GrantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -29,12 +24,17 @@ REFERENCES [dbo].[Agreement] ([AgreementID])
 GO
 ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID]
 GO
-ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_Grant_GrantID] FOREIGN KEY([GrantID])
-REFERENCES [dbo].[Grant] ([GrantID])
+ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID] FOREIGN KEY([AgreementID], [GrantID])
+REFERENCES [dbo].[Agreement] ([AgreementID], [GrantID])
 GO
-ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Grant_GrantID]
+ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID]
 GO
 ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
 REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
 ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID]
+GO
+ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID] FOREIGN KEY([GrantAllocationID], [GrantID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID], [GrantID])
+GO
+ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID]

@@ -21,9 +21,19 @@ Source code is available upon request via <support@sitkatech.com>.
 @using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Views
+@using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @inherits GrantAllocationBasics
+
+@functions 
+{
+    private string GetProgramMangerPersonFullName(GrantAllocationBasicsViewData viewDataTyped)
+    {
+        return ViewDataTyped.GrantAllocation.ProgramManagerPerson != null ? ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast : string.Empty;
+    }
+
+}
 
 <style>
     .basicsLayout .row {
@@ -47,7 +57,7 @@ Source code is available upon request via <support@sitkatech.com>.
 <div class="basicsLayout">
     <div class="row">
         <div class="col-sm-3">
-            <label for="Name">Name</label>
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectName)
         </div>
         <div class="col-sm-9">
             <span id="Name">@ViewDataTyped.GrantAllocation.ProjectName</span>
@@ -55,7 +65,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="Organization">Organization</label>
+            @Html.LabelWithSugarFor(FieldDefinition.Organization)
         </div>
         <div class="col-sm-9">
             <span id="Organization">@ViewDataTyped.OrganizationDisplayName</span>
@@ -66,12 +76,12 @@ Source code is available upon request via <support@sitkatech.com>.
             <label for="ProgramManager">ProgramManager</label>
         </div>
         <div class="col-sm-9">
-            <span id="ProgramManager">@ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast</span>
+            <span id="ProgramManager">@GetProgramMangerPersonFullName(ViewDataTyped)</span>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="Status">Status</label>
+            @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
         </div>
         <div class="col-sm-9">
             <span id="Status">@ViewDataTyped.GrantAllocation.Grant.GrantStatus.GrantStatusName</span>
@@ -98,7 +108,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <label for="ProjectCode">Project Code</label>
         </div>
         <div class="col-sm-9">
-            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodesAsCsvString</span>
+            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
         </div>
     </div>
     <div class="row">
@@ -115,6 +125,14 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
         <div class="col-sm-9">
             <span id="CFDA">@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="ProjectCode">Project Code</label>
+        </div>
+        <div class="col-sm-9">
+            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
         </div>
     </div>
     <div class="row">

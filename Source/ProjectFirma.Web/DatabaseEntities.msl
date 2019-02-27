@@ -44,15 +44,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AgreementProjectCode">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementProjectCode">
-        <MappingFragment StoreEntitySet="AgreementProjectCode">
-          <ScalarProperty Name="AgreementProjectCodeID" ColumnName="AgreementProjectCodeID" />
-          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
-          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="AgreementStatus">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementStatus">
         <MappingFragment StoreEntitySet="AgreementStatus">
@@ -269,8 +260,6 @@
           <ScalarProperty Name="GrantNumber" ColumnName="GrantNumber" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
-          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
           <ScalarProperty Name="ConditionsAndRequirements" ColumnName="ConditionsAndRequirements" />
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
           <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
@@ -1253,6 +1242,20 @@
           <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
           <ScalarProperty Name="F8" ColumnName="F8" />
           <ScalarProperty Name="F9" ColumnName="F9" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tmpAgreementContactsImportTemplate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate">
+        <MappingFragment StoreEntitySet="tmpAgreementContactsImportTemplate">
+          <ScalarProperty Name="tmpAgreementContactsImportTemplateID" ColumnName="tmpAgreementContactsImportTemplateID" />
+          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

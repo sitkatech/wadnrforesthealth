@@ -15,13 +15,10 @@ namespace ProjectFirma.Web.Controllers
 {
     public class AgreementController : FirmaBaseController
     {
-
-
         [HttpGet]
         [AgreementCreateFeature]
         public PartialViewResult New()
         {
-
             var viewModel = new EditAgreementViewModel();
             return ViewEdit(viewModel, EditAgreementType.NewAgreement);
         }
@@ -337,6 +334,7 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult Edit(AgreementPrimaryKey agreementPrimaryKey, EditAgreementViewModel viewModel)
         {
             var agreement = agreementPrimaryKey.EntityObject;
+            Check.Require(agreement.AgreementID == viewModel.AgreementID, "URL AgreementID does not match Form AgreementID. Should not happen.");
             if (!ModelState.IsValid)
             {
                 return ViewEdit(viewModel, EditAgreementType.ExistingAgreement);

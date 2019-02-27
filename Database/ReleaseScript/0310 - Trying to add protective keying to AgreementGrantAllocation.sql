@@ -1,19 +1,19 @@
 --begin tran
 
-delete from AgreementGrantAllocation
+delete from dbo.AgreementGrantAllocation
 
-alter table AgreementGrantAllocation
-add GrantID int not null
+alter table AgreementGrantAllocation add GrantID int not null
 GO
 
-alter table AgreementGrantAllocation
-with check add constraint FK_AgreementGrantAllocation_Grant_GrantID FOREIGN KEY(GrantID)
-REFERENCES [dbo].[Grant] (GrantID)
-GO
+alter table dbo.grantallocation add constraint AK_GrantAllocation_GrantAllocationID_GrantID unique (GrantAllocationID, GrantID)
+alter table AgreementGrantAllocation add constraint FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID FOREIGN KEY(GrantAllocationID, GrantID) REFERENCES [dbo].[GrantAllocation] (GrantAllocationID, GrantID)
 
-alter table AgreementGrantAllocation
-add constraint AK_AgreementGrantAllocation_GrantAllocationID_GrantID unique(GrantAllocationID, GrantID)
-GO
+alter table dbo.Agreement add constraint AK_Agreement_AgreementID_GrantID unique (AgreementID, GrantID)
+alter table dbo.AgreementGrantAllocation add constraint FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID FOREIGN KEY(AgreementID, GrantID) REFERENCES [dbo].Agreement (AgreementID, GrantID)
+
+
+drop table dbo.AgreementProjectCode
+alter table dbo.[Grant] drop column ProjectCode
 
 
 
