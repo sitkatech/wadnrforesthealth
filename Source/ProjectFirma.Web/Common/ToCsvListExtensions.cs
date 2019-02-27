@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LtInfo.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Common
@@ -24,9 +23,14 @@ namespace ProjectFirma.Web.Common
             return MakeDistinctCaseInsensitiveStringListFromObjectList(programIndices, x => x.ProgramIndexAbbrev);
         }
 
-        private static string MakeDistinctCaseInsensitiveStringListFromObjectList<T>(List<T> projectCodes, Func<T, string> funcObjectToString)
+        private static string MakeDistinctCaseInsensitiveStringListFromObjectList<T>(List<T> objectList, Func<T, string> funcObjectToString)
         {
-            return String.Join(", ", projectCodes.Select(funcObjectToString).OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase).Distinct(StringComparer.InvariantCultureIgnoreCase));
+            if (objectList == null)
+            {
+                return string.Empty;
+            }
+
+            return String.Join(", ", objectList.Where(x => x != null).Select(funcObjectToString).OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase).Distinct(StringComparer.InvariantCultureIgnoreCase));
         }
     }
 }
