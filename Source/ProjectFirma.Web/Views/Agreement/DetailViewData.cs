@@ -76,10 +76,9 @@ namespace ProjectFirma.Web.Views.Agreement
             UserHasEditAgreementPermissions = userHasEditAgreementPermissions;
             // Used for creating file download link, if file available
             ShowDownload = agreement.AgreementFileResource != null;
-            
-            ProgramIndices = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocation.ProgramIndex).ToList();
 
-            ProjectCodes = agreement.AgreementGrantAllocations.SelectMany(aga => aga.GrantAllocation.ProjectCodes).ToList();
+            ProgramIndices = agreement.ProgramIndices;
+            ProjectCodes = agreement.ProjectCodes;
 
             AgreementPersonGridSpec = new AgreementPersonGridSpec(currentPerson) { ObjectNameSingular = "Agreement Contact", ObjectNamePlural = "Agreement Contacts", SaveFiltersInCookie = true };
 
