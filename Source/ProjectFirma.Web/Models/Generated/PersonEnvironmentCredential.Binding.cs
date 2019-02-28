@@ -63,11 +63,7 @@ namespace ProjectFirma.Web.Models
             this.Person = person;
             person.PersonEnvironmentCredentials.Add(this);
             this.DeploymentEnvironmentID = deploymentEnvironment.DeploymentEnvironmentID;
-            this.DeploymentEnvironment = deploymentEnvironment;
-            deploymentEnvironment.PersonEnvironmentCredentials.Add(this);
             this.AuthenticatorID = authenticator.AuthenticatorID;
-            this.Authenticator = authenticator;
-            authenticator.PersonEnvironmentCredentials.Add(this);
         }
 
         /// <summary>
@@ -120,8 +116,8 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return PersonEnvironmentCredentialID; } set { PersonEnvironmentCredentialID = value; } }
 
         public virtual Person Person { get; set; }
-        public virtual DeploymentEnvironment DeploymentEnvironment { get; set; }
-        public virtual Authenticator Authenticator { get; set; }
+        public DeploymentEnvironment DeploymentEnvironment { get { return DeploymentEnvironment.AllLookupDictionary[DeploymentEnvironmentID]; } }
+        public Authenticator Authenticator { get { return Authenticator.AllLookupDictionary[AuthenticatorID]; } }
 
         public static class FieldLengths
         {

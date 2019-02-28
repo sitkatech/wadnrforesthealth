@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[DeploymentEnvironment]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,101 +16,122 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[DeploymentEnvironment] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[DeploymentEnvironment]")]
-    public partial class DeploymentEnvironment : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class DeploymentEnvironment : IHavePrimaryKey
     {
+        public static readonly DeploymentEnvironmentLocal Local = DeploymentEnvironmentLocal.Instance;
+        public static readonly DeploymentEnvironmentQA QA = DeploymentEnvironmentQA.Instance;
+        public static readonly DeploymentEnvironmentProd Prod = DeploymentEnvironmentProd.Instance;
+
+        public static readonly List<DeploymentEnvironment> All;
+        public static readonly ReadOnlyDictionary<int, DeploymentEnvironment> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected DeploymentEnvironment()
+        static DeploymentEnvironment()
         {
-            this.PersonEnvironmentCredentials = new HashSet<PersonEnvironmentCredential>();
+            All = new List<DeploymentEnvironment> { Local, QA, Prod };
+            AllLookupDictionary = new ReadOnlyDictionary<int, DeploymentEnvironment>(All.ToDictionary(x => x.DeploymentEnvironmentID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public DeploymentEnvironment(int deploymentEnvironmentID, string deploymentEnvironmentName) : this()
+        protected DeploymentEnvironment(int deploymentEnvironmentID, string deploymentEnvironmentName)
         {
-            this.DeploymentEnvironmentID = deploymentEnvironmentID;
-            this.DeploymentEnvironmentName = deploymentEnvironmentName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public DeploymentEnvironment(string deploymentEnvironmentName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.DeploymentEnvironmentID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.DeploymentEnvironmentName = deploymentEnvironmentName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static DeploymentEnvironment CreateNewBlank()
-        {
-            return new DeploymentEnvironment(default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return PersonEnvironmentCredentials.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(DeploymentEnvironment).Name, typeof(PersonEnvironmentCredential).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.DeploymentEnvironments.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in PersonEnvironmentCredentials.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            DeploymentEnvironmentID = deploymentEnvironmentID;
+            DeploymentEnvironmentName = deploymentEnvironmentName;
         }
 
         [Key]
-        public int DeploymentEnvironmentID { get; set; }
-        public string DeploymentEnvironmentName { get; set; }
+        public int DeploymentEnvironmentID { get; private set; }
+        public string DeploymentEnvironmentName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return DeploymentEnvironmentID; } set { DeploymentEnvironmentID = value; } }
+        public int PrimaryKey { get { return DeploymentEnvironmentID; } }
 
-        public virtual ICollection<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(DeploymentEnvironment other)
         {
-            public const int DeploymentEnvironmentName = 10;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.DeploymentEnvironmentID == DeploymentEnvironmentID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as DeploymentEnvironment);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return DeploymentEnvironmentID;
+        }
+
+        public static bool operator ==(DeploymentEnvironment left, DeploymentEnvironment right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(DeploymentEnvironment left, DeploymentEnvironment right)
+        {
+            return !Equals(left, right);
+        }
+
+        public DeploymentEnvironmentEnum ToEnum { get { return (DeploymentEnvironmentEnum)GetHashCode(); } }
+
+        public static DeploymentEnvironment ToType(int enumValue)
+        {
+            return ToType((DeploymentEnvironmentEnum)enumValue);
+        }
+
+        public static DeploymentEnvironment ToType(DeploymentEnvironmentEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case DeploymentEnvironmentEnum.Local:
+                    return Local;
+                case DeploymentEnvironmentEnum.Prod:
+                    return Prod;
+                case DeploymentEnvironmentEnum.QA:
+                    return QA;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum DeploymentEnvironmentEnum
+    {
+        Local = 1,
+        QA = 2,
+        Prod = 3
+    }
+
+    public partial class DeploymentEnvironmentLocal : DeploymentEnvironment
+    {
+        private DeploymentEnvironmentLocal(int deploymentEnvironmentID, string deploymentEnvironmentName) : base(deploymentEnvironmentID, deploymentEnvironmentName) {}
+        public static readonly DeploymentEnvironmentLocal Instance = new DeploymentEnvironmentLocal(1, @"Local");
+    }
+
+    public partial class DeploymentEnvironmentQA : DeploymentEnvironment
+    {
+        private DeploymentEnvironmentQA(int deploymentEnvironmentID, string deploymentEnvironmentName) : base(deploymentEnvironmentID, deploymentEnvironmentName) {}
+        public static readonly DeploymentEnvironmentQA Instance = new DeploymentEnvironmentQA(2, @"QA");
+    }
+
+    public partial class DeploymentEnvironmentProd : DeploymentEnvironment
+    {
+        private DeploymentEnvironmentProd(int deploymentEnvironmentID, string deploymentEnvironmentName) : base(deploymentEnvironmentID, deploymentEnvironmentName) {}
+        public static readonly DeploymentEnvironmentProd Instance = new DeploymentEnvironmentProd(3, @"Prod");
     }
 }

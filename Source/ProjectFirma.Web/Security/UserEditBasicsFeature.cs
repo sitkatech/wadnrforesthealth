@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }
 
-            if (string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier))
+            if (!person.IsFullUser())
             {
                 if (hasContactManagePermissions)
                 {

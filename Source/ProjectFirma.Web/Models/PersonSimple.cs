@@ -61,7 +61,8 @@ namespace ProjectFirma.Web.Models
             : this()
         {
             PersonID = person.PersonID;
-            PersonGuid = person.PersonUniqueIdentifier;
+            //PersonGuid = person.PersonUniqueIdentifier; 
+            PersonGuid = "Need GUID here"; 
             FirstName = person.FirstName;
             LastName = person.LastName;
             FullName = person.FullNameFirstLastAndOrg;

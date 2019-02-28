@@ -1,7 +1,7 @@
 --begin tran
 
 -- DeploymentEnvironment
----------------
+-------------------------
 create table dbo.DeploymentEnvironment
 (
     [DeploymentEnvironmentID] int identity(1,1) not null,
@@ -18,11 +18,15 @@ add CONSTRAINT [PK_DeploymentEnvironment_DeploymentEnvironmentID] PRIMARY KEY CL
 GO
 
 insert into dbo.DeploymentEnvironment(DeploymentEnvironmentName)
-values ('Prod')
+values ('Local')
 GO
 
 insert into dbo.DeploymentEnvironment(DeploymentEnvironmentName)
 values ('QA')
+GO
+
+insert into dbo.DeploymentEnvironment(DeploymentEnvironmentName)
+values ('Prod')
 GO
 
 -- Authentication method
@@ -31,24 +35,24 @@ GO
 create table dbo.Authenticator
 (
     AuthenticatorID int identity(1,1) not null,
-    AuthenticatorShortName varchar(10) not null,
+    AuthenticatorName varchar(10) not null,
     AuthenticatorFullName  varchar(100) not null
 )
 GO
 
 -- PK
-alter table dbo.Authenticator 
+alter table dbo.Authenticator
 add CONSTRAINT [PK_Authenticator_AuthenticatorID] PRIMARY KEY CLUSTERED 
 (
     [AuthenticatorID] ASC
 ) ON [PRIMARY]
 GO
 
-insert into dbo.Authenticator(AuthenticatorShortName, AuthenticatorFullName)
+insert into dbo.Authenticator(AuthenticatorName, AuthenticatorFullName)
 values ('ADFS', 'Washington DNR ADFS Account')
 GO
 
-insert into dbo.Authenticator(AuthenticatorShortName, AuthenticatorFullName)
+insert into dbo.Authenticator(AuthenticatorName, AuthenticatorFullName)
 values ('SAW', 'Secure Access Washington Account')
 GO
 
@@ -93,17 +97,27 @@ add constraint AK_PersonEnvironmentCredential_PersonID_DeploymentEnvironmentID_A
 GO
 
 -- Create Person / DeploymentEnvironment / Credential records
----------------------------------------------------
+-------------------------------------------------------------
 -- Here we assume **all current PersonUniqueIdentifiers are for Prod, not QA**. 
--- UpdateTenantAttributes will need to be removed/modified.
 
+-- SAW First
 insert into dbo.PersonEnvironmentCredential
 select p.PersonID,
-       (select e.DeploymentEnvironmentID from DeploymentEnvironment as e where e.DeploymentEnvironmentName = 'QA') as DeploymentEnvironmentID,
-       (select a.AuthenticatorID from Authenticator as a where a.AuthenticatorShortName = 'SAW') as AuthenticatorID,
+       (select e.DeploymentEnvironmentID from DeploymentEnvironment as e where e.DeploymentEnvironmentName = 'Prod') as DeploymentEnvironmentID,
+       (select a.AuthenticatorID from Authenticator as a where a.AuthenticatorName = 'SAW') as AuthenticatorID,
        p.[PersonUniqueIdentifier]
 from dbo.Person as p 
 where p.PersonUniqueIdentifier not like '%@dnr.wa%'
+
+
+-- ADFS Next
+insert into dbo.PersonEnvironmentCredential
+select p.PersonID,
+       (select e.DeploymentEnvironmentID from DeploymentEnvironment as e where e.DeploymentEnvironmentName = 'Prod') as DeploymentEnvironmentID,
+       (select a.AuthenticatorID from Authenticator as a where a.AuthenticatorName = 'ADFS') as AuthenticatorID,
+       p.[PersonUniqueIdentifier]
+from dbo.Person as p 
+where p.PersonUniqueIdentifier like '%@dnr.wa%'
 
 DROP INDEX [UQ_Person_PersonUniqueIdentifier] ON [dbo].[Person]
 GO

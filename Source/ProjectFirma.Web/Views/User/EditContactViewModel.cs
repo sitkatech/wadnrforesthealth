@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.User
             person.Phone = Phone;
             person.Notes = Notes;
 
-            if (string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier)) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
+            if (!person.IsFullUser()) // These fields come from SAW/ADFS and are disabled on the front-end when editing Legit Users
             {
                 person.FirstName = FirstName;
                 person.MiddleName = MiddleName;

@@ -46,7 +46,8 @@ namespace ProjectFirma.Web.Models
         public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier)
         {
             Check.EnsureNotNull(personUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
-            var person = people.SingleOrDefault(x => x.PersonUniqueIdentifier == personUniqueIdentifier);
+
+            var person = people.Where(p =>p.PersonEnvironmentCredentials.Any(pec => pec.PersonUniqueIdentifier == personUniqueIdentifier)).SingleOrDefault();
             return person;
         }
 

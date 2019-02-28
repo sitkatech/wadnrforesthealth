@@ -34,7 +34,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
-        public virtual DbSet<Authenticator> Authenticators { get; set; }
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
@@ -42,7 +41,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
-        public virtual DbSet<DeploymentEnvironment> DeploymentEnvironments { get; set; }
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
         public virtual DbSet<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
@@ -178,7 +176,9 @@ namespace ProjectFirma.Web.Models
                     return AuditLogs.GetAuditLog(primaryKey);
 
                 case "Authenticator":
-                    return Authenticators.GetAuthenticator(primaryKey);
+                    var authenticator = Authenticator.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(authenticator, "Authenticator", primaryKey);
+                    return authenticator;
 
                 case "ClassificationPerformanceMeasure":
                     return ClassificationPerformanceMeasures.GetClassificationPerformanceMeasure(primaryKey);
@@ -207,7 +207,9 @@ namespace ProjectFirma.Web.Models
                     return CustomPages.GetCustomPage(primaryKey);
 
                 case "DeploymentEnvironment":
-                    return DeploymentEnvironments.GetDeploymentEnvironment(primaryKey);
+                    var deploymentEnvironment = DeploymentEnvironment.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(deploymentEnvironment, "DeploymentEnvironment", primaryKey);
+                    return deploymentEnvironment;
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);

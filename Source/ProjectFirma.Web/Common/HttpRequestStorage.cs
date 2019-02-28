@@ -201,6 +201,32 @@ namespace ProjectFirma.Web.Common
             return claimValue;
         }
 
+        public static DeploymentEnvironment GetDeploymentEnvironment()
+        {
+            switch (FirmaWebConfiguration.FirmaEnvironment.FirmaEnvironmentType)
+            {
+                case FirmaEnvironmentType.Local:
+                    return DeploymentEnvironment.Local;
+                case FirmaEnvironmentType.Qa:
+                    return DeploymentEnvironment.QA;
+                case FirmaEnvironmentType.Prod:
+                    return DeploymentEnvironment.Prod;
+                default:
+                    throw new Exception($"Unhandled case: {FirmaWebConfiguration.FirmaEnvironment.FirmaEnvironmentType}");
+            }
+        }
+
+        public static Authenticator GetAuthenticator(string uniqueIdentifier)
+        {
+            // There is likely a far better way to detect this, but this will work for now.
+            if (uniqueIdentifier.Contains("@wa.dnr"))
+            {
+                return Authenticator.ADFS;
+            }
+            // Assume SAW if not ADFS
+            return Authenticator.SAW;
+        }
+
         public static Person GetOpenIDUserFromPrincipal(IPrincipal principal, Person anonymousSitkaUser)
         {
             if (principal?.Identity == null || !principal.Identity.IsAuthenticated)
@@ -217,23 +243,35 @@ namespace ProjectFirma.Web.Common
             {
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
-                string thingToLookup;
-                string thingWeAreLookingUp;
-                Person user;
 
-                if (FirmaWebConfiguration.SAWOverrideLookupUsingEmail)
+                bool canFallBackToEmail = FirmaWebConfiguration.SAWOverrideLookupUsingEmail;
+                //canFallBackToEmail = false;
+
+                // First, always attempt to look up via GUID, which is arguably more secure
+                var thingToLookup = saml2UserClaims.UniqueIdentifier;
+                var thingWeAreLookingUp = "GUID";
+                var user = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(thingToLookup);
+
+                // If we fail to look up via GUID, and we are allowed to fall back to email, try email
+                if (user == null && canFallBackToEmail)
                 {
                     thingToLookup = saml2UserClaims.Email;
                     thingWeAreLookingUp = "email";
                     user = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(thingToLookup, false);
-                }
-                else
-                {
-                    thingToLookup = saml2UserClaims.UniqueIdentifier;
-                    thingWeAreLookingUp = "GUID";
-                    user = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(thingToLookup);
+
+                    // If we were able to find user via email, write in the user's GUID if provided by authenticator, and not already saved.
+                    if (user != null &&  !GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(saml2UserClaims.UniqueIdentifier))
+                    {
+                        // No existing credentials saved for this GUID?
+                        if (user.PersonEnvironmentCredentials.SingleOrDefault(pec => pec.PersonUniqueIdentifier == saml2UserClaims.UniqueIdentifier) == null)
+                        {
+                            var newPec = new PersonEnvironmentCredential(user, GetDeploymentEnvironment(), GetAuthenticator(saml2UserClaims.UniqueIdentifier), saml2UserClaims.UniqueIdentifier);
+                            HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(newPec);
+                        }
+                    }
                 }
 
+                // If we can't find user using any available method, there's a problem
                 if (user == null)
                 {
                     throw new Saml2ClaimNotFoundException($"User not found for {thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})");

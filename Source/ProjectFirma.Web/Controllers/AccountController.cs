@@ -162,7 +162,6 @@ namespace ProjectFirma.Web.Controllers
         {
             SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - User '{0}', Authenticated = '{1}'", userIdentity.Name, userIdentity.IsAuthenticated);
             var saml2UserClaims = Saml2ClaimsHelpers.ParseOpenIDClaims(userIdentity);
-
             var personUniqueIdentifier = saml2UserClaims.UniqueIdentifier;
             var names = saml2UserClaims.DisplayName.Split(' ');
             var firstName = "";
@@ -187,27 +186,23 @@ namespace ProjectFirma.Web.Controllers
                 // new user - provision with limited role
                 SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", personUniqueIdentifier);
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                person = new Person(firstName, lastName, Role.Unassigned.RoleID,
-                    DateTime.Now, true, false)
+                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false)
                 {
-                    //PersonUniqueIdentifier = personUniqueIdentifier,
                     Email = email,
                     LoginName = username,
                     OrganizationID = unknownOrganization.OrganizationID
                 };
-
-
-                saml2UserClaims.DisplayName
-                var personEnvironmentCredential = new PersonEnvironmentCredential(person, , )
-
-
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
+
+                var personEnvironmentCredential = new PersonEnvironmentCredential(person, Saml2ClaimsHelpers.GetDeploymentEnvironment(), Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier), personUniqueIdentifier);
+                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredential);
+
                 sendNewUserNotification = true;
             }
             else
             {
                 // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - syncing local profile for User '{0}'", personUniqueIdentifier);
+                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - syncing local profile for User Email '{1}' '{0}'", personUniqueIdentifier, email);
             }
 
             person.FirstName = firstName;

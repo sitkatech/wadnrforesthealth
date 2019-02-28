@@ -78,15 +78,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Authenticator">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Authenticator">
-        <MappingFragment StoreEntitySet="Authenticator">
-          <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
-          <ScalarProperty Name="AuthenticatorShortName" ColumnName="AuthenticatorShortName" />
-          <ScalarProperty Name="AuthenticatorFullName" ColumnName="AuthenticatorFullName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Classification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Classification">
         <MappingFragment StoreEntitySet="Classification">
@@ -156,14 +147,6 @@
           <ScalarProperty Name="CustomPageImageID" ColumnName="CustomPageImageID" />
           <ScalarProperty Name="CustomPageID" ColumnName="CustomPageID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DeploymentEnvironment">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.DeploymentEnvironment">
-        <MappingFragment StoreEntitySet="DeploymentEnvironment">
-          <ScalarProperty Name="DeploymentEnvironmentID" ColumnName="DeploymentEnvironmentID" />
-          <ScalarProperty Name="DeploymentEnvironmentName" ColumnName="DeploymentEnvironmentName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
