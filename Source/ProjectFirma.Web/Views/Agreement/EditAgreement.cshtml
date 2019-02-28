@@ -149,12 +149,17 @@
                         var mouAgreementTypeId = @ViewDataTyped.MOUAgreementTypeID;
                         var mouAgreementTypeIdHasValue = '@ViewDataTyped.MOUAgreementTypeID.HasValue';
 
-                        function updateDisabledFieldsIfMouIsSelected(mouAgreementTypeIdVar)
+                        var ndaAgreementTypeId = @ViewDataTyped.NDAAgreementTypeID;
+                        var ndaAgreementTypeIdHasValue = '@ViewDataTyped.NDAAgreementTypeID.HasValue';
+
+                        function updateDisabledFieldsIfMouOrNdaIsSelected(mouAgreementTypeIdVar, ndaAgreementTypeIdVar)
                         {
-                            var selectionIsMou = jQuery("#@Html.IdFor(m => m.AgreementTypeID)").val().toString() === mouAgreementTypeIdVar.toString();
+                            var selectedAgreementTypeIDAsString = jQuery("#@Html.IdFor(m => m.AgreementTypeID)").val().toString();
+                            var selectionIsMou = selectedAgreementTypeIDAsString === mouAgreementTypeIdVar.toString();
+                            var selectionIsNda = selectedAgreementTypeIDAsString === ndaAgreementTypeIdVar.toString();
                             var agreementAmountInput =
                                 jQuery("#@Html.IdFor(m => m.AgreementAmount)" + ".sitkaCurrency");
-                            if (selectionIsMou) {
+                            if (selectionIsMou || selectionIsNda) {
                                 agreementAmountInput.attr('disabled', 'disabled');
                                 agreementAmountInput.val("");
                             } else {
@@ -163,10 +168,11 @@
                         }
 
 
-                        if (mouAgreementTypeIdHasValue == 'True' || mouAgreementTypeIdHasValue == 'true') {
-                            updateDisabledFieldsIfMouIsSelected(mouAgreementTypeId);
+                        if (mouAgreementTypeIdHasValue == 'True' || mouAgreementTypeIdHasValue == 'true' ||
+                            ndaAgreementTypeIdHasValue == 'True' || ndaAgreementTypeIdHasValue == 'true') {
+                            updateDisabledFieldsIfMouOrNdaIsSelected(mouAgreementTypeId, ndaAgreementTypeId);
                             jQuery("#@Html.IdFor(m => m.AgreementTypeID)").change(function() {
-                                updateDisabledFieldsIfMouIsSelected(mouAgreementTypeId);
+                                updateDisabledFieldsIfMouOrNdaIsSelected(mouAgreementTypeId, ndaAgreementTypeId);
                             });
                         }
                     });

@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public EditAgreementType EditAgreementType { get; set; }
 
         public int? MOUAgreementTypeID { get; set; }
+        public int? NDAAgreementTypeID { get; set; }
 
         public EditAgreementViewData(EditAgreementType editAgreementType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.Grant> grants, IEnumerable<Models.AgreementType> agreementTypes, IEnumerable<Models.AgreementStatus> agreementStatuses)
         {
@@ -47,6 +48,8 @@ namespace ProjectFirma.Web.Views.Agreement
             AgreementStatusList = agreementStatuses.ToSelectListWithEmptyFirstRow(x => x.AgreementStatusID.ToString(CultureInfo.InvariantCulture), y => y.AgreementStatusName);
             EditAgreementType = editAgreementType;
             MOUAgreementTypeID = agreementTypesAsList.SingleOrDefault(x => string.Equals(x.AgreementTypeAbbrev, "MOU"))
+                ?.AgreementTypeID;
+            NDAAgreementTypeID = agreementTypesAsList.SingleOrDefault(x => string.Equals(x.AgreementTypeAbbrev, "NDA"))
                 ?.AgreementTypeID;
         }
     }
