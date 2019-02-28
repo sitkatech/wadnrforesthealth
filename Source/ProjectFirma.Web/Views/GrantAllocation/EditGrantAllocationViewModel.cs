@@ -67,8 +67,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public DateTime? EndDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramManager)]
-        public int? ProgramManagerID { get; set; }
-      
+        public List<int> ProgramManagerPersonIDs { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             AllocationAmount = grantAllocation.AllocationAmount;
             StartDate = grantAllocation.StartDate;
             EndDate = grantAllocation.EndDate;
-            ProgramManagerID = grantAllocation.ProgramManagerPersonID;
+            ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -112,7 +112,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;
             grantAllocation.EndDate = EndDate;
-            grantAllocation.ProgramManagerPersonID = ProgramManagerID;
+
+            grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
+            grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
         }
     }
 }

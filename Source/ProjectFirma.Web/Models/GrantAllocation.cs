@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using LtInfo.Common;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
@@ -38,6 +36,21 @@ namespace ProjectFirma.Web.Models
         public string AuditDescriptionString
         {
             get { return ProjectName; }
+        }
+
+        public List<int> ProgramManagerPersonIDs
+        {
+            get { return ProgramManagerPersons.Select(p => p.PersonID).ToList(); }
+        }
+
+        public List<Person> ProgramManagerPersons
+        {
+            get { return GrantAllocationProgramManagers.Select(gapm => gapm.Person).ToList(); }
+        }
+
+        public string GetAllProgramManagerPersonNamesAsString()
+        {
+            return string.Join(", ", this.ProgramManagerPersons.Select(pmp => pmp.FullNameFirstLast));
         }
 
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)

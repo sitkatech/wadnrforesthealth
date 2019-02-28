@@ -34,7 +34,6 @@ namespace ProjectFirma.Web.UnitTestCommon
                 person.Email = MakeTestEmail("email");
                 person.FirstName = MakeTestName("firstName", Person.FieldLengths.FirstName);
                 person.LastName = MakeTestName("lastName", Person.FieldLengths.LastName);
-                person.PasswordPdfK2SaltHash = null;
 
                 return person;
             }
