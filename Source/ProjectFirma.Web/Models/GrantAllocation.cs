@@ -40,6 +40,21 @@ namespace ProjectFirma.Web.Models
             get { return ProjectName; }
         }
 
+        public List<int> ProgramManagerPersonIDs
+        {
+            get { return ProgramManagerPersons.Select(p => p.PersonID).ToList(); }
+        }
+
+        public List<Person> ProgramManagerPersons
+        {
+            get { return GrantAllocationProgramManagers.Select(gapm => gapm.Person).ToList(); }
+        }
+
+        public string GetAllProgramManagerPersonNamesAsString()
+        {
+            return string.Join(", ", this.ProgramManagerPersons.Select(pmp => pmp.FullNameFirstLast));
+        }
+
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
         {
             var convertedProjectCodes = new List<ProjectCode>();

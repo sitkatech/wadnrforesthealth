@@ -26,13 +26,14 @@ namespace ProjectFirma.Web.Models
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
+            this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
             this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programManagerPersonID, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string projectName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -41,7 +42,6 @@ namespace ProjectFirma.Web.Models
             this.EndDate = endDate;
             this.AllocationAmount = allocationAmount;
             this.CostTypeID = costTypeID;
-            this.ProgramManagerPersonID = programManagerPersonID;
             this.ProgramIndexID = programIndexID;
             this.FederalFundCodeID = federalFundCodeID;
             this.OrganizationID = organizationID;
@@ -85,13 +85,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationProjectCodes.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name};
 
 
         /// <summary>
@@ -126,6 +126,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in GrantAllocationProgramManagers.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GrantAllocationProjectCodes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -140,7 +145,6 @@ namespace ProjectFirma.Web.Models
         public DateTime? EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
         public int? CostTypeID { get; set; }
-        public int? ProgramManagerPersonID { get; set; }
         public int? ProgramIndexID { get; set; }
         public int? FederalFundCodeID { get; set; }
         public int? OrganizationID { get; set; }
@@ -150,10 +154,10 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
+        public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual CostType CostType { get; set; }
-        public virtual Person ProgramManagerPerson { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }

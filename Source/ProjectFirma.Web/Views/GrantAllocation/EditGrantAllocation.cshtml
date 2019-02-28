@@ -70,11 +70,11 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.ProgramManagerID)
+                @Html.LabelWithSugarFor(m => m.ProgramManagerPersonIDs)
             </div>
             <div class="col-xs-6">
-                @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerID, ViewDataTyped.ProgramManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
-                @Html.ValidationMessageFor(m => m.ProgramManagerID)
+                @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerPersonIDs, ViewDataTyped.ProgramManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(m => m.ProgramManagerPersonIDs)
             </div>
         </div>
         <div class="form-group">
@@ -89,7 +89,7 @@
                 @Html.LabelWithSugarFor(m => m.ProjectCodeIDs)
             </div>
             <div class="col-xs-2">
-                @Html.SearchableMultiSelectDropDownListFor(m => m.ProjectCodeIDs, ViewDataTyped.ProjectCodes, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.SearchableMultiSelectDropDownListFor(m => m.ProjectCodeIDs, ViewDataTyped.ProjectCodes, new {style = "width: auto;", @class = "form-control selectpicker"})
                 @Html.ValidationMessageFor(m => m.ProjectCodeIDs)
             </div>
         </div>

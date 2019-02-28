@@ -20,7 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*@
 @using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
-@using LtInfo.Common.Views
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
@@ -28,9 +27,9 @@ Source code is available upon request via <support@sitkatech.com>.
 
 @functions 
 {
-    private string GetProgramMangerPersonFullName(GrantAllocationBasicsViewData viewDataTyped)
+    private string GetProgramMangerPersonFullNames(GrantAllocationBasicsViewData viewDataTyped)
     {
-        return ViewDataTyped.GrantAllocation.ProgramManagerPerson != null ? ViewDataTyped.GrantAllocation.ProgramManagerPerson.FullNameFirstLast : string.Empty;
+        return viewDataTyped.GrantAllocation.GetAllProgramManagerPersonNamesAsString();
     }
 
 }
@@ -76,7 +75,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.ProgramManager)
         </div>
         <div class="col-sm-9">
-            <span id="ProgramManager">@GetProgramMangerPersonFullName(ViewDataTyped)</span>
+            <span id="ProgramManager">@GetProgramMangerPersonFullNames(ViewDataTyped)</span>
         </div>
     </div>
     <div class="row">
