@@ -17,7 +17,6 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
           <ScalarProperty Name="AgreementFileResourceID" ColumnName="AgreementFileResourceID" />
           <ScalarProperty Name="tmpAgreement2ID" ColumnName="tmpAgreement2ID" />
@@ -30,7 +29,6 @@
           <ScalarProperty Name="AgreementGrantAllocationID" ColumnName="AgreementGrantAllocationID" />
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -283,7 +281,6 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
@@ -301,6 +298,15 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationProgramManager">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProgramManager">
+        <MappingFragment StoreEntitySet="GrantAllocationProgramManager">
+          <ScalarProperty Name="GrantAllocationProgramManagerID" ColumnName="GrantAllocationProgramManagerID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

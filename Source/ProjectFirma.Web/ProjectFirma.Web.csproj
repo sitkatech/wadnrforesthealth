@@ -149,6 +149,9 @@
     <Compile Include="Models\Generated\GrantAllocationNote.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationNotePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProgramManager.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProgramManager.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProgramManagerPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationProjectCode.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationProjectCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationProjectCodePrimaryKey.Binding.cs" />
@@ -468,6 +471,7 @@
     <Compile Include="Controllers\GrantAllocationController.cs" />
     <Compile Include="Common\ICanDeleteFull.cs" />
     <Compile Include="Models\FederalFundCode.cs" />
+    <Compile Include="Models\GrantAllocationProgramManager.cs" />
     <Compile Include="Models\GrantType.cs" />
     <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />

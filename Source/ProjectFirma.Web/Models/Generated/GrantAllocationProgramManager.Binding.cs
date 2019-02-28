@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[AgreementGrantAllocation]
+//  Source Table: [dbo].[GrantAllocationProgramManager]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +15,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[AgreementGrantAllocation] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[AgreementGrantAllocation]")]
-    public partial class AgreementGrantAllocation : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[GrantAllocationProgramManager] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[GrantAllocationProgramManager]")]
+    public partial class GrantAllocationProgramManager : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected AgreementGrantAllocation()
+        protected GrantAllocationProgramManager()
         {
 
         }
@@ -30,46 +30,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public AgreementGrantAllocation(int agreementGrantAllocationID, int agreementID, int grantAllocationID) : this()
+        public GrantAllocationProgramManager(int grantAllocationProgramManagerID, int grantAllocationID, int personID) : this()
         {
-            this.AgreementGrantAllocationID = agreementGrantAllocationID;
-            this.AgreementID = agreementID;
+            this.GrantAllocationProgramManagerID = grantAllocationProgramManagerID;
             this.GrantAllocationID = grantAllocationID;
+            this.PersonID = personID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public AgreementGrantAllocation(int agreementID, int grantAllocationID) : this()
+        public GrantAllocationProgramManager(int grantAllocationID, int personID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.AgreementGrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.GrantAllocationProgramManagerID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.AgreementID = agreementID;
             this.GrantAllocationID = grantAllocationID;
+            this.PersonID = personID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this()
+        public GrantAllocationProgramManager(GrantAllocation grantAllocation, Person person) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.AgreementGrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.AgreementID = agreement.AgreementID;
-            this.Agreement = agreement;
-            agreement.AgreementGrantAllocations.Add(this);
+            this.GrantAllocationProgramManagerID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
-            grantAllocation.AgreementGrantAllocations.Add(this);
+            grantAllocation.GrantAllocationProgramManagers.Add(this);
+            this.PersonID = person.PersonID;
+            this.Person = person;
+            person.GrantAllocationProgramManagers.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, GrantAllocation grantAllocation)
+        public static GrantAllocationProgramManager CreateNewBlank(GrantAllocation grantAllocation, Person person)
         {
-            return new AgreementGrantAllocation(agreement, grantAllocation);
+            return new GrantAllocationProgramManager(grantAllocation, person);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(AgreementGrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationProgramManager).Name};
 
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.AgreementGrantAllocations.Remove(this);
+            dbContext.GrantAllocationProgramManagers.Remove(this);
         }
         
         /// <summary>
@@ -105,14 +105,14 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int AgreementGrantAllocationID { get; set; }
-        public int AgreementID { get; set; }
+        public int GrantAllocationProgramManagerID { get; set; }
         public int GrantAllocationID { get; set; }
+        public int PersonID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return AgreementGrantAllocationID; } set { AgreementGrantAllocationID = value; } }
+        public int PrimaryKey { get { return GrantAllocationProgramManagerID; } set { GrantAllocationProgramManagerID = value; } }
 
-        public virtual Agreement Agreement { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
+        public virtual Person Person { get; set; }
 
         public static class FieldLengths
         {

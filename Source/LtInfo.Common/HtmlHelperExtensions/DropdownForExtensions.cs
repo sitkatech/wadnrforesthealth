@@ -196,9 +196,13 @@ namespace LtInfo.Common.HtmlHelperExtensions
             return newSelectList;
         }
 
-        private static MvcHtmlString SelectInternal(this HtmlHelper htmlHelper, ModelMetadata metadata,
-            string optionLabel, string name, IEnumerable<SelectListItem> selectList, bool allowMultiple,
-            IDictionary<string, object> htmlAttributes)
+        private static MvcHtmlString SelectInternal(this HtmlHelper htmlHelper, 
+                                                    ModelMetadata metadata,
+                                                    string optionLabel, 
+                                                    string name, 
+                                                    IEnumerable<SelectListItem> selectList, 
+                                                    bool allowMultiple,
+                                                    IDictionary<string, object> htmlAttributes)
         {
             string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
             if (String.IsNullOrEmpty(fullName))
@@ -231,9 +235,16 @@ namespace LtInfo.Common.HtmlHelperExtensions
                 }
             }
 
+            // Unsure why the array syntax above is not giving us an IEnumerable, but this
+            // should take care of the issue.
             if (defaultValue != null)
             {
-                selectList = GetSelectListWithDefaultValue(selectList, defaultValue, allowMultiple);
+                object defaultValueUpdated = defaultValue;
+                if (allowMultiple && !(defaultValue is IEnumerable))
+                {
+                    defaultValueUpdated = new List<Object> {defaultValue};
+                }
+                selectList = GetSelectListWithDefaultValue(selectList, defaultValueUpdated, allowMultiple);
             }
 
             // Convert each ListItem to an <option> tag and wrap them with <optgroup> if requested.
@@ -257,8 +268,7 @@ namespace LtInfo.Common.HtmlHelperExtensions
             }
 
             // If there are any errors for a named field, we add the css attribute.
-            ModelState modelState;
-            if (htmlHelper.ViewData.ModelState.TryGetValue(fullName, out modelState))
+            if (htmlHelper.ViewData.ModelState.TryGetValue(fullName, out var modelState))
             {
                 if (modelState.Errors.Count > 0)
                 {

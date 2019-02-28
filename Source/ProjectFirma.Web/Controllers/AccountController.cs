@@ -194,6 +194,7 @@ namespace ProjectFirma.Web.Controllers
                 };
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
+                // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
                 var personEnvironmentCredential = new PersonEnvironmentCredential(person, Saml2ClaimsHelpers.GetDeploymentEnvironment(), Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier), personUniqueIdentifier);
                 HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredential);
 

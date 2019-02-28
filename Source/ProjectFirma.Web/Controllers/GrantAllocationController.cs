@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -232,10 +233,16 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.SingleOrDefault(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
+            if (grantAllocation == null)
+            {
+                throw new Exception($"Could not find GrantAllocationID # {grantAllocationPrimaryKey.PrimaryKeyValue}; has it been deleted?");
+            }
+
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, taxonomyLevel);
             var userHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);

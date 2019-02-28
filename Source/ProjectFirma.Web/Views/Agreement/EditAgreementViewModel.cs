@@ -58,9 +58,6 @@ namespace ProjectFirma.Web.Views.Agreement
         [Required]
         public int AgreementTypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
-        public int? GrantID { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public List<ProgramIndex> ProgramIndices { get; }
 
@@ -99,7 +96,6 @@ namespace ProjectFirma.Web.Views.Agreement
             OrganizationID = agreement.OrganizationID;
             AgreemeentStatusID = agreement.AgreementStatusID;
             AgreementTypeID = agreement.AgreementTypeID;
-            GrantID = agreement.GrantID;
             AgreementAmount = agreement.AgreementAmount;
             AgreementStartDate = agreement.StartDate;
             AgreementEndDate = agreement.EndDate;
@@ -113,7 +109,6 @@ namespace ProjectFirma.Web.Views.Agreement
             agreement.OrganizationID = OrganizationID.Value;
             agreement.AgreementStatusID = AgreemeentStatusID.Value;
             agreement.AgreementTypeID = AgreementTypeID;
-            agreement.GrantID = GrantID;
             agreement.AgreementAmount = AgreementAmount;
             agreement.StartDate = AgreementStartDate;
             agreement.EndDate = AgreementEndDate;
@@ -137,35 +132,10 @@ namespace ProjectFirma.Web.Views.Agreement
             var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
             var mouAgreementType = agreementTypes.SingleOrDefault(x => string.Equals(x.AgreementTypeAbbrev, "MOU"));
 
-            if (GrantID.HasValue && mouAgreementType != null && AgreementTypeID == mouAgreementType.AgreementTypeID)
-            {
-                yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
-                    $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Grant must be blank", m => m.GrantID);
-            }
-
-            var existingAgreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(x => x.AgreementID == AgreementID);
-            if (existingAgreement != null)
-            {
-                var existingAgreementGrantAllocationsGrantIDs = existingAgreement.AgreementGrantAllocations.Select(x => x.GrantID).Distinct().ToList();
-                if (existingAgreementGrantAllocationsGrantIDs.Any())
-                {
-                    if (!GrantID.HasValue || !existingAgreementGrantAllocationsGrantIDs.Contains(GrantID.Value))
-                    {
-                        yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
-                            $"The Grant can only be changed when no Grant Allocations are associated to it. Please delete associated Grant Allocations",
-                            m => m.GrantID);
-                    }
-                }
-            }
             if (AgreementAmount.HasValue && mouAgreementType != null && AgreementTypeID == mouAgreementType.AgreementTypeID)
             {
                 yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
                     $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Agreement Amount must be blank", m => m.AgreementAmount);
-            }
-            if (!GrantID.HasValue && (mouAgreementType == null || AgreementTypeID != mouAgreementType.AgreementTypeID))
-            {
-                yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
-                    $"A Grant must be selected if the Agreement Type is not MOU", m => m.GrantID);
             }
             if (AgreementAmount.HasValue && AgreementAmount > SqlMoney.MaxValue.Value)
             {
