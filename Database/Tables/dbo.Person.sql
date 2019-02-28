@@ -8,7 +8,6 @@ CREATE TABLE [dbo].[Person](
 	[LastName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Email] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Phone] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[PasswordPdfK2SaltHash] [nvarchar](1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[RoleID] [int] NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[UpdateDate] [datetime] NULL,

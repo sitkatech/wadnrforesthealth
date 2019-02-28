@@ -65,14 +65,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress, int? addedByPersonID) : this()
+        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress, int? addedByPersonID) : this()
         {
             this.PersonID = personID;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
             this.Phone = phone;
-            this.PasswordPdfK2SaltHash = passwordPdfK2SaltHash;
             this.RoleID = roleID;
             this.CreateDate = createDate;
             this.UpdateDate = updateDate;
@@ -352,7 +351,6 @@ namespace ProjectFirma.Web.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string PasswordPdfK2SaltHash { get; set; }
         public int RoleID { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
@@ -416,7 +414,6 @@ namespace ProjectFirma.Web.Models
             public const int LastName = 100;
             public const int Email = 255;
             public const int Phone = 30;
-            public const int PasswordPdfK2SaltHash = 1000;
             public const int LoginName = 128;
             public const int MiddleName = 100;
             public const int StatewideVendorNumber = 100;

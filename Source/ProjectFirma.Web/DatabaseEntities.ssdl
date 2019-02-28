@@ -1328,7 +1328,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="Email" Type="varchar" MaxLength="255" />
     <Property Name="Phone" Type="varchar" MaxLength="30" />
-    <Property Name="PasswordPdfK2SaltHash" Type="nvarchar" MaxLength="1000" />
     <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
     <Property Name="UpdateDate" Type="datetime" />
