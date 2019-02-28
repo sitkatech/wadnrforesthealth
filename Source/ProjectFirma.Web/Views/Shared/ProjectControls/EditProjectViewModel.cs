@@ -141,6 +141,15 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                 yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
+            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
+            {
+                var treatmentActivitiesOnProject = HttpRequestStorage.DatabaseEntities.TreatmentActivities.Where(x => x.ProjectID == ProjectID).ToList();
+                if (treatmentActivitiesOnProject.Any(x => x.TreatmentActivityStatus == TreatmentActivityStatus.Planned))
+                {
+                    yield return new SitkaValidationResult<EditProjectViewModel, int>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all Treatment Activities must be Completed or Cancelled.", m => m.ProjectStageID);
+                }
+            }
+
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
             if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now)
             {
