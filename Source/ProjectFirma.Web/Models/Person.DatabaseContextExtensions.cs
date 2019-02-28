@@ -43,12 +43,23 @@ namespace ProjectFirma.Web.Models
             return person;
         }
 
-        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier)
+        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string desiredPersonUniqueIdentifier)
         {
-            Check.EnsureNotNull(personUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
+            Check.EnsureNotNull(desiredPersonUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
 
-            var person = people.Where(p =>p.PersonEnvironmentCredentials.Any(pec => pec.PersonUniqueIdentifier == personUniqueIdentifier)).SingleOrDefault();
+            // Make sure the GUID we are looking up aligns with the environment (Local,QA, Prod) and authentication method (ADFS, SAW).
+            var desiredDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
+            var desiredAuthenticator = Saml2ClaimsHelpers.GetAuthenticator(desiredPersonUniqueIdentifier);
+
+            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredDeploymentEnvironment, desiredAuthenticator));
             return person;
+        }
+
+        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, DeploymentEnvironment desiredDeploymentEnvironment, Authenticator desiredAuthenticator)
+        {
+            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.DeploymentEnvironment.DeploymentEnvironmentID == desiredDeploymentEnvironment.DeploymentEnvironmentID &&
+                                                                           pec.Authenticator.AuthenticatorID == desiredAuthenticator.AuthenticatorID &&
+                                                                           pec.PersonUniqueIdentifier == desiredPersonUniqueIdentifier);
         }
 
         public static Person GetPersonByWebServiceAccessToken(this IQueryable<Person> people, Guid webServiceAccessToken)
