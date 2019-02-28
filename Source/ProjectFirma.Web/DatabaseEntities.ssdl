@@ -121,10 +121,6 @@
       <End Role="AgreementFileResource" EntitySet="FileResource" />
       <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
     </AssociationSet>
-    <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
     <AssociationSet Name="FK_Agreement_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -810,9 +806,6 @@
       <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="Agreement">
     <Key>
       <PropertyRef Name="AgreementID" />
@@ -2093,18 +2086,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="AgreementsWhereYouAreTheAgreementFileResource">
         <PropertyRef Name="AgreementFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agreement_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

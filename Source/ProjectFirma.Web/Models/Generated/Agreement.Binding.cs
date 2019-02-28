@@ -163,7 +163,6 @@ namespace ProjectFirma.Web.Models
         public virtual AgreementType AgreementType { get; set; }
         public virtual Region Region { get; set; }
         public virtual Organization Organization { get; set; }
-        public virtual Grant Grant { get; set; }
         public virtual AgreementStatus AgreementStatus { get; set; }
         public virtual FileResource AgreementFileResource { get; set; }
 

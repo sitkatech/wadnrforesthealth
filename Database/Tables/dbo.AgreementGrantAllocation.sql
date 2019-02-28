@@ -24,11 +24,6 @@ REFERENCES [dbo].[Agreement] ([AgreementID])
 GO
 ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID]
 GO
-ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID] FOREIGN KEY([AgreementID], [GrantID])
-REFERENCES [dbo].[Agreement] ([AgreementID], [GrantID])
-GO
-ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID]
-GO
 ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
 REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO

@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Models
         public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this(agreement, grantAllocation, grantAllocation.GrantID)
         {
             // Invariant
-            EnsureGrantIDsAlign();
+            //EnsureGrantIDsAlign();
         }
 
         /// <summary>

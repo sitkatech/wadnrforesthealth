@@ -27,7 +27,6 @@ namespace ProjectFirma.Web.Views.Agreement
 {
     public class EditAgreementGrantAllocationsViewData : FirmaUserControlViewData
     {
-        public readonly bool HasParentGrant;
         public readonly IEnumerable<SelectListItem> GrantAllocationSelectListItems;
         public readonly List<GrantAllocationJson> AllPossibleGrantAllocationJsons;
 
@@ -35,9 +34,8 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             GrantAllocationSelectListItems = grantAllocationSelectListItems;
             var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            HasParentGrant = agreement.Grant != null;
             // Filter to only aligned GrantAllocations
-            var filteredGrantAllocations = databaseEntitiesGrantAllocations.Where(ga => ga.GrantID == agreement.GrantID).ToList();
+            var filteredGrantAllocations = databaseEntitiesGrantAllocations.ToList();
             AllPossibleGrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(filteredGrantAllocations);
         }
 

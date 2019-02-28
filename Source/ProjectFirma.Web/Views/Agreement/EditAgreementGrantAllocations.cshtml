@@ -78,17 +78,6 @@
     </div>
 
     <div id="EditAgreementGrantAllocationsAngularApp" ng-controller="EditAgreementGrantAllocationsController">
-        
-        @*We probably need to do better than a warning, but this at least tells users what's going on.*@
-        @if (!ViewDataTyped.HasParentGrant)
-        {
-            <div class="row">
-                <div class="col-md-12">
-                    <p style="font-weight: bold">Since there is no @FieldDefinition.Grant.GetFieldDefinitionLabel() associated with this @FieldDefinition.Agreement.GetFieldDefinitionLabel(), you can't yet select any @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized(). </p>
-                </div>
-            </div>
-        }
-
         <div class="row">
             <div class="col-md-12">
                 <p>Select the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Agreement.GetFieldDefinitionLabel(). </p>
