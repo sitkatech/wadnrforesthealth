@@ -20,19 +20,24 @@ namespace ProjectFirma.Web.Models
             return Projects.ToList();
         }
 
+        public List<Project> GetAssociatedImplementationOrFurtherProjects()
+        {
+            return Projects.Where(p => p.ProjectStage == ProjectStage.Completed || p.ProjectStage == ProjectStage.Implementation || p.ProjectStage == ProjectStage.PostImplementation).ToList();
+        }
+
         public decimal? SumOfProjectEstimatedTotalCost
         {
-            get { return Projects.Select(x => x.EstimatedTotalCost).Sum(); }
+            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.EstimatedTotalCost).Sum(); }
         }
 
         public decimal? SumOfProjectReportedExpenditures
         {
-            get { return Projects.Select(x => x.TotalExpenditures).Sum(); }
+            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.TotalExpenditures).Sum(); }
         }
 
         public decimal TotalCompletedFootprintAcres
         {
-            get { return Projects.Where(x => x.ProjectStage == ProjectStage.Completed).Select(x => x.TotalCompletedFootprintAcres).Sum(); }
+            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.TotalCompletedFootprintAcres).Sum(); }
         }
 
         public string AuditDescriptionString => FocusAreaName;

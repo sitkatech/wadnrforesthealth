@@ -130,4 +130,12 @@ VALUES
 (305, N'AgreementNotes', 'Agreement Notes', 'Placeholder for Agreement Notes.'),
 (306, N'AgreementStatus', 'Agreement Status', 'Placeholder for Agreement Status.'),
 (307, N'GrantAllocationNote', 'Grant Allocation Note', 'Placeholder for Grant Allocation Notes.'),
-(308, N'FileResource', 'File Resource', 'Placeholder for File Resource.')
+(308, N'FileResource', 'File Resource', 'Placeholder for File Resource.'),
+(309, N'ProjectTotalCompletedFootprintAcres', 'Project Completed Footprint Acres', 'Sum of Footprint Acres on all completed Treatment Activities under a Project.'),
+(310, N'FocusAreaTotalProjectReportedExpendiures', 'Sum of Project Reported Expendiures', 'Sum of reported expenditures on all Projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
+(311, N'FocusAreaTotalProjectEstimatedTotalCosts', 'Sum of Project Estimated Total Costs', 'Sum of estimated total costs on all Projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
+(312, N'FocusAreaTotalCompletedFootprintAcres', 'Total Footprint Acres - Completed', 'Sum of Footprint Acres on all completed Treatment Activities under all Projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
+(313, N'FocusAreaTotalPlannedFootprintAcres', 'Total Footprint Acres - Planned', 'The value entered in the Planned Footprint Acres field of a Focus Area'),
+(314, N'FocusAreaCloseoutReportProjectList', 'Project List', 'All projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.')
+
+
