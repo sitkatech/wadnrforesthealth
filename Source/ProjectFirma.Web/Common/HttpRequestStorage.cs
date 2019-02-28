@@ -238,7 +238,7 @@ namespace ProjectFirma.Web.Common
             // application pool that keystone runs under and have an authentication type of "Kerberos". these particular invocations need to be treated the same way as the
             // unauthenticated calls over basic bindings - that is they do not map to a MM user and should be considered "anonymous".
 
-            //These are OpenID AuthenticationTypes, WIF ones include "Keberos" and "Federation"
+            //These are OpenID AuthenticationTypes, WIF ones include "Kerberos" and "Federation"
             if (principal.Identity.AuthenticationType == "ApplicationCookie")
             {
                 // otherwise remap claims from principal
