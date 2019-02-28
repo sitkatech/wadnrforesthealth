@@ -7,6 +7,7 @@
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.AgreementStatus" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.AgreementType" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.AuditLog" />
+    <EntitySet Name="Authenticator" EntityType="ProjectFirma.Web.Models.Authenticator" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
@@ -14,6 +15,7 @@
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
+    <EntitySet Name="DeploymentEnvironment" EntityType="ProjectFirma.Web.Models.DeploymentEnvironment" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.FederalFundCode" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.FieldDefinitionData" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
@@ -48,6 +50,7 @@
     <EntitySet Name="PerformanceMeasureSubcategory" EntityType="ProjectFirma.Web.Models.PerformanceMeasureSubcategory" />
     <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.PerformanceMeasureSubcategoryOption" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Person" />
+    <EntitySet Name="PersonEnvironmentCredential" EntityType="ProjectFirma.Web.Models.PersonEnvironmentCredential" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.PersonStewardOrganization" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.PersonStewardRegion" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" />
@@ -153,6 +156,10 @@
       <End Role="Person" EntitySet="Person" />
       <End Role="AuditLogs" EntitySet="AuditLog" />
     </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID" Association="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID">
+      <End Role="Authenticator" EntitySet="Authenticator" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
+    </AssociationSet>
     <AssociationSet Name="FK_Classification_ClassificationSystem_ClassificationSystemID" Association="ProjectFirma.Web.Models.FK_Classification_ClassificationSystem_ClassificationSystemID">
       <End Role="ClassificationSystem" EntitySet="ClassificationSystem" />
       <End Role="Classifications" EntitySet="Classification" />
@@ -188,6 +195,10 @@
     <AssociationSet Name="FK_CustomPageImage_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="CustomPageImages" EntitySet="CustomPageImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID" Association="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID">
+      <End Role="DeploymentEnvironment" EntitySet="DeploymentEnvironment" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
@@ -492,6 +503,10 @@
     <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID">
       <End Role="AddedByPerson" EntitySet="Person" />
       <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardOrganization_Person_PersonID" Association="ProjectFirma.Web.Models.FK_PersonStewardOrganization_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -903,6 +918,15 @@
     <Property Name="ProjectID" Type="Int32" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="AuditLogs" ToRole="Person" />
   </EntityType>
+  <EntityType Name="Authenticator">
+    <Key>
+      <PropertyRef Name="AuthenticatorID" />
+    </Key>
+    <Property Name="AuthenticatorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AuthenticatorShortName" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="AuthenticatorFullName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="PersonEnvironmentCredentials" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID" FromRole="Authenticator" ToRole="PersonEnvironmentCredentials" />
+  </EntityType>
   <EntityType Name="Classification">
     <Key>
       <PropertyRef Name="ClassificationID" />
@@ -979,6 +1003,14 @@
     <Property Name="FileResourceID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CustomPage" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID" FromRole="CustomPageImages" ToRole="CustomPage" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID" FromRole="CustomPageImages" ToRole="FileResource" />
+  </EntityType>
+  <EntityType Name="DeploymentEnvironment">
+    <Key>
+      <PropertyRef Name="DeploymentEnvironmentID" />
+    </Key>
+    <Property Name="DeploymentEnvironmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DeploymentEnvironmentName" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="PersonEnvironmentCredentials" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID" FromRole="DeploymentEnvironment" ToRole="PersonEnvironmentCredentials" />
   </EntityType>
   <EntityType Name="FederalFundCode">
     <Key>
@@ -1454,7 +1486,6 @@
       <PropertyRef Name="PersonID" />
     </Key>
     <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PersonUniqueIdentifier" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="Email" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
@@ -1489,6 +1520,7 @@
     <NavigationProperty Name="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="PeopleWhereYouAreTheAddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="AddedByPerson" ToRole="PeopleWhereYouAreTheAddedByPerson" />
     <NavigationProperty Name="AddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="PeopleWhereYouAreTheAddedByPerson" ToRole="AddedByPerson" />
+    <NavigationProperty Name="PersonEnvironmentCredentials" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Person_PersonID" FromRole="Person" ToRole="PersonEnvironmentCredentials" />
     <NavigationProperty Name="PersonStewardOrganizations" Relationship="ProjectFirma.Web.Models.FK_PersonStewardOrganization_Person_PersonID" FromRole="Person" ToRole="PersonStewardOrganizations" />
     <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Person_PersonID" FromRole="Person" ToRole="PersonStewardRegions" />
     <NavigationProperty Name="PersonStewardTaxonomyBranches" Relationship="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_Person_PersonID" FromRole="Person" ToRole="PersonStewardTaxonomyBranches" />
@@ -1511,6 +1543,19 @@
     <NavigationProperty Name="SupportRequestLogsWhereYouAreTheRequestPerson" Relationship="ProjectFirma.Web.Models.FK_SupportRequestLog_Person_RequestPersonID_PersonID" FromRole="RequestPerson" ToRole="SupportRequestLogsWhereYouAreTheRequestPerson" />
     <NavigationProperty Name="SystemAttributesWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="SystemAttributesWhereYouAreThePrimaryContactPerson" />
     <NavigationProperty Name="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" FromRole="TreatmentActivityContact" ToRole="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" />
+  </EntityType>
+  <EntityType Name="PersonEnvironmentCredential">
+    <Key>
+      <PropertyRef Name="PersonEnvironmentCredentialID" />
+    </Key>
+    <Property Name="PersonEnvironmentCredentialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonID" Type="Int32" Nullable="false" />
+    <Property Name="DeploymentEnvironmentID" Type="Int32" Nullable="false" />
+    <Property Name="AuthenticatorID" Type="Int32" Nullable="false" />
+    <Property Name="PersonUniqueIdentifier" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Authenticator" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID" FromRole="PersonEnvironmentCredentials" ToRole="Authenticator" />
+    <NavigationProperty Name="DeploymentEnvironment" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID" FromRole="PersonEnvironmentCredentials" ToRole="DeploymentEnvironment" />
+    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Person_PersonID" FromRole="PersonEnvironmentCredentials" ToRole="Person" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">
     <Key>
@@ -2516,6 +2561,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID">
+    <End Role="Authenticator" Type="ProjectFirma.Web.Models.Authenticator" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authenticator">
+        <PropertyRef Name="AuthenticatorID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="AuthenticatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Classification_ClassificationSystem_ClassificationSystemID">
     <End Role="ClassificationSystem" Type="ProjectFirma.Web.Models.ClassificationSystem" Multiplicity="1" />
     <End Role="Classifications" Type="ProjectFirma.Web.Models.Classification" Multiplicity="*" />
@@ -2621,6 +2678,18 @@
       </Principal>
       <Dependent Role="CustomPageImages">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID">
+    <End Role="DeploymentEnvironment" Type="ProjectFirma.Web.Models.DeploymentEnvironment" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeploymentEnvironment">
+        <PropertyRef Name="DeploymentEnvironmentID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="DeploymentEnvironmentID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3533,6 +3602,18 @@
       </Principal>
       <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
         <PropertyRef Name="AddedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonEnvironmentCredential_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

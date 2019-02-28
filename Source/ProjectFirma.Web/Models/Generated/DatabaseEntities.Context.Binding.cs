@@ -34,6 +34,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
+        public virtual DbSet<Authenticator> Authenticators { get; set; }
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
@@ -41,6 +42,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
+        public virtual DbSet<DeploymentEnvironment> DeploymentEnvironments { get; set; }
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
         public virtual DbSet<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
@@ -75,6 +77,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PerformanceMeasure> PerformanceMeasures { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
+        public virtual DbSet<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
@@ -174,6 +177,9 @@ namespace ProjectFirma.Web.Models
                 case "AuditLog":
                     return AuditLogs.GetAuditLog(primaryKey);
 
+                case "Authenticator":
+                    return Authenticators.GetAuthenticator(primaryKey);
+
                 case "ClassificationPerformanceMeasure":
                     return ClassificationPerformanceMeasures.GetClassificationPerformanceMeasure(primaryKey);
 
@@ -199,6 +205,9 @@ namespace ProjectFirma.Web.Models
 
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
+
+                case "DeploymentEnvironment":
+                    return DeploymentEnvironments.GetDeploymentEnvironment(primaryKey);
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
@@ -356,6 +365,9 @@ namespace ProjectFirma.Web.Models
                     var performanceMeasureType = PerformanceMeasureType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(performanceMeasureType, "PerformanceMeasureType", primaryKey);
                     return performanceMeasureType;
+
+                case "PersonEnvironmentCredential":
+                    return PersonEnvironmentCredentials.GetPersonEnvironmentCredential(primaryKey);
 
                 case "PersonStewardOrganization":
                     return PersonStewardOrganizations.GetPersonStewardOrganization(primaryKey);

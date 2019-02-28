@@ -78,6 +78,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Authenticator">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Authenticator">
+        <MappingFragment StoreEntitySet="Authenticator">
+          <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
+          <ScalarProperty Name="AuthenticatorShortName" ColumnName="AuthenticatorShortName" />
+          <ScalarProperty Name="AuthenticatorFullName" ColumnName="AuthenticatorFullName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Classification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Classification">
         <MappingFragment StoreEntitySet="Classification">
@@ -147,6 +156,14 @@
           <ScalarProperty Name="CustomPageImageID" ColumnName="CustomPageImageID" />
           <ScalarProperty Name="CustomPageID" ColumnName="CustomPageID" />
           <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeploymentEnvironment">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.DeploymentEnvironment">
+        <MappingFragment StoreEntitySet="DeploymentEnvironment">
+          <ScalarProperty Name="DeploymentEnvironmentID" ColumnName="DeploymentEnvironmentID" />
+          <ScalarProperty Name="DeploymentEnvironmentName" ColumnName="DeploymentEnvironmentName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -534,7 +551,6 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Person">
         <MappingFragment StoreEntitySet="Person">
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -554,6 +570,17 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonEnvironmentCredential">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonEnvironmentCredential">
+        <MappingFragment StoreEntitySet="PersonEnvironmentCredential">
+          <ScalarProperty Name="PersonEnvironmentCredentialID" ColumnName="PersonEnvironmentCredentialID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="DeploymentEnvironmentID" ColumnName="DeploymentEnvironmentID" />
+          <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
+          <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

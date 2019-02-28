@@ -190,11 +190,17 @@ namespace ProjectFirma.Web.Controllers
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID,
                     DateTime.Now, true, false)
                 {
-                    PersonUniqueIdentifier = personUniqueIdentifier,
+                    //PersonUniqueIdentifier = personUniqueIdentifier,
                     Email = email,
                     LoginName = username,
                     OrganizationID = unknownOrganization.OrganizationID
                 };
+
+
+                saml2UserClaims.DisplayName
+                var personEnvironmentCredential = new PersonEnvironmentCredential(person, )
+
+
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
                 sendNewUserNotification = true;
             }

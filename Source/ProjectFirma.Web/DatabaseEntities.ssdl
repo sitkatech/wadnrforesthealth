@@ -7,6 +7,7 @@
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Authenticator" EntityType="ProjectFirma.Web.Models.Store.Authenticator" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Store.Classification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.Store.ClassificationPerformanceMeasure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.Store.ClassificationSystem" store:Type="Tables" Schema="dbo" />
@@ -14,6 +15,7 @@
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.Store.County" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeploymentEnvironment" EntityType="ProjectFirma.Web.Models.Store.DeploymentEnvironment" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.Store.FederalFundCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionData" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
@@ -48,6 +50,7 @@
     <EntitySet Name="PerformanceMeasureSubcategory" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategoryOption" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonEnvironmentCredential" EntityType="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
@@ -424,6 +427,18 @@
     <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Person_Person_AddedByPersonID_PersonID">
       <End Role="AddedByPerson" EntitySet="Person" />
       <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID">
+      <End Role="Authenticator" EntitySet="Authenticator" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID">
+      <End Role="DeploymentEnvironment" EntitySet="DeploymentEnvironment" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardOrganization_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardOrganization_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -884,6 +899,14 @@ warning 6035: The relationship 'FK_AgreementGrantAllocation_Agreement_AgreementI
     <Property Name="AuditDescription" Type="varchar(max)" />
     <Property Name="ProjectID" Type="int" />
   </EntityType>
+  <EntityType Name="Authenticator">
+    <Key>
+      <PropertyRef Name="AuthenticatorID" />
+    </Key>
+    <Property Name="AuthenticatorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AuthenticatorShortName" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="AuthenticatorFullName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
   <EntityType Name="Classification">
     <Key>
       <PropertyRef Name="ClassificationID" />
@@ -948,6 +971,13 @@ warning 6035: The relationship 'FK_AgreementGrantAllocation_Agreement_AgreementI
     <Property Name="CustomPageImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CustomPageID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeploymentEnvironment">
+    <Key>
+      <PropertyRef Name="DeploymentEnvironmentID" />
+    </Key>
+    <Property Name="DeploymentEnvironmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DeploymentEnvironmentName" Type="varchar" Nullable="false" MaxLength="10" />
   </EntityType>
   <EntityType Name="FederalFundCode">
     <Key>
@@ -1319,7 +1349,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="PersonID" />
     </Key>
     <Property Name="PersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PersonUniqueIdentifier" Type="varchar" MaxLength="100" />
     <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="Email" Type="varchar" MaxLength="255" />
@@ -1339,6 +1368,16 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
+  </EntityType>
+  <EntityType Name="PersonEnvironmentCredential">
+    <Key>
+      <PropertyRef Name="PersonEnvironmentCredentialID" />
+    </Key>
+    <Property Name="PersonEnvironmentCredentialID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="DeploymentEnvironmentID" Type="int" Nullable="false" />
+    <Property Name="AuthenticatorID" Type="int" Nullable="false" />
+    <Property Name="PersonUniqueIdentifier" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">
     <Key>
@@ -3005,6 +3044,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
         <PropertyRef Name="AddedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonEnvironmentCredential_Authenticator_AuthenticatorID">
+    <End Role="Authenticator" Type="ProjectFirma.Web.Models.Store.Authenticator" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authenticator">
+        <PropertyRef Name="AuthenticatorID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="AuthenticatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID">
+    <End Role="DeploymentEnvironment" Type="ProjectFirma.Web.Models.Store.DeploymentEnvironment" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeploymentEnvironment">
+        <PropertyRef Name="DeploymentEnvironmentID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="DeploymentEnvironmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonEnvironmentCredential_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
