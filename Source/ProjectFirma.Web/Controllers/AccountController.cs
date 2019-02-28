@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Controllers
 
 
                 saml2UserClaims.DisplayName
-                var personEnvironmentCredential = new PersonEnvironmentCredential(person, )
+                var personEnvironmentCredential = new PersonEnvironmentCredential(person, , )
 
 
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
