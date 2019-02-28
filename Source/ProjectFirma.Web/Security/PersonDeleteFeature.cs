@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Security
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"You don't have permission to delete {contextModelObject.FullNameFirstLast}");
             }
 
-            if (!string.IsNullOrWhiteSpace(contextModelObject.PersonUniqueIdentifier))
+            if (contextModelObject.IsFullUser())
             {
                 return PermissionCheckResult.MakeFailurePermissionCheckResult($"{contextModelObject.FullNameFirstLast} cannot be deleted because they are a user with an account.");
             }

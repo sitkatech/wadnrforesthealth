@@ -71,6 +71,8 @@
     <Compile Include="Models\Generated\AuditLogEventType.Binding.cs" />
     <Compile Include="Models\Generated\AuditLogEventTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\AuditLogPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\Authenticator.Binding.cs" />
+    <Compile Include="Models\Generated\AuthenticatorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Classification.Binding.cs" />
     <Compile Include="Models\Generated\Classification.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ClassificationPerformanceMeasure.Binding.cs" />
@@ -95,6 +97,8 @@
     <Compile Include="Models\Generated\CustomPageImagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CustomPagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\DatabaseEntities.Context.Binding.cs" />
+    <Compile Include="Models\Generated\DeploymentEnvironment.Binding.cs" />
+    <Compile Include="Models\Generated\DeploymentEnvironmentPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />
@@ -221,6 +225,9 @@
     <Compile Include="Models\Generated\PerformanceMeasureTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Person.Binding.cs" />
     <Compile Include="Models\Generated\Person.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PersonEnvironmentCredential.Binding.cs" />
+    <Compile Include="Models\Generated\PersonEnvironmentCredential.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PersonEnvironmentCredentialPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganization.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganization.DatabaseContextExtensions.cs" />
@@ -466,6 +473,7 @@
     <Compile Include="Models\FederalFundCode.cs" />
     <Compile Include="Models\GrantAllocationProgramManager.cs" />
     <Compile Include="Models\GrantType.cs" />
+    <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
     <Compile Include="Models\ProgramIndex.cs" />

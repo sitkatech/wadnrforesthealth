@@ -70,7 +70,7 @@ namespace ProjectFirma.Web.Views.User
             : base(currentPerson)
         {
             Person = personToView;
-            PersonIsMereContact = string.IsNullOrWhiteSpace(personToView.PersonUniqueIdentifier);
+            PersonIsMereContact = !personToView.IsFullUser();
             PageTitle = personToView.FullNameFirstLast + (!personToView.IsActive ? " (inactive)" : string.Empty);
             EntityName = "User";
             //TODO: This gets pulled up to root

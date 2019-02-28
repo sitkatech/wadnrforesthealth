@@ -157,7 +157,8 @@ namespace ProjectFirma.Web.Models
 
         public bool IsFullUser()
         {
-            return !string.IsNullOrWhiteSpace(PersonUniqueIdentifier);
+            //return !string.IsNullOrWhiteSpace(PersonUniqueIdentifier);
+            return PersonEnvironmentCredentials.Any();
         }
     }
 }

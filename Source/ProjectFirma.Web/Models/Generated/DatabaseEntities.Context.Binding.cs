@@ -76,6 +76,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PerformanceMeasure> PerformanceMeasures { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
+        public virtual DbSet<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
@@ -175,6 +176,11 @@ namespace ProjectFirma.Web.Models
                 case "AuditLog":
                     return AuditLogs.GetAuditLog(primaryKey);
 
+                case "Authenticator":
+                    var authenticator = Authenticator.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(authenticator, "Authenticator", primaryKey);
+                    return authenticator;
+
                 case "ClassificationPerformanceMeasure":
                     return ClassificationPerformanceMeasures.GetClassificationPerformanceMeasure(primaryKey);
 
@@ -200,6 +206,11 @@ namespace ProjectFirma.Web.Models
 
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
+
+                case "DeploymentEnvironment":
+                    var deploymentEnvironment = DeploymentEnvironment.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(deploymentEnvironment, "DeploymentEnvironment", primaryKey);
+                    return deploymentEnvironment;
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
@@ -360,6 +371,9 @@ namespace ProjectFirma.Web.Models
                     var performanceMeasureType = PerformanceMeasureType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(performanceMeasureType, "PerformanceMeasureType", primaryKey);
                     return performanceMeasureType;
+
+                case "PersonEnvironmentCredential":
+                    return PersonEnvironmentCredentials.GetPersonEnvironmentCredential(primaryKey);
 
                 case "PersonStewardOrganization":
                     return PersonStewardOrganizations.GetPersonStewardOrganization(primaryKey);
