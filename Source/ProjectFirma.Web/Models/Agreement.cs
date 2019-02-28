@@ -9,7 +9,6 @@ namespace ProjectFirma.Web.Models
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string AuditDescriptionString => AgreementTitle;
-        public string GrantNumberDisplay => GrantID.HasValue ? Grant?.GrantNumber : string.Empty;
         public string AgreementStatusDisplay => AgreementStatus != null ? AgreementStatus.AgreementStatusName : string.Empty;
 
         // read-only Helper accessors

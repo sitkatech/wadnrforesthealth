@@ -16,18 +16,12 @@ CREATE TABLE [dbo].[Agreement](
 	[Notes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AgreementTitle] [varchar](256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[OrganizationID] [int] NOT NULL,
-	[GrantID] [int] NULL,
 	[AgreementStatusID] [int] NULL,
 	[AgreementFileResourceID] [int] NULL,
 	[tmpAgreement2ID] [int] NULL,
  CONSTRAINT [PK_Agreement_AgreementID] PRIMARY KEY CLUSTERED 
 (
 	[AgreementID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_Agreement_AgreementID_GrantID] UNIQUE NONCLUSTERED 
-(
-	[AgreementID] ASC,
-	[GrantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 

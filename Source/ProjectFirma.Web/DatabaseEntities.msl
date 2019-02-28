@@ -17,7 +17,6 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
           <ScalarProperty Name="AgreementFileResourceID" ColumnName="AgreementFileResourceID" />
           <ScalarProperty Name="tmpAgreement2ID" ColumnName="tmpAgreement2ID" />
@@ -30,7 +29,6 @@
           <ScalarProperty Name="AgreementGrantAllocationID" ColumnName="AgreementGrantAllocationID" />
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

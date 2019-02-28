@@ -19,10 +19,12 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -32,7 +34,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             AddColumn("Type", x => x.AgreementType?.AgreementTypeAbbrev);
             AddColumn("Number", x => x.AgreementNumber);
-            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => x.Grant.GrantNumber);
+            AddColumn(Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel(), x => x.AgreementGrantAllocations.ToDistinctOrderedCsvListOfGrantNumber());
             AddColumn(Models.FieldDefinition.Organization.GetFieldDefinitionLabel(), x => x.Organization.DisplayName);
             AddColumn("Title", x => x.AgreementTitle);
             AddColumn("Start Date", x => x.StartDateDisplay);

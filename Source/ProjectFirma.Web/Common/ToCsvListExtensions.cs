@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.Common
         /// <summary>
         /// List of ProjectCodes as a comma delimited string ("EEB, GMX" for example) 
         /// </summary>
-        public static string ToDistinctOrderedCsvList(this List<ProjectCode> projectCodes)
+        public static string ToDistinctOrderedCsvList(this ICollection<ProjectCode> projectCodes)
         {
             return MakeDistinctCaseInsensitiveStringListFromObjectList(projectCodes, x => x.ProjectCodeAbbrev);
         }
@@ -18,19 +18,27 @@ namespace ProjectFirma.Web.Common
         /// <summary>
         /// List of ProgramIndex as a comma delimited string ("234, 25B" for example) 
         /// </summary>
-        public static string ToDistinctOrderedCsvList(this List<ProgramIndex> programIndices)
+        public static string ToDistinctOrderedCsvList(this ICollection<ProgramIndex> programIndices)
         {
             return MakeDistinctCaseInsensitiveStringListFromObjectList(programIndices, x => x.ProgramIndexAbbrev);
         }
 
-        private static string MakeDistinctCaseInsensitiveStringListFromObjectList<T>(List<T> objectList, Func<T, string> funcObjectToString)
+        /// <summary>
+        /// List of Grants as a comma delimited string ("234, 25B" for example) 
+        /// </summary>
+        public static string ToDistinctOrderedCsvListOfGrantNumber(this ICollection<AgreementGrantAllocation> agreementGrantAllocations)
+        {
+            return MakeDistinctCaseInsensitiveStringListFromObjectList(agreementGrantAllocations, x => x.GrantAllocation.Grant.GrantNumber);
+        }
+
+        private static string MakeDistinctCaseInsensitiveStringListFromObjectList<T>(ICollection<T> objectList, Func<T, string> funcObjectToString)
         {
             if (objectList == null)
             {
                 return string.Empty;
             }
 
-            return String.Join(", ", objectList.Where(x => x != null).Select(funcObjectToString).OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase).Distinct(StringComparer.InvariantCultureIgnoreCase));
+            return String.Join(", ", objectList.Where(x => x != null).Select(funcObjectToString).Distinct(StringComparer.InvariantCultureIgnoreCase).OrderBy(x => x, StringComparer.InvariantCultureIgnoreCase));
         }
     }
 }

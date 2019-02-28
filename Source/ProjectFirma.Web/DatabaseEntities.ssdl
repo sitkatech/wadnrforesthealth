@@ -823,7 +823,6 @@
     <Property Name="Notes" Type="varchar(max)" />
     <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" />
     <Property Name="AgreementStatusID" Type="int" />
     <Property Name="AgreementFileResourceID" Type="int" />
     <Property Name="tmpAgreement2ID" Type="int" />
@@ -835,7 +834,6 @@
     <Property Name="AgreementGrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementPerson">
     <Key>
@@ -1054,9 +1052,6 @@
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
--->
   <EntityType Name="GrantAllocation">
     <Key>
       <PropertyRef Name="GrantAllocationID" />

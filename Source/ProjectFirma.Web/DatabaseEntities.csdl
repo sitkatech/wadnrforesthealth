@@ -830,7 +830,6 @@
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="AgreementTitle" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" />
     <Property Name="AgreementStatusID" Type="Int32" />
     <Property Name="AgreementFileResourceID" Type="Int32" />
     <Property Name="tmpAgreement2ID" Type="Int32" />
@@ -849,7 +848,6 @@
     <Property Name="AgreementGrantAllocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Agreement" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID" FromRole="AgreementGrantAllocations" ToRole="Agreement" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="AgreementGrantAllocations" ToRole="GrantAllocation" />
   </EntityType>
