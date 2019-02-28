@@ -148,23 +148,6 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
-                                @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
-                            </div>
-                            <div class="col-sm-9">
-                                <span>
-                                    @if (ViewDataTyped.ProjectCodes.Any())
-                                    {
-                                        @ViewDataTyped.ProjectCodes.ToDistinctOrderedCsvList()
-                                    }
-                                    else
-                                    {
-                                        <span>There aren't any Project Codes associated with this Agreement</span>
-                                    }
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
                                 @Html.LabelWithSugarFor(FieldDefinition.ProgramIndex)
                             </div>
                             <div class="col-sm-9">
@@ -176,6 +159,23 @@
                                     else
                                     {
                                         <span>There aren't any Program Indices associated with this Agreement</span>
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
+                            </div>
+                            <div class="col-sm-9">
+                                <span>
+                                    @if (ViewDataTyped.ProjectCodes.Any())
+                                    {
+                                        @ViewDataTyped.ProjectCodes.ToDistinctOrderedCsvList()
+                                    }
+                                    else
+                                    {
+                                        <span>There aren't any Project Codes associated with this Agreement</span>
                                     }
                                 </span>
                             </div>
