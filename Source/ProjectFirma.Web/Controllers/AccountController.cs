@@ -180,7 +180,7 @@ namespace ProjectFirma.Web.Controllers
             var username = saml2UserClaims.Username;
 
             var sendNewUserNotification = false;
-            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
+            var person = FirmaWebConfiguration.SAWOverrideLookupUsingEmail ? HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false) : HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
 
             if (person == null)
             {
