@@ -126,6 +126,10 @@ alter table dbo.Person
 drop column PersonUniqueIdentifier
 GO
 
+alter table dbo.Person
+drop column PasswordPdfK2SaltHash
+GO
+
 --select * from dbo.Person
 --select * from PersonEnvironmentCredential
 
