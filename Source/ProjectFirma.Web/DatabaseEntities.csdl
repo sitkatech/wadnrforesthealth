@@ -121,10 +121,6 @@
       <End Role="AgreementFileResource" EntitySet="FileResource" />
       <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
     </AssociationSet>
-    <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
     <AssociationSet Name="FK_Agreement_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -834,14 +830,12 @@
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="AgreementTitle" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" />
     <Property Name="AgreementStatusID" Type="Int32" />
     <Property Name="AgreementFileResourceID" Type="Int32" />
     <Property Name="tmpAgreement2ID" Type="Int32" />
     <NavigationProperty Name="AgreementStatus" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID" FromRole="Agreements" ToRole="AgreementStatus" />
     <NavigationProperty Name="AgreementType" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID" FromRole="Agreements" ToRole="AgreementType" />
     <NavigationProperty Name="AgreementFileResource" Relationship="ProjectFirma.Web.Models.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" FromRole="AgreementsWhereYouAreTheAgreementFileResource" ToRole="AgreementFileResource" />
-    <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID" FromRole="Agreements" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Agreements" ToRole="Organization" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Agreements" ToRole="Region" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementGrantAllocations" />
@@ -854,7 +848,6 @@
     <Property Name="AgreementGrantAllocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Agreement" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID" FromRole="AgreementGrantAllocations" ToRole="Agreement" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="AgreementGrantAllocations" ToRole="GrantAllocation" />
   </EntityType>
@@ -1123,7 +1116,6 @@
     <Property Name="ShortName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
     <Property Name="GrantStatusID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Grant_GrantID" FromRole="Grant" ToRole="Agreements" />
     <NavigationProperty Name="GrantStatus" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID" FromRole="Grants" ToRole="GrantStatus" />
     <NavigationProperty Name="GrantType" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="Grants" ToRole="GrantType" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Grants" ToRole="Organization" />
@@ -2417,18 +2409,6 @@
       </Principal>
       <Dependent Role="AgreementsWhereYouAreTheAgreementFileResource">
         <PropertyRef Name="AgreementFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agreement_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

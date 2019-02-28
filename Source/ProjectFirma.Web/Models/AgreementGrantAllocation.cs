@@ -9,20 +9,7 @@ namespace ProjectFirma.Web.Models
         public string AuditDescriptionString
         {
             get { return this.GrantAllocation != null ? this.GrantAllocation.ProjectName : "NullGrantAllocation"; }
-        }
 
-        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this(agreement, grantAllocation, grantAllocation.GrantID)
-        {
-            // Invariant
-            EnsureGrantIDsAlign();
-        }
-
-        /// <summary>
-        /// Invariant
-        /// </summary>
-        public void EnsureGrantIDsAlign()
-        {
-            Check.Ensure(GrantAllocation.Grant.GrantID == Agreement.GrantID, $"GrantIDs must align. Agreement GrantID: {Agreement.GrantID} GrantAllocation GrantID: {GrantAllocation.Grant.GrantID}");
         }
 
         public static List<AgreementGrantAllocation> OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(List<AgreementGrantAllocation> agreementGrantAllocations)

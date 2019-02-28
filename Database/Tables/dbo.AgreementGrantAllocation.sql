@@ -6,7 +6,6 @@ CREATE TABLE [dbo].[AgreementGrantAllocation](
 	[AgreementGrantAllocationID] [int] IDENTITY(1,1) NOT NULL,
 	[AgreementID] [int] NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
-	[GrantID] [int] NOT NULL,
  CONSTRAINT [PK_AgreementGrantAllocation_AgreementGrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[AgreementGrantAllocationID] ASC
@@ -24,17 +23,7 @@ REFERENCES [dbo].[Agreement] ([AgreementID])
 GO
 ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID]
 GO
-ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID] FOREIGN KEY([AgreementID], [GrantID])
-REFERENCES [dbo].[Agreement] ([AgreementID], [GrantID])
-GO
-ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_Agreement_AgreementID_GrantID]
-GO
 ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
 REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
 ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID]
-GO
-ALTER TABLE [dbo].[AgreementGrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID] FOREIGN KEY([GrantAllocationID], [GrantID])
-REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID], [GrantID])
-GO
-ALTER TABLE [dbo].[AgreementGrantAllocation] CHECK CONSTRAINT [FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID_GrantID]
