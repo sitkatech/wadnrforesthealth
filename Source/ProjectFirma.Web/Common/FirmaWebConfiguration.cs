@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Common
         public static readonly string OgrInfoExecutable = SitkaConfiguration.GetRequiredAppSetting("OgrInfoExecutable");
         public static readonly int DefaultSupportPersonID = Int32.Parse(SitkaConfiguration.GetRequiredAppSetting("DefaultSupportPersonID"));
 
-        public static readonly TimeSpan HttpRuntimeExecutionTimeout = ((HttpRuntimeSection)WebConfigurationManager.GetSection("system.web/httpRuntime")).ExecutionTimeout;       
+        public static readonly TimeSpan HttpRuntimeExecutionTimeout = ((HttpRuntimeSection)WebConfigurationManager.GetSection("system.web/httpRuntime")).ExecutionTimeout;
         public static readonly string SAWUrl = SitkaConfiguration.GetRequiredAppSetting("SAWUrl");
 
         public static readonly FirmaEnvironment FirmaEnvironment = FirmaEnvironment.MakeFirmaEnvironment(SitkaConfiguration.GetRequiredAppSetting("FirmaEnvironment"));
@@ -49,6 +49,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string CanonicalHostName = SitkaConfiguration.GetRequiredAppSetting("CanonicalHostName");
 
         public static readonly string WebMapServiceUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("WebMapServiceUrl");
+
+        public static readonly bool SAWOverrideLookupUsingEmail = Boolean.Parse(SitkaConfiguration.GetRequiredAppSetting("SAWOverrideLookupUsingEmail"));
 
         public static readonly int GeoSpatialReferenceID = 4326;
 

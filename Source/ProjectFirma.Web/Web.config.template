@@ -33,6 +33,7 @@
     <add key="SAWUrl" value="${saw-base-url}" />
     <add key="Saml2EntityID" value="${saw-saml-entity-id}" />
     <add key="SAWEndPoint" value="${saw-sso-endpoint}" />
+	<add key="SAWOverrideLookupUsingEmail" value="${saw-override-lookup-using-email}" />	
     <add key="SamlIDPCertificateThumbPrint" value="${saml-idp-certificate-thumbprint}" />
     <add key="ADFSEndPoint" value="${adfs-sso-endpoint}" />
     <add key="DefaultModalDialogButtonCssClasses" value="btn-firma,btn-xs" />

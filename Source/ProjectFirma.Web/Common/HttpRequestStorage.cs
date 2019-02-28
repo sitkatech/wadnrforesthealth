@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Common
             {
                 return GetValueOrDefault(PersonKey,
                     () => Saml2ClaimsHelpers.GetOpenIDUserFromPrincipal(GetHttpContextUserThroughOwin(),
-                        Person.GetAnonymousSitkaUser(), DatabaseEntities.People.GetPersonByPersonUniqueIdentifier));
+                        Person.GetAnonymousSitkaUser()));
             }
             set { SetValue(PersonKey, value); }
         }
@@ -201,7 +201,7 @@ namespace ProjectFirma.Web.Common
             return claimValue;
         }
 
-        public static Person GetOpenIDUserFromPrincipal(IPrincipal principal, Person anonymousSitkaUser, Func<string, Person> getUserByGuid)
+        public static Person GetOpenIDUserFromPrincipal(IPrincipal principal, Person anonymousSitkaUser)
         {
             if (principal?.Identity == null || !principal.Identity.IsAuthenticated)
             {
@@ -217,10 +217,26 @@ namespace ProjectFirma.Web.Common
             {
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
-                var user = getUserByGuid(saml2UserClaims.UniqueIdentifier);
+                string thingToLookup;
+                string thingWeAreLookingUp;
+                Person user;
+
+                if (FirmaWebConfiguration.SAWOverrideLookupUsingEmail)
+                {
+                    thingToLookup = saml2UserClaims.Email;
+                    thingWeAreLookingUp = "email";
+                    user = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(thingToLookup, false);
+                }
+                else
+                {
+                    thingToLookup = saml2UserClaims.UniqueIdentifier;
+                    thingWeAreLookingUp = "GUID";
+                    user = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(thingToLookup);
+                }
+
                 if (user == null)
                 {
-                    throw new Saml2ClaimNotFoundException($"User not found for GUID {saml2UserClaims.UniqueIdentifier} ({saml2UserClaims.DisplayName})");
+                    throw new Saml2ClaimNotFoundException($"User not found for {thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})");
                 }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)
