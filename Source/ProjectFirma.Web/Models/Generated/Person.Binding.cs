@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress, int? addedByPersonID) : this()
+        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string statewideVendorNumber, string notes, string personAddress, int? addedByPersonID, int allowedAuthenticatorID) : this()
         {
             this.PersonID = personID;
             this.FirstName = firstName;
@@ -86,12 +86,13 @@ namespace ProjectFirma.Web.Models
             this.Notes = notes;
             this.PersonAddress = personAddress;
             this.AddedByPersonID = addedByPersonID;
+            this.AllowedAuthenticatorID = allowedAuthenticatorID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
+        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails, int allowedAuthenticatorID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -102,12 +103,13 @@ namespace ProjectFirma.Web.Models
             this.CreateDate = createDate;
             this.IsActive = isActive;
             this.ReceiveSupportEmails = receiveSupportEmails;
+            this.AllowedAuthenticatorID = allowedAuthenticatorID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
+        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails, Authenticator allowedAuthenticator) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -117,14 +119,15 @@ namespace ProjectFirma.Web.Models
             this.CreateDate = createDate;
             this.IsActive = isActive;
             this.ReceiveSupportEmails = receiveSupportEmails;
+            this.AllowedAuthenticatorID = allowedAuthenticator.AuthenticatorID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Person CreateNewBlank(Role role)
+        public static Person CreateNewBlank(Role role, Authenticator allowedAuthenticator)
         {
-            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool));
+            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool), allowedAuthenticator);
         }
 
         /// <summary>
@@ -365,6 +368,7 @@ namespace ProjectFirma.Web.Models
         public string Notes { get; set; }
         public string PersonAddress { get; set; }
         public int? AddedByPersonID { get; set; }
+        public int AllowedAuthenticatorID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonID; } set { PersonID = value; } }
 
@@ -407,6 +411,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<TreatmentActivity> TreatmentActivitiesWhereYouAreTheTreatmentActivityContact { get; set; }
         public Role Role { get { return Role.AllLookupDictionary[RoleID]; } }
         public virtual Organization Organization { get; set; }
+        public Authenticator AllowedAuthenticator { get { return Authenticator.AllLookupDictionary[AllowedAuthenticatorID]; } }
 
         public static class FieldLengths
         {

@@ -26,6 +26,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
 using Person = ProjectFirma.Web.Models.Person;
 
@@ -104,12 +105,12 @@ namespace ProjectFirma.Web.Common
         }
     }
 
-    public class Saml2ClaimNotFoundException : Exception
+    public class Saml2ClaimException : Exception
     {
-        public Saml2ClaimNotFoundException(string message) : base(message) { }
-        public Saml2ClaimNotFoundException() { }
-        public Saml2ClaimNotFoundException(string message, Exception innerException) : base(message, innerException) { }
-        protected Saml2ClaimNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public Saml2ClaimException(string message) : base(message) { }
+        public Saml2ClaimException() { }
+        public Saml2ClaimException(string message, Exception innerException) : base(message, innerException) { }
+        protected Saml2ClaimException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 
     public static class Saml2ClaimsHelpers
@@ -142,7 +143,7 @@ namespace ProjectFirma.Web.Common
             }
             else
             {
-                throw new Saml2ClaimNotFoundException($"The {nameof(IIdentity)} is not expected type {nameof(ClaimsIdentity)}. {nameof(IIdentity.Name)}: {userIdentity.Name}");
+                throw new Saml2ClaimException($"The {nameof(IIdentity)} is not expected type {nameof(ClaimsIdentity)}. {nameof(IIdentity.Name)}: {userIdentity.Name}");
             }
 
             return saml2UserClaims;
@@ -152,7 +153,7 @@ namespace ProjectFirma.Web.Common
         {
             if (!claimsDictionary.ContainsKey(claimType))
             {
-                throw new Saml2ClaimNotFoundException(claimType);
+                throw new Saml2ClaimException(claimType);
             }
         }
 
@@ -219,7 +220,7 @@ namespace ProjectFirma.Web.Common
         public static Authenticator GetAuthenticator(string uniqueIdentifier)
         {
             // There is likely a far better way to detect this, but this will work for now.
-            if (uniqueIdentifier.Contains("@wa.dnr"))
+            if (uniqueIdentifier.Contains("@wa.dnr") || uniqueIdentifier.Contains("@dnr.wa.gov"))
             {
                 return Authenticator.ADFS;
             }
@@ -244,16 +245,22 @@ namespace ProjectFirma.Web.Common
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
 
-                bool canFallBackToEmail = FirmaWebConfiguration.SAWOverrideLookupUsingEmail;
-                //canFallBackToEmail = false;
+                // TODO: This config variable  FirmaWebConfiguration.SAWOverrideLookupUsingEmail can likely be eventually removed,
+                // as I currently believe email fallback validation is required for practical use of SAW. -- SLG 2/28/2019
+                //bool canSawFallBackToEmail = FirmaWebConfiguration.SAWOverrideLookupUsingEmail;
+                //bool canFallBackToEmail = false;
 
                 // First, always attempt to look up via GUID, which is arguably more secure
                 var thingToLookup = saml2UserClaims.UniqueIdentifier;
                 var thingWeAreLookingUp = "GUID";
                 var user = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(thingToLookup);
 
-                // If we fail to look up via GUID, and we are allowed to fall back to email, try email
-                if (user == null && canFallBackToEmail)
+                var lastAuthenticatorUsed = GetAuthenticator(thingToLookup);
+                bool attemptingSawAuthentication = lastAuthenticatorUsed == Authenticator.SAW;
+
+                // If we fail to look up via GUID, and we are allowed to fall back to email, try email.
+                // We **NEVER** allow falling back to email for ADFS, but pretty much have to for practical use of SAW.
+                if (user == null && attemptingSawAuthentication)
                 {
                     thingToLookup = saml2UserClaims.Email;
                     thingWeAreLookingUp = "email";
@@ -265,16 +272,30 @@ namespace ProjectFirma.Web.Common
                         // No existing credentials saved for this GUID?
                         if (user.PersonEnvironmentCredentials.SingleOrDefault(pec => pec.PersonUniqueIdentifier == saml2UserClaims.UniqueIdentifier) == null)
                         {
+                            // Save new SAW credentials for next login
+                            Check.Ensure(GetAuthenticator(saml2UserClaims.UniqueIdentifier) == Authenticator.SAW, "Was expecting SAW credentials here; coding error?");
                             var newPec = new PersonEnvironmentCredential(user, GetDeploymentEnvironment(), GetAuthenticator(saml2UserClaims.UniqueIdentifier), saml2UserClaims.UniqueIdentifier);
                             HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(newPec);
                         }
                     }
                 }
 
-                // If we can't find user using any available method, there's a problem
+                // Ensure the Authenticator used is valid for this user
+                if (user != null)
+                {
+                    var finalAuthenticatorUsed = GetAuthenticator(thingToLookup);
+
+                    // Currently only one authenticator is allowed per Person. You can't mix and match.
+                    if (finalAuthenticatorUsed.AuthenticatorID != user.AllowedAuthenticatorID)
+                    {
+                        throw new Saml2ClaimException($"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {finalAuthenticatorUsed.AuthenticatorFullName} ({finalAuthenticatorUsed.AuthenticatorName}), but is restricted to {user.AllowedAuthenticator.AuthenticatorFullName} ({user.AllowedAuthenticator.AuthenticatorName}). [{thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})]");
+                    }
+                }
+
+                // If we can't find user by now, there's a problem
                 if (user == null)
                 {
-                    throw new Saml2ClaimNotFoundException($"User not found for {thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})");
+                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})");
                 }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)

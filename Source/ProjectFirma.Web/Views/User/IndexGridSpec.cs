@@ -52,6 +52,7 @@ namespace ProjectFirma.Web.Views.User
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
             Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
             Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
+            Add("Authentication Method", x => x.AllowedAuthenticator.AuthenticatorName, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
 
         private static HtmlString GetOrganizationShortNameUrl(Person person)

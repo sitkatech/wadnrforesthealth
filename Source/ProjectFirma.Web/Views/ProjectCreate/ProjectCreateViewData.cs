@@ -64,10 +64,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             string currentSectionDisplayName,
             ProposalSectionsStatus proposalSectionsStatus) : this(project, currentPerson, currentSectionDisplayName)
         {
+            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
+            bool isBasicsPage = currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase);
+
             Check.Assert(project != null, "Project should be created in database by this point so it cannot be null.");
-            Check.Assert(currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase) || currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase) ||
-                         proposalSectionsStatus.IsBasicsSectionComplete,
-                $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
+            //Check.Assert(IsInstructionsPage /*|| isBasicsPage*/ || proposalSectionsStatus.IsBasicsSectionComplete, $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
 
             CurrentPersonCanWithdraw = new ProjectCreateFeature().HasPermission(currentPerson, project).HasPermission;
 
@@ -77,8 +78,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             CanAdvanceStage = ProposalSectionsStatus.AreAllSectionsValidForProject(project);
             // ReSharper disable PossibleNullReferenceException
             ProjectStateIsValidInWizard = project.ProjectApprovalStatus == ProjectApprovalStatus.Draft || project.ProjectApprovalStatus == ProjectApprovalStatus.Returned || project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
-            // ReSharper restore PossibleNullReferenceException
-            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
 
             InstructionsPageUrl = project.ProjectStage == ProjectStage.Application
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
