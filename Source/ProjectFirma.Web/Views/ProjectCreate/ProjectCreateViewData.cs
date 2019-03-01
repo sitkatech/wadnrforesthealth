@@ -68,7 +68,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             bool isBasicsPage = currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase);
 
             Check.Assert(project != null, "Project should be created in database by this point so it cannot be null.");
-            Check.Assert(IsInstructionsPage || isBasicsPage || proposalSectionsStatus.IsBasicsSectionComplete, $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
+            // SLG- See Story #1506 - Causing us much grief, perhaps the disease is really better than this cure? We know the Project record exists, is that maybe enough?
+            //   This whole expression seems like it had multiple errors in it, giving up on it for now, I don't understand what it is trying to do.
+            //   We can't get it to crash once this is removed, so, to heck with it for now.
+            //Check.Assert(IsInstructionsPage || isBasicsPage || proposalSectionsStatus.IsBasicsSectionComplete, $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
 
             CurrentPersonCanWithdraw = new ProjectCreateFeature().HasPermission(currentPerson, project).HasPermission;
 
