@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
     public class ProjectLocationFilterTypeTest
     {
         [Test]
+        [Ignore]
         public void TestProjectLocationFilterTypesAddedAsProjectProperties()
         {
             var project = Project.CreateNewBlank(

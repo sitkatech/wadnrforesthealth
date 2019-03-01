@@ -124,6 +124,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void IsUpdateMandatoryForProjectWithMultipleUpdatesInCurrentReportingYearTest()
         {
             var project = TestFramework.TestProject.Create();
@@ -141,6 +142,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void IsUpdateMandatoryForProjectWitUpdatesInCurrentReportingYearAndPreviousYearTest()
         {
             var project = TestFramework.TestProject.Create();

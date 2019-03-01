@@ -1,0 +1,1 @@
+exec sp_rename 'FK_Person_Authenticator_AuthenticatorID', 'FK_Person_Authenticator_AllowedAuthenticatorID_AuthenticatorID', 'OBJECT'

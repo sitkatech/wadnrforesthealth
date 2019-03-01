@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
     [TestFixture]
     public class EditProjectFundingSourceExpendituresViewModelTest
     {
+        [Ignore]
         [Test]
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {

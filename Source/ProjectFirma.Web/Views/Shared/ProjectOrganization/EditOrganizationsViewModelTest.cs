@@ -60,6 +60,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {

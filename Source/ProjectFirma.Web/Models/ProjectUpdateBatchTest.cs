@@ -51,6 +51,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void ProjectUpdateBatchStatesTest()
         {
             var person = TestFramework.TestPerson.Create();
@@ -149,6 +150,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void GetNewOrCurrentNotApprovedProjectUpdateBatchForProjectNoneExistingTest()
         {
             var person = TestFramework.TestPerson.Create();
@@ -190,6 +192,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void GetProjectUpdateStartToCompletionDateRangeTest()
         {
             var project = TestFramework.TestProject.Create();
@@ -269,6 +272,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void GetProjectUpdatePlanningDesignStartToCompletionDateRangeTest()
         {
             var project = TestFramework.TestProject.Create();
@@ -349,6 +353,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void GetProjectUpdatePlanningDesignStartToCompletionDateRangeForProjectBudgetsTest()
         {
             var project = TestFramework.TestProject.Create();
@@ -424,6 +429,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void ValidateExpendituresAndForceValidationTest()
         {
             var projectUpdate = TestFramework.TestProjectUpdate.Create();
@@ -509,6 +515,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void ValidatePerformanceMeasuresAndForceValidationTest()
         {
             var projectUpdate = TestFramework.TestProjectUpdate.Create();
@@ -606,6 +613,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void ValidatePerformanceMeasuresAndForceValidationProjectUpdateInPlanningDesignTest()
         {
             var projectUpdate = TestFramework.TestProjectUpdate.Create();

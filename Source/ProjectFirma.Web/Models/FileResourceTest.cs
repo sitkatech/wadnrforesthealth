@@ -33,6 +33,7 @@ using NUnit.Framework;
 
 namespace ProjectFirma.Web.Models
 {
+    [Ignore]
     [TestFixture]
     public class FileResourceTest
     {
@@ -43,6 +44,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreateNewFromHttpPostedFileTest()
         {
             // Arrange
@@ -60,6 +62,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void GuidRegexWorksTest()
         {
             var a = TestFramework.TestFileResource.Create();
@@ -165,17 +168,19 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void IsRegexToFindNonServerRootRelativeUrlsWorking()
         {
             Trace.WriteLine(string.Format("Non-server root relative Regex string: {0}", NonServerRootRelativeUrlRegex));
             Assert.That(DoesHtmlStringContainNonServerRootRelativeUrl(""), Is.False, "Empty string - can't be bad");
             Assert.That(DoesHtmlStringContainNonServerRootRelativeUrl("ABC"), Is.False, "Simple string - can't be bad");
-            Assert.That(DoesHtmlStringContainNonServerRootRelativeUrl(string.Format("\"../../{0}", ControllerPartOfUri)), Is.True, "should be bad - not server root relative");
+            Assert.That(DoesHtmlStringContainNonServerRootRelativeUrl($"\"../../{ControllerPartOfUri}"), Is.True, "should be bad - not server root relative");
             Assert.That(DoesHtmlStringContainNonServerRootRelativeUrl(ControllerPartOfUri), Is.True, "should be bad - not server root relative");
             Assert.That(DoesHtmlStringContainNonServerRootRelativeUrl("/FileResource/DisplayResource/9d73b8cf-1108-43c3-a7f7-e0625033adde"), Is.False, "Should be fine -- is server root relative");
         }
 
         [Test]
+        [Ignore]
         public void UrlsInTextColumnsInDatabaseMatchDatabaseRecords()
         {
             //TODO: Not sure if ProjectUpdateBatch should be in the exception list, but not clear how to correct data that has already posted that is breaking this test.

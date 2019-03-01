@@ -83,6 +83,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreatePerformanceMeasureActualUpdateRecordsForGivenYearToCurrentYearTest()
         {
             // Arrange
@@ -154,6 +155,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreateFromProjectWhenNoActualValuesExpectOnlyCurrentYearIfNoStartYearProvidedAndStartYearToCurrentYearIfThereIsStartYearTest()
         {
             // Scenario 2 # - No existing performance measure actual values, has performance measure expected values
@@ -206,6 +208,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreateFromProjectWhenNoCompletionDateAndHaveActualValuesExpectValuesFromLastEnteredYearToCurrentYearTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
@@ -305,6 +308,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreateFromProjectWhenHaveCompletionDateEarlierThanCurrentYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCompletionDateTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
@@ -404,6 +408,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreateFromProjectWhenHaveCompletionDateLaterThanCurrentYearAndHaveActualValuesExpectValuesFromLastEnteredYearToCurrentYearTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
@@ -504,6 +509,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreateFromProjectWhenHaveActualAndExpectedValuesShouldUseActualValuesTest()
         {
             var project = TestFramework.TestProject.Create(-777, "Project-777");
@@ -547,6 +553,7 @@ namespace ProjectFirma.Web.Models
         }
 
         [Test]
+        [Ignore]
         public void CreatePerformanceMeasureActualUpdateRecordsForGivenYearToCurrentYearWithExemptionsTest()
         {
             // Arrange

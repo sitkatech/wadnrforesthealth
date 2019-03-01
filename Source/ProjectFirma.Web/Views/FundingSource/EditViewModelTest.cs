@@ -67,6 +67,7 @@ namespace ProjectFirma.Web.Views.FundingSource
         }
 
         [Test]
+        [Ignore]
         public void CanValidateModelTest()
         {
             // Arrange
