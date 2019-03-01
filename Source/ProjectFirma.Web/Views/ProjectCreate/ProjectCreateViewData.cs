@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             bool isBasicsPage = currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase);
 
             Check.Assert(project != null, "Project should be created in database by this point so it cannot be null.");
-            //Check.Assert(IsInstructionsPage /*|| isBasicsPage*/ || proposalSectionsStatus.IsBasicsSectionComplete, $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
+            Check.Assert(IsInstructionsPage || isBasicsPage || proposalSectionsStatus.IsBasicsSectionComplete, $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
 
             CurrentPersonCanWithdraw = new ProjectCreateFeature().HasPermission(currentPerson, project).HasPermission;
 
@@ -113,7 +113,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             InstructionsPageUrl = proposalInstructionsUrl;
             ProposalInstructionsUrl = proposalInstructionsUrl;
             ProposalBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(true));
-            HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));            
+            HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));
 
             CurrentPersonCanWithdraw = false;
 
