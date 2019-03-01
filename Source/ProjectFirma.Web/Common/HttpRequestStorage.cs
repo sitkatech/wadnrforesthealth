@@ -220,7 +220,7 @@ namespace ProjectFirma.Web.Common
         public static Authenticator GetAuthenticator(string uniqueIdentifier)
         {
             // There is likely a far better way to detect this, but this will work for now.
-            if (uniqueIdentifier.Contains("@wa.dnr"))
+            if (uniqueIdentifier.Contains("@wa.dnr") || uniqueIdentifier.Contains("@dnr.wa.gov"))
             {
                 return Authenticator.ADFS;
             }
@@ -285,32 +285,14 @@ namespace ProjectFirma.Web.Common
                 {
                     var finalAuthenticatorUsed = GetAuthenticator(thingToLookup);
 
-                    // If user logged in using ADFS, quietly clean out any prior SAW credentials.
-                    // A user should not use SAW at all if ADFS is available to them.
-                    if (finalAuthenticatorUsed == Authenticator.ADFS)
+                    // Currently only one authenticator is allowed per Person. You can't mix and match.
+                    if (finalAuthenticatorUsed.AuthenticatorID != user.AllowedAuthenticatorID)
                     {
-                        var sawCredentialsForThisUser = user.PersonEnvironmentCredentials.Where(pec => pec.AuthenticatorID == Authenticator.SAW.AuthenticatorID).ToList();
-                        if (sawCredentialsForThisUser.Any())
-                        {
-                            HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.RemoveRange(sawCredentialsForThisUser);
-                        }
-                    }
-
-                    // If user logged in using SAW, make sure there is no ADFS record available to them.
-                    // If there is, prevent login.  A user should not use SAW at all if ADFS is available to them.
-                    if (finalAuthenticatorUsed == Authenticator.SAW)
-                    {
-                        var adfsCredentialsForThisUser = user.PersonEnvironmentCredentials.Where(pec => pec.AuthenticatorID == Authenticator.ADFS.AuthenticatorID).ToList();
-                        if (adfsCredentialsForThisUser.Any())
-                        {
-                            throw new Saml2ClaimException($"User {user.FullNameFirstLast} (PersonID {user.PersonID}) has an ADFS account, and should not be logging in using SAW. Please log in using WA DNR domain account. [{thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})]");
-                        }
+                        throw new Saml2ClaimException($"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {finalAuthenticatorUsed.AuthenticatorFullName} ({finalAuthenticatorUsed.AuthenticatorName}), but is restricted to {user.AllowedAuthenticator.AuthenticatorFullName} ({user.AllowedAuthenticator.AuthenticatorName}). [{thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})]");
                     }
                 }
 
-
-
-                // If we can't find user using any available method, there's a problem
+                // If we can't find user by now, there's a problem
                 if (user == null)
                 {
                     throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})");

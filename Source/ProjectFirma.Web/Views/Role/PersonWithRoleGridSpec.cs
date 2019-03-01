@@ -18,7 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Web;
+
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.Role
             Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 200, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("First Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FirstName), 200, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.Organization.DisplayName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Last Activity", a => a.LastActivityDate.ToString(), 200, DhtmlxGridColumnFilterType.SelectFilterStrict);            
+            Add("Last Activity", a => a.LastActivityDate.ToString(), 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }

@@ -1342,6 +1342,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
+    <Property Name="AllowedAuthenticatorID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PersonEnvironmentCredential">
     <Key>

@@ -184,9 +184,10 @@ namespace ProjectFirma.Web.Controllers
             if (person == null)
             {
                 // new user - provision with limited role
+                var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
                 SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", personUniqueIdentifier);
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false)
+                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false, authenticatorToRequire.AuthenticatorID)
                 {
                     Email = email,
                     LoginName = username,
@@ -195,7 +196,7 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
-                var personEnvironmentCredential = new PersonEnvironmentCredential(person, Saml2ClaimsHelpers.GetDeploymentEnvironment(), Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier), personUniqueIdentifier);
+                var personEnvironmentCredential = new PersonEnvironmentCredential(person, Saml2ClaimsHelpers.GetDeploymentEnvironment(), authenticatorToRequire, personUniqueIdentifier);
                 HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredential);
 
                 sendNewUserNotification = true;

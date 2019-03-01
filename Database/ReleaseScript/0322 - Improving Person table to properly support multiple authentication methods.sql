@@ -81,7 +81,7 @@ ALTER TABLE [dbo].PersonEnvironmentCredential  WITH CHECK ADD  CONSTRAINT [FK_Pe
 REFERENCES [dbo].Person (PersonID)
 GO
 
--- FK => Enviroment
+-- FK => Environment
 ALTER TABLE [dbo].PersonEnvironmentCredential  WITH CHECK ADD  CONSTRAINT [FK_PersonEnvironmentCredential_DeploymentEnvironment_DeploymentEnvironmentID] FOREIGN KEY(DeploymentEnvironmentID)
 REFERENCES [dbo].DeploymentEnvironment (DeploymentEnvironmentID)
 GO
@@ -122,13 +122,49 @@ where p.PersonUniqueIdentifier like '%@dnr.wa%'
 DROP INDEX [UQ_Person_PersonUniqueIdentifier] ON [dbo].[Person]
 GO
 
-alter table dbo.Person
-drop column PersonUniqueIdentifier
-GO
 
 alter table dbo.Person
 drop column PasswordPdfK2SaltHash
 GO
+
+alter table dbo.Person
+add AllowedAuthenticatorID int null
+GO
+
+update dbo.Person
+set AllowedAuthenticatorID = 1
+where PersonUniqueIdentifier like '%@dnr.wa%'
+or Email = 'jane.doe.test@dnr.wa.gov'
+GO
+
+update dbo.Person
+set AllowedAuthenticatorID = 2
+where PersonUniqueIdentifier not like '%@dnr.wa%'
+or PersonUniqueIdentifier is null
+GO
+
+update dbo.Person
+set AllowedAuthenticatorID = 1
+where OrganizationID = 4704 -- WA DNR
+GO
+
+--select * from Authenticator
+
+alter table dbo.Person
+alter column AllowedAuthenticatorID int not null
+GO
+
+-- FK Person.AllowedAuthenticator => Authenticator
+ALTER TABLE [dbo].Person  WITH CHECK ADD  CONSTRAINT [FK_Person_Authenticator_AuthenticatorID] FOREIGN KEY(AllowedAuthenticatorID)
+REFERENCES [dbo].Authenticator (AuthenticatorID)
+GO
+
+alter table dbo.Person
+drop column PersonUniqueIdentifier
+GO
+
+
+
 
 --select * from dbo.Person
 --select * from PersonEnvironmentCredential

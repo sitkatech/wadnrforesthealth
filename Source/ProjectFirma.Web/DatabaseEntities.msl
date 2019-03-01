@@ -558,6 +558,7 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
+          <ScalarProperty Name="AllowedAuthenticatorID" ColumnName="AllowedAuthenticatorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -323,8 +323,15 @@ namespace ProjectFirma.Web.Controllers
                 return ViewAddContact(viewModel, null);
             }
 
-            var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
-                    Role.Unassigned.RoleID, DateTime.Now, true, false)
+            var authenticatorToUse = Saml2ClaimsHelpers.GetAuthenticator(viewModel.Email);
+
+            var firmaPerson = new Person(viewModel.FirstName, 
+                                         viewModel.LastName,
+                                         Role.Unassigned.RoleID, 
+                                         DateTime.Now, 
+                                         true, 
+                                         false,
+                                         authenticatorToUse.AuthenticatorID)
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.People.Add(firmaPerson);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
