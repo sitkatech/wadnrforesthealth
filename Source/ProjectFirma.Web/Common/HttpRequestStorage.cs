@@ -245,11 +245,6 @@ namespace ProjectFirma.Web.Common
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
 
-                // TODO: This config variable  FirmaWebConfiguration.SAWOverrideLookupUsingEmail can likely be eventually removed,
-                // as I currently believe email fallback validation is required for practical use of SAW. -- SLG 2/28/2019
-                //bool canSawFallBackToEmail = FirmaWebConfiguration.SAWOverrideLookupUsingEmail;
-                //bool canFallBackToEmail = false;
-
                 // First, always attempt to look up via GUID, which is arguably more secure
                 var thingToLookup = saml2UserClaims.UniqueIdentifier;
                 var thingWeAreLookingUp = "GUID";

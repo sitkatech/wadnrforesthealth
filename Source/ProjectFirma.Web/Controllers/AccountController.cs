@@ -179,14 +179,24 @@ namespace ProjectFirma.Web.Controllers
             var username = saml2UserClaims.Username;
 
             var sendNewUserNotification = false;
-            var person = FirmaWebConfiguration.SAWOverrideLookupUsingEmail ? HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false) : HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
+
+            var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
+            bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
+
+            // Always try to validate first using unique identifier, as it is arguably more secure
+            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
+
+            // For SAW only, we allow ourselves to fall back to email.
+            if (person == null && attemptingSawAuthentication)
+            {
+                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false);
+            }
 
             // If there's no Person already that corresponds to the Person who is logging in,
-            // we create a Person record PersonEnvironmentCredential records for them.
+            // we create Person and  PersonEnvironmentCredential records for them.
             if (person == null)
             {
                 // new user - provision with limited role
-                var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
                 SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - creating local profile for Username:  {username} FirstName: {firstName} LastName: {lastName} Email: {email} PersonUniqueIdentifier: {personUniqueIdentifier}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false, authenticatorToRequire.AuthenticatorID)
