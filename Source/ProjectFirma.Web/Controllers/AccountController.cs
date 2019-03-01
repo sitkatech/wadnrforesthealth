@@ -181,11 +181,13 @@ namespace ProjectFirma.Web.Controllers
             var sendNewUserNotification = false;
             var person = FirmaWebConfiguration.SAWOverrideLookupUsingEmail ? HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false) : HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
 
+            // If there's no Person already that corresponds to the Person who is logging in,
+            // we create a Person record PersonEnvironmentCredential records for them.
             if (person == null)
             {
                 // new user - provision with limited role
                 var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
-                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", personUniqueIdentifier);
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - creating local profile for Username:  {username} FirstName: {firstName} LastName: {lastName} Email: {email} PersonUniqueIdentifier: {personUniqueIdentifier}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false, authenticatorToRequire.AuthenticatorID)
                 {
@@ -196,8 +198,17 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
-                var personEnvironmentCredential = new PersonEnvironmentCredential(person, Saml2ClaimsHelpers.GetDeploymentEnvironment(), authenticatorToRequire, personUniqueIdentifier);
-                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredential);
+                var currentDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
+                var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person, currentDeploymentEnvironment, authenticatorToRequire, personUniqueIdentifier);
+                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForCurrentEnvironment);
+
+                // If we are logging in to Prod, from ADFS, we *ALSO* create the parallel QA credential.
+                // (We can't do this with SAW since the unique identifier varies.)
+                if (currentDeploymentEnvironment == DeploymentEnvironment.Prod && authenticatorToRequire == Authenticator.ADFS)
+                {
+                    var personEnvironmentCredentialForQa = new PersonEnvironmentCredential(person, DeploymentEnvironment.QA, authenticatorToRequire, personUniqueIdentifier);
+                    HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForQa);
+                }
 
                 sendNewUserNotification = true;
             }
