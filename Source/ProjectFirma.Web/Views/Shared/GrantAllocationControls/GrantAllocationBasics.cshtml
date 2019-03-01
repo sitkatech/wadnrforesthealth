@@ -88,7 +88,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="Type">Type</label>
+            @Html.LabelWithSugarFor(FieldDefinition.GrantType)
         </div>
         <div class="col-sm-9">
             <span id="Type">@ViewDataTyped.GrantAllocation.Grant.GrantTypeDisplay</span>
@@ -96,7 +96,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="GrantNumber">Grant Number</label>
+            @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
         </div>
         <div class="col-sm-9">
             <span id="GrantNumber">@ViewDataTyped.GrantAllocation.Grant.GrantNumber</span>
@@ -104,15 +104,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="ProjectCode">Project Code</label>
-        </div>
-        <div class="col-sm-9">
-            <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="ProgramIndex">Program Index (PI)</label>
+            @Html.LabelWithSugarFor(FieldDefinition.ProgramIndex)
         </div>
         <div class="col-sm-9">
             <span id="ProgramIndex">@ViewDataTyped.GrantAllocation.ProgramIndexDisplay</span>
@@ -120,15 +112,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="CFDA">CFDA</label>
-        </div>
-        <div class="col-sm-9">
-            <span id="CFDA">@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="ProjectCode">Project Code</label>
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
         </div>
         <div class="col-sm-9">
             <span id="ProjectCode">@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
@@ -136,7 +120,15 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="Region">Region</label>
+            @Html.LabelWithSugarFor(FieldDefinition.CFDA)
+        </div>
+        <div class="col-sm-9">
+            <span id="CFDA">@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.Region)
         </div>
         <div class="col-sm-9">
             <span id="Region">@ViewDataTyped.GrantAllocation.RegionNameDisplay</span>
@@ -144,7 +136,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="AllocationAmount">Allocation Amount</label>
+            @Html.LabelWithSugarFor(FieldDefinition.AllocationAmount)
         </div>
         <div class="col-sm-9">
             <span id="AllocationAmount">@ViewDataTyped.GrantAllocation.AllocationAmount.ToStringCurrency()</span>
@@ -152,7 +144,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="StartDate">Start Date</label>
+            @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
         </div>
         <div class="col-sm-9">
             <span id="StartDate">@ViewDataTyped.GrantAllocation.StartDateDisplay</span>
@@ -160,7 +152,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="EndDate">End Date</label>
+            @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
         </div>
         <div class="col-sm-9">
             <span id="EndDate">@ViewDataTyped.GrantAllocation.EndDateDisplay</span>
@@ -168,7 +160,7 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <label for="FederalFundCode">Federal Fund Code</label>
+            @Html.LabelWithSugarFor(FieldDefinition.FederalFundCode)
         </div>
         <div class="col-sm-9">
             <span id="FederalFundCode">@ViewDataTyped.GrantAllocation.FederalFundCodeDisplay</span>
