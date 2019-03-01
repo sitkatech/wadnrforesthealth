@@ -1,1 +1,0 @@
-ALTER TABLE dbo.FocusArea ALTER COLUMN PlannedFootprintAcres decimal(18,0) 
