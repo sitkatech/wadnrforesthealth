@@ -245,26 +245,19 @@ namespace ProjectFirma.Web.Common
                 // otherwise remap claims from principal
                 var saml2UserClaims = ParseOpenIDClaims(principal.Identity);
 
-                // TODO: This config variable  FirmaWebConfiguration.SAWOverrideLookupUsingEmail can likely be eventually removed,
-                // as I currently believe email fallback validation is required for practical use of SAW. -- SLG 2/28/2019
-                //bool canSawFallBackToEmail = FirmaWebConfiguration.SAWOverrideLookupUsingEmail;
-                //bool canFallBackToEmail = false;
-
                 // First, always attempt to look up via GUID, which is arguably more secure
-                var thingToLookup = saml2UserClaims.UniqueIdentifier;
                 var thingWeAreLookingUp = "GUID";
-                var user = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(thingToLookup);
+                var user = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(saml2UserClaims.UniqueIdentifier);
 
-                var lastAuthenticatorUsed = GetAuthenticator(thingToLookup);
-                bool attemptingSawAuthentication = lastAuthenticatorUsed == Authenticator.SAW;
+                var authenticatorUsed = GetAuthenticator(saml2UserClaims.UniqueIdentifier);
+                bool attemptingSawAuthentication = authenticatorUsed == Authenticator.SAW;
 
                 // If we fail to look up via GUID, and we are allowed to fall back to email, try email.
                 // We **NEVER** allow falling back to email for ADFS, but pretty much have to for practical use of SAW.
                 if (user == null && attemptingSawAuthentication)
                 {
-                    thingToLookup = saml2UserClaims.Email;
                     thingWeAreLookingUp = "email";
-                    user = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(thingToLookup, false);
+                    user = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(saml2UserClaims.Email, false);
 
                     // If we were able to find user via email, write in the user's GUID if provided by authenticator, and not already saved.
                     if (user != null &&  !GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(saml2UserClaims.UniqueIdentifier))
@@ -273,8 +266,8 @@ namespace ProjectFirma.Web.Common
                         if (user.PersonEnvironmentCredentials.SingleOrDefault(pec => pec.PersonUniqueIdentifier == saml2UserClaims.UniqueIdentifier) == null)
                         {
                             // Save new SAW credentials for next login
-                            Check.Ensure(GetAuthenticator(saml2UserClaims.UniqueIdentifier) == Authenticator.SAW, "Was expecting SAW credentials here; coding error?");
-                            var newPec = new PersonEnvironmentCredential(user, GetDeploymentEnvironment(), GetAuthenticator(saml2UserClaims.UniqueIdentifier), saml2UserClaims.UniqueIdentifier);
+                            Check.Ensure(authenticatorUsed == Authenticator.SAW, "Was expecting SAW credentials here; coding error?");
+                            var newPec = new PersonEnvironmentCredential(user, GetDeploymentEnvironment(), authenticatorUsed, saml2UserClaims.UniqueIdentifier);
                             HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(newPec);
                         }
                     }
@@ -283,19 +276,22 @@ namespace ProjectFirma.Web.Common
                 // Ensure the Authenticator used is valid for this user
                 if (user != null)
                 {
-                    var finalAuthenticatorUsed = GetAuthenticator(thingToLookup);
-
                     // Currently only one authenticator is allowed per Person. You can't mix and match.
-                    if (finalAuthenticatorUsed.AuthenticatorID != user.AllowedAuthenticatorID)
+                    bool authenticatorsMatchUserSettings = authenticatorUsed.AuthenticatorID == user.AllowedAuthenticatorID;
+
+                    string userAuthenticationDescription =$"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {authenticatorUsed.AuthenticatorFullName} - method {thingWeAreLookingUp} - {saml2UserClaims.DisplayName} authenticatorsMatchUserSettings: {authenticatorsMatchUserSettings}";
+                    SitkaHttpApplication.Logger.Debug($"{userAuthenticationDescription} - Allowed Authenticator: {user.AllowedAuthenticator.AuthenticatorFullName}. [method {thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
+
+                    if (!authenticatorsMatchUserSettings)
                     {
-                        throw new Saml2ClaimException($"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {finalAuthenticatorUsed.AuthenticatorFullName} ({finalAuthenticatorUsed.AuthenticatorName}), but is restricted to {user.AllowedAuthenticator.AuthenticatorFullName} ({user.AllowedAuthenticator.AuthenticatorName}). [{thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})]");
+                        throw new Saml2ClaimException($"{userAuthenticationDescription}, but is restricted to {user.AllowedAuthenticator.AuthenticatorFullName} ({user.AllowedAuthenticator.AuthenticatorName}). [{thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
                     }
                 }
 
                 // If we can't find user by now, there's a problem
                 if (user == null)
                 {
-                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} {thingToLookup} ({saml2UserClaims.DisplayName})");
+                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} Authenticator Used: {authenticatorUsed.AuthenticatorFullName} ({saml2UserClaims.DisplayName})");
                 }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)

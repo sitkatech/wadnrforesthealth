@@ -50,11 +50,6 @@ namespace ProjectFirma.Web.Common
 
         public static readonly string WebMapServiceUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("WebMapServiceUrl");
 
-        /// <summary>
-        /// Probably obsolete, leaving until sure though -- SLG
-        /// </summary>
-        public static readonly bool SAWOverrideLookupUsingEmail = Boolean.Parse(SitkaConfiguration.GetRequiredAppSetting("SAWOverrideLookupUsingEmail"));
-
         public static readonly int GeoSpatialReferenceID = 4326;
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
