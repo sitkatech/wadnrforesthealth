@@ -992,42 +992,10 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        [HttpGet]
-        [ProjectCreateFeature]
-        public PartialViewResult EditNote(ProjectNotePrimaryKey projectNotePrimaryKey)
-        {
-            var projectNote = projectNotePrimaryKey.EntityObject;
-            var viewModel = new EditNoteViewModel(projectNote.Note);
-            return ViewEditNote(viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditNote(ProjectNotePrimaryKey projectNotePrimaryKey, EditNoteViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ViewEditNote(viewModel);
-            }
-            var projectNote = projectNotePrimaryKey.EntityObject;
-            viewModel.UpdateModel(projectNote, CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-
         private PartialViewResult ViewEditNote(EditNoteViewModel viewModel)
         {
             var viewData = new EditNoteViewData();
             return RazorPartialView<EditNote, EditNoteViewData, EditNoteViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [ProjectCreateFeature]
-        public PartialViewResult DeleteNote(ProjectNotePrimaryKey projectNotePrimaryKey)
-        {
-            var projectNote = projectNotePrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(projectNote.ProjectNoteID);
-            return ViewDeleteNote(projectNote, viewModel);
         }
 
         private PartialViewResult ViewDeleteNote(ProjectNote projectNote, ConfirmDialogFormViewModel viewModel)
@@ -1040,20 +1008,6 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
 
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteNote(ProjectNotePrimaryKey projectNotePrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var projectNote = projectNotePrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewDeleteNote(projectNote, viewModel);
-            }
-            projectNote.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
@@ -1078,74 +1032,10 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        [HttpGet]
-        [ProjectCreateFeature]
-        public PartialViewResult EditDocument(ProjectDocumentPrimaryKey projectDocumentPrimaryKey)
-        {
-            var projectDocument = projectDocumentPrimaryKey.EntityObject;
-            var viewModel = new EditProjectDocumentsViewModel(projectDocument);
-            return ViewEditDocument(viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditDocument(ProjectDocumentPrimaryKey projectDocumentPrimaryKey, EditProjectDocumentsViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ViewEditDocument(viewModel);
-            }
-            var projectDocument = projectDocumentPrimaryKey.EntityObject;
-            viewModel.UpdateModel(projectDocument);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditDocument(EditProjectDocumentsViewModel viewModel)
-        {
-            var viewData = new EditProjectDocumentsViewData();
-            return RazorPartialView<EditProjectDocuments, EditProjectDocumentsViewData, EditProjectDocumentsViewModel>(viewData, viewModel);
-        }
-
         private PartialViewResult ViewNewDocument(NewProjectDocumentViewModel viewModel)
         {
             var viewData = new NewProjectDocumentViewData();
             return RazorPartialView<NewProjectDocument, NewProjectDocumentViewData, NewProjectDocumentViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [ProjectCreateFeature]
-        public PartialViewResult DeleteDocument(ProjectDocumentPrimaryKey projectDocumentPrimaryKey)
-        {
-            var projectDocument = projectDocumentPrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(projectDocument.ProjectDocumentID);
-            return ViewDeleteDocument(projectDocument, viewModel);
-        }
-
-        private PartialViewResult ViewDeleteDocument(ProjectDocument projectDocument, ConfirmDialogFormViewModel viewModel)
-        {
-            var canDelete = !projectDocument.HasDependentObjects();
-            var confirmMessage = canDelete
-                ? $"Are you sure you want to delete \"{projectDocument.DisplayName}\" from this {FieldDefinition.Project.GetFieldDefinitionLabel()}?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"Proposed {FieldDefinition.Project.GetFieldDefinitionLabel()} Document");
-
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
-
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteDocument(ProjectDocumentPrimaryKey projectDocumentPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var projectDocument = projectDocumentPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewDeleteDocument(projectDocument, viewModel);
-            }
-            projectDocument.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            return new ModalDialogFormJsonResult();
         }
 
         [ProjectCreateFeature]

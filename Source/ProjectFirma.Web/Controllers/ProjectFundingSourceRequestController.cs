@@ -59,29 +59,6 @@ namespace ProjectFirma.Web.Controllers
             return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests, project);
         }
 
-        [HttpGet]
-        [ProjectEditAsAdminFeature]
-        public PartialViewResult EditProjectFundingSourceRequestsForFundingSource(FundingSourcePrimaryKey fundingSourcePrimaryKey)
-        {
-            var fundingSource = fundingSourcePrimaryKey.EntityObject;
-            var currentProjectFundingSourceRequests = fundingSource.ProjectFundingSourceRequests.ToList();
-            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests,false, null);
-            return ViewEditProjectFundingSourceRequests(fundingSource, viewModel);
-        }
-
-        [HttpPost]
-        [ProjectEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectFundingSourceRequestsForFundingSource(FundingSourcePrimaryKey fundingSourcePrimaryKey, EditProjectFundingSourceRequestsViewModel viewModel)
-        {
-            var fundingSource = fundingSourcePrimaryKey.EntityObject;
-            var currentProjectFundingSourceRequests = fundingSource.ProjectFundingSourceRequests.ToList();
-            if (!ModelState.IsValid)
-            {
-                return ViewEditProjectFundingSourceRequests(fundingSource, viewModel);
-            }
-            return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests, null);
-        }
 
         private static ActionResult UpdateProjectFundingSourceRequests(
             EditProjectFundingSourceRequestsViewModel viewModel,
