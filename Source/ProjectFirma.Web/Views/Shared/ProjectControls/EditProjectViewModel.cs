@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public int? OldProjectStageID { get; set; }
 
-        public int? FocusAreaID { get; set; }
+        public int FocusAreaID { get; set; }
 
 
         /// <summary>
@@ -168,11 +168,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
             var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
 
-            if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
-            {
-                var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
-            }
+            //if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
+            //{
+            //    var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
+            //    yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
+            //}
         }
     }
 }

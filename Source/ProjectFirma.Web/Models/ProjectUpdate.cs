@@ -43,7 +43,8 @@ namespace ProjectFirma.Web.Models
                 : 0;
         }
 
-        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch) : this(projectUpdateBatch, projectUpdateBatch.Project.ProjectStage, projectUpdateBatch.Project.ProjectDescription, projectUpdateBatch.Project.ProjectLocationSimpleType)
+        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch) : this(projectUpdateBatch, projectUpdateBatch.Project.ProjectStage, projectUpdateBatch.Project.ProjectDescription, 
+                                                                           projectUpdateBatch.Project.ProjectLocationSimpleType, projectUpdateBatch.Project.FocusArea)
         {
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
