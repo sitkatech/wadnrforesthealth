@@ -189,7 +189,7 @@ namespace ProjectFirma.Web.Controllers
             var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
 
             string personLookupSuccess = person != null ? "Found" : "Did NOT find";
-            SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - {personLookupSuccess} by ");
+            SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - {personLookupSuccess} by PersonUniqueIdentifier. [{userDetailsString}] ");
 
             // For SAW only, we allow ourselves to fall back to email.
             if (person == null && attemptingSawAuthentication)
