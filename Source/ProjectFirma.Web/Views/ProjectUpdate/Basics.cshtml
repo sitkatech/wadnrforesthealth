@@ -135,7 +135,7 @@
 
         <div class="form-group">
             <div class="col-xs-12 col-sm-4 control-label">
-                @Html.LabelWithSugarFor(m => m.FocusAreaID)
+                @Html.LabelWithSugarFor(m => m.FocusAreaID, true)
             </div>
             <div class="col-xs-12 col-sm-8">
                 @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })
