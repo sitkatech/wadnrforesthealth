@@ -291,7 +291,7 @@ namespace ProjectFirma.Web.Common
                 // If we can't find user by now, there's a problem
                 if (user == null)
                 {
-                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} Authenticator Used: {authenticatorUsed.AuthenticatorName} - DisplayName: {saml2UserClaims.DisplayName} - Unique Identifier: \"{saml2UserClaims.UniqueIdentifier}\"");
+                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} Authenticator Used: {authenticatorUsed.AuthenticatorName} - DisplayName: \"{saml2UserClaims.DisplayName}\" - Unique Identifier: \"{saml2UserClaims.UniqueIdentifier}\"");
                 }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)
