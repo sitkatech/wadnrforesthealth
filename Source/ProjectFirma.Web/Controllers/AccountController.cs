@@ -145,7 +145,7 @@ namespace ProjectFirma.Web.Controllers
             SyncLocalAccountStore(identity, authenticationMethod);
         }
 
-        public void IdentitySignout()
+        private void IdentitySignout()
         {
             HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie, DefaultAuthenticationTypes.ExternalCookie);
         }
@@ -153,6 +153,7 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         public ActionResult LogOff()
         {
+            SitkaHttpApplication.Logger.Debug($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
             IdentitySignout();
             var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
             return Redirect(returnUrl);
