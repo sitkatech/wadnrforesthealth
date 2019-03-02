@@ -116,6 +116,8 @@ namespace ProjectFirma.Web.Controllers
         private void IdentitySignin(string userId, string name, string email, string userName, string groups,
             AuthenticationMethod authenticationMethod, string providerKey = null, bool isPersistent = false)
         {
+            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignin) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {providerKey} isPersistent: {isPersistent}");
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId),
