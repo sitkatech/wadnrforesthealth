@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
 using NUnit.Framework;
+using ProjectFirma.Web.UnitTestCommon;
 
 namespace ProjectFirma.Web.Models
 {
@@ -32,12 +33,14 @@ namespace ProjectFirma.Web.Models
         [Ignore]
         public void TestProjectLocationFilterTypesAddedAsProjectProperties()
         {
+            var focusArea = TestFramework.TestFocusArea.Create();
+
             var project = Project.CreateNewBlank(
                 ProjectType.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                ProjectApprovalStatus.Approved);
+                ProjectApprovalStatus.Approved, focusArea);
 
             project.ProjectLocationPoint = DbGeometry.PointFromText("POINT(29.11 40.11)", 4326);
 

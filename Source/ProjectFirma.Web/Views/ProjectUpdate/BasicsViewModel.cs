@@ -27,6 +27,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using FluentValidation.Attributes;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
@@ -54,7 +55,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public DateTime? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
-        public int? FocusAreaID { get; set; }
+        public int FocusAreaID { get; set; }
         [DisplayName("Reviewer Comments")]
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
         public string Comments { get; set; }

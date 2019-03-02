@@ -63,7 +63,8 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public DateTime? CompletionDate { get; set; }
 
 		[FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
-        public int? FocusAreaID { get; set; }
+        [Required]
+        public int FocusAreaID { get; set; }
 
         public int? ImportExternalProjectStagingID { get; set; }
 
@@ -101,7 +102,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             project.ExpirationDate = ExpirationDate;
             project.CompletionDate = CompletionDate;
             project.FocusAreaID = FocusAreaID;
-
 
             var nonAllTypeAttributes = project.ProjectCustomAttributes.Where(x => !x.ProjectCustomAttributeType.ApplyToAllProjectTypes).ToList();
             if (nonAllTypeAttributes.Any())
@@ -196,11 +196,11 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
 
-            if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
-            {
-                var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(errorMessage, m => m.FocusAreaID);
-            }
+            //if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
+            //{
+            //    var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
+            //    yield return new SitkaValidationResult<BasicsViewModel, int?>(errorMessage, m => m.FocusAreaID);
+            //}
         }
     }
 }

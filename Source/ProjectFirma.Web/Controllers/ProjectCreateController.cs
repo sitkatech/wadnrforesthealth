@@ -179,12 +179,14 @@ namespace ProjectFirma.Web.Controllers
         private ActionResult CreateAndEditBasicsPostImpl(BasicsViewModel viewModel)
         {
             var project = new Project(viewModel.ProjectTypeID ?? ModelObjectHelpers.NotYetAssignedID,
-                viewModel.ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID,
-                viewModel.ProjectName,
-                viewModel.ProjectDescription,
-                false,
-                ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
-                ProjectApprovalStatus.Draft.ProjectApprovalStatusID)
+                                      viewModel.ProjectStageID ?? ModelObjectHelpers.NotYetAssignedID,
+                                      viewModel.ProjectName,
+                                      viewModel.ProjectDescription,
+                                      false,
+                                      ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
+                                      ProjectApprovalStatus.Draft.ProjectApprovalStatusID,
+                                      viewModel.FocusAreaID 
+                                    )
             {
                 ProposingPerson = CurrentPerson,
                 ProposingDate = DateTime.Now
