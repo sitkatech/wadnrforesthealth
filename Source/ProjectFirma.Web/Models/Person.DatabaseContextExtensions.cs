@@ -38,7 +38,13 @@ namespace ProjectFirma.Web.Models
         {
             SitkaHttpApplication.Logger.Debug($"GetPersonByEmail: email: {email} requireRecordFound: {requireRecordFound} ");
 
-            var person = people.SingleOrDefault(x => x.Email == email);
+            var peopleWithDesiredEmail = people.Where(x => x.Email == email).ToList();
+            if (peopleWithDesiredEmail.Count > 1)
+            {
+                throw new Saml2ClaimException($"GetPersonByEmail - Found more than one Person with email {email}; should be prohibited");
+            }
+
+            var person = peopleWithDesiredEmail.SingleOrDefault();
             if (requireRecordFound)
             {
                 Check.RequireNotNullThrowNotFound(person, email);
