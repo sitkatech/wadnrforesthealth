@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
 
@@ -35,6 +36,8 @@ namespace ProjectFirma.Web.Models
 
         public static Person GetPersonByEmail(this IQueryable<Person> people, string email, bool requireRecordFound)
         {
+            SitkaHttpApplication.Logger.Debug($"GetPersonByEmail: email: {email} requireRecordFound: {requireRecordFound} ");
+
             var person = people.SingleOrDefault(x => x.Email == email);
             if (requireRecordFound)
             {
@@ -52,6 +55,9 @@ namespace ProjectFirma.Web.Models
             var desiredAuthenticator = Saml2ClaimsHelpers.GetAuthenticator(desiredPersonUniqueIdentifier);
 
             var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredDeploymentEnvironment, desiredAuthenticator));
+
+            string successString = person != null ? "Found" : "Did NOT find";
+            SitkaHttpApplication.Logger.Debug($"GetPersonByPersonUniqueIdentifier: {successString} desiredPersonUniqueIdentifier {desiredPersonUniqueIdentifier} - desiredDeploymentEnvironment {desiredDeploymentEnvironment.DeploymentEnvironmentName} - desiredAuthenticator : {desiredAuthenticator}");
             return person;
         }
 

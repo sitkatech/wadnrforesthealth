@@ -197,7 +197,7 @@ namespace ProjectFirma.Web.Controllers
             if (person == null)
             {
                 // new user - provision with limited role
-                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - creating local profile for Username:  {username} FirstName: {firstName} LastName: {lastName} Email: {email} PersonUniqueIdentifier: {personUniqueIdentifier}");
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - creating local profile for Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email} PersonUniqueIdentifier: {personUniqueIdentifier}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false, authenticatorToRequire.AuthenticatorID)
                 {
