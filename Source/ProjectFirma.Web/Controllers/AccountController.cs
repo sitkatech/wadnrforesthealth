@@ -203,7 +203,8 @@ namespace ProjectFirma.Web.Controllers
             if (person == null)
             {
                 // new user - provision with limited role
-                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - User not found using any available authentication method - creating local user for {userDetailsString}");
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - Person not found using any available authentication method -- {userDetailsString}");
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - Creating new Person for -- {userDetailsString}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false, authenticatorToRequire.AuthenticatorID)
                 {
