@@ -62,8 +62,8 @@ namespace ProjectFirma.Web.Models
 
             var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredDeploymentEnvironment, desiredAuthenticator));
 
-            string successString = person != null ? "Found" : "Did NOT find";
-            SitkaHttpApplication.Logger.Debug($"GetPersonByPersonUniqueIdentifier: {successString} desiredPersonUniqueIdentifier: \"{desiredPersonUniqueIdentifier}\" - desiredDeploymentEnvironment: {desiredDeploymentEnvironment.DeploymentEnvironmentName} - desiredAuthenticator : {desiredAuthenticator.AuthenticatorName}");
+            // string successString = person != null ? "Found Person" : "Did NOT find Person";
+            // SitkaHttpApplication.Logger.Debug($"GetPersonByPersonUniqueIdentifier: {successString} desiredPersonUniqueIdentifier: \"{desiredPersonUniqueIdentifier}\" - desiredDeploymentEnvironment: {desiredDeploymentEnvironment.DeploymentEnvironmentName} - desiredAuthenticator : {desiredAuthenticator.AuthenticatorName}");
             return person;
         }
 

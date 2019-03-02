@@ -280,7 +280,7 @@ namespace ProjectFirma.Web.Common
                     bool authenticatorsMatchUserSettings = authenticatorUsed.AuthenticatorID == user.AllowedAuthenticatorID;
 
                     string userAuthenticationDescription =$"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {authenticatorUsed.AuthenticatorName} - method {thingWeAreLookingUp} - {saml2UserClaims.DisplayName} authenticatorsMatchUserSettings: {authenticatorsMatchUserSettings}";
-                    SitkaHttpApplication.Logger.Debug($"{userAuthenticationDescription} - Allowed Authenticator: {user.AllowedAuthenticator.AuthenticatorName}. [method {thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
+                    //SitkaHttpApplication.Logger.Debug($"{userAuthenticationDescription} - Allowed Authenticator: {user.AllowedAuthenticator.AuthenticatorName}. [method {thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
 
                     if (!authenticatorsMatchUserSettings)
                     {
