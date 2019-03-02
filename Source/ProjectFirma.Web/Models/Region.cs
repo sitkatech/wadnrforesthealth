@@ -54,11 +54,10 @@ namespace ProjectFirma.Web.Models
             return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
         }
 
-        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<RegionController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
-
         public string GetDetailUrl()
         {
-            return DetailUrlTemplate.ParameterReplace(RegionID);
+            var urlTemplateString = SitkaRoute<RegionController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int));
+            return urlTemplateString.Replace(UrlTemplate.Parameter1Int.ToString(), this.RegionID.ToString());
         }
 
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
