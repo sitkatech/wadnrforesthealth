@@ -28,12 +28,15 @@ namespace ProjectFirma.Web.UnitTestCommon
     {
         public static class TestProject
         {
+
             public static Project Create()
             {
                 var projectType = TestProjectType.Create();
                 var projectStage = ProjectStage.Planned;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, FocusArea.CreateNewBlank(FocusAreaStatus.InProgress, Region.CreateNewBlank()));
+
+                var testFocusArea = TestFocusArea.Create();
+                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, testFocusArea);
                 return project;
             }
 
