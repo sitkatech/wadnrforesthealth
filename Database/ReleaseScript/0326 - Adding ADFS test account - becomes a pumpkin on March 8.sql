@@ -2,8 +2,8 @@
 
 delete from Person where FirstName = 'Sitka' and  LastName = 'Dev'
 
-insert into Person (FirstName, LastName, RoleID, IsActive, OrganizationID, AllowedAuthenticatorID, ReceiveSupportEmails, CreateDate)
-values ('Sitka', 'Dev', 7, 1, 4703, 1, 0, GETDATE())
+insert into Person (FirstName, LastName, RoleID, IsActive, OrganizationID, AllowedAuthenticatorID, ReceiveSupportEmails, CreateDate, Email)
+values ('Sitka', 'Dev', 7, 1, 4703, 1, 0, GETDATE(), 'sitkadev@dnr.wa.gov')
 GO
 
 declare @SitkaDevPersonID int;
