@@ -220,7 +220,7 @@ namespace ProjectFirma.Web.Common
         public static Authenticator GetAuthenticator(string uniqueIdentifier)
         {
             // There is likely a far better way to detect this, but this will work for now.
-            if (uniqueIdentifier.Contains("@wa.dnr") || uniqueIdentifier.Contains("@dnr.wa.gov"))
+            if (uniqueIdentifier.Contains("@dnr.wa.lcl") || uniqueIdentifier.Contains("@dnr.wa.gov"))
             {
                 return Authenticator.ADFS;
             }
