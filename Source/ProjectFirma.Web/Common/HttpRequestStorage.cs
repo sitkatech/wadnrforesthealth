@@ -279,19 +279,19 @@ namespace ProjectFirma.Web.Common
                     // Currently only one authenticator is allowed per Person. You can't mix and match.
                     bool authenticatorsMatchUserSettings = authenticatorUsed.AuthenticatorID == user.AllowedAuthenticatorID;
 
-                    string userAuthenticationDescription =$"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {authenticatorUsed.AuthenticatorFullName} - method {thingWeAreLookingUp} - {saml2UserClaims.DisplayName} authenticatorsMatchUserSettings: {authenticatorsMatchUserSettings}";
-                    SitkaHttpApplication.Logger.Debug($"{userAuthenticationDescription} - Allowed Authenticator: {user.AllowedAuthenticator.AuthenticatorFullName}. [method {thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
+                    string userAuthenticationDescription =$"User {user.FullNameFirstLast} (PersonID {user.PersonID}) authenticated using {authenticatorUsed.AuthenticatorName} - method {thingWeAreLookingUp} - {saml2UserClaims.DisplayName} authenticatorsMatchUserSettings: {authenticatorsMatchUserSettings}";
+                    SitkaHttpApplication.Logger.Debug($"{userAuthenticationDescription} - Allowed Authenticator: {user.AllowedAuthenticator.AuthenticatorName}. [method {thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
 
                     if (!authenticatorsMatchUserSettings)
                     {
-                        throw new Saml2ClaimException($"{userAuthenticationDescription}, but is restricted to {user.AllowedAuthenticator.AuthenticatorFullName} ({user.AllowedAuthenticator.AuthenticatorName}). [{thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
+                        throw new Saml2ClaimException($"{userAuthenticationDescription}, but is restricted to {user.AllowedAuthenticator.AuthenticatorName} ({user.AllowedAuthenticator.AuthenticatorName}). [{thingWeAreLookingUp} ({saml2UserClaims.DisplayName})]");
                     }
                 }
 
                 // If we can't find user by now, there's a problem
                 if (user == null)
                 {
-                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} Authenticator Used: {authenticatorUsed.AuthenticatorFullName} - DisplayName: {saml2UserClaims.DisplayName} - Unique Identifier: \"{saml2UserClaims.UniqueIdentifier}\"");
+                    throw new Saml2ClaimException($"User not found for {thingWeAreLookingUp} Authenticator Used: {authenticatorUsed.AuthenticatorName} - DisplayName: {saml2UserClaims.DisplayName} - Unique Identifier: \"{saml2UserClaims.UniqueIdentifier}\"");
                 }
                 var names = saml2UserClaims.DisplayName.Split(' ');
                 if (names.Length == 2)
