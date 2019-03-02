@@ -11,7 +11,11 @@ set @SitkaDevPersonID = (select PersonID from Person where FirstName = 'Sitka' a
 
 insert into PersonEnvironmentCredential(PersonID, DeploymentEnvironmentID, AuthenticatorID, PersonUniqueIdentifier)
 values (@sitkaDevPersonID, 2, 1, 'sitkadev@dnr.wa.lcl')
+
+insert into PersonEnvironmentCredential(PersonID, DeploymentEnvironmentID, AuthenticatorID, PersonUniqueIdentifier)
+values (@sitkaDevPersonID, 3, 1, 'sitkadev@dnr.wa.lcl')
 GO
+
 
 --select * from Person
 --select * from PersonEnvironmentCredential
