@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.UnitTestCommon
     {
         public static class TestProject
         {
+
             public static Project Create()
             {
                 var projectType = TestProjectType.Create();
