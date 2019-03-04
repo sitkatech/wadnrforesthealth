@@ -260,7 +260,7 @@ namespace ProjectFirma.Web.Common
                     user = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(saml2UserClaims.Email, false);
 
                     // If we were able to find user via email, write in the user's GUID if provided by authenticator, and not already saved.
-                    if (user != null &&  !GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(saml2UserClaims.UniqueIdentifier))
+                    if (user != null && !GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(saml2UserClaims.UniqueIdentifier))
                     {
                         // No existing credentials saved for this GUID?
                         if (user.PersonEnvironmentCredentials.SingleOrDefault(pec => pec.PersonUniqueIdentifier == saml2UserClaims.UniqueIdentifier) == null)
@@ -305,7 +305,10 @@ namespace ProjectFirma.Web.Common
                 }
                 user.Email = saml2UserClaims.Email;
                 
-                return user;
+                // This is a DELIBERATE hack. Putting QA into a state where I can see the yellow-screen crashes, in order to correct them.
+                throw new Exception("Bogus exception. This was placed here for deliberate testing, to get QA into state where yellow screen errors happen");
+
+                //return user;
             }
             return anonymousSitkaUser;
         }
