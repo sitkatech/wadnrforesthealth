@@ -306,9 +306,9 @@ namespace ProjectFirma.Web.Common
                 user.Email = saml2UserClaims.Email;
                 
                 // This is a DELIBERATE hack. Putting QA into a state where I can see the yellow-screen crashes, in order to correct them.
-                throw new Exception("Bogus exception. This was placed here for deliberate testing, to get QA into state where yellow screen errors happen");
+               //throw new Exception("Bogus exception. This was placed here for deliberate testing, to get QA into state where yellow screen errors happen");
 
-                //return user;
+                return user;
             }
             return anonymousSitkaUser;
         }

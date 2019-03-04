@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Common
             if (lastError is SitkaRecordNotAuthorizedException && IsCurrentUserAnonymous())
             {
                 var requestUrl = Request.Url != null ? Request.Url.ToString() : String.Empty;
-                var url = String.Format("{0}?returnUrl={1}", LoginUrl, Server.UrlEncode(requestUrl));
+                var url = $"{LoginUrl}?returnUrl={Server.UrlEncode(requestUrl)}";
                 filterContext.ExceptionHandled = true;
                 Response.Redirect(url);
                 return;
