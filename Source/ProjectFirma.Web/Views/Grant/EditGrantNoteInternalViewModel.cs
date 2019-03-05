@@ -28,49 +28,47 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public class EditGrantNoteViewModel : FormViewModel, IValidatableObject
+    public class EditGrantNoteInternalViewModel : FormViewModel, IValidatableObject
     {
         public int GrantID { get; set; }
 
-        public int GrantNoteID { get; set; }
+        public int GrantNoteInternalID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNote)]
         [Required]
         public string GrantNoteText { get; set; }
 
-       
+
 
 
 
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditGrantNoteViewModel()
+        public EditGrantNoteInternalViewModel()
         {
         }
 
-        public EditGrantNoteViewModel(Models.GrantNote grantNote)
+        public EditGrantNoteInternalViewModel(Models.GrantNoteInternal grantNoteInternaal)
         {
-            GrantNoteText = grantNote.GrantNoteText;
-            GrantNoteID = grantNote.GrantNoteID;
-            GrantID = grantNote.GrantID;
+            GrantNoteText = grantNoteInternaal.GrantNoteText;
 
         }
 
-        public void UpdateModel(Models.GrantNote grantNote, Person currentPerson, EditGrantNoteType editGrantNoteType)
+        public void UpdateModel(Models.GrantNoteInternal grantNoteInternal, Person currentPerson, EditGrantNoteType editGrantNoteType)
         {
             if (editGrantNoteType == EditGrantNoteTypeNewNote.Instance)
             {
-                grantNote.CreatedByPerson = currentPerson;
-                grantNote.CreatedDate = DateTime.Now;
+                grantNoteInternal.CreatedByPerson = currentPerson;
+                grantNoteInternal.CreatedDate = DateTime.Now;
             }
             else
             {
-                grantNote.LastUpdatedByPerson = currentPerson;
-                grantNote.LastUpdatedDate = DateTime.Now;
+                grantNoteInternal.LastUpdatedByPerson = currentPerson;
+                grantNoteInternal.LastUpdatedDate = DateTime.Now;
             }
 
-            grantNote.GrantNoteText = GrantNoteText;
+            grantNoteInternal.GrantNoteText = GrantNoteText;
 
         }
 

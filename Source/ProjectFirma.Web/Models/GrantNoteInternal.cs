@@ -1,11 +1,11 @@
-﻿using LtInfo.Common.Views;
+﻿using System;
+using LtInfo.Common.Views;
 using ProjectFirma.Web.Common;
-using System;
 using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class GrantNote : IAuditableEntity, IEntityNote
+    public partial class GrantNoteInternal : IAuditableEntity, IEntityNote
     {
         public DateTime Created
         {
@@ -45,12 +45,12 @@ namespace ProjectFirma.Web.Models
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.DeleteGrantNote(GrantNoteID)); }
+            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.DeleteGrantNoteInternal(GrantNoteInternalID)); }
         }
 
         public string EditUrl
         {
-            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.EditGrantNote(GrantNoteID)); }
+            get { return SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.EditGrantNoteInternal(GrantNoteInternalID)); }
         }
         public string AuditDescriptionString
         {
@@ -61,6 +61,5 @@ namespace ProjectFirma.Web.Models
                 return $"Grant: {grantName}";
             }
         }
-
     }
 }

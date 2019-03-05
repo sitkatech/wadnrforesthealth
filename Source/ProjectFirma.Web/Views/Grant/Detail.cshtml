@@ -160,8 +160,9 @@
                     </div>
                 </div>
             </div>
+
             
-            
+
             <div class="row">
                 <div class="col-sm-12" style="padding: 0px;">
                     <div class="panel panelFirma">
@@ -172,7 +173,11 @@
                         </div>
                         <div class="panel-body">
                             <div class="basicsLayout">
+                                <strong>Public Notes</strong>
                                 @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantNotesViewData); }
+
+                                <strong>Internal Notes</strong>
+                                @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantNotesViewData); }
 
                             </div>
                         </div>
