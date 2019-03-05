@@ -53,6 +53,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeRegionsList RegionsList = FirmaPageTypeRegionsList.Instance;
         public static readonly FirmaPageTypePriorityAreasList PriorityAreasList = FirmaPageTypePriorityAreasList.Instance;
         public static readonly FirmaPageTypeFullAgreementList FullAgreementList = FirmaPageTypeFullAgreementList.Instance;
+        public static readonly FirmaPageTypeFullInvoiceList FullInvoiceList = FirmaPageTypeFullInvoiceList.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -62,7 +63,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList, FullAgreementList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList, FullAgreementList, FullInvoiceList };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -152,6 +153,8 @@ namespace ProjectFirma.Web.Models
                     return FullGrantAllocationList;
                 case FirmaPageTypeEnum.FullGrantList:
                     return FullGrantList;
+                case FirmaPageTypeEnum.FullInvoiceList:
+                    return FullInvoiceList;
                 case FirmaPageTypeEnum.FullProjectList:
                     return FullProjectList;
                 case FirmaPageTypeEnum.FullProjectListSimple:
@@ -246,7 +249,8 @@ namespace ProjectFirma.Web.Models
         FullGrantAllocationList = 57,
         RegionsList = 58,
         PriorityAreasList = 59,
-        FullAgreementList = 60
+        FullAgreementList = 60,
+        FullInvoiceList = 61
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -457,5 +461,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeFullAgreementList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeFullAgreementList Instance = new FirmaPageTypeFullAgreementList(60, @"FullAgreementList", @"Full Agreement List", 1);
+    }
+
+    public partial class FirmaPageTypeFullInvoiceList : FirmaPageType
+    {
+        private FirmaPageTypeFullInvoiceList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeFullInvoiceList Instance = new FirmaPageTypeFullInvoiceList(61, @"FullInvoiceList", @"Full Invoice List", 1);
     }
 }

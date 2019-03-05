@@ -54,13 +54,26 @@ namespace ProjectFirma.Web.Models
             this.PreparedByPersonID = preparedByPersonID;
         }
 
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public Invoice(string requestorName, DateTime invoiceDate, Person preparedByPerson) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.RequestorName = requestorName;
+            this.InvoiceDate = invoiceDate;
+            this.PreparedByPersonID = preparedByPerson.PersonID;
+            this.PreparedByPerson = preparedByPerson;
+            preparedByPerson.InvoicesWhereYouAreThePreparedByPerson.Add(this);
+        }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Invoice CreateNewBlank()
+        public static Invoice CreateNewBlank(Person preparedByPerson)
         {
-            return new Invoice(default(string), default(DateTime), default(int));
+            return new Invoice(default(string), default(DateTime), preparedByPerson);
         }
 
         /// <summary>
@@ -106,7 +119,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }
 
-
+        public virtual Person PreparedByPerson { get; set; }
 
         public static class FieldLengths
         {

@@ -292,6 +292,10 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNote" />
     </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
+      <End Role="PreparedByPerson" EntitySet="Person" />
+      <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
+    </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="Notifications" EntitySet="Notification" />
@@ -2624,6 +2628,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantNotesWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
+    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PreparedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
+        <PropertyRef Name="PreparedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

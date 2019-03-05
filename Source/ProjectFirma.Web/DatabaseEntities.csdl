@@ -348,6 +348,10 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNote" />
     </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
+      <End Role="PreparedByPerson" EntitySet="Person" />
+      <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
+    </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="Notifications" EntitySet="Notification" />
@@ -1236,6 +1240,7 @@
     <Property Name="Status" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -1505,6 +1510,7 @@
     <NavigationProperty Name="GrantAllocationProgramManagers" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_Person_PersonID" FromRole="Person" ToRole="GrantAllocationProgramManagers" />
     <NavigationProperty Name="GrantNotesWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNote_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantNotesWhereYouAreTheCreatedByPerson" />
     <NavigationProperty Name="GrantNotesWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNote_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantNotesWhereYouAreTheLastUpdatedByPerson" />
+    <NavigationProperty Name="InvoicesWhereYouAreThePreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="PreparedByPerson" ToRole="InvoicesWhereYouAreThePreparedByPerson" />
     <NavigationProperty Name="Notifications" Relationship="ProjectFirma.Web.Models.FK_Notification_Person_PersonID" FromRole="Person" ToRole="Notifications" />
     <NavigationProperty Name="OrganizationsWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="OrganizationsWhereYouAreThePrimaryContactPerson" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Person_Organization_OrganizationID" FromRole="People" ToRole="Organization" />
@@ -3124,6 +3130,18 @@
       </Principal>
       <Dependent Role="GrantNotesWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
+    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PreparedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
+        <PropertyRef Name="PreparedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

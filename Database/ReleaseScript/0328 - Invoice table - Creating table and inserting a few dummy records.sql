@@ -15,6 +15,18 @@ GO
 
 insert into dbo.Invoice
 values
-	('Johnny B. Goode', 1/2/1955, 'Landowner Cost-Share Agreement', 'Pending', 1000, 5282),
-	('Little Miss Muffett', 2/15/1955, '113-091', 'Canceled', 5000, 5282)
+	('Johnny B. Goode', '1/2/2008', 'Landowner Cost-Share Agreement', 'Pending', 1000, 5282),
+	('Little Miss Muffett', '2/15/2010', '113-091', 'Canceled', 5000, 5282)
 go
+
+alter table dbo.Invoice
+add constraint FK_Invoice_Person_PreparedByPersonID_PersonID foreign key(PreparedByPersonID)
+references dbo.Person(PersonID) 
+go
+
+insert into dbo.FirmaPageType values
+(61, 'FullInvoiceList', 'Full Invoice List', 1)
+go
+
+insert into dbo.FirmaPage values
+(61, NULL)

@@ -457,6 +457,8 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Common\ToCsvListExtensions.cs" />
     <Compile Include="Controllers\PdfFormController.cs" />
     <Compile Include="Models\AgreementGrantAllocation.cs" />
@@ -530,6 +532,7 @@
     <Compile Include="Security\GrantAllocationsViewFeature.cs" />
     <Compile Include="Security\GrantNoteEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantsViewFeature.cs" />
+    <Compile Include="Security\InvoicesViewFullListFeature.cs" />
     <Compile Include="Security\GrantsViewFullListFeature.cs" />
     <Compile Include="Saml.cs" />
     <Compile Include="Security\FocusAreaViewFeature.cs" />
@@ -603,6 +606,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\Invoice\InvoiceGridSpec.cs" />
+    <Compile Include="Views\Invoice\InvoiceIndex.cs" />
+    <Compile Include="Views\Invoice\InvoiceIndexViewData.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewData.cs" />
@@ -1190,6 +1196,7 @@
     <Content Include="Views\Home\TrainingVideo.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocation.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationNote.cshtml" />
+    <Content Include="Views\Invoice\InvoiceIndex.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
