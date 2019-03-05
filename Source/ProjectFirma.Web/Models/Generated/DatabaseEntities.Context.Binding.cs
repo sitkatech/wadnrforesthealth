@@ -59,6 +59,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Grant> Grants { get; set; }
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -295,6 +296,9 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantType":
                     return GrantTypes.GetGrantType(primaryKey);
+
+                case "Invoice":
+                    return Invoices.GetInvoice(primaryKey);
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

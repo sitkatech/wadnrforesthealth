@@ -32,6 +32,7 @@
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -1131,6 +1132,18 @@
     </Key>
     <Property Name="GrantTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
+    <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
+    <Property Name="Status" Type="varchar" MaxLength="30" />
+    <Property Name="TotalPaymentAmount" Type="money" />
+    <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>

@@ -32,6 +32,7 @@
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.GrantNote" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
+    <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -1223,6 +1224,18 @@
     <Property Name="GrantTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="GrantType" ToRole="Grants" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestorName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Nullable="false" />
+    <Property Name="PurchaseAuthority" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Status" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
