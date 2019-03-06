@@ -143,6 +143,7 @@ VALUES
 (319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR'),
 (320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.'),
 (321, N'GrantNoteInternal', 'Internal Grant Note', N'<p>Any additional important information about the grant. These notes are only visible to internal users </p>'),
-(322, N'GrantAllocationNoteInternal', 'Internal Grant Allocation Note', N'<p>Any additional important information about the grant allocation. These notes are only visible to internal users </p>')
+(322, N'GrantAllocationNoteInternal', 'Internal Grant Allocation Note', N'<p>Any additional important information about the grant allocation. These notes are only visible to internal users </p>'),
+(323, N'InvoiceStatus', 'Invoice Status', N'<p>Any important information about the status of an invoice </p>')
 
 

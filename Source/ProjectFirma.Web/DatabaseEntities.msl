@@ -382,7 +382,7 @@
           <ScalarProperty Name="RequestorName" ColumnName="RequestorName" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="PurchaseAuthority" ColumnName="PurchaseAuthority" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="InvoiceStatus" ColumnName="InvoiceStatus" />
           <ScalarProperty Name="TotalPaymentAmount" ColumnName="TotalPaymentAmount" />
           <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
         </MappingFragment>

@@ -4,7 +4,7 @@ CREATE TABLE [dbo].[Invoice](
 	[RequestorName] [varchar](255) NOT NULL, --Landowner or Vendor (when fully implementing, use two fields with an exclusive or)
 	[InvoiceDate] [DateTime] NOT NULL,
 	[PurchaseAuthority] [varchar](255) NULL,
-	[Status] [varchar](30) NULL,
+	[InvoiceStatus] [varchar](30) NULL,
 	[TotalPaymentAmount] [money] NULL,
 	[PreparedByPersonID] [int] NOT NULL,
  CONSTRAINT [PK_Invoice_InvoiceID] PRIMARY KEY CLUSTERED 
