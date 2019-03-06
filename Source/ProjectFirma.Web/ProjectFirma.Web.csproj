@@ -537,6 +537,7 @@
     <Compile Include="Security\GrantAllocationsViewFeature.cs" />
     <Compile Include="Security\GrantNoteInternalEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantNoteEditAsAdminFeature.cs" />
+    <Compile Include="Security\GrantNoteInternalViewFeature.cs" />
     <Compile Include="Security\GrantsViewFeature.cs" />
     <Compile Include="Security\InvoicesViewFullListFeature.cs" />
     <Compile Include="Security\GrantsViewFullListFeature.cs" />
