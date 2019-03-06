@@ -150,7 +150,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantNoteEditAsAdminFeature]
+        [GrantNoteInternalEditAsAdminFeature]
         public PartialViewResult EditGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey)
         {
             var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
@@ -159,7 +159,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantNoteEditAsAdminFeature]
+        [GrantNoteInternalEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey, EditGrantNoteInternalViewModel viewModel)
         {
@@ -183,7 +183,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [GrantNoteEditAsAdminFeature]
+        [GrantNoteInternalEditAsAdminFeature]
         public PartialViewResult DeleteGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey)
         {
             var viewModel = new ConfirmDialogFormViewModel(grantNoteInternalPrimaryKey.PrimaryKeyValue);
@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantNoteEditAsAdminFeature]
+        [GrantNoteInternalEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
