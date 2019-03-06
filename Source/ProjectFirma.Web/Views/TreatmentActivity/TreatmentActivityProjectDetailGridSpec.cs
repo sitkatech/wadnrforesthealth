@@ -37,10 +37,10 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             bool userHasEditTreatmentPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             int buttonGridWidth = 30;
             Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTreatmentActivityUrl(), userHasEditTreatmentPermissions, true, true), buttonGridWidth, DhtmlxGridColumnFilterType.None);
-            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl()), userHasEditTreatmentPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);
+            Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl(), $"Edit Treatment Activity"), userHasEditTreatmentPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);
 
             Add("Contact", a => a.GetContactText(), 125, DhtmlxGridColumnFilterType.Html);
-            Add("Status", a => a.GetStatusDisplayName(), 75, DhtmlxGridColumnFilterType.Text);
+            Add("Status", a => a.GetStatusDisplayName(), 125, DhtmlxGridColumnFilterType.Text);
             Add("Program Index", a => a.GetProgramIndexName(), 75, DhtmlxGridColumnFilterType.Text);
             Add("Project Code", a => a.GetProjectCodeName(), 75, DhtmlxGridColumnFilterType.Text);
             Add("Start Date", a => a.TreatmentActivityStartDate, 125, DhtmlxGridColumnFormatType.Date);
