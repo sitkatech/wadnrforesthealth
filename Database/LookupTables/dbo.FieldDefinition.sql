@@ -140,6 +140,7 @@ VALUES
 (316, N'InvoiceDate', 'Invoice Date', 'The date the invoice was submitted.'),
 (317, N'PurchaseAuthority', 'Purchase Authority', 'Typically describes an Agreement Number or that the invoice is part of landowner cost-share agreement.'),
 (318, N'TotalRequestedInvoicePaymentAmount', 'Total Invoice Amount', 'The total amount of funding requested by a given invoice'),
-(319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR')
+(319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR'),
+(320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.')
 
 

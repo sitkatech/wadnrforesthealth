@@ -1142,6 +1142,7 @@
       <PropertyRef Name="InvoiceID" />
     </Key>
     <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceIdentifyingName" Type="varchar" MaxLength="255" />
     <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
     <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />

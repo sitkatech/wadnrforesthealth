@@ -1234,6 +1234,7 @@
       <PropertyRef Name="InvoiceID" />
     </Key>
     <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceIdentifyingName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="RequestorName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceDate" Type="DateTime" Nullable="false" />
     <Property Name="PurchaseAuthority" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />

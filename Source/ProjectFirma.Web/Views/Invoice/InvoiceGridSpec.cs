@@ -43,7 +43,9 @@ namespace ProjectFirma.Web.Views.Invoice
             SaveFiltersInCookie = true;
  
             // hidden column for Invoice ID for use by JavaScript
-            Add(InvoiceIdHiddenColumnName, x => x.InvoiceID, 0);
+            Add("Invoice ID", x => x.InvoiceID, 50);
+            Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x => x.InvoiceIdentifyingName,
+                InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.RequestorName.ToGridHeaderString(), x => x.RequestorName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.PurchaseAuthority.ToGridHeaderString(), x => x.PurchaseAuthority, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);

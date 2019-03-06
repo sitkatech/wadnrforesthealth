@@ -30,9 +30,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string requestorName, DateTime invoiceDate, string purchaseAuthority, string status, decimal? totalPaymentAmount, int preparedByPersonID) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string status, decimal? totalPaymentAmount, int preparedByPersonID) : this()
         {
             this.InvoiceID = invoiceID;
+            this.InvoiceIdentifyingName = invoiceIdentifyingName;
             this.RequestorName = requestorName;
             this.InvoiceDate = invoiceDate;
             this.PurchaseAuthority = purchaseAuthority;
@@ -110,6 +111,7 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int InvoiceID { get; set; }
+        public string InvoiceIdentifyingName { get; set; }
         public string RequestorName { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string PurchaseAuthority { get; set; }
@@ -123,6 +125,7 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
+            public const int InvoiceIdentifyingName = 255;
             public const int RequestorName = 255;
             public const int PurchaseAuthority = 255;
             public const int Status = 30;

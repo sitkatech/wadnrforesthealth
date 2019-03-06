@@ -1,6 +1,7 @@
 CREATE TABLE [dbo].[Invoice](
 	[InvoiceID] [int] IDENTITY(1,1) NOT NULL,
-	[RequestorName] [varchar](255) NOT NULL, --Landowner or Vendor
+	[InvoiceIdentifyingName] [varchar](255) NULL,
+	[RequestorName] [varchar](255) NOT NULL, --Landowner or Vendor (when fully implementing, use two fields with an exclusive or)
 	[InvoiceDate] [DateTime] NOT NULL,
 	[PurchaseAuthority] [varchar](255) NULL,
 	[Status] [varchar](30) NULL,
@@ -15,8 +16,8 @@ GO
 
 insert into dbo.Invoice
 values
-	('Johnny B. Goode', '1/2/2008', 'Landowner Cost-Share Agreement', 'Pending', 1000, 5282),
-	('Little Miss Muffett', '2/15/2010', '113-091', 'Canceled', 5000, 5282)
+	('Thinning on the Back 40', 'Johnny B. Goode', '1/2/2008', 'Landowner Cost-Share Agreement', 'Pending', 1000, 5282),
+	('Fuels reduction work on BlackAcre', 'Little Miss Muffett', '2/15/2010', '113-091', 'Canceled', 5000, 5282)
 go
 
 alter table dbo.Invoice

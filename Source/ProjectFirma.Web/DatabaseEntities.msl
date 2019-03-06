@@ -352,6 +352,7 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Invoice">
         <MappingFragment StoreEntitySet="Invoice">
           <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+          <ScalarProperty Name="InvoiceIdentifyingName" ColumnName="InvoiceIdentifyingName" />
           <ScalarProperty Name="RequestorName" ColumnName="RequestorName" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="PurchaseAuthority" ColumnName="PurchaseAuthority" />
