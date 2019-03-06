@@ -113,7 +113,7 @@ VALUES
 (289, N'TotalAwardAmount', 'Total Award Amount', N'<p>The total amount of money awarded by the grant. This may include the sum of all associated grant allocations. </p>'),
 (290, N'GrantStartDate', 'Start Date', N'<p>The start date of the grant. </p>'),
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
-(292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
+(292, N'GrantNote', 'Grant Note', N'<p>Any additional important information about the grant. </p>'),
 (293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
 (294, N'Invoice', 'Invoice', N'<p>Placeholder for Invoice</p>'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
@@ -128,7 +128,7 @@ VALUES
 (304, N'ProgramManager', 'Program Manager', 'Placeholder for Program Manager.'),
 (305, N'AgreementNotes', 'Agreement Notes', 'Placeholder for Agreement Notes.'),
 (306, N'AgreementStatus', 'Agreement Status', 'Placeholder for Agreement Status.'),
-(307, N'GrantAllocationNote', 'Grant Allocation Note', 'Placeholder for Grant Allocation Notes.'),
+(307, N'GrantAllocationNote', 'Grant Allocation Note', N'<p>Any additional important information about the grant allocation.</p>'),
 (308, N'FileResource', 'File Resource', 'Placeholder for File Resource.'),
 (309, N'ProjectTotalCompletedFootprintAcres', 'Project Completed Footprint Acres', 'Sum of Footprint Acres on all completed Treatment Activities under a Project.'),
 (310, N'FocusAreaTotalProjectReportedExpendiures', 'Sum of Project Reported Expendiures', 'Sum of reported expenditures on all Projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
@@ -141,6 +141,8 @@ VALUES
 (317, N'PurchaseAuthority', 'Purchase Authority', 'Typically describes an Agreement Number or that the invoice is part of landowner cost-share agreement.'),
 (318, N'TotalRequestedInvoicePaymentAmount', 'Total Invoice Amount', 'The total amount of funding requested by a given invoice'),
 (319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR'),
-(320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.')
+(320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.'),
+(321, N'GrantNoteInternal', 'Internal Grant Note', N'<p>Any additional important information about the grant. These notes are only visible to internal users </p>'),
+(322, N'GrantAllocationNoteInternal', 'Internal Grant Allocation Note', N'<p>Any additional important information about the grant allocation. These notes are only visible to internal users </p>')
 
 

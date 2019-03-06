@@ -26,7 +26,40 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     public abstract class EditGrantAllocationNoteInternal : TypedWebPartialViewPage<EditGrantAllocationNoteInternalViewData, EditGrantAllocationNoteInternalViewModel>
     {
     }
-    
 
-    
+    public abstract class EditGrantAllocationNoteInternalType
+    {
+        public readonly string IntroductoryText;
+
+        internal EditGrantAllocationNoteInternalType(string introductoryText)
+        {
+            IntroductoryText = introductoryText;
+        }
+
+        public static readonly EditGrantAllocationNoteInternalTypeNewNote NewNote = EditGrantAllocationNoteInternalTypeNewNote.Instance;
+        public static readonly EditGrantAllocationNoteInternalTypeExistingNote ExistingGrantAllocationNoteInternal = EditGrantAllocationNoteInternalTypeExistingNote.Instance;
+    }
+
+    public class EditGrantAllocationNoteInternalTypeNewNote : EditGrantAllocationNoteInternalType
+    {
+        private EditGrantAllocationNoteInternalTypeNewNote(string introductoryText) : base(introductoryText)
+        {
+        }
+
+        public static readonly EditGrantAllocationNoteInternalTypeNewNote Instance = new EditGrantAllocationNoteInternalTypeNewNote(
+            $"<p>Enter a new {Models.FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()}.</p>");
+    }
+
+    public class EditGrantAllocationNoteInternalTypeExistingNote : EditGrantAllocationNoteInternalType
+    {
+        private EditGrantAllocationNoteInternalTypeExistingNote(string introductoryText) : base(introductoryText)
+        {
+        }
+
+        public static readonly EditGrantAllocationNoteInternalTypeExistingNote Instance =
+            new EditGrantAllocationNoteInternalTypeExistingNote(
+                $"<p>Update this {Models.FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()}.</p>");
+    }
+
+
 }

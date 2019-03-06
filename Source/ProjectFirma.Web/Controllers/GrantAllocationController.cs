@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult NewGrantAllocationNoteInternal(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var viewModel = new EditGrantAllocationNoteInternalViewModel();
-            return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteType.NewNote);
+            return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.NewNote);
         }
 
         [HttpPost]
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteType.NewNote);
+                return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.NewNote);
             }
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             var grantAllocationNoteInternal = GrantAllocationNoteInternal.CreateNewBlank(grantAllocation, CurrentPerson);
@@ -127,9 +127,9 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private PartialViewResult ViewEditGrantAllocationNoteInternal(EditGrantAllocationNoteInternalViewModel viewModel, EditGrantAllocationNoteType editGrantAllocationNoteType)
+        private PartialViewResult ViewEditGrantAllocationNoteInternal(EditGrantAllocationNoteInternalViewModel viewModel, EditGrantAllocationNoteInternalType editGrantAllocationNoteInternalType)
         {
-            var viewData = new EditGrantAllocationNoteInternalViewData(editGrantAllocationNoteType);
+            var viewData = new EditGrantAllocationNoteInternalViewData(editGrantAllocationNoteInternalType);
             return RazorPartialView<EditGrantAllocationNoteInternal, EditGrantAllocationNoteInternalViewData, EditGrantAllocationNoteInternalViewModel>(viewData, viewModel);
         }
 
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantAllocationNoteInternal = grantAllocationNoteInternalPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationNoteInternalViewModel(grantAllocationNoteInternal);
-            return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
+            return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.ExistingGrantAllocationNoteInternal);
         }
 
         [HttpPost]
@@ -150,7 +150,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
+                return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.ExistingGrantAllocationNoteInternal);
             }
 
             var grantAllocationNoteInternal = grantAllocationNoteInternalPrimaryKey.EntityObject;
@@ -170,7 +170,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteGrantAllocationNoteInternal(GrantAllocationNoteInternal grantAllocationNoteInternal, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} created on '{grantAllocationNoteInternal.CreatedDate}' by '{grantAllocationNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()} created on '{grantAllocationNoteInternal.CreatedDate}' by '{grantAllocationNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -186,7 +186,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteGrantAllocationNoteInternal(grantAllocationNoteInternal, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} created on '{grantAllocationNoteInternal.CreatedDate}' by '{grantAllocationNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()} created on '{grantAllocationNoteInternal.CreatedDate}' by '{grantAllocationNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
             grantAllocationNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();

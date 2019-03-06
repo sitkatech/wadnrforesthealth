@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public int GrantAllocationNoteInternalID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationNote)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationNoteInternal)]
         [Required]
         public string GrantAllocationNoteInternalText { get; set; }
 

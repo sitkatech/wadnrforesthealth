@@ -3,11 +3,11 @@
     public class EditGrantNoteInternalViewData : FirmaUserControlViewData
     {
 
-        public EditGrantNoteType EditGrantNoteType { get; set; }
+        public EditGrantNoteInternalType EditGrantNoteInternalType { get; set; }
 
-        public EditGrantNoteInternalViewData(EditGrantNoteType editGrantNoteType)
+        public EditGrantNoteInternalViewData(EditGrantNoteInternalType editGrantNoteInternalType)
         {
-            EditGrantNoteType = editGrantNoteType;
+            EditGrantNoteInternalType = editGrantNoteInternalType;
         }
     }
 }

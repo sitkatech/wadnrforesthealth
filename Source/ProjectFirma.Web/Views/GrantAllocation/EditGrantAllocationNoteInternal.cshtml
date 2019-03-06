@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using LtInfo.Common.HtmlHelperExtensions
 @inherits ProjectFirma.Web.Views.GrantAllocation.EditGrantAllocationNoteInternal
 
-@Html.Raw(ViewDataTyped.EditGrantAllocationNoteType.IntroductoryText)
+@Html.Raw(ViewDataTyped.EditGrantAllocationNoteInternalType.IntroductoryText)
 
 @Html.ValidationSummary()
 
@@ -31,7 +31,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
     <div class="form-group">
         <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantAllocationNoteInternalText)
+            @Html.LabelWithSugarFor(m => m.GrantAllocationNoteInternalText, "Note")
         </div>
         <div class="col-xs-10">
             @Html.TextAreaFor(m => m.GrantAllocationNoteInternalText, new { @class = "form-control" })

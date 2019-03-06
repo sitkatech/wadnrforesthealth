@@ -31,11 +31,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     public class EditGrantAllocationNoteInternalViewData : FirmaUserControlViewData
     {
 
-        public EditGrantAllocationNoteType EditGrantAllocationNoteType { get; set; }
+        public EditGrantAllocationNoteInternalType EditGrantAllocationNoteInternalType { get; set; }
 
-        public EditGrantAllocationNoteInternalViewData(EditGrantAllocationNoteType editGrantAllocationNoteType)
+        public EditGrantAllocationNoteInternalViewData(EditGrantAllocationNoteInternalType editGrantAllocationNoteInternalType)
         {
-            EditGrantAllocationNoteType = editGrantAllocationNoteType;
+            EditGrantAllocationNoteInternalType = editGrantAllocationNoteInternalType;
         }
     }
 }
