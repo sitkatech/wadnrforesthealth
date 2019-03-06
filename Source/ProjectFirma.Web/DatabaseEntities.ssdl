@@ -33,6 +33,7 @@
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -303,6 +304,10 @@
     <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
+      <End Role="PreparedByPerson" EntitySet="Person" />
+      <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1156,6 +1161,19 @@
     </Key>
     <Property Name="GrantTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceIdentifyingName" Type="varchar" MaxLength="255" />
+    <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
+    <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
+    <Property Name="Status" Type="varchar" MaxLength="30" />
+    <Property Name="TotalPaymentAmount" Type="money" />
+    <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2672,6 +2690,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
+    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PreparedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
+        <PropertyRef Name="PreparedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -61,6 +61,5 @@ namespace ProjectFirma.Web.Models
                 return $"Grant: {grantName}";
             }
         }
-
     }
 }

@@ -115,8 +115,7 @@ VALUES
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
 (292, N'GrantNote', 'Note', N'<p>Any additional important information about the grant. </p>'),
 (293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
--- On the next field addition, feel free to replace this Placeholder with something real -- SLG
-(294, N'PLACEHOLDERDONOTUSE', 'PLACEHOLDER', N'Placeholder'),
+(294, N'Invoice', 'Invoice', N'<p>Placeholder for Invoice</p>'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
 (297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.'),
@@ -136,6 +135,12 @@ VALUES
 (311, N'FocusAreaTotalProjectEstimatedTotalCosts', 'Sum of Project Estimated Total Costs', 'Sum of estimated total costs on all Projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
 (312, N'FocusAreaTotalCompletedFootprintAcres', 'Total Footprint Acres - Completed', 'Sum of Footprint Acres on all completed Treatment Activities under all Projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
 (313, N'FocusAreaTotalPlannedFootprintAcres', 'Total Footprint Acres - Planned', 'The value entered in the Planned Footprint Acres field of a Focus Area'),
-(314, N'FocusAreaCloseoutReportProjectList', 'Project List', 'All projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.')
+(314, N'FocusAreaCloseoutReportProjectList', 'Project List', 'All projects within a Focus Area that are in an Implementation, Post-Implementation, or Completed Project Stage.'),
+(315, N'RequestorName', 'Requestor Name', 'The name of the person/vendor preparing the invoice requesting payment.' ),
+(316, N'InvoiceDate', 'Invoice Date', 'The date the invoice was submitted.'),
+(317, N'PurchaseAuthority', 'Purchase Authority', 'Typically describes an Agreement Number or that the invoice is part of landowner cost-share agreement.'),
+(318, N'TotalRequestedInvoicePaymentAmount', 'Total Invoice Amount', 'The total amount of funding requested by a given invoice'),
+(319, N'PreparedByPerson', 'Prepared By', 'The person preparing the invoice for submission to IPR'),
+(320, N'InvoiceIdentifyingName', 'Invoice Nickname', 'This name is a nickname to make identification of particular invoices easier.')
 
 
