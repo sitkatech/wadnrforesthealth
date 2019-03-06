@@ -64,6 +64,7 @@
 
         if (replace) {
             container.empty();
+            error.addClass('hiddenError');
             error.removeClass("input-validation-error").appendTo(container);
         }
         else {

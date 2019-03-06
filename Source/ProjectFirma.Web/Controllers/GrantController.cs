@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult NewGrantNoteInternal(GrantPrimaryKey grantPrimaryKey)
         {
             var viewModel = new EditGrantNoteInternalViewModel();
-            return ViewEditNoteInternal(viewModel, EditGrantNoteType.NewNote);
+            return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.NewNote);
         }
 
         [HttpPost]
@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditNoteInternal(viewModel, EditGrantNoteType.NewNote);
+                return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.NewNote);
             }
             var grant = grantPrimaryKey.EntityObject;
             var grantNoteInternal = GrantNoteInternal.CreateNewBlank(grant, CurrentPerson);
@@ -142,10 +142,10 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private PartialViewResult ViewEditNoteInternal(EditGrantNoteInternalViewModel viewModel, EditGrantNoteType editGrantNoteType)
+        private PartialViewResult ViewEditNoteInternal(EditGrantNoteInternalViewModel viewModel, EditGrantNoteInternalType editGrantNoteInternalType)
         {
-            var viewData = new EditGrantNoteViewData(editGrantNoteType);
-            return RazorPartialView<EditGrantNoteInternal, EditGrantNoteViewData, EditGrantNoteInternalViewModel>(viewData, viewModel);
+            var viewData = new EditGrantNoteInternalViewData(editGrantNoteInternalType);
+            return RazorPartialView<EditGrantNoteInternal, EditGrantNoteInternalViewData, EditGrantNoteInternalViewModel>(viewData, viewModel);
         }
 
 
@@ -155,7 +155,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
             var viewModel = new EditGrantNoteInternalViewModel(grantNoteInternal);
-            return ViewEditNoteInternal(viewModel, EditGrantNoteType.ExistingNote);
+            return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.ExistingNote);
         }
 
         [HttpPost]
@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewEditNoteInternal(viewModel, EditGrantNoteType.ExistingNote);
+                return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.ExistingNote);
             }
 
             var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
@@ -192,7 +192,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteGrantNoteInternal(GrantNoteInternal grantNoteInternal, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -208,7 +208,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteGrantNoteInternal(grantNoteInternal, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            var message = $"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
             grantNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
