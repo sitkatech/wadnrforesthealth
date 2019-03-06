@@ -30,14 +30,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string status, decimal? totalPaymentAmount, int preparedByPersonID) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string invoiceStatus, decimal? totalPaymentAmount, int preparedByPersonID) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
             this.RequestorName = requestorName;
             this.InvoiceDate = invoiceDate;
             this.PurchaseAuthority = purchaseAuthority;
-            this.Status = status;
+            this.InvoiceStatus = invoiceStatus;
             this.TotalPaymentAmount = totalPaymentAmount;
             this.PreparedByPersonID = preparedByPersonID;
         }
@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Models
         public string RequestorName { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string PurchaseAuthority { get; set; }
-        public string Status { get; set; }
+        public string InvoiceStatus { get; set; }
         public decimal? TotalPaymentAmount { get; set; }
         public int PreparedByPersonID { get; set; }
         [NotMapped]
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Models
             public const int InvoiceIdentifyingName = 255;
             public const int RequestorName = 255;
             public const int PurchaseAuthority = 255;
-            public const int Status = 30;
+            public const int InvoiceStatus = 30;
         }
     }
 }

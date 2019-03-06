@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[Invoice](
 	[RequestorName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[InvoiceDate] [datetime] NOT NULL,
 	[PurchaseAuthority] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[Status] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[InvoiceStatus] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TotalPaymentAmount] [money] NULL,
 	[PreparedByPersonID] [int] NOT NULL,
  CONSTRAINT [PK_Invoice_InvoiceID] PRIMARY KEY CLUSTERED 

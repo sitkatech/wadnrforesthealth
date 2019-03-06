@@ -1196,7 +1196,7 @@
     <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
     <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
-    <Property Name="Status" Type="varchar" MaxLength="30" />
+    <Property Name="InvoiceStatus" Type="varchar" MaxLength="30" />
     <Property Name="TotalPaymentAmount" Type="money" />
     <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
   </EntityType>
