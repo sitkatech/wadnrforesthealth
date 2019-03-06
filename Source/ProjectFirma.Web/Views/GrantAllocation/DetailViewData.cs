@@ -30,8 +30,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public GrantAllocationBasicsViewData GrantAllocationBasicsViewData { get; }
         public string NewGrantAllocationNoteUrl { get; set; }
         public EntityNotesViewData GrantAllocationNotesViewData { get; set; }
+        public EntityNotesViewData GrantAllocationNoteInternalsViewData { get; set; }
 
-        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation, GrantAllocationBasicsViewData grantAllocationBasicsViewData, EntityNotesViewData grantAllocationNotesViewData)
+        public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
+            , GrantAllocationBasicsViewData grantAllocationBasicsViewData
+            , EntityNotesViewData grantAllocationNotesViewData
+            , EntityNotesViewData grantAllocationNoteInternalsViewData)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.ProjectName.ToEllipsifiedStringClean(110);
@@ -41,6 +45,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationNotesViewData = grantAllocationNotesViewData;
 
             NewGrantAllocationNoteUrl = grantAllocation.GetNewNoteUrl();
+            GrantAllocationNoteInternalsViewData = grantAllocationNoteInternalsViewData;
         }
     }
 }

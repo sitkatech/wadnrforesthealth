@@ -144,8 +144,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditNoteInternal(EditGrantNoteInternalViewModel viewModel, EditGrantNoteType editGrantNoteType)
         {
-            var viewData = new EditGrantNoteViewData(editGrantNoteType);
-            return RazorPartialView<EditGrantNoteInternal, EditGrantNoteViewData, EditGrantNoteInternalViewModel>(viewData, viewModel);
+            var viewData = new EditGrantNoteInternalViewData(editGrantNoteType);
+            return RazorPartialView<EditGrantNoteInternal, EditGrantNoteInternalViewData, EditGrantNoteInternalViewModel>(viewData, viewModel);
         }
 
 

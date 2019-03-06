@@ -2,7 +2,7 @@
 
 namespace ProjectFirma.Web.Views.Grant
 {
-    public abstract class EditGrantNoteInternal : TypedWebPartialViewPage<EditGrantNoteViewData, EditGrantNoteInternalViewModel>
+    public abstract class EditGrantNoteInternal : TypedWebPartialViewPage<EditGrantNoteInternalViewData, EditGrantNoteInternalViewModel>
     {
     }
 }
