@@ -28,14 +28,16 @@ namespace ProjectFirma.Web.Views.Grant
     {
         public string NewGrantNoteUrl { get; set; }
         public EntityNotesViewData GrantNotesViewData { get; set; }
+        public EntityNotesViewData InternalGrantNotesViewData { get; set; }
 
-        public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData)
+        public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
         {
             PageTitle = grant.GrantTitle.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} Detail";
             NewGrantNoteUrl = grant.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
+            InternalGrantNotesViewData = internalNotesViewData;
         }
     }
 }
