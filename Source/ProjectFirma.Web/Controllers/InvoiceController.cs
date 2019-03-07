@@ -48,8 +48,5 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Invoice>(invoices, gridSpec);
             return gridJsonNetJObjectResult;
         }
-
-
-
     }
 }
