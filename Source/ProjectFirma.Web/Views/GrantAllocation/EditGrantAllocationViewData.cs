@@ -53,9 +53,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
             Regions = regions.OrderBy(x => x.RegionName).ToSelectListWithEmptyFirstRow(x => x.RegionID.ToString(CultureInfo.InvariantCulture), y => y.RegionName);
             ProjectCodes = projectCodes.ToSelectList(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => y.ProjectCodeAbbrev);
-            ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(
+            ProgramIndices = programIndices.OrderBy(x => x.ProgramIndexAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => y.ProgramIndexAbbrev);
-            FederalFundCodes = federalFundCodes.ToSelectListWithEmptyFirstRow(
+            FederalFundCodes = federalFundCodes.OrderBy(x => x.FederalFundCodeAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
             ProgramManagers = programManagers.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
