@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
@@ -27,6 +29,9 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Invoice;
+using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using ProjectFirma.Web.Views.Shared.InvoiceControls;
+using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -38,6 +43,26 @@ namespace ProjectFirma.Web.Controllers
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullInvoiceList);
             var viewData = new InvoiceIndexViewData(CurrentPerson, firmaPage);
             return RazorView<InvoiceIndex, InvoiceIndexViewData>(viewData);
+        }
+
+        [HttpGet]
+        [InvoiceViewFeature]
+        public ViewResult InvoiceDetail(InvoicePrimaryKey invoicePrimaryKey)
+        {
+            var invoice =
+                HttpRequestStorage.DatabaseEntities.Invoices.SingleOrDefault(i =>
+                    i.InvoiceID == invoicePrimaryKey.PrimaryKeyValue);
+            if (invoice == null)
+            {
+                throw new Exception(
+                    $"Could not find InvoiceID # {invoicePrimaryKey.PrimaryKeyValue}; has it been deleted?");
+            }
+
+            var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
+            var invoiceBasicsViewData = new InvoiceBasicsViewData(invoice, false, taxonomyLevel);
+            // var userHasEditInvoicePermissions = new InvoiceEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
+            var viewData = new Views.Invoice.DetailViewData(CurrentPerson, invoice, invoiceBasicsViewData);
+            return RazorView<Views.Invoice.Detail, Views.Invoice.DetailViewData>(viewData);
         }
 
         [InvoicesViewFullListFeature]

@@ -21,20 +21,20 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
+namespace ProjectFirma.Web.Views.Shared.InvoiceControls
 {
-    public class GrantAllocationBasicsViewData
+    public class InvoiceBasicsViewData
     {
-        public Models.GrantAllocation GrantAllocation { get; }
-        public bool UserHasGrantAllocationManagePermissions { get; }
+        public Models.Invoice Invoice { get; }
+        public bool UserHasProjectBudgetManagePermissions { get; }
         public string OrganizationDisplayName { get; }
-        //public GrantAllocationTaxonomyViewData GrantAllocationTaxonomyViewData { get; }
+        //public InvoiceTaxonomyViewData InvoiceTaxonomyViewData { get; }
 
-        public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasGrantAllocationManagePermissions, TaxonomyLevel taxonomyLevel)
+        public InvoiceBasicsViewData(Models.Invoice invoice, bool userHasProjectBudgetManagePermissions, TaxonomyLevel taxonomyLevel)
         {
-            GrantAllocation = grantAllocation;
-            UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
-            OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
+            Invoice = invoice;
+            UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
+            //OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
             //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
         }        
     }

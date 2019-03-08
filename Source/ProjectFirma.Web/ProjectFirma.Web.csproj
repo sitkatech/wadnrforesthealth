@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -490,6 +490,7 @@
     <Compile Include="Models\GrantNoteInternal.cs" />
     <Compile Include="Models\GrantStatus.cs" />
     <Compile Include="Models\GrantType.cs" />
+    <Compile Include="Models\InvoiceModelExtensions.cs" />
     <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
@@ -548,11 +549,13 @@
     <Compile Include="Security\GrantNoteEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantNoteInternalViewFeature.cs" />
     <Compile Include="Security\GrantsViewFeature.cs" />
+    <Compile Include="Security\InvoiceEditAsAdminFeature.cs" />
     <Compile Include="Security\InvoicesViewFullListFeature.cs" />
     <Compile Include="Security\GrantsViewFullListFeature.cs" />
     <Compile Include="Saml.cs" />
     <Compile Include="Security\FocusAreaViewFeature.cs" />
     <Compile Include="Security\FocusAreaManageFeature.cs" />
+    <Compile Include="Security\InvoiceViewFeature.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityAreaManageFeature.cs" />
     <Compile Include="Security\RegionManageFeature.cs" />
@@ -628,6 +631,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\Invoice\Detail.cs" />
+    <Compile Include="Views\Invoice\DetailViewData.cs" />
+    <Compile Include="Views\Invoice\InvoiceViewData.cs" />
     <Compile Include="Views\Invoice\InvoiceGridSpec.cs" />
     <Compile Include="Views\Invoice\InvoiceIndex.cs" />
     <Compile Include="Views\Invoice\InvoiceIndexViewData.cs" />
@@ -682,6 +688,8 @@
     <Compile Include="Views\Region\MapTooltipViewData.cs" />
     <Compile Include="Views\Shared\GrantAllocationControls\GrantAllocationBasics.cs" />
     <Compile Include="Views\Shared\GrantAllocationControls\GrantAllocationBasicsViewData.cs" />
+    <Compile Include="Views\Shared\InvoiceControls\InvoiceBasics.cs" />
+    <Compile Include="Views\Shared\InvoiceControls\InvoiceBasicsViewData.cs" />
     <Compile Include="Views\Shared\ProjectControls\EditProjectAttributes.cs" />
     <Compile Include="Views\Shared\ProjectControls\EditProjectAttributesViewData.cs" />
     <Compile Include="Views\Shared\ProjectControls\EditProjectAttributesViewModel.cs" />
@@ -1221,6 +1229,7 @@
     <Content Include="Views\Grant\EditGrantNoteInternal.cshtml" />
     <Content Include="Views\Invoice\InvoiceIndex.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationNoteInternal.cshtml" />
+    <Content Include="Views\Invoice\Detail.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
@@ -1827,6 +1836,7 @@
     <Content Include="Views\Shared\ProjectControls\EditProjectAttributes.cshtml" />
     <Content Include="Views\Shared\GrantAllocationControls\GrantAllocationBasics.cshtml" />
     <Content Include="Views\Shared\ProjectCostShare\ProjectCostShare.cshtml" />
+    <Content Include="Views\Shared\InvoiceControls\InvoiceBasics.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
