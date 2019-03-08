@@ -51,10 +51,63 @@ Source code is available upon request via <support@sitkatech.com>.
 <div class="basicsLayout">
     <div class="row">
         <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.Invoice)
+            @Html.LabelWithSugarFor(FieldDefinition.InvoiceIdentifyingName)
         </div>
         <div class="col-sm-9">
             <span>@ViewDataTyped.Invoice.InvoiceIdentifyingName</span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.RequestorName)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.RequestorName</span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.InvoiceDate)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.InvoiceDateDisplay</span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.PurchaseAuthority)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.PurchaseAuthority</span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.TotalRequestedInvoicePaymentAmount)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.TotalPaymentAmount</span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.InvoiceApprovalStatus)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.InvoiceApprovalStatus.InvoiceApprovalStatusName</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.InvoiceApprovalComment)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.InvoiceApprovalStatusComment</span>
         </div>
     </div>
 </div>
