@@ -35,6 +35,7 @@
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
+    <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.InvoiceApprovalStatus" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -373,6 +374,10 @@
     <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
+      <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
+      <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
@@ -1299,7 +1304,18 @@
     <Property Name="InvoiceStatus" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
+    <Property Name="InvoiceApprovalStatusID" Type="Int32" />
+    <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="InvoiceApprovalStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="Invoices" ToRole="InvoiceApprovalStatus" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
+  </EntityType>
+  <EntityType Name="InvoiceApprovalStatus">
+    <Key>
+      <PropertyRef Name="InvoiceApprovalStatusID" />
+    </Key>
+    <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
+    <Property Name="InvoiceApprovalStatusName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="InvoiceApprovalStatus" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -3265,6 +3281,18 @@
       </Principal>
       <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
+    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.InvoiceApprovalStatus" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceApprovalStatus">
+        <PropertyRef Name="InvoiceApprovalStatusID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="InvoiceApprovalStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

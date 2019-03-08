@@ -385,6 +385,16 @@
           <ScalarProperty Name="InvoiceStatus" ColumnName="InvoiceStatus" />
           <ScalarProperty Name="TotalPaymentAmount" ColumnName="TotalPaymentAmount" />
           <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
+          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
+          <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceApprovalStatus">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceApprovalStatus">
+        <MappingFragment StoreEntitySet="InvoiceApprovalStatus">
+          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
+          <ScalarProperty Name="InvoiceApprovalStatusName" ColumnName="InvoiceApprovalStatusName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

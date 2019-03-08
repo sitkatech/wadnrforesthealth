@@ -42,7 +42,6 @@ namespace ProjectFirma.Web.Views.Invoice
             ObjectNamePlural = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
  
-            // hidden column for Invoice ID for use by JavaScript
             Add("Invoice ID", x => x.InvoiceID, 50);
             Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x => x.InvoiceIdentifyingName,
                 InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
@@ -52,6 +51,8 @@ namespace ProjectFirma.Web.Views.Invoice
             Add(Models.FieldDefinition.InvoiceStatus.ToGridHeaderString(), x =>
                 x.InvoiceStatus, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.TotalRequestedInvoicePaymentAmount.ToGridHeaderString(), x => x.TotalPaymentAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.InvoiceApprovalStatus.ToGridHeaderString(), x =>
+                    x.InvoiceApprovalStatus.InvoiceApprovalStatusName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.PreparedByPerson.ToGridHeaderString(), x => x.PreparedByPerson.FullNameFirstLast, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }

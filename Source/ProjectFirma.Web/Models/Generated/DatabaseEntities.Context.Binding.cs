@@ -61,6 +61,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Grant> Grants { get; set; }
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
+        public virtual DbSet<InvoiceApprovalStatus> InvoiceApprovalStatuses { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
@@ -304,6 +305,9 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantType":
                     return GrantTypes.GetGrantType(primaryKey);
+
+                case "InvoiceApprovalStatus":
+                    return InvoiceApprovalStatuses.GetInvoiceApprovalStatus(primaryKey);
 
                 case "Invoice":
                     return Invoices.GetInvoice(primaryKey);

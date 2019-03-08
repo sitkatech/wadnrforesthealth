@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string invoiceStatus, decimal? totalPaymentAmount, int preparedByPersonID) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string invoiceStatus, decimal? totalPaymentAmount, int preparedByPersonID, int? invoiceApprovalStatusID, string invoiceApprovalStatusComment) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
@@ -40,6 +40,8 @@ namespace ProjectFirma.Web.Models
             this.InvoiceStatus = invoiceStatus;
             this.TotalPaymentAmount = totalPaymentAmount;
             this.PreparedByPersonID = preparedByPersonID;
+            this.InvoiceApprovalStatusID = invoiceApprovalStatusID;
+            this.InvoiceApprovalStatusComment = invoiceApprovalStatusComment;
         }
 
         /// <summary>
@@ -118,10 +120,13 @@ namespace ProjectFirma.Web.Models
         public string InvoiceStatus { get; set; }
         public decimal? TotalPaymentAmount { get; set; }
         public int PreparedByPersonID { get; set; }
+        public int? InvoiceApprovalStatusID { get; set; }
+        public string InvoiceApprovalStatusComment { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }
 
         public virtual Person PreparedByPerson { get; set; }
+        public virtual InvoiceApprovalStatus InvoiceApprovalStatus { get; set; }
 
         public static class FieldLengths
         {
