@@ -1,0 +1,108 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.Models
+@inherits ProjectFirma.Web.Views.Invoice.EditInvoice
+
+@Html.Raw(ViewDataTyped.EditInvoiceType.IntroductoryText)
+
+@Html.ValidationSummary()
+
+<script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+@*<script type="text/javascript">
+    // <![CDATA[
+
+    jQuery(document).ready(function () {
+        jQuery(".selectpicker").selectpicker("refresh");
+    });
+    // ]]>
+</script>*@
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.InvoiceIdentifyingName)
+            </div>
+            <div class="col-xs-6">
+                @Html.TextBoxFor(m => m.InvoiceIdentifyingName, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.InvoiceIdentifyingName)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.RequestorName)
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(m => m.RequestorName, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RequestorName)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.InvoiceDate)
+            </div>
+            <div class="col-xs-6">
+                @Html.EditorFor(m => m.InvoiceDate, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.InvoiceDate)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.PurchaseAuthority)
+            </div>
+            <div class="col-xs-6">
+                @Html.TextBoxFor(m => m.PurchaseAuthority, new { style = "width: 100;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PurchaseAuthority)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.InvoiceAmount)
+            </div>
+            <div class="col-xs-2">
+                @Html.TextBoxFor(m => m.InvoiceAmount, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.InvoiceAmount)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusID)
+            </div>
+            <div class="col-xs-2">
+                @Html.DropDownListFor(m => m.InvoiceApprovalStatusID, ViewDataTyped.InvoiceApprovalStatuses, new {style = "width: auto;", @class = "form-control"})
+                @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment)
+            </div>
+            <div class="col-xs-6">
+                @Html.TextAreaFor(m => m.InvoiceApprovalStatusComment, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusComment)
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.InvoiceID)
+}

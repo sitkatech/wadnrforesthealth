@@ -1304,7 +1304,7 @@
     <Property Name="InvoiceStatus" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceApprovalStatusID" Type="Int32" />
+    <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="InvoiceApprovalStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="Invoices" ToRole="InvoiceApprovalStatus" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
@@ -3285,7 +3285,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.InvoiceApprovalStatus" Multiplicity="0..1" />
+    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.InvoiceApprovalStatus" Multiplicity="1" />
     <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="InvoiceApprovalStatus">

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectBasicsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,22 +19,28 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Web.Mvc;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using LtInfo.Common.Mvc;
+using MoreLinq;
 
-namespace ProjectFirma.Web.Views.Shared.InvoiceControls
+namespace ProjectFirma.Web.Views.Invoice
 {
-    public class InvoiceBasicsViewData
+    public class EditInvoiceViewData : FirmaUserControlViewData
     {
-        public Models.Invoice Invoice { get; }
-        public bool UserHasProjectBudgetManagePermissions { get; }
-        //public InvoiceTaxonomyViewData InvoiceTaxonomyViewData { get; }
+        public IEnumerable<SelectListItem> InvoiceApprovalStatuses { get; set; }
+        public EditInvoiceType EditInvoiceType { get; set; }
 
-        public InvoiceBasicsViewData(Models.Invoice invoice, bool userHasProjectBudgetManagePermissions, TaxonomyLevel taxonomyLevel)
+        public EditInvoiceViewData(EditInvoiceType editInvoiceType, IEnumerable<Models.InvoiceApprovalStatus> invoiceApprovalStatuses)
         {
-            Invoice = invoice;
-            UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
-            //OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
-            //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
-        }        
+            InvoiceApprovalStatuses = invoiceApprovalStatuses.ToSelectList(x => x.InvoiceApprovalStatusID.ToString(CultureInfo.InvariantCulture), y => y.InvoiceApprovalStatusName);
+            EditInvoiceType = editInvoiceType;
+        }
+
     }
 }

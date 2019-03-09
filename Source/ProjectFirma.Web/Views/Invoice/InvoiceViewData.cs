@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.Invoice
             Invoice = invoice;
             HtmlPageTitle = invoice.InvoiceIdentifyingName;
             EntityName = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}";
-            //EditInvoiceUrl = invoice.GetEditUrl();
+            EditInvoiceUrl = invoice.GetEditUrl();
             UserHasEditInvoicePermissions = new InvoiceEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             BackToInvoicesText = "Back to all Invoices";
             InvoicesListUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.Index());

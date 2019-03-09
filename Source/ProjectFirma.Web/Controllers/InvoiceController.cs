@@ -46,6 +46,37 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
+        [InvoiceEditAsAdminFeature]
+        public PartialViewResult Edit(InvoicePrimaryKey invoicePrimaryKey)
+        {
+            var invoice = invoicePrimaryKey.EntityObject;
+            var viewModel = new EditInvoiceViewModel(invoice);
+            return InvoiceViewEdit(viewModel, EditInvoiceType.ExistingInvoice);
+        }
+
+        [HttpPost]
+        [InvoiceEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Edit(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceViewModel viewModel)
+        {
+            var invoice = invoicePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return InvoiceViewEdit(viewModel, EditInvoiceType.ExistingInvoice);
+            }
+
+            viewModel.UpdateModel(invoice, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult InvoiceViewEdit(EditInvoiceViewModel viewModel, EditInvoiceType editInvoiceType)
+        {
+            var invoiceApprovalStatuses = HttpRequestStorage.DatabaseEntities.InvoiceApprovalStatuses;
+            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses);
+            return RazorPartialView<EditInvoice, EditInvoiceViewData, EditInvoiceViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
         [InvoiceViewFeature]
         public ViewResult InvoiceDetail(InvoicePrimaryKey invoicePrimaryKey)
         {
@@ -60,7 +91,6 @@ namespace ProjectFirma.Web.Controllers
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var invoiceBasicsViewData = new InvoiceBasicsViewData(invoice, false, taxonomyLevel);
-            // var userHasEditInvoicePermissions = new InvoiceEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
             var viewData = new Views.Invoice.DetailViewData(CurrentPerson, invoice, invoiceBasicsViewData);
             return RazorView<Views.Invoice.Detail, Views.Invoice.DetailViewData>(viewData);
         }

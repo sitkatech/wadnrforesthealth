@@ -1204,7 +1204,7 @@
     <Property Name="InvoiceStatus" Type="varchar" MaxLength="30" />
     <Property Name="TotalPaymentAmount" Type="money" />
     <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
-    <Property Name="InvoiceApprovalStatusID" Type="int" />
+    <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="InvoiceApprovalStatus">
@@ -2769,7 +2769,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" Multiplicity="0..1" />
+    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" Multiplicity="1" />
     <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="InvoiceApprovalStatus">

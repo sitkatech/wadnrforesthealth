@@ -44,6 +44,7 @@ namespace ProjectFirma.Web.Common
         public const string LettersOnly = "Only letters are allowed.";
         public const string MoreThanOneProjectUpdateInProgress = "Cannot determine latest update state; more than one update is in progress.";
         public static readonly string ImplementationYearMustBePastOrPresentForImplementationProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Implementation stage cannot have an {FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel()} in the future.";
+        public static readonly string InvoiceNicknameMustBePopulated = "You must provide an Invoice nickname.";
 
     }
 }

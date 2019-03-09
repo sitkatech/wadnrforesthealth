@@ -28,9 +28,6 @@ namespace ProjectFirma.Web.Views.Invoice
     public class DetailViewData : InvoiceViewData
     {
         public InvoiceBasicsViewData InvoiceBasicsViewData { get; set; }
-        public string NewGrantNoteUrl { get; set; }
-        public EntityNotesViewData GrantNotesViewData { get; set; }
-        public EntityNotesViewData InternalGrantNotesViewData { get; set; }
 
         public DetailViewData(Person currentPerson, Models.Invoice invoice, InvoiceBasicsViewData invoiceBasicsViewData)
             : base(currentPerson, invoice)

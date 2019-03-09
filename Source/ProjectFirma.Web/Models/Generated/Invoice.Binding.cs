@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string invoiceStatus, decimal? totalPaymentAmount, int preparedByPersonID, int? invoiceApprovalStatusID, string invoiceApprovalStatusComment) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, string invoiceStatus, decimal? totalPaymentAmount, int preparedByPersonID, int invoiceApprovalStatusID, string invoiceApprovalStatusComment) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(string requestorName, DateTime invoiceDate, int preparedByPersonID) : this()
+        public Invoice(string requestorName, DateTime invoiceDate, int preparedByPersonID, int invoiceApprovalStatusID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -55,12 +55,13 @@ namespace ProjectFirma.Web.Models
             this.RequestorName = requestorName;
             this.InvoiceDate = invoiceDate;
             this.PreparedByPersonID = preparedByPersonID;
+            this.InvoiceApprovalStatusID = invoiceApprovalStatusID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Invoice(string requestorName, DateTime invoiceDate, Person preparedByPerson) : this()
+        public Invoice(string requestorName, DateTime invoiceDate, Person preparedByPerson, InvoiceApprovalStatus invoiceApprovalStatus) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -69,14 +70,17 @@ namespace ProjectFirma.Web.Models
             this.PreparedByPersonID = preparedByPerson.PersonID;
             this.PreparedByPerson = preparedByPerson;
             preparedByPerson.InvoicesWhereYouAreThePreparedByPerson.Add(this);
+            this.InvoiceApprovalStatusID = invoiceApprovalStatus.InvoiceApprovalStatusID;
+            this.InvoiceApprovalStatus = invoiceApprovalStatus;
+            invoiceApprovalStatus.Invoices.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Invoice CreateNewBlank(Person preparedByPerson)
+        public static Invoice CreateNewBlank(Person preparedByPerson, InvoiceApprovalStatus invoiceApprovalStatus)
         {
-            return new Invoice(default(string), default(DateTime), preparedByPerson);
+            return new Invoice(default(string), default(DateTime), preparedByPerson, invoiceApprovalStatus);
         }
 
         /// <summary>
@@ -120,7 +124,7 @@ namespace ProjectFirma.Web.Models
         public string InvoiceStatus { get; set; }
         public decimal? TotalPaymentAmount { get; set; }
         public int PreparedByPersonID { get; set; }
-        public int? InvoiceApprovalStatusID { get; set; }
+        public int InvoiceApprovalStatusID { get; set; }
         public string InvoiceApprovalStatusComment { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }

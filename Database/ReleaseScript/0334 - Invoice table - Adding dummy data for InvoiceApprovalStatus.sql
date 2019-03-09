@@ -7,3 +7,10 @@ update dbo.Invoice
 set InvoiceApprovalStatusID = 3, InvoiceApprovalStatusComment = 'Denied. Invoice requested amount does not match agreement amount.'
 where InvoiceID = 2
 go
+
+alter table 
+	dbo.Invoice
+alter column 
+	InvoiceApprovalStatusID 
+		int NOT NULL;
+go

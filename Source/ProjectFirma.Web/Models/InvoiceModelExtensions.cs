@@ -45,11 +45,11 @@ namespace ProjectFirma.Web.Models
         }
 
 
-        //public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
-        //public static string GetEditUrl(this Invoice invoice)
-        //{
-        //    return EditUrlTemplate.ParameterReplace(invoice.InvoiceID);
-        //}
+        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
+        public static string GetEditUrl(this Invoice invoice)
+        {
+            return EditUrlTemplate.ParameterReplace(invoice.InvoiceID);
+        }
 
         //public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationNote(UrlTemplate.Parameter1Int)));
         //public static string GetNewNoteUrl(this GrantAllocation grantAllocation)

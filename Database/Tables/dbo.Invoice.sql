@@ -11,7 +11,7 @@ CREATE TABLE [dbo].[Invoice](
 	[InvoiceStatus] [varchar](30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[TotalPaymentAmount] [money] NULL,
 	[PreparedByPersonID] [int] NOT NULL,
-	[InvoiceApprovalStatusID] [int] NULL,
+	[InvoiceApprovalStatusID] [int] NOT NULL,
 	[InvoiceApprovalStatusComment] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Invoice_InvoiceID] PRIMARY KEY CLUSTERED 
 (
