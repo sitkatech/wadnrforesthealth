@@ -1306,6 +1306,7 @@
     <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="InvoiceApprovalStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="Invoices" ToRole="InvoiceApprovalStatus" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
   </EntityType>

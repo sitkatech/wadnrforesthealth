@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[Invoice](
 	[PreparedByPersonID] [int] NOT NULL,
 	[InvoiceApprovalStatusID] [int] NOT NULL,
 	[InvoiceApprovalStatusComment] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[PurchaseAuthorityIsLandownerCostShareAgreement] [bit] NOT NULL,
  CONSTRAINT [PK_Invoice_InvoiceID] PRIMARY KEY CLUSTERED 
 (
 	[InvoiceID] ASC

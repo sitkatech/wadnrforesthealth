@@ -29,13 +29,13 @@
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 @*<script type="text/javascript">
-    // <![CDATA[
+        // <![CDATA[
 
-    jQuery(document).ready(function () {
-        jQuery(".selectpicker").selectpicker("refresh");
-    });
-    // ]]>
-</script>*@
+        jQuery(document).ready(function () {
+            jQuery(".selectpicker").selectpicker("refresh");
+        });
+        // ]]>
+    </script>*@
 
 @using (Html.BeginForm())
 {
@@ -67,6 +67,15 @@
                 @Html.ValidationMessageFor(m => m.InvoiceDate)
             </div>
         </div>
+        <div class="form-group form-group-tight">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement, ViewDataTyped.PurchaseAuthorityType, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.PurchaseAuthority)
@@ -90,7 +99,7 @@
                 @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusID)
             </div>
             <div class="col-xs-2">
-                @Html.DropDownListFor(m => m.InvoiceApprovalStatusID, ViewDataTyped.InvoiceApprovalStatuses, new {style = "width: auto;", @class = "form-control"})
+                @Html.DropDownListFor(m => m.InvoiceApprovalStatusID, ViewDataTyped.InvoiceApprovalStatuses, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusID)
             </div>
         </div>
@@ -106,3 +115,25 @@
     </div>
     @Html.HiddenFor(m => m.InvoiceID)
 }
+
+
+
+<script type="text/javascript">
+                jQuery(document)
+                    .ready(function () {
+
+                        var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
+                        var purchaseAuthoirty = jQuery("#@Html.IdFor(m => m.PurchaseAuthority)");
+
+                        purchaseAuthorityIsLandownerCostShare.change(function() {
+                            var value = purchaseAuthorityIsLandownerCostShare.val();
+                            if (value == 'True') {
+                                purchaseAuthoirty.attr('disabled', 'disabled');
+                            } else {
+                                purchaseAuthoirty.removeAttr('disabled');
+                            }
+                        });
+
+                        
+                    });
+</script>

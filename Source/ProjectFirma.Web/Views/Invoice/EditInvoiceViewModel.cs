@@ -47,6 +47,9 @@ namespace ProjectFirma.Web.Views.Invoice
         [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
         public string PurchaseAuthority { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
+        public bool PurchaseAuthorityIsLandownerCostShareAgreement { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.TotalRequestedInvoicePaymentAmount)]
         public Money? InvoiceAmount { get; set; }
 
@@ -72,6 +75,8 @@ namespace ProjectFirma.Web.Views.Invoice
             InvoiceAmount = invoice.TotalPaymentAmount;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
+            PurchaseAuthorityIsLandownerCostShareAgreement =
+                invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -92,6 +97,7 @@ namespace ProjectFirma.Web.Views.Invoice
             invoice.TotalPaymentAmount = InvoiceAmount;
             invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
             invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
+            invoice.PurchaseAuthorityIsLandownerCostShareAgreement = PurchaseAuthorityIsLandownerCostShareAgreement;
         }
     }
 }

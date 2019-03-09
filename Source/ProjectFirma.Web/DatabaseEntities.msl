@@ -387,6 +387,7 @@
           <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
           <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
           <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
+          <ScalarProperty Name="PurchaseAuthorityIsLandownerCostShareAgreement" ColumnName="PurchaseAuthorityIsLandownerCostShareAgreement" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

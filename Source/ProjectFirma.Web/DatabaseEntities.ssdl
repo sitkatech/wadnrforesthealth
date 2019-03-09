@@ -1206,6 +1206,7 @@
     <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="InvoiceApprovalStatus">
     <Key>

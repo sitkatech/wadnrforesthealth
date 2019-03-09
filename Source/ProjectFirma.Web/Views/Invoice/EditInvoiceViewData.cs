@@ -34,12 +34,17 @@ namespace ProjectFirma.Web.Views.Invoice
     public class EditInvoiceViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> InvoiceApprovalStatuses { get; set; }
+        public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
         public EditInvoiceType EditInvoiceType { get; set; }
 
         public EditInvoiceViewData(EditInvoiceType editInvoiceType, IEnumerable<Models.InvoiceApprovalStatus> invoiceApprovalStatuses)
         {
             InvoiceApprovalStatuses = invoiceApprovalStatuses.ToSelectList(x => x.InvoiceApprovalStatusID.ToString(CultureInfo.InvariantCulture), y => y.InvoiceApprovalStatusName);
             EditInvoiceType = editInvoiceType;
+            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = "Landowner Cost-Share Agreement" , Value = true.ToString()};
+            var selectListItemOther = new SelectListItem(){Text = "Other" , Value = false.ToString()};
+            PurchaseAuthorityType =
+                new List<SelectListItem> { selectListItemLandOwnerCostShareAgreement, selectListItemOther};
         }
 
     }
