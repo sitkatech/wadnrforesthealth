@@ -1201,12 +1201,14 @@
     <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
     <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
-    <Property Name="InvoiceStatus" Type="varchar" MaxLength="30" />
     <Property Name="TotalPaymentAmount" Type="money" />
     <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
     <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="bit" Nullable="false" />
+    <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="InvoiceApprovalStatus">
     <Key>

@@ -41,16 +41,21 @@ namespace ProjectFirma.Web.Views.Invoice
             ObjectNameSingular = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
-
+            var userHasCreatePermissions = new InvoiceCreateFeature().HasPermissionByPerson(currentPerson);
+            if (userHasCreatePermissions)
+            {
+                var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.New());
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Invoice");
+            }
 
             Add("Invoice ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InvoiceID.ToString()), 50);
             Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InvoiceIdentifyingName),
                 InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.RequestorName.ToGridHeaderString(), x => x.RequestorName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.PurchaseAuthority.ToGridHeaderString(), x => x.PurchaseAuthority, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.PurchaseAuthority.ToGridHeaderString(), x => x.PurchaseAuthorityDisplay, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InvoiceStatus.ToGridHeaderString(), x =>
-                x.InvoiceStatus, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                x.InvoiceStatus.InvoiceStatusDisplayName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.TotalRequestedInvoicePaymentAmount.ToGridHeaderString(), x => x.TotalPaymentAmount.ToStringCurrency(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InvoiceApprovalStatus.ToGridHeaderString(), x =>
                     x.InvoiceApprovalStatus.InvoiceApprovalStatusName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);

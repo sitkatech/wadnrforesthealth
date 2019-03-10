@@ -309,8 +309,18 @@ namespace ProjectFirma.Web.Models
                 case "InvoiceApprovalStatus":
                     return InvoiceApprovalStatuses.GetInvoiceApprovalStatus(primaryKey);
 
+                case "InvoiceMatchAmountType":
+                    var invoiceMatchAmountType = InvoiceMatchAmountType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(invoiceMatchAmountType, "InvoiceMatchAmountType", primaryKey);
+                    return invoiceMatchAmountType;
+
                 case "Invoice":
                     return Invoices.GetInvoice(primaryKey);
+
+                case "InvoiceStatus":
+                    var invoiceStatus = InvoiceStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(invoiceStatus, "InvoiceStatus", primaryKey);
+                    return invoiceStatus;
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
