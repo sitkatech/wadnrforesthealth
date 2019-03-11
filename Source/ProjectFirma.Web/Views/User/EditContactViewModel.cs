@@ -7,10 +7,11 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using System.Text.RegularExpressions;
+using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class EditContactViewModel : FormViewModel, IValidatableObject
+    public class EditContactViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
     {
 
         [Required]

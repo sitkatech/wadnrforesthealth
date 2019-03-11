@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -692,6 +692,8 @@
     <Compile Include="Views\PriorityArea\IndexViewData.cs" />
     <Compile Include="Views\PriorityArea\MapTooltip.cs" />
     <Compile Include="Views\PriorityArea\MapTooltipViewData.cs" />
+    <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
+    <Compile Include="Views\Vendor\EditVendor.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
     <Compile Include="Views\Vendor\VendorSearchResultsViewData.cs" />
     <Compile Include="Views\Region\Detail.cs" />
@@ -1853,6 +1855,7 @@
     <Content Include="Views\Shared\GrantAllocationControls\GrantAllocationBasics.cshtml" />
     <Content Include="Views\Shared\ProjectCostShare\ProjectCostShare.cshtml" />
     <Content Include="Views\Shared\InvoiceControls\InvoiceBasics.cshtml" />
+    <Content Include="Views\Vendor\EditVendor.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
