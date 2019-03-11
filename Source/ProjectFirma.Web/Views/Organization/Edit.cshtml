@@ -81,23 +81,12 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.LabelWithSugarFor(m => m.VendorID)
                 </div>
                 <div class="col-sm-9">
-                    @Html.SearchableDropDownListFor(m => m.VendorID, ViewDataTyped.Vendors)
-                    @Html.ValidationMessageFor(m => m.VendorID)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-3 control-label">
-                    Vendor Search
-                </div>
-                <div class="col-sm-9">
                     <input id="@VendorSearchResults.VendorSearchInputTextboxID" type="text" class="form-control"
-                           name="@VendorSearchResults.VendorSearchInputTextboxID" maxlength="200" onkeypress="return submitFormWithEnter(this, event, 1)"
-                           placeholder="@FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
-                           style="margin-right: -5px; max-width: 300px; margin-left: auto;"/>
-                    @*<button id="searchButton" type="button" class="btn btn-default">
-                        <span class="sr-only">Search</span>
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>*@
+                           name="@VendorSearchResults.VendorSearchInputTextboxID" maxlength="200"
+                           placeholder="Search @FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
+                           style="margin-right: -5px; margin-left: auto;" value="@Model.VendorDisplayName" />
+                    <input id="VendorID" name="VendorID" type="hidden" value="@Model.VendorID" />
+                    @Html.ValidationMessageFor(m => m.VendorID)
                 </div>
             </div>
             <div class="form-group">
@@ -156,6 +145,8 @@ Source code is available upon request via <support@sitkatech.com>.
                 select: function (event, ui) {
                     //set VenderID value
                     //document.location = ui.item.value;
+                    jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
+                    jQuery("#VendorID").val(ui.item.value);
                     event.preventDefault();
                 },
                 html: true

@@ -19,7 +19,7 @@ namespace ProjectFirma.Web.Controllers
                 .GetVendorFindResultsForVendorNameAndStatewideVendorNumber(term).Take(20);
             var vendorsFound2 = vendorsFound.Select(p => new ListItem(p.VendorNameAndStatewideVendorNumberWithSuffix, p.VendorID.ToString(CultureInfo.InvariantCulture))).ToList();
 
-            return Json(vendorsFound2.Select(pfr => new { label = pfr.Text, value = pfr.Value }), JsonRequestBehavior.AllowGet);//use JSON structure for jquerys autocomplete functionality
+            return Json(vendorsFound2.Select(v => new { label = v.Text, value = v.Value }), JsonRequestBehavior.AllowGet);//use JSON structure for jquerys autocomplete functionality
 
         }
 

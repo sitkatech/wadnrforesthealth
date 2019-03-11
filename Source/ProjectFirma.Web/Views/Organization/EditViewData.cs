@@ -30,18 +30,15 @@ namespace ProjectFirma.Web.Views.Organization
     {
         public readonly IEnumerable<SelectListItem> OrganizationTypes;
         public readonly IEnumerable<SelectListItem> People;
-        public readonly IEnumerable<SelectListItem> Vendors;
         public readonly bool IsInKeystone;
         public readonly string RequestOrganizationChangeUrl;
         public readonly bool IsSitkaAdmin;
         public readonly string VendorFindUrlTemplate;
 
-        public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people,
-            IEnumerable<SelectListItem> vendors, bool isInKeystone, bool isSitkaAdmin)
+        public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people, bool isInKeystone, bool isSitkaAdmin)
         {
             OrganizationTypes = organizationTypes;
             People = people;
-            Vendors = vendors;
             IsInKeystone = isInKeystone;
             RequestOrganizationChangeUrl =
                 SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.RequestOrganizationNameChange());

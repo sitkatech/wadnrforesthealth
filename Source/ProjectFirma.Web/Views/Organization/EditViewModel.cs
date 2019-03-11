@@ -59,6 +59,8 @@ namespace ProjectFirma.Web.Views.Organization
         [DisplayName("Vendor")]
         public int? VendorID { get; set; }
 
+        public string VendorDisplayName { get; set; }
+
         [Url]
         [DisplayName("Home Page")]
         public string OrganizationUrl { get; set; }
@@ -86,6 +88,10 @@ namespace ProjectFirma.Web.Views.Organization
             PrimaryContactPersonID = organization.PrimaryContactPerson?.PersonID;
             OrganizationUrl = organization.OrganizationUrl;
             VendorID = organization.VendorID;
+            if (organization.Vendor != null)
+            {
+                VendorDisplayName = organization.Vendor.GetVendorNameWithFullStatewideVendorNumber();
+            }
             IsActive = organization.IsActive;
         }
 
