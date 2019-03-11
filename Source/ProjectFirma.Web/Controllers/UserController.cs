@@ -346,10 +346,8 @@ namespace ProjectFirma.Web.Controllers
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
             bool fullUpUser = person != null && person.IsFullUser();
-            var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName)
-                .ToSelectListWithEmptyFirstRow(k => k.VendorID.ToString(CultureInfo.InvariantCulture),
-                    y => $"{y.VendorName} ({y.StatewideVendorNumberWithSuffix})", "No Vendor");
-            var viewData = new EditContactViewData(organizations, vendors, fullUpUser);
+
+            var viewData = new EditContactViewData(organizations, fullUpUser);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }
 

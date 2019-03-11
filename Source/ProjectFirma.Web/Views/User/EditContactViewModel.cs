@@ -40,6 +40,8 @@ namespace ProjectFirma.Web.Views.User
         [DisplayName("Vendor")]
         public int? VendorID { get; set; }
 
+        public string VendorDisplayName { get; set; }
+
         [DisplayName("Notes")]
         [StringLength(Person.FieldLengths.Notes)]
         public string Notes { get; set; }
@@ -62,6 +64,10 @@ namespace ProjectFirma.Web.Views.User
             Phone = person.Phone;
             OrganizationID = person.OrganizationID;
             VendorID = person.VendorID;
+            if (person.Vendor != null)
+            {
+                VendorDisplayName = person.Vendor.GetVendorNameWithFullStatewideVendorNumber();
+            }
             Notes = person.Notes;
         }
 

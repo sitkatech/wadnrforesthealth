@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.User
 {
     public class EditContactViewData : FirmaUserControlViewData
     {
         public bool FullUpUser { get; }
+        public IEnumerable<SelectListItem> Organizations { get; }
+        public string VendorFindUrlTemplate { get; }
 
-        public EditContactViewData(IEnumerable<SelectListItem> organizations, IEnumerable<SelectListItem> vendors, bool fullUpUser)
+        public EditContactViewData(IEnumerable<SelectListItem> organizations, bool fullUpUser)
         {
             Organizations = organizations;
-            Vendors = vendors;
             FullUpUser = fullUpUser;
+            VendorFindUrlTemplate =
+                SitkaRoute<VendorController>.BuildUrlFromExpression(x => x.FindVendor(string.Empty));
         }
-
-        public IEnumerable<SelectListItem> Organizations { get; }
-
-        public IEnumerable<SelectListItem> Vendors { get; }
-
 
     }
 }
