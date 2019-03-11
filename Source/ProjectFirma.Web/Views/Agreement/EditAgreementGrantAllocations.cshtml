@@ -108,15 +108,15 @@
                         </div>
                     </div>
                 </div>
-                <br/>
+                <br />
                 <span>Currently Selected Grant Allocations:</span>
                 <div class="row" ng-repeat="currentGrantAllocationJson in AngularModel.GrantAllocationJsons" style="margin-top: 5px;">
                     @*Selections*@
                     <div class="col-md-12">
                         <span>
                             <a href="#" ng-click="removeSelectedGrantAllocation(currentGrantAllocationJson.GrantAllocationID); $event.preventDefault();">
-                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
-                        </a>
+                                <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
+                            </a>
                         </span>
                         <span ng-bind="(currentGrantAllocationJson.GrantNumber) + ' ' + (currentGrantAllocationJson.ProjectName)"></span>
                     </div>

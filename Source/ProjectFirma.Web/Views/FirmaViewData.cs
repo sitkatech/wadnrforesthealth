@@ -98,8 +98,7 @@ namespace ProjectFirma.Web.Views
             {
                 BuildAboutMenu(currentPerson),
                 BuildProjectsMenu(currentPerson),
-                BuildGrantMenuItem(currentPerson),
-                BuildAgreementMenuItem(currentPerson),
+                BuildFinancialsMenuItem(currentPerson),
                 BuildProgramInfoMenu(currentPerson)
             };
             TopLevelLtInfoMenuItems.Add(BuildManageMenu(currentPerson));
@@ -135,25 +134,21 @@ namespace ProjectFirma.Web.Views
         }
 
         /// <summary>
-        /// Grants Top-Level menu
+        /// Financials Top-Level menu
         /// </summary>
-        private static LtInfoMenuItem BuildGrantMenuItem(Person currentPerson)
+        private static LtInfoMenuItem BuildFinancialsMenuItem(Person currentPerson)
         {
-            var grantsMenu = new LtInfoMenuItem("Grants");
-            grantsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List", "Group1"));
+            var financialsMenu = new LtInfoMenuItem("Financials");
 
-            return grantsMenu;
-        }
+            financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<GrantController>(c => c.Index()), currentPerson, 
+              $"Full {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()} List", "Group1"));
 
-        /// <summary>
-        /// Agreements Top-Level menu
-        /// </summary>
-        private static LtInfoMenuItem BuildAgreementMenuItem(Person currentPerson)
-        {
-            var agreementsMenu = new LtInfoMenuItem("Agreements");
-            agreementsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<AgreementController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} List", "Group1"));
+            financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<AgreementController>(c => c.Index()), currentPerson, $"Full { Models.FieldDefinition.Agreement.GetFieldDefinitionLabel()} List", "Group2"));
 
-            return agreementsMenu;
+            financialsMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<InvoiceController>(c => c.Index()), currentPerson,
+                $"Full { Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} List", "Group3"));
+
+            return financialsMenu;
         }
 
         private static LtInfoMenuItem BuildProgramInfoMenu(Person currentPerson)

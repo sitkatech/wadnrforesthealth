@@ -60,11 +60,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {
             // Act
-            var viewModel = new EditOrganizationsViewModel(_project, _projectOrganizations, Person.CreateNewBlank(Models.Role.Normal));
+            var viewModel = new EditOrganizationsViewModel(_project, _projectOrganizations, Person.CreateNewBlank(Models.Role.Normal, Authenticator.SAW));
 
             // Assert
             Assert.That(viewModel.ProjectOrganizationSimples, Is.Not.Null);

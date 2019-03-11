@@ -57,6 +57,8 @@ namespace ProjectFirma.Web.Views.User
         public readonly string UserAgreementsGridName;
         public readonly string UserAgreementsGridDataUrl;
 
+        public readonly Authenticator Authenticator;
+
         public DetailViewData(Person currentPerson,
             Person personToView,
             ProjectInfoForUserDetailGridSpec basicProjectInfoGridSpec,
@@ -70,7 +72,7 @@ namespace ProjectFirma.Web.Views.User
             : base(currentPerson)
         {
             Person = personToView;
-            PersonIsMereContact = string.IsNullOrWhiteSpace(personToView.PersonUniqueIdentifier);
+            PersonIsMereContact = !personToView.IsFullUser();
             PageTitle = personToView.FullNameFirstLast + (!personToView.IsActive ? " (inactive)" : string.Empty);
             EntityName = "User";
             //TODO: This gets pulled up to root
@@ -87,6 +89,7 @@ namespace ProjectFirma.Web.Views.User
                     $"Edit Roles for User - {personToView.FullNameFirstLast}",
                     true)
                 : new HtmlString(string.Empty);
+            Authenticator = Authenticator.ToType(Person.AllowedAuthenticatorID);
 
             BasicProjectInfoGridSpec = basicProjectInfoGridSpec;
             BasicProjectInfoGridName = basicProjectInfoGridName;

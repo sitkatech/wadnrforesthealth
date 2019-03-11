@@ -4,7 +4,6 @@
     <EntitySet Name="Agreement" EntityType="ProjectFirma.Web.Models.Store.Agreement" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementGrantAllocation" EntityType="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementPerson" EntityType="ProjectFirma.Web.Models.Store.AgreementPerson" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AgreementProjectCode" EntityType="ProjectFirma.Web.Models.Store.AgreementProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementStatus" EntityType="ProjectFirma.Web.Models.Store.AgreementStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AgreementType" EntityType="ProjectFirma.Web.Models.Store.AgreementType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuditLog" EntityType="ProjectFirma.Web.Models.Store.AuditLog" store:Type="Tables" Schema="dbo" />
@@ -28,10 +27,17 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoiceMatchAmountType" EntityType="ProjectFirma.Web.Models.Store.InvoiceMatchAmountType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoiceStatus" EntityType="ProjectFirma.Web.Models.Store.InvoiceStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -49,6 +55,7 @@
     <EntitySet Name="PerformanceMeasureSubcategory" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategoryOption" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonEnvironmentCredential" EntityType="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
@@ -106,6 +113,7 @@
     <EntitySet Name="TaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.TaxonomyBranch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TaxonomyTrunk" EntityType="ProjectFirma.Web.Models.Store.TaxonomyTrunk" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
@@ -121,10 +129,6 @@
       <End Role="AgreementFileResource" EntitySet="FileResource" />
       <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
     </AssociationSet>
-    <AssociationSet Name="FK_Agreement_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
     <AssociationSet Name="FK_Agreement_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -135,10 +139,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Agreement_AgreementID">
       <End Role="Agreement" EntitySet="Agreement" />
-      <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementGrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
       <End Role="AgreementGrantAllocations" EntitySet="AgreementGrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
@@ -152,14 +152,6 @@
     <AssociationSet Name="FK_AgreementPerson_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AgreementPerson_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="AgreementPeople" EntitySet="AgreementPerson" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementProjectCode_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_Agreement_AgreementID">
-      <End Role="Agreement" EntitySet="Agreement" />
-      <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="AgreementProjectCodes" EntitySet="AgreementProjectCode" />
     </AssociationSet>
     <AssociationSet Name="FK_AuditLog_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_AuditLog_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -257,10 +249,6 @@
       <End Role="Organization" EntitySet="Organization" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID">
-      <End Role="ProgramManagerPerson" EntitySet="Person" />
-      <End Role="GrantAllocationsWhereYouAreTheProgramManagerPerson" EntitySet="GrantAllocation" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_ProgramIndex_ProgramIndexID">
       <End Role="ProgramIndex" EntitySet="ProgramIndex" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
@@ -281,6 +269,26 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantAllocationNote" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationNoteInternals" EntitySet="GrantAllocationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantAllocationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantAllocationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationProjectCodes" EntitySet="GrantAllocationProjectCode" />
@@ -300,6 +308,34 @@
     <AssociationSet Name="FK_GrantNote_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Person_LastUpdatedByPersonID_PersonID">
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNotesWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantNoteInternal_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantNoteInternals" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="GrantNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
+      <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID">
+      <End Role="InvoiceMatchAmountType" EntitySet="InvoiceMatchAmountType" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_InvoiceStatus_InvoiceStatusID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoiceStatus_InvoiceStatusID">
+      <End Role="InvoiceStatus" EntitySet="InvoiceStatus" />
+      <End Role="Invoices" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
+      <End Role="PreparedByPerson" EntitySet="Person" />
+      <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -444,6 +480,10 @@
     <AssociationSet Name="FK_Person_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_Person_Vendor_VendorID">
       <End Role="Vendor" EntitySet="Vendor" />
       <End Role="People" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardOrganization_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardOrganization_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -847,7 +887,6 @@
     <Property Name="Notes" Type="varchar(max)" />
     <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" />
     <Property Name="AgreementStatusID" Type="int" />
     <Property Name="AgreementFileResourceID" Type="int" />
     <Property Name="tmpAgreement2ID" Type="int" />
@@ -859,7 +898,6 @@
     <Property Name="AgreementGrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementPerson">
     <Key>
@@ -869,14 +907,6 @@
     <Property Name="AgreementID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="AgreementPersonRoleID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AgreementProjectCode">
-    <Key>
-      <PropertyRef Name="AgreementProjectCodeID" />
-    </Key>
-    <Property Name="AgreementProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="AgreementID" Type="int" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="AgreementStatus">
     <Key>
@@ -1046,6 +1076,7 @@
     <Property Name="FocusAreaStatusID" Type="int" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="geometry" />
     <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="PlannedFootprintAcres" Type="decimal" />
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
     <Key>
@@ -1075,8 +1106,6 @@
     <Property Name="GrantNumber" Type="varchar" MaxLength="30" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
-    <Property Name="ProgramIndex" Type="int" />
-    <Property Name="ProjectCode" Type="varchar" MaxLength="100" />
     <Property Name="ConditionsAndRequirements" Type="varchar(max)" />
     <Property Name="ComplianceNotes" Type="varchar(max)" />
     <Property Name="AwardedFunds" Type="money" />
@@ -1098,7 +1127,6 @@
     <Property Name="EndDate" Type="datetime" />
     <Property Name="AllocationAmount" Type="money" />
     <Property Name="CostTypeID" Type="int" />
-    <Property Name="ProgramManagerPersonID" Type="int" />
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="FederalFundCodeID" Type="int" />
     <Property Name="OrganizationID" Type="int" />
@@ -1115,6 +1143,26 @@
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="LastUpdatedByPersonID" Type="int" />
     <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="GrantAllocationNoteInternal">
+    <Key>
+      <PropertyRef Name="GrantAllocationNoteInternalID" />
+    </Key>
+    <Property Name="GrantAllocationNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationNoteInternalText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="GrantAllocationProgramManager">
+    <Key>
+      <PropertyRef Name="GrantAllocationProgramManagerID" />
+    </Key>
+    <Property Name="GrantAllocationProgramManagerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationProjectCode">
     <Key>
@@ -1136,6 +1184,18 @@
     <Property Name="LastUpdatedByPersonID" Type="int" />
     <Property Name="LastUpdatedDate" Type="datetime" />
   </EntityType>
+  <EntityType Name="GrantNoteInternal">
+    <Key>
+      <PropertyRef Name="GrantNoteInternalID" />
+    </Key>
+    <Property Name="GrantNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="GrantNoteText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="GrantStatus">
     <Key>
       <PropertyRef Name="GrantStatusID" />
@@ -1149,6 +1209,47 @@
     </Key>
     <Property Name="GrantTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceIdentifyingName" Type="varchar" MaxLength="255" />
+    <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
+    <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
+    <Property Name="TotalPaymentAmount" Type="money" />
+    <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
+    <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
+    <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="bit" Nullable="false" />
+    <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InvoiceApprovalStatus">
+    <Key>
+      <PropertyRef Name="InvoiceApprovalStatusID" />
+    </Key>
+    <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
+    <Property Name="InvoiceApprovalStatusName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="InvoiceMatchAmountType">
+    <Key>
+      <PropertyRef Name="InvoiceMatchAmountTypeID" />
+    </Key>
+    <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
+    <Property Name="InvoiceMatchAmountTypeName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="InvoiceMatchAmountTypeDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="InvoiceStatus">
+    <Key>
+      <PropertyRef Name="InvoiceStatusID" />
+    </Key>
+    <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
+    <Property Name="InvoiceStatusName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="InvoiceStatusDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -1343,12 +1444,10 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="PersonID" />
     </Key>
     <Property Name="PersonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PersonUniqueIdentifier" Type="varchar" MaxLength="100" />
     <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="Email" Type="varchar" MaxLength="255" />
     <Property Name="Phone" Type="varchar" MaxLength="30" />
-    <Property Name="PasswordPdfK2SaltHash" Type="nvarchar" MaxLength="1000" />
     <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
     <Property Name="UpdateDate" Type="datetime" />
@@ -1362,7 +1461,18 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
+    <Property Name="AllowedAuthenticatorID" Type="int" Nullable="false" />
     <Property Name="VendorID" Type="int" />
+  </EntityType>
+  <EntityType Name="PersonEnvironmentCredential">
+    <Key>
+      <PropertyRef Name="PersonEnvironmentCredentialID" />
+    </Key>
+    <Property Name="PersonEnvironmentCredentialID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="DeploymentEnvironmentID" Type="int" Nullable="false" />
+    <Property Name="AuthenticatorID" Type="int" Nullable="false" />
+    <Property Name="PersonUniqueIdentifier" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">
     <Key>
@@ -1430,7 +1540,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ReviewedByPersonID" Type="int" />
     <Property Name="DefaultBoundingBox" Type="geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
-    <Property Name="FocusAreaID" Type="int" />
+    <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ExpirationDate" Type="datetime" />
@@ -1821,7 +1931,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="int" />
-    <Property Name="FocusAreaID" Type="int" />
+    <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="ExpirationDate" Type="datetime" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
@@ -1996,6 +2106,19 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="F8" Type="nvarchar" MaxLength="255" />
     <Property Name="F9" Type="nvarchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="tmpAgreementContactsImportTemplate">
+    <Key>
+      <PropertyRef Name="tmpAgreementContactsImportTemplateID" />
+    </Key>
+    <Property Name="tmpAgreementContactsImportTemplateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AgreementNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="1" />
+    <Property Name="Organization" Type="nvarchar" MaxLength="100" />
+    <Property Name="AgreementRole" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
   <EntityType Name="TrainingVideo">
     <Key>
       <PropertyRef Name="TrainingVideoID" />
@@ -2107,18 +2230,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Agreement_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Agreement_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
@@ -2155,18 +2266,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AgreementGrantAllocation_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
-    <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
-      </Principal>
-      <Dependent Role="AgreementGrantAllocations">
-        <PropertyRef Name="GrantID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="AgreementGrantAllocations" Type="ProjectFirma.Web.Models.Store.AgreementGrantAllocation" Multiplicity="*" />
@@ -2200,30 +2299,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="AgreementPeople">
         <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AgreementProjectCode_Agreement_AgreementID">
-    <End Role="Agreement" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="1" />
-    <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.Store.AgreementProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Agreement">
-        <PropertyRef Name="AgreementID" />
-      </Principal>
-      <Dependent Role="AgreementProjectCodes">
-        <PropertyRef Name="AgreementID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AgreementProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="1" />
-    <End Role="AgreementProjectCodes" Type="ProjectFirma.Web.Models.Store.AgreementProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="AgreementProjectCodes">
-        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2515,18 +2590,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID">
-    <End Role="ProgramManagerPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="GrantAllocationsWhereYouAreTheProgramManagerPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramManagerPerson">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="GrantAllocationsWhereYouAreTheProgramManagerPerson">
-        <PropertyRef Name="ProgramManagerPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocation_ProgramIndex_ProgramIndexID">
     <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="0..1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
@@ -2587,6 +2650,66 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationNoteInternals">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProgramManagers">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationProgramManager_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="GrantAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProgramManagers">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="GrantAllocationProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" Multiplicity="*" />
@@ -2644,6 +2767,90 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantNotesWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantNoteInternal_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="GrantNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantNoteInternals">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="GrantNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantNoteInternalsWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
+    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" Multiplicity="1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceApprovalStatus">
+        <PropertyRef Name="InvoiceApprovalStatusID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="InvoiceApprovalStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID">
+    <End Role="InvoiceMatchAmountType" Type="ProjectFirma.Web.Models.Store.InvoiceMatchAmountType" Multiplicity="1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceMatchAmountType">
+        <PropertyRef Name="InvoiceMatchAmountTypeID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="InvoiceMatchAmountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_InvoiceStatus_InvoiceStatusID">
+    <End Role="InvoiceStatus" Type="ProjectFirma.Web.Models.Store.InvoiceStatus" Multiplicity="1" />
+    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceStatus">
+        <PropertyRef Name="InvoiceStatusID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="InvoiceStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
+    <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PreparedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
+        <PropertyRef Name="PreparedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3079,6 +3286,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PersonEnvironmentCredential_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PersonEnvironmentCredentials">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PersonStewardOrganization_Organization_OrganizationID">
     <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
     <End Role="PersonStewardOrganizations" Type="ProjectFirma.Web.Models.Store.PersonStewardOrganization" Multiplicity="*" />
@@ -3152,7 +3371,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Project_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FocusArea">
@@ -4040,7 +4259,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="1" />
     <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FocusArea">
@@ -4231,6 +4450,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="string" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="delimiter" Type="char" Mode="In" />
@@ -4255,6 +4475,36 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="TrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>

@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
 	[PrimaryContactPersonID] [int] NULL,
-	[FocusAreaID] [int] NULL,
+	[FocusAreaID] [int] NOT NULL,
 	[ExpirationDate] [datetime] NULL,
  CONSTRAINT [PK_ProjectUpdate_ProjectUpdateID] PRIMARY KEY CLUSTERED 
 (

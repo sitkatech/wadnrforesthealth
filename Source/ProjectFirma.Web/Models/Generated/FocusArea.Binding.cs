@@ -32,13 +32,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public FocusArea(int focusAreaID, string focusAreaName, int focusAreaStatusID, DbGeometry focusAreaLocation, int regionID) : this()
+        public FocusArea(int focusAreaID, string focusAreaName, int focusAreaStatusID, DbGeometry focusAreaLocation, int regionID, decimal? plannedFootprintAcres) : this()
         {
             this.FocusAreaID = focusAreaID;
             this.FocusAreaName = focusAreaName;
             this.FocusAreaStatusID = focusAreaStatusID;
             this.FocusAreaLocation = focusAreaLocation;
             this.RegionID = regionID;
+            this.PlannedFootprintAcres = plannedFootprintAcres;
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace ProjectFirma.Web.Models
         public int FocusAreaStatusID { get; set; }
         public DbGeometry FocusAreaLocation { get; set; }
         public int RegionID { get; set; }
+        public decimal? PlannedFootprintAcres { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return FocusAreaID; } set { FocusAreaID = value; } }
 

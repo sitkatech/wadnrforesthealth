@@ -33,21 +33,24 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        // List of ProjectCodes as a comma delimited string ("EEB, GMX" for example)
-        public string ProjectCodesAsCsvString
-        {
-            get
-            {
-                return string.Join($"{ProjectCodeSeparator} ", ProjectCodes.OrderBy(x => x.ProjectCodeAbbrev).Select(x => x.ProjectCodeAbbrev));
-            }
-        }
-
-        private const string ProjectCodeSeparator = ",";
-        
-
         public string AuditDescriptionString
         {
             get { return ProjectName; }
+        }
+
+        public List<int> ProgramManagerPersonIDs
+        {
+            get { return ProgramManagerPersons.Select(p => p.PersonID).ToList(); }
+        }
+
+        public List<Person> ProgramManagerPersons
+        {
+            get { return GrantAllocationProgramManagers.Select(gapm => gapm.Person).ToList(); }
+        }
+
+        public string GetAllProgramManagerPersonNamesAsString()
+        {
+            return string.Join(", ", this.ProgramManagerPersons.Select(pmp => pmp.FullNameFirstLast));
         }
 
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)

@@ -26,13 +26,12 @@ namespace ProjectFirma.Web.Models
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.AgreementPeople = new HashSet<AgreementPerson>();
-            this.AgreementProjectCodes = new HashSet<AgreementProjectCode>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? grantID, int? agreementStatusID, int? agreementFileResourceID, int? tmpAgreement2ID) : this()
+        public Agreement(int agreementID, int agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? agreementStatusID, int? agreementFileResourceID, int? tmpAgreement2ID) : this()
         {
             this.AgreementID = agreementID;
             this.AgreementTypeID = agreementTypeID;
@@ -47,7 +46,6 @@ namespace ProjectFirma.Web.Models
             this.Notes = notes;
             this.AgreementTitle = agreementTitle;
             this.OrganizationID = organizationID;
-            this.GrantID = grantID;
             this.AgreementStatusID = agreementStatusID;
             this.AgreementFileResourceID = agreementFileResourceID;
             this.tmpAgreement2ID = tmpAgreement2ID;
@@ -96,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || AgreementPeople.Any() || AgreementProjectCodes.Any();
+            return AgreementGrantAllocations.Any() || AgreementPeople.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name, typeof(AgreementProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(AgreementPerson).Name};
 
 
         /// <summary>
@@ -136,11 +134,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in AgreementProjectCodes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -157,7 +150,6 @@ namespace ProjectFirma.Web.Models
         public string Notes { get; set; }
         public string AgreementTitle { get; set; }
         public int OrganizationID { get; set; }
-        public int? GrantID { get; set; }
         public int? AgreementStatusID { get; set; }
         public int? AgreementFileResourceID { get; set; }
         public int? tmpAgreement2ID { get; set; }
@@ -166,11 +158,9 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
-        public virtual ICollection<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual AgreementType AgreementType { get; set; }
         public virtual Region Region { get; set; }
         public virtual Organization Organization { get; set; }
-        public virtual Grant Grant { get; set; }
         public virtual AgreementStatus AgreementStatus { get; set; }
         public virtual FileResource AgreementFileResource { get; set; }
 

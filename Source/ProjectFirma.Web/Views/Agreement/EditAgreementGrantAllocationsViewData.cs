@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Agreement
             GrantAllocationSelectListItems = grantAllocationSelectListItems;
             var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             // Filter to only aligned GrantAllocations
-            var filteredGrantAllocations = databaseEntitiesGrantAllocations.Where(ga => ga.GrantID == agreement.GrantID).ToList();
+            var filteredGrantAllocations = databaseEntitiesGrantAllocations.ToList();
             AllPossibleGrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(filteredGrantAllocations);
         }
 

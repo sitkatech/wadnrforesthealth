@@ -68,12 +68,7 @@ namespace ProjectFirma.Web.Models
         }
         public static string GetProjectFocusAreaUrl(this Models.TreatmentActivity treatmentActivity)
         {
-            var result = string.Empty;
-            if (treatmentActivity.Project.FocusAreaID != null)
-            {
-                result = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.Detail(treatmentActivity.Project.FocusAreaID));
-            }
-
+            string result = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(fac => fac.Detail(treatmentActivity.Project.FocusAreaID));        
             return result;
         }
         
@@ -95,17 +90,7 @@ namespace ProjectFirma.Web.Models
 
         public static HtmlString GetFocusAreaText(this Models.TreatmentActivity treatmentActivity)
         {
-            HtmlString returnValue = new HtmlString(string.Empty);
-            if (treatmentActivity.Project.FocusAreaID == null)
-            {
-                returnValue = "".ToHTMLFormattedString();
-            }
-            else
-            {
-                returnValue = UrlTemplate.MakeHrefString(treatmentActivity.GetProjectFocusAreaUrl(),
-                    treatmentActivity.GetProjectFocusAreaName());
-            }
-
+            HtmlString returnValue = UrlTemplate.MakeHrefString(treatmentActivity.GetProjectFocusAreaUrl(), treatmentActivity.GetProjectFocusAreaName());
             return returnValue;
         }
 
@@ -117,6 +102,11 @@ namespace ProjectFirma.Web.Models
         public static string GetProjectCodeName(this Models.TreatmentActivity treatmentActivity)
         {
             return treatmentActivity.ProjectCode == null ? "" : treatmentActivity.ProjectCode.ProjectCodeAbbrev;
+        }
+
+        public static string GetProjectTypeName(this Models.TreatmentActivity treatmentActivity)
+        {
+            return treatmentActivity.Project.ProjectType == null ? "": treatmentActivity.Project.ProjectType.ProjectTypeName;
         }
 
         public static string GetDeleteTreatmentActivityUrl(this Models.TreatmentActivity treatmentActivity)

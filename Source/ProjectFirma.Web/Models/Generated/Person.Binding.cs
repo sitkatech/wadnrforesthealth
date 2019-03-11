@@ -27,16 +27,22 @@ namespace ProjectFirma.Web.Models
             this.AgreementPeople = new HashSet<AgreementPerson>();
             this.AuditLogs = new HashSet<AuditLog>();
             this.FileResourcesWhereYouAreTheCreatePerson = new HashSet<FileResource>();
-            this.GrantAllocationsWhereYouAreTheProgramManagerPerson = new HashSet<GrantAllocation>();
             this.GrantAllocationNotesWhereYouAreTheCreatedByPerson = new HashSet<GrantAllocationNote>();
             this.GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantAllocationNote>();
+            this.GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<GrantAllocationNoteInternal>();
+            this.GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantAllocationNoteInternal>();
+            this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
             this.GrantNotesWhereYouAreTheCreatedByPerson = new HashSet<GrantNote>();
             this.GrantNotesWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantNote>();
+            this.GrantNoteInternalsWhereYouAreTheCreatedByPerson = new HashSet<GrantNoteInternal>();
+            this.GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson = new HashSet<GrantNoteInternal>();
+            this.InvoicesWhereYouAreThePreparedByPerson = new HashSet<Invoice>();
             this.Notifications = new HashSet<Notification>();
             this.OrganizationsWhereYouAreThePrimaryContactPerson = new HashSet<Organization>();
             this.PerformanceMeasureNotesWhereYouAreTheCreatePerson = new HashSet<PerformanceMeasureNote>();
             this.PerformanceMeasureNotesWhereYouAreTheUpdatePerson = new HashSet<PerformanceMeasureNote>();
             this.PeopleWhereYouAreTheAddedByPerson = new HashSet<Person>();
+            this.PersonEnvironmentCredentials = new HashSet<PersonEnvironmentCredential>();
             this.PersonStewardOrganizations = new HashSet<PersonStewardOrganization>();
             this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
             this.PersonStewardTaxonomyBranches = new HashSet<PersonStewardTaxonomyBranch>();
@@ -64,15 +70,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string personUniqueIdentifier, string firstName, string lastName, string email, string phone, string passwordPdfK2SaltHash, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID) : this()
+        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string notes, string personAddress, int? addedByPersonID, int allowedAuthenticatorID, int? vendorID) : this()
         {
             this.PersonID = personID;
-            this.PersonUniqueIdentifier = personUniqueIdentifier;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
             this.Phone = phone;
-            this.PasswordPdfK2SaltHash = passwordPdfK2SaltHash;
             this.RoleID = roleID;
             this.CreateDate = createDate;
             this.UpdateDate = updateDate;
@@ -86,13 +90,14 @@ namespace ProjectFirma.Web.Models
             this.Notes = notes;
             this.PersonAddress = personAddress;
             this.AddedByPersonID = addedByPersonID;
+            this.AllowedAuthenticatorID = allowedAuthenticatorID;
             this.VendorID = vendorID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
+        public Person(string firstName, string lastName, int roleID, DateTime createDate, bool isActive, bool receiveSupportEmails, int allowedAuthenticatorID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -103,12 +108,13 @@ namespace ProjectFirma.Web.Models
             this.CreateDate = createDate;
             this.IsActive = isActive;
             this.ReceiveSupportEmails = receiveSupportEmails;
+            this.AllowedAuthenticatorID = allowedAuthenticatorID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails) : this()
+        public Person(string firstName, string lastName, Role role, DateTime createDate, bool isActive, bool receiveSupportEmails, Authenticator allowedAuthenticator) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -118,14 +124,15 @@ namespace ProjectFirma.Web.Models
             this.CreateDate = createDate;
             this.IsActive = isActive;
             this.ReceiveSupportEmails = receiveSupportEmails;
+            this.AllowedAuthenticatorID = allowedAuthenticator.AuthenticatorID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Person CreateNewBlank(Role role)
+        public static Person CreateNewBlank(Role role, Authenticator allowedAuthenticator)
         {
-            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool));
+            return new Person(default(string), default(string), role, default(DateTime), default(bool), default(bool), allowedAuthenticator);
         }
 
         /// <summary>
@@ -134,13 +141,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementPeople.Any() || AuditLogs.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || GrantAllocationsWhereYouAreTheProgramManagerPerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProjectsWhereYouAreThePrimaryContactPerson.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdatesWhereYouAreThePrimaryContactPerson.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TreatmentActivitiesWhereYouAreTheTreatmentActivityContact.Any();
+            return AgreementPeople.Any() || AuditLogs.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InvoicesWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonEnvironmentCredentials.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProjectsWhereYouAreThePrimaryContactPerson.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdatesWhereYouAreThePrimaryContactPerson.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TreatmentActivitiesWhereYouAreTheTreatmentActivityContact.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(FileResource).Name, typeof(GrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantNote).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PerformanceMeasureNote).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(FileResource).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(Invoice).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PerformanceMeasureNote).Name, typeof(PersonEnvironmentCredential).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -180,11 +187,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in GrantAllocationsWhereYouAreTheProgramManagerPerson.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in GrantAllocationNotesWhereYouAreTheCreatedByPerson.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -195,12 +197,42 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationProgramManagers.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GrantNotesWhereYouAreTheCreatedByPerson.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
             foreach(var x in GrantNotesWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantNoteInternalsWhereYouAreTheCreatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in InvoicesWhereYouAreThePreparedByPerson.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -226,6 +258,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in PeopleWhereYouAreTheAddedByPerson.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in PersonEnvironmentCredentials.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -343,12 +380,10 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int PersonID { get; set; }
-        public string PersonUniqueIdentifier { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string PasswordPdfK2SaltHash { get; set; }
         public int RoleID { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
@@ -362,6 +397,7 @@ namespace ProjectFirma.Web.Models
         public string Notes { get; set; }
         public string PersonAddress { get; set; }
         public int? AddedByPersonID { get; set; }
+        public int AllowedAuthenticatorID { get; set; }
         public int? VendorID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonID; } set { PersonID = value; } }
@@ -369,17 +405,23 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual ICollection<AuditLog> AuditLogs { get; set; }
         public virtual ICollection<FileResource> FileResourcesWhereYouAreTheCreatePerson { get; set; }
-        public virtual ICollection<GrantAllocation> GrantAllocationsWhereYouAreTheProgramManagerPerson { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotesWhereYouAreTheCreatedByPerson { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual ICollection<GrantNote> GrantNotesWhereYouAreTheCreatedByPerson { get; set; }
         public virtual ICollection<GrantNote> GrantNotesWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<GrantNoteInternal> GrantNoteInternalsWhereYouAreTheCreatedByPerson { get; set; }
+        public virtual ICollection<GrantNoteInternal> GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson { get; set; }
+        public virtual ICollection<Invoice> InvoicesWhereYouAreThePreparedByPerson { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Organization> OrganizationsWhereYouAreThePrimaryContactPerson { get; set; }
         public virtual ICollection<PerformanceMeasureNote> PerformanceMeasureNotesWhereYouAreTheCreatePerson { get; set; }
         public virtual ICollection<PerformanceMeasureNote> PerformanceMeasureNotesWhereYouAreTheUpdatePerson { get; set; }
         public virtual ICollection<Person> PeopleWhereYouAreTheAddedByPerson { get; set; }
         public virtual Person AddedByPerson { get; set; }
+        public virtual ICollection<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
         public virtual ICollection<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual ICollection<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
@@ -404,16 +446,15 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<TreatmentActivity> TreatmentActivitiesWhereYouAreTheTreatmentActivityContact { get; set; }
         public Role Role { get { return Role.AllLookupDictionary[RoleID]; } }
         public virtual Organization Organization { get; set; }
+        public Authenticator AllowedAuthenticator { get { return Authenticator.AllLookupDictionary[AllowedAuthenticatorID]; } }
         public virtual Vendor Vendor { get; set; }
 
         public static class FieldLengths
         {
-            public const int PersonUniqueIdentifier = 100;
             public const int FirstName = 100;
             public const int LastName = 100;
             public const int Email = 255;
             public const int Phone = 30;
-            public const int PasswordPdfK2SaltHash = 1000;
             public const int LoginName = 128;
             public const int MiddleName = 100;
             public const int Notes = 500;

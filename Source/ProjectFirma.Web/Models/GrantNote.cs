@@ -61,14 +61,5 @@ namespace ProjectFirma.Web.Models
                 return $"Grant: {grantName}";
             }
         }
-
-    }
-
-    public partial class GrantStatus : IAuditableEntity
-    {
-        public string AuditDescriptionString
-        {
-            get { return GrantStatusName; }
-        }
     }
 }

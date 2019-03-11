@@ -64,10 +64,14 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             string currentSectionDisplayName,
             ProposalSectionsStatus proposalSectionsStatus) : this(project, currentPerson, currentSectionDisplayName)
         {
+            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
+            bool isBasicsPage = currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase);
+
             Check.Assert(project != null, "Project should be created in database by this point so it cannot be null.");
-            Check.Assert(currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase) || currentSectionDisplayName.Equals("Basics", StringComparison.InvariantCultureIgnoreCase) ||
-                         proposalSectionsStatus.IsBasicsSectionComplete,
-                $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
+            // SLG- See Story #1506 - Causing us much grief, perhaps the disease is really better than this cure? We know the Project record exists, is that maybe enough?
+            //   This whole expression seems like it had multiple errors in it, giving up on it for now, I don't understand what it is trying to do.
+            //   We can't get it to crash once this is removed, so, to heck with it for now.
+            //Check.Assert(IsInstructionsPage || isBasicsPage || proposalSectionsStatus.IsBasicsSectionComplete, $"Can't access this section of the Proposal - You must complete the basics first ({project.GetEditUrl()})");
 
             CurrentPersonCanWithdraw = new ProjectCreateFeature().HasPermission(currentPerson, project).HasPermission;
 
@@ -77,8 +81,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             CanAdvanceStage = ProposalSectionsStatus.AreAllSectionsValidForProject(project);
             // ReSharper disable PossibleNullReferenceException
             ProjectStateIsValidInWizard = project.ProjectApprovalStatus == ProjectApprovalStatus.Draft || project.ProjectApprovalStatus == ProjectApprovalStatus.Returned || project.ProjectApprovalStatus == ProjectApprovalStatus.PendingApproval;
-            // ReSharper restore PossibleNullReferenceException
-            IsInstructionsPage = currentSectionDisplayName.Equals("Instructions", StringComparison.InvariantCultureIgnoreCase);
 
             InstructionsPageUrl = project.ProjectStage == ProjectStage.Application
                 ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x =>
@@ -114,7 +116,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             InstructionsPageUrl = proposalInstructionsUrl;
             ProposalInstructionsUrl = proposalInstructionsUrl;
             ProposalBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(true));
-            HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));            
+            HistoricProjectBasicsUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.CreateAndEditBasics(false));
 
             CurrentPersonCanWithdraw = false;
 

@@ -22,8 +22,8 @@ namespace ProjectFirma.Web.Security
 
         public PermissionCheckResult HasPermission(Person person, Grant contextModelObject)
         {
-            bool userHasPermision = HasPermissionByPerson(person);
-            if (userHasPermision)
+            bool userHasPermission = HasPermissionByPerson(person);
+            if (userHasPermission)
             {
                 return PermissionCheckResult.MakeSuccessPermissionCheckResult();
             }

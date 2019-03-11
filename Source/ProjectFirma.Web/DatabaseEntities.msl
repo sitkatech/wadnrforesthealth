@@ -17,7 +17,6 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
           <ScalarProperty Name="AgreementStatusID" ColumnName="AgreementStatusID" />
           <ScalarProperty Name="AgreementFileResourceID" ColumnName="AgreementFileResourceID" />
           <ScalarProperty Name="tmpAgreement2ID" ColumnName="tmpAgreement2ID" />
@@ -30,7 +29,6 @@
           <ScalarProperty Name="AgreementGrantAllocationID" ColumnName="AgreementGrantAllocationID" />
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -41,15 +39,6 @@
           <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="AgreementPersonRoleID" ColumnName="AgreementPersonRoleID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="AgreementProjectCode">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.AgreementProjectCode">
-        <MappingFragment StoreEntitySet="AgreementProjectCode">
-          <ScalarProperty Name="AgreementProjectCodeID" ColumnName="AgreementProjectCodeID" />
-          <ScalarProperty Name="AgreementID" ColumnName="AgreementID" />
-          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -237,6 +226,7 @@
           <ScalarProperty Name="FocusAreaStatusID" ColumnName="FocusAreaStatusID" />
           <ScalarProperty Name="FocusAreaLocation" ColumnName="FocusAreaLocation" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="PlannedFootprintAcres" ColumnName="PlannedFootprintAcres" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -269,8 +259,6 @@
           <ScalarProperty Name="GrantNumber" ColumnName="GrantNumber" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-          <ScalarProperty Name="ProgramIndex" ColumnName="ProgramIndex" />
-          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
           <ScalarProperty Name="ConditionsAndRequirements" ColumnName="ConditionsAndRequirements" />
           <ScalarProperty Name="ComplianceNotes" ColumnName="ComplianceNotes" />
           <ScalarProperty Name="AwardedFunds" ColumnName="AwardedFunds" />
@@ -293,7 +281,6 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="ProgramManagerPersonID" ColumnName="ProgramManagerPersonID" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
@@ -311,6 +298,28 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationNoteInternal">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNoteInternal">
+        <MappingFragment StoreEntitySet="GrantAllocationNoteInternal">
+          <ScalarProperty Name="GrantAllocationNoteInternalID" ColumnName="GrantAllocationNoteInternalID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="GrantAllocationNoteInternalText" ColumnName="GrantAllocationNoteInternalText" />
+          <ScalarProperty Name="CreatedByPersonID" ColumnName="CreatedByPersonID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationProgramManager">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProgramManager">
+        <MappingFragment StoreEntitySet="GrantAllocationProgramManager">
+          <ScalarProperty Name="GrantAllocationProgramManagerID" ColumnName="GrantAllocationProgramManagerID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -336,6 +345,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantNoteInternal">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantNoteInternal">
+        <MappingFragment StoreEntitySet="GrantNoteInternal">
+          <ScalarProperty Name="GrantNoteInternalID" ColumnName="GrantNoteInternalID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantNoteText" ColumnName="GrantNoteText" />
+          <ScalarProperty Name="CreatedByPersonID" ColumnName="CreatedByPersonID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantStatus">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantStatus">
         <MappingFragment StoreEntitySet="GrantStatus">
@@ -349,6 +371,51 @@
         <MappingFragment StoreEntitySet="GrantType">
           <ScalarProperty Name="GrantTypeID" ColumnName="GrantTypeID" />
           <ScalarProperty Name="GrantTypeName" ColumnName="GrantTypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoice">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+          <ScalarProperty Name="InvoiceIdentifyingName" ColumnName="InvoiceIdentifyingName" />
+          <ScalarProperty Name="RequestorName" ColumnName="RequestorName" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="PurchaseAuthority" ColumnName="PurchaseAuthority" />
+          <ScalarProperty Name="TotalPaymentAmount" ColumnName="TotalPaymentAmount" />
+          <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
+          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
+          <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
+          <ScalarProperty Name="PurchaseAuthorityIsLandownerCostShareAgreement" ColumnName="PurchaseAuthorityIsLandownerCostShareAgreement" />
+          <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceApprovalStatus">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceApprovalStatus">
+        <MappingFragment StoreEntitySet="InvoiceApprovalStatus">
+          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
+          <ScalarProperty Name="InvoiceApprovalStatusName" ColumnName="InvoiceApprovalStatusName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceMatchAmountType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceMatchAmountType">
+        <MappingFragment StoreEntitySet="InvoiceMatchAmountType">
+          <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
+          <ScalarProperty Name="InvoiceMatchAmountTypeName" ColumnName="InvoiceMatchAmountTypeName" />
+          <ScalarProperty Name="InvoiceMatchAmountTypeDisplayName" ColumnName="InvoiceMatchAmountTypeDisplayName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceStatus">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceStatus">
+        <MappingFragment StoreEntitySet="InvoiceStatus">
+          <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
+          <ScalarProperty Name="InvoiceStatusName" ColumnName="InvoiceStatusName" />
+          <ScalarProperty Name="InvoiceStatusDisplayName" ColumnName="InvoiceStatusDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -545,12 +612,10 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Person">
         <MappingFragment StoreEntitySet="Person">
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="PasswordPdfK2SaltHash" ColumnName="PasswordPdfK2SaltHash" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
@@ -564,7 +629,19 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
+          <ScalarProperty Name="AllowedAuthenticatorID" ColumnName="AllowedAuthenticatorID" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonEnvironmentCredential">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonEnvironmentCredential">
+        <MappingFragment StoreEntitySet="PersonEnvironmentCredential">
+          <ScalarProperty Name="PersonEnvironmentCredentialID" ColumnName="PersonEnvironmentCredentialID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="DeploymentEnvironmentID" ColumnName="DeploymentEnvironmentID" />
+          <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
+          <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1254,6 +1331,20 @@
           <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
           <ScalarProperty Name="F8" ColumnName="F8" />
           <ScalarProperty Name="F9" ColumnName="F9" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tmpAgreementContactsImportTemplate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate">
+        <MappingFragment StoreEntitySet="tmpAgreementContactsImportTemplate">
+          <ScalarProperty Name="tmpAgreementContactsImportTemplateID" ColumnName="tmpAgreementContactsImportTemplateID" />
+          <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="AgreementRole" ColumnName="AgreementRole" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

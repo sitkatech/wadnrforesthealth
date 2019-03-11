@@ -1,23 +1,23 @@
 ﻿@*-----------------------------------------------------------------------
-<copyright file="Basics.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
-Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
-<author>Sitka Technology Group</author>
-</copyright>
+    <copyright file="Basics.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
 
-<license>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
 
-Source code is available upon request via <support@sitkatech.com>.
-</license>
------------------------------------------------------------------------*@
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProjectUpdate
 @using LtInfo.Common
@@ -32,8 +32,8 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         <script type="text/javascript">
             // <![CDATA[
-            jQuery(document).ready(function() { HookupCheckIfFormIsDirty(undefined, ".submitProject"); });
-            // ]]>
+            jQuery(document).ready(function () { HookupCheckIfFormIsDirty(undefined, ".submitProject"); });
+                    // ]]>
         </script>
     }
 }
@@ -45,111 +45,112 @@ Source code is available upon request via <support@sitkatech.com>.
 <hr />
 @using (Html.BeginForm())
 {
-<div class="form-horizontal">
-    <div class="row form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectDescription, true)
+    @Html.HiddenFor(m => m.ProjectID)
+    <div class="form-horizontal">
+        <div class="row form-group form-group-condensed">
+            <div class="col-sm-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectDescription, true)
+            </div>
+            <div class="col-sm-8" style="padding-left: 10px;">
+                @if (ViewDataTyped.IsEditable)
+                {
+                    @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 6), null, new List<string> { "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProjectDescription)
+                }
+                else
+                {
+                    <div style="width: 464px">
+                        @Html.Raw(ViewDataTyped.ProjectUpdate.ProjectDescription.HtmlEncodeWithBreaks())
+                    </div>
+                }
+            </div>
         </div>
-        <div class="col-sm-8" style="padding-left: 10px;">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 6), null, new List<string> { "form-control" })
-                @Html.ValidationMessageFor(m => m.ProjectDescription)
-            }
-            else
-            {
-                <div style="width: 464px">
-                    @Html.Raw(ViewDataTyped.ProjectUpdate.ProjectDescription.HtmlEncodeWithBreaks())
+        <div class="row form-group form-group-condensed">
+            <div class="col-sm-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectStageID, true)
+            </div>
+            <div class="col-sm-8" style="padding-left: 10px;">
+                @if (ViewDataTyped.IsEditable)
+                {
+                    @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    @Html.ValidationMessageFor(m => m.ProjectStageID)
+                }
+                else
+                {
+                    @ViewDataTyped.ProjectUpdate.ProjectStage.ProjectStageDisplayName
+                }
+                <div>
+                    <p class="systemText">To change the @FieldDefinition.Project.GetFieldDefinitionLabel() stage to a stage not listed, @ModalDialogFormHelper.ModalDialogFormLink("contact support", ViewDataTyped.RequestSupportUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null).</p>
                 </div>
-            }
+            </div>
         </div>
-    </div>
-    <div class="row form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectStageID, true)
+        <div class="form-group form-group-condensed">
+            <div class="col-sm-4 control-label">
+                @Html.LabelWithSugarFor(FieldDefinition.StartApprovalDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Start/Approval Date</strong>
+            </div>
+            <div class="col-sm-8">
+                @if (ViewDataTyped.IsEditable)
+                {
+                    @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    @Html.ValidationMessageFor(m => m.PlannedDate)
+                }
+                else
+                {
+                    <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetPlannedDate().</p>
+                }
+            </div>
         </div>
-        <div class="col-sm-8" style="padding-left: 10px;">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                @Html.ValidationMessageFor(m => m.ProjectStageID)
-            }
-            else
-            {
-                @ViewDataTyped.ProjectUpdate.ProjectStage.ProjectStageDisplayName
-            }
-            <div>
-                <p class="systemText">To change the @FieldDefinition.Project.GetFieldDefinitionLabel() stage to a stage not listed, @ModalDialogFormHelper.ModalDialogFormLink("contact support", ViewDataTyped.RequestSupportUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null).</p>
+        <div class="form-group form-group-condensed">
+            <div class="col-sm-4 control-label">
+                @Html.LabelWithSugarFor(FieldDefinition.ExpirationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Expiration Date</strong>
+            </div>
+            <div class="col-sm-8">
+                @if (ViewDataTyped.IsEditable)
+                {
+                    @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                    @Html.ValidationMessageFor(m => m.ExpirationDate)
+                }
+                else
+                {
+                    <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetExpirationDateFormatted()</p>
+                }
+            </div>
+        </div>
+        <div class="form-group form-group-condensed">
+            <div class="col-sm-4 control-label">
+                @Html.LabelWithSugarFor(m => m.CompletionDate)
+            </div>
+            <div class="col-sm-8">
+                @if (ViewDataTyped.IsEditable)
+                {
+                    @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
+                    @Html.ValidationMessageFor(m => m.CompletionDate)
+                }
+                else
+                {
+                    <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionDateFormatted()</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-4 control-label">
+                @Html.LabelWithSugarFor(m => m.FocusAreaID, true)
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { @class = "form-control", style = "width: auto;" })
+                @Html.ValidationMessageFor(m => m.FocusAreaID)
+            </div>
+        </div>
+        <div class="row form-group-condensed">
+            <div class="col-sm-4 control-label">
+                @Html.LabelWithSugarFor(FieldDefinition.ProjectType)
+            </div>
+            <div class="col-sm-8">
+                @ViewDataTyped.ProjectTypeDisplayName
             </div>
         </div>
     </div>
-    <div class="form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.StartApprovalDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Start/Approval Date</strong>
-        </div>
-        <div class="col-sm-8">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.EditorFor(m => m.PlannedDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                @Html.ValidationMessageFor(m => m.PlannedDate)
-            }
-            else
-            {
-                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetPlannedDate().</p>
-            }
-        </div>
-    </div>
-    <div class="form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.ExpirationDate, LabelWithSugarForExtensions.DisplayStyle.HelpIconOnly) <strong>Expiration Date</strong>
-        </div>
-        <div class="col-sm-8">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-                @Html.ValidationMessageFor(m => m.ExpirationDate)
-            }
-            else
-            {
-                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetExpirationDateFormatted()</p>
-            }
-        </div>
-    </div>
-    <div class="form-group form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(m => m.CompletionDate)
-        </div>
-        <div class="col-sm-8">
-            @if (ViewDataTyped.IsEditable)
-            {
-                @Html.EditorFor(m => m.CompletionDate, new { @class = "form-control", style = "width: auto;" })
-                @Html.ValidationMessageFor(m => m.CompletionDate)
-            }
-            else
-            {
-                <p class="form-control-static">@ViewDataTyped.ProjectUpdate.GetCompletionDateFormatted()</p>
-            }
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <div class="col-xs-12 col-sm-4 control-label">
-            @Html.LabelWithSugarFor(m => m.FocusAreaID)
-        </div>
-        <div class="col-xs-12 col-sm-8">
-            @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new {@class = "form-control", style = "width: auto;"})
-            @Html.ValidationMessageFor(m => m.FocusAreaID)
-        </div>
-    </div>
-    <div class="row form-group-condensed">
-        <div class="col-sm-4 control-label">
-            @Html.LabelWithSugarFor(FieldDefinition.ProjectType)
-        </div>
-        <div class="col-sm-8">
-            @ViewDataTyped.ProjectTypeDisplayName
-        </div>
-    </div>
-</div>
 
     if (ViewDataTyped.IsEditable)
     {
@@ -159,7 +160,7 @@ Source code is available upon request via <support@sitkatech.com>.
             <div class="row form-group">
                 <div class="col-sm-4 control-label">@Html.LabelWithSugarFor(x => x.Comments)</div>
                 <div class="col-sm-8">
-                    @Html.TextAreaFor(x => x.Comments, new {style = "width: 100%", @class = "form-control"})
+                    @Html.TextAreaFor(x => x.Comments, new { style = "width: 100%", @class = "form-control" })
                 </div>
             </div>
         }

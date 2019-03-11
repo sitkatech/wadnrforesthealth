@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public int? OldProjectStageID { get; set; }
 
-        public int? FocusAreaID { get; set; }
+        public int FocusAreaID { get; set; }
 
 
         /// <summary>
@@ -141,6 +141,15 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                 yield return new SitkaValidationResult<EditProjectViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
             }
 
+            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
+            {
+                var treatmentActivitiesOnProject = HttpRequestStorage.DatabaseEntities.TreatmentActivities.Where(x => x.ProjectID == ProjectID).ToList();
+                if (treatmentActivitiesOnProject.Any(x => x.TreatmentActivityStatus == TreatmentActivityStatus.Planned))
+                {
+                    yield return new SitkaValidationResult<EditProjectViewModel, int>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all Treatment Activities must be Completed or Cancelled.", m => m.ProjectStageID);
+                }
+            }
+
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
             if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now)
             {
@@ -159,11 +168,11 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
             var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
 
-            if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
-            {
-                var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
-            }
+            //if (FocusAreaID == null && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
+            //{
+            //    var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
+            //    yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
+            //}
         }
     }
 }

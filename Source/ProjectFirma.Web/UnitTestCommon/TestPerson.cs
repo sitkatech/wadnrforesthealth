@@ -29,12 +29,11 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Person Create()
             {
                 var organization = TestOrganization.Create();
-                var person = Person.CreateNewBlank(Role.Normal);
+                var person = Person.CreateNewBlank(Role.Normal, Authenticator.SAW);
                 person.Organization = organization;
                 person.Email = MakeTestEmail("email");
                 person.FirstName = MakeTestName("firstName", Person.FieldLengths.FirstName);
                 person.LastName = MakeTestName("lastName", Person.FieldLengths.LastName);
-                person.PasswordPdfK2SaltHash = null;
 
                 return person;
             }

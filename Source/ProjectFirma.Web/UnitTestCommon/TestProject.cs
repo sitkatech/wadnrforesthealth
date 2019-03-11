@@ -28,29 +28,33 @@ namespace ProjectFirma.Web.UnitTestCommon
     {
         public static class TestProject
         {
+
             public static Project Create()
             {
                 var projectType = TestProjectType.Create();
                 var projectStage = ProjectStage.Planned;
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None,
-                     ProjectApprovalStatus.Approved);
+
+                var testFocusArea = TestFocusArea.Create();
+                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, testFocusArea);
                 return project;
             }
 
             public static Project Create(DatabaseEntities dbContext)
             {
                 var projectType = TestProjectType.Create(dbContext);
-
                 var projectStage = ProjectStage.Planned;
+                var focusArea = TestFocusArea.Create();
+
                 var project = new Project(projectType,
                     projectStage,
-                    string.Format("Test Project Name {0}", Guid.NewGuid()),
+                    $"Test Project Name {Guid.NewGuid()}",
                     MakeTestName("Test Project Description"),
                     false,
                     ProjectLocationSimpleType.None,
                     // TODO: Verify that this is correct or use the correct value
-                    ProjectApprovalStatus.Approved);
+                    ProjectApprovalStatus.Approved,
+                    focusArea);
 
                 dbContext.Projects.Add(project);
                 return project;
@@ -60,8 +64,10 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var projectType = TestProjectType.Create();
                 var projectStage = ProjectStage.Implementation;
+                var focusArea = TestFocusArea.Create();
+
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved)
+                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, focusArea)
                 {
                     ProjectID = projectID
                 };

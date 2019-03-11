@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using System.Globalization
 @using LtInfo.Common
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
@@ -70,7 +71,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="focusAreaOverview">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
                                 @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditFocusAreaUrl, string.Format("Edit {0} - {1}", "Focus Area", ViewDataTyped.FocusArea.FocusAreaName), ViewDataTyped.UserHasFocusAreaManagePermissions) Basics
@@ -79,16 +80,20 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="row">
-                                            <div class="col-xs-2 fieldLabel">@Html.Label("Name")</div>
+                                            <div class="col-xs-3 fieldLabel">@Html.Label("Name")</div>
                                             <div class="col-xs-6">@ViewDataTyped.FocusArea.FocusAreaName</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-2 fieldLabel">@Html.Label("Status")</div>
+                                            <div class="col-xs-3 fieldLabel">@Html.Label("Status")</div>
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.FocusAreaStatus != null ? ViewDataTyped.FocusArea.FocusAreaStatus.FocusAreaStatusDisplayName : string.Empty)</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xs-2 fieldLabel">@Html.Label("Region")</div>
+                                            <div class="col-xs-3 fieldLabel">@Html.Label("Region")</div>
                                             <div class="col-xs-6">@(ViewDataTyped.FocusArea.Region != null ? ViewDataTyped.FocusArea.Region.RegionName : string.Empty)</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 fieldLabel">@Html.Label("Planned Footprint Acres")</div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.PlannedFootprintAcres.HasValue ? ViewDataTyped.FocusArea.PlannedFootprintAcres.Value.ToString() : "None")</div>
                                         </div>
                                     </div>
                                 </div>
@@ -168,6 +173,82 @@
                             </div>
                             <div class="panel-body">
                                 @Html.DhtmlxGrid(ViewDataTyped.ProjectsIncludingLeadImplementingGridSpec, ViewDataTyped.ProjectFocusAreaGridName, ViewDataTyped.ProjectFocusAreaGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panelFirma">
+                            <div class="panel-heading panelTitle">
+                                CLOSEOUT REPORT
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-3"><h4>@ViewDataTyped.FocusArea.FocusAreaName</h4></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalPlannedFootprintAcres): </div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.PlannedFootprintAcres.HasValue ? ViewDataTyped.FocusArea.PlannedFootprintAcres.Value.ToString() : "None")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalCompletedFootprintAcres): </div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.TotalCompletedFootprintAcres.ToString())</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalProjectEstimatedTotalCosts):  </div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.SumOfProjectEstimatedTotalCost.HasValue ? ViewDataTyped.FocusArea.SumOfProjectEstimatedTotalCost.Value.ToString("C", CultureInfo.CurrentCulture) : "None")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 fieldLabel">@Html.LabelWithSugarFor(FieldDefinition.FocusAreaTotalProjectReportedExpendiures): </div>
+                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.SumOfProjectReportedExpenditures.HasValue ? ViewDataTyped.FocusArea.SumOfProjectReportedExpenditures.Value.ToString("C", CultureInfo.CurrentCulture) : "None")</div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="row">
+                                            <h4>@Html.LabelWithSugarFor(FieldDefinition.FocusAreaCloseoutReportProjectList) </h4>
+                                        </div>
+                                        <div class="row">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" style="border-bottom: none;">Project</th>
+                                                    <th scope="col" style="border-bottom: none;">Status</th>
+                                                    <th scope="col" style="border-bottom: none;">@Html.LabelWithSugarFor(FieldDefinition.ProjectTotalCompletedFootprintAcres, "Footprint Acres")</th>
+                                                    <th scope="col" style="border-bottom: none;">Estimated Total Cost</th>
+                                                    <th scope="col" style="border-bottom: none;">Reported Expenditures</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var project in ViewDataTyped.FocusArea.GetAssociatedImplementationOrFurtherProjects().OrderBy(x => x.DisplayName))
+                                                    {
+                                                    <tr >
+                                                        <td style="border-top: none;">
+                                                            @project.DisplayName
+                                                        </td>
+                                                        <td style="border-top: none;">
+                                                            @project.ProjectStage.ProjectStageDisplayName
+                                                        </td>
+                                                        <td style="border-top: none;">
+                                                            @project.TotalCompletedFootprintAcres
+                                                        </td>
+                                                        <td style="border-top: none;">
+                                                            @(project.EstimatedTotalCost.HasValue ? project.EstimatedTotalCost.Value.ToString("C", CultureInfo.CurrentCulture) : "None")
+                                                        </td>
+                                                        <td style="border-top: none;">
+                                                            @(project.TotalExpenditures.HasValue ? project.TotalExpenditures.Value.ToString("C", CultureInfo.CurrentCulture) : "None")
+                                                        </td>
+                                                    </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -22,10 +22,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using FluentValidation.Attributes;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
@@ -36,6 +38,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectDescription)]
         [StringLength(Models.Project.MaxLengthForProjectDescription)]
         public string ProjectDescription { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
+        public int ProjectID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
         public int ProjectStageID { get; set; }
@@ -50,7 +55,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public DateTime? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
-        public int? FocusAreaID { get; set; }
+        public int FocusAreaID { get; set; }
         [DisplayName("Reviewer Comments")]
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
         public string Comments { get; set; }
@@ -73,6 +78,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             CompletionDate = projectUpdate.CompletionDate;
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
+            ProjectID = projectUpdate.ProjectUpdateBatch.ProjectID;
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -97,6 +103,15 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID && !CompletionDate.HasValue)
             {
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>($"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed stage, the Completion year is required", m => m.CompletionDate);
+            }
+
+            if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
+            {
+                var treatmentActivitiesOnProject = HttpRequestStorage.DatabaseEntities.TreatmentActivities.Where(x => x.ProjectID == ProjectID).ToList();
+                if (treatmentActivitiesOnProject.Any(x => x.TreatmentActivityStatus == TreatmentActivityStatus.Planned))
+                {
+                    yield return new SitkaValidationResult<BasicsViewModel, int>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all Treatment Activities must be Completed or Cancelled.", m => m.ProjectStageID);
+                }
             }
 
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;

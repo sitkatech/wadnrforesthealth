@@ -26,7 +26,7 @@ CREATE TABLE [dbo].[Project](
 	[ReviewedByPersonID] [int] NULL,
 	[DefaultBoundingBox] [geometry] NULL,
 	[NoExpendituresToReportExplanation] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[FocusAreaID] [int] NULL,
+	[FocusAreaID] [int] NOT NULL,
 	[NoRegionsExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[NoPriorityAreasExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ExpirationDate] [datetime] NULL,

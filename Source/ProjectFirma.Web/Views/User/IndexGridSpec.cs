@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.User
             if (hasDeletePermission)
             {
                 Add(string.Empty,
-                    x => string.IsNullOrWhiteSpace(x.PersonUniqueIdentifier) ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.HasDependentObjects(), !x.HasDependentObjects(), true) : new HtmlString(""),
+                    x => x.IsFullUser() ? DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), !x.HasDependentObjects(), !x.HasDependentObjects(), true) : new HtmlString(""),
                     30, DhtmlxGridColumnFilterType.None);
             }
             Add("Last Name", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.LastName), 100, DhtmlxGridColumnFilterType.Html);
@@ -52,6 +52,7 @@ namespace ProjectFirma.Web.Views.User
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
             Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
             Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
+            Add("Authentication Method", x => x.AllowedAuthenticator.AuthenticatorName, 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
 
         private static HtmlString GetOrganizationShortNameUrl(Person person)

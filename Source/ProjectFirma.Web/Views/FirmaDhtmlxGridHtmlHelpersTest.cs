@@ -62,6 +62,7 @@ namespace ProjectFirma.Web.Views
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CreateCreateUrlHtmlTestWithCreatePopupForm()
         {
@@ -90,6 +91,7 @@ namespace ProjectFirma.Web.Views
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void BuildDhtmlxGridHeaderTest()
         {
@@ -125,6 +127,7 @@ namespace ProjectFirma.Web.Views
         }
 
         [Test]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CreateFilteredExcelDownloadIconHtmlTest()
         {

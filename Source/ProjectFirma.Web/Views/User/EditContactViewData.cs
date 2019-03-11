@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using ProjectFirma.Web.Views;
 
 namespace ProjectFirma.Web.Views.User
 {

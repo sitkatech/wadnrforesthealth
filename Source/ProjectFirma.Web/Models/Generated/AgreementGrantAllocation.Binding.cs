@@ -30,31 +30,29 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public AgreementGrantAllocation(int agreementGrantAllocationID, int agreementID, int grantAllocationID, int grantID) : this()
+        public AgreementGrantAllocation(int agreementGrantAllocationID, int agreementID, int grantAllocationID) : this()
         {
             this.AgreementGrantAllocationID = agreementGrantAllocationID;
             this.AgreementID = agreementID;
             this.GrantAllocationID = grantAllocationID;
-            this.GrantID = grantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public AgreementGrantAllocation(int agreementID, int grantAllocationID, int grantID) : this()
+        public AgreementGrantAllocation(int agreementID, int grantAllocationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementGrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.AgreementID = agreementID;
             this.GrantAllocationID = grantAllocationID;
-            this.GrantID = grantID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation, Grant grant) : this()
+        public AgreementGrantAllocation(Agreement agreement, GrantAllocation grantAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.AgreementGrantAllocationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -64,17 +62,14 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.AgreementGrantAllocations.Add(this);
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.AgreementGrantAllocations.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, GrantAllocation grantAllocation, Grant grant)
+        public static AgreementGrantAllocation CreateNewBlank(Agreement agreement, GrantAllocation grantAllocation)
         {
-            return new AgreementGrantAllocation(agreement, grantAllocation, grant);
+            return new AgreementGrantAllocation(agreement, grantAllocation);
         }
 
         /// <summary>
@@ -113,13 +108,11 @@ namespace ProjectFirma.Web.Models
         public int AgreementGrantAllocationID { get; set; }
         public int AgreementID { get; set; }
         public int GrantAllocationID { get; set; }
-        public int GrantID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return AgreementGrantAllocationID; } set { AgreementGrantAllocationID = value; } }
 
         public virtual Agreement Agreement { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
-        public virtual Grant Grant { get; set; }
 
         public static class FieldLengths
         {

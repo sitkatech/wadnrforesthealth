@@ -45,5 +45,30 @@ namespace ProjectFirma.Web.UnitTestCommon
                 return newProjectType;
             }
         }
+
+        public static class TestFocusArea
+        {
+            public static FocusArea Create()
+            {
+                //var testRegion = Region.CreateNewBlank();
+                var testRegion = TestRegion.Create();
+
+                var focusArea = FocusArea.CreateNewBlank(FocusAreaStatus.InProgress, testRegion);
+                focusArea.FocusAreaName = MakeTestName("Test Focus Area");
+                focusArea.Region.RegionName = MakeTestName("Test Region Name", 100);
+                return focusArea;
+            }
+        }
+
+        public static class TestRegion
+        {
+            public static Region Create()
+            {
+                var testRegion = Region.CreateNewBlank();
+                testRegion.RegionName = MakeTestName("Test Region", 100);
+                return testRegion;
+            }
+        }
+
     }
 }

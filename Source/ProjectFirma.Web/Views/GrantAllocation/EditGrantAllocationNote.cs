@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public static readonly EditGrantAllocationNoteTypeExistingNote Instance =
             new EditGrantAllocationNoteTypeExistingNote(
-                $"<p>Update this {Models.FieldDefinition.GrantNote.GetFieldDefinitionLabel()}.</p>");
+                $"<p>Update this {Models.FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()}.</p>");
     }
 
     

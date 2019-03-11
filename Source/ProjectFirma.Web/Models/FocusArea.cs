@@ -20,9 +20,29 @@ namespace ProjectFirma.Web.Models
             return Projects.ToList();
         }
 
+        public List<Project> GetAssociatedImplementationOrFurtherProjects()
+        {
+            return Projects.Where(p => p.ProjectStage == ProjectStage.Completed || p.ProjectStage == ProjectStage.Implementation || p.ProjectStage == ProjectStage.PostImplementation).ToList();
+        }
+
+        public decimal? SumOfProjectEstimatedTotalCost
+        {
+            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.EstimatedTotalCost).Sum(); }
+        }
+
+        public decimal? SumOfProjectReportedExpenditures
+        {
+            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.TotalExpenditures).Sum(); }
+        }
+
+        public decimal TotalCompletedFootprintAcres
+        {
+            get { return GetAssociatedImplementationOrFurtherProjects().Select(x => x.TotalCompletedFootprintAcres).Sum(); }
+        }
+
         public string AuditDescriptionString => FocusAreaName;
 
-        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
+        //public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int)));
 
         public DbGeometry DbGeometry
         {

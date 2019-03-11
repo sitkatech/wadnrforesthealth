@@ -21,7 +21,9 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
+using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -34,7 +36,15 @@ namespace ProjectFirma.Web.Models
 
         public static Person GetPersonByEmail(this IQueryable<Person> people, string email, bool requireRecordFound)
         {
-            var person = people.SingleOrDefault(x => x.Email == email);
+            SitkaHttpApplication.Logger.Debug($"GetPersonByEmail: email: {email} requireRecordFound: {requireRecordFound} ");
+
+            var peopleWithDesiredEmail = people.Where(x => x.Email == email).ToList();
+            if (peopleWithDesiredEmail.Count > 1)
+            {
+                throw new Saml2ClaimException($"GetPersonByEmail - Found more than one Person with email {email}; should be prohibited");
+            }
+
+            var person = peopleWithDesiredEmail.SingleOrDefault();
             if (requireRecordFound)
             {
                 Check.RequireNotNullThrowNotFound(person, email);
@@ -42,20 +52,26 @@ namespace ProjectFirma.Web.Models
             return person;
         }
 
-        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier)
+        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string desiredPersonUniqueIdentifier)
         {
-            return GetPersonByPersonUniqueIdentifier(people, personUniqueIdentifier, false);
+            Check.EnsureNotNull(desiredPersonUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
+
+            // Make sure the GUID we are looking up aligns with the environment (Local,QA, Prod) and authentication method (ADFS, SAW).
+            var desiredDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
+            var desiredAuthenticator = Saml2ClaimsHelpers.GetAuthenticator(desiredPersonUniqueIdentifier);
+
+            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredDeploymentEnvironment, desiredAuthenticator));
+
+            // string successString = person != null ? "Found Person" : "Did NOT find Person";
+            // SitkaHttpApplication.Logger.Debug($"GetPersonByPersonUniqueIdentifier: {successString} desiredPersonUniqueIdentifier: \"{desiredPersonUniqueIdentifier}\" - desiredDeploymentEnvironment: {desiredDeploymentEnvironment.DeploymentEnvironmentName} - desiredAuthenticator : {desiredAuthenticator.AuthenticatorName}");
+            return person;
         }
 
-        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string personUniqueIdentifier, bool requireRecordFound)
+        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, DeploymentEnvironment desiredDeploymentEnvironment, Authenticator desiredAuthenticator)
         {
-            Check.EnsureNotNull(personUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
-            var person = people.SingleOrDefault(x => x.PersonUniqueIdentifier == personUniqueIdentifier);
-            if (requireRecordFound)
-            {
-                Check.RequireNotNullThrowNotFound(person, personUniqueIdentifier.ToString());
-            }
-            return person;
+            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.DeploymentEnvironment.DeploymentEnvironmentID == desiredDeploymentEnvironment.DeploymentEnvironmentID &&
+                                                                           pec.Authenticator.AuthenticatorID == desiredAuthenticator.AuthenticatorID &&
+                                                                           pec.PersonUniqueIdentifier == desiredPersonUniqueIdentifier);
         }
 
         public static Person GetPersonByWebServiceAccessToken(this IQueryable<Person> people, Guid webServiceAccessToken)

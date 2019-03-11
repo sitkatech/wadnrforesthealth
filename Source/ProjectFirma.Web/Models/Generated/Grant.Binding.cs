@@ -24,23 +24,20 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Grant()
         {
-            this.Agreements = new HashSet<Agreement>();
-            this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantNotes = new HashSet<GrantNote>();
+            this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, int? programIndex, string projectCode, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
             this.StartDate = startDate;
             this.EndDate = endDate;
-            this.ProgramIndex = programIndex;
-            this.ProjectCode = projectCode;
             this.ConditionsAndRequirements = conditionsAndRequirements;
             this.ComplianceNotes = complianceNotes;
             this.AwardedFunds = awardedFunds;
@@ -95,13 +92,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return Agreements.Any() || AgreementGrantAllocations.Any() || GrantAllocations.Any() || GrantNotes.Any();
+            return GrantAllocations.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(Agreement).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
 
 
         /// <summary>
@@ -126,22 +123,17 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in Agreements.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in AgreementGrantAllocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in GrantAllocations.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
             foreach(var x in GrantNotes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantNoteInternals.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -152,8 +144,6 @@ namespace ProjectFirma.Web.Models
         public string GrantNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public int? ProgramIndex { get; set; }
-        public string ProjectCode { get; set; }
         public string ConditionsAndRequirements { get; set; }
         public string ComplianceNotes { get; set; }
         public decimal? AwardedFunds { get; set; }
@@ -166,10 +156,9 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
-        public virtual ICollection<Agreement> Agreements { get; set; }
-        public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
+        public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual GrantType GrantType { get; set; }
         public virtual GrantStatus GrantStatus { get; set; }
         public virtual Organization Organization { get; set; }
@@ -177,7 +166,6 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int GrantNumber = 30;
-            public const int ProjectCode = 100;
             public const int CFDANumber = 10;
             public const int GrantName = 64;
             public const int ShortName = 64;

@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.Grant
             }
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.Grant.GrantNumber, GrantNumberColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), GrantNumberColumnWidth, DhtmlxGridColumnFilterType.Text);
-            Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.ProgramManagerPerson != null ? x.ProgramManagerPerson.FullNameFirstLast : string.Empty, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.ProgramManager.ToGridHeaderString(), x => x.GetAllProgramManagerPersonNamesAsString(), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add($"Parent Grant {Models.FieldDefinition.GrantStatus.ToGridHeaderString()}", x => x.Grant.GrantStatus.GrantStatusName, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
@@ -65,9 +65,11 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.FederalFundCode.ToGridHeaderString(), x => x.FederalFundCode != null ? x.FederalFundCode.FederalFundCodeAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.AllocationAmount.ToGridHeaderString(), x => x.AllocationAmount, 90, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndex != null ? x.ProgramIndex.ProgramIndexAbbrev : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCodesAsCsvString, 90, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCodes.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
+
+        
 
     }
 }

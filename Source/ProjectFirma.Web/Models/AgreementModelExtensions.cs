@@ -1,4 +1,9 @@
-﻿using LtInfo.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using LtInfo.Common;
+using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 
@@ -25,15 +30,14 @@ namespace ProjectFirma.Web.Models
         }
 
         public static readonly UrlTemplate<int> GrantDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
-        public static string GetGrantDetailUrl(this Agreement agreement)
+
+        public static HtmlString GetListOfGrantHrefs(this Models.Agreement agreement)
         {
-            if (agreement.GrantID.HasValue)
-            {
-                return GrantDetailUrlTemplate.ParameterReplace(agreement.GrantID.Value);
-            }
+            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.GrantAllocation.Grant).DistinctBy(x => x.GrantNumber).OrderBy(x => x.GrantNumber, StringComparer.InvariantCultureIgnoreCase);
 
-            return string.Empty;
-
+            var distinctListOfGrantHrefs = distinctListOfGrants.Select(x =>
+                UrlTemplate.MakeHrefString(GrantDetailUrlTemplate.ParameterReplace(x.GrantID), x.GrantNumber));
+            return new HtmlString(string.Join(", ", distinctListOfGrantHrefs.Select(x => x.ToHtmlString())));
         }
 
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));

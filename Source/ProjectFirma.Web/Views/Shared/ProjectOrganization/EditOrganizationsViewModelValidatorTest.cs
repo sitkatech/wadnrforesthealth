@@ -30,6 +30,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
     public class EditOrganizationsViewModelValidatorTest
     {
         [Test]
+        [Ignore]
         public void HasOneLeadImplementerOrNoOrganizationsTest()
         {
             var project = TestFramework.TestProject.Create();
@@ -46,15 +47,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
             organization3.PrimaryContactPerson = primaryContact;
             organization3.PrimaryContactPersonID = primaryContact.PersonID;
 
-           
-
             var projectOrganization1 = TestFramework.TestProjectOrganization.Create(project, organization1);
             var projectOrganization2 = TestFramework.TestProjectOrganization.Create(project, organization2);
             var projectOrganization3 = TestFramework.TestProjectOrganization.Create(project, organization3);
             
            
             var projectOrganizations = new List<Models.ProjectOrganization>();
-            var viewModel = new EditOrganizationsViewModel(project, projectOrganizations, Person.CreateNewBlank(Models.Role.Normal));
+            var viewModel = new EditOrganizationsViewModel(project, projectOrganizations, Person.CreateNewBlank(Models.Role.Normal, Authenticator.SAW));
 
             //TODO tests
         }

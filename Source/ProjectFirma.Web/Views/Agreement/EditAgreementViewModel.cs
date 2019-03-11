@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Common;
@@ -57,9 +58,6 @@ namespace ProjectFirma.Web.Views.Agreement
         [Required]
         public int AgreementTypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
-        public int? GrantID { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public List<ProgramIndex> ProgramIndices { get; }
 
@@ -92,16 +90,12 @@ namespace ProjectFirma.Web.Views.Agreement
 
         public EditAgreementViewModel(Models.Agreement agreement)
         {
-            var agreementGrantAllocationsForThisAgreement = agreement.AgreementGrantAllocations;
-
+            AgreementID = agreement.AgreementID;
             AgreementTitle = agreement.AgreementTitle;
             AgreementNumber = agreement.AgreementNumber;
             OrganizationID = agreement.OrganizationID;
             AgreemeentStatusID = agreement.AgreementStatusID;
             AgreementTypeID = agreement.AgreementTypeID;
-            GrantID = agreement.GrantID;
-            //ProgramIndices = agreement.AgreementGrantAllocations
-            //ProjectCode = agreement.Grant.ProjectCode;
             AgreementAmount = agreement.AgreementAmount;
             AgreementStartDate = agreement.StartDate;
             AgreementEndDate = agreement.EndDate;
@@ -115,7 +109,6 @@ namespace ProjectFirma.Web.Views.Agreement
             agreement.OrganizationID = OrganizationID.Value;
             agreement.AgreementStatusID = AgreemeentStatusID.Value;
             agreement.AgreementTypeID = AgreementTypeID;
-            agreement.GrantID = GrantID;
             agreement.AgreementAmount = AgreementAmount;
             agreement.StartDate = AgreementStartDate;
             agreement.EndDate = AgreementEndDate;
@@ -139,29 +132,16 @@ namespace ProjectFirma.Web.Views.Agreement
             var agreementTypes = HttpRequestStorage.DatabaseEntities.AgreementTypes;
             var mouAgreementType = agreementTypes.SingleOrDefault(x => string.Equals(x.AgreementTypeAbbrev, "MOU"));
 
-            if (GrantID.HasValue && mouAgreementType != null && AgreementTypeID == mouAgreementType.AgreementTypeID)
-            {
-                yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
-                    $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Grant must be blank", m => m.GrantID);
-            }
             if (AgreementAmount.HasValue && mouAgreementType != null && AgreementTypeID == mouAgreementType.AgreementTypeID)
             {
                 yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
                     $"If the Agreement Type is set to {mouAgreementType.AgreementTypeName} ({mouAgreementType.AgreementTypeAbbrev}) then Agreement Amount must be blank", m => m.AgreementAmount);
             }
-            if (!GrantID.HasValue && (mouAgreementType == null || AgreementTypeID != mouAgreementType.AgreementTypeID))
-            {
-                yield return new SitkaValidationResult<EditAgreementViewModel, int?>(
-                    $"A Grant must be selected if the Agreement Type is not MOU", m => m.GrantID);
-            }
-            if (AgreementAmount.HasValue && AgreementAmount > 2147483646 )
+            if (AgreementAmount.HasValue && AgreementAmount > SqlMoney.MaxValue.Value)
             {
                 yield return new SitkaValidationResult<EditAgreementViewModel, Money?>(
-                    $"The Agreement Amount you entered exceeds the maximum. Please enter an amount less than $2,147,483,646", m => m.AgreementAmount);
+                    $"The Agreement Amount you entered exceeds the maximum. Please enter an amount less than ${SqlMoney.MaxValue.Value:C}", m => m.AgreementAmount);
             }
-
-
-            
         }
     }
 }

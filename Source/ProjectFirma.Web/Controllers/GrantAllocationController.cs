@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -99,6 +100,96 @@ namespace ProjectFirma.Web.Controllers
         {
             var viewData = new EditGrantAllocationNoteViewData(editGrantAllocationNoteType);
             return RazorPartialView<EditGrantAllocationNote, EditGrantAllocationNoteViewData, EditGrantAllocationNoteViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult NewGrantAllocationNoteInternal(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var viewModel = new EditGrantAllocationNoteInternalViewModel();
+            return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.NewNote);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantAllocationNoteInternal(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationNoteInternalViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.NewNote);
+            }
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationNoteInternal = GrantAllocationNoteInternal.CreateNewBlank(grantAllocation, CurrentPerson);
+            viewModel.UpdateModel(grantAllocationNoteInternal, CurrentPerson, EditGrantAllocationNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.GrantAllocationNoteInternals.Add(grantAllocationNoteInternal);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult ViewEditGrantAllocationNoteInternal(EditGrantAllocationNoteInternalViewModel viewModel, EditGrantAllocationNoteInternalType editGrantAllocationNoteInternalType)
+        {
+            var viewData = new EditGrantAllocationNoteInternalViewData(editGrantAllocationNoteInternalType);
+            return RazorPartialView<EditGrantAllocationNoteInternal, EditGrantAllocationNoteInternalViewData, EditGrantAllocationNoteInternalViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [GrantAllocationNoteInternalEditAsAdminFeature]
+        public PartialViewResult EditGrantAllocationNoteInternal(GrantAllocationNoteInternalPrimaryKey grantAllocationNoteInternalPrimaryKey)
+        {
+            var grantAllocationNoteInternal = grantAllocationNoteInternalPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationNoteInternalViewModel(grantAllocationNoteInternal);
+            return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.ExistingGrantAllocationNoteInternal);
+        }
+
+        [HttpPost]
+        [GrantAllocationNoteInternalEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantAllocationNoteInternal(GrantAllocationNoteInternalPrimaryKey grantAllocationNoteInternalPrimaryKey, EditGrantAllocationNoteInternalViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantAllocationNoteInternal(viewModel, EditGrantAllocationNoteInternalType.ExistingGrantAllocationNoteInternal);
+            }
+
+            var grantAllocationNoteInternal = grantAllocationNoteInternalPrimaryKey.EntityObject;
+            viewModel.UpdateModel(grantAllocationNoteInternal, CurrentPerson, EditGrantAllocationNoteType.ExistingGrantAllocationNote);
+            HttpRequestStorage.DatabaseEntities.GrantAllocationNoteInternals.AddOrUpdate(grantAllocationNoteInternal);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        [HttpGet]
+        [GrantAllocationNoteInternalEditAsAdminFeature]
+        public PartialViewResult DeleteGrantAllocationNoteInternal(GrantAllocationNoteInternalPrimaryKey grantAllocationNoteInternalPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationNoteInternalPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantAllocationNoteInternal(grantAllocationNoteInternalPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantAllocationNoteInternal(GrantAllocationNoteInternal grantAllocationNoteInternal, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()} created on '{grantAllocationNoteInternal.CreatedDate}' by '{grantAllocationNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationNoteInternalEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantAllocationNoteInternal(GrantAllocationNoteInternalPrimaryKey grantAllocationNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationNoteInternal = grantAllocationNoteInternalPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantAllocationNoteInternal(grantAllocationNoteInternal, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationNoteInternal.GetFieldDefinitionLabel()} created on '{grantAllocationNoteInternal.CreatedDate}' by '{grantAllocationNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            grantAllocationNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
@@ -232,20 +323,31 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.SingleOrDefault(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
+            if (grantAllocation == null)
+            {
+                throw new Exception($"Could not find GrantAllocationID # {grantAllocationPrimaryKey.PrimaryKeyValue}; has it been deleted?");
+            }
+
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
             var grantAllocationBasicsViewData = new GrantAllocationBasicsViewData(grantAllocation, false, taxonomyLevel);
             var userHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
-            var grantNotesViewData = new EntityNotesViewData(
+            var grantAllocationNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantAllocation.GrantAllocationNotes)),
                 SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationNote(grantAllocationPrimaryKey)),
                 grantAllocation.ProjectName,
                 userHasEditGrantAllocationPermissions);
+            var grantAllocationNoteInternalsViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantAllocation.GrantAllocationNoteInternals)),
+                SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationNoteInternal(grantAllocationPrimaryKey)),
+                grantAllocation.ProjectName,
+                userHasEditGrantAllocationPermissions);
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantNotesViewData);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
     }

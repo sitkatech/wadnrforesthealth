@@ -41,7 +41,6 @@
         List<AgreementGrantAllocation> agreementGrantAllocations = ViewDataTyped.Agreement.AgreementGrantAllocations.ToList();
         return AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocations);
     }
-
 }
 
 @section JavascriptAndStylesContent
@@ -96,7 +95,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <span id="Name">@ViewDataTyped.Agreement.AgreementTitle</span>
+                                <span>@ViewDataTyped.Agreement.AgreementTitle</span>
                             </div>
                         </div>
                         <div class="row">
@@ -104,7 +103,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementNumber)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementTitle">@ViewDataTyped.Agreement.AgreementNumber</span>
+                                <span>@ViewDataTyped.Agreement.AgreementNumber</span>
                             </div>
                         </div>
                         <div class="row">
@@ -112,7 +111,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.Organization)
                             </div>
                             <div class="col-sm-9">
-                                <span id="Organization">@UrlTemplate.MakeHrefString(ViewDataTyped.Agreement.GetOrganizationDetailUrl(), ViewDataTyped.Agreement.Organization.DisplayName)</span>
+                                <span>@UrlTemplate.MakeHrefString(ViewDataTyped.Agreement.GetOrganizationDetailUrl(), ViewDataTyped.Agreement.Organization.DisplayName)</span>
                             </div>
                         </div>
                         <div class="row">
@@ -120,7 +119,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementStartDate)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementStartDate">@ViewDataTyped.Agreement.StartDateDisplay</span>
+                                <span>@ViewDataTyped.Agreement.StartDateDisplay</span>
                             </div>
                         </div>
                         <div class="row">
@@ -128,7 +127,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementEndDate)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementEndDate">@ViewDataTyped.Agreement.EndDateDisplay</span>
+                                <span>@ViewDataTyped.Agreement.EndDateDisplay</span>
                             </div>
                         </div>
                         <div class="row">
@@ -136,7 +135,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementStatus)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementStatus">@ViewDataTyped.Agreement.AgreementStatusDisplay</span>
+                                <span>@ViewDataTyped.Agreement.AgreementStatusDisplay</span>
                             </div>
                         </div>
                         <div class="row">
@@ -144,15 +143,41 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementType)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementType">@(ViewDataTyped.Agreement.AgreementType != null ? ViewDataTyped.Agreement.AgreementType.AgreementTypeName : string.Format("No {0} selected", FieldDefinition.AgreementType.GetFieldDefinitionLabel()))</span>
+                                <span>@(ViewDataTyped.Agreement.AgreementType != null ? ViewDataTyped.Agreement.AgreementType.AgreementTypeName : string.Format("No {0} selected", FieldDefinition.AgreementType.GetFieldDefinitionLabel()))</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
-                                @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
+                                @Html.LabelWithSugarFor(FieldDefinition.ProgramIndex)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementFundingSource">@UrlTemplate.MakeHrefString(ViewDataTyped.Agreement.GetGrantDetailUrl(), ViewDataTyped.Agreement.GrantNumberDisplay)</span>
+                                <span>
+                                    @if (ViewDataTyped.ProgramIndices.Any())
+                                    {
+                                        @ViewDataTyped.ProgramIndices.ToDistinctOrderedCsvList()
+                                    }
+                                    else
+                                    {
+                                        <span>There aren't any Program Indices associated with this Agreement</span>
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
+                            </div>
+                            <div class="col-sm-9">
+                                <span>
+                                    @if (ViewDataTyped.ProjectCodes.Any())
+                                    {
+                                        @ViewDataTyped.ProjectCodes.ToDistinctOrderedCsvList()
+                                    }
+                                    else
+                                    {
+                                        <span>There aren't any Project Codes associated with this Agreement</span>
+                                    }
+                                </span>
                             </div>
                         </div>
                         <div class="row">
@@ -168,7 +193,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.AgreementNotes)
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementNotes">@ViewDataTyped.Agreement.Notes</span>
+                                <span>@ViewDataTyped.Agreement.Notes</span>
                             </div>
                         </div>
                         <div class="row">
@@ -176,11 +201,11 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Agreement File")
                             </div>
                             <div class="col-sm-9">
-                                <span id="AgreementFile">
+                                <span>
                                     @if (ViewDataTyped.ShowDownload)
                                     {
                                         <a href="@ViewDataTyped.Agreement.AgreementFileResource.FileResourceUrl">
-                                            @ViewDataTyped.Agreement.AgreementFileResource.OriginalBaseFilename
+                                            @ViewDataTyped.Agreement.AgreementFileResource.OriginalCompleteFileName
                                         </a>
                                     }
                                     else

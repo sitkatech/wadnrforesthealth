@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Models
         }
         public virtual DbSet<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual DbSet<AgreementPerson> AgreementPeople { get; set; }
-        public virtual DbSet<AgreementProjectCode> AgreementProjectCodes { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; }
         public virtual DbSet<AgreementType> AgreementTypes { get; set; }
@@ -52,13 +51,20 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<FundingSource> FundingSources { get; set; }
+        public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
+        public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual DbSet<GrantNote> GrantNotes { get; set; }
         public virtual DbSet<Grant> Grants { get; set; }
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
+        public virtual DbSet<InvoiceApprovalStatus> InvoiceApprovalStatuses { get; set; }
+        public virtual DbSet<InvoiceMatchAmountType> InvoiceMatchAmountTypes { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<InvoiceStatus> InvoiceStatuses { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -76,6 +82,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PerformanceMeasure> PerformanceMeasures { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
+        public virtual DbSet<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
@@ -133,6 +140,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TaxonomyBranch> TaxonomyBranches { get; set; }
         public virtual DbSet<TaxonomyTrunk> TaxonomyTrunks { get; set; }
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
+        public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
@@ -157,9 +165,6 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(agreementPersonRole, "AgreementPersonRole", primaryKey);
                     return agreementPersonRole;
 
-                case "AgreementProjectCode":
-                    return AgreementProjectCodes.GetAgreementProjectCode(primaryKey);
-
                 case "Agreement":
                     return Agreements.GetAgreement(primaryKey);
 
@@ -176,6 +181,11 @@ namespace ProjectFirma.Web.Models
 
                 case "AuditLog":
                     return AuditLogs.GetAuditLog(primaryKey);
+
+                case "Authenticator":
+                    var authenticator = Authenticator.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(authenticator, "Authenticator", primaryKey);
+                    return authenticator;
 
                 case "ClassificationPerformanceMeasure":
                     return ClassificationPerformanceMeasures.GetClassificationPerformanceMeasure(primaryKey);
@@ -202,6 +212,11 @@ namespace ProjectFirma.Web.Models
 
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
+
+                case "DeploymentEnvironment":
+                    var deploymentEnvironment = DeploymentEnvironment.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(deploymentEnvironment, "DeploymentEnvironment", primaryKey);
+                    return deploymentEnvironment;
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
@@ -263,14 +278,23 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
 
+                case "GrantAllocationNoteInternal":
+                    return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
+
                 case "GrantAllocationNote":
                     return GrantAllocationNotes.GetGrantAllocationNote(primaryKey);
+
+                case "GrantAllocationProgramManager":
+                    return GrantAllocationProgramManagers.GetGrantAllocationProgramManager(primaryKey);
 
                 case "GrantAllocationProjectCode":
                     return GrantAllocationProjectCodes.GetGrantAllocationProjectCode(primaryKey);
 
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);
+
+                case "GrantNoteInternal":
+                    return GrantNoteInternals.GetGrantNoteInternal(primaryKey);
 
                 case "GrantNote":
                     return GrantNotes.GetGrantNote(primaryKey);
@@ -283,6 +307,18 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantType":
                     return GrantTypes.GetGrantType(primaryKey);
+
+                case "InvoiceApprovalStatus":
+                    return InvoiceApprovalStatuses.GetInvoiceApprovalStatus(primaryKey);
+
+                case "InvoiceMatchAmountType":
+                    return InvoiceMatchAmountTypes.GetInvoiceMatchAmountType(primaryKey);
+
+                case "Invoice":
+                    return Invoices.GetInvoice(primaryKey);
+
+                case "InvoiceStatus":
+                    return InvoiceStatuses.GetInvoiceStatus(primaryKey);
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -359,6 +395,9 @@ namespace ProjectFirma.Web.Models
                     var performanceMeasureType = PerformanceMeasureType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(performanceMeasureType, "PerformanceMeasureType", primaryKey);
                     return performanceMeasureType;
+
+                case "PersonEnvironmentCredential":
+                    return PersonEnvironmentCredentials.GetPersonEnvironmentCredential(primaryKey);
 
                 case "PersonStewardOrganization":
                     return PersonStewardOrganizations.GetPersonStewardOrganization(primaryKey);
@@ -625,6 +664,9 @@ namespace ProjectFirma.Web.Models
 
                 case "tmpAgreementContact":
                     return tmpAgreementContacts.GettmpAgreementContact(primaryKey);
+
+                case "tmpAgreementContactsImportTemplate":
+                    return tmpAgreementContactsImportTemplates.GettmpAgreementContactsImportTemplate(primaryKey);
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);

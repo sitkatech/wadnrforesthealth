@@ -10,7 +10,6 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[EndDate] [datetime] NULL,
 	[AllocationAmount] [money] NULL,
 	[CostTypeID] [int] NULL,
-	[ProgramManagerPersonID] [int] NULL,
 	[ProgramIndexID] [int] NULL,
 	[FederalFundCodeID] [int] NULL,
 	[OrganizationID] [int] NULL,
@@ -18,6 +17,11 @@ CREATE TABLE [dbo].[GrantAllocation](
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [AK_GrantAllocation_GrantAllocationID_GrantID] UNIQUE NONCLUSTERED 
+(
+	[GrantAllocationID] ASC,
+	[GrantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -41,11 +45,6 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[Organization] ([OrganizationID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Organization_OrganizationID]
-GO
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID] FOREIGN KEY([ProgramManagerPersonID])
-REFERENCES [dbo].[Person] ([PersonID])
-GO
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Person_ProgramManagerPersonID_PersonID]
 GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
 REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])

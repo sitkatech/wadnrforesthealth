@@ -217,7 +217,7 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
             // Check that the audit log mentions this object
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for {0} named \"{1}\" in Audit Log database entries.", FieldDefinition.Project.GetFieldDefinitionLabel(), testProject.ProjectName));
+            System.Diagnostics.Trace.WriteLine($"Looking for {FieldDefinition.Project.GetFieldDefinitionLabel()} named \"{testProject.ProjectName}\" in Audit Log database entries.");
             Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testProject.ProjectName)));
 
             // Change audit logging
@@ -234,6 +234,10 @@ namespace ProjectFirma.Web.Models
             // Delete audit logging
             // --------------------
 
+            // Stash for later; we'll need to clean these up
+            var testRegion = testProject.FocusArea.Region;
+            var testFocusArea = testProject.FocusArea;
+
             testProject.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
             // Check that the audit log mentions this Project name as deleted
@@ -241,6 +245,11 @@ namespace ProjectFirma.Web.Models
                 HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
                     al => al.TableName == "Project" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testProject.ProjectID) != null,
                 $"Could not find deleted {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} record");
+
+            // Cleanup
+            testRegion.DeleteFull(dbContext);
+            testFocusArea.DeleteFull(dbContext);
+            HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
         }
 
         [Test]

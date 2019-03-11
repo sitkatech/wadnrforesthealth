@@ -116,6 +116,8 @@ namespace ProjectFirma.Web.Controllers
         private void IdentitySignin(string userId, string name, string email, string userName, string groups,
             AuthenticationMethod authenticationMethod, string providerKey = null, bool isPersistent = false)
         {
+            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignin) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {providerKey} isPersistent: {isPersistent}");
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId),
@@ -145,7 +147,7 @@ namespace ProjectFirma.Web.Controllers
             SyncLocalAccountStore(identity, authenticationMethod);
         }
 
-        public void IdentitySignout()
+        private void IdentitySignout()
         {
             HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie, DefaultAuthenticationTypes.ExternalCookie);
         }
@@ -153,6 +155,7 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         public ActionResult LogOff()
         {
+            SitkaHttpApplication.Logger.Debug($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
             IdentitySignout();
             var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
             return Redirect(returnUrl);
@@ -162,7 +165,6 @@ namespace ProjectFirma.Web.Controllers
         {
             SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - User '{0}', Authenticated = '{1}'", userIdentity.Name, userIdentity.IsAuthenticated);
             var saml2UserClaims = Saml2ClaimsHelpers.ParseOpenIDClaims(userIdentity);
-
             var personUniqueIdentifier = saml2UserClaims.UniqueIdentifier;
             var names = saml2UserClaims.DisplayName.Split(' ');
             var firstName = "";
@@ -180,28 +182,60 @@ namespace ProjectFirma.Web.Controllers
             var username = saml2UserClaims.Username;
 
             var sendNewUserNotification = false;
+
+            string userDetailsString =$"PersonUniqueIdentifier: {personUniqueIdentifier} -- Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
+
+            var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
+            bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
+
+            // Always try to validate first using unique identifier, as it is arguably more secure
             var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
 
+            string personLookupSuccess = person != null ? "Found" : "Did NOT find";
+            SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - {personLookupSuccess} by PersonUniqueIdentifier. [{userDetailsString}] ");
+
+            // For SAW only, we allow ourselves to fall back to email.
+            if (person == null && attemptingSawAuthentication)
+            {
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - Falling back to SAW email authentication --  {userDetailsString}");
+                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false);
+            }
+
+            // If there's no Person already that corresponds to the Person who is logging in,
+            // we create Person and  PersonEnvironmentCredential records for them.
             if (person == null)
             {
                 // new user - provision with limited role
-                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - creating local profile for User '{0}'", personUniqueIdentifier);
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - Person not found using any available authentication method -- {userDetailsString}");
+                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - Creating new Person for -- {userDetailsString}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                person = new Person(firstName, lastName, Role.Unassigned.RoleID,
-                    DateTime.Now, true, false)
+                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false, authenticatorToRequire.AuthenticatorID)
                 {
-                    PersonUniqueIdentifier = personUniqueIdentifier,
                     Email = email,
                     LoginName = username,
                     OrganizationID = unknownOrganization.OrganizationID
                 };
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
+
+                // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
+                var currentDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
+                var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person, currentDeploymentEnvironment, authenticatorToRequire, personUniqueIdentifier);
+                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForCurrentEnvironment);
+
+                // If we are logging in to Prod, from ADFS, we *ALSO* create the parallel QA credential.
+                // (We can't do this with SAW since the unique identifier varies.)
+                if (currentDeploymentEnvironment == DeploymentEnvironment.Prod && authenticatorToRequire == Authenticator.ADFS)
+                {
+                    var personEnvironmentCredentialForQa = new PersonEnvironmentCredential(person, DeploymentEnvironment.QA, authenticatorToRequire, personUniqueIdentifier);
+                    HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForQa);
+                }
+
                 sendNewUserNotification = true;
             }
             else
             {
                 // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat("In SyncLocalAccountStore - syncing local profile for User '{0}'", personUniqueIdentifier);
+                SitkaHttpApplication.Logger.DebugFormat($"In SyncLocalAccountStore - user record already exists -- syncing local profile for {userDetailsString}");
             }
 
             person.FirstName = firstName;
@@ -212,6 +246,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (authenticationMethod == AuthenticationMethod.ADFS)
             {
+                SitkaHttpApplication.Logger.DebugFormat($"In SyncLocalAccountStore - Mapping ADFS role groups for {userDetailsString}");
                 var roleGroups = saml2UserClaims.RoleGroups;
                 if (roleGroups.Any())
                 {
@@ -225,6 +260,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (sendNewUserNotification)
             {
+                SitkaHttpApplication.Logger.DebugFormat($"In SyncLocalAccountStore - Sending new user created message for {userDetailsString}");
                 SendNewUserCreatedMessage(person, username);
             }
             return HttpRequestStorage.Person;

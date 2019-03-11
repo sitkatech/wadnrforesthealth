@@ -26,14 +26,14 @@ namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
     public class GrantAllocationBasicsViewData
     {
         public Models.GrantAllocation GrantAllocation { get; }
-        public bool UserHasProjectBudgetManagePermissions { get; }
+        public bool UserHasGrantAllocationManagePermissions { get; }
         public string OrganizationDisplayName { get; }
         //public GrantAllocationTaxonomyViewData GrantAllocationTaxonomyViewData { get; }
 
-        public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasProjectBudgetManagePermissions, TaxonomyLevel taxonomyLevel)
+        public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasGrantAllocationManagePermissions, TaxonomyLevel taxonomyLevel)
         {
             GrantAllocation = grantAllocation;
-            UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
+            UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
             OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
             //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
         }        

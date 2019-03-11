@@ -305,13 +305,12 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditUserStewardshipAreas, EditUserStewardshipAreasViewData, EditUserStewardshipAreasViewModel>(viewData, viewModel);
         }
 
-
         [HttpGet]
         [ContactManageFeature]
         public PartialViewResult AddContact()
         {
             var viewModel = new EditContactViewModel();
-            return ViewAddContact(viewModel, false);
+            return ViewAddContact(viewModel, null);
         }
 
         [HttpPost]
@@ -321,11 +320,18 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewAddContact(viewModel, false);
+                return ViewAddContact(viewModel, null);
             }
 
-            var firmaPerson = new Person(viewModel.FirstName, viewModel.LastName,
-                    Role.Unassigned.RoleID, DateTime.Now, true, false)
+            var authenticatorToUse = Saml2ClaimsHelpers.GetAuthenticator(viewModel.Email);
+
+            var firmaPerson = new Person(viewModel.FirstName, 
+                                         viewModel.LastName,
+                                         Role.Unassigned.RoleID, 
+                                         DateTime.Now, 
+                                         true, 
+                                         false,
+                                         authenticatorToUse.AuthenticatorID)
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.People.Add(firmaPerson);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
@@ -334,11 +340,12 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewAddContact(EditContactViewModel viewModel, bool fullUpUser)
+        private PartialViewResult ViewAddContact(EditContactViewModel viewModel, Person person)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.OrderBy(x=>x.OrganizationName)
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
+            bool fullUpUser = person != null && person.IsFullUser();
             var vendors = HttpRequestStorage.DatabaseEntities.Vendors.OrderBy(x => x.VendorName)
                 .ToSelectListWithEmptyFirstRow(k => k.VendorID.ToString(CultureInfo.InvariantCulture),
                     y => $"{y.VendorName} ({y.StatewideVendorNumberWithSuffix})", "No Vendor");
@@ -349,10 +356,10 @@ namespace ProjectFirma.Web.Controllers
         [HttpGet]
         [UserEditBasicsFeature]
         public ActionResult EditContact(PersonPrimaryKey personPrimaryKey)
-            {
+        {
             var person = personPrimaryKey.EntityObject;
             var viewModel = new EditContactViewModel(person);
-            return ViewAddContact(viewModel, !string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier));
+            return ViewAddContact(viewModel, person);
         }
 
         [HttpPost]
@@ -363,7 +370,7 @@ namespace ProjectFirma.Web.Controllers
             var person = personPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewAddContact(viewModel, !string.IsNullOrWhiteSpace(person.PersonUniqueIdentifier));
+                return ViewAddContact(viewModel, person);
             }
 
             viewModel.UpdateModel(person);

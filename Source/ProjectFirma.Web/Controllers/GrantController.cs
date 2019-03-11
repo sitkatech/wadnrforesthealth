@@ -76,6 +76,30 @@ namespace ProjectFirma.Web.Controllers
             return ViewEditNote(viewModel, EditGrantNoteType.NewNote);
         }
 
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult NewGrantNoteInternal(GrantPrimaryKey grantPrimaryKey)
+        {
+            var viewModel = new EditGrantNoteInternalViewModel();
+            return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.NewNote);
+        }
+
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantNoteInternal(GrantPrimaryKey grantPrimaryKey, EditGrantNoteInternalViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.NewNote);
+            }
+            var grant = grantPrimaryKey.EntityObject;
+            var grantNoteInternal = GrantNoteInternal.CreateNewBlank(grant, CurrentPerson);
+            viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.NewNote);
+            HttpRequestStorage.DatabaseEntities.GrantNoteInternals.Add(grantNoteInternal);
+            return new ModalDialogFormJsonResult();
+        }
+
         [HttpPost]
         [GrantEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
@@ -118,10 +142,76 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+        private PartialViewResult ViewEditNoteInternal(EditGrantNoteInternalViewModel viewModel, EditGrantNoteInternalType editGrantNoteInternalType)
+        {
+            var viewData = new EditGrantNoteInternalViewData(editGrantNoteInternalType);
+            return RazorPartialView<EditGrantNoteInternal, EditGrantNoteInternalViewData, EditGrantNoteInternalViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [GrantNoteInternalEditAsAdminFeature]
+        public PartialViewResult EditGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey)
+        {
+            var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
+            var viewModel = new EditGrantNoteInternalViewModel(grantNoteInternal);
+            return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.ExistingNote);
+        }
+
+        [HttpPost]
+        [GrantNoteInternalEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey, EditGrantNoteInternalViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNoteInternal(viewModel, EditGrantNoteInternalType.ExistingNote);
+            }
+
+            var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
+            viewModel.UpdateModel(grantNoteInternal, CurrentPerson, EditGrantNoteType.ExistingNote);
+            HttpRequestStorage.DatabaseEntities.GrantNoteInternals.AddOrUpdate(grantNoteInternal);
+            return new ModalDialogFormJsonResult();
+        }
+
+
         private PartialViewResult ViewEditNote(EditGrantNoteViewModel viewModel, EditGrantNoteType editGrantNoteType)
         {
             var viewData = new EditGrantNoteViewData(editGrantNoteType);
             return RazorPartialView<EditGrantNote, EditGrantNoteViewData, EditGrantNoteViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [GrantNoteInternalEditAsAdminFeature]
+        public PartialViewResult DeleteGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantNoteInternalPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantNoteInternal(grantNoteInternalPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantNoteInternal(GrantNoteInternal grantNoteInternal, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantNoteInternalEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantNoteInternal(GrantNoteInternalPrimaryKey grantNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantNoteInternal = grantNoteInternalPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantNoteInternal(grantNoteInternal, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantNoteInternal.GetFieldDefinitionLabel()} created on '{grantNoteInternal.CreatedDate}' by '{grantNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            grantNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
@@ -138,6 +228,8 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
+
+       
 
         [HttpPost]
         [GrantNoteEditAsAdminFeature]
@@ -232,7 +324,13 @@ namespace ProjectFirma.Web.Controllers
                 SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNote(grantPrimaryKey)),
                 grant.GrantName,
                 userHasEditGrantPermissions);
-            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData);
+
+            var internalGrantNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNoteInternals)),
+                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNoteInternal(grantPrimaryKey)),
+                grant.GrantName,
+                userHasEditGrantPermissions);
+            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 

@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[Agreement](
 	[Notes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AgreementTitle] [varchar](256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[OrganizationID] [int] NOT NULL,
-	[GrantID] [int] NULL,
 	[AgreementStatusID] [int] NULL,
 	[AgreementFileResourceID] [int] NULL,
 	[tmpAgreement2ID] [int] NULL,
@@ -41,11 +40,6 @@ ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_FileReso
 REFERENCES [dbo].[FileResource] ([FileResourceID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID]
-GO
-ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Grant_GrantID] FOREIGN KEY([GrantID])
-REFERENCES [dbo].[Grant] ([GrantID])
-GO
-ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_Grant_GrantID]
 GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])

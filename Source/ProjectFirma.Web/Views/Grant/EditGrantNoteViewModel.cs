@@ -52,6 +52,8 @@ namespace ProjectFirma.Web.Views.Grant
         public EditGrantNoteViewModel(Models.GrantNote grantNote)
         {
             GrantNoteText = grantNote.GrantNoteText;
+            GrantNoteID = grantNote.GrantNoteID;
+            GrantID = grantNote.GrantID;
 
         }
 
