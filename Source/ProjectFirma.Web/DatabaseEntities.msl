@@ -401,24 +401,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceMatchAmountType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceMatchAmountType">
-        <MappingFragment StoreEntitySet="InvoiceMatchAmountType">
-          <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
-          <ScalarProperty Name="InvoiceMatchAmountTypeName" ColumnName="InvoiceMatchAmountTypeName" />
-          <ScalarProperty Name="InvoiceMatchAmountTypeDisplayName" ColumnName="InvoiceMatchAmountTypeDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceStatus">
-        <MappingFragment StoreEntitySet="InvoiceStatus">
-          <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
-          <ScalarProperty Name="InvoiceStatusName" ColumnName="InvoiceStatusName" />
-          <ScalarProperty Name="InvoiceStatusDisplayName" ColumnName="InvoiceStatusDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Notification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Notification">
         <MappingFragment StoreEntitySet="Notification">

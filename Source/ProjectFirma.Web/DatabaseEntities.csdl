@@ -36,8 +36,6 @@
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
     <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.InvoiceApprovalStatus" />
-    <EntitySet Name="InvoiceMatchAmountType" EntityType="ProjectFirma.Web.Models.InvoiceMatchAmountType" />
-    <EntitySet Name="InvoiceStatus" EntityType="ProjectFirma.Web.Models.InvoiceStatus" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -379,14 +377,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
       <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
-      <End Role="Invoices" EntitySet="Invoice" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID">
-      <End Role="InvoiceMatchAmountType" EntitySet="InvoiceMatchAmountType" />
-      <End Role="Invoices" EntitySet="Invoice" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Invoice_InvoiceStatus_InvoiceStatusID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoiceStatus_InvoiceStatusID">
-      <End Role="InvoiceStatus" EntitySet="InvoiceStatus" />
       <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
@@ -1328,8 +1318,6 @@
     <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="InvoiceStatusID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="InvoiceApprovalStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="Invoices" ToRole="InvoiceApprovalStatus" />
-    <NavigationProperty Name="InvoiceMatchAmountType" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID" FromRole="Invoices" ToRole="InvoiceMatchAmountType" />
-    <NavigationProperty Name="InvoiceStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceStatus_InvoiceStatusID" FromRole="Invoices" ToRole="InvoiceStatus" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
   </EntityType>
   <EntityType Name="InvoiceApprovalStatus">
@@ -1339,24 +1327,6 @@
     <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="InvoiceApprovalStatus" ToRole="Invoices" />
-  </EntityType>
-  <EntityType Name="InvoiceMatchAmountType">
-    <Key>
-      <PropertyRef Name="InvoiceMatchAmountTypeID" />
-    </Key>
-    <Property Name="InvoiceMatchAmountTypeID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceMatchAmountTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="InvoiceMatchAmountTypeDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID" FromRole="InvoiceMatchAmountType" ToRole="Invoices" />
-  </EntityType>
-  <EntityType Name="InvoiceStatus">
-    <Key>
-      <PropertyRef Name="InvoiceStatusID" />
-    </Key>
-    <Property Name="InvoiceStatusID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceStatusName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <Property Name="InvoiceStatusDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceStatus_InvoiceStatusID" FromRole="InvoiceStatus" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -3339,30 +3309,6 @@
       </Principal>
       <Dependent Role="Invoices">
         <PropertyRef Name="InvoiceApprovalStatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Invoice_InvoiceMatchAmountType_InvoiceMatchAmountTypeID">
-    <End Role="InvoiceMatchAmountType" Type="ProjectFirma.Web.Models.InvoiceMatchAmountType" Multiplicity="1" />
-    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="InvoiceMatchAmountType">
-        <PropertyRef Name="InvoiceMatchAmountTypeID" />
-      </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="InvoiceMatchAmountTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Invoice_InvoiceStatus_InvoiceStatusID">
-    <End Role="InvoiceStatus" Type="ProjectFirma.Web.Models.InvoiceStatus" Multiplicity="1" />
-    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="InvoiceStatus">
-        <PropertyRef Name="InvoiceStatusID" />
-      </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="InvoiceStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

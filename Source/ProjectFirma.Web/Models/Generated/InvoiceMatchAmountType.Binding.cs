@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[InvoiceMatchAmountType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,105 +16,124 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[InvoiceMatchAmountType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[InvoiceMatchAmountType]")]
-    public partial class InvoiceMatchAmountType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class InvoiceMatchAmountType : IHavePrimaryKey
     {
+        public static readonly InvoiceMatchAmountTypeDollarAmount DollarAmount = InvoiceMatchAmountTypeDollarAmount.Instance;
+        public static readonly InvoiceMatchAmountTypeN_A N_A = InvoiceMatchAmountTypeN_A.Instance;
+        public static readonly InvoiceMatchAmountTypeDNR DNR = InvoiceMatchAmountTypeDNR.Instance;
+
+        public static readonly List<InvoiceMatchAmountType> All;
+        public static readonly ReadOnlyDictionary<int, InvoiceMatchAmountType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected InvoiceMatchAmountType()
+        static InvoiceMatchAmountType()
         {
-            this.Invoices = new HashSet<Invoice>();
+            All = new List<InvoiceMatchAmountType> { DollarAmount, N_A, DNR };
+            AllLookupDictionary = new ReadOnlyDictionary<int, InvoiceMatchAmountType>(All.ToDictionary(x => x.InvoiceMatchAmountTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public InvoiceMatchAmountType(int invoiceMatchAmountTypeID, string invoiceMatchAmountTypeName, string invoiceMatchAmountTypeDisplayName) : this()
+        protected InvoiceMatchAmountType(int invoiceMatchAmountTypeID, string invoiceMatchAmountTypeName, string invoiceMatchAmountTypeDisplayName)
         {
-            this.InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
-            this.InvoiceMatchAmountTypeName = invoiceMatchAmountTypeName;
-            this.InvoiceMatchAmountTypeDisplayName = invoiceMatchAmountTypeDisplayName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public InvoiceMatchAmountType(string invoiceMatchAmountTypeName, string invoiceMatchAmountTypeDisplayName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.InvoiceMatchAmountTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.InvoiceMatchAmountTypeName = invoiceMatchAmountTypeName;
-            this.InvoiceMatchAmountTypeDisplayName = invoiceMatchAmountTypeDisplayName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static InvoiceMatchAmountType CreateNewBlank()
-        {
-            return new InvoiceMatchAmountType(default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return Invoices.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InvoiceMatchAmountType).Name, typeof(Invoice).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.InvoiceMatchAmountTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Invoices.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
+            InvoiceMatchAmountTypeName = invoiceMatchAmountTypeName;
+            InvoiceMatchAmountTypeDisplayName = invoiceMatchAmountTypeDisplayName;
         }
 
         [Key]
-        public int InvoiceMatchAmountTypeID { get; set; }
-        public string InvoiceMatchAmountTypeName { get; set; }
-        public string InvoiceMatchAmountTypeDisplayName { get; set; }
+        public int InvoiceMatchAmountTypeID { get; private set; }
+        public string InvoiceMatchAmountTypeName { get; private set; }
+        public string InvoiceMatchAmountTypeDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return InvoiceMatchAmountTypeID; } set { InvoiceMatchAmountTypeID = value; } }
+        public int PrimaryKey { get { return InvoiceMatchAmountTypeID; } }
 
-        public virtual ICollection<Invoice> Invoices { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(InvoiceMatchAmountType other)
         {
-            public const int InvoiceMatchAmountTypeName = 50;
-            public const int InvoiceMatchAmountTypeDisplayName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.InvoiceMatchAmountTypeID == InvoiceMatchAmountTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as InvoiceMatchAmountType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return InvoiceMatchAmountTypeID;
+        }
+
+        public static bool operator ==(InvoiceMatchAmountType left, InvoiceMatchAmountType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(InvoiceMatchAmountType left, InvoiceMatchAmountType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public InvoiceMatchAmountTypeEnum ToEnum { get { return (InvoiceMatchAmountTypeEnum)GetHashCode(); } }
+
+        public static InvoiceMatchAmountType ToType(int enumValue)
+        {
+            return ToType((InvoiceMatchAmountTypeEnum)enumValue);
+        }
+
+        public static InvoiceMatchAmountType ToType(InvoiceMatchAmountTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case InvoiceMatchAmountTypeEnum.DNR:
+                    return DNR;
+                case InvoiceMatchAmountTypeEnum.DollarAmount:
+                    return DollarAmount;
+                case InvoiceMatchAmountTypeEnum.N_A:
+                    return N_A;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum InvoiceMatchAmountTypeEnum
+    {
+        DollarAmount = 1,
+        N_A = 2,
+        DNR = 3
+    }
+
+    public partial class InvoiceMatchAmountTypeDollarAmount : InvoiceMatchAmountType
+    {
+        private InvoiceMatchAmountTypeDollarAmount(int invoiceMatchAmountTypeID, string invoiceMatchAmountTypeName, string invoiceMatchAmountTypeDisplayName) : base(invoiceMatchAmountTypeID, invoiceMatchAmountTypeName, invoiceMatchAmountTypeDisplayName) {}
+        public static readonly InvoiceMatchAmountTypeDollarAmount Instance = new InvoiceMatchAmountTypeDollarAmount(1, @"DollarAmount", @"Dollar Amount (enter amount in input below)");
+    }
+
+    public partial class InvoiceMatchAmountTypeN_A : InvoiceMatchAmountType
+    {
+        private InvoiceMatchAmountTypeN_A(int invoiceMatchAmountTypeID, string invoiceMatchAmountTypeName, string invoiceMatchAmountTypeDisplayName) : base(invoiceMatchAmountTypeID, invoiceMatchAmountTypeName, invoiceMatchAmountTypeDisplayName) {}
+        public static readonly InvoiceMatchAmountTypeN_A Instance = new InvoiceMatchAmountTypeN_A(2, @"N/A", @"N/A");
+    }
+
+    public partial class InvoiceMatchAmountTypeDNR : InvoiceMatchAmountType
+    {
+        private InvoiceMatchAmountTypeDNR(int invoiceMatchAmountTypeID, string invoiceMatchAmountTypeName, string invoiceMatchAmountTypeDisplayName) : base(invoiceMatchAmountTypeID, invoiceMatchAmountTypeName, invoiceMatchAmountTypeDisplayName) {}
+        public static readonly InvoiceMatchAmountTypeDNR Instance = new InvoiceMatchAmountTypeDNR(3, @"DNR", @"DNR");
     }
 }

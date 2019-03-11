@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[InvoiceStatus]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,105 +16,124 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[InvoiceStatus] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[InvoiceStatus]")]
-    public partial class InvoiceStatus : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class InvoiceStatus : IHavePrimaryKey
     {
+        public static readonly InvoiceStatusPending Pending = InvoiceStatusPending.Instance;
+        public static readonly InvoiceStatusPaid Paid = InvoiceStatusPaid.Instance;
+        public static readonly InvoiceStatusCanceled Canceled = InvoiceStatusCanceled.Instance;
+
+        public static readonly List<InvoiceStatus> All;
+        public static readonly ReadOnlyDictionary<int, InvoiceStatus> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected InvoiceStatus()
+        static InvoiceStatus()
         {
-            this.Invoices = new HashSet<Invoice>();
+            All = new List<InvoiceStatus> { Pending, Paid, Canceled };
+            AllLookupDictionary = new ReadOnlyDictionary<int, InvoiceStatus>(All.ToDictionary(x => x.InvoiceStatusID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public InvoiceStatus(int invoiceStatusID, string invoiceStatusName, string invoiceStatusDisplayName) : this()
+        protected InvoiceStatus(int invoiceStatusID, string invoiceStatusName, string invoiceStatusDisplayName)
         {
-            this.InvoiceStatusID = invoiceStatusID;
-            this.InvoiceStatusName = invoiceStatusName;
-            this.InvoiceStatusDisplayName = invoiceStatusDisplayName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public InvoiceStatus(string invoiceStatusName, string invoiceStatusDisplayName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.InvoiceStatusID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.InvoiceStatusName = invoiceStatusName;
-            this.InvoiceStatusDisplayName = invoiceStatusDisplayName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static InvoiceStatus CreateNewBlank()
-        {
-            return new InvoiceStatus(default(string), default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return Invoices.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InvoiceStatus).Name, typeof(Invoice).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.InvoiceStatuses.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Invoices.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            InvoiceStatusID = invoiceStatusID;
+            InvoiceStatusName = invoiceStatusName;
+            InvoiceStatusDisplayName = invoiceStatusDisplayName;
         }
 
         [Key]
-        public int InvoiceStatusID { get; set; }
-        public string InvoiceStatusName { get; set; }
-        public string InvoiceStatusDisplayName { get; set; }
+        public int InvoiceStatusID { get; private set; }
+        public string InvoiceStatusName { get; private set; }
+        public string InvoiceStatusDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return InvoiceStatusID; } set { InvoiceStatusID = value; } }
+        public int PrimaryKey { get { return InvoiceStatusID; } }
 
-        public virtual ICollection<Invoice> Invoices { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(InvoiceStatus other)
         {
-            public const int InvoiceStatusName = 50;
-            public const int InvoiceStatusDisplayName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.InvoiceStatusID == InvoiceStatusID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as InvoiceStatus);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return InvoiceStatusID;
+        }
+
+        public static bool operator ==(InvoiceStatus left, InvoiceStatus right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(InvoiceStatus left, InvoiceStatus right)
+        {
+            return !Equals(left, right);
+        }
+
+        public InvoiceStatusEnum ToEnum { get { return (InvoiceStatusEnum)GetHashCode(); } }
+
+        public static InvoiceStatus ToType(int enumValue)
+        {
+            return ToType((InvoiceStatusEnum)enumValue);
+        }
+
+        public static InvoiceStatus ToType(InvoiceStatusEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case InvoiceStatusEnum.Canceled:
+                    return Canceled;
+                case InvoiceStatusEnum.Paid:
+                    return Paid;
+                case InvoiceStatusEnum.Pending:
+                    return Pending;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum InvoiceStatusEnum
+    {
+        Pending = 1,
+        Paid = 2,
+        Canceled = 3
+    }
+
+    public partial class InvoiceStatusPending : InvoiceStatus
+    {
+        private InvoiceStatusPending(int invoiceStatusID, string invoiceStatusName, string invoiceStatusDisplayName) : base(invoiceStatusID, invoiceStatusName, invoiceStatusDisplayName) {}
+        public static readonly InvoiceStatusPending Instance = new InvoiceStatusPending(1, @"Pending", @"Pending");
+    }
+
+    public partial class InvoiceStatusPaid : InvoiceStatus
+    {
+        private InvoiceStatusPaid(int invoiceStatusID, string invoiceStatusName, string invoiceStatusDisplayName) : base(invoiceStatusID, invoiceStatusName, invoiceStatusDisplayName) {}
+        public static readonly InvoiceStatusPaid Instance = new InvoiceStatusPaid(2, @"Paid", @"Paid");
+    }
+
+    public partial class InvoiceStatusCanceled : InvoiceStatus
+    {
+        private InvoiceStatusCanceled(int invoiceStatusID, string invoiceStatusName, string invoiceStatusDisplayName) : base(invoiceStatusID, invoiceStatusName, invoiceStatusDisplayName) {}
+        public static readonly InvoiceStatusCanceled Instance = new InvoiceStatusCanceled(3, @"Canceled", @"Canceled");
     }
 }

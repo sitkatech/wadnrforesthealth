@@ -81,11 +81,7 @@ namespace ProjectFirma.Web.Models
             invoiceApprovalStatus.Invoices.Add(this);
             this.PurchaseAuthorityIsLandownerCostShareAgreement = purchaseAuthorityIsLandownerCostShareAgreement;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountType.InvoiceMatchAmountTypeID;
-            this.InvoiceMatchAmountType = invoiceMatchAmountType;
-            invoiceMatchAmountType.Invoices.Add(this);
             this.InvoiceStatusID = invoiceStatus.InvoiceStatusID;
-            this.InvoiceStatus = invoiceStatus;
-            invoiceStatus.Invoices.Add(this);
         }
 
         /// <summary>
@@ -147,8 +143,8 @@ namespace ProjectFirma.Web.Models
 
         public virtual Person PreparedByPerson { get; set; }
         public virtual InvoiceApprovalStatus InvoiceApprovalStatus { get; set; }
-        public virtual InvoiceMatchAmountType InvoiceMatchAmountType { get; set; }
-        public virtual InvoiceStatus InvoiceStatus { get; set; }
+        public InvoiceMatchAmountType InvoiceMatchAmountType { get { return InvoiceMatchAmountType.AllLookupDictionary[InvoiceMatchAmountTypeID]; } }
+        public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }
 
         public static class FieldLengths
         {
