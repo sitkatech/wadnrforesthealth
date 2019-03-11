@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.User
 {
