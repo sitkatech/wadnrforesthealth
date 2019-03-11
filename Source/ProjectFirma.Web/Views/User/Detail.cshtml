@@ -114,8 +114,8 @@
                     <div class="col-xs-7">@ViewDataTyped.Person.PersonAddress</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-5 fieldLabel text-right">@Html.LabelWithSugarFor(FieldDefinition.StatewideVendorNumber)</div>
-                    <div class="col-xs-7">@ViewDataTyped.Person.StatewideVendorNumber</div>
+                    <div class="col-xs-5 fieldLabel text-right">Vendor</div>
+                    <div class="col-xs-7">@ViewDataTyped.Person.Vendor.GetVendorNameWithFullStatewideVendorNumber()</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">Notes</div>

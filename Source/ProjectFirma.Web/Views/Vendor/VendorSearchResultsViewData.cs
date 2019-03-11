@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="SearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="VendorSearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -22,23 +22,19 @@ using System;
 using System.Collections.Generic;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Project
+namespace ProjectFirma.Web.Views.Vendor
 {
-    public class SearchResultsViewData : FirmaViewData
+    public class VendorSearchResultsViewData : FirmaViewData
     {
-        public readonly List<Models.Project> EntitySearchResults;
+        public readonly List<Models.Vendor> EntitySearchResults;
         public readonly string SearchCriteria;
         public Func<String, string> UrlGeneratingFunctor;
 
-        public SearchResultsViewData(Person currentPerson, List<Models.Project> entitySearchResults, string searchCriteria) : base(currentPerson)
+        public VendorSearchResultsViewData(Person currentPerson, List<Models.Vendor> entitySearchResults, string searchCriteria) : base(currentPerson)
         {
             EntitySearchResults = entitySearchResults;
             SearchCriteria = searchCriteria;
-            PageTitle = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Search";
+            PageTitle = $"{Models.FieldDefinition.Vendor.GetFieldDefinitionLabel()} Search";
         }
     }
-
-   
 }
-
-

@@ -346,6 +346,7 @@ namespace ProjectFirma.Web.Controllers
                 .ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture),
                     x => x.DisplayName.ToString(CultureInfo.InvariantCulture), "No Organization");
             bool fullUpUser = person != null && person.IsFullUser();
+
             var viewData = new EditContactViewData(organizations, fullUpUser);
             return RazorPartialView<EditContact, EditContactViewData, EditContactViewModel>(viewData, viewModel);
         }

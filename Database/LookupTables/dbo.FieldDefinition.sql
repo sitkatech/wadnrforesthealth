@@ -147,6 +147,7 @@ VALUES
 (323, N'InvoiceStatus', 'Invoice Status', N'<p>Any important information about the overall status of an invoice </p>'),
 (324, N'InvoiceApprovalStatus', 'Invoice Approval Status', N'<p>Important information about the approval status of an invoice</p>'),
 (325, N'InvoiceApprovalComment', 'Invoice Approval Comment', N'<p>Important rationale about the approval status of an invoice</p>'),
-(326, N'MatchAmount', 'Match Amount', N'<p>The amount of this invoice matched by another agency</p>')
+(326, N'MatchAmount', 'Match Amount', N'<p>The amount of this invoice matched by another agency</p>'),
+(327, N'Vendor', 'Vendor', N'Vendor Placeholder')
 
 

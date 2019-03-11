@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="SearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="Vendor.DatabaseContextExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,27 +18,21 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System;
+
 using System.Collections.Generic;
-using ProjectFirma.Web.Models;
+using System.Linq;
 
-namespace ProjectFirma.Web.Views.Project
+namespace ProjectFirma.Web.Models
 {
-    public class SearchResultsViewData : FirmaViewData
+    public static partial class DatabaseContextExtensions
     {
-        public readonly List<Models.Project> EntitySearchResults;
-        public readonly string SearchCriteria;
-        public Func<String, string> UrlGeneratingFunctor;
-
-        public SearchResultsViewData(Person currentPerson, List<Models.Project> entitySearchResults, string searchCriteria) : base(currentPerson)
+        public static List<Vendor> GetVendorFindResultsForVendorNameAndStatewideVendorNumber(this IQueryable<Vendor> vendors, string vendorKeyword)
         {
-            EntitySearchResults = entitySearchResults;
-            SearchCriteria = searchCriteria;
-            PageTitle = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Search";
+            return
+                vendors.Where(x => x.VendorName.Contains(vendorKeyword) || x.StatewideVendorNumber.Contains(vendorKeyword))
+                    .OrderBy(x => x.VendorName)
+                    .ToList();
         }
+
     }
-
-   
 }
-
-

@@ -23,6 +23,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Mvc
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.Vendor
 @inherits ProjectFirma.Web.Views.Organization.Edit
 @using (Html.BeginForm())
 {
@@ -30,83 +31,96 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         <p class="systemText">This @FieldDefinition.Organization.GetFieldDefinitionLabel() is managed in Keystone. To change this @FieldDefinition.Organization.GetFieldDefinitionLabel()'s name, please send an @ModalDialogFormHelper.ModalDialogFormLink("email to support", ViewDataTyped.RequestOrganizationChangeUrl, "Request Support", 800, "Submit Request", "Cancel", new List<string>(), null, null)</p>
     }
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.OrganizationName)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.OrganizationName)
+                </div>
+                <div class="col-sm-9">
+                    @if (ViewDataTyped.IsInKeystone)
+                    {
+                        @Model.OrganizationName
+                        @Html.HiddenFor(x => x.OrganizationName)
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control", style = "width:100%" })
+                        @Html.ValidationMessageFor(m => m.OrganizationName)
+                    }
+                </div>
             </div>
-            <div class="col-sm-9">
-                @if (ViewDataTyped.IsInKeystone)
-                {
-                    @Model.OrganizationName
-                    @Html.HiddenFor(x => x.OrganizationName)
-                }
-                else
-                {
-                    @Html.TextBoxFor(m => m.OrganizationName, new { @class="form-control", style = "width:100%" })
-                    @Html.ValidationMessageFor(m => m.OrganizationName)
-                }
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.OrganizationShortName)
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.OrganizationShortName, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.OrganizationShortName)
+                </div>
             </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.OrganizationTypeID)
+                </div>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(m => m.OrganizationTypeID, ViewDataTyped.OrganizationTypes, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.OrganizationTypeID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.PrimaryContactPersonID)
+                </div>
+                <div class="col-sm-9">
+                    @Html.SearchableDropDownListFor(m => m.PrimaryContactPersonID, ViewDataTyped.People)
+                    @Html.ValidationMessageFor(m => m.PrimaryContactPersonID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.VendorID)
+                </div>
+                <div class="col-sm-9">
+                    <input id="@VendorSearchResults.VendorSearchInputTextboxID" type="text" class="form-control"
+                           name="@VendorSearchResults.VendorSearchInputTextboxID" onblur="return checkForDeleteOfVendor(this)"
+                           placeholder="Search @FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
+                           style="margin-right: -5px; margin-left: auto;" value="@Model.VendorDisplayName" />
+                    @Html.HiddenFor(x => x.VendorID)
+                    @Html.ValidationMessageFor(m => m.VendorID)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.OrganizationUrl)
+                </div>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.OrganizationUrl, new { @class = "form-control", style = "width:100%" })
+                    @Html.ValidationMessageFor(m => m.OrganizationUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(x => x.LogoFileResourceData)
+                </div>
+                <div class="col-sm-9">
+                    @Html.EditorFor(x => x.LogoFileResourceData)
+                    <span class="smallExplanationText">
+                        Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                    </span>
+                    @Html.ValidationMessageFor(x => x.LogoFileResourceData)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.IsActive)
+                </div>
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(m => m.IsActive)
+                    @Html.ValidationMessageFor(m => m.IsActive)
+                </div>
+            </div>
+
         </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.OrganizationShortName)
-            </div>
-            <div class="col-sm-9">
-               @Html.TextBoxFor(m => m.OrganizationShortName, new { @class="form-control", style = "width:100%" })
-            @Html.ValidationMessageFor(m => m.OrganizationShortName)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.OrganizationTypeID)
-            </div>
-            <div class="col-sm-9">
-                @Html.DropDownListFor(m => m.OrganizationTypeID, ViewDataTyped.OrganizationTypes, new { @class="form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.OrganizationTypeID)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.PrimaryContactPersonID)
-            </div>
-            <div class="col-sm-9">
-                @Html.SearchableDropDownListFor(m => m.PrimaryContactPersonID, ViewDataTyped.People)
-                @Html.ValidationMessageFor(m => m.PrimaryContactPersonID)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.OrganizationUrl)
-            </div>
-            <div class="col-sm-9">
-                @Html.TextBoxFor(m => m.OrganizationUrl, new { @class="form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.OrganizationUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(x => x.LogoFileResourceData)
-            </div>
-            <div class="col-sm-9">
-                @Html.EditorFor(x => x.LogoFileResourceData)
-                <span class="smallExplanationText">
-                    Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
-                </span>
-                @Html.ValidationMessageFor(x => x.LogoFileResourceData)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.IsActive)
-            </div>
-            <div class="col-sm-9">
-                @Html.CheckBoxFor(m => m.IsActive)
-                @Html.ValidationMessageFor(m => m.IsActive)
-            </div>
-        </div>
-        
-    </div>
     @Html.HiddenFor(m => m.OrganizationID)
 }
 
@@ -116,4 +130,34 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         HookupCheckIfFormIsDirty(undefined, ".submitProject");
     });
+</script>
+
+<script type="text/javascript">
+    // <![CDATA[
+    function checkForDeleteOfVendor(myField) {
+        if (!myField.value) {
+            jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val("");
+            jQuery("#@Html.IdFor(x => x.VendorID)").val("");
+            return true;
+        }
+        return false;
+    }
+
+    jQuery(document).ready(function ()
+    {
+        jQuery("#@VendorSearchResults.VendorSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(ViewDataTyped.VendorFindUrlTemplate)",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function (event, ui) {
+                    //set VenderID value and display text in input
+                    jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
+                    jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.value);
+                    event.preventDefault();
+                },
+                html: true
+            });
+    });
+    // ]]>
 </script>

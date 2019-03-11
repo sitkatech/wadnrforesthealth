@@ -433,6 +433,7 @@
           <ScalarProperty Name="LogoFileResourceID" ColumnName="LogoFileResourceID" />
           <ScalarProperty Name="OrganizationTypeID" ColumnName="OrganizationTypeID" />
           <ScalarProperty Name="OrganizationBoundary" ColumnName="OrganizationBoundary" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -607,11 +608,11 @@
           <ScalarProperty Name="WebServiceAccessToken" ColumnName="WebServiceAccessToken" />
           <ScalarProperty Name="LoginName" ColumnName="LoginName" />
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-          <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
           <ScalarProperty Name="AllowedAuthenticatorID" ColumnName="AllowedAuthenticatorID" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

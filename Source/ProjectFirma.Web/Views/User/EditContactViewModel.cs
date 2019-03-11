@@ -37,8 +37,10 @@ namespace ProjectFirma.Web.Views.User
         [DisplayName("Organization")]
         public int? OrganizationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.StatewideVendorNumber)]
-        public string StatewideVendorNumber { get; set; }
+        [DisplayName("Vendor")]
+        public int? VendorID { get; set; }
+
+        public string VendorDisplayName { get; set; }
 
         [DisplayName("Notes")]
         [StringLength(Person.FieldLengths.Notes)]
@@ -61,7 +63,11 @@ namespace ProjectFirma.Web.Views.User
             Address = person.PersonAddress;
             Phone = person.Phone;
             OrganizationID = person.OrganizationID;
-            StatewideVendorNumber = person.StatewideVendorNumber;
+            VendorID = person.VendorID;
+            if (person.Vendor != null)
+            {
+                VendorDisplayName = person.Vendor.GetVendorNameWithFullStatewideVendorNumber();
+            }
             Notes = person.Notes;
         }
 
@@ -69,7 +75,7 @@ namespace ProjectFirma.Web.Views.User
         {
             person.OrganizationID = OrganizationID;
             person.PersonAddress = Address;
-            person.StatewideVendorNumber = StatewideVendorNumber;
+            person.VendorID = VendorID;
             person.Phone = Phone;
             person.Notes = Notes;
 
