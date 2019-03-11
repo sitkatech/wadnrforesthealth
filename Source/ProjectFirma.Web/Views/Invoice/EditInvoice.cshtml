@@ -28,14 +28,46 @@
 
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
-@*<script type="text/javascript">
+<script type="text/javascript">
     // <![CDATA[
-
     jQuery(document).ready(function () {
-        jQuery(".selectpicker").selectpicker("refresh");
+
+        // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
+        var isInvoiceCommentFieldMandatory = function() {
+            var selectedInvoiceApprovalStatus = jQuery("#invoiceApprovalStatus option:selected").text();
+            console.log(selectedInvoiceApprovalStatus);
+            // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
+            if (selectedInvoiceApprovalStatus == 'Denied') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
+        console.log(initialLoadCommentIsMandatory);
+        if (initialLoadCommentIsMandatory) {
+            jQuery("#InvoiceApprovalStatusComment")
+                .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
+        } else {
+            jQuery("#InvoiceApprovalStatusComment")
+                .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
+        }
+
+        jQuery("#invoiceApprovalStatus").on('change', function () {
+            var commentIsMandatory = isInvoiceCommentFieldMandatory();
+            console.log(commentIsMandatory);
+            if (commentIsMandatory) {
+                jQuery("#InvoiceApprovalStatusComment")
+                    .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
+            } else {
+                jQuery("#InvoiceApprovalStatusComment")
+                    .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
+            }
+        });
     });
     // ]]>
-</script>*@
+</script>
 
 @using (Html.BeginForm())
 {
@@ -89,13 +121,13 @@
             <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusID)
             </div>
-            <div class="col-xs-2">
+            <div id="invoiceApprovalStatus" class="col-xs-2">
                 @Html.DropDownListFor(m => m.InvoiceApprovalStatusID, ViewDataTyped.InvoiceApprovalStatuses, new {style = "width: auto;", @class = "form-control"})
                 @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusID)
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-4 control-label">
+            <div id="InvoiceApprovalStatusComment" class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment)
             </div>
             <div class="col-xs-6">
