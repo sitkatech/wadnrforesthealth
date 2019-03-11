@@ -115,7 +115,7 @@ VALUES
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
 (292, N'GrantNote', 'Grant Note', N'<p>Any additional important information about the grant. </p>'),
 (293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
-(294, N'Vendor', 'Vendor', N'Vendor Placeholder'),
+(294, N'Invoice', 'Invoice', N'<p>Placeholder for Invoice</p>'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),
 (297, N'AllocationAmount', 'Allocation Amount', 'Placeholder for GrantAllocation Allocation Amount.'),
@@ -147,6 +147,7 @@ VALUES
 (323, N'InvoiceStatus', 'Invoice Status', N'<p>Any important information about the overall status of an invoice </p>'),
 (324, N'InvoiceApprovalStatus', 'Invoice Approval Status', N'<p>Important information about the approval status of an invoice</p>'),
 (325, N'InvoiceApprovalComment', 'Invoice Approval Comment', N'<p>Important rationale about the approval status of an invoice</p>'),
-(326, N'MatchAmount', 'Match Amount', N'<p>The amount of this invoice matched by another agency</p>')
+(326, N'MatchAmount', 'Match Amount', N'<p>The amount of this invoice matched by another agency</p>'),
+(327, N'Vendor', 'Vendor', N'Vendor Placeholder')
 
 
