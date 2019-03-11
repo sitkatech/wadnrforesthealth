@@ -85,7 +85,7 @@ Source code is available upon request via <support@sitkatech.com>.
                            name="@VendorSearchResults.VendorSearchInputTextboxID" onblur="return checkForDeleteOfVendor(this)"
                            placeholder="Search @FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
                            style="margin-right: -5px; margin-left: auto;" value="@Model.VendorDisplayName" />
-                    <input id="VendorID" name="VendorID" type="hidden" value="@Model.VendorID" />
+                    @Html.HiddenFor(x => x.VendorID)
                     @Html.ValidationMessageFor(m => m.VendorID)
                 </div>
             </div>
@@ -137,7 +137,7 @@ Source code is available upon request via <support@sitkatech.com>.
     function checkForDeleteOfVendor(myField) {
         if (!myField.value) {
             jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val("");
-            jQuery("#VendorID").val("");
+            jQuery("#@Html.IdFor(x => x.VendorID)").val("");
             return true;
         }
         return false;
@@ -153,7 +153,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 select: function (event, ui) {
                     //set VenderID value and display text in input
                     jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
-                    jQuery("#VendorID").val(ui.item.value);
+                    jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.value);
                     event.preventDefault();
                 },
                 html: true
