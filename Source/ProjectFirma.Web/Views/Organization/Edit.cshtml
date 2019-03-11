@@ -82,7 +82,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 </div>
                 <div class="col-sm-9">
                     <input id="@VendorSearchResults.VendorSearchInputTextboxID" type="text" class="form-control"
-                           name="@VendorSearchResults.VendorSearchInputTextboxID"
+                           name="@VendorSearchResults.VendorSearchInputTextboxID" onblur="return checkForDeleteOfVendor(this)"
                            placeholder="Search @FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
                            style="margin-right: -5px; margin-left: auto;" value="@Model.VendorDisplayName" />
                     <input id="VendorID" name="VendorID" type="hidden" value="@Model.VendorID" />
@@ -134,17 +134,24 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <script type="text/javascript">
     // <![CDATA[
+    function checkForDeleteOfVendor(myField) {
+        if (!myField.value) {
+            jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val("");
+            jQuery("#VendorID").val("");
+            return true;
+        }
+        return false;
+    }
+
     jQuery(document).ready(function ()
     {
-
         jQuery("#@VendorSearchResults.VendorSearchInputTextboxID")
             .autocomplete({
                 source: "@Html.Raw(ViewDataTyped.VendorFindUrlTemplate)",
                 minLength: 1,
                 position: { my: "right top", at: "right bottom" },
                 select: function (event, ui) {
-                    //set VenderID value
-                    //document.location = ui.item.value;
+                    //set VenderID value and display text in input
                     jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
                     jQuery("#VendorID").val(ui.item.value);
                     event.preventDefault();
