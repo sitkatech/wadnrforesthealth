@@ -4458,4 +4458,51 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="TrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProgramIndex' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpProgramIndex">
+  <Property Name="fy_biennium" Type="varchar" MaxLength="200" />
+  <Property Name="agency" Type="varchar" MaxLength="200" />
+  <Property Name="subagency" Type="varchar" MaxLength="200" />
+  <Property Name="program_index" Type="varchar" MaxLength="200" />
+  <Property Name="title" Type="varchar" MaxLength="2000" />
+  <Property Name="program_function" Type="varchar" MaxLength="200" />
+  <Property Name="program" Type="varchar" MaxLength="200" />
+  <Property Name="subprogram" Type="varchar" MaxLength="200" />
+  <Property Name="activity" Type="varchar" MaxLength="200" />
+  <Property Name="subactivity" Type="varchar" MaxLength="200" />
+  <Property Name="task" Type="varchar" MaxLength="200" />
+  <Property Name="allot_pgm_level_ind" Type="varchar" MaxLength="200" />
+  <Property Name="gl_program_ind" Type="varchar" MaxLength="200" />
+  <Property Name="program_index_restrictor" Type="varchar" MaxLength="200" />
+  <Property Name="last_process_date" Type="varchar" MaxLength="200" />
+  <Property Name="program_index_used_ind" Type="varchar" MaxLength="200" />
+</EntityType>
+Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProjectCode' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpProjectCode">
+  <Property Name="agency" Type="varchar" MaxLength="200" />
+  <Property Name="subagency" Type="varchar" MaxLength="200" />
+  <Property Name="project" Type="varchar" MaxLength="200" />
+  <Property Name="subproject" Type="varchar" MaxLength="200" />
+  <Property Name="project_phase" Type="varchar" MaxLength="200" />
+  <Property Name="title" Type="varchar" MaxLength="2000" />
+  <Property Name="project_type" Type="varchar" MaxLength="200" />
+  <Property Name="project_start_date" Type="varchar" MaxLength="200" />
+  <Property Name="project_end_date" Type="varchar" MaxLength="200" />
+  <Property Name="federal_catalog" Type="varchar" MaxLength="200" />
+  <Property Name="sub_grantee" Type="varchar" MaxLength="200" />
+  <Property Name="indirect_cost_rate" Type="varchar" MaxLength="200" />
+  <Property Name="indirect_cost_limit" Type="varchar" MaxLength="200" />
+  <Property Name="reimbursement_method" Type="varchar" MaxLength="200" />
+  <Property Name="federal_agency" Type="varchar" MaxLength="200" />
+  <Property Name="object_posting_level_ind" Type="varchar" MaxLength="200" />
+  <Property Name="revenue_posting_level_ind" Type="varchar" MaxLength="200" />
+  <Property Name="approp_cntrl_type_ind" Type="varchar" MaxLength="200" />
+  <Property Name="cash_cntrl_type_ind" Type="varchar" MaxLength="200" />
+  <Property Name="gl_project_level" Type="varchar" MaxLength="200" />
+  <Property Name="create_date" Type="varchar" MaxLength="200" />
+</EntityType>-->
 </Schema>
