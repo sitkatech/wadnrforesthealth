@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="VendorSearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditRoles.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,21 +19,22 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
-using ProjectFirma.Web.Models;
+using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
 
 namespace ProjectFirma.Web.Views.Vendor
 {
-    public class VendorSearchResultsViewData : FirmaViewData
+    public abstract class EditVendor : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditVendorViewData, IEditVendorViewModel>
     {
-        public readonly List<Models.Vendor> EntitySearchResults;
-        public readonly string SearchCriteria;
-
-        public VendorSearchResultsViewData(Person currentPerson, List<Models.Vendor> entitySearchResults, string searchCriteria) : base(currentPerson)
+        public static void RenderPartialView(HtmlHelper html, IEditVendorViewModel viewModel)
         {
-            EntitySearchResults = entitySearchResults;
-            SearchCriteria = searchCriteria;
-            PageTitle = $"{Models.FieldDefinition.Vendor.GetFieldDefinitionLabel()} Search";
+            html.RenderRazorSitkaPartial<EditVendor, EditVendorViewData, IEditVendorViewModel>(new EditVendorViewData(), viewModel);
         }
+
+        
     }
+    public class EditVendorViewData
+    {
+    }
+
 }

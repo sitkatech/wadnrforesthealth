@@ -20,7 +20,6 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
-using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 
@@ -33,7 +32,6 @@ namespace ProjectFirma.Web.Views.Organization
         public bool IsInKeystone { get; }
         public string RequestOrganizationChangeUrl { get; }
         public bool IsSitkaAdmin { get; }
-        public string VendorFindUrlTemplate { get; }
 
         public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people, bool isInKeystone, bool isSitkaAdmin)
         {
@@ -43,8 +41,6 @@ namespace ProjectFirma.Web.Views.Organization
             RequestOrganizationChangeUrl =
                 SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.RequestOrganizationNameChange());
             IsSitkaAdmin = isSitkaAdmin;
-            VendorFindUrlTemplate =
-                SitkaRoute<VendorController>.BuildUrlFromExpression(x => x.FindVendor(string.Empty));
 
         }
     }

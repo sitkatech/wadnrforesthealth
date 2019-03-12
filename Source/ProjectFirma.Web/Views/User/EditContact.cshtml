@@ -51,12 +51,9 @@
         <div class="form-group row">
             <div class="col-xs-4 fieldLabel text-right">@Html.LabelWithSugarFor(m => m.VendorID)</div>
             <div class="col-xs-8">
-                <input id="@VendorSearchResults.VendorSearchInputTextboxID" type="text" class="form-control"
-                       name="@VendorSearchResults.VendorSearchInputTextboxID" onblur="return checkForDeleteOfVendor(this)"
-                       placeholder="Search @FieldDefinition.Vendor.GetFieldDefinitionLabel() Name or Statewide @FieldDefinition.Vendor.GetFieldDefinitionLabel() Number"
-                       style="margin-right: -5px; margin-left: auto;" value="@Model.VendorDisplayName" />
-                @Html.HiddenFor(x => x.VendorID)
-                @Html.ValidationMessageFor(m => m.VendorID)
+
+                @{ EditVendor.RenderPartialView(Html, Model); }
+
             </div>
         </div>
         <div class="form-group row">
@@ -71,33 +68,4 @@
     jQuery(function() {
         jQuery("#phone").mask("(000) 000-0000");
     })
-</script>
-<script type="text/javascript">
-    // <![CDATA[
-    function checkForDeleteOfVendor(myField) {
-        if (!myField.value) {
-            jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val("");
-            jQuery("#@Html.IdFor(x => x.VendorID)").val("");
-            return true;
-        }
-        return false;
-    }
-
-    jQuery(document).ready(function ()
-    {
-        jQuery("#@VendorSearchResults.VendorSearchInputTextboxID")
-            .autocomplete({
-                source: "@Html.Raw(ViewDataTyped.VendorFindUrlTemplate)",
-                minLength: 1,
-                position: { my: "right top", at: "right bottom" },
-                select: function (event, ui) {
-                    //set VenderID value and display text in input
-                    jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
-                    jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.value);
-                    event.preventDefault();
-                },
-                html: true
-            });
-    });
-    // ]]>
 </script>

@@ -30,10 +30,11 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.Organization
 {
-    public class EditViewModel : FormViewModel, IValidatableObject
+    public class EditViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
     {
         public const int MaxLogoSizeInBytes = 1024 * 200;
 
