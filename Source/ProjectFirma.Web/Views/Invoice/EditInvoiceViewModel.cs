@@ -42,19 +42,41 @@ namespace ProjectFirma.Web.Views.Invoice
         public string RequestorName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceDate)]
-        public DateTime InvoiceDate { get; set; }
+        [Required]
+        public DateTime? InvoiceDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
         public string PurchaseAuthority { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PurchaseAuthority)]
+        [Required]
+        public bool? PurchaseAuthorityIsLandownerCostShareAgreement { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.TotalRequestedInvoicePaymentAmount)]
         public Money? InvoiceAmount { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
+        public Money? MatchAmount { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceStatus)]
+        [Required]
+        public int InvoiceStatusID { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.MatchAmount)]
+        [Required]
+        public int InvoiceMatchAmountTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalStatus)]
         public int InvoiceApprovalStatusID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceApprovalComment)]
         public string InvoiceApprovalStatusComment { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
+        [Required]
+        public int PreparedByPersonID { get; set; }
+
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -72,6 +94,12 @@ namespace ProjectFirma.Web.Views.Invoice
             InvoiceAmount = invoice.TotalPaymentAmount;
             InvoiceApprovalStatusID = invoice.InvoiceApprovalStatusID;
             InvoiceApprovalStatusComment = invoice.InvoiceApprovalStatusComment;
+            PurchaseAuthorityIsLandownerCostShareAgreement =
+                invoice.PurchaseAuthorityIsLandownerCostShareAgreement;
+            MatchAmount = invoice.MatchAmount;
+            InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
+            PreparedByPersonID = invoice.PreparedByPersonID;
+           
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -81,17 +109,40 @@ namespace ProjectFirma.Web.Views.Invoice
                 yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
                     FirmaValidationMessages.InvoiceNicknameMustBePopulated, m => m.InvoiceIdentifyingName);
             }
+
+            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority) )
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
+                    FirmaValidationMessages.PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement, m => m.PurchaseAuthority);
+            }
+
+            if (InvoiceMatchAmountTypeID == InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID && !MatchAmount.HasValue)
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, Money?>(
+                    FirmaValidationMessages.InvoiceMatchAmountDollarValueMustNotBeNull, m => m.MatchAmount);
+            }
+
+
+            if (InvoiceApprovalStatusID == InvoiceApprovalStatus.Denied.InvoiceApprovalStatusID && String.IsNullOrEmpty(InvoiceApprovalStatusComment))
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
+                    FirmaValidationMessages.InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied, m => m.InvoiceApprovalStatusComment);
+            }
         }
 
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)
         {
             invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
             invoice.RequestorName = RequestorName;
-            invoice.InvoiceDate = InvoiceDate;
+            invoice.InvoiceDate = InvoiceDate.Value;
             invoice.PurchaseAuthority = PurchaseAuthority;
             invoice.TotalPaymentAmount = InvoiceAmount;
             invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
             invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
+            invoice.PurchaseAuthorityIsLandownerCostShareAgreement = PurchaseAuthorityIsLandownerCostShareAgreement.Value;
+            invoice.MatchAmount = MatchAmount;
+            invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
+            invoice.PreparedByPersonID = PreparedByPersonID;
         }
     }
 }

@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[InvoiceApprovalStatus]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,101 +16,122 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[InvoiceApprovalStatus] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[InvoiceApprovalStatus]")]
-    public partial class InvoiceApprovalStatus : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class InvoiceApprovalStatus : IHavePrimaryKey
     {
+        public static readonly InvoiceApprovalStatusNotSet NotSet = InvoiceApprovalStatusNotSet.Instance;
+        public static readonly InvoiceApprovalStatusApproved Approved = InvoiceApprovalStatusApproved.Instance;
+        public static readonly InvoiceApprovalStatusDenied Denied = InvoiceApprovalStatusDenied.Instance;
+
+        public static readonly List<InvoiceApprovalStatus> All;
+        public static readonly ReadOnlyDictionary<int, InvoiceApprovalStatus> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected InvoiceApprovalStatus()
+        static InvoiceApprovalStatus()
         {
-            this.Invoices = new HashSet<Invoice>();
+            All = new List<InvoiceApprovalStatus> { NotSet, Approved, Denied };
+            AllLookupDictionary = new ReadOnlyDictionary<int, InvoiceApprovalStatus>(All.ToDictionary(x => x.InvoiceApprovalStatusID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public InvoiceApprovalStatus(int invoiceApprovalStatusID, string invoiceApprovalStatusName) : this()
+        protected InvoiceApprovalStatus(int invoiceApprovalStatusID, string invoiceApprovalStatusName)
         {
-            this.InvoiceApprovalStatusID = invoiceApprovalStatusID;
-            this.InvoiceApprovalStatusName = invoiceApprovalStatusName;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public InvoiceApprovalStatus(string invoiceApprovalStatusName) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.InvoiceApprovalStatusID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.InvoiceApprovalStatusName = invoiceApprovalStatusName;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static InvoiceApprovalStatus CreateNewBlank()
-        {
-            return new InvoiceApprovalStatus(default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return Invoices.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InvoiceApprovalStatus).Name, typeof(Invoice).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.InvoiceApprovalStatuses.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in Invoices.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            InvoiceApprovalStatusID = invoiceApprovalStatusID;
+            InvoiceApprovalStatusName = invoiceApprovalStatusName;
         }
 
         [Key]
-        public int InvoiceApprovalStatusID { get; set; }
-        public string InvoiceApprovalStatusName { get; set; }
+        public int InvoiceApprovalStatusID { get; private set; }
+        public string InvoiceApprovalStatusName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return InvoiceApprovalStatusID; } set { InvoiceApprovalStatusID = value; } }
+        public int PrimaryKey { get { return InvoiceApprovalStatusID; } }
 
-        public virtual ICollection<Invoice> Invoices { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(InvoiceApprovalStatus other)
         {
-            public const int InvoiceApprovalStatusName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.InvoiceApprovalStatusID == InvoiceApprovalStatusID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as InvoiceApprovalStatus);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return InvoiceApprovalStatusID;
+        }
+
+        public static bool operator ==(InvoiceApprovalStatus left, InvoiceApprovalStatus right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(InvoiceApprovalStatus left, InvoiceApprovalStatus right)
+        {
+            return !Equals(left, right);
+        }
+
+        public InvoiceApprovalStatusEnum ToEnum { get { return (InvoiceApprovalStatusEnum)GetHashCode(); } }
+
+        public static InvoiceApprovalStatus ToType(int enumValue)
+        {
+            return ToType((InvoiceApprovalStatusEnum)enumValue);
+        }
+
+        public static InvoiceApprovalStatus ToType(InvoiceApprovalStatusEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case InvoiceApprovalStatusEnum.Approved:
+                    return Approved;
+                case InvoiceApprovalStatusEnum.Denied:
+                    return Denied;
+                case InvoiceApprovalStatusEnum.NotSet:
+                    return NotSet;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum InvoiceApprovalStatusEnum
+    {
+        NotSet = 1,
+        Approved = 2,
+        Denied = 3
+    }
+
+    public partial class InvoiceApprovalStatusNotSet : InvoiceApprovalStatus
+    {
+        private InvoiceApprovalStatusNotSet(int invoiceApprovalStatusID, string invoiceApprovalStatusName) : base(invoiceApprovalStatusID, invoiceApprovalStatusName) {}
+        public static readonly InvoiceApprovalStatusNotSet Instance = new InvoiceApprovalStatusNotSet(1, @"Not Set");
+    }
+
+    public partial class InvoiceApprovalStatusApproved : InvoiceApprovalStatus
+    {
+        private InvoiceApprovalStatusApproved(int invoiceApprovalStatusID, string invoiceApprovalStatusName) : base(invoiceApprovalStatusID, invoiceApprovalStatusName) {}
+        public static readonly InvoiceApprovalStatusApproved Instance = new InvoiceApprovalStatusApproved(2, @"Approved");
+    }
+
+    public partial class InvoiceApprovalStatusDenied : InvoiceApprovalStatus
+    {
+        private InvoiceApprovalStatusDenied(int invoiceApprovalStatusID, string invoiceApprovalStatusName) : base(invoiceApprovalStatusID, invoiceApprovalStatusName) {}
+        public static readonly InvoiceApprovalStatusDenied Instance = new InvoiceApprovalStatusDenied(3, @"Denied");
     }
 }

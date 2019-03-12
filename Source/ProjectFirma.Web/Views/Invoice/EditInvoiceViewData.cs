@@ -34,12 +34,34 @@ namespace ProjectFirma.Web.Views.Invoice
     public class EditInvoiceViewData : FirmaUserControlViewData
     {
         public IEnumerable<SelectListItem> InvoiceApprovalStatuses { get; set; }
+        public IEnumerable<SelectListItem> InvoiceStatuses { get; set; }
+        public IEnumerable<SelectListItem> People { get; set; }
+        public IEnumerable<SelectListItem> PurchaseAuthorityType { get; set; }
         public EditInvoiceType EditInvoiceType { get; set; }
 
-        public EditInvoiceViewData(EditInvoiceType editInvoiceType, IEnumerable<Models.InvoiceApprovalStatus> invoiceApprovalStatuses)
+        public EditInvoiceViewData(EditInvoiceType editInvoiceType, IEnumerable<Models.InvoiceApprovalStatus> invoiceApprovalStatuses, IEnumerable<Models.InvoiceStatus> invoiceStatuses, IEnumerable<Models.Person> people)
         {
             InvoiceApprovalStatuses = invoiceApprovalStatuses.ToSelectList(x => x.InvoiceApprovalStatusID.ToString(CultureInfo.InvariantCulture), y => y.InvoiceApprovalStatusName);
             EditInvoiceType = editInvoiceType;
+            var selectListItemLandOwnerCostShareAgreement = new SelectListItem(){Text = Models.Invoice.LandOwnerPurchaseAuthority, Value = true.ToString()};
+            var selectListItemOther = new SelectListItem(){Text = "Other (Enter Agreement Number in textbox below)" , Value = false.ToString()};
+            var selectListChooseOne = new SelectListItem(){Text = "<Choose one>" , Value = ""};
+           
+            if (editInvoiceType == EditInvoiceType.ExistingInvoice)
+            {
+                InvoiceStatuses = invoiceStatuses.ToSelectList(x => x.InvoiceStatusID.ToString(), y => y.InvoiceStatusDisplayName);
+                PurchaseAuthorityType =
+                    new List<SelectListItem> { selectListItemLandOwnerCostShareAgreement, selectListItemOther };
+            }
+            else
+            {
+                InvoiceStatuses = invoiceStatuses.ToSelectListWithEmptyFirstRow(x => x.InvoiceStatusID.ToString(), y => y.InvoiceStatusDisplayName);
+                PurchaseAuthorityType =
+                    new List<SelectListItem> { selectListChooseOne, selectListItemLandOwnerCostShareAgreement, selectListItemOther };
+            }
+            
+            People = people.OrderBy(x => x.LastName)
+                .ToSelectListWithEmptyFirstRow(k => k.PersonID.ToString(), v => v.FullNameFirstLastAndOrg);
         }
 
     }

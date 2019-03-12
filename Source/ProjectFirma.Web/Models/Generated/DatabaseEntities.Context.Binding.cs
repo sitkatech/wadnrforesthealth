@@ -61,7 +61,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Grant> Grants { get; set; }
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
-        public virtual DbSet<InvoiceApprovalStatus> InvoiceApprovalStatuses { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
@@ -307,10 +306,22 @@ namespace ProjectFirma.Web.Models
                     return GrantTypes.GetGrantType(primaryKey);
 
                 case "InvoiceApprovalStatus":
-                    return InvoiceApprovalStatuses.GetInvoiceApprovalStatus(primaryKey);
+                    var invoiceApprovalStatus = InvoiceApprovalStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(invoiceApprovalStatus, "InvoiceApprovalStatus", primaryKey);
+                    return invoiceApprovalStatus;
+
+                case "InvoiceMatchAmountType":
+                    var invoiceMatchAmountType = InvoiceMatchAmountType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(invoiceMatchAmountType, "InvoiceMatchAmountType", primaryKey);
+                    return invoiceMatchAmountType;
 
                 case "Invoice":
                     return Invoices.GetInvoice(primaryKey);
+
+                case "InvoiceStatus":
+                    var invoiceStatus = InvoiceStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(invoiceStatus, "InvoiceStatus", primaryKey);
+                    return invoiceStatus;
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

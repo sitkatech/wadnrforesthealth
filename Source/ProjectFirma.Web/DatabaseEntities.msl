@@ -382,19 +382,14 @@
           <ScalarProperty Name="RequestorName" ColumnName="RequestorName" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="PurchaseAuthority" ColumnName="PurchaseAuthority" />
-          <ScalarProperty Name="InvoiceStatus" ColumnName="InvoiceStatus" />
           <ScalarProperty Name="TotalPaymentAmount" ColumnName="TotalPaymentAmount" />
           <ScalarProperty Name="PreparedByPersonID" ColumnName="PreparedByPersonID" />
           <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
           <ScalarProperty Name="InvoiceApprovalStatusComment" ColumnName="InvoiceApprovalStatusComment" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceApprovalStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceApprovalStatus">
-        <MappingFragment StoreEntitySet="InvoiceApprovalStatus">
-          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
-          <ScalarProperty Name="InvoiceApprovalStatusName" ColumnName="InvoiceApprovalStatusName" />
+          <ScalarProperty Name="PurchaseAuthorityIsLandownerCostShareAgreement" ColumnName="PurchaseAuthorityIsLandownerCostShareAgreement" />
+          <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
+          <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
+          <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -430,6 +425,7 @@
           <ScalarProperty Name="LogoFileResourceID" ColumnName="LogoFileResourceID" />
           <ScalarProperty Name="OrganizationTypeID" ColumnName="OrganizationTypeID" />
           <ScalarProperty Name="OrganizationBoundary" ColumnName="OrganizationBoundary" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -604,11 +600,11 @@
           <ScalarProperty Name="WebServiceAccessToken" ColumnName="WebServiceAccessToken" />
           <ScalarProperty Name="LoginName" ColumnName="LoginName" />
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-          <ScalarProperty Name="StatewideVendorNumber" ColumnName="StatewideVendorNumber" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
           <ScalarProperty Name="AllowedAuthenticatorID" ColumnName="AllowedAuthenticatorID" />
+          <ScalarProperty Name="VendorID" ColumnName="VendorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

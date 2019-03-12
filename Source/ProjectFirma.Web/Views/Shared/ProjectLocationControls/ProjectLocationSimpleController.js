@@ -149,6 +149,14 @@
             $scope.getProjectLocationProperties = function() {
                 switch ($scope.AngularModel.ProjectLocationSimpleType) {
                 case "PointOnMap":
+                    if ($scope.propertiesForPointOnMap === undefined) {
+                        return $scope.propertiesForPointOnMap;
+                    }
+                    Object.keys($scope.propertiesForPointOnMap).forEach(key => {
+                        if ($scope.propertiesForPointOnMap[key] === undefined) {
+                            delete $scope.propertiesForPointOnMap[key];
+                        }
+                    });
                     return $scope.propertiesForPointOnMap;
                 case "None": // Do nothing
                     break;

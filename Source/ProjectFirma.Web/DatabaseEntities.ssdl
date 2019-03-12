@@ -35,7 +35,6 @@
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -319,10 +318,6 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-      <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
-      <End Role="Invoices" EntitySet="Invoice" />
-    </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
       <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
@@ -350,6 +345,10 @@
     <AssociationSet Name="FK_Organization_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Organization_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="OrganizationsWhereYouAreThePrimaryContactPerson" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_Organization_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="Organizations" EntitySet="Organization" />
     </AssociationSet>
     <AssociationSet Name="FK_OrganizationBoundaryStaging_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_OrganizationBoundaryStaging_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -462,6 +461,10 @@
     <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Person_Person_AddedByPersonID_PersonID">
       <End Role="AddedByPerson" EntitySet="Person" />
       <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_Person_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="People" EntitySet="Person" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1201,18 +1204,14 @@
     <Property Name="RequestorName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
     <Property Name="PurchaseAuthority" Type="varchar" MaxLength="255" />
-    <Property Name="InvoiceStatus" Type="varchar" MaxLength="30" />
     <Property Name="TotalPaymentAmount" Type="money" />
     <Property Name="PreparedByPersonID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="varchar(max)" />
-  </EntityType>
-  <EntityType Name="InvoiceApprovalStatus">
-    <Key>
-      <PropertyRef Name="InvoiceApprovalStatusID" />
-    </Key>
-    <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
-    <Property Name="InvoiceApprovalStatusName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="bit" Nullable="false" />
+    <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
+    <Property Name="MatchAmount" Type="money" />
+    <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -1245,6 +1244,7 @@
     <Property Name="LogoFileResourceID" Type="int" />
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
     <Property Name="OrganizationBoundary" Type="geometry" />
+    <Property Name="VendorID" Type="int" />
   </EntityType>
   <EntityType Name="OrganizationBoundaryStaging">
     <Key>
@@ -1420,11 +1420,11 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
     <Property Name="LoginName" Type="varchar" MaxLength="128" />
     <Property Name="MiddleName" Type="varchar" MaxLength="100" />
-    <Property Name="StatewideVendorNumber" Type="varchar" MaxLength="100" />
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
     <Property Name="AllowedAuthenticatorID" Type="int" Nullable="false" />
+    <Property Name="VendorID" Type="int" />
   </EntityType>
   <EntityType Name="PersonEnvironmentCredential">
     <Key>
@@ -2768,18 +2768,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" Multiplicity="1" />
-    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="InvoiceApprovalStatus">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
-      </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
     <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
@@ -2861,6 +2849,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="OrganizationsWhereYouAreThePrimaryContactPerson">
         <PropertyRef Name="PrimaryContactPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Store.Vendor" Multiplicity="0..1" />
+    <End Role="Organizations" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="Organizations">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3197,6 +3197,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
         <PropertyRef Name="AddedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Store.Vendor" Multiplicity="0..1" />
+    <End Role="People" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="People">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4383,6 +4395,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     <Parameter Name="FirstName" Type="varchar" Mode="In" />
     <Parameter Name="LastName" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="pVendorImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VendorListJsonFileName" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
@@ -4419,4 +4434,51 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   <Function Name="TrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
   </Function>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProgramIndex' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpProgramIndex">
+  <Property Name="fy_biennium" Type="varchar" MaxLength="200" />
+  <Property Name="agency" Type="varchar" MaxLength="200" />
+  <Property Name="subagency" Type="varchar" MaxLength="200" />
+  <Property Name="program_index" Type="varchar" MaxLength="200" />
+  <Property Name="title" Type="varchar" MaxLength="2000" />
+  <Property Name="program_function" Type="varchar" MaxLength="200" />
+  <Property Name="program" Type="varchar" MaxLength="200" />
+  <Property Name="subprogram" Type="varchar" MaxLength="200" />
+  <Property Name="activity" Type="varchar" MaxLength="200" />
+  <Property Name="subactivity" Type="varchar" MaxLength="200" />
+  <Property Name="task" Type="varchar" MaxLength="200" />
+  <Property Name="allot_pgm_level_ind" Type="varchar" MaxLength="200" />
+  <Property Name="gl_program_ind" Type="varchar" MaxLength="200" />
+  <Property Name="program_index_restrictor" Type="varchar" MaxLength="200" />
+  <Property Name="last_process_date" Type="varchar" MaxLength="200" />
+  <Property Name="program_index_used_ind" Type="varchar" MaxLength="200" />
+</EntityType>
+Errors Found During Generation:
+warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProjectCode' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+
+<EntityType Name="tmpProjectCode">
+  <Property Name="agency" Type="varchar" MaxLength="200" />
+  <Property Name="subagency" Type="varchar" MaxLength="200" />
+  <Property Name="project" Type="varchar" MaxLength="200" />
+  <Property Name="subproject" Type="varchar" MaxLength="200" />
+  <Property Name="project_phase" Type="varchar" MaxLength="200" />
+  <Property Name="title" Type="varchar" MaxLength="2000" />
+  <Property Name="project_type" Type="varchar" MaxLength="200" />
+  <Property Name="project_start_date" Type="varchar" MaxLength="200" />
+  <Property Name="project_end_date" Type="varchar" MaxLength="200" />
+  <Property Name="federal_catalog" Type="varchar" MaxLength="200" />
+  <Property Name="sub_grantee" Type="varchar" MaxLength="200" />
+  <Property Name="indirect_cost_rate" Type="varchar" MaxLength="200" />
+  <Property Name="indirect_cost_limit" Type="varchar" MaxLength="200" />
+  <Property Name="reimbursement_method" Type="varchar" MaxLength="200" />
+  <Property Name="federal_agency" Type="varchar" MaxLength="200" />
+  <Property Name="object_posting_level_ind" Type="varchar" MaxLength="200" />
+  <Property Name="revenue_posting_level_ind" Type="varchar" MaxLength="200" />
+  <Property Name="approp_cntrl_type_ind" Type="varchar" MaxLength="200" />
+  <Property Name="cash_cntrl_type_ind" Type="varchar" MaxLength="200" />
+  <Property Name="gl_project_level" Type="varchar" MaxLength="200" />
+  <Property Name="create_date" Type="varchar" MaxLength="200" />
+</EntityType>-->
 </Schema>

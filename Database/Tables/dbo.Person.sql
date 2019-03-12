@@ -18,11 +18,11 @@ CREATE TABLE [dbo].[Person](
 	[WebServiceAccessToken] [uniqueidentifier] NULL,
 	[LoginName] [varchar](128) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[MiddleName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[StatewideVendorNumber] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Notes] [varchar](500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PersonAddress] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AddedByPersonID] [int] NULL,
 	[AllowedAuthenticatorID] [int] NOT NULL,
+	[VendorID] [int] NULL,
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC
@@ -59,3 +59,8 @@ ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Role_RoleID] F
 REFERENCES [dbo].[Role] ([RoleID])
 GO
 ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Role_RoleID]
+GO
+ALTER TABLE [dbo].[Person]  WITH CHECK ADD  CONSTRAINT [FK_Person_Vendor_VendorID] FOREIGN KEY([VendorID])
+REFERENCES [dbo].[Vendor] ([VendorID])
+GO
+ALTER TABLE [dbo].[Person] CHECK CONSTRAINT [FK_Person_Vendor_VendorID]

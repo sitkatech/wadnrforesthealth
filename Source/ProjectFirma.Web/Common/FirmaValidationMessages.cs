@@ -45,6 +45,10 @@ namespace ProjectFirma.Web.Common
         public const string MoreThanOneProjectUpdateInProgress = "Cannot determine latest update state; more than one update is in progress.";
         public static readonly string ImplementationYearMustBePastOrPresentForImplementationProjects = $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in the Implementation stage cannot have an {FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel()} in the future.";
         public static readonly string InvoiceNicknameMustBePopulated = "You must provide an Invoice nickname.";
+        public static readonly string PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement = "Purchase Authority Agreement Number Must Be Blank If It Is Land-Owner Agreement";
+        public static readonly string InvoiceMatchAmountDollarValueMustNotBeNull = $"You must enter a dollar value for the {FieldDefinition.MatchAmount.GetFieldDefinitionLabel()} if dollar amount is selected";
+        public static readonly string InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied =
+            $"You must provide a comment describing why the {FieldDefinition.Invoice.GetFieldDefinitionLabel()} was denied.";
 
     }
 }

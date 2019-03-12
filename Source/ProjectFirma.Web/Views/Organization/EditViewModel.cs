@@ -30,10 +30,11 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.Organization
 {
-    public class EditViewModel : FormViewModel, IValidatableObject
+    public class EditViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
     {
         public const int MaxLogoSizeInBytes = 1024 * 200;
 
@@ -55,6 +56,11 @@ namespace ProjectFirma.Web.Views.Organization
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.OrganizationPrimaryContact)]
         public int? PrimaryContactPersonID { get; set; }
+
+        [DisplayName("Vendor")]
+        public int? VendorID { get; set; }
+
+        public string VendorDisplayName { get; set; }
 
         [Url]
         [DisplayName("Home Page")]
@@ -82,7 +88,11 @@ namespace ProjectFirma.Web.Views.Organization
             OrganizationTypeID = organization.OrganizationTypeID;
             PrimaryContactPersonID = organization.PrimaryContactPerson?.PersonID;
             OrganizationUrl = organization.OrganizationUrl;
-
+            VendorID = organization.VendorID;
+            if (organization.Vendor != null)
+            {
+                VendorDisplayName = organization.Vendor.GetVendorNameWithFullStatewideVendorNumber();
+            }
             IsActive = organization.IsActive;
         }
 
@@ -94,6 +104,7 @@ namespace ProjectFirma.Web.Views.Organization
             organization.IsActive = IsActive;
             organization.PrimaryContactPersonID = PrimaryContactPersonID;
             organization.OrganizationUrl = OrganizationUrl;
+            organization.VendorID = VendorID;
             if (LogoFileResourceData != null)
             {
                 organization.LogoFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(LogoFileResourceData, currentPerson);    

@@ -7,10 +7,11 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using System.Text.RegularExpressions;
+using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.User
 {
-    public class EditContactViewModel : FormViewModel, IValidatableObject
+    public class EditContactViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
     {
 
         [Required]
@@ -37,8 +38,10 @@ namespace ProjectFirma.Web.Views.User
         [DisplayName("Organization")]
         public int? OrganizationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.StatewideVendorNumber)]
-        public string StatewideVendorNumber { get; set; }
+        [DisplayName("Vendor")]
+        public int? VendorID { get; set; }
+
+        public string VendorDisplayName { get; set; }
 
         [DisplayName("Notes")]
         [StringLength(Person.FieldLengths.Notes)]
@@ -61,7 +64,11 @@ namespace ProjectFirma.Web.Views.User
             Address = person.PersonAddress;
             Phone = person.Phone;
             OrganizationID = person.OrganizationID;
-            StatewideVendorNumber = person.StatewideVendorNumber;
+            VendorID = person.VendorID;
+            if (person.Vendor != null)
+            {
+                VendorDisplayName = person.Vendor.GetVendorNameWithFullStatewideVendorNumber();
+            }
             Notes = person.Notes;
         }
 
@@ -69,7 +76,7 @@ namespace ProjectFirma.Web.Views.User
         {
             person.OrganizationID = OrganizationID;
             person.PersonAddress = Address;
-            person.StatewideVendorNumber = StatewideVendorNumber;
+            person.VendorID = VendorID;
             person.Phone = Phone;
             person.Notes = Notes;
 

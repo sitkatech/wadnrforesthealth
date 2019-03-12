@@ -6,6 +6,8 @@ namespace ProjectFirma.Web.Views.User
     public class EditContactViewData : FirmaUserControlViewData
     {
         public bool FullUpUser { get; }
+        public IEnumerable<SelectListItem> Organizations { get; }
+        
 
         public EditContactViewData(IEnumerable<SelectListItem> organizations, bool fullUpUser)
         {
@@ -13,6 +15,5 @@ namespace ProjectFirma.Web.Views.User
             FullUpUser = fullUpUser;
         }
 
-        public IEnumerable<SelectListItem> Organizations { get; }
     }
 }

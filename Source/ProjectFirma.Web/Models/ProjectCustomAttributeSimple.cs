@@ -8,6 +8,7 @@ namespace ProjectFirma.Web.Models
     public class ProjectCustomAttributeSimple
     {
         public int ProjectCustomAttributeTypeID { get; set; }
+        public int ProjectCustomAttributeDataTypeID { get; set; }
         public IList<string> ProjectCustomAttributeValues { get; set; }
         public string ProjectCustomAttributeValueDisplayString { get; set; }
 
@@ -19,6 +20,7 @@ namespace ProjectFirma.Web.Models
         public ProjectCustomAttributeSimple(IProjectCustomAttribute projectCustomAttribute)
         {
             ProjectCustomAttributeTypeID = projectCustomAttribute.ProjectCustomAttributeTypeID;
+            ProjectCustomAttributeDataTypeID = projectCustomAttribute.ProjectCustomAttributeType.ProjectCustomAttributeDataTypeID;
             ProjectCustomAttributeValues = projectCustomAttribute.Values
                 .Select(y =>
                     y.IProjectCustomAttribute.ProjectCustomAttributeType.ProjectCustomAttributeDataType ==
@@ -26,7 +28,7 @@ namespace ProjectFirma.Web.Models
                         ? DateTime.Parse(y.AttributeValue).ToShortDateString()
                         : y.AttributeValue)
                 .ToList();
-            if (ProjectCustomAttributeTypeID == ProjectCustomAttributeDataType.DateTime.ProjectCustomAttributeDataTypeID)
+            if (ProjectCustomAttributeDataTypeID == ProjectCustomAttributeDataType.DateTime.ProjectCustomAttributeDataTypeID)
             {
                 ProjectCustomAttributeValueDisplayString = ProjectAttributes.StringToDateStringStatic(projectCustomAttribute.Values.Single().AttributeValue);
             }

@@ -20,24 +20,28 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Web.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.Organization
 {
     public class EditViewData : FirmaUserControlViewData
     {
-        public readonly IEnumerable<SelectListItem> OrganizationTypes;
-        public readonly IEnumerable<SelectListItem> People;
-        public readonly bool IsInKeystone;
-        public readonly string RequestOrganizationChangeUrl;
-        public readonly bool IsSitkaAdmin;
+        public IEnumerable<SelectListItem> OrganizationTypes { get; }
+        public IEnumerable<SelectListItem> People { get; }
+        public bool IsInKeystone { get; }
+        public string RequestOrganizationChangeUrl { get; }
+        public bool IsSitkaAdmin { get; }
 
-        public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people, bool isInKeystone, string requestOrganizationChangeUrl, bool isSitkaAdmin)
+        public EditViewData(IEnumerable<SelectListItem> organizationTypes, IEnumerable<SelectListItem> people, bool isInKeystone, bool isSitkaAdmin)
         {
             OrganizationTypes = organizationTypes;
             People = people;
             IsInKeystone = isInKeystone;
-            RequestOrganizationChangeUrl = requestOrganizationChangeUrl;
+            RequestOrganizationChangeUrl =
+                SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.RequestOrganizationNameChange());
             IsSitkaAdmin = isSitkaAdmin;
+
         }
     }
 }

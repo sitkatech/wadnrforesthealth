@@ -20,6 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Models
+@using ProjectFirma.Web.Models
 @inherits ProjectFirma.Web.Views.Invoice.EditInvoice
 
 @Html.Raw(ViewDataTyped.EditInvoiceType.IntroductoryText)
@@ -30,111 +31,232 @@
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 <script type="text/javascript">
     // <![CDATA[
+
     jQuery(document).ready(function () {
 
         // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
-        var isInvoiceCommentFieldMandatory = function() {
-            var selectedInvoiceApprovalStatus = jQuery("#invoiceApprovalStatus option:selected").text();
-            console.log(selectedInvoiceApprovalStatus);
-            // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
-            if (selectedInvoiceApprovalStatus == 'Denied') {
-                return true;
-            } else {
-                return false;
-            }
+    var isInvoiceCommentFieldMandatory = function() {
+        var selectedInvoiceApprovalStatus = jQuery("#InvoiceApprovalStatus option:selected").text();
+        console.log(selectedInvoiceApprovalStatus);
+        // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
+        if (selectedInvoiceApprovalStatus == 'Denied') {
+            return true;
+        } else {
+            return false;
         }
+    }
 
-        var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
-        console.log(initialLoadCommentIsMandatory);
-        if (initialLoadCommentIsMandatory) {
+    var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
+    console.log(initialLoadCommentIsMandatory);
+    if (initialLoadCommentIsMandatory) {
+        jQuery("#InvoiceApprovalStatusComment")
+            .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
+    } else {
+        jQuery("#InvoiceApprovalStatusComment")
+            .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
+    }
+
+    jQuery("#InvoiceApprovalStatus").on('change', function () {
+        var commentIsMandatory = isInvoiceCommentFieldMandatory();
+        console.log(commentIsMandatory);
+        if (commentIsMandatory) {
             jQuery("#InvoiceApprovalStatusComment")
                 .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
         } else {
             jQuery("#InvoiceApprovalStatusComment")
                 .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
         }
+    });
 
-        jQuery("#invoiceApprovalStatus").on('change', function () {
-            var commentIsMandatory = isInvoiceCommentFieldMandatory();
-            console.log(commentIsMandatory);
-            if (commentIsMandatory) {
-                jQuery("#InvoiceApprovalStatusComment")
-                    .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
-            } else {
-                jQuery("#InvoiceApprovalStatusComment")
-                    .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
-            }
-        });
     });
     // ]]>
 </script>
 
 @using (Html.BeginForm())
 {
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.InvoiceIdentifyingName)
-            </div>
-            <div class="col-xs-6">
-                @Html.TextBoxFor(m => m.InvoiceIdentifyingName, new { style = "width: 100%;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.InvoiceIdentifyingName)
-            </div>
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceIdentifyingName)
         </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.RequestorName)
-            </div>
-            <div class="col-xs-4">
-                @Html.TextBoxFor(m => m.RequestorName, new { style = "width: 100%;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.RequestorName)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.InvoiceDate)
-            </div>
-            <div class="col-xs-6">
-                @Html.EditorFor(m => m.InvoiceDate, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.InvoiceDate)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.PurchaseAuthority)
-            </div>
-            <div class="col-xs-6">
-                @Html.TextBoxFor(m => m.PurchaseAuthority, new { style = "width: 100;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.PurchaseAuthority)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.InvoiceAmount)
-            </div>
-            <div class="col-xs-2">
-                @Html.TextBoxFor(m => m.InvoiceAmount, new { style = "width: auto;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.InvoiceAmount)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusID)
-            </div>
-            <div id="invoiceApprovalStatus" class="col-xs-2">
-                @Html.DropDownListFor(m => m.InvoiceApprovalStatusID, ViewDataTyped.InvoiceApprovalStatuses, new {style = "width: auto;", @class = "form-control"})
-                @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusID)
-            </div>
-        </div>
-        <div class="form-group">
-            <div id="InvoiceApprovalStatusComment" class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment)
-            </div>
-            <div class="col-xs-6">
-                @Html.TextAreaFor(m => m.InvoiceApprovalStatusComment, new { style = "width: 100%;", @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusComment)
-            </div>
+        <div class="col-xs-6">
+            @Html.TextBoxFor(m => m.InvoiceIdentifyingName, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceIdentifyingName)
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.RequestorName)
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(m => m.RequestorName, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.RequestorName)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceDate)
+        </div>
+        <div class="col-xs-6">
+            @Html.EditorFor(m => m.InvoiceDate, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceDate)
+        </div>
+    </div>
+    <div class="form-group form-group-tight">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement, ViewDataTyped.PurchaseAuthorityType, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)
+        </div>
+    </div>
+    <div class="form-group" id="purchaseAuthorityTextBoxEntry">
+        <div class="col-xs-4 control-label">
+
+        </div>
+        <div class="col-xs-6">
+            @Html.TextBoxFor(m => m.PurchaseAuthority, new { style = "width: 100;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PurchaseAuthority)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceStatusID)
+        </div>
+        <div class="col-xs-2">
+            @Html.DropDownListFor(m => m.InvoiceStatusID, ViewDataTyped.InvoiceStatuses, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceStatusID)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceAmount)
+        </div>
+        <div class="col-xs-2">
+            @Html.EditorFor(m => m.InvoiceAmount, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceAmount)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceMatchAmountTypeID)
+        </div>
+        <div class="col-xs-8">
+            @foreach (var matchType in InvoiceMatchAmountType.All.OrderBy(x => x == InvoiceMatchAmountType.DollarAmount).ThenBy(x => x.InvoiceMatchAmountTypeID).ToList())
+            {
+                <div class="row">
+                    <div class="radio-inline">
+                        <label>
+                            @Html.RadioButtonFor(m => m.InvoiceMatchAmountTypeID, matchType.InvoiceMatchAmountTypeID) @(matchType.InvoiceMatchAmountTypeDisplayName)
+                        </label>
+                    </div>
+                </div>
+            }
+            @Html.ValidationMessageFor(m => m.InvoiceMatchAmountTypeID)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+
+        </div>
+        <div class="col-xs-2">
+            @Html.EditorFor(m => m.MatchAmount, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MatchAmount)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.PreparedByPersonID)
+        </div>
+        <div class="col-xs-2">
+            @Html.DropDownListFor(m => m.PreparedByPersonID, ViewDataTyped.People, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PreparedByPersonID)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusID)
+        </div>
+        <div id="InvoiceApprovalStatus" class="col-xs-2">
+            @Html.DropDownListFor(m => m.InvoiceApprovalStatusID, ViewDataTyped.InvoiceApprovalStatuses, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusID)
+        </div>
+    </div>
+    <div class="form-group">
+        <div id="InvoiceApprovalStatusComment" class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment)
+        </div>
+        <div class="col-xs-6">
+            @Html.TextAreaFor(m => m.InvoiceApprovalStatusComment, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InvoiceApprovalStatusComment)
+        </div>
+    </div>
+</div>
     @Html.HiddenFor(m => m.InvoiceID)
 }
+
+
+
+<script type="text/javascript">
+                jQuery(document)
+                    .ready(function () {
+                        var dollarValueMatchTypeID = '@InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID';
+                        var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
+                        var purchaseAuthoirty = jQuery("#@Html.IdFor(m => m.PurchaseAuthority)");
+
+                        var isPurchaseAuthorityLandOwner = purchaseAuthorityIsLandownerCostShare.val();
+                        console.log(isPurchaseAuthorityLandOwner);
+                        if (isPurchaseAuthorityLandOwner == 'False') {
+                            purchaseAuthoirty.removeAttr('disabled');
+                            jQuery("#purchaseAuthorityTextBoxEntry").show();
+                        } else {
+                            purchaseAuthoirty.attr('disabled', 'disabled');
+                            jQuery("#purchaseAuthorityTextBoxEntry").hide();
+                            purchaseAuthoirty.val('');
+                        }
+
+                        purchaseAuthorityIsLandownerCostShare.change(function() {
+                            var value = purchaseAuthorityIsLandownerCostShare.val();
+                            if (value == 'False') {
+                                purchaseAuthoirty.removeAttr('disabled');
+                                jQuery("#purchaseAuthorityTextBoxEntry").show();
+                            } else {
+                                purchaseAuthoirty.attr('disabled', 'disabled');
+                                jQuery("#purchaseAuthorityTextBoxEntry").hide();
+                                purchaseAuthoirty.val('');
+                            }
+                        });
+
+
+                        var matchAmountType = jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]');
+                        var checkedMatchAmountType =
+                            jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]:checked')[0];
+                        var matchAmountTypeCheckedValue = null;
+                        if (checkedMatchAmountType !== undefined && checkedMatchAmountType !== null) {
+                            matchAmountTypeCheckedValue = checkedMatchAmountType.value;
+                        }
+
+                        var matchAmount = jQuery("#@Html.IdFor(m => m.MatchAmount)");
+
+                        if (matchAmountTypeCheckedValue == dollarValueMatchTypeID) {
+                            matchAmount.removeAttr('disabled');
+                        } else {
+                            matchAmount.attr('disabled', 'disabled');
+                        }
+
+                        matchAmountType.change(function() {
+                            if (this.value == dollarValueMatchTypeID) {
+                                matchAmount.removeAttr('disabled');
+                            } else {
+                                matchAmount.attr('disabled', 'disabled');
+                                matchAmount.val('');
+                            }
+                        });
+
+
+                    });
+</script>

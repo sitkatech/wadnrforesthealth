@@ -24,7 +24,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected Vendor()
         {
-
+            this.Organizations = new HashSet<Organization>();
+            this.People = new HashSet<Person>();
         }
 
         /// <summary>
@@ -82,13 +83,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return Organizations.Any() || People.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Vendor).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Vendor).Name, typeof(Organization).Name, typeof(Person).Name};
 
 
         /// <summary>
@@ -104,8 +105,24 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in Organizations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in People.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -132,7 +149,8 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return VendorID; } set { VendorID = value; } }
 
-
+        public virtual ICollection<Organization> Organizations { get; set; }
+        public virtual ICollection<Person> People { get; set; }
 
         public static class FieldLengths
         {

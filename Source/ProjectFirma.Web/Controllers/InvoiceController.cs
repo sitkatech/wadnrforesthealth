@@ -37,6 +37,34 @@ namespace ProjectFirma.Web.Controllers
 {
     public class InvoiceController : FirmaBaseController
     {
+
+        [HttpGet]
+        [AgreementCreateFeature]
+        public PartialViewResult New()
+        {
+            var viewModel = new EditInvoiceViewModel();
+            return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
+        }
+
+        [HttpPost]
+        [AgreementCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditInvoiceViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return InvoiceViewEdit(viewModel, EditInvoiceType.NewInvoice);
+            }
+
+            var preparedByPerson = HttpRequestStorage.DatabaseEntities.People.Single(g => g.PersonID == viewModel.PreparedByPersonID);
+            var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
+            var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
+            var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
+            var agreement = Invoice.CreateNewBlank(preparedByPerson, invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus);
+            viewModel.UpdateModel(agreement, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
         [InvoicesViewFullListFeature]
         public ViewResult Index()
         {
@@ -71,8 +99,10 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult InvoiceViewEdit(EditInvoiceViewModel viewModel, EditInvoiceType editInvoiceType)
         {
-            var invoiceApprovalStatuses = HttpRequestStorage.DatabaseEntities.InvoiceApprovalStatuses;
-            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses);
+            var invoiceApprovalStatuses = InvoiceApprovalStatus.All;
+            var invoiceStatuses = InvoiceStatus.All.OrderBy(x => x.InvoiceStatusID).ToList();
+            var people =  HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
+            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people);
             return RazorPartialView<EditInvoice, EditInvoiceViewData, EditInvoiceViewModel>(viewData, viewModel);
         }
 

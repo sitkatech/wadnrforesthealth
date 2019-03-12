@@ -218,7 +218,8 @@ namespace ProjectFirma.Web.Controllers
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
-            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, new ProjectCustomAttributes(project).Attributes, false);
+            var projectCustomAttributeSimples = new ProjectCustomAttributes(project).Attributes.ToList();
+            var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, projectCustomAttributeSimples, false);
             var viewData = new DetailViewData(CurrentPerson,
                 project,
                 activeProjectStages,
@@ -607,6 +608,8 @@ namespace ProjectFirma.Web.Controllers
             var projectsFound = GetViewableProjectsFromSearchCriteria(searchCriteria);
             return SearchImpl(searchCriteria, projectsFound);
         }
+
+       
 
         private List<Project> GetViewableProjectsFromSearchCriteria(string searchCriteria)
         {

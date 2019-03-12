@@ -35,7 +35,6 @@
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
-    <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.InvoiceApprovalStatus" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -375,10 +374,6 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-      <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
-      <End Role="Invoices" EntitySet="Invoice" />
-    </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
       <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
@@ -402,6 +397,10 @@
     <AssociationSet Name="FK_Organization_Person_PrimaryContactPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID">
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="OrganizationsWhereYouAreThePrimaryContactPerson" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization_Vendor_VendorID" Association="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="Organizations" EntitySet="Organization" />
     </AssociationSet>
     <AssociationSet Name="FK_OrganizationBoundaryStaging_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_OrganizationBoundaryStaging_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -530,6 +529,10 @@
     <AssociationSet Name="FK_Person_Person_AddedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID">
       <End Role="AddedByPerson" EntitySet="Person" />
       <End Role="PeopleWhereYouAreTheAddedByPerson" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Vendor_VendorID" Association="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID">
+      <End Role="Vendor" EntitySet="Vendor" />
+      <End Role="People" EntitySet="Person" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1301,21 +1304,15 @@
     <Property Name="RequestorName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InvoiceDate" Type="DateTime" Nullable="false" />
     <Property Name="PurchaseAuthority" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="InvoiceStatus" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
     <Property Name="TotalPaymentAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="PreparedByPersonID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceApprovalStatusComment" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="InvoiceApprovalStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="Invoices" ToRole="InvoiceApprovalStatus" />
+    <Property Name="PurchaseAuthorityIsLandownerCostShareAgreement" Type="Boolean" Nullable="false" />
+    <Property Name="InvoiceMatchAmountTypeID" Type="Int32" Nullable="false" />
+    <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="InvoiceStatusID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
-  </EntityType>
-  <EntityType Name="InvoiceApprovalStatus">
-    <Key>
-      <PropertyRef Name="InvoiceApprovalStatusID" />
-    </Key>
-    <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceApprovalStatusName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="InvoiceApprovalStatus" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -1352,6 +1349,7 @@
     <Property Name="LogoFileResourceID" Type="Int32" />
     <Property Name="OrganizationTypeID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationBoundary" Type="Geometry" />
+    <Property Name="VendorID" Type="Int32" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Organization" ToRole="Agreements" />
     <NavigationProperty Name="LogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="OrganizationsWhereYouAreTheLogoFileResource" ToRole="LogoFileResource" />
     <NavigationProperty Name="FundingSources" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="Organization" ToRole="FundingSources" />
@@ -1359,6 +1357,7 @@
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="Organization" ToRole="GrantAllocations" />
     <NavigationProperty Name="OrganizationType" Relationship="ProjectFirma.Web.Models.FK_Organization_OrganizationType_OrganizationTypeID" FromRole="Organizations" ToRole="OrganizationType" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="OrganizationsWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
+    <NavigationProperty Name="Vendor" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Organizations" ToRole="Vendor" />
     <NavigationProperty Name="OrganizationBoundaryStagings" Relationship="ProjectFirma.Web.Models.FK_OrganizationBoundaryStaging_Organization_OrganizationID" FromRole="Organization" ToRole="OrganizationBoundaryStagings" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Organization_OrganizationID" FromRole="Organization" ToRole="People" />
     <NavigationProperty Name="PersonStewardOrganizations" Relationship="ProjectFirma.Web.Models.FK_PersonStewardOrganization_Organization_OrganizationID" FromRole="Organization" ToRole="PersonStewardOrganizations" />
@@ -1572,11 +1571,11 @@
     <Property Name="WebServiceAccessToken" Type="Guid" />
     <Property Name="LoginName" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
     <Property Name="MiddleName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="StatewideVendorNumber" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
     <Property Name="Notes" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="PersonAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="AddedByPersonID" Type="Int32" />
     <Property Name="AllowedAuthenticatorID" Type="Int32" Nullable="false" />
+    <Property Name="VendorID" Type="Int32" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
@@ -1597,6 +1596,7 @@
     <NavigationProperty Name="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureNote_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="PerformanceMeasureNotesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="PeopleWhereYouAreTheAddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="AddedByPerson" ToRole="PeopleWhereYouAreTheAddedByPerson" />
     <NavigationProperty Name="AddedByPerson" Relationship="ProjectFirma.Web.Models.FK_Person_Person_AddedByPersonID_PersonID" FromRole="PeopleWhereYouAreTheAddedByPerson" ToRole="AddedByPerson" />
+    <NavigationProperty Name="Vendor" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="People" ToRole="Vendor" />
     <NavigationProperty Name="PersonEnvironmentCredentials" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Person_PersonID" FromRole="Person" ToRole="PersonEnvironmentCredentials" />
     <NavigationProperty Name="PersonStewardOrganizations" Relationship="ProjectFirma.Web.Models.FK_PersonStewardOrganization_Person_PersonID" FromRole="Person" ToRole="PersonStewardOrganizations" />
     <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Person_PersonID" FromRole="Person" ToRole="PersonStewardRegions" />
@@ -2503,6 +2503,8 @@
     <Property Name="VendorStatus" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="TaxpayerIdNumber" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
+    <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
     <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.AgreementStatus" Multiplicity="0..1" />
@@ -3284,18 +3286,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.InvoiceApprovalStatus" Multiplicity="1" />
-    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="InvoiceApprovalStatus">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
-      </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Invoice_Person_PreparedByPersonID_PersonID">
     <End Role="PreparedByPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
     <End Role="InvoicesWhereYouAreThePreparedByPerson" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
@@ -3365,6 +3355,18 @@
       </Principal>
       <Dependent Role="OrganizationsWhereYouAreThePrimaryContactPerson">
         <PropertyRef Name="PrimaryContactPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Vendor" Multiplicity="0..1" />
+    <End Role="Organizations" Type="ProjectFirma.Web.Models.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="Organizations">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3749,6 +3751,18 @@
       </Principal>
       <Dependent Role="PeopleWhereYouAreTheAddedByPerson">
         <PropertyRef Name="AddedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Vendor_VendorID">
+    <End Role="Vendor" Type="ProjectFirma.Web.Models.Vendor" Multiplicity="0..1" />
+    <End Role="People" Type="ProjectFirma.Web.Models.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendor">
+        <PropertyRef Name="VendorID" />
+      </Principal>
+      <Dependent Role="People">
+        <PropertyRef Name="VendorID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

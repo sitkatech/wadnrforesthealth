@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Organization(int organizationID, Guid? organizationGuid, string organizationName, string organizationShortName, int? primaryContactPersonID, bool isActive, string organizationUrl, int? logoFileResourceID, int organizationTypeID, DbGeometry organizationBoundary) : this()
+        public Organization(int organizationID, Guid? organizationGuid, string organizationName, string organizationShortName, int? primaryContactPersonID, bool isActive, string organizationUrl, int? logoFileResourceID, int organizationTypeID, DbGeometry organizationBoundary, int? vendorID) : this()
         {
             this.OrganizationID = organizationID;
             this.OrganizationGuid = organizationGuid;
@@ -50,6 +50,7 @@ namespace ProjectFirma.Web.Models
             this.LogoFileResourceID = logoFileResourceID;
             this.OrganizationTypeID = organizationTypeID;
             this.OrganizationBoundary = organizationBoundary;
+            this.VendorID = vendorID;
         }
 
         /// <summary>
@@ -181,6 +182,7 @@ namespace ProjectFirma.Web.Models
         public int? LogoFileResourceID { get; set; }
         public int OrganizationTypeID { get; set; }
         public DbGeometry OrganizationBoundary { get; set; }
+        public int? VendorID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return OrganizationID; } set { OrganizationID = value; } }
 
@@ -196,6 +198,7 @@ namespace ProjectFirma.Web.Models
         public virtual Person PrimaryContactPerson { get; set; }
         public virtual FileResource LogoFileResource { get; set; }
         public virtual OrganizationType OrganizationType { get; set; }
+        public virtual Vendor Vendor { get; set; }
 
         public static class FieldLengths
         {
