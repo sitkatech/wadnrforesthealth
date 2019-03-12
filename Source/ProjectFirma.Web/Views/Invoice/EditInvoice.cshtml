@@ -29,48 +29,6 @@
 
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
-<script type="text/javascript">
-    // <![CDATA[
-
-    jQuery(document).ready(function () {
-
-        // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
-    var isInvoiceCommentFieldMandatory = function() {
-        var selectedInvoiceApprovalStatus = jQuery("#InvoiceApprovalStatus option:selected").text();
-        console.log(selectedInvoiceApprovalStatus);
-        // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
-        if (selectedInvoiceApprovalStatus == 'Denied') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
-    console.log(initialLoadCommentIsMandatory);
-    if (initialLoadCommentIsMandatory) {
-        jQuery("#InvoiceApprovalStatusComment")
-            .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
-    } else {
-        jQuery("#InvoiceApprovalStatusComment")
-            .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
-    }
-
-    jQuery("#InvoiceApprovalStatus").on('change', function () {
-        var commentIsMandatory = isInvoiceCommentFieldMandatory();
-        console.log(commentIsMandatory);
-        if (commentIsMandatory) {
-            jQuery("#InvoiceApprovalStatusComment")
-                .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
-        } else {
-            jQuery("#InvoiceApprovalStatusComment")
-                .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
-        }
-    });
-
-    });
-    // ]]>
-</script>
 
 @using (Html.BeginForm())
 {
@@ -116,7 +74,7 @@
 
         </div>
         <div class="col-xs-6">
-            @Html.TextBoxFor(m => m.PurchaseAuthority, new { style = "width: 100;", @class = "form-control" })
+            @Html.TextBoxFor(m => m.PurchaseAuthority, new { style = "width: 100%;", @class = "form-control" })
             @Html.ValidationMessageFor(m => m.PurchaseAuthority)
         </div>
     </div>
@@ -202,61 +160,88 @@
 
 
 <script type="text/javascript">
-                jQuery(document)
-                    .ready(function () {
-                        var dollarValueMatchTypeID = '@InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID';
-                        var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
-                        var purchaseAuthoirty = jQuery("#@Html.IdFor(m => m.PurchaseAuthority)");
+    jQuery(document)
+        .ready(function() {
+            // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
+            var isInvoiceCommentFieldMandatory = function () {
+                var selectedInvoiceApprovalStatus = jQuery("#InvoiceApprovalStatus option:selected").text();
+                // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
+                if (selectedInvoiceApprovalStatus == 'Denied') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
-                        var isPurchaseAuthorityLandOwner = purchaseAuthorityIsLandownerCostShare.val();
-                        console.log(isPurchaseAuthorityLandOwner);
-                        if (isPurchaseAuthorityLandOwner == 'False') {
-                            purchaseAuthoirty.removeAttr('disabled');
-                            jQuery("#purchaseAuthorityTextBoxEntry").show();
-                        } else {
-                            purchaseAuthoirty.attr('disabled', 'disabled');
-                            jQuery("#purchaseAuthorityTextBoxEntry").hide();
-                            purchaseAuthoirty.val('');
-                        }
+            var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
+            if (initialLoadCommentIsMandatory) {
+                jQuery("#InvoiceApprovalStatusComment")
+                    .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
+            } else {
+                jQuery("#InvoiceApprovalStatusComment")
+                    .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
+            }
 
-                        purchaseAuthorityIsLandownerCostShare.change(function() {
-                            var value = purchaseAuthorityIsLandownerCostShare.val();
-                            if (value == 'False') {
-                                purchaseAuthoirty.removeAttr('disabled');
-                                jQuery("#purchaseAuthorityTextBoxEntry").show();
-                            } else {
-                                purchaseAuthoirty.attr('disabled', 'disabled');
-                                jQuery("#purchaseAuthorityTextBoxEntry").hide();
-                                purchaseAuthoirty.val('');
-                            }
-                        });
+            jQuery("#InvoiceApprovalStatus").on('change', function () {
+                var commentIsMandatory = isInvoiceCommentFieldMandatory();
+                if (commentIsMandatory) {
+                    jQuery("#InvoiceApprovalStatusComment")
+                        .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
+                } else {
+                    jQuery("#InvoiceApprovalStatusComment")
+                        .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
+                }
+            });
 
+            var dollarValueMatchTypeID = '@InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID';
+            var purchaseAuthorityIsLandownerCostShare = jQuery("#@Html.IdFor(m => m.PurchaseAuthorityIsLandownerCostShareAgreement)");
+            var purchaseAuthoirty = jQuery("#@Html.IdFor(m => m.PurchaseAuthority)");
 
-                        var matchAmountType = jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]');
-                        var checkedMatchAmountType =
-                            jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]:checked')[0];
-                        var matchAmountTypeCheckedValue = null;
-                        if (checkedMatchAmountType !== undefined && checkedMatchAmountType !== null) {
-                            matchAmountTypeCheckedValue = checkedMatchAmountType.value;
-                        }
+            var isPurchaseAuthorityLandOwner = purchaseAuthorityIsLandownerCostShare.val();
+            if (isPurchaseAuthorityLandOwner == 'False') {
+                purchaseAuthoirty.removeAttr('disabled');
+                jQuery("#purchaseAuthorityTextBoxEntry").show();
+            } else {
+                purchaseAuthoirty.attr('disabled', 'disabled');
+                jQuery("#purchaseAuthorityTextBoxEntry").hide();
+                purchaseAuthoirty.val('');
+            }
 
-                        var matchAmount = jQuery("#@Html.IdFor(m => m.MatchAmount)");
+            purchaseAuthorityIsLandownerCostShare.change(function() {
+                var value = purchaseAuthorityIsLandownerCostShare.val();
+                if (value == 'False') {
+                    purchaseAuthoirty.removeAttr('disabled');
+                    jQuery("#purchaseAuthorityTextBoxEntry").show();
+                } else {
+                    purchaseAuthoirty.attr('disabled', 'disabled');
+                    jQuery("#purchaseAuthorityTextBoxEntry").hide();
+                    purchaseAuthoirty.val('');
+                }
+            });
 
-                        if (matchAmountTypeCheckedValue == dollarValueMatchTypeID) {
-                            matchAmount.removeAttr('disabled');
-                        } else {
-                            matchAmount.attr('disabled', 'disabled');
-                        }
+            var matchAmountType = jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]');
+            var checkedMatchAmountType =
+                jQuery('input[type=radio][name=@Html.NameFor(m => m.InvoiceMatchAmountTypeID)]:checked')[0];
+            var matchAmountTypeCheckedValue = null;
+            if (checkedMatchAmountType !== undefined && checkedMatchAmountType !== null) {
+                matchAmountTypeCheckedValue = checkedMatchAmountType.value;
+            }
 
-                        matchAmountType.change(function() {
-                            if (this.value == dollarValueMatchTypeID) {
-                                matchAmount.removeAttr('disabled');
-                            } else {
-                                matchAmount.attr('disabled', 'disabled');
-                                matchAmount.val('');
-                            }
-                        });
+            var matchAmount = jQuery("#@Html.IdFor(m => m.MatchAmount)");
 
+            if (matchAmountTypeCheckedValue == dollarValueMatchTypeID) {
+                matchAmount.removeAttr('disabled');
+            } else {
+                matchAmount.attr('disabled', 'disabled');
+            }
 
-                    });
+            matchAmountType.change(function() {
+                if (this.value == dollarValueMatchTypeID) {
+                    matchAmount.removeAttr('disabled');
+                } else {
+                    matchAmount.attr('disabled', 'disabled');
+                    matchAmount.val('');
+                }
+            });
+        });
 </script>
