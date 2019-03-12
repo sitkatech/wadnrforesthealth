@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var preparedByPerson = HttpRequestStorage.DatabaseEntities.People.Single(g => g.PersonID == viewModel.PreparedByPersonID);
-            var invoiceApprovalStatus = HttpRequestStorage.DatabaseEntities.InvoiceApprovalStatuses.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
+            var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
             var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
             var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
             var agreement = Invoice.CreateNewBlank(preparedByPerson, invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus);
@@ -99,7 +99,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult InvoiceViewEdit(EditInvoiceViewModel viewModel, EditInvoiceType editInvoiceType)
         {
-            var invoiceApprovalStatuses = HttpRequestStorage.DatabaseEntities.InvoiceApprovalStatuses;
+            var invoiceApprovalStatuses = InvoiceApprovalStatus.All;
             var invoiceStatuses = InvoiceStatus.All.OrderBy(x => x.InvoiceStatusID).ToList();
             var people =  HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
             var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people);

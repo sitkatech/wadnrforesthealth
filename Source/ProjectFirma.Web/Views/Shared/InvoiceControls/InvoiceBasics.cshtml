@@ -102,13 +102,16 @@ Source code is available upon request via <support@sitkatech.com>.
             <span>@ViewDataTyped.Invoice.InvoiceApprovalStatus.InvoiceApprovalStatusName</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            @Html.LabelWithSugarFor(FieldDefinition.InvoiceApprovalComment)
+    @if (ViewDataTyped.Invoice.InvoiceApprovalStatusComment != null)
+    {
+        <div class="row">
+            <div class="col-sm-3">
+                @Html.LabelWithSugarFor(FieldDefinition.InvoiceApprovalComment)
+            </div>
+            <div class="col-sm-9">
+                <span>@ViewDataTyped.Invoice.InvoiceApprovalStatusComment</span>
+            </div>
         </div>
-        <div class="col-sm-9">
-            <span>@ViewDataTyped.Invoice.InvoiceApprovalStatusComment</span>
-        </div>
-    </div>
+    }
 </div>
 

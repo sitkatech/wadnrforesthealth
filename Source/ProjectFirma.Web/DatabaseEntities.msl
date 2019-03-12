@@ -393,14 +393,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceApprovalStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceApprovalStatus">
-        <MappingFragment StoreEntitySet="InvoiceApprovalStatus">
-          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
-          <ScalarProperty Name="InvoiceApprovalStatusName" ColumnName="InvoiceApprovalStatusName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Notification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Notification">
         <MappingFragment StoreEntitySet="Notification">

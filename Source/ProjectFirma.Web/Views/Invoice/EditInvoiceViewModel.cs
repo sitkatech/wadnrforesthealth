@@ -121,6 +121,13 @@ namespace ProjectFirma.Web.Views.Invoice
                 yield return new SitkaValidationResult<EditInvoiceViewModel, Money?>(
                     FirmaValidationMessages.InvoiceMatchAmountDollarValueMustNotBeNull, m => m.MatchAmount);
             }
+
+
+            if (InvoiceApprovalStatusID == InvoiceApprovalStatus.Denied.InvoiceApprovalStatusID && String.IsNullOrEmpty(InvoiceApprovalStatusComment))
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
+                    FirmaValidationMessages.InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied, m => m.InvoiceApprovalStatusComment);
+            }
         }
 
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)

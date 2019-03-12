@@ -77,8 +77,6 @@ namespace ProjectFirma.Web.Models
             this.PreparedByPerson = preparedByPerson;
             preparedByPerson.InvoicesWhereYouAreThePreparedByPerson.Add(this);
             this.InvoiceApprovalStatusID = invoiceApprovalStatus.InvoiceApprovalStatusID;
-            this.InvoiceApprovalStatus = invoiceApprovalStatus;
-            invoiceApprovalStatus.Invoices.Add(this);
             this.PurchaseAuthorityIsLandownerCostShareAgreement = purchaseAuthorityIsLandownerCostShareAgreement;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountType.InvoiceMatchAmountTypeID;
             this.InvoiceStatusID = invoiceStatus.InvoiceStatusID;
@@ -142,7 +140,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }
 
         public virtual Person PreparedByPerson { get; set; }
-        public virtual InvoiceApprovalStatus InvoiceApprovalStatus { get; set; }
+        public InvoiceApprovalStatus InvoiceApprovalStatus { get { return InvoiceApprovalStatus.AllLookupDictionary[InvoiceApprovalStatusID]; } }
         public InvoiceMatchAmountType InvoiceMatchAmountType { get { return InvoiceMatchAmountType.AllLookupDictionary[InvoiceMatchAmountTypeID]; } }
         public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }
 
