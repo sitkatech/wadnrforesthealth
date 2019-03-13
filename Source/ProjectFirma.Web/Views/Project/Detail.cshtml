@@ -285,31 +285,31 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedIndirectCost)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedIndirectCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedIndirectCost.ToStringCurrency()</div>
                         </div>
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedPersonnelAndBenefitsCost)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedPersonnelAndBenefitsCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedPersonnelAndBenefitsCost.ToStringCurrency()</div>
                         </div>
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedSuppliesCost)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedSuppliesCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedSuppliesCost.ToStringCurrency()</div>
                         </div>
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTravelCost)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTravelCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedTravelCost.ToStringCurrency()</div>
                         </div>
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()</div>
                         </div>
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.GetSecuredFunding().ToStringCurrency()</div>
                         </div>
                         <div class="row">
-                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.UnfundedNeed)</label>
+                            <label class="col-xs-6 col-sm-4 text-right">@Html.LabelWithSugarFor(FieldDefinition.UnfundedNeed)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.UnfundedNeed().ToStringCurrency()</div>
                             @if (ViewDataTyped.Project.GetUnsecuredFunding() > 0)
                             {

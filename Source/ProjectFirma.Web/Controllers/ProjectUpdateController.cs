@@ -634,7 +634,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectFundingSourceRequestUpdates,
-                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost);
+                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost, project.EstimatedIndirectCost, project.EstimatedPersonnelAndBenefitsCost, project.EstimatedSuppliesCost, project.EstimatedTravelCost);
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
         }
 
@@ -670,11 +670,19 @@ namespace ProjectFirma.Web.Controllers
         {
             var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var expectedFundingValidationResult = projectUpdateBatch.ValidateExpectedFunding(viewModel.ProjectFundingSourceRequests);
-            var estimatedTotalCost = projectUpdateBatch.ProjectUpdate.EstimatedTotalCost ?? 0;
+            var estimatedTotalCost = projectUpdateBatch.ProjectUpdate.EstimatedTotalCost.GetValueOrDefault();
+            var estimatedIndirectCost = projectUpdateBatch.ProjectUpdate.EstimatedIndirectCost.GetValueOrDefault();
+            var estimatedPersonnelAndBenefitsCost = projectUpdateBatch.ProjectUpdate.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
+            var estimatedSuppliesCost = projectUpdateBatch.ProjectUpdate.EstimatedSuppliesCost.GetValueOrDefault();
+            var estimatedTravelCost = projectUpdateBatch.ProjectUpdate.EstimatedTravelCost.GetValueOrDefault();
 
             var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(projectUpdateBatch,
                 allFundingSources,
-                estimatedTotalCost);
+                estimatedTotalCost, 
+                estimatedIndirectCost, 
+                estimatedPersonnelAndBenefitsCost, 
+                estimatedSuppliesCost, 
+                estimatedTravelCost);
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IFundingSourceRequestAmount>(projectUpdateBatch.ProjectFundingSourceRequestUpdates));
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, projectFundingDetailViewData, GetUpdateStatus(projectUpdateBatch), expectedFundingValidationResult);

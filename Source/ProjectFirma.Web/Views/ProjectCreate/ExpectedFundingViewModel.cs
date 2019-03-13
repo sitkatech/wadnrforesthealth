@@ -39,6 +39,23 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [JsonIgnore]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedIndirectCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedIndirectCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedPersonnelAndBenefitsCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedPersonnelAndBenefitsCost { get; set; }
+
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedSuppliesCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedSuppliesCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTravelCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedTravelCost { get; set; }
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -47,11 +64,15 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
         }
 
-        public ExpectedFundingViewModel(List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, Money? projectEstimatedTotalCost)
+        public ExpectedFundingViewModel(List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequests
                 .Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
+            ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
+            ProjectEstimatedPersonnelAndBenefitsCost = projectEstimatedPersonnelAndBenefitsCost;
+            ProjectEstimatedSuppliesCost = projectEstimatedSuppliesCost;
+            ProjectEstimatedTravelCost = projectEstimatedTravelCost;
         }
 
         public void UpdateModel(Models.Project project,
@@ -75,6 +96,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                     x.UnsecuredAmount = y.UnsecuredAmount;
                 });
             project.EstimatedTotalCost = ProjectEstimatedTotalCost;
+            project.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
+            project.EstimatedPersonnelAndBenefitsCost = ProjectEstimatedPersonnelAndBenefitsCost;
+            project.EstimatedSuppliesCost = ProjectEstimatedSuppliesCost;
+            project.EstimatedTravelCost = ProjectEstimatedTravelCost;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

@@ -459,15 +459,19 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult ExpectedFunding(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(), project.EstimatedTotalCost);
+            var viewModel = new ExpectedFundingViewModel(project.ProjectFundingSourceRequests.ToList(), project.EstimatedTotalCost, project.EstimatedIndirectCost, project.EstimatedPersonnelAndBenefitsCost, project.EstimatedSuppliesCost, project.EstimatedTravelCost);
             return ViewExpectedFunding(project, viewModel);
         }
 
         private ViewResult ViewExpectedFunding(Project project, ExpectedFundingViewModel viewModel)
         {
             var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var estimatedTotalCost = project.EstimatedTotalCost ?? 0;
-            var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allFundingSources, estimatedTotalCost);
+            var estimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
+            var estimatedIndirectCost = project.EstimatedIndirectCost.GetValueOrDefault();
+            var estimatedPersonnelAndBenefitsCost = project.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
+            var estimatedSuppliesCost = project.EstimatedSuppliesCost.GetValueOrDefault();
+            var estimatedTravelCost = project.EstimatedTravelCost.GetValueOrDefault();
+            var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allFundingSources, estimatedTotalCost, estimatedIndirectCost, estimatedPersonnelAndBenefitsCost, estimatedSuppliesCost, estimatedTravelCost);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsExpectedFundingSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPerformanceMeasureSectionComplete;

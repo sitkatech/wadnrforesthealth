@@ -2219,6 +2219,10 @@
     <Property Name="PrimaryContactPersonID" Type="Int32" />
     <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
     <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="EstimatedIndirectCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EstimatedPersonnelAndBenefitsCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EstimatedSuppliesCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EstimatedTravelCost" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID" FromRole="ProjectUpdates" ToRole="FocusArea" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_Person_PrimaryContactPersonID_PersonID" FromRole="ProjectUpdatesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdates" ToRole="ProjectUpdateBatch" />
