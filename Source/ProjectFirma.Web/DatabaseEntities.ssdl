@@ -1511,6 +1511,10 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="EstimatedIndirectCost" Type="money" />
+    <Property Name="EstimatedPersonnelAndBenefitsCost" Type="money" />
+    <Property Name="EstimatedSuppliesCost" Type="money" />
+    <Property Name="EstimatedTravelCost" Type="money" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -1900,6 +1904,10 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="EstimatedIndirectCost" Type="money" />
+    <Property Name="EstimatedPersonnelAndBenefitsCost" Type="money" />
+    <Property Name="EstimatedSuppliesCost" Type="money" />
+    <Property Name="EstimatedTravelCost" Type="money" />
   </EntityType>
   <EntityType Name="ProjectUpdateBatch">
     <Key>

@@ -694,6 +694,10 @@
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="EstimatedIndirectCost" ColumnName="EstimatedIndirectCost" />
+          <ScalarProperty Name="EstimatedPersonnelAndBenefitsCost" ColumnName="EstimatedPersonnelAndBenefitsCost" />
+          <ScalarProperty Name="EstimatedSuppliesCost" ColumnName="EstimatedSuppliesCost" />
+          <ScalarProperty Name="EstimatedTravelCost" ColumnName="EstimatedTravelCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1122,6 +1126,10 @@
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="EstimatedIndirectCost" ColumnName="EstimatedIndirectCost" />
+          <ScalarProperty Name="EstimatedPersonnelAndBenefitsCost" ColumnName="EstimatedPersonnelAndBenefitsCost" />
+          <ScalarProperty Name="EstimatedSuppliesCost" ColumnName="EstimatedSuppliesCost" />
+          <ScalarProperty Name="EstimatedTravelCost" ColumnName="EstimatedTravelCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

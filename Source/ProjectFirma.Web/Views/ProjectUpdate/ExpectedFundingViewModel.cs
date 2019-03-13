@@ -44,6 +44,23 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [JsonIgnore]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedIndirectCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedIndirectCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedPersonnelAndBenefitsCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedPersonnelAndBenefitsCost { get; set; }
+
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedSuppliesCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedSuppliesCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTravelCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedTravelCost { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -53,11 +70,15 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public ExpectedFundingViewModel(List<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates,
-            string comments, Money? projectEstimatedTotalCost)
+            string comments, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequestUpdates.Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
             Comments = comments;
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
+            ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
+            ProjectEstimatedPersonnelAndBenefitsCost = projectEstimatedPersonnelAndBenefitsCost;
+            ProjectEstimatedSuppliesCost = projectEstimatedSuppliesCost;
+            ProjectEstimatedTravelCost = projectEstimatedTravelCost;
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
@@ -81,6 +102,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 });
 
             projectUpdate.EstimatedTotalCost = ProjectEstimatedTotalCost;
+            projectUpdate.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
+            projectUpdate.EstimatedPersonnelAndBenefitsCost = ProjectEstimatedPersonnelAndBenefitsCost;
+            projectUpdate.EstimatedSuppliesCost = ProjectEstimatedSuppliesCost;
+            projectUpdate.EstimatedTravelCost = ProjectEstimatedTravelCost;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

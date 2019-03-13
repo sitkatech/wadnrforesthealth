@@ -34,10 +34,27 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
 {
     public class EditProjectFundingSourceRequestsViewModel : FormViewModel, IValidatableObject
     {
-        [DisplayName("Estimated Total cost")]
+        
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         [JsonIgnore]
         public Money? ProjectEstimatedTotalCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedIndirectCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedIndirectCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedPersonnelAndBenefitsCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedPersonnelAndBenefitsCost { get; set; }
+
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedSuppliesCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedSuppliesCost { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTravelCost)]
+        [JsonIgnore]
+        public Money? ProjectEstimatedTravelCost { get; set; }
 
         [Required]
         public bool? ForProject { get; set; }
@@ -52,11 +69,15 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         }
 
         public EditProjectFundingSourceRequestsViewModel(
-            List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, bool forProject, Money? projectEstimatedTotalCost)
+            List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, bool forProject, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequests
                 .Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
+            ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
+            ProjectEstimatedPersonnelAndBenefitsCost = projectEstimatedPersonnelAndBenefitsCost;
+            ProjectEstimatedSuppliesCost = projectEstimatedSuppliesCost;
+            ProjectEstimatedTravelCost = projectEstimatedTravelCost;
             ForProject = forProject;
         }
 
@@ -79,6 +100,10 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
                         "Project is required to update Funding Source Requests for a Project");
                 }
                 project.EstimatedTotalCost = ProjectEstimatedTotalCost;
+                project.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
+                project.EstimatedPersonnelAndBenefitsCost = ProjectEstimatedPersonnelAndBenefitsCost;
+                project.EstimatedSuppliesCost = ProjectEstimatedSuppliesCost;
+                project.EstimatedTravelCost = ProjectEstimatedTravelCost;
             }
 
             currentProjectFundingSourceRequests.Merge(projectFundingSourceRequestsUpdated,
