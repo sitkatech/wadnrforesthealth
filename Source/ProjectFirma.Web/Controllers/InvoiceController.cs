@@ -69,7 +69,8 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Index()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullInvoiceList);
-            var viewData = new InvoiceIndexViewData(CurrentPerson, firmaPage);
+            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
+            var viewData = new InvoiceIndexViewData(CurrentPerson, firmaPage, invoices.Any(x => x.InvoiceFileResourceID.HasValue));
             return RazorView<InvoiceIndex, InvoiceIndexViewData>(viewData);
         }
 
@@ -128,8 +129,8 @@ namespace ProjectFirma.Web.Controllers
         [InvoicesViewFullListFeature]
         public GridJsonNetJObjectResult<Invoice> InvoiceGridJsonData()
         {
-            var gridSpec = new InvoiceGridSpec(CurrentPerson);
             var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
+            var gridSpec = new InvoiceGridSpec(CurrentPerson, invoices.Any(x => x.InvoiceFileResourceID.HasValue));
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Invoice>(invoices, gridSpec);
             return gridJsonNetJObjectResult;
         }

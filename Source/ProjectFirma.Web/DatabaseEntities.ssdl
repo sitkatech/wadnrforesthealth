@@ -318,6 +318,10 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
     </AssociationSet>
+    <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
+      <End Role="InvoiceFileResource" EntitySet="FileResource" />
+      <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
+    </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
       <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
@@ -1212,6 +1216,7 @@
     <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
     <Property Name="MatchAmount" Type="money" />
     <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
+    <Property Name="InvoiceFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2765,6 +2770,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
+    <End Role="InvoiceFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="InvoicesWhereYouAreTheInvoiceFileResource" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="InvoicesWhereYouAreTheInvoiceFileResource">
+        <PropertyRef Name="InvoiceFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

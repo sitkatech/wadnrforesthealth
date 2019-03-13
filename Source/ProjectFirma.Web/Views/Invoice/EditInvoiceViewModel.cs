@@ -123,10 +123,10 @@ namespace ProjectFirma.Web.Views.Invoice
             invoice.PreparedByPersonID = PreparedByPersonID;
             if (InvoiceFileResourceData != null)
             {
-                var currentAgreementFileResource = invoice.InvoiceFileResource;
+                var currentInvoiceFileResource = invoice.InvoiceFileResource;
                 invoice.InvoiceFileResource = null;
-                // Delete old Agreement file, if present
-                if (currentAgreementFileResource != null)
+                // Delete old Invoice file, if present
+                if (currentInvoiceFileResource != null)
                 {
                     HttpRequestStorage.DatabaseEntities.SaveChanges();
                     HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentInvoiceFileResource);

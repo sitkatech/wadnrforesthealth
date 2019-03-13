@@ -113,5 +113,24 @@ Source code is available upon request via <support@sitkatech.com>.
             </div>
         </div>
     }
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Invoice Voucher File")
+        </div>
+        <div class="col-sm-9">
+            <span>
+                @if (ViewDataTyped.ShowDownload)
+                {
+                    <a href="@ViewDataTyped.Invoice.InvoiceFileResource.FileResourceUrl">
+                        @ViewDataTyped.Invoice.InvoiceFileResource.OriginalCompleteFileName
+                    </a>
+                }
+                else
+                {
+                    <span>No documents uploaded yet.</span>
+                }
+            </span>
+        </div>
+    </div>
 </div>
 
