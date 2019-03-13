@@ -100,6 +100,10 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
                         "Project is required to update Funding Source Requests for a Project");
                 }
                 project.EstimatedTotalCost = ProjectEstimatedTotalCost;
+                project.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
+                project.EstimatedPersonnelAndBenefitsCost = ProjectEstimatedPersonnelAndBenefitsCost;
+                project.EstimatedSuppliesCost = ProjectEstimatedSuppliesCost;
+                project.EstimatedTravelCost = ProjectEstimatedTravelCost;
             }
 
             currentProjectFundingSourceRequests.Merge(projectFundingSourceRequestsUpdated,
