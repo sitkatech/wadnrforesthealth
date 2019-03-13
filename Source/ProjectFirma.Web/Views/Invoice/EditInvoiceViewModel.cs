@@ -20,8 +20,10 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ApprovalUtilities.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -75,6 +77,11 @@ namespace ProjectFirma.Web.Views.Invoice
         [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
         [Required]
         public int PreparedByPersonID { get; set; }
+        
+        [DisplayName("Invoice Voucher Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase InvoiceFileResourceData { get; set; }
+
 
 
 
@@ -99,7 +106,33 @@ namespace ProjectFirma.Web.Views.Invoice
             MatchAmount = invoice.MatchAmount;
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
             PreparedByPersonID = invoice.PreparedByPersonID;
-           
+        }
+
+        public void UpdateModel(Models.Invoice invoice, Person currentPerson)
+        {
+            invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
+            invoice.RequestorName = RequestorName;
+            invoice.InvoiceDate = InvoiceDate.Value;
+            invoice.PurchaseAuthority = PurchaseAuthority;
+            invoice.TotalPaymentAmount = InvoiceAmount;
+            invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
+            invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
+            invoice.PurchaseAuthorityIsLandownerCostShareAgreement = PurchaseAuthorityIsLandownerCostShareAgreement.Value;
+            invoice.MatchAmount = MatchAmount;
+            invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
+            invoice.PreparedByPersonID = PreparedByPersonID;
+            if (InvoiceFileResourceData != null)
+            {
+                var currentAgreementFileResource = invoice.InvoiceFileResource;
+                invoice.InvoiceFileResource = null;
+                // Delete old Agreement file, if present
+                if (currentAgreementFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentInvoiceFileResource);
+                }
+                invoice.InvoiceFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(InvoiceFileResourceData, currentPerson);
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -110,7 +143,7 @@ namespace ProjectFirma.Web.Views.Invoice
                     FirmaValidationMessages.InvoiceNicknameMustBePopulated, m => m.InvoiceIdentifyingName);
             }
 
-            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority) )
+            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority))
             {
                 yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
                     FirmaValidationMessages.PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement, m => m.PurchaseAuthority);
@@ -128,21 +161,6 @@ namespace ProjectFirma.Web.Views.Invoice
                 yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
                     FirmaValidationMessages.InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied, m => m.InvoiceApprovalStatusComment);
             }
-        }
-
-        public void UpdateModel(Models.Invoice invoice, Person currentPerson)
-        {
-            invoice.InvoiceIdentifyingName = InvoiceIdentifyingName;
-            invoice.RequestorName = RequestorName;
-            invoice.InvoiceDate = InvoiceDate.Value;
-            invoice.PurchaseAuthority = PurchaseAuthority;
-            invoice.TotalPaymentAmount = InvoiceAmount;
-            invoice.InvoiceApprovalStatusID = InvoiceApprovalStatusID;
-            invoice.InvoiceApprovalStatusComment = InvoiceApprovalStatusComment;
-            invoice.PurchaseAuthorityIsLandownerCostShareAgreement = PurchaseAuthorityIsLandownerCostShareAgreement.Value;
-            invoice.MatchAmount = MatchAmount;
-            invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
-            invoice.PreparedByPersonID = PreparedByPersonID;
         }
     }
 }
