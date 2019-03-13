@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Views.Shared.InvoiceControls
     {
         public Models.Invoice Invoice { get; }
         public bool UserHasProjectBudgetManagePermissions { get; }
-        //public InvoiceTaxonomyViewData InvoiceTaxonomyViewData { get; }
+        public bool ShowDownload { get; }
 
         public InvoiceBasicsViewData(Models.Invoice invoice, bool userHasProjectBudgetManagePermissions, TaxonomyLevel taxonomyLevel)
         {
@@ -35,6 +35,7 @@ namespace ProjectFirma.Web.Views.Shared.InvoiceControls
             UserHasProjectBudgetManagePermissions = userHasProjectBudgetManagePermissions;
             //OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
             //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
+            ShowDownload = invoice.InvoiceFileResource != null;
         }        
     }
 }

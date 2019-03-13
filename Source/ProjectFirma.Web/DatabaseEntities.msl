@@ -390,6 +390,7 @@
           <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
           <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
           <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
+          <ScalarProperty Name="InvoiceFileResourceID" ColumnName="InvoiceFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

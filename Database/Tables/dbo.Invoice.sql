@@ -16,12 +16,18 @@ CREATE TABLE [dbo].[Invoice](
 	[InvoiceMatchAmountTypeID] [int] NOT NULL,
 	[MatchAmount] [money] NULL,
 	[InvoiceStatusID] [int] NOT NULL,
+	[InvoiceFileResourceID] [int] NULL,
  CONSTRAINT [PK_Invoice_InvoiceID] PRIMARY KEY CLUSTERED 
 (
 	[InvoiceID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID] FOREIGN KEY([InvoiceFileResourceID])
+REFERENCES [dbo].[FileResource] ([FileResourceID])
+GO
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID] FOREIGN KEY([InvoiceApprovalStatusID])
 REFERENCES [dbo].[InvoiceApprovalStatus] ([InvoiceApprovalStatusID])
