@@ -35,7 +35,6 @@
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
-    <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.InvoiceApprovalStatus" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Organization" />
@@ -215,6 +214,10 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
+    <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
+      <End Role="InvoiceFileResource" EntitySet="FileResource" />
+      <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
+    </AssociationSet>
     <AssociationSet Name="FK_Organization_FileResource_LogoFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID">
       <End Role="LogoFileResource" EntitySet="FileResource" />
       <End Role="OrganizationsWhereYouAreTheLogoFileResource" EntitySet="Organization" />
@@ -374,10 +377,6 @@
     <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-      <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
-      <End Role="Invoices" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
@@ -1075,6 +1074,7 @@
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="FileResourcesWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
     <NavigationProperty Name="FirmaHomePageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaHomePageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaHomePageImages" />
     <NavigationProperty Name="FirmaPageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaPageImages" />
+    <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocumentUpdates" />
@@ -1317,16 +1317,9 @@
     <Property Name="InvoiceMatchAmountTypeID" Type="Int32" Nullable="false" />
     <Property Name="MatchAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="InvoiceStatusID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="InvoiceApprovalStatus" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="Invoices" ToRole="InvoiceApprovalStatus" />
+    <Property Name="InvoiceFileResourceID" Type="Int32" />
+    <NavigationProperty Name="InvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoicesWhereYouAreTheInvoiceFileResource" ToRole="InvoiceFileResource" />
     <NavigationProperty Name="PreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="InvoicesWhereYouAreThePreparedByPerson" ToRole="PreparedByPerson" />
-  </EntityType>
-  <EntityType Name="InvoiceApprovalStatus">
-    <Key>
-      <PropertyRef Name="InvoiceApprovalStatusID" />
-    </Key>
-    <Property Name="InvoiceApprovalStatusID" Type="Int32" Nullable="false" />
-    <Property Name="InvoiceApprovalStatusName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="Invoices" Relationship="ProjectFirma.Web.Models.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" FromRole="InvoiceApprovalStatus" ToRole="Invoices" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2824,6 +2817,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
+    <End Role="InvoiceFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
+    <End Role="InvoicesWhereYouAreTheInvoiceFileResource" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="InvoicesWhereYouAreTheInvoiceFileResource">
+        <PropertyRef Name="InvoiceFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Organization_FileResource_LogoFileResourceID_FileResourceID">
     <End Role="LogoFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
     <End Role="OrganizationsWhereYouAreTheLogoFileResource" Type="ProjectFirma.Web.Models.Organization" Multiplicity="*" />
@@ -3301,18 +3306,6 @@
       </Principal>
       <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.InvoiceApprovalStatus" Multiplicity="1" />
-    <End Role="Invoices" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="InvoiceApprovalStatus">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
-      </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

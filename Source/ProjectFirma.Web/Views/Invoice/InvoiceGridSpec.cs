@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public const int InvoiceColumnWidth = 180;
         public static string InvoiceIdHiddenColumnName = "InvoiceIdAsText";
 
-        public InvoiceGridSpec(Models.Person currentPerson)
+        public InvoiceGridSpec(Models.Person currentPerson, bool invoiceFileExistsOnAtLeastOne)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabelPluralized()}";
@@ -46,6 +46,11 @@ namespace ProjectFirma.Web.Views.Invoice
             {
                 var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.New());
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Invoice");
+            }
+
+            if (invoiceFileExistsOnAtLeastOne)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl()), 30, DhtmlxGridColumnFilterType.None);
             }
 
             Add("Invoice ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InvoiceID.ToString()), 50);

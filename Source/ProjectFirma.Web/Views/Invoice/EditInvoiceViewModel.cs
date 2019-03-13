@@ -20,8 +20,10 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ApprovalUtilities.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -75,6 +77,11 @@ namespace ProjectFirma.Web.Views.Invoice
         [FieldDefinitionDisplay(FieldDefinitionEnum.PreparedByPerson)]
         [Required]
         public int PreparedByPersonID { get; set; }
+        
+        [DisplayName("Invoice Voucher Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase InvoiceFileResourceData { get; set; }
+
 
 
 
@@ -99,28 +106,6 @@ namespace ProjectFirma.Web.Views.Invoice
             MatchAmount = invoice.MatchAmount;
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
             PreparedByPersonID = invoice.PreparedByPersonID;
-           
-        }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (InvoiceIdentifyingName == "")
-            {
-                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
-                    FirmaValidationMessages.InvoiceNicknameMustBePopulated, m => m.InvoiceIdentifyingName);
-            }
-
-            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority) )
-            {
-                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
-                    FirmaValidationMessages.PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement, m => m.PurchaseAuthority);
-            }
-
-            if (InvoiceMatchAmountTypeID == InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID && !MatchAmount.HasValue)
-            {
-                yield return new SitkaValidationResult<EditInvoiceViewModel, Money?>(
-                    FirmaValidationMessages.InvoiceMatchAmountDollarValueMustNotBeNull, m => m.MatchAmount);
-            }
         }
 
         public void UpdateModel(Models.Invoice invoice, Person currentPerson)
@@ -136,6 +121,46 @@ namespace ProjectFirma.Web.Views.Invoice
             invoice.MatchAmount = MatchAmount;
             invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
             invoice.PreparedByPersonID = PreparedByPersonID;
+            if (InvoiceFileResourceData != null)
+            {
+                var currentInvoiceFileResource = invoice.InvoiceFileResource;
+                invoice.InvoiceFileResource = null;
+                // Delete old Invoice file, if present
+                if (currentInvoiceFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentInvoiceFileResource);
+                }
+                invoice.InvoiceFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(InvoiceFileResourceData, currentPerson);
+            }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (InvoiceIdentifyingName == "")
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
+                    FirmaValidationMessages.InvoiceNicknameMustBePopulated, m => m.InvoiceIdentifyingName);
+            }
+
+            if (PurchaseAuthorityIsLandownerCostShareAgreement.HasValue && PurchaseAuthorityIsLandownerCostShareAgreement.Value && !string.IsNullOrWhiteSpace(PurchaseAuthority))
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
+                    FirmaValidationMessages.PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement, m => m.PurchaseAuthority);
+            }
+
+            if (InvoiceMatchAmountTypeID == InvoiceMatchAmountType.DollarAmount.InvoiceMatchAmountTypeID && !MatchAmount.HasValue)
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, Money?>(
+                    FirmaValidationMessages.InvoiceMatchAmountDollarValueMustNotBeNull, m => m.MatchAmount);
+            }
+
+
+            if (InvoiceApprovalStatusID == InvoiceApprovalStatus.Denied.InvoiceApprovalStatusID && String.IsNullOrEmpty(InvoiceApprovalStatusComment))
+            {
+                yield return new SitkaValidationResult<EditInvoiceViewModel, string>(
+                    FirmaValidationMessages.InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied, m => m.InvoiceApprovalStatusComment);
+            }
         }
     }
 }

@@ -31,11 +31,11 @@ namespace ProjectFirma.Web.Views.Invoice
         public readonly string InvoiceGridName;
         public readonly string InvoiceGridDataUrl;
 
-        public InvoiceIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public InvoiceIndexViewData(Person currentPerson, Models.FirmaPage firmaPage, bool atLeastOneInvoiceHasAFile) : base(currentPerson, firmaPage)
         {
             PageTitle = $"Full Invoice List";
 
-            InvoiceGridSpec = new InvoiceGridSpec(currentPerson);
+            InvoiceGridSpec = new InvoiceGridSpec(currentPerson, atLeastOneInvoiceHasAFile);
             InvoiceGridName = "invoicesGridName";
             InvoiceGridDataUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(tc => tc.InvoiceGridJsonData());
         }

@@ -390,14 +390,7 @@
           <ScalarProperty Name="InvoiceMatchAmountTypeID" ColumnName="InvoiceMatchAmountTypeID" />
           <ScalarProperty Name="MatchAmount" ColumnName="MatchAmount" />
           <ScalarProperty Name="InvoiceStatusID" ColumnName="InvoiceStatusID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InvoiceApprovalStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InvoiceApprovalStatus">
-        <MappingFragment StoreEntitySet="InvoiceApprovalStatus">
-          <ScalarProperty Name="InvoiceApprovalStatusID" ColumnName="InvoiceApprovalStatusID" />
-          <ScalarProperty Name="InvoiceApprovalStatusName" ColumnName="InvoiceApprovalStatusName" />
+          <ScalarProperty Name="InvoiceFileResourceID" ColumnName="InvoiceFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

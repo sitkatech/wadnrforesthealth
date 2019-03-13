@@ -35,7 +35,6 @@
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="InvoiceApprovalStatus" EntityType="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -319,9 +318,9 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
     </AssociationSet>
-    <AssociationSet Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-      <End Role="InvoiceApprovalStatus" EntitySet="InvoiceApprovalStatus" />
-      <End Role="Invoices" EntitySet="Invoice" />
+    <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
+      <End Role="InvoiceFileResource" EntitySet="FileResource" />
+      <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
@@ -1217,13 +1216,7 @@
     <Property Name="InvoiceMatchAmountTypeID" Type="int" Nullable="false" />
     <Property Name="MatchAmount" Type="money" />
     <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="InvoiceApprovalStatus">
-    <Key>
-      <PropertyRef Name="InvoiceApprovalStatusID" />
-    </Key>
-    <Property Name="InvoiceApprovalStatusID" Type="int" Nullable="false" />
-    <Property Name="InvoiceApprovalStatusName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="InvoiceFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2784,15 +2777,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Invoice_InvoiceApprovalStatus_InvoiceApprovalStatusID">
-    <End Role="InvoiceApprovalStatus" Type="ProjectFirma.Web.Models.Store.InvoiceApprovalStatus" Multiplicity="1" />
-    <End Role="Invoices" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
+  <Association Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
+    <End Role="InvoiceFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="InvoicesWhereYouAreTheInvoiceFileResource" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="InvoiceApprovalStatus">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
+      <Principal Role="InvoiceFileResource">
+        <PropertyRef Name="FileResourceID" />
       </Principal>
-      <Dependent Role="Invoices">
-        <PropertyRef Name="InvoiceApprovalStatusID" />
+      <Dependent Role="InvoicesWhereYouAreTheInvoiceFileResource">
+        <PropertyRef Name="InvoiceFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

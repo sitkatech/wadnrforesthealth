@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, decimal? totalPaymentAmount, int preparedByPersonID, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, bool purchaseAuthorityIsLandownerCostShareAgreement, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, string requestorName, DateTime invoiceDate, string purchaseAuthority, decimal? totalPaymentAmount, int preparedByPersonID, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, bool purchaseAuthorityIsLandownerCostShareAgreement, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
@@ -45,6 +45,7 @@ namespace ProjectFirma.Web.Models
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountTypeID;
             this.MatchAmount = matchAmount;
             this.InvoiceStatusID = invoiceStatusID;
+            this.InvoiceFileResourceID = invoiceFileResourceID;
         }
 
         /// <summary>
@@ -77,8 +78,6 @@ namespace ProjectFirma.Web.Models
             this.PreparedByPerson = preparedByPerson;
             preparedByPerson.InvoicesWhereYouAreThePreparedByPerson.Add(this);
             this.InvoiceApprovalStatusID = invoiceApprovalStatus.InvoiceApprovalStatusID;
-            this.InvoiceApprovalStatus = invoiceApprovalStatus;
-            invoiceApprovalStatus.Invoices.Add(this);
             this.PurchaseAuthorityIsLandownerCostShareAgreement = purchaseAuthorityIsLandownerCostShareAgreement;
             this.InvoiceMatchAmountTypeID = invoiceMatchAmountType.InvoiceMatchAmountTypeID;
             this.InvoiceStatusID = invoiceStatus.InvoiceStatusID;
@@ -138,13 +137,15 @@ namespace ProjectFirma.Web.Models
         public int InvoiceMatchAmountTypeID { get; set; }
         public decimal? MatchAmount { get; set; }
         public int InvoiceStatusID { get; set; }
+        public int? InvoiceFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return InvoiceID; } set { InvoiceID = value; } }
 
         public virtual Person PreparedByPerson { get; set; }
-        public virtual InvoiceApprovalStatus InvoiceApprovalStatus { get; set; }
+        public InvoiceApprovalStatus InvoiceApprovalStatus { get { return InvoiceApprovalStatus.AllLookupDictionary[InvoiceApprovalStatusID]; } }
         public InvoiceMatchAmountType InvoiceMatchAmountType { get { return InvoiceMatchAmountType.AllLookupDictionary[InvoiceMatchAmountTypeID]; } }
         public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }
+        public virtual FileResource InvoiceFileResource { get; set; }
 
         public static class FieldLengths
         {

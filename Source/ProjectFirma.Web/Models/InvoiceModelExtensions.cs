@@ -56,6 +56,16 @@ namespace ProjectFirma.Web.Models
         //{
         //    return NewNoteUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
         //}
+        public static string GetFileDownloadUrl(this Invoice invoice)
+        {
+            if (invoice.InvoiceFileResource != null)
+            {
+                var url = FileResource.FileResourceByGuidUrlTemplate;
+                return url.ParameterReplace(invoice.InvoiceFileResource.FileResourceGUIDAsString);
+            }
+
+            return string.Empty;
+        }
 
     }
 }

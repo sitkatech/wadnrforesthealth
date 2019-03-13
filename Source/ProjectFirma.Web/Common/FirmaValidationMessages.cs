@@ -47,6 +47,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string InvoiceNicknameMustBePopulated = "You must provide an Invoice nickname.";
         public static readonly string PurchaseAuthorityAgreementNumberMustBeBlankIfIsLandOwnerAgreement = "Purchase Authority Agreement Number Must Be Blank If It Is Land-Owner Agreement";
         public static readonly string InvoiceMatchAmountDollarValueMustNotBeNull = $"You must enter a dollar value for the {FieldDefinition.MatchAmount.GetFieldDefinitionLabel()} if dollar amount is selected";
+        public static readonly string InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied =
+            $"You must provide a comment describing why the {FieldDefinition.Invoice.GetFieldDefinitionLabel()} was denied.";
 
     }
 }

@@ -174,7 +174,6 @@
     <Compile Include="Models\Generated\Invoice.Binding.cs" />
     <Compile Include="Models\Generated\Invoice.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\InvoiceApprovalStatus.Binding.cs" />
-    <Compile Include="Models\Generated\InvoiceApprovalStatus.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\InvoiceApprovalStatusPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceMatchAmountType.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceMatchAmountTypePrimaryKey.Binding.cs" />
