@@ -1726,6 +1726,10 @@
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="EstimatedIndirectCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EstimatedPersonnelAndBenefitsCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EstimatedSuppliesCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EstimatedTravelCost" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
     <NavigationProperty Name="PerformanceMeasureActuals" Relationship="ProjectFirma.Web.Models.FK_PerformanceMeasureActual_Project_ProjectID" FromRole="Project" ToRole="PerformanceMeasureActuals" />

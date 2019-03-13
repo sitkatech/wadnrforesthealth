@@ -285,6 +285,22 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedIndirectCost)</label>
+                            <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedIndirectCost.ToStringCurrency()</div>
+                        </div>
+                        <div class="row">
+                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedPersonnelAndBenefitsCost)</label>
+                            <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedPersonnelAndBenefitsCost.ToStringCurrency()</div>
+                        </div>
+                        <div class="row">
+                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedSuppliesCost)</label>
+                            <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedSuppliesCost.ToStringCurrency()</div>
+                        </div>
+                        <div class="row">
+                            <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTravelCost)</label>
+                            <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedTravelCost.ToStringCurrency()</div>
+                        </div>
+                        <div class="row">
                             <label class="col-xs-6 col-sm-3 text-right">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost)</label>
                             <div class="col-xs-6 col-sm-2 text-right">@ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()</div>
                         </div>

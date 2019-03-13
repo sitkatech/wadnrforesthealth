@@ -41,7 +41,12 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var currentProjectFundingSourceRequests = project.ProjectFundingSourceRequests.ToList();
             Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
-            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests, true, projectEstimatedTotalCost);
+            Money projectEstimatedIndirectCost = project.EstimatedIndirectCost.GetValueOrDefault();
+            Money projectEstimatedPersonnelAndBenefitsCost = project.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
+            Money projectEstimatedSuppliesCost = project.EstimatedSuppliesCost.GetValueOrDefault();
+            Money projectEstimatedTravelCost = project.EstimatedTravelCost.GetValueOrDefault();
+
+            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests, true, projectEstimatedTotalCost, projectEstimatedIndirectCost, projectEstimatedPersonnelAndBenefitsCost, projectEstimatedSuppliesCost, projectEstimatedTravelCost);
             return ViewEditProjectFundingSourceRequests(project, viewModel);
         }
 

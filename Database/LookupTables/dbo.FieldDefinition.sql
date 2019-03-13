@@ -148,6 +148,10 @@ VALUES
 (324, N'InvoiceApprovalStatus', 'Invoice Approval Status', N'<p>Important information about the approval status of an invoice</p>'),
 (325, N'InvoiceApprovalComment', 'Invoice Approval Comment', N'<p>Important rationale about the approval status of an invoice</p>'),
 (326, N'MatchAmount', 'Match Amount', N'<p>The amount of this invoice matched by another agency</p>'),
-(327, N'Vendor', 'Vendor', N'Vendor Placeholder')
+(327, N'Vendor', 'Vendor', N'Vendor Placeholder'),
+(328, N'EstimatedIndirectCost', N'Estimated Indirect Cost', N'<p>The estimated indirect cost to complete all stages of project implementation.</p>'),
+(329, N'EstimatedPersonnelAndBenefitsCost', N'Estimated Personnel & Benefits Cost', N'<p>The estimated personnel and benefits costs to complete all stages of project implementation.</p>'),
+(330, N'EstimatedSuppliesCost', N'Estimated Supplies Cost', N'<p>The estimated supplies cost to complete all stages of project implementation.</p>'),
+(331, N'EstimatedTravelCost', N'Estimated Travel Cost', N'<p>The estimated travel costs to complete all stages of project implementation.</p>')
 
 
