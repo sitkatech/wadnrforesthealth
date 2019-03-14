@@ -52,8 +52,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 position: { my: "right top", at: "right bottom" },
                 select: function (event, ui) {
                     //set VenderID value and display text in input
-                    jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
-                    jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.value);
+                    jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.actualValue);
                     event.preventDefault();
                 },
                 html: true
