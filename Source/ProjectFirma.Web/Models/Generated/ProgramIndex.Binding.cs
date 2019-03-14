@@ -31,10 +31,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(int programIndexID, string programIndexAbbrev) : this()
+        public ProgramIndex(int programIndexID, string programIndexAbbrev, string programIndexTitle) : this()
         {
             this.ProgramIndexID = programIndexID;
             this.ProgramIndexAbbrev = programIndexAbbrev;
+            this.ProgramIndexTitle = programIndexTitle;
         }
 
         /// <summary>
@@ -108,6 +109,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProgramIndexID { get; set; }
         public string ProgramIndexAbbrev { get; set; }
+        public string ProgramIndexTitle { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 
@@ -117,6 +119,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int ProgramIndexAbbrev = 255;
+            public const int ProgramIndexTitle = 255;
         }
     }
 }

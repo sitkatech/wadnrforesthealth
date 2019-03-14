@@ -31,10 +31,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(int projectCodeID, string projectCodeAbbrev) : this()
+        public ProjectCode(int projectCodeID, string projectCodeAbbrev, string projectCodeTitle) : this()
         {
             this.ProjectCodeID = projectCodeID;
             this.ProjectCodeAbbrev = projectCodeAbbrev;
+            this.ProjectCodeTitle = projectCodeTitle;
         }
 
         /// <summary>
@@ -108,6 +109,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectCodeID { get; set; }
         public string ProjectCodeAbbrev { get; set; }
+        public string ProjectCodeTitle { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
 
@@ -117,6 +119,7 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int ProjectCodeAbbrev = 100;
+            public const int ProjectCodeTitle = 255;
         }
     }
 }

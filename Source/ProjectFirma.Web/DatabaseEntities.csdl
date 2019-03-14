@@ -1685,6 +1685,7 @@
     </Key>
     <Property Name="ProgramIndexID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProgramIndexAbbrev" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramIndexTitle" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="GrantAllocations" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="TreatmentActivities" />
   </EntityType>
@@ -1768,6 +1769,7 @@
     </Key>
     <Property Name="ProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectCodeAbbrev" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProjectCodeTitle" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProjectCodes" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="TreatmentActivities" />
   </EntityType>

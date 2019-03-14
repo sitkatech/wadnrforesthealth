@@ -661,6 +661,7 @@
         <MappingFragment StoreEntitySet="ProgramIndex">
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
+          <ScalarProperty Name="ProgramIndexTitle" ColumnName="ProgramIndexTitle" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -716,6 +717,7 @@
         <MappingFragment StoreEntitySet="ProjectCode">
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
           <ScalarProperty Name="ProjectCodeAbbrev" ColumnName="ProjectCodeAbbrev" />
+          <ScalarProperty Name="ProjectCodeTitle" ColumnName="ProjectCodeTitle" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1479,6 +1479,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProgramIndexID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProgramIndexAbbrev" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="ProgramIndexTitle" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Project">
     <Key>
@@ -1531,6 +1532,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectCodeAbbrev" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="ProjectCodeTitle" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
