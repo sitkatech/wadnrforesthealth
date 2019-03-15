@@ -19,7 +19,10 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.ProjectCode
 
 @inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
 
@@ -69,7 +72,11 @@
                 @Html.LabelWithSugarFor(m => m.ProjectCodeID)
             </div>
             <div class="col-sm-3">
-                @Html.DropDownListFor(m => m.ProjectCodeID, ViewDataTyped.ProjectCodes, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
+                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfVendor(this)"
+                       placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodeDisplayName" />
+                @Html.HiddenFor(x => x.ProjectCodeID)
                 @Html.ValidationMessageFor(m => m.ProjectCodeID)
             </div>
         </div>
@@ -258,3 +265,34 @@
     </div>
     @Html.HiddenFor(m => m.TreatmentActivityID)
 }
+
+
+<script type="text/javascript">
+    // <![CDATA[
+    function checkForDeleteOfVendor(myField) {
+        if (!myField.value) {
+            jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
+            jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val("");
+            return true;
+        }
+        return false;
+    }
+
+    jQuery(document).ready(function ()
+    {
+        jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function (event, ui) {
+                    //set VenderID value and display text in input
+                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
+                    jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);
+                    event.preventDefault();
+                },
+                html: true
+            });
+    });
+    // ]]>
+</script>

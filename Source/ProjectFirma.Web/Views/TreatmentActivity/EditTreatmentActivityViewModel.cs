@@ -97,6 +97,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
         [DisplayName("Other Treatment")]
         public decimal TreatmentActivityOtherTreatmentAcres { get; set; }
 
+        public string ProjectCodeDisplayName { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -112,6 +114,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
             ProgramIndexID = treatmentActivity.ProgramIndexID;
             ProjectCodeID = treatmentActivity.ProjectCodeID;
+            ProjectCodeDisplayName = treatmentActivity.ProjectCode?.ProjectCodeAbbrev;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
             TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
             TreatmentActivityFootprintAcres = treatmentActivity.TreatmentActivityFootprintAcres;
