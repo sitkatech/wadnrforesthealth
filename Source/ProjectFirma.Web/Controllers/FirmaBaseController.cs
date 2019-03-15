@@ -67,19 +67,17 @@ namespace ProjectFirma.Web.Controllers
         /// </summary>
         protected override void OnAuthentication(AuthenticationContext filterContext)
         {
-            var anonymousSitkaUser = Person.GetAnonymousSitkaUser();
-            HttpRequestStorage.Person = anonymousSitkaUser;
+            HttpRequestStorage.Person = Person.GetAnonymousSitkaUser();
 
-            var person = anonymousSitkaUser;
             try
             {
-                person = Saml2ClaimsHelpers.GetPersonFromIdentityApplicationCookie(HttpRequestStorage.GetHttpContextUserThroughOwin(),
-                    anonymousSitkaUser);
+                HttpRequestStorage.Person = ClaimsIdentityHelper.GetPersonFromClaimsIdentity(HttpRequestStorage.GetHttpContextUserThroughOwin());
             }
             catch
             {
                 var areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal = filterContext.HttpContext.Request.Url.ToString().EndsWith(SitkaGlobalBase.Instance.ErrorUrl, StringComparison.InvariantCultureIgnoreCase);
-                if (areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal)
+                var areWeOnTheNotFoundPageInWhichCaseIdentityFailuresMayBeNormal = filterContext.HttpContext.Request.Url.ToString().EndsWith(SitkaGlobalBase.Instance.NotFoundUrl, StringComparison.InvariantCultureIgnoreCase);
+                if (areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal || areWeOnTheNotFoundPageInWhichCaseIdentityFailuresMayBeNormal)
                 {
                     // Error page authentication error - ignore because we could be getting a error because of authentication
                     return;
@@ -89,7 +87,6 @@ namespace ProjectFirma.Web.Controllers
                 throw;
             }
 
-            HttpRequestStorage.Person = person;
             base.OnAuthentication(filterContext);
         }
 
