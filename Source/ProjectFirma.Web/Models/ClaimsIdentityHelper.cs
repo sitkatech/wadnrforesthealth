@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
+using ApprovalUtilities.Utilities;
 using Microsoft.AspNet.Identity;
 using ProjectFirma.Web.Common;
 
@@ -35,21 +36,21 @@ namespace ProjectFirma.Web.Models
                 return anonymousSitkaPerson;
             }
 
-            var userIdentity = principal.Identity;
-            if (userIdentity == null)
+            var principalIdentity = principal.Identity;
+            if (principalIdentity == null)
             {
-                throw new NullReferenceException($"Should have {nameof(IIdentity)}");
+                throw new ClaimsIdentityException($"Should have {nameof(IIdentity)} on principal but got null.");
             }
 
-            if (!(userIdentity is ClaimsIdentity claimsIdentity))
+            if (!(principalIdentity is ClaimsIdentity claimsIdentity))
             {
-                throw new Saml2ClaimException($"The {nameof(IIdentity)} is not expected type {nameof(ClaimsIdentity)}. {nameof(IIdentity.Name)}: {userIdentity.Name}");
+                throw new ClaimsIdentityException($"The {nameof(IIdentity)} is not expected type {nameof(ClaimsIdentity)} but rather type {principalIdentity.GetType()}. {nameof(IIdentity.Name)}: {principalIdentity.Name}");
             }
 
             var personIDClaim = claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimUsedToStorePersonID);
             if (personIDClaim == null)
             {
-                throw new Saml2ClaimException($"Can't find required claim \"{ClaimUsedToStorePersonID}\" in Identity Provider claims.");
+                throw new ClaimsIdentityException($"Can't find required claim \"{ClaimUsedToStorePersonID}\" in Identity Provider claims.");
             }
 
             var personID = Int32.Parse(personIDClaim.Value);

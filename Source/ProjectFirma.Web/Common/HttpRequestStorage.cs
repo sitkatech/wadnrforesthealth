@@ -18,10 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
 using LtInfo.Common;
@@ -98,44 +95,6 @@ namespace ProjectFirma.Web.Common
             }
 
             BackingStore.Remove(PersonKey);
-        }
-    }
-
-    public class Saml2ClaimException : SitkaDisplayErrorException
-    {
-        public Saml2ClaimException(string message) : base(message)
-        {
-        }
-    }
-
-    public static class Saml2ClaimsHelpers
-    {
-        public static DeploymentEnvironment GetDeploymentEnvironment()
-        {
-            switch (FirmaWebConfiguration.FirmaEnvironment.FirmaEnvironmentType)
-            {
-                case FirmaEnvironmentType.Local:
-                    return DeploymentEnvironment.Local;
-                case FirmaEnvironmentType.Qa:
-                    return DeploymentEnvironment.QA;
-                case FirmaEnvironmentType.Prod:
-                    return DeploymentEnvironment.Prod;
-                default:
-                    throw new Exception(
-                        $"Unhandled case: {FirmaWebConfiguration.FirmaEnvironment.FirmaEnvironmentType}");
-            }
-        }
-
-        public static Authenticator GetAuthenticator(string uniqueIdentifier)
-        {
-            // There is likely a far better way to detect this, but this will work for now.
-            if (uniqueIdentifier.Contains("@dnr.wa.lcl") || uniqueIdentifier.Contains("@dnr.wa.gov"))
-            {
-                return Authenticator.ADFS;
-            }
-
-            // Assume SAW if not ADFS
-            return Authenticator.SAW;
         }
     }
 }

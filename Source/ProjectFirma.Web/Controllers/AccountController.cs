@@ -168,7 +168,7 @@ namespace ProjectFirma.Web.Controllers
             string userDetailsString =
                 $"PersonUniqueIdentifier: {personUniqueIdentifier} -- Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
 
-            var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
+            var authenticatorToRequire = AuthenticatorHelper.GetAuthenticator(personUniqueIdentifier);
             bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
 
             // Always try to validate first using unique identifier, as it is arguably more secure
@@ -205,7 +205,7 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
-                var currentDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
+                var currentDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
                 var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person,
                     currentDeploymentEnvironment, authenticatorToRequire, personUniqueIdentifier);
                 HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(

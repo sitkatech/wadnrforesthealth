@@ -323,7 +323,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewAddContact(viewModel, null);
             }
 
-            var authenticatorToUse = Saml2ClaimsHelpers.GetAuthenticator(viewModel.Email);
+            var authenticatorToUse = AuthenticatorHelper.GetAuthenticator(viewModel.Email);
 
             var firmaPerson = new Person(viewModel.FirstName, 
                                          viewModel.LastName,
