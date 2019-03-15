@@ -22,9 +22,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Web.Mvc;
+using System.Web.Mvc.Filters;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using log4net;
+using LtInfo.Common;
 using SitkaController = ProjectFirma.Web.Common.SitkaController;
 
 namespace ProjectFirma.Web.Controllers
@@ -35,17 +37,6 @@ namespace ProjectFirma.Web.Controllers
         public static ControllerContext ControllerContextStatic = null;
 
         protected ILog Logger = LogManager.GetLogger(typeof(FirmaBaseController));
-
-        protected override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            if (!IsCurrentUserAnonymous())
-            {
-                CurrentPerson.LastActivityDate = DateTime.Now;
-                HttpRequestStorage.DatabaseEntities.ChangeTracker.DetectChanges();
-                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
-            }
-            base.OnAuthorization(filterContext);
-        }
 
         protected FirmaBaseController()
         {
@@ -70,5 +61,55 @@ namespace ProjectFirma.Web.Controllers
         protected override ISitkaDbContext SitkaDbContext => HttpRequestStorage.DatabaseEntities;
 
         protected Person CurrentPerson => HttpRequestStorage.Person;
+
+        /// <summary>
+        /// Must run before any code attempt to access <see cref="HttpRequestStorage.Person"/>
+        /// </summary>
+        protected override void OnAuthentication(AuthenticationContext filterContext)
+        {
+            var anonymousSitkaUser = Person.GetAnonymousSitkaUser();
+            HttpRequestStorage.Person = anonymousSitkaUser;
+
+            var person = anonymousSitkaUser;
+            try
+            {
+                person = Saml2ClaimsHelpers.GetPersonFromIdentityApplicationCookie(HttpRequestStorage.GetHttpContextUserThroughOwin(),
+                    anonymousSitkaUser);
+            }
+            catch
+            {
+                var areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal = filterContext.HttpContext.Request.Url.ToString().EndsWith(SitkaGlobalBase.Instance.ErrorUrl, StringComparison.InvariantCultureIgnoreCase);
+                if (areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal)
+                {
+                    // Error page authentication error - ignore because we could be getting a error because of authentication
+                    return;
+                }
+
+                // Let the authentication exception propagate
+                throw;
+            }
+
+            HttpRequestStorage.Person = person;
+            base.OnAuthentication(filterContext);
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            UpdatePersonLastActivityDate();
+            base.OnActionExecuting(filterContext);
+        }
+
+        /// <summary>
+        /// Update the <see cref="Person.LastActivityDate"/> to record their action in the system
+        /// </summary>
+        private void UpdatePersonLastActivityDate()
+        {
+            if (!IsCurrentUserAnonymous())
+            {
+                CurrentPerson.LastActivityDate = DateTime.Now;
+                HttpRequestStorage.DatabaseEntities.ChangeTracker.DetectChanges();
+                HttpRequestStorage.DatabaseEntities.SaveChangesWithNoAuditing();
+            }
+        }
     }
 }
