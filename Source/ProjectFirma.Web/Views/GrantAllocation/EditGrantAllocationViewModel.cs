@@ -27,10 +27,11 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Views.ProjectCode;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject
+    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProjectCodeViewModel
     {
         public int GrantAllocationID { get; set; }
 
@@ -49,7 +50,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int? ProgramIndexID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
-        public List<int> ProjectCodeIDs { get; set; }
+        public string ProjectCodesString { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public int? FederalFundCodeID { get; set; }
@@ -69,6 +70,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramManager)]
         public List<int> ProgramManagerPersonIDs { get; set; }
 
+        //public List<string> ProjectCodesList => ProjectCodesString.Split(',').ToList();
+
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -82,7 +86,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
             ProgramIndexID = grantAllocation.ProgramIndexID;
-            ProjectCodeIDs = grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeID).ToList();
+            ProjectCodesString = grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeAbbrev).Aggregate((x, y) => x + ", " + y);
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             RegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
@@ -106,7 +110,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.GrantID = GrantID;
             grantAllocation.ProgramIndexID = ProgramIndexID;
-            grantAllocation.ProjectCodes = grantAllocation.ConvertIntsToProjectCodes(ProjectCodeIDs);
+            grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromStrings(ProjectCodesString);
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;

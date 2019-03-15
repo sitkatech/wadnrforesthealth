@@ -20,6 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Models
+@using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.EditGrantAllocation
 
 @Html.Raw(ViewDataTyped.EditGrantAllocationType.IntroductoryText)
@@ -82,15 +83,16 @@
                 @Html.LabelWithSugarFor(m => m.ProgramIndexID)
             </div>
             <div class="col-xs-2">
-                @Html.DropDownListFor(m => m.ProgramIndexID, ViewDataTyped.ProgramIndices, new { style = "width: auto;", @class = "form-control" })
+                @Html.SearchableDropDownListFor(m => m.ProgramIndexID, ViewDataTyped.ProgramIndices, new { style = "width: auto;", @class = "form-control selectpicker" })
                 @Html.ValidationMessageFor(m => m.ProgramIndexID)
             </div>
             <div class="col-xs-2 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectCodeIDs)
+                @Html.LabelWithSugarFor(m => m.ProjectCodesString)
             </div>
             <div class="col-xs-2">
-                @Html.SearchableMultiSelectDropDownListFor(m => m.ProjectCodeIDs, ViewDataTyped.ProjectCodes, new {style = "width: auto;", @class = "form-control selectpicker"})
-                @Html.ValidationMessageFor(m => m.ProjectCodeIDs)
+                @*@Html.SearchableMultiSelectDropDownListFor(m => m.ProjectCodeIDs, ViewDataTyped.ProjectCodes, new {style = "width: auto;", @class = "form-control selectpicker"})
+                @Html.ValidationMessageFor(m => m.ProjectCodeIDs)*@
+                @{ EditProjectCode.RenderPartialView(Html, Model); }
             </div>
         </div>
         <div class="form-group">

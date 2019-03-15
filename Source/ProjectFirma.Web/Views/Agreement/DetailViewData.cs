@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public bool ShowDownload { get; }
         public string EditAgreementGrantAllocationRelationshipsUrl { get; }
         [NotNull]
-        public List<ProjectCode> ProjectCodes { get; }
+        public List<Models.ProjectCode> ProjectCodes { get; }
         [NotNull]
         public List<ProgramIndex> ProgramIndices { get; }
         public Models.Agreement Agreement { get; }
