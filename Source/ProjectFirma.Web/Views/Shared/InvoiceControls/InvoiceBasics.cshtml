@@ -51,6 +51,14 @@ Source code is available upon request via <support@sitkatech.com>.
 <div class="basicsLayout">
     <div class="row">
         <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.InvoiceID)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.InvoiceID</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.InvoiceIdentifyingName)
         </div>
         <div class="col-sm-9">
@@ -58,7 +66,6 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
     <div class="row">
-
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.RequestorName)
         </div>
@@ -67,7 +74,6 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
     <div class="row">
-
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.InvoiceDate)
         </div>
@@ -76,7 +82,6 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
     <div class="row">
-
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.PurchaseAuthority)
         </div>
@@ -85,7 +90,14 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
     <div class="row">
-
+        <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.InvoiceStatus)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.InvoiceStatus.InvoiceStatusDisplayName</span>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.TotalRequestedInvoicePaymentAmount)
         </div>
@@ -94,7 +106,6 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
     <div class="row">
-
         <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.InvoiceApprovalStatus)
         </div>
@@ -115,6 +126,14 @@ Source code is available upon request via <support@sitkatech.com>.
     }
     <div class="row">
         <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.PreparedByPerson)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.Invoice.PreparedByPerson.FullNameFirstLast</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Invoice Voucher File")
         </div>
         <div class="col-sm-9">
@@ -133,4 +152,3 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
     </div>
 </div>
-
