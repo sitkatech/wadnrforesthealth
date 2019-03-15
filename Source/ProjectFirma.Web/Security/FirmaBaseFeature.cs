@@ -56,18 +56,8 @@ namespace ProjectFirma.Web.Security
         {
             Roles = CalculateRoleNameStringFromFeature();
 
-            AddLocalUserAccountRolesToClaims(HttpRequestStorage.Person, HttpRequestStorage.GetHttpContextUserThroughOwin().Identity);
-
             // This ends up making the calls into the RoleProvider
             base.OnAuthorization(filterContext);
-        }
-
-        private static void AddLocalUserAccountRolesToClaims(Person user, IIdentity userIdentity)
-        {
-            if (userIdentity is ClaimsIdentity claimsIdentity)
-            {
-                user.RoleNames.ToList().ForEach(role => claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role)));
-            }
         }
 
         internal string CalculateRoleNameStringFromFeature()

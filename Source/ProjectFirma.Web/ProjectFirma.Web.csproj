@@ -743,7 +743,7 @@
     <Compile Include="Models\ProjectStewardshipAreaType.cs" />
     <Compile Include="Models\ProjectUpdateBatchModelExtensions.cs" />
     <Compile Include="Models\ProjectWorkflowSectionGrouping.cs" />
-    <Compile Include="Models\Saml2UserClaims.cs" />
+    <Compile Include="Models\ClaimsIdentityHelper.cs" />
     <Compile Include="Models\TreatmentActivity.cs" />
     <Compile Include="Security\ContactManageFeature.cs" />
     <Compile Include="Security\ProjectInternalNoteManageAsAdminFeature.cs" />
