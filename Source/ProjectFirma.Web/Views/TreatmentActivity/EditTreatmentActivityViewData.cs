@@ -30,20 +30,12 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
         public IEnumerable<SelectListItem> TreatmentActivityContacts { get; }
 
-        public IEnumerable<SelectListItem> ProgramIndices { get; }
-
-        public IEnumerable<SelectListItem> ProjectCodes { get; }
-
-        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContacts, IEnumerable<SelectListItem> programIndices, IEnumerable<SelectListItem> projectCodes, Person currentPerson) : base(currentPerson)
+        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContacts, Person currentPerson) : base(currentPerson)
         {
-
-
             PageTitle = "Edit Treatment Activity";
 
             TreatmentActivityStatus = treatmentActivityStatus;
             TreatmentActivityContacts = treatmentActivityContacts;
-            ProgramIndices = programIndices;
-            ProjectCodes = projectCodes;
         }
     }
 }

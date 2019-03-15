@@ -31,22 +31,24 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(int programIndexID, string programIndexAbbrev, string programIndexTitle) : this()
+        public ProgramIndex(int programIndexID, string programIndexAbbrev, string programIndexTitle, bool isHistoric) : this()
         {
             this.ProgramIndexID = programIndexID;
             this.ProgramIndexAbbrev = programIndexAbbrev;
             this.ProgramIndexTitle = programIndexTitle;
+            this.IsHistoric = isHistoric;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(string programIndexAbbrev) : this()
+        public ProgramIndex(string programIndexAbbrev, bool isHistoric) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProgramIndexID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProgramIndexAbbrev = programIndexAbbrev;
+            this.IsHistoric = isHistoric;
         }
 
 
@@ -55,7 +57,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProgramIndex CreateNewBlank()
         {
-            return new ProgramIndex(default(string));
+            return new ProgramIndex(default(string), default(bool));
         }
 
         /// <summary>
@@ -110,6 +112,7 @@ namespace ProjectFirma.Web.Models
         public int ProgramIndexID { get; set; }
         public string ProgramIndexAbbrev { get; set; }
         public string ProgramIndexTitle { get; set; }
+        public bool IsHistoric { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 

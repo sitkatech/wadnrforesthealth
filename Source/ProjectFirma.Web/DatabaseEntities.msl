@@ -662,6 +662,7 @@
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
           <ScalarProperty Name="ProgramIndexTitle" ColumnName="ProgramIndexTitle" />
+          <ScalarProperty Name="IsHistoric" ColumnName="IsHistoric" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

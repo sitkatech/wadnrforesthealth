@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Controllers
         public JsonResult FindProgramIndex(string term)
         {
 
-            var programIndicesFound = HttpRequestStorage.DatabaseEntities.ProgramIndices
+            var programIndicesFound = HttpRequestStorage.DatabaseEntities.ProgramIndices.GetProgramIndicesWithoutHistoricRecords()
                 .GetProgramIndexFindResults(term).Take(20);
             var programIndicesFound2 = programIndicesFound.Select(p => new ListItem(p.ProgramIndexAbbrev, p.ProgramIndexID.ToString(CultureInfo.InvariantCulture))).ToList();
 

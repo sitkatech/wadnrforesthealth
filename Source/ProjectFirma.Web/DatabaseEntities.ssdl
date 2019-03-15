@@ -1480,6 +1480,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramIndexID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProgramIndexAbbrev" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="ProgramIndexTitle" Type="varchar" MaxLength="255" />
+    <Property Name="IsHistoric" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Project">
     <Key>

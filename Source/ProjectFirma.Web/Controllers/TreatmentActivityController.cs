@@ -58,15 +58,7 @@ namespace ProjectFirma.Web.Controllers
                 treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).OrderBy(x => x.LastName).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
                     d => d.FullNameFirstLastAndOrg);
 
-            var programIndices =
-                HttpRequestStorage.DatabaseEntities.ProgramIndices.ToSelectListWithEmptyFirstRow(k => k.ProgramIndexID.ToString(),
-                    v => v.ProgramIndexAbbrev);
-
-            var projectCodes =
-                HttpRequestStorage.DatabaseEntities.ProjectCodes.ToSelectListWithEmptyFirstRow(
-                    k => k.ProjectCodeID.ToString(), v => v.ProjectCodeAbbrev);
-
-            var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems, programIndices, projectCodes,  CurrentPerson);
+            var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems,  CurrentPerson);
             return RazorPartialView<EditTreatmentActivity, EditTreatmentActivityViewData, EditTreatmentActivityViewModel>(viewData, viewModel);
         }
 

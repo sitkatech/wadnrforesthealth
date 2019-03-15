@@ -12,5 +12,10 @@ namespace ProjectFirma.Web.Models
                 .ToList();
         }
 
+        public static IQueryable<ProgramIndex> GetProgramIndicesWithoutHistoricRecords(this IQueryable<ProgramIndex> programIndices)
+        {
+            return programIndices.Where(x => x.IsHistoric != true);
+        }
+
     }
 }

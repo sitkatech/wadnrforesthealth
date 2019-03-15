@@ -6,6 +6,7 @@ CREATE TABLE [dbo].[ProgramIndex](
 	[ProgramIndexID] [int] IDENTITY(1,1) NOT NULL,
 	[ProgramIndexAbbrev] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ProgramIndexTitle] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[IsHistoric] [bit] NOT NULL,
  CONSTRAINT [PK_ProgramIndex_ProgramIndexID] PRIMARY KEY CLUSTERED 
 (
 	[ProgramIndexID] ASC
