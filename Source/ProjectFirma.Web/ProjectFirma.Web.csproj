@@ -693,8 +693,8 @@
     <Compile Include="Views\PriorityArea\IndexViewData.cs" />
     <Compile Include="Views\PriorityArea\MapTooltip.cs" />
     <Compile Include="Views\PriorityArea\MapTooltipViewData.cs" />
-    <Compile Include="Views\ProjectCode\EditProjectCode.cs" />
-    <Compile Include="Views\ProjectCode\IEditProjectCodeViewModel.cs" />
+    <Compile Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cs" />
+    <Compile Include="Views\ProjectCode\IEditProjectCodeWithMultiSelectViewModel.cs" />
     <Compile Include="Views\ProjectCode\ProjectCodeSearchResults.cs" />
     <Compile Include="Views\ProjectCode\ProjectCodeSearchResultsViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
@@ -1861,7 +1861,7 @@
     <Content Include="Views\Shared\ProjectCostShare\ProjectCostShare.cshtml" />
     <Content Include="Views\Shared\InvoiceControls\InvoiceBasics.cshtml" />
     <Content Include="Views\Vendor\EditVendor.cshtml" />
-    <Content Include="Views\ProjectCode\EditProjectCode.cshtml" />
+    <Content Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

@@ -3,11 +3,8 @@ using System.Linq;
 
 namespace ProjectFirma.Web.Views.ProjectCode
 {
-    public interface IEditProjectCodeViewModel
+    public interface IEditProjectCodeWithMultiselectViewModel
     {
         string ProjectCodesString { get; set; }
-
-        //List<string> ProjectCodesList { get; }
-        //string ProjectCodeDisplay { get; set; }
     }
 }

@@ -31,7 +31,7 @@ using ProjectFirma.Web.Views.ProjectCode;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProjectCodeViewModel
+    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProjectCodeWithMultiselectViewModel
     {
         public int GrantAllocationID { get; set; }
 

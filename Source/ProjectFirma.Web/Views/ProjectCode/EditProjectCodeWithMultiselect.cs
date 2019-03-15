@@ -24,16 +24,16 @@ using LtInfo.Common.HtmlHelperExtensions;
 
 namespace ProjectFirma.Web.Views.ProjectCode
 {
-    public abstract class EditProjectCode : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectCodeViewData, IEditProjectCodeViewModel>
+    public abstract class EditProjectCodeWithMultiSelect : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>
     {
-        public static void RenderPartialView(HtmlHelper html, IEditProjectCodeViewModel viewModel)
+        public static void RenderPartialView(HtmlHelper html, IEditProjectCodeWithMultiselectViewModel viewModel)
         {
-            html.RenderRazorSitkaPartial<EditProjectCode, EditProjectCodeViewData, IEditProjectCodeViewModel>(new EditProjectCodeViewData(), viewModel);
+            html.RenderRazorSitkaPartial<EditProjectCodeWithMultiSelect, EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>(new EditProjectCodeWithMultiSelectViewData(), viewModel);
         }
 
         
     }
-    public class EditProjectCodeViewData
+    public class EditProjectCodeWithMultiSelectViewData
     {
     }
 
