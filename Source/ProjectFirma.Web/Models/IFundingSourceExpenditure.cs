@@ -24,5 +24,7 @@ namespace ProjectFirma.Web.Models
     {
         FundingSource FundingSource { get; }
         int FundingSourceID { get; }
+
+        decimal ExpenditureAmount { get; }
     }
 }

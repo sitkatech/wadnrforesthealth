@@ -79,22 +79,20 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             if (!everyYearIsExempt)
             {
-                if (!fundingSources.Any())
-                {
-                    var yearsForErrorDisplay = string.Join(", ", FirmaHelpers.CalculateYearRanges(expectedYears.Except(exemptReportingYears)));
-                    errors.Add($"Missing Expenditures for {string.Join(", ", yearsForErrorDisplay)}");
-                }
-                else
+                if (fundingSources.Any())
                 {
                     var missingFundingSourceYears = new Dictionary<Models.FundingSource, IEnumerable<int>>();
                     foreach (var fundingSource in fundingSources)
                     {
                         var currentFundingSource = fundingSource;
+                        //Added check for 0 to prevent a user from submitting a 0 value with no comment
+                        var yearsWithValues = projectFundingSourceExpenditures
+                            .Where(x => x.FundingSourceID == currentFundingSource.FundingSourceID &&
+                                        x.ExpenditureAmount > 0)
+                            .Select(x => x.CalendarYear);
                         var missingYears =
                             expectedYears
-                                .GetMissingYears(projectFundingSourceExpenditures
-                                    .Where(x => x.FundingSourceID == currentFundingSource.FundingSourceID)
-                                    .Select(x => x.CalendarYear)).ToList()
+                                .GetMissingYears(yearsWithValues).ToList()
                                 .Where(year =>
                                     !exemptReportingYears.Contains(year)).ToList();
 
@@ -113,8 +111,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             }
 
 
-            // reported expenditures in exempt years
-            var yearsWithExpenditures = projectFundingSourceExpenditures.GroupBy(x => x.FundingSourceID);
+            // reported expenditures in exempt years - Added check for 0 to prevent a user from submitting a 0 value with no comment
+            var yearsWithExpenditures = projectFundingSourceExpenditures.Where(x => x.ExpenditureAmount > 0).GroupBy(x => x.FundingSourceID);
             foreach (var fundingSource in yearsWithExpenditures)
             {
                 var exemptYearsWithReportedValues = fundingSource
