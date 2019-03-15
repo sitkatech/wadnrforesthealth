@@ -90,7 +90,7 @@ namespace ProjectFirma.Web.Controllers
                 var email = samlResponse.GetEmail();
                 var userName = samlResponse.GetUserName();
 
-                IdentitySignin(username, fullName, email, userName, null, AuthenticationMethod.SAW);
+                IdentitySignIn(username, fullName, email, userName, null, AuthenticationMethod.SAW);
             }
             return new RedirectResult(HomeUrl);
         }
@@ -108,14 +108,13 @@ namespace ProjectFirma.Web.Controllers
             var email = samlResponse.GetEmail();
             var upn = samlResponse.GetUPN();
             var groups = samlResponse.GetRoleGroups();
-            IdentitySignin(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.ADFS);
+            IdentitySignIn(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.ADFS);
             return new RedirectResult(HomeUrl);
         }
 
-        private void IdentitySignin(string userId, string name, string email, string userName, string groups,
-            AuthenticationMethod authenticationMethod, string providerKey = null, bool isPersistent = false)
+        private void IdentitySignIn(string userId, string name, string email, string userName, string groups, AuthenticationMethod authenticationMethod)
         {
-            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignin) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {providerKey} isPersistent: {isPersistent}");
+            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignIn) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {(string) null} isPersistent: {false}");
             ParseName(name, out var firstName, out var lastName);
             var roleGroups = !string.IsNullOrWhiteSpace(groups) ? groups.Split(',').ToList() : new List<string>();
             var person = LookupExistingPersonOrProvisionNewPerson(authenticationMethod, userId, userName, firstName, lastName, email, roleGroups);
@@ -123,24 +122,14 @@ namespace ProjectFirma.Web.Controllers
             var claimsIdentity = ClaimsIdentityHelper.MakeClaimsIdentityFromPerson(person);
 
             // add to user here!
-            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties
-            {
-                AllowRefresh = true,
-                IsPersistent = isPersistent,
-                ExpiresUtc = DateTime.UtcNow.AddDays(7)
-            }, claimsIdentity);
-        }
-
-        private void IdentitySignout()
-        {
-            HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie, DefaultAuthenticationTypes.ExternalCookie);
+            ClaimsIdentityHelper.IdentitySignIn(claimsIdentity, HttpContext.GetOwinContext().Authentication);
         }
 
         [AnonymousUnclassifiedFeature]
         public ActionResult LogOff()
         {
             SitkaHttpApplication.Logger.Debug($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
-            IdentitySignout();
+            ClaimsIdentityHelper.IdentitySignOut(HttpContext.GetOwinContext().Authentication);
             var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
             return Redirect(returnUrl);
         }

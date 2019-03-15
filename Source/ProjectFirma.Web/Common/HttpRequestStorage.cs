@@ -37,11 +37,6 @@ namespace ProjectFirma.Web.Common
 
         protected override List<string> BackingStoreKeys => new List<string>();
 
-        public static IPrincipal GetHttpContextUserThroughOwin()
-        {
-            return HttpContext.Current.GetOwinContext().Authentication.User;
-        }
-
         public static Person Person
         {
             get

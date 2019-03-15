@@ -21,6 +21,8 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using ProjectFirma.Web.Common;
@@ -71,7 +73,8 @@ namespace ProjectFirma.Web.Controllers
 
             try
             {
-                HttpRequestStorage.Person = ClaimsIdentityHelper.GetPersonFromClaimsIdentity(HttpRequestStorage.GetHttpContextUserThroughOwin());
+                var authenticationManager = this.HttpContext.GetOwinContext().Authentication;
+                HttpRequestStorage.Person = ClaimsIdentityHelper.GetPersonFromClaimsIdentity(authenticationManager);
             }
             catch
             {
