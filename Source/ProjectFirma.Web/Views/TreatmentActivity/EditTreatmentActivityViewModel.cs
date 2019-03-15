@@ -24,10 +24,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using ProjectFirma.Web.Views.ProgramIndex;
 
 namespace ProjectFirma.Web.Views.TreatmentActivity
 {
-    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject
+    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject, IEditProgramIndexViewModel
     {
  
         public int ProjectID { get; set; }
@@ -45,6 +46,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
         [DisplayName("Program Index")]
         public int? ProgramIndexID { get; set; }
+        public string ProgramIndexDisplayName { get; set; }
+
         [DisplayName("Project Code")]
         public int? ProjectCodeID { get; set; }
 
@@ -113,6 +116,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
             ProgramIndexID = treatmentActivity.ProgramIndexID;
+            ProgramIndexDisplayName = treatmentActivity.ProgramIndex?.ProgramIndexAbbrev;
             ProjectCodeID = treatmentActivity.ProjectCodeID;
             ProjectCodeDisplayName = treatmentActivity.ProjectCode?.ProjectCodeAbbrev;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;

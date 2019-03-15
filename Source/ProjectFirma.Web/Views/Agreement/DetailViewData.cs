@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.Agreement
         [NotNull]
         public List<Models.ProjectCode> ProjectCodes { get; }
         [NotNull]
-        public List<ProgramIndex> ProgramIndices { get; }
+        public List<Models.ProgramIndex> ProgramIndices { get; }
         public Models.Agreement Agreement { get; }
         public string EditAgreementUrl { get; set; }
         public string BackToAgreementsText { get; set; }

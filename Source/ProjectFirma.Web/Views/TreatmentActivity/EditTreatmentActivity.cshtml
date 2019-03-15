@@ -22,6 +22,7 @@
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.ProgramIndex
 @using ProjectFirma.Web.Views.ProjectCode
 
 @inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
@@ -65,15 +66,14 @@
                 @Html.LabelWithSugarFor(m => m.ProgramIndexID)
             </div>
             <div class="col-sm-3">
-                @Html.DropDownListFor(m => m.ProgramIndexID, ViewDataTyped.ProgramIndices, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
-                @Html.ValidationMessageFor(m => m.ProgramIndexID)
+                @{ EditProgramIndex.RenderPartialView(Html, Model); }
             </div>
             <div class="col-sm-2 control-label">
                 @Html.LabelWithSugarFor(m => m.ProjectCodeID)
             </div>
             <div class="col-sm-3">
                 <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfVendor(this)"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfProjectCode(this)"
                        placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
                        style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodeDisplayName" />
                 @Html.HiddenFor(x => x.ProjectCodeID)
@@ -269,7 +269,7 @@
 
 <script type="text/javascript">
     // <![CDATA[
-    function checkForDeleteOfVendor(myField) {
+    function checkForDeleteOfProjectCode(myField) {
         if (!myField.value) {
             jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
             jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val("");

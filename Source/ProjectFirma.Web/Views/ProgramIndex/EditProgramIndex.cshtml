@@ -1,0 +1,63 @@
+﻿@*-----------------------------------------------------------------------
+<copyright file="EditProgramIndex.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+<author>Sitka Technology Group</author>
+</copyright>
+
+<license>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+Source code is available upon request via <support@sitkatech.com>.
+</license>
+-----------------------------------------------------------------------*@
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.ProgramIndex
+@inherits ProjectFirma.Web.Views.ProgramIndex.EditProgramIndex
+
+<input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
+       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" onblur="return checkForDeleteOfProgramIndex(this)"
+       placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
+       style="margin-right: -5px; margin-left: auto;" value="@Model.ProgramIndexDisplayName" />
+@Html.HiddenFor(x => x.ProgramIndexID)
+@Html.ValidationMessageFor(m => m.ProgramIndexID)
+
+
+<script type="text/javascript">
+    // <![CDATA[
+    function checkForDeleteOfProgramIndex(myField) {
+        if (!myField.value) {
+            jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val("");
+            jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val("");
+            return true;
+        }
+        return false;
+    }
+
+    jQuery(document).ready(function ()
+    {
+        jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function (event, ui) {
+                    //set VenderID value and display text in input
+                    jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
+                    jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(ui.item.actualValue);
+                    event.preventDefault();
+                },
+                html: true
+            });
+    });
+    // ]]>
+</script>

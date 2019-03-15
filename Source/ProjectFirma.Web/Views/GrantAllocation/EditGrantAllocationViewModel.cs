@@ -27,11 +27,12 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using ProjectFirma.Web.Views.ProgramIndex;
 using ProjectFirma.Web.Views.ProjectCode;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProjectCodeWithMultiselectViewModel
+    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProjectCodeWithMultiselectViewModel, IEditProgramIndexViewModel
     {
         public int GrantAllocationID { get; set; }
 
@@ -48,6 +49,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public int? ProgramIndexID { get; set; }
+
+        public string ProgramIndexDisplayName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
         public string ProjectCodesString { get; set; }
@@ -70,9 +73,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramManager)]
         public List<int> ProgramManagerPersonIDs { get; set; }
 
-        //public List<string> ProjectCodesList => ProjectCodesString.Split(',').ToList();
-
-
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -86,6 +86,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
             ProgramIndexID = grantAllocation.ProgramIndexID;
+            ProgramIndexDisplayName = grantAllocation.ProgramIndexDisplay;
             ProjectCodesString = grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeAbbrev).Aggregate((x, y) => x + ", " + y);
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             RegionID = grantAllocation.RegionIDDisplay;

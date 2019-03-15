@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ProgramIndexController.cs" />
     <Compile Include="Controllers\ProjectCodeController.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
@@ -500,6 +501,7 @@
     <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
+    <Compile Include="Models\ProgramIndex.DatabaseContextExtensions.cs" />
     <Compile Include="Models\ProjectCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\ProgramIndex.cs" />
     <Compile Include="Models\ProjectCode.cs" />
@@ -697,6 +699,10 @@
     <Compile Include="Views\ProjectCode\IEditProjectCodeWithMultiSelectViewModel.cs" />
     <Compile Include="Views\ProjectCode\ProjectCodeSearchResults.cs" />
     <Compile Include="Views\ProjectCode\ProjectCodeSearchResultsViewData.cs" />
+    <Compile Include="Views\ProgramIndex\EditProgramIndex.cs" />
+    <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
+    <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
+    <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
@@ -1862,6 +1868,7 @@
     <Content Include="Views\Shared\InvoiceControls\InvoiceBasics.cshtml" />
     <Content Include="Views\Vendor\EditVendor.cshtml" />
     <Content Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cshtml" />
+    <Content Include="Views\ProgramIndex\EditProgramIndex.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

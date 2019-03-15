@@ -25,7 +25,7 @@
 @inherits ProjectFirma.Web.Views.ProjectCode.EditProjectCodeWithMultiSelect
 
 <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfProjectCode(this)"
+       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfProjectCodeMultiSelect(this)"
        placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
        style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodesString" />
 @Html.HiddenFor(x => x.ProjectCodesString)
@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
     // <![CDATA[
-    function checkForDeleteOfProjectCode(myField) {
+    function checkForDeleteOfProjectCodeMultiSelect(myField) {
         if (!myField.value) {
             jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
             jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val("");
