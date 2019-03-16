@@ -34,6 +34,8 @@
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.Store.InteractionEvent" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
@@ -317,6 +319,14 @@
     <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID">
+      <End Role="InteractionEventType" EntitySet="InteractionEventType" />
+      <End Role="InteractionEvents" EntitySet="InteractionEvent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEvent_Person_StaffPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_InteractionEvent_Person_StaffPersonID_PersonID">
+      <End Role="StaffPerson" EntitySet="Person" />
+      <End Role="InteractionEventsWhereYouAreTheStaffPerson" EntitySet="InteractionEvent" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
       <End Role="InvoiceFileResource" EntitySet="FileResource" />
@@ -1198,6 +1208,25 @@
     </Key>
     <Property Name="GrantTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="InteractionEvent">
+    <Key>
+      <PropertyRef Name="InteractionEventID" />
+    </Key>
+    <Property Name="InteractionEventID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InteractionEventTypeID" Type="int" Nullable="false" />
+    <Property Name="StaffPersonID" Type="int" Nullable="false" />
+    <Property Name="InteractionEventTitle" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="InteractionEventDescription" Type="varchar" MaxLength="3000" />
+    <Property Name="InteractionEventDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InteractionEventType">
+    <Key>
+      <PropertyRef Name="InteractionEventTypeID" />
+    </Key>
+    <Property Name="InteractionEventTypeID" Type="int" Nullable="false" />
+    <Property Name="InteractionEventTypeName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="InteractionEventTypeDisplayName" Type="varchar" Nullable="false" MaxLength="255" />
   </EntityType>
   <EntityType Name="Invoice">
     <Key>
@@ -2778,6 +2807,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEvent_InteractionEventType_InteractionEventTypeID">
+    <End Role="InteractionEventType" Type="ProjectFirma.Web.Models.Store.InteractionEventType" Multiplicity="1" />
+    <End Role="InteractionEvents" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InteractionEventType">
+        <PropertyRef Name="InteractionEventTypeID" />
+      </Principal>
+      <Dependent Role="InteractionEvents">
+        <PropertyRef Name="InteractionEventTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEvent_Person_StaffPersonID_PersonID">
+    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="InteractionEventsWhereYouAreTheStaffPerson" Type="ProjectFirma.Web.Models.Store.InteractionEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InteractionEventsWhereYouAreTheStaffPerson">
+        <PropertyRef Name="StaffPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

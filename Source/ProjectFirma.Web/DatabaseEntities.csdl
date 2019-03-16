@@ -34,6 +34,8 @@
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.GrantNoteInternal" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.GrantType" />
+    <EntitySet Name="InteractionEvent" EntityType="ProjectFirma.Web.Models.InteractionEvent" />
+    <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.InteractionEventType" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Invoice" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Notification" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.NotificationProject" />
@@ -377,6 +379,14 @@
     <AssociationSet Name="FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID">
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" Association="ProjectFirma.Web.Models.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID">
+      <End Role="InteractionEventType" EntitySet="InteractionEventType" />
+      <End Role="InteractionEvents" EntitySet="InteractionEvent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InteractionEvent_Person_StaffPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID">
+      <End Role="StaffPerson" EntitySet="Person" />
+      <End Role="InteractionEventsWhereYouAreTheStaffPerson" EntitySet="InteractionEvent" />
     </AssociationSet>
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
@@ -1300,6 +1310,28 @@
     <Property Name="GrantTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="GrantType" ToRole="Grants" />
   </EntityType>
+  <EntityType Name="InteractionEvent">
+    <Key>
+      <PropertyRef Name="InteractionEventID" />
+    </Key>
+    <Property Name="InteractionEventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InteractionEventTypeID" Type="Int32" Nullable="false" />
+    <Property Name="StaffPersonID" Type="Int32" Nullable="false" />
+    <Property Name="InteractionEventTitle" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="InteractionEventDescription" Type="String" MaxLength="3000" Unicode="false" FixedLength="false" />
+    <Property Name="InteractionEventDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="InteractionEventType" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" FromRole="InteractionEvents" ToRole="InteractionEventType" />
+    <NavigationProperty Name="StaffPerson" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID" FromRole="InteractionEventsWhereYouAreTheStaffPerson" ToRole="StaffPerson" />
+  </EntityType>
+  <EntityType Name="InteractionEventType">
+    <Key>
+      <PropertyRef Name="InteractionEventTypeID" />
+    </Key>
+    <Property Name="InteractionEventTypeID" Type="Int32" Nullable="false" />
+    <Property Name="InteractionEventTypeName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="InteractionEventTypeDisplayName" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="InteractionEvents" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" FromRole="InteractionEventType" ToRole="InteractionEvents" />
+  </EntityType>
   <EntityType Name="Invoice">
     <Key>
       <PropertyRef Name="InvoiceID" />
@@ -1595,6 +1627,7 @@
     <NavigationProperty Name="GrantNotesWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNote_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantNotesWhereYouAreTheLastUpdatedByPerson" />
     <NavigationProperty Name="GrantNoteInternalsWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantNoteInternalsWhereYouAreTheCreatedByPerson" />
     <NavigationProperty Name="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson" />
+    <NavigationProperty Name="InteractionEventsWhereYouAreTheStaffPerson" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID" FromRole="StaffPerson" ToRole="InteractionEventsWhereYouAreTheStaffPerson" />
     <NavigationProperty Name="InvoicesWhereYouAreThePreparedByPerson" Relationship="ProjectFirma.Web.Models.FK_Invoice_Person_PreparedByPersonID_PersonID" FromRole="PreparedByPerson" ToRole="InvoicesWhereYouAreThePreparedByPerson" />
     <NavigationProperty Name="Notifications" Relationship="ProjectFirma.Web.Models.FK_Notification_Person_PersonID" FromRole="Person" ToRole="Notifications" />
     <NavigationProperty Name="OrganizationsWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_Organization_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="OrganizationsWhereYouAreThePrimaryContactPerson" />
@@ -3310,6 +3343,30 @@
       </Principal>
       <Dependent Role="GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson">
         <PropertyRef Name="LastUpdatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEvent_InteractionEventType_InteractionEventTypeID">
+    <End Role="InteractionEventType" Type="ProjectFirma.Web.Models.InteractionEventType" Multiplicity="1" />
+    <End Role="InteractionEvents" Type="ProjectFirma.Web.Models.InteractionEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InteractionEventType">
+        <PropertyRef Name="InteractionEventTypeID" />
+      </Principal>
+      <Dependent Role="InteractionEvents">
+        <PropertyRef Name="InteractionEventTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InteractionEvent_Person_StaffPersonID_PersonID">
+    <End Role="StaffPerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="InteractionEventsWhereYouAreTheStaffPerson" Type="ProjectFirma.Web.Models.InteractionEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="InteractionEventsWhereYouAreTheStaffPerson">
+        <PropertyRef Name="StaffPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
