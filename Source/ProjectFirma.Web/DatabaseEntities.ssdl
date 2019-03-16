@@ -35,6 +35,7 @@
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.Store.GrantStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantType" EntityType="ProjectFirma.Web.Models.Store.GrantType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.Store.InvoiceLineItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -325,6 +326,18 @@
     <AssociationSet Name="FK_Invoice_Person_PreparedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Invoice_Person_PreparedByPersonID_PersonID">
       <End Role="PreparedByPerson" EntitySet="Person" />
       <End Role="InvoicesWhereYouAreThePreparedByPerson" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceLineItem_CostType_CostTypeID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_CostType_CostTypeID">
+      <End Role="CostType" EntitySet="CostType" />
+      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceLineItem_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceLineItem_Invoice_InvoiceID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_Invoice_InvoiceID">
+      <End Role="Invoice" EntitySet="Invoice" />
+      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_Notification_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_Notification_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1217,6 +1230,17 @@
     <Property Name="MatchAmount" Type="money" />
     <Property Name="InvoiceStatusID" Type="int" Nullable="false" />
     <Property Name="InvoiceFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="InvoiceLineItem">
+    <Key>
+      <PropertyRef Name="InvoiceLineItemID" />
+    </Key>
+    <Property Name="InvoiceLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceID" Type="int" Nullable="false" />
+    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="CostTypeID" Type="int" Nullable="false" />
+    <Property Name="InvoiceLineItemAmount" Type="money" Nullable="false" />
+    <Property Name="InvoiceLineItemNote" Type="varchar" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2802,6 +2826,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="InvoicesWhereYouAreThePreparedByPerson">
         <PropertyRef Name="PreparedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceLineItem_CostType_CostTypeID">
+    <End Role="CostType" Type="ProjectFirma.Web.Models.Store.CostType" Multiplicity="1" />
+    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.Store.InvoiceLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostType">
+        <PropertyRef Name="CostTypeID" />
+      </Principal>
+      <Dependent Role="InvoiceLineItems">
+        <PropertyRef Name="CostTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceLineItem_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.Store.InvoiceLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="InvoiceLineItems">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceLineItem_Invoice_InvoiceID">
+    <End Role="Invoice" Type="ProjectFirma.Web.Models.Store.Invoice" Multiplicity="1" />
+    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.Store.InvoiceLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="InvoiceID" />
+      </Principal>
+      <Dependent Role="InvoiceLineItems">
+        <PropertyRef Name="InvoiceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

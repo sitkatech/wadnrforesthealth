@@ -23,12 +23,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Invoice;
+using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.InvoiceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
@@ -37,6 +40,116 @@ namespace ProjectFirma.Web.Controllers
 {
     public class InvoiceController : FirmaBaseController
     {
+
+        [HttpGet]
+        [InvoiceLineItemDeleteFeature]
+        public PartialViewResult DeleteInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(invoiceLineItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteInvoiceLineItem(invoiceLineItemPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteInvoiceLineItem(InvoiceLineItem invoiceLineItem, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to remove this {FieldDefinition.Invoice.GetFieldDefinitionLabel()} Line Item from this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [InvoiceLineItemDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteInvoiceLineItem(invoiceLineItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.Invoice.GetFieldDefinitionLabel()} Line Item successfully removed from this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}.";
+
+            invoiceLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [InvoiceEditAsAdminFeature]
+        public PartialViewResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey)
+        {
+            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
+            var viewModel = new EditInvoiceLineItemViewModel(invoiceID);
+            return ViewEditInvoiceLineItem(viewModel);
+        }
+
+        [HttpPost]
+        [InvoiceEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceLineItemViewModel viewModel)
+        {
+            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditInvoiceLineItem(viewModel);
+            }
+
+            var invoiceLineItem = new InvoiceLineItem(invoiceID, viewModel.GrantID, viewModel.CostTypeID,
+                viewModel.InvoiceLineItemAmount);
+            viewModel.UpdateModel(invoiceLineItem);
+            HttpRequestStorage.DatabaseEntities.InvoiceLineItems.Add(invoiceLineItem);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            SetMessageForDisplay($"Invoice Line Item successfully added to this {FieldDefinition.Invoice.GetFieldDefinitionLabel()}.");
+
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        [HttpGet]
+        [InvoiceLineItemEditAsAdminFeature]
+        public PartialViewResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
+        {
+            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
+            var viewModel = new EditInvoiceLineItemViewModel(invoiceLineItem);
+            return ViewEditInvoiceLineItem(viewModel);
+        }
+
+        [HttpPost]
+        [InvoiceLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, EditInvoiceLineItemViewModel viewModel)
+        {
+            var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditInvoiceLineItem(viewModel);
+            }
+            viewModel.UpdateModel(invoiceLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditInvoiceLineItem(EditInvoiceLineItemViewModel viewModel)
+        {
+            var costTypes = HttpRequestStorage.DatabaseEntities.CostTypes.Where(x => x.CostTypeID < 5).ToList();
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var viewData = new EditInvoiceLineItemViewData(grants, costTypes);
+            return RazorPartialView<EditInvoiceLineItem, EditInvoiceLineItemViewData, EditInvoiceLineItemViewModel>(viewData, viewModel);
+        }
+
+        [InvoiceViewFeature]
+        public GridJsonNetJObjectResult<InvoiceLineItem> InvoiceLineItemGridJsonData(InvoicePrimaryKey invoicePrimaryKey)
+        {
+            var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
+            var gridSpec = new InvoiceLineItemGridSpec(CurrentPerson);
+            var invoice = HttpRequestStorage.DatabaseEntities.Invoices.FirstOrDefault(x => x.InvoiceID == invoiceID);
+            var invoiceLineItems = invoice != null
+                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDescription).ToList()
+                : new List<InvoiceLineItem>();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InvoiceLineItem>(invoiceLineItems, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
 
         [HttpGet]
         [AgreementCreateFeature]

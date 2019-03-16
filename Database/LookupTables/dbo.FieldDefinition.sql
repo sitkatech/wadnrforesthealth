@@ -153,5 +153,6 @@ VALUES
 (329, N'EstimatedPersonnelAndBenefitsCost', N'Estimated Personnel & Benefits Cost', N'<p>The estimated personnel and benefits costs to complete all stages of project implementation.</p>'),
 (330, N'EstimatedSuppliesCost', N'Estimated Supplies Cost', N'<p>The estimated supplies cost to complete all stages of project implementation.</p>'),
 (331, N'EstimatedTravelCost', N'Estimated Travel Cost', N'<p>The estimated travel costs to complete all stages of project implementation.</p>'),
-(332, N'InvoiceID', N'Invoice ID', N'<p>The System-unique identifier for a given Invoice.</p>')
+(332, N'InvoiceID', N'Invoice ID', N'<p>The System-unique identifier for a given Invoice.</p>'),
+(333, N'InvoiceLineItem', N'Invoice Line Item', N'<p>A line item on an invoice which includes an amount and the associated funding source/grant.</p>')
 
