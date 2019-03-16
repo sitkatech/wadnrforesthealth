@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Detail.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditAgreementPersonViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,18 +18,22 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    public abstract class Detail : LtInfo.Common.Mvc.TypedWebViewPage<DetailViewData>
+    public class EditInvoiceLineItemViewData : FirmaUserControlViewData
     {
-        public string StringToDateString(string stringDate)
-        {
-            return DateTime.TryParse(stringDate, out var date) ? date.ToShortDateString() : null;
-        }
+        public readonly IEnumerable<SelectListItem> Grants;
+        public readonly IEnumerable<SelectListItem> CostTypes;
 
-        public const string InvoiceLineItemGridName = "invoiceLineItemGrid";
+        public EditInvoiceLineItemViewData(List<Models.Grant> grants, List<CostType> costTypes)
+        {
+            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription);
+            Grants = grants.ToSelectListWithEmptyFirstRow(k => k.GrantID.ToString(), v => v.GrantName);
+        }
     }
 }
