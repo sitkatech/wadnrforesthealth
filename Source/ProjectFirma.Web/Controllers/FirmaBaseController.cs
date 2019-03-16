@@ -21,31 +21,20 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using log4net;
-using LtInfo.Common;
-using SitkaController = ProjectFirma.Web.Common.SitkaController;
 
 namespace ProjectFirma.Web.Controllers
 {
     [ValidateInput(false)]
     public abstract class FirmaBaseController : SitkaController
     {
-        public static ControllerContext ControllerContextStatic = null;
-
         protected ILog Logger = LogManager.GetLogger(typeof(FirmaBaseController));
-
-        protected FirmaBaseController()
-        {
-            if (ControllerContextStatic == null)
-                ControllerContextStatic = ControllerContext;
-        }
-
+  
         public static ReadOnlyCollection<MethodInfo> AllControllerActionMethods => AllControllerActionMethodsProtected;
 
         static FirmaBaseController()
@@ -69,27 +58,7 @@ namespace ProjectFirma.Web.Controllers
         /// </summary>
         protected override void OnAuthentication(AuthenticationContext filterContext)
         {
-            HttpRequestStorage.Person = Person.GetAnonymousSitkaUser();
-
-            try
-            {
-                var authenticationManager = this.HttpContext.GetOwinContext().Authentication;
-                HttpRequestStorage.Person = ClaimsIdentityHelper.GetPersonFromClaimsIdentity(authenticationManager);
-            }
-            catch
-            {
-                var areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal = filterContext.HttpContext.Request.Url.ToString().EndsWith(SitkaGlobalBase.Instance.ErrorUrl, StringComparison.InvariantCultureIgnoreCase);
-                var areWeOnTheNotFoundPageInWhichCaseIdentityFailuresMayBeNormal = filterContext.HttpContext.Request.Url.ToString().EndsWith(SitkaGlobalBase.Instance.NotFoundUrl, StringComparison.InvariantCultureIgnoreCase);
-                if (areWeOnTheErrorPageInWhichCaseIdentityFailuresMayBeNormal || areWeOnTheNotFoundPageInWhichCaseIdentityFailuresMayBeNormal)
-                {
-                    // Error page authentication error - ignore because we could be getting a error because of authentication
-                    return;
-                }
-
-                // Let the authentication exception propagate
-                throw;
-            }
-
+            HttpRequestStorage.Person = ClaimsIdentityHelper.PersonFromClaimsIdentity(HttpContext.GetOwinContext().Authentication);
             base.OnAuthentication(filterContext);
         }
 
