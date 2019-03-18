@@ -27,7 +27,6 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocations = new HashSet<GrantAllocation>();
             this.GrantNotes = new HashSet<GrantNote>();
             this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
-            this.InvoiceLineItems = new HashSet<InvoiceLineItem>();
         }
 
         /// <summary>
@@ -93,13 +92,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || GrantNotes.Any() || GrantNoteInternals.Any() || InvoiceLineItems.Any();
+            return GrantAllocations.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(InvoiceLineItem).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
 
 
         /// <summary>
@@ -138,11 +137,6 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
-
-            foreach(var x in InvoiceLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
         }
 
         [Key]
@@ -165,7 +159,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
-        public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual GrantType GrantType { get; set; }
         public virtual GrantStatus GrantStatus { get; set; }
         public virtual Organization Organization { get; set; }

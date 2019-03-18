@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewEditInvoiceLineItem(viewModel);
             }
 
-            var invoiceLineItem = new InvoiceLineItem(invoiceID, viewModel.GrantID, viewModel.CostTypeID,
+            var invoiceLineItem = new InvoiceLineItem(invoiceID, viewModel.GrantAllocationID, viewModel.CostTypeID,
                 viewModel.InvoiceLineItemAmount);
             viewModel.UpdateModel(invoiceLineItem);
             HttpRequestStorage.DatabaseEntities.InvoiceLineItems.Add(invoiceLineItem);
@@ -132,8 +132,8 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditInvoiceLineItem(EditInvoiceLineItemViewModel viewModel)
         {
             var costTypes = HttpRequestStorage.DatabaseEntities.CostTypes.Where(x => x.CostTypeID < 5).ToList();
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            var viewData = new EditInvoiceLineItemViewData(grants, costTypes);
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var viewData = new EditInvoiceLineItemViewData(grantAllocations, costTypes);
             return RazorPartialView<EditInvoiceLineItem, EditInvoiceLineItemViewData, EditInvoiceLineItemViewModel>(viewData, viewModel);
         }
 

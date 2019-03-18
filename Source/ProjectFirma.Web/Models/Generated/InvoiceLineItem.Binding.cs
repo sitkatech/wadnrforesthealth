@@ -30,11 +30,11 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public InvoiceLineItem(int invoiceLineItemID, int invoiceID, int grantID, int costTypeID, decimal invoiceLineItemAmount, string invoiceLineItemNote) : this()
+        public InvoiceLineItem(int invoiceLineItemID, int invoiceID, int grantAllocationID, int costTypeID, decimal invoiceLineItemAmount, string invoiceLineItemNote) : this()
         {
             this.InvoiceLineItemID = invoiceLineItemID;
             this.InvoiceID = invoiceID;
-            this.GrantID = grantID;
+            this.GrantAllocationID = grantAllocationID;
             this.CostTypeID = costTypeID;
             this.InvoiceLineItemAmount = invoiceLineItemAmount;
             this.InvoiceLineItemNote = invoiceLineItemNote;
@@ -43,13 +43,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public InvoiceLineItem(int invoiceID, int grantID, int costTypeID, decimal invoiceLineItemAmount) : this()
+        public InvoiceLineItem(int invoiceID, int grantAllocationID, int costTypeID, decimal invoiceLineItemAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.InvoiceID = invoiceID;
-            this.GrantID = grantID;
+            this.GrantAllocationID = grantAllocationID;
             this.CostTypeID = costTypeID;
             this.InvoiceLineItemAmount = invoiceLineItemAmount;
         }
@@ -57,16 +57,16 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public InvoiceLineItem(Invoice invoice, Grant grant, CostType costType, decimal invoiceLineItemAmount) : this()
+        public InvoiceLineItem(Invoice invoice, GrantAllocation grantAllocation, CostType costType, decimal invoiceLineItemAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.InvoiceLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.InvoiceID = invoice.InvoiceID;
             this.Invoice = invoice;
             invoice.InvoiceLineItems.Add(this);
-            this.GrantID = grant.GrantID;
-            this.Grant = grant;
-            grant.InvoiceLineItems.Add(this);
+            this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            this.GrantAllocation = grantAllocation;
+            grantAllocation.InvoiceLineItems.Add(this);
             this.CostTypeID = costType.CostTypeID;
             this.CostType = costType;
             costType.InvoiceLineItems.Add(this);
@@ -76,9 +76,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static InvoiceLineItem CreateNewBlank(Invoice invoice, Grant grant, CostType costType)
+        public static InvoiceLineItem CreateNewBlank(Invoice invoice, GrantAllocation grantAllocation, CostType costType)
         {
-            return new InvoiceLineItem(invoice, grant, costType, default(decimal));
+            return new InvoiceLineItem(invoice, grantAllocation, costType, default(decimal));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int InvoiceLineItemID { get; set; }
         public int InvoiceID { get; set; }
-        public int GrantID { get; set; }
+        public int GrantAllocationID { get; set; }
         public int CostTypeID { get; set; }
         public decimal InvoiceLineItemAmount { get; set; }
         public string InvoiceLineItemNote { get; set; }
@@ -124,7 +124,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return InvoiceLineItemID; } set { InvoiceLineItemID = value; } }
 
         public virtual Invoice Invoice { get; set; }
-        public virtual Grant Grant { get; set; }
+        public virtual GrantAllocation GrantAllocation { get; set; }
         public virtual CostType CostType { get; set; }
 
         public static class FieldLengths

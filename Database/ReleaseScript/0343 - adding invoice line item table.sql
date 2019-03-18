@@ -2,7 +2,7 @@
 CREATE TABLE [dbo].[InvoiceLineItem](
 	[InvoiceLineItemID] [int] IDENTITY(1,1) NOT NULL,
 	[InvoiceID] [int] NOT NULL,
-	[GrantID] [int] NOT NULL,
+	[GrantAllocationID] [int] NOT NULL,
     [CostTypeID] [int] NOT NULL,
     [InvoiceLineItemAmount] [money] NOT NULL,
     [InvoiceLineItemNote] varchar(8000) NULL,
@@ -13,11 +13,11 @@ CREATE TABLE [dbo].[InvoiceLineItem](
 )
 GO
 
-ALTER TABLE [dbo].[InvoiceLineItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceLineItem_Grant_GrantID] FOREIGN KEY([GrantID])
-REFERENCES [dbo].[Grant] ([GrantID])
+ALTER TABLE [dbo].[InvoiceLineItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceLineItem_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
 
-ALTER TABLE [dbo].[InvoiceLineItem] CHECK CONSTRAINT [FK_InvoiceLineItem_Grant_GrantID]
+ALTER TABLE [dbo].[InvoiceLineItem] CHECK CONSTRAINT [FK_InvoiceLineItem_GrantAllocation_GrantAllocationID]
 GO
 
 

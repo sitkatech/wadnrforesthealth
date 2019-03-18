@@ -331,8 +331,8 @@
       <End Role="CostType" EntitySet="CostType" />
       <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
     </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_Grant_GrantID">
-      <End Role="Grant" EntitySet="Grant" />
+    <AssociationSet Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_InvoiceLineItem_Invoice_InvoiceID" Association="ProjectFirma.Web.Models.Store.FK_InvoiceLineItem_Invoice_InvoiceID">
@@ -1237,7 +1237,7 @@
     </Key>
     <Property Name="InvoiceLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="InvoiceID" Type="int" Nullable="false" />
-    <Property Name="GrantID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="InvoiceLineItemAmount" Type="money" Nullable="false" />
     <Property Name="InvoiceLineItemNote" Type="varchar" />
@@ -2841,15 +2841,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InvoiceLineItem_Grant_GrantID">
-    <End Role="Grant" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="1" />
+  <Association Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.Store.InvoiceLineItem" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Grant">
-        <PropertyRef Name="GrantID" />
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="GrantID" />
+        <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

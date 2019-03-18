@@ -27,13 +27,13 @@ namespace ProjectFirma.Web.Views.Invoice
 {
     public class EditInvoiceLineItemViewData : FirmaUserControlViewData
     {
-        public readonly IEnumerable<SelectListItem> Grants;
+        public readonly IEnumerable<SelectListItem> GrantAllocations;
         public readonly IEnumerable<SelectListItem> CostTypes;
 
-        public EditInvoiceLineItemViewData(List<Models.Grant> grants, List<CostType> costTypes)
+        public EditInvoiceLineItemViewData(List<Models.GrantAllocation> grantAllocations, List<CostType> costTypes)
         {
             CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription);
-            Grants = grants.ToSelectListWithEmptyFirstRow(k => k.GrantID.ToString(), v => v.GrantName);
+            GrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(k => k.GrantID.ToString(), v => v.ProjectName);
         }
     }
 }

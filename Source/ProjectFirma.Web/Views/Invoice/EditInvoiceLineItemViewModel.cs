@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.Invoice
 
         [Required]
         [DisplayName("Grant")]
-        public int GrantID { get; set; }
+        public int GrantAllocationID { get; set; }
 
         [DisplayName("Note")]
         public string InvoiceLineItemNote { get; set; }
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Views.Invoice
         {
             InvoiceLineItemID = invoiceLineItem.InvoiceLineItemID;
             CostTypeID = invoiceLineItem.CostTypeID;
-            GrantID = invoiceLineItem.GrantID;
+            GrantAllocationID = invoiceLineItem.GrantAllocationID;
             InvoiceID = invoiceLineItem.InvoiceID;
             InvoiceLineItemAmount = invoiceLineItem.InvoiceLineItemAmount;
             InvoiceLineItemNote = invoiceLineItem.InvoiceLineItemNote;
@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public void UpdateModel(Models.InvoiceLineItem invoiceLineItem)
         {
             invoiceLineItem.CostTypeID = CostTypeID;
-            invoiceLineItem.GrantID = GrantID;
+            invoiceLineItem.GrantAllocationID = GrantAllocationID;
             invoiceLineItem.InvoiceLineItemAmount = InvoiceLineItemAmount;
             invoiceLineItem.InvoiceLineItemNote = InvoiceLineItemNote;
         }

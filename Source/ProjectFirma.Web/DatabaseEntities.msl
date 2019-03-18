@@ -399,7 +399,7 @@
         <MappingFragment StoreEntitySet="InvoiceLineItem">
           <ScalarProperty Name="InvoiceLineItemID" ColumnName="InvoiceLineItemID" />
           <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="InvoiceLineItemAmount" ColumnName="InvoiceLineItemAmount" />
           <ScalarProperty Name="InvoiceLineItemNote" ColumnName="InvoiceLineItemNote" />

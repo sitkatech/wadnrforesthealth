@@ -5,7 +5,7 @@ GO
 CREATE TABLE [dbo].[InvoiceLineItem](
 	[InvoiceLineItemID] [int] IDENTITY(1,1) NOT NULL,
 	[InvoiceID] [int] NOT NULL,
-	[GrantID] [int] NOT NULL,
+	[GrantAllocationID] [int] NOT NULL,
 	[CostTypeID] [int] NOT NULL,
 	[InvoiceLineItemAmount] [money] NOT NULL,
 	[InvoiceLineItemNote] [varchar](8000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -21,10 +21,10 @@ REFERENCES [dbo].[CostType] ([CostTypeID])
 GO
 ALTER TABLE [dbo].[InvoiceLineItem] CHECK CONSTRAINT [FK_InvoiceLineItem_CostType_CostTypeID]
 GO
-ALTER TABLE [dbo].[InvoiceLineItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceLineItem_Grant_GrantID] FOREIGN KEY([GrantID])
-REFERENCES [dbo].[Grant] ([GrantID])
+ALTER TABLE [dbo].[InvoiceLineItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceLineItem_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
-ALTER TABLE [dbo].[InvoiceLineItem] CHECK CONSTRAINT [FK_InvoiceLineItem_Grant_GrantID]
+ALTER TABLE [dbo].[InvoiceLineItem] CHECK CONSTRAINT [FK_InvoiceLineItem_GrantAllocation_GrantAllocationID]
 GO
 ALTER TABLE [dbo].[InvoiceLineItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceLineItem_Invoice_InvoiceID] FOREIGN KEY([InvoiceID])
 REFERENCES [dbo].[Invoice] ([InvoiceID])

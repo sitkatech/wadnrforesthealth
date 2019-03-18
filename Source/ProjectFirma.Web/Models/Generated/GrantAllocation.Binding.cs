@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
             this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
+            this.InvoiceLineItems = new HashSet<InvoiceLineItem>();
         }
 
         /// <summary>
@@ -86,13 +87,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any() || InvoiceLineItems.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name, typeof(InvoiceLineItem).Name};
 
 
         /// <summary>
@@ -141,6 +142,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in InvoiceLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -163,6 +169,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
+        public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual CostType CostType { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
