@@ -28,8 +28,6 @@ using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common;
 using LtInfo.Common.Email;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
@@ -60,7 +58,6 @@ namespace ProjectFirma.Web.Controllers
             get { return SitkaRoute<HomeController>.BuildUrlFromExpression(c => c.Index()); }
         }
 
-
         [AnonymousUnclassifiedFeature]
         public ContentResult NotAuthorized()
         {
@@ -78,6 +75,7 @@ namespace ProjectFirma.Web.Controllers
 
         [AnonymousUnclassifiedFeature]
         [HttpPost]
+        // ReSharper disable once InconsistentNaming
         public ActionResult SAWPost(string returnUrl)
         {
             var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
@@ -90,13 +88,14 @@ namespace ProjectFirma.Web.Controllers
                 var email = samlResponse.GetEmail();
                 var userName = samlResponse.GetUserName();
 
-                IdentitySignin(username, fullName, email, userName, null, AuthenticationMethod.SAW);
+                IdentitySignIn(username, fullName, email, userName, null, AuthenticationMethod.Saw);
             }
             return new RedirectResult(HomeUrl);
         }
 
         [AnonymousUnclassifiedFeature]
         [HttpPost]
+        // ReSharper disable once InconsistentNaming
         public ActionResult ADFSPost(string returnUrl)
         {
             var samlResponse = new ADFSSamlResponse();
@@ -108,47 +107,17 @@ namespace ProjectFirma.Web.Controllers
             var email = samlResponse.GetEmail();
             var upn = samlResponse.GetUPN();
             var groups = samlResponse.GetRoleGroups();
-            IdentitySignin(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.ADFS);
+            IdentitySignIn(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.Adfs);
             return new RedirectResult(HomeUrl);
         }
 
-        private void IdentitySignin(string userId, string name, string email, string userName, string groups,
-            AuthenticationMethod authenticationMethod, string providerKey = null, bool isPersistent = false)
+        private void IdentitySignIn(string userId, string name, string email, string userName, string groups, AuthenticationMethod authenticationMethod)
         {
-            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignin) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {providerKey} isPersistent: {isPersistent}");
-            ParseName(name, out var firstName, out var lastName);
-            var roleGroups = !string.IsNullOrWhiteSpace(groups) ? groups.Split(',').ToList() : new List<string>();
-            var person = LookupExistingPersonOrProvisionNewPerson(authenticationMethod, userId, userName, firstName, lastName, email, roleGroups);
+            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignIn) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {(string) null} isPersistent: {false}");
 
-            var claimsIdentity = ClaimsIdentityHelper.MakeClaimsIdentityFromPerson(person);
-
-            // add to user here!
-            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties
-            {
-                AllowRefresh = true,
-                IsPersistent = isPersistent,
-                ExpiresUtc = DateTime.UtcNow.AddDays(7)
-            }, claimsIdentity);
-        }
-
-        private void IdentitySignout()
-        {
-            HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie, DefaultAuthenticationTypes.ExternalCookie);
-        }
-
-        [AnonymousUnclassifiedFeature]
-        public ActionResult LogOff()
-        {
-            SitkaHttpApplication.Logger.Debug($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
-            IdentitySignout();
-            var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
-            return Redirect(returnUrl);
-        }
-
-        private static void ParseName(string displayName, out string firstName, out string lastName)
-        {
-            var names = displayName.Split(' ');
-            lastName = "";
+            var names = name.Split(' ');
+            string firstName;
+            var lastName = "";
             if (names.Length == 2)
             {
                 firstName = names[0];
@@ -156,8 +125,24 @@ namespace ProjectFirma.Web.Controllers
             }
             else
             {
-                firstName = displayName;
+                firstName = name;
             }
+
+            var roleGroups = !string.IsNullOrWhiteSpace(groups) ? groups.Split(',').ToList() : new List<string>();
+
+            var person = LookupExistingPersonOrProvisionNewPerson(authenticationMethod, userId, userName, firstName, lastName, email, roleGroups);
+
+            // add to user here!
+            ClaimsIdentityHelper.IdentitySignIn(HttpContext.GetOwinContext().Authentication, person);
+        }
+
+        [AnonymousUnclassifiedFeature]
+        public ActionResult LogOff()
+        {
+            SitkaHttpApplication.Logger.Debug($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
+            ClaimsIdentityHelper.IdentitySignOut(HttpContext.GetOwinContext().Authentication);
+            var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
+            return Redirect(returnUrl);
         }
 
         private static Person LookupExistingPersonOrProvisionNewPerson(AuthenticationMethod authenticationMethod, string personUniqueIdentifier, string username,
@@ -168,7 +153,7 @@ namespace ProjectFirma.Web.Controllers
             string userDetailsString =
                 $"PersonUniqueIdentifier: {personUniqueIdentifier} -- Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
 
-            var authenticatorToRequire = Saml2ClaimsHelpers.GetAuthenticator(personUniqueIdentifier);
+            var authenticatorToRequire = AuthenticatorHelper.GetAuthenticator(personUniqueIdentifier);
             bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
 
             // Always try to validate first using unique identifier, as it is arguably more secure
@@ -176,13 +161,13 @@ namespace ProjectFirma.Web.Controllers
 
             string personLookupSuccess = person != null ? "Found" : "Did NOT find";
             SitkaHttpApplication.Logger.Debug(
-                $"In SyncLocalAccountStore - {personLookupSuccess} by PersonUniqueIdentifier. [{userDetailsString}] ");
+                $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - {personLookupSuccess} by PersonUniqueIdentifier. [{userDetailsString}] ");
 
             // For SAW only, we allow ourselves to fall back to email.
             if (person == null && attemptingSawAuthentication)
             {
                 SitkaHttpApplication.Logger.Debug(
-                    $"In SyncLocalAccountStore - Falling back to SAW email authentication --  {userDetailsString}");
+                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Falling back to SAW email authentication --  {userDetailsString}");
                 person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false);
             }
 
@@ -192,8 +177,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 // new user - provision with limited role
                 SitkaHttpApplication.Logger.Debug(
-                    $"In SyncLocalAccountStore - Person not found using any available authentication method -- {userDetailsString}");
-                SitkaHttpApplication.Logger.Debug($"In SyncLocalAccountStore - Creating new Person for -- {userDetailsString}");
+                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Person not found using any available authentication method -- {userDetailsString}");
+                SitkaHttpApplication.Logger.Debug($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Creating new Person for -- {userDetailsString}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false,
                     authenticatorToRequire.AuthenticatorID)
@@ -205,7 +190,7 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
-                var currentDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
+                var currentDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
                 var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person,
                     currentDeploymentEnvironment, authenticatorToRequire, personUniqueIdentifier);
                 HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(
@@ -226,7 +211,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 // existing user - sync values
                 SitkaHttpApplication.Logger.DebugFormat(
-                    $"In SyncLocalAccountStore - user record already exists -- syncing local profile for {userDetailsString}");
+                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
             }
 
             person.FirstName = firstName;
@@ -235,10 +220,10 @@ namespace ProjectFirma.Web.Controllers
             person.LoginName = username;
             person.UpdateDate = DateTime.Now;
 
-            if (authenticationMethod == AuthenticationMethod.ADFS)
+            if (authenticationMethod == AuthenticationMethod.Adfs)
             {
                 SitkaHttpApplication.Logger.DebugFormat(
-                    $"In SyncLocalAccountStore - Mapping ADFS role groups for {userDetailsString}");
+                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Mapping ADFS role groups for {userDetailsString}");
                 if (groups.Any())
                 {
                     person.RoleID = MapRoleFromClaims(groups).RoleID;
@@ -247,17 +232,17 @@ namespace ProjectFirma.Web.Controllers
                 person.OrganizationID = OrganizationModelExtensions.WadnrID;
             }
 
-            HttpRequestStorage.Person = person;
             HttpRequestStorage.DatabaseEntities.SaveChanges(person);
+            HttpRequestStorage.Person = person;
 
             if (sendNewUserNotification)
             {
                 SitkaHttpApplication.Logger.DebugFormat(
-                    $"In SyncLocalAccountStore - Sending new user created message for {userDetailsString}");
+                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Sending new user created message for {userDetailsString}");
                 SendNewUserCreatedMessage(person, username);
             }
 
-            return HttpRequestStorage.Person;
+            return person;
         }
 
         private static Role MapRoleFromClaims(List<string> roleGroups)
@@ -279,7 +264,6 @@ namespace ProjectFirma.Web.Controllers
 
             return Role.Unassigned;
         }
-
 
         private static void SendNewUserCreatedMessage(Person person, string loginName)
         {
@@ -327,8 +311,8 @@ namespace ProjectFirma.Web.Controllers
 
         private enum AuthenticationMethod
         {
-            ADFS,
-            SAW
+            Adfs,
+            Saw
         }
     }
 }

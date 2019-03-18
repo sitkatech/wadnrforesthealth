@@ -36,13 +36,8 @@ namespace ProjectFirma.Web.Models
 
         public static Person GetPersonByEmail(this IQueryable<Person> people, string email, bool requireRecordFound)
         {
-            SitkaHttpApplication.Logger.Debug($"GetPersonByEmail: email: {email} requireRecordFound: {requireRecordFound} ");
-
             var peopleWithDesiredEmail = people.Where(x => x.Email == email).ToList();
-            if (peopleWithDesiredEmail.Count > 1)
-            {
-                throw new Saml2ClaimException($"GetPersonByEmail - Found more than one Person with email {email}; should be prohibited");
-            }
+            Check.Require(peopleWithDesiredEmail.Count <= 1, "Found more than one Person with email \"{email}\", emails should be unique in database.");
 
             var person = peopleWithDesiredEmail.SingleOrDefault();
             if (requireRecordFound)
@@ -57,13 +52,11 @@ namespace ProjectFirma.Web.Models
             Check.EnsureNotNull(desiredPersonUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
 
             // Make sure the GUID we are looking up aligns with the environment (Local,QA, Prod) and authentication method (ADFS, SAW).
-            var desiredDeploymentEnvironment = Saml2ClaimsHelpers.GetDeploymentEnvironment();
-            var desiredAuthenticator = Saml2ClaimsHelpers.GetAuthenticator(desiredPersonUniqueIdentifier);
+            var desiredDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
+            var desiredAuthenticator = AuthenticatorHelper.GetAuthenticator(desiredPersonUniqueIdentifier);
 
             var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredDeploymentEnvironment, desiredAuthenticator));
 
-            // string successString = person != null ? "Found Person" : "Did NOT find Person";
-            // SitkaHttpApplication.Logger.Debug($"GetPersonByPersonUniqueIdentifier: {successString} desiredPersonUniqueIdentifier: \"{desiredPersonUniqueIdentifier}\" - desiredDeploymentEnvironment: {desiredDeploymentEnvironment.DeploymentEnvironmentName} - desiredAuthenticator : {desiredAuthenticator.AuthenticatorName}");
             return person;
         }
 

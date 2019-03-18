@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Detail.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditAgreementPerson.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,18 +18,12 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System;
+using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
-    public abstract class Detail : LtInfo.Common.Mvc.TypedWebViewPage<DetailViewData>
+    public abstract class EditInvoiceLineItem : TypedWebPartialViewPage<EditInvoiceLineItemViewData, EditInvoiceLineItemViewModel>
     {
-        public string StringToDateString(string stringDate)
-        {
-            return DateTime.TryParse(stringDate, out var date) ? date.ToShortDateString() : null;
-        }
-
-        public const string InvoiceLineItemGridName = "invoiceLineItemGrid";
     }
+ 
 }

@@ -2,6 +2,9 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web
 {
@@ -15,7 +18,8 @@ namespace ProjectFirma.Web
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString( SitkaRoute<AccountController>.BuildUrlFromExpression(x => x.Login(null))),
+                CookieName = ClaimsIdentityHelper.AuthenticationApplicationCookieName
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
         }
