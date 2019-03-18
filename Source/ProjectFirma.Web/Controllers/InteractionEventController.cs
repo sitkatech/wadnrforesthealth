@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventViewFeature]
         public ViewResult Index()
         {
-            //var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
+            var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             //return RazorView<Index, IndexViewData>(viewData);
             throw new NotImplementedException();
         }
@@ -48,11 +48,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult InteractionEventViewEdit(EditInteractionEventViewModel viewModel, EditInteractionEventType editInteractionEventType)
         {
             var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes;
-            //var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            //var regions = HttpRequestStorage.DatabaseEntities.Regions;
-            //var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
-            //var programManagers =
-            //    HttpRequestStorage.DatabaseEntities.People.Where(x => x.RoleID == Role.ProjectSteward.RoleID);
+            
 
             var viewData = new EditInteractionEventViewData(editInteractionEventType,
                 interactionEventTypes
