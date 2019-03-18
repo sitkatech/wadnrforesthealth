@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentActivityViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProgramIndexSearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,24 +18,22 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using ProjectFirma.Web.Models;
+
 using System.Collections.Generic;
-using System.Web.Mvc;
+using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.TreatmentActivity
+namespace ProjectFirma.Web.Views.ProgramIndex
 {
-    public class EditTreatmentActivityViewData : FirmaViewData
+    public class ProgramIndexSearchResultsViewData : FirmaViewData
     {
-        public IEnumerable<SelectListItem> TreatmentActivityStatus { get; }
+        public readonly List<Models.ProgramIndex> EntitySearchResults;
+        public readonly string SearchCriteria;
 
-        public IEnumerable<SelectListItem> TreatmentActivityContacts { get; }
-
-        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContacts, Person currentPerson) : base(currentPerson)
+        public ProgramIndexSearchResultsViewData(Person currentPerson, List<Models.ProgramIndex> entitySearchResults, string searchCriteria) : base(currentPerson)
         {
-            PageTitle = "Edit Treatment Activity";
-
-            TreatmentActivityStatus = treatmentActivityStatus;
-            TreatmentActivityContacts = treatmentActivityContacts;
+            EntitySearchResults = entitySearchResults;
+            SearchCriteria = searchCriteria;
+            PageTitle = $"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()} Search";
         }
     }
 }

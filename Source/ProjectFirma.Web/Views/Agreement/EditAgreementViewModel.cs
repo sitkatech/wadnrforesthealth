@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public int AgreementTypeID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
-        public List<ProgramIndex> ProgramIndices { get; }
+        public List<Models.ProgramIndex> ProgramIndices { get; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectCode)]
         public string ProjectCode { get; }

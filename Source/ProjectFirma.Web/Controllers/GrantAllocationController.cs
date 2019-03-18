@@ -277,12 +277,9 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult GrantAllocationViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantAllocationStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
             var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
             var regions = HttpRequestStorage.DatabaseEntities.Regions;
-            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes;
-            var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
             var programManagers =
                 HttpRequestStorage.DatabaseEntities.People.Where(x => x.RoleID == Role.ProjectSteward.RoleID);
@@ -292,8 +289,6 @@ namespace ProjectFirma.Web.Controllers
                 grantTypes,
                 grants,
                 regions,
-                projectCodes,
-                programIndices,
                 federalFundCodes,
                 programManagers
             );

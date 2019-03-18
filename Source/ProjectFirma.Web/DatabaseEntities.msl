@@ -128,6 +128,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CurrentBiennium">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CurrentBiennium">
+        <MappingFragment StoreEntitySet="CurrentBiennium">
+          <ScalarProperty Name="CurrentBienniumID" ColumnName="CurrentBienniumID" />
+          <ScalarProperty Name="CurrentBienniumFiscalYear" ColumnName="CurrentBienniumFiscalYear" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="CustomPage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CustomPage">
         <MappingFragment StoreEntitySet="CustomPage">
@@ -694,6 +702,8 @@
         <MappingFragment StoreEntitySet="ProgramIndex">
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
+          <ScalarProperty Name="ProgramIndexTitle" ColumnName="ProgramIndexTitle" />
+          <ScalarProperty Name="IsHistoric" ColumnName="IsHistoric" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -749,6 +759,7 @@
         <MappingFragment StoreEntitySet="ProjectCode">
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
           <ScalarProperty Name="ProjectCodeAbbrev" ColumnName="ProjectCodeAbbrev" />
+          <ScalarProperty Name="ProjectCodeTitle" ColumnName="ProjectCodeTitle" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

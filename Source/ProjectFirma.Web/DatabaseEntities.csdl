@@ -12,6 +12,7 @@
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
     <EntitySet Name="CostType" EntityType="ProjectFirma.Web.Models.CostType" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
+    <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.CurrentBiennium" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.FederalFundCode" />
@@ -1029,6 +1030,13 @@
     <Property Name="CountyFeature" Type="Geometry" />
     <NavigationProperty Name="StateProvince" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="Counties" ToRole="StateProvince" />
   </EntityType>
+  <EntityType Name="CurrentBiennium">
+    <Key>
+      <PropertyRef Name="CurrentBienniumID" />
+    </Key>
+    <Property Name="CurrentBienniumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrentBienniumFiscalYear" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="CustomPage">
     <Key>
       <PropertyRef Name="CustomPageID" />
@@ -1748,6 +1756,8 @@
     </Key>
     <Property Name="ProgramIndexID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProgramIndexAbbrev" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ProgramIndexTitle" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="IsHistoric" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="GrantAllocations" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="TreatmentActivities" />
   </EntityType>
@@ -1831,6 +1841,7 @@
     </Key>
     <Property Name="ProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectCodeAbbrev" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProjectCodeTitle" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProjectCodes" />
     <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="TreatmentActivities" />
   </EntityType>

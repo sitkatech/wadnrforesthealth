@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentActivityViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectCode.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,24 +18,21 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using ProjectFirma.Web.Models;
-using System.Collections.Generic;
+
 using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
 
-namespace ProjectFirma.Web.Views.TreatmentActivity
+namespace ProjectFirma.Web.Views.ProjectCode
 {
-    public class EditTreatmentActivityViewData : FirmaViewData
+    public abstract class EditProjectCodeWithMultiSelect : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>
     {
-        public IEnumerable<SelectListItem> TreatmentActivityStatus { get; }
-
-        public IEnumerable<SelectListItem> TreatmentActivityContacts { get; }
-
-        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContacts, Person currentPerson) : base(currentPerson)
+        public static void RenderPartialView(HtmlHelper html, IEditProjectCodeWithMultiselectViewModel viewModel)
         {
-            PageTitle = "Edit Treatment Activity";
-
-            TreatmentActivityStatus = treatmentActivityStatus;
-            TreatmentActivityContacts = treatmentActivityContacts;
+            html.RenderRazorSitkaPartial<EditProjectCodeWithMultiSelect, EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>(new EditProjectCodeWithMultiSelectViewData(), viewModel);
         }
     }
+    public class EditProjectCodeWithMultiSelectViewData
+    {
+    }
+
 }

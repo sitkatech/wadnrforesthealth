@@ -29,6 +29,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string CompletionDateGreaterThanEqualToPlannedDate = $"{FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be greater than or equal to the {FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel()}.";
         public static readonly string UpdateSectionIsDependentUponBasicsSection = "Your project's \"Basics\" page must be complete before you can begin updating this section.";
         public static readonly string ProjectNameUnique = $"{FieldDefinition.ProjectName.GetFieldDefinitionLabel()} already exists.";
+        public static readonly string ProjectCodeInvalid = $"{FieldDefinition.ProjectCode.GetFieldDefinitionLabel()} is not valid.";
+        public static readonly string ProgramIndexInvalid = $"{FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()} is not valid.";
         public static readonly string OrganizationNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} name already exists.";
         public static readonly string GrantNoteIsEmptyText = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
         public static readonly string GrantAllocationNoteIsEmptyText = $"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
