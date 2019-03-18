@@ -88,6 +88,9 @@
     <Compile Include="Models\Generated\County.Binding.cs" />
     <Compile Include="Models\Generated\County.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CountyPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\CurrentBiennium.Binding.cs" />
+    <Compile Include="Models\Generated\CurrentBiennium.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\CurrentBienniumPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CustomPage.Binding.cs" />
     <Compile Include="Models\Generated\CustomPage.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CustomPageDisplayType.Binding.cs" />
@@ -475,6 +478,8 @@
     <Compile Include="Models\CostType.cs" />
     <Compile Include="Models\AuthenticatorHelper.cs" />
     <Compile Include="Models\ClaimsIdentityException.cs" />
+    <Compile Include="Controllers\ProgramIndexController.cs" />
+    <Compile Include="Controllers\ProjectCodeController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
     <Compile Include="Models\InvoiceApprovalStatus.cs" />
@@ -507,6 +512,8 @@
     <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
+    <Compile Include="Models\ProgramIndex.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\ProjectCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\ProgramIndex.cs" />
     <Compile Include="Models\ProjectCode.cs" />
     <Compile Include="Models\ProjectLocationType.cs" />
@@ -663,6 +670,7 @@
     <Compile Include="Views\Invoice\InvoiceGridSpec.cs" />
     <Compile Include="Views\Invoice\InvoiceIndex.cs" />
     <Compile Include="Views\Invoice\InvoiceIndexViewData.cs" />
+    <Compile Include="Views\ProgramIndex\TestBiennium.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewData.cs" />
@@ -705,6 +713,14 @@
     <Compile Include="Views\PriorityArea\IndexViewData.cs" />
     <Compile Include="Views\PriorityArea\MapTooltip.cs" />
     <Compile Include="Views\PriorityArea\MapTooltipViewData.cs" />
+    <Compile Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cs" />
+    <Compile Include="Views\ProjectCode\IEditProjectCodeWithMultiSelectViewModel.cs" />
+    <Compile Include="Views\ProjectCode\ProjectCodeSearchResults.cs" />
+    <Compile Include="Views\ProjectCode\ProjectCodeSearchResultsViewData.cs" />
+    <Compile Include="Views\ProgramIndex\EditProgramIndex.cs" />
+    <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
+    <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
+    <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
@@ -1870,6 +1886,8 @@
     <Content Include="Views\Shared\ProjectCostShare\ProjectCostShare.cshtml" />
     <Content Include="Views\Shared\InvoiceControls\InvoiceBasics.cshtml" />
     <Content Include="Views\Vendor\EditVendor.cshtml" />
+    <Content Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cshtml" />
+    <Content Include="Views\ProgramIndex\EditProgramIndex.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>

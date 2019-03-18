@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditTreatmentActivityViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectCodeSearchResults.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,24 +18,10 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using ProjectFirma.Web.Models;
-using System.Collections.Generic;
-using System.Web.Mvc;
-
-namespace ProjectFirma.Web.Views.TreatmentActivity
+namespace ProjectFirma.Web.Views.ProjectCode
 {
-    public class EditTreatmentActivityViewData : FirmaViewData
+    public abstract class ProjectCodeSearchResults : LtInfo.Common.Mvc.TypedWebViewPage<ProjectCodeSearchResultsViewData>
     {
-        public IEnumerable<SelectListItem> TreatmentActivityStatus { get; }
-
-        public IEnumerable<SelectListItem> TreatmentActivityContacts { get; }
-
-        public EditTreatmentActivityViewData(IEnumerable<SelectListItem> treatmentActivityStatus, IEnumerable<SelectListItem> treatmentActivityContacts, Person currentPerson) : base(currentPerson)
-        {
-            PageTitle = "Edit Treatment Activity";
-
-            TreatmentActivityStatus = treatmentActivityStatus;
-            TreatmentActivityContacts = treatmentActivityContacts;
-        }
+        public const string ProjectCodeSearchInputTextboxID = "ProjectCodeSearchCriteria";
     }
 }
