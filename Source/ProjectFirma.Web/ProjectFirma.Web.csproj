@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -181,6 +181,9 @@
     <Compile Include="Models\Generated\Invoice.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\InvoiceApprovalStatus.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceApprovalStatusPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\InvoiceLineItem.Binding.cs" />
+    <Compile Include="Models\Generated\InvoiceLineItem.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\InvoiceLineItemPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceMatchAmountType.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceMatchAmountTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InvoicePrimaryKey.Binding.cs" />
@@ -475,9 +478,10 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
-    <Compile Include="Controllers\InteractionEventController.cs" />
+    <Compile Include="Models\CostType.cs" />
     <Compile Include="Models\AuthenticatorHelper.cs" />
     <Compile Include="Models\ClaimsIdentityException.cs" />
+    <Compile Include="Controllers\InteractionEventController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
     <Compile Include="Models\InvoiceApprovalStatus.cs" />
@@ -504,6 +508,8 @@
     <Compile Include="Models\GrantNoteInternal.cs" />
     <Compile Include="Models\GrantStatus.cs" />
     <Compile Include="Models\GrantType.cs" />
+    <Compile Include="Models\InvoiceLineItem.cs" />
+    <Compile Include="Models\InvoiceLineItemExtensions.cs" />
     <Compile Include="Models\InvoiceModelExtensions.cs" />
     <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />
@@ -571,6 +577,8 @@
     <Compile Include="Security\InteractionEventViewFeature.cs" />
     <Compile Include="Security\InvoiceCreateFeature.cs" />
     <Compile Include="Security\InvoiceEditAsAdminFeature.cs" />
+    <Compile Include="Security\InvoiceLineItemDeleteFeature.cs" />
+    <Compile Include="Security\InvoiceLineItemEditAsAdminFeature.cs" />
     <Compile Include="Security\InvoicesViewFullListFeature.cs" />
     <Compile Include="Security\GrantsViewFullListFeature.cs" />
     <Compile Include="Saml.cs" />
@@ -652,6 +660,10 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\Invoice\EditInvoiceLineItem.cs" />
+    <Compile Include="Views\Invoice\EditInvoiceLineItemViewData.cs" />
+    <Compile Include="Views\Invoice\EditInvoiceLineItemViewModel.cs" />
+    <Compile Include="Views\Invoice\InvoiceLineItemGridSpec.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventViewData.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEvent.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventViewModel.cs" />
@@ -1262,6 +1274,7 @@
     <Content Include="Views\GrantAllocation\EditGrantAllocationNoteInternal.cshtml" />
     <Content Include="Views\Invoice\Detail.cshtml" />
     <Content Include="Views\Invoice\EditInvoice.cshtml" />
+    <Content Include="Views\Invoice\EditInvoiceLineItem.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />

@@ -63,6 +63,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantType> GrantTypes { get; set; }
         public virtual DbSet<InteractionEvent> InteractionEvents { get; set; }
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
+        public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
@@ -317,6 +318,9 @@ namespace ProjectFirma.Web.Models
                     var invoiceApprovalStatus = InvoiceApprovalStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(invoiceApprovalStatus, "InvoiceApprovalStatus", primaryKey);
                     return invoiceApprovalStatus;
+
+                case "InvoiceLineItem":
+                    return InvoiceLineItems.GetInvoiceLineItem(primaryKey);
 
                 case "InvoiceMatchAmountType":
                     var invoiceMatchAmountType = InvoiceMatchAmountType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected CostType()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.InvoiceLineItems = new HashSet<InvoiceLineItem>();
         }
 
         /// <summary>
@@ -62,13 +63,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any();
+            return GrantAllocations.Any() || InvoiceLineItems.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(CostType).Name, typeof(GrantAllocation).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(CostType).Name, typeof(GrantAllocation).Name, typeof(InvoiceLineItem).Name};
 
 
         /// <summary>
@@ -97,6 +98,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in InvoiceLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -106,6 +112,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return CostTypeID; } set { CostTypeID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
 
         public static class FieldLengths
         {

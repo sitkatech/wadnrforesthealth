@@ -19,7 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using LtInfo.Common;
+using LtInfo.Common.ModalDialog;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared.InvoiceControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -29,12 +33,27 @@ namespace ProjectFirma.Web.Views.Invoice
     {
         public InvoiceBasicsViewData InvoiceBasicsViewData { get; set; }
 
-        public DetailViewData(Person currentPerson, Models.Invoice invoice, InvoiceBasicsViewData invoiceBasicsViewData)
+        public string InvoiceLineItemGridDataUrl { get; }
+        public InvoiceLineItemGridSpec InvoiceLineItemGridSpec { get; }
+
+
+        
+
+        public DetailViewData(Person currentPerson, Models.Invoice invoice
+            , InvoiceBasicsViewData invoiceBasicsViewData)
             : base(currentPerson, invoice)
         {
             PageTitle = invoice.InvoiceIdentifyingName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.Invoice.GetFieldDefinitionLabel()} Detail";
             InvoiceBasicsViewData = invoiceBasicsViewData;
+            InvoiceLineItemGridSpec = new InvoiceLineItemGridSpec(currentPerson) { ObjectNameSingular = "Invoice Line Item", ObjectNamePlural = "Invoice Line Items", SaveFiltersInCookie = true };
+            InvoiceLineItemGridDataUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(ac => ac.InvoiceLineItemGridJsonData(invoice.InvoiceID));
+            var userHasEditInvoicePermissions = new InvoiceLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            if (userHasEditInvoicePermissions)
+            {
+                var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.NewInvoiceLineItem(invoice.InvoiceID));
+                InvoiceLineItemGridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Invoice Line Item");
+            }
         }
     }
 }
