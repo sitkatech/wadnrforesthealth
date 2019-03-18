@@ -551,6 +551,8 @@
     <Compile Include="Security\AgreementsViewFeature.cs" />
     <Compile Include="Security\AgreementsViewFullListFeature.cs" />
     <Compile Include="Security\CostSharePDFFilledInFeature.cs" />
+    <Compile Include="Security\InteractionEventCreateFeature.cs" />
+    <Compile Include="Security\InteractionEventEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationNoteEditAsAdminFeature.cs" />
@@ -650,6 +652,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventViewData.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEvent.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventViewModel.cs" />
     <Compile Include="Views\Invoice\Detail.cs" />
     <Compile Include="Views\Invoice\DetailViewData.cs" />
     <Compile Include="Views\Invoice\EditInvoiceViewModel.cs" />
@@ -1257,6 +1262,7 @@
     <Content Include="Views\GrantAllocation\EditGrantAllocationNoteInternal.cshtml" />
     <Content Include="Views\Invoice\Detail.cshtml" />
     <Content Include="Views\Invoice\EditInvoice.cshtml" />
+    <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
@@ -3810,7 +3816,6 @@
     <Folder Include="Content\img\MimeTypeIcons\" />
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Help\" />
-    <Folder Include="Views\InteractionEvent\" />
     <Folder Include="Views\ProjectGeospatialArea\" />
   </ItemGroup>
   <ItemGroup>
