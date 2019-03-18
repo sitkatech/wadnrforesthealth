@@ -30,8 +30,6 @@ namespace ProjectFirma.Web.Views.ProjectCode
         {
             html.RenderRazorSitkaPartial<EditProjectCodeWithMultiSelect, EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>(new EditProjectCodeWithMultiSelectViewData(), viewModel);
         }
-
-        
     }
     public class EditProjectCodeWithMultiSelectViewData
     {

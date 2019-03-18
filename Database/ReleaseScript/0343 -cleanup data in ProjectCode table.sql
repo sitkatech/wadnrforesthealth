@@ -70,10 +70,11 @@ VALUES
 --GrantAllocationID to link 197
 insert into dbo.GrantAllocationProjectCode
 (GrantAllocationID, ProjectCodeID) VALUES
-(197, 107),
-(197,108),
-(197,109),
-(197,110)
+
+(197, (select ProjectCodeID from dbo.ProjectCode where ProjectCodeAbbrev = 'RGP')),
+(197, (select ProjectCodeID from dbo.ProjectCode where ProjectCodeAbbrev = 'RGR')),
+(197, (select ProjectCodeID from dbo.ProjectCode where ProjectCodeAbbrev = 'RGS')),
+(197, (select ProjectCodeID from dbo.ProjectCode where ProjectCodeAbbrev = 'RGU'))
 
 
 --remove bad project code

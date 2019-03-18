@@ -9,11 +9,11 @@ namespace ProjectFirma.Web.Models
 
         public string AuditDescriptionString => ProjectCodeAbbrev;
 
-        public static List<ProjectCode> GetListProjectCodesFromStrings(string projectCodesStrings)
+        public static List<ProjectCode> GetListProjectCodesFromCommaDelimitedString(string commaDelimitedListOfProjectCodes)
         {
             List<ProjectCode> projectCodes = new List<ProjectCode>();
 
-            foreach (var code in projectCodesStrings.Split(',').Select(s => s.Trim()))
+            foreach (var code in commaDelimitedListOfProjectCodes.Split(',').Select(s => s.Trim()))
             {
                 var foundCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(x => x.ProjectCodeAbbrev == code);
                 if (foundCode != null)

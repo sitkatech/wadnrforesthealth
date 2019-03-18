@@ -13,14 +13,12 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         public JsonResult FindProgramIndex(string term)
         {
-
             var programIndicesFound = HttpRequestStorage.DatabaseEntities.ProgramIndices.GetProgramIndicesWithoutHistoricRecords()
                 .GetProgramIndexFindResults(term).Take(20);
-            var programIndicesFound2 = programIndicesFound.Select(p => new ListItem(p.ProgramIndexAbbrev, p.ProgramIndexID.ToString(CultureInfo.InvariantCulture))).ToList();
-
-            return Json(programIndicesFound2.Select(v => new { label = v.Text, value = v.Text, actualValue = v.Value }), JsonRequestBehavior.AllowGet);//use JSON structure for jquerys autocomplete functionality
-
+            var programIndicesAsListItems = programIndicesFound.Select(p => new ListItem(p.ProgramIndexAbbrev, p.ProgramIndexID.ToString(CultureInfo.InvariantCulture))).ToList();
+            var programIndicesAsAnonymousJsonStructure = programIndicesAsListItems.Select(v => new { label = v.Text, value = v.Text, actualValue = v.Value });
+            //use JSON structure for jquerys autocomplete functionality
+            return Json(programIndicesAsAnonymousJsonStructure, JsonRequestBehavior.AllowGet);
         }
-
     }
 }

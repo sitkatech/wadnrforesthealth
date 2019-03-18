@@ -30,10 +30,25 @@
 <script type="text/javascript">
     // <![CDATA[
 
+    (function (jQuery) {
+        jQuery.validator.addMethod('checkProjectCode', function (value, element) {
+            console.log('checkProjectCode validation function');
+            // Test 'value' for html here. 'value' is the value of the control being validated.
+            // Return true or false depending on if it passes or fails validation, respectively.
+            return false;
+        }, 'Project Code is invalid');
+
+    }(jQuery));
+
     jQuery(document).ready(function () {
+        console.log('jQuery document ready');
         jQuery(".selectpicker").selectpicker("refresh");
+
+        jQuery.validator.unobtrusive.adapters.addBool('checkProjectCode');
     });
     // ]]>
+
+
 </script>
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
@@ -73,9 +88,9 @@
             </div>
             <div class="col-sm-3">
                 <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfProjectCode(this)"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return validateManualTypedUserInputForProjectCode(this)"
                        placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
-                       style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodeDisplayName" />
+                       style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodeSearchCriteria" />
                 @Html.HiddenFor(x => x.ProjectCodeID)
                 @Html.ValidationMessageFor(m => m.ProjectCodeID)
             </div>
@@ -269,12 +284,28 @@
 
 <script type="text/javascript">
     // <![CDATA[
-    function checkForDeleteOfProjectCode(myField) {
+    function validateManualTypedUserInputForProjectCode(myField) {
         if (!myField.value) {
-            jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
             jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val("");
             return true;
         }
+
+        jQuery.ajax({
+                method: "POST",
+                url: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
+                data: { term: myField.value }
+            })
+            .done(function (msg) {
+                console.log("ajax is done.");
+                if (msg.length == 1)
+                {
+                    jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(msg[0].actualValue);
+                } else
+                {
+                    jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val("");
+                }
+                
+            });
         return false;
     }
 
@@ -286,7 +317,7 @@
                 minLength: 1,
                 position: { my: "right top", at: "right bottom" },
                 select: function (event, ui) {
-                    //set VenderID value and display text in input
+                    //set ProjectCodeID value and display text in input
                     jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
                     jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);
                     event.preventDefault();

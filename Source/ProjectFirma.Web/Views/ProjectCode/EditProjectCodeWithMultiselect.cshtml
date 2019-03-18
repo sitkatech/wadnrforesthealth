@@ -34,12 +34,15 @@
 
 <script type="text/javascript">
     // <![CDATA[
-    function checkForDeleteOfProjectCodeMultiSelect(myField) {
-        if (!myField.value) {
+    function checkForDeleteOfProjectCodeMultiSelect(myField)
+    {
+        if (!myField.value)
+        {
             jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
             jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val("");
             return true;
-        } else {
+        } else
+        {
             jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val(myField.value);
         }
         return false;
@@ -47,11 +50,13 @@
 
     jQuery(document).ready(function ()
     {
-
-        function split(val) {
+        function split(val)
+        {
             return val.split(/,\s*/);
         }
-        function extractLast(term) {
+
+        function extractLast(term)
+        {
             return split(term).pop();
         }
 

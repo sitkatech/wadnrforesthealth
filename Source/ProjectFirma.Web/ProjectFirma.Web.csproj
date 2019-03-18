@@ -88,6 +88,9 @@
     <Compile Include="Models\Generated\County.Binding.cs" />
     <Compile Include="Models\Generated\County.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CountyPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\CurrentBiennium.Binding.cs" />
+    <Compile Include="Models\Generated\CurrentBiennium.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\CurrentBienniumPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CustomPage.Binding.cs" />
     <Compile Include="Models\Generated\CustomPage.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\CustomPageDisplayType.Binding.cs" />

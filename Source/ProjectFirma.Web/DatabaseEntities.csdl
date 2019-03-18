@@ -12,6 +12,7 @@
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
     <EntitySet Name="CostType" EntityType="ProjectFirma.Web.Models.CostType" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
+    <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.CurrentBiennium" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.FederalFundCode" />
@@ -1004,6 +1005,13 @@
     <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
     <Property Name="CountyFeature" Type="Geometry" />
     <NavigationProperty Name="StateProvince" Relationship="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID" FromRole="Counties" ToRole="StateProvince" />
+  </EntityType>
+  <EntityType Name="CurrentBiennium">
+    <Key>
+      <PropertyRef Name="CurrentBienniumID" />
+    </Key>
+    <Property Name="CurrentBienniumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrentBienniumFiscalYear" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomPage">
     <Key>

@@ -22,6 +22,6 @@ namespace ProjectFirma.Web.Views.ProgramIndex
 {
     public abstract class ProgramIndexSearchResults : LtInfo.Common.Mvc.TypedWebViewPage<ProgramIndexSearchResultsViewData>
     {
-        public const string ProgramIndexSearchInputTextboxID = "programIndexSearchCriteria";
+        public const string ProgramIndexSearchInputTextboxID = "ProgramIndexSearchCriteria";
     }
 }

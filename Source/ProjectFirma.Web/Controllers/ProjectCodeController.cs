@@ -14,13 +14,11 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         public JsonResult FindProjectCode(string term)
         {
-
             var projectCodesFound = HttpRequestStorage.DatabaseEntities.ProjectCodes.GetProjectCodeFindResults(term).Take(20);
-            var projectCodesFound2 = projectCodesFound.Select(p => new ListItem(p.ProjectCodeAbbrev, p.ProjectCodeID.ToString(CultureInfo.InvariantCulture))).ToList();
-
-            return Json(projectCodesFound2.Select(v => new { label = v.Text, value = v.Text, actualValue = v.Value }), JsonRequestBehavior.AllowGet);//use JSON structure for jquerys autocomplete functionality
-
+            var projectCodesFoundAsListItems = projectCodesFound.Select(p => new ListItem(p.ProjectCodeAbbrev, p.ProjectCodeID.ToString(CultureInfo.InvariantCulture))).ToList();
+            var projectCodesFoundAsAnonymousJsonStructure = projectCodesFoundAsListItems.Select(v => new { label = v.Text, value = v.Text, actualValue = v.Value });
+            // use JSON structure for jquerys autocomplete functionality
+            return Json(projectCodesFoundAsAnonymousJsonStructure, JsonRequestBehavior.AllowGet);
         }
-
     }
 }

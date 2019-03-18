@@ -25,21 +25,39 @@ Source code is available upon request via <support@sitkatech.com>.
 @inherits ProjectFirma.Web.Views.ProgramIndex.EditProgramIndex
 
 <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
-       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" onblur="return checkForDeleteOfProgramIndex(this)"
+       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" onblur="return validateManuallyTypedUserInputProgramIndex(this)"
        placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
-       style="margin-right: -5px; margin-left: auto;" value="@Model.ProgramIndexDisplayName" />
+       style="margin-right: -5px; margin-left: auto;" value="@Model.ProgramIndexSearchCriteria" />
 @Html.HiddenFor(x => x.ProgramIndexID)
 @Html.ValidationMessageFor(m => m.ProgramIndexID)
 
 
 <script type="text/javascript">
     // <![CDATA[
-    function checkForDeleteOfProgramIndex(myField) {
-        if (!myField.value) {
-            jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val("");
+    function validateManuallyTypedUserInputProgramIndex(myField)
+    {
+        //console.log('validateUserInputProgramIndex. myField: ' + myField.value);
+        if (!myField.value)
+        {
             jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val("");
             return true;
         }
+
+        jQuery.ajax({
+                method: "POST",
+                url: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
+                data: { term: myField.value }
+            })
+            .done(function (msg) {
+                if (msg.length == 1)
+                {
+                    jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(msg[0].actualValue);
+                } else
+                {
+                    jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val("");
+                }
+                
+            });
         return false;
     }
 
@@ -51,9 +69,10 @@ Source code is available upon request via <support@sitkatech.com>.
                 minLength: 1,
                 position: { my: "right top", at: "right bottom" },
                 select: function (event, ui) {
-                    //set VenderID value and display text in input
+                    //set ProgramIndexID value and display text in input
                     jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
                     jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(ui.item.actualValue);
+                    //console.log('ui.item.actualValue: ' + ui.item.actualValue);
                     event.preventDefault();
                 },
                 html: true

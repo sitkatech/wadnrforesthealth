@@ -26,3 +26,5 @@ INSERT INTO dbo.ProjectCode (ProjectCodeAbbrev, ProjectCodeTitle)
 	left join dbo.ProjectCode as pc 
 	on tpc.project = pc.ProjectCodeAbbrev 
 	where pc.ProjectCodeAbbrev is null
+
+--select * from dbo.tmpProjectCode

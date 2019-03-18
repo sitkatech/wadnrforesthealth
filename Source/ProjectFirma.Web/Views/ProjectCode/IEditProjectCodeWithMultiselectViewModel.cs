@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace ProjectFirma.Web.Views.ProjectCode
+﻿namespace ProjectFirma.Web.Views.ProjectCode
 {
     public interface IEditProjectCodeWithMultiselectViewModel
     {

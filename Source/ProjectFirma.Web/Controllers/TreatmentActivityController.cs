@@ -5,7 +5,6 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.TreatmentActivity;
-using System;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Models;

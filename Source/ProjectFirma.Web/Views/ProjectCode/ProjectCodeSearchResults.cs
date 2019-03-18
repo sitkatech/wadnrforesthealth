@@ -22,6 +22,6 @@ namespace ProjectFirma.Web.Views.ProjectCode
 {
     public abstract class ProjectCodeSearchResults : LtInfo.Common.Mvc.TypedWebViewPage<ProjectCodeSearchResultsViewData>
     {
-        public const string ProjectCodeSearchInputTextboxID = "projectCodeSearchCriteria";
+        public const string ProjectCodeSearchInputTextboxID = "ProjectCodeSearchCriteria";
     }
 }
