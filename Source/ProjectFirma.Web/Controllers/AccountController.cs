@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 SitkaHttpApplication.Logger.Debug(
                     $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Falling back to SAW email authentication --  {userDetailsString}");
-                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false);
+                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email);
             }
 
             // If there's no Person already that corresponds to the Person who is logging in,

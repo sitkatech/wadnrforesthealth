@@ -21,9 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
-using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -31,19 +29,9 @@ namespace ProjectFirma.Web.Models
     {
         public static Person GetPersonByEmail(this IQueryable<Person> people, string email)
         {
-            return GetPersonByEmail(people, email, true);
-        }
-
-        public static Person GetPersonByEmail(this IQueryable<Person> people, string email, bool requireRecordFound)
-        {
             var peopleWithDesiredEmail = people.Where(x => x.Email == email).ToList();
             Check.Require(peopleWithDesiredEmail.Count <= 1, "Found more than one Person with email \"{email}\", emails should be unique in database.");
-
             var person = peopleWithDesiredEmail.SingleOrDefault();
-            if (requireRecordFound)
-            {
-                Check.RequireNotNullThrowNotFound(person, email);
-            }
             return person;
         }
 
