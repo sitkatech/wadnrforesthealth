@@ -814,7 +814,6 @@
     <Content Include="Views\Agreement\EditAgreement.cshtml" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocations.cshtml" />
     <Content Include="Content\documents\CostShareBlankFormFields.pdf" />
-    <None Include="Views\FocusArea\Detail.cshtml" />
     <Content Include="Views\Agreement\Detail.cshtml" />
     <Content Include="Views\Agreement\EditAgreementPerson.cshtml" />
     <None Include="Views\FocusArea\Detail.cshtml" />

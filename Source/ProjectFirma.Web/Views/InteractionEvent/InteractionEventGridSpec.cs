@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(),
                 x => x.InteractionEventType?.InteractionEventTypeDisplayName, 120,
                 DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.InteractionEventStaff.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast,
+            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast,
                 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
         }
