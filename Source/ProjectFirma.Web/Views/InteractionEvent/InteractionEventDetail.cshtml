@@ -1,0 +1,77 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="InteractionEventDetail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Shared
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.ModalDialog
+@using MoreLinq
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.PerformanceMeasure
+@inherits ProjectFirma.Web.Views.InteractionEvent.InteractionEventDetail
+
+@section JavascriptAndStylesContent
+{
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+    @{ MapJavascriptIncludes.RenderPartialView(Html); }
+}
+
+
+
+<div>
+    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.InteractionEvent.FieldDefinitionDisplayName </a>
+</div>
+
+<div class="panel panelFirma">
+    <div class="panel-heading panelTitle">
+        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditInteractionEventUrl, string.Format("Edit {0} - {1}", FieldDefinition.InteractionEvent.FieldDefinitionDisplayName, ViewDataTyped.InteractionEvent.InteractionEventTitle), ViewDataTyped.UserHasInteractionEventManagePermissions) Basics
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Title")</div>
+                    <div class="col-xs-6">@ViewDataTyped.InteractionEvent.InteractionEventTitle</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Description")</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.InteractionEventDescription)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Date")</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.DateDisplay)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label(FieldDefinition.InteractionEventType.GetFieldDefinitionLabel())</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.InteractionEventType.InteractionEventTypeDisplayName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label(FieldDefinition.DNRStaffPerson.GetFieldDefinitionLabel())</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.StaffPerson.GetFullNameFirstLastAsUrl())</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

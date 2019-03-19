@@ -99,9 +99,13 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [InteractionEventViewFeature]
-        public PartialViewResult InteractionEventDetail(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        public ViewResult InteractionEventDetail(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
-            throw new NotImplementedException();
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+
+
+            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent);
+            return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
         }
 
 

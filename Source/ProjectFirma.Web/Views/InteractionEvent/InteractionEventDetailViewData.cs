@@ -19,7 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
@@ -27,9 +30,18 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     {
         public string IndexUrl { get; set; }
 
-        public InteractionEventDetailViewData(Person currentPerson) : base(currentPerson)
+        public Models.InteractionEvent InteractionEvent { get; set; }
+
+        public string EditInteractionEventUrl { get; set; }
+
+        public bool UserHasInteractionEventManagePermissions { get; set; }
+
+        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent) : base(currentPerson)
         {
-            
+            IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
+            EditInteractionEventUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
+            UserHasInteractionEventManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
+            InteractionEvent = interactionEvent;
         }
 
         

@@ -669,8 +669,8 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
-    <Compile Include="Views\InteractionEvent\Detail.cs" />
-    <Compile Include="Views\InteractionEvent\DetailViewData.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventIndexViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventIndex.cs" />
@@ -1299,7 +1299,7 @@
     <Content Include="Views\Invoice\EditInvoiceLineItem.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
-    <Content Include="Views\InteractionEvent\Detail.cshtml" />
+    <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
