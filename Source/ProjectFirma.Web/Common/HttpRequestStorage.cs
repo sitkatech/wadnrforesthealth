@@ -19,8 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
-using System.Security.Principal;
-using System.Web;
 using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Models;
@@ -42,8 +40,7 @@ namespace ProjectFirma.Web.Common
             get
             {
                 var person = GetValueOrDefault<Person>(PersonKey, () => null);
-                Check.RequireNotNull(person, "Attempting to access Person before OnAuthentication is complete. Unexpected, some code may be running too soon in event lifecycle.");
-
+                Check.RequireNotNull(person, $"Attempting to access {nameof(Person)} before OnAuthentication is complete. Unexpected, some code may be trying to access Person too soon in request event lifecycle.");
                 return person;
             }
             set => SetValue(PersonKey, value);

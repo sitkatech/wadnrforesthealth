@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Models
                 AllowRefresh = true,
                 IsPersistent = false,
                 ExpiresUtc = DateTime.UtcNow.AddDays(7)
-            }, ClaimsIdentityHelper.ClaimsIdentityFromPerson(person));
+            }, ClaimsIdentityFromPerson(person));
         }
 
         public static void IdentitySignOut(IAuthenticationManager authenticationManager)
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
         public static Person PersonFromClaimsIdentity(IAuthenticationManager authenticationManager)
         {
             var claimsPrincipal = authenticationManager.User;
-            if (claimsPrincipal?.Identity == null || !claimsPrincipal.Identity.IsAuthenticated || claimsPrincipal.Identity.AuthenticationType != DefaultAuthenticationTypes.ApplicationCookie)
+            if (claimsPrincipal?.Identity == null || !claimsPrincipal.Identity.IsAuthenticated  || claimsPrincipal.Identity.AuthenticationType != DefaultAuthenticationTypes.ApplicationCookie)
             {
                 return Person.GetAnonymousSitkaUser();
             }

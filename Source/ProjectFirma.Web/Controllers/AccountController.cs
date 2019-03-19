@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common;
@@ -98,15 +97,15 @@ namespace ProjectFirma.Web.Controllers
         // ReSharper disable once InconsistentNaming
         public ActionResult ADFSPost(string returnUrl)
         {
-            var samlResponse = new ADFSSamlResponse();
-            samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
+            var adfsSamlResponse = new ADFSSamlResponse();
+            adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
 
-            samlResponse.Decrypt();
-            var firstName = samlResponse.GetFirstName();
-            var lastName = samlResponse.GetLastName();
-            var email = samlResponse.GetEmail();
-            var upn = samlResponse.GetUPN();
-            var groups = samlResponse.GetRoleGroups();
+            adfsSamlResponse.Decrypt();
+            var firstName = adfsSamlResponse.GetFirstName();
+            var lastName = adfsSamlResponse.GetLastName();
+            var email = adfsSamlResponse.GetEmail();
+            var upn = adfsSamlResponse.GetUPN();
+            var groups = adfsSamlResponse.GetRoleGroups();
             IdentitySignIn(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.Adfs);
             return new RedirectResult(HomeUrl);
         }
