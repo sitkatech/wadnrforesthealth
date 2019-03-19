@@ -38,21 +38,19 @@ namespace ProjectFirma.Web.Controllers
                 return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
             }
 
-            var interactionEventType =
-                HttpRequestStorage.DatabaseEntities.InteractionEventTypes.Single(x =>
-                    x.InteractionEventTypeID == viewModel.InteractionEventTypeID);
-            var dnrStaffPerson =
-                HttpRequestStorage.DatabaseEntities.People.Single(p => p.PersonID == viewModel.DNRStaffPersonID);
-            var interactionEvent = InteractionEvent.CreateNewBlank(interactionEventType, dnrStaffPerson);
+            var interactionEvent = new InteractionEvent(viewModel.InteractionEventTypeID, viewModel.DNRStaffPersonID,
+                viewModel.Title, viewModel.Date);
             viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            HttpRequestStorage.DatabaseEntities.InteractionEvents.Add(interactionEvent);
+            SetMessageForDisplay($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} \"{interactionEvent.InteractionEventTitle}\" successfully created.");
             return new ModalDialogFormJsonResult();
         }
 
         private PartialViewResult InteractionEventViewEdit(EditInteractionEventViewModel viewModel, EditInteractionEventEditType editInteractionEventEditType)
         {
             var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes.ToList();
-            var dnrStaffPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(p => p.LastName).Where(p =>
-                p.Organization.OrganizationName == "Washington State Department of Natural Resources").ToList();
+            var dnrStaffPeople = HttpRequestStorage.DatabaseEntities.People.Where(p =>
+                p.Organization.OrganizationName == Organization.OrganizationWADNR).OrderBy(p => p.LastName).ToList();
             
 
             var viewData = new EditInteractionEventViewData(editInteractionEventEditType,
