@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
-using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common;
@@ -32,7 +31,6 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.Account;
-using Saml;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -78,17 +76,14 @@ namespace ProjectFirma.Web.Controllers
         // ReSharper disable once InconsistentNaming
         public ActionResult SAWPost(string returnUrl)
         {
-            var samlResponse = new Response(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
+            var samlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
             samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
-
             if (samlResponse.IsValid())
             {
-                var username = samlResponse.GetNameID();
+                var userName = samlResponse.GetUserName();
                 var fullName = samlResponse.GetName();
                 var email = samlResponse.GetEmail();
-                var userName = samlResponse.GetUserName();
-
-                IdentitySignIn(username, fullName, email, userName, null, AuthenticationMethod.Saw);
+                IdentitySignIn(userName, fullName, email, null, AuthenticationMethod.Saw);
             }
             return new RedirectResult(HomeUrl);
         }
@@ -98,22 +93,23 @@ namespace ProjectFirma.Web.Controllers
         // ReSharper disable once InconsistentNaming
         public ActionResult ADFSPost(string returnUrl)
         {
-            var samlResponse = new ADFSSamlResponse();
-            samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
+            var adfsSamlResponse = new ADFSSamlResponse();
+            adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
+            adfsSamlResponse.Decrypt();
 
-            samlResponse.Decrypt();
-            var firstName = samlResponse.GetFirstName();
-            var lastName = samlResponse.GetLastName();
-            var email = samlResponse.GetEmail();
-            var upn = samlResponse.GetUPN();
-            var groups = samlResponse.GetRoleGroups();
-            IdentitySignIn(upn, firstName + " " + lastName, email, upn, groups, AuthenticationMethod.Adfs);
+            var username = adfsSamlResponse.GetUpn();
+            var firstName = adfsSamlResponse.GetFirstName();
+            var lastName = adfsSamlResponse.GetLastName();
+            var email = adfsSamlResponse.GetEmail();
+            var groups = adfsSamlResponse.GetRoleGroups();
+
+            IdentitySignIn(username, firstName + " " + lastName, email, groups, AuthenticationMethod.Adfs);
             return new RedirectResult(HomeUrl);
         }
 
-        private void IdentitySignIn(string userId, string name, string email, string userName, string groups, AuthenticationMethod authenticationMethod)
+        private void IdentitySignIn(string userName, string name, string email, string groups, AuthenticationMethod authenticationMethod)
         {
-            SitkaHttpApplication.Logger.Debug($"Logon (IdentitySignIn) - AuthMethod {authenticationMethod.ToString()} userId: {userId} name: {name} email: {email} userName: {userName} providerKey: {(string) null} isPersistent: {false}");
+            SitkaHttpApplication.Logger.Info($"Logon (IdentitySignIn) - AuthMethod {authenticationMethod.ToString()} userName: {userName} name: {name} email: {email} providerKey: {(string) null} isPersistent: {false}");
 
             var names = name.Split(' ');
             string firstName;
@@ -130,7 +126,7 @@ namespace ProjectFirma.Web.Controllers
 
             var roleGroups = !string.IsNullOrWhiteSpace(groups) ? groups.Split(',').ToList() : new List<string>();
 
-            var person = LookupExistingPersonOrProvisionNewPerson(authenticationMethod, userId, userName, firstName, lastName, email, roleGroups);
+            var person = LookupExistingPersonOrProvisionNewPerson(authenticationMethod, userName, firstName, lastName, email, roleGroups);
 
             // add to user here!
             ClaimsIdentityHelper.IdentitySignIn(HttpContext.GetOwinContext().Authentication, person);
@@ -145,19 +141,19 @@ namespace ProjectFirma.Web.Controllers
             return Redirect(returnUrl);
         }
 
-        private static Person LookupExistingPersonOrProvisionNewPerson(AuthenticationMethod authenticationMethod, string personUniqueIdentifier, string username,
+        private static Person LookupExistingPersonOrProvisionNewPerson(AuthenticationMethod authenticationMethod, string username,
             string firstName, string lastName, string email, List<string> groups)
         {
             var sendNewUserNotification = false;
 
             string userDetailsString =
-                $"PersonUniqueIdentifier: {personUniqueIdentifier} -- Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
+                $"Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
 
-            var authenticatorToRequire = AuthenticatorHelper.GetAuthenticator(personUniqueIdentifier);
+            var authenticatorToRequire = AuthenticatorHelper.GetAuthenticator(username);
             bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
 
             // Always try to validate first using unique identifier, as it is arguably more secure
-            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(personUniqueIdentifier);
+            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(username);
 
             string personLookupSuccess = person != null ? "Found" : "Did NOT find";
             SitkaHttpApplication.Logger.Debug(
@@ -168,7 +164,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 SitkaHttpApplication.Logger.Debug(
                     $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Falling back to SAW email authentication --  {userDetailsString}");
-                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email, false);
+                person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email);
             }
 
             // If there's no Person already that corresponds to the Person who is logging in,
@@ -192,7 +188,7 @@ namespace ProjectFirma.Web.Controllers
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
                 var currentDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
                 var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person,
-                    currentDeploymentEnvironment, authenticatorToRequire, personUniqueIdentifier);
+                    currentDeploymentEnvironment, authenticatorToRequire, username);
                 HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(
                     personEnvironmentCredentialForCurrentEnvironment);
 
@@ -201,7 +197,7 @@ namespace ProjectFirma.Web.Controllers
                 if (currentDeploymentEnvironment == DeploymentEnvironment.Prod && authenticatorToRequire == Authenticator.ADFS)
                 {
                     var personEnvironmentCredentialForQa = new PersonEnvironmentCredential(person, DeploymentEnvironment.QA,
-                        authenticatorToRequire, personUniqueIdentifier);
+                        authenticatorToRequire, username);
                     HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForQa);
                 }
 
