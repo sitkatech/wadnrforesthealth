@@ -118,5 +118,49 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [InteractionEventManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventContactsViewModel viewModel)
+        {
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            //if (!ModelState.IsValid)
+            //{
+            //    return InteractionEventContactsViewEdit(viewModel, EditInteractionEventContactsEditType.ExistingInteractionEventContactsEdit);
+            //}
+            //viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            //return new ModalDialogFormJsonResult();
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult EditInteractionEventProjects(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [InteractionEventManageFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInteractionEventProjects(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventProjectsViewModel viewModel)
+        {
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            //if (!ModelState.IsValid)
+            //{
+            //    return InteractionEventProjeactsViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventContactsEdit);
+            //}
+            //viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            //return new ModalDialogFormJsonResult();
+            throw new NotImplementedException();
+        }
+
     }
 }

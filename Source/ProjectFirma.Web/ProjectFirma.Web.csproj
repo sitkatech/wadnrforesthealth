@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -176,7 +176,13 @@
     <Compile Include="Models\Generated\GrantTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEvent.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEvent.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\InteractionEventContact.Binding.cs" />
+    <Compile Include="Models\Generated\InteractionEventContact.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\InteractionEventContactPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\InteractionEventProject.Binding.cs" />
+    <Compile Include="Models\Generated\InteractionEventProject.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\InteractionEventProjectPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventType.Binding.cs" />
     <Compile Include="Models\Generated\InteractionEventType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\InteractionEventTypePrimaryKey.Binding.cs" />
@@ -669,6 +675,8 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewModel.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />

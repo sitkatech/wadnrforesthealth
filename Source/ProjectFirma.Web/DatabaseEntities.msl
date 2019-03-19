@@ -394,6 +394,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventContact">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventContact">
+        <MappingFragment StoreEntitySet="InteractionEventContact">
+          <ScalarProperty Name="InteractionEventContactID" ColumnName="InteractionEventContactID" />
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventProject">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventProject">
+        <MappingFragment StoreEntitySet="InteractionEventProject">
+          <ScalarProperty Name="InteractionEventProjectID" ColumnName="InteractionEventProjectID" />
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="InteractionEventType">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventType">
         <MappingFragment StoreEntitySet="InteractionEventType">

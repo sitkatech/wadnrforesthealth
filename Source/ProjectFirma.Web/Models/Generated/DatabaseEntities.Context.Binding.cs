@@ -62,6 +62,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<Grant> Grants { get; set; }
         public virtual DbSet<GrantStatus> GrantStatuses { get; set; }
         public virtual DbSet<GrantType> GrantTypes { get; set; }
+        public virtual DbSet<InteractionEventContact> InteractionEventContacts { get; set; }
+        public virtual DbSet<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual DbSet<InteractionEvent> InteractionEvents { get; set; }
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
         public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; set; }
@@ -311,6 +313,12 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantType":
                     return GrantTypes.GetGrantType(primaryKey);
+
+                case "InteractionEventContact":
+                    return InteractionEventContacts.GetInteractionEventContact(primaryKey);
+
+                case "InteractionEventProject":
+                    return InteractionEventProjects.GetInteractionEventProject(primaryKey);
 
                 case "InteractionEvent":
                     return InteractionEvents.GetInteractionEvent(primaryKey);

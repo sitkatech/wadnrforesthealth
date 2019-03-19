@@ -24,7 +24,8 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected InteractionEvent()
         {
-
+            this.InteractionEventContacts = new HashSet<InteractionEventContact>();
+            this.InteractionEventProjects = new HashSet<InteractionEventProject>();
         }
 
         /// <summary>
@@ -85,13 +86,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return InteractionEventContacts.Any() || InteractionEventProjects.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InteractionEvent).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InteractionEventProject).Name};
 
 
         /// <summary>
@@ -107,8 +108,24 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in InteractionEventContacts.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in InteractionEventProjects.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -121,6 +138,8 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return InteractionEventID; } set { InteractionEventID = value; } }
 
+        public virtual ICollection<InteractionEventContact> InteractionEventContacts { get; set; }
+        public virtual ICollection<InteractionEventProject> InteractionEventProjects { get; set; }
         public virtual InteractionEventType InteractionEventType { get; set; }
         public virtual Person StaffPerson { get; set; }
 

@@ -41,7 +41,7 @@
 
 
 <div>
-    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.InteractionEvent.FieldDefinitionDisplayName </a>
+    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.InteractionEvent.FieldDefinitionDisplayName</a>
 </div>
 
 <div class="panel panelFirma">
@@ -72,6 +72,68 @@
                     <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.StaffPerson.GetFullNameFirstLastAsUrl())</div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="panel panelFirma">
+    <div class="panel-heading panelTitle">
+        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditInteractionEventContactsUrl, string.Format("Edit {0} - {1}", FieldDefinition.InteractionEvent.FieldDefinitionDisplayName, ViewDataTyped.InteractionEvent.InteractionEventTitle), ViewDataTyped.UserHasInteractionEventManagePermissions) Contacts
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                @*<div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Title")</div>
+                    <div class="col-xs-6">@ViewDataTyped.InteractionEvent.InteractionEventTitle</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Description")</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.InteractionEventDescription)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Date")</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.DateDisplay)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label(FieldDefinition.InteractionEventType.GetFieldDefinitionLabel())</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.InteractionEventType.InteractionEventTypeDisplayName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label(FieldDefinition.DNRStaffPerson.GetFieldDefinitionLabel())</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.StaffPerson.GetFullNameFirstLastAsUrl())</div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panelFirma">
+    <div class="panel-heading panelTitle">
+        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditInteractionEventProjectsUrl, string.Format("Edit {0} - {1}", FieldDefinition.InteractionEvent.FieldDefinitionDisplayName, ViewDataTyped.InteractionEvent.InteractionEventTitle), ViewDataTyped.UserHasInteractionEventManagePermissions) Projects
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            @*<div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Title")</div>
+                    <div class="col-xs-6">@ViewDataTyped.InteractionEvent.InteractionEventTitle</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Description")</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.InteractionEventDescription)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label("Date")</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.DateDisplay)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label(FieldDefinition.InteractionEventType.GetFieldDefinitionLabel())</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.InteractionEventType.InteractionEventTypeDisplayName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 fieldLabel">@Html.Label(FieldDefinition.DNRStaffPerson.GetFieldDefinitionLabel())</div>
+                    <div class="col-xs-6">@(ViewDataTyped.InteractionEvent.StaffPerson.GetFullNameFirstLastAsUrl())</div>
+                </div>
+            </div>*@
         </div>
     </div>
 </div>
