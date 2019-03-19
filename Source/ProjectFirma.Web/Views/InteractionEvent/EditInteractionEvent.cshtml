@@ -27,18 +27,54 @@ Source code is available upon request via <support@sitkatech.com>.
 
 @using (Html.BeginForm())
 {
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        <div class="form-group">
-            <div class="col-xs-2 control-label">
-                @Html.LabelWithSugarFor(m => m.InteractionEventID, "Interaction Event")
-            </div>
-            <div class="col-xs-10">
-                @Html.DropDownListFor(m => m.InteractionEventID, ViewDataTyped.InteractionEventTypes, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.InteractionEventID)
-            </div>
+    <div class="form-group">
+        <div class="col-xs-2 control-label">
+            @Html.LabelWithSugarFor(m => m.InteractionEventTypeID, "Type")
         </div>
-
+        <div class="col-xs-6">
+            @Html.DropDownListFor(m => m.InteractionEventTypeID, ViewDataTyped.InteractionEventTypes, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InteractionEventTypeID)
+        </div>
     </div>
+    <div class="form-group">
+        <div class="col-xs-2 control-label">
+            @Html.LabelWithSugarFor(m => m.Date, "Date")
+        </div>
+        <div class="col-xs-10">
+            @Html.EditorFor(m => m.Date, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Date)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-2 control-label">
+            @Html.LabelWithSugarFor(m => m.Title, "Title")
+        </div>
+        <div class="col-xs-8">
+            @Html.EditorFor(m => m.Title, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-2 control-label">
+            @Html.LabelWithSugarFor(m => m.Description, "Description")
+        </div>
+        <div class="col-xs-6">
+            @Html.TextAreaFor(m => m.Description, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-2 control-label">
+            @Html.LabelWithSugarFor(m => m.DNRStaffPersonID, "DNR Staff Person")
+        </div>
+        <div class="col-xs-6">
+            @Html.DropDownListFor(m => m.DNRStaffPersonID, ViewDataTyped.StaffPeople, new { style = "width: auto;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DNRStaffPersonID)
+        </div>
+    </div>
+
+</div>
     @Html.HiddenFor(m => m.InteractionEventID)
 }

@@ -157,4 +157,4 @@ VALUES
 (333, N'InvoiceLineItem', N'Invoice Line Item', N'<p>A line item on an invoice which includes an amount and the associated funding source/grant.</p>'),
 (334, N'InteractionEvent', N'Interaction/Event', N'<p>Placeholder definition for Interaction/Event description.</p>'),
 (335, N'InteractionEventType', N'Interaction/Event Type', N'<p>Placeholder definition for Interaction/Event Type description.</p>'),
-(336, N'InteractionEventStaff', N'Interaction/Event Staff', N'<p>Placeholder definition for Interaction/Event Staff description.</p>')
+(336, N'DNRStaffPerson', N'DNR Staff Person', N'<p>Placeholder definition for DNR Staff Person assigned to an Interaction/Event.</p>')

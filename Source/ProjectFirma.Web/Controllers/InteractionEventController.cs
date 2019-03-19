@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.InteractionEvent;
 
 namespace ProjectFirma.Web.Controllers
@@ -40,18 +37,27 @@ namespace ProjectFirma.Web.Controllers
             {
                 return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
             }
-            var interactionEvent = HttpRequestStorage.DatabaseEntities.InteractionEvents.Single(g => g.InteractionEventID == viewModel.InteractionEventID);
+
+            var interactionEventType =
+                HttpRequestStorage.DatabaseEntities.InteractionEventTypes.Single(x =>
+                    x.InteractionEventTypeID == viewModel.InteractionEventTypeID);
+            var dnrStaffPerson =
+                HttpRequestStorage.DatabaseEntities.People.Single(p => p.PersonID == viewModel.DNRStaffPersonID);
+            var interactionEvent = InteractionEvent.CreateNewBlank(interactionEventType, dnrStaffPerson);
             viewModel.UpdateModel(interactionEvent, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
         private PartialViewResult InteractionEventViewEdit(EditInteractionEventViewModel viewModel, EditInteractionEventEditType editInteractionEventEditType)
         {
-            var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes;
+            var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes.ToList();
+            var dnrStaffPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(p => p.LastName).Where(p =>
+                p.Organization.OrganizationName == "Washington State Department of Natural Resources").ToList();
             
 
             var viewData = new EditInteractionEventViewData(editInteractionEventEditType,
-                interactionEventTypes
+                interactionEventTypes,
+                dnrStaffPeople
             );
             return RazorPartialView<EditInteractionEvent, EditInteractionEventViewData, EditInteractionEventViewModel>(viewData, viewModel);
         }
@@ -69,11 +75,11 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventViewModel viewModel)
         {
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
                 return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventEdit);
             }
-            var interactionEvent = HttpRequestStorage.DatabaseEntities.InteractionEvents.Single(g => g.InteractionEventID == viewModel.InteractionEventID);
             viewModel.UpdateModel(interactionEvent, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }

@@ -56,13 +56,13 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 120,
                 DhtmlxGridColumnFilterType.Html);
             Add("Description", x => x.InteractionEventDescription, 200, DhtmlxGridColumnFilterType.Text);
-            Add("Date", x => x.InteractionEventDate.ToShortDateString(), 50,
+            Add("Date", x => x.InteractionEventDate.ToShortDateString(), 80,
                 DhtmlxGridColumnFilterType.FormattedNumeric);
             Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(),
-                x => x.InteractionEventType?.InteractionEventTypeDisplayName, 50,
+                x => x.InteractionEventType?.InteractionEventTypeDisplayName, 120,
                 DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InteractionEventStaff.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast,
-                50, DhtmlxGridColumnFilterType.SelectFilterStrict);
+                180, DhtmlxGridColumnFilterType.SelectFilterStrict);
 
         }
     }

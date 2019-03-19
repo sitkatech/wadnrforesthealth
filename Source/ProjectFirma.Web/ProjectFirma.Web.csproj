@@ -489,6 +489,7 @@
     <Compile Include="Controllers\InteractionEventController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
+    <Compile Include="Models\InteractionEventType.cs" />
     <Compile Include="Models\InteractionEvent.cs" />
     <Compile Include="Models\InteractionEventModelExtensions.cs" />
     <Compile Include="Models\InvoiceApprovalStatus.cs" />

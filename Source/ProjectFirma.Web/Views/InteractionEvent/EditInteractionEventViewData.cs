@@ -31,11 +31,16 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public EditInteractionEventEditType EditInteractionEventEditType { get; set; }
         public IEnumerable<SelectListItem> InteractionEventTypes { get; }
+        public IEnumerable<SelectListItem> StaffPeople { get; }
         
 
-        public EditInteractionEventViewData(EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes)
+        public EditInteractionEventViewData(EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> staffPeople)
         {
             InteractionEventTypes = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
+            // Sorted and filtered on controller
+            StaffPeople =
+                staffPeople.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FullNameFirstLast);
 
             EditInteractionEventEditType = editInteractionEventEditType;
         }
