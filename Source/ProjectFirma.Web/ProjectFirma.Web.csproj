@@ -100,8 +100,6 @@
     <Compile Include="Models\Generated\CustomPageImagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CustomPagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\DatabaseEntities.Context.Binding.cs" />
-    <Compile Include="Models\Generated\DeploymentEnvironment.Binding.cs" />
-    <Compile Include="Models\Generated\DeploymentEnvironmentPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />

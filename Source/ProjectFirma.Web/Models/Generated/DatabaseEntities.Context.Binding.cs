@@ -215,11 +215,6 @@ namespace ProjectFirma.Web.Models
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
 
-                case "DeploymentEnvironment":
-                    var deploymentEnvironment = DeploymentEnvironment.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(deploymentEnvironment, "DeploymentEnvironment", primaryKey);
-                    return deploymentEnvironment;
-
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
 

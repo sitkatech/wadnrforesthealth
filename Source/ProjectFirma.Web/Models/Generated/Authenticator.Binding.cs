@@ -19,7 +19,8 @@ namespace ProjectFirma.Web.Models
     public abstract partial class Authenticator : IHavePrimaryKey
     {
         public static readonly AuthenticatorADFS ADFS = AuthenticatorADFS.Instance;
-        public static readonly AuthenticatorSAW SAW = AuthenticatorSAW.Instance;
+        public static readonly AuthenticatorSAWPROD SAWPROD = AuthenticatorSAWPROD.Instance;
+        public static readonly AuthenticatorSAWTEST SAWTEST = AuthenticatorSAWTEST.Instance;
 
         public static readonly List<Authenticator> All;
         public static readonly ReadOnlyDictionary<int, Authenticator> AllLookupDictionary;
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static Authenticator()
         {
-            All = new List<Authenticator> { ADFS, SAW };
+            All = new List<Authenticator> { ADFS, SAWPROD, SAWTEST };
             AllLookupDictionary = new ReadOnlyDictionary<int, Authenticator>(All.ToDictionary(x => x.AuthenticatorID));
         }
 
@@ -101,8 +102,10 @@ namespace ProjectFirma.Web.Models
             {
                 case AuthenticatorEnum.ADFS:
                     return ADFS;
-                case AuthenticatorEnum.SAW:
-                    return SAW;
+                case AuthenticatorEnum.SAWPROD:
+                    return SAWPROD;
+                case AuthenticatorEnum.SAWTEST:
+                    return SAWTEST;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -112,7 +115,8 @@ namespace ProjectFirma.Web.Models
     public enum AuthenticatorEnum
     {
         ADFS = 1,
-        SAW = 2
+        SAWPROD = 2,
+        SAWTEST = 3
     }
 
     public partial class AuthenticatorADFS : Authenticator
@@ -121,9 +125,15 @@ namespace ProjectFirma.Web.Models
         public static readonly AuthenticatorADFS Instance = new AuthenticatorADFS(1, @"ADFS", @"Washington DNR ADFS Account");
     }
 
-    public partial class AuthenticatorSAW : Authenticator
+    public partial class AuthenticatorSAWPROD : Authenticator
     {
-        private AuthenticatorSAW(int authenticatorID, string authenticatorName, string authenticatorFullName) : base(authenticatorID, authenticatorName, authenticatorFullName) {}
-        public static readonly AuthenticatorSAW Instance = new AuthenticatorSAW(2, @"SAW", @"Secure Access Washington Account");
+        private AuthenticatorSAWPROD(int authenticatorID, string authenticatorName, string authenticatorFullName) : base(authenticatorID, authenticatorName, authenticatorFullName) {}
+        public static readonly AuthenticatorSAWPROD Instance = new AuthenticatorSAWPROD(2, @"SAW-PROD", @"Secure Access Washington Account (PROD)");
+    }
+
+    public partial class AuthenticatorSAWTEST : Authenticator
+    {
+        private AuthenticatorSAWTEST(int authenticatorID, string authenticatorName, string authenticatorFullName) : base(authenticatorID, authenticatorName, authenticatorFullName) {}
+        public static readonly AuthenticatorSAWTEST Instance = new AuthenticatorSAWTEST(3, @"SAW-TEST", @"Secure Access Washington Account (TEST)");
     }
 }

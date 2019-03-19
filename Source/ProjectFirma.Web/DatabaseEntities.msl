@@ -634,7 +634,6 @@
         <MappingFragment StoreEntitySet="PersonEnvironmentCredential">
           <ScalarProperty Name="PersonEnvironmentCredentialID" ColumnName="PersonEnvironmentCredentialID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="DeploymentEnvironmentID" ColumnName="DeploymentEnvironmentID" />
           <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
           <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
         </MappingFragment>

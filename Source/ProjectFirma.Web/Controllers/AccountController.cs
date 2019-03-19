@@ -150,7 +150,7 @@ namespace ProjectFirma.Web.Controllers
                 $"Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
 
             var authenticatorToRequire = AuthenticatorHelper.GetAuthenticator(username);
-            bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
+            bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAWTEST;
 
             // Always try to validate first using unique identifier, as it is arguably more secure
             var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(username);
@@ -186,18 +186,14 @@ namespace ProjectFirma.Web.Controllers
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
-                var currentDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
-                var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person,
-                    currentDeploymentEnvironment, authenticatorToRequire, username);
-                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(
-                    personEnvironmentCredentialForCurrentEnvironment);
+                var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person, authenticatorToRequire, username);
+                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForCurrentEnvironment);
 
                 // If we are logging in to Prod, from ADFS, we *ALSO* create the parallel QA credential.
                 // (We can't do this with SAW since the unique identifier varies.)
-                if (currentDeploymentEnvironment == DeploymentEnvironment.Prod && authenticatorToRequire == Authenticator.ADFS)
+                if (authenticatorToRequire == Authenticator.ADFS)
                 {
-                    var personEnvironmentCredentialForQa = new PersonEnvironmentCredential(person, DeploymentEnvironment.QA,
-                        authenticatorToRequire, username);
+                    var personEnvironmentCredentialForQa = new PersonEnvironmentCredential(person, authenticatorToRequire, username);
                     HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForQa);
                 }
 
@@ -206,8 +202,7 @@ namespace ProjectFirma.Web.Controllers
             else
             {
                 // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat(
-                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
+                SitkaHttpApplication.Logger.DebugFormat($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
             }
 
             person.FirstName = firstName;

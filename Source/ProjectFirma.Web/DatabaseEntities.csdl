@@ -1672,9 +1672,8 @@
     </Key>
     <Property Name="PersonEnvironmentCredentialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="Int32" Nullable="false" />
-    <Property Name="DeploymentEnvironmentID" Type="Int32" Nullable="false" />
     <Property Name="AuthenticatorID" Type="Int32" Nullable="false" />
-    <Property Name="PersonUniqueIdentifier" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="PersonUniqueIdentifier" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonEnvironmentCredential_Person_PersonID" FromRole="PersonEnvironmentCredentials" ToRole="Person" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">

@@ -40,18 +40,16 @@ namespace ProjectFirma.Web.Models
             Check.EnsureNotNull(desiredPersonUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
 
             // Make sure the GUID we are looking up aligns with the environment (Local,QA, Prod) and authentication method (ADFS, SAW).
-            var desiredDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
             var desiredAuthenticator = AuthenticatorHelper.GetAuthenticator(desiredPersonUniqueIdentifier);
 
-            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredDeploymentEnvironment, desiredAuthenticator));
+            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredAuthenticator));
 
             return person;
         }
 
-        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, DeploymentEnvironment desiredDeploymentEnvironment, Authenticator desiredAuthenticator)
+        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, Authenticator desiredAuthenticator)
         {
-            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.DeploymentEnvironment.DeploymentEnvironmentID == desiredDeploymentEnvironment.DeploymentEnvironmentID &&
-                                                                           pec.Authenticator.AuthenticatorID == desiredAuthenticator.AuthenticatorID &&
+            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.Authenticator.AuthenticatorID == desiredAuthenticator.AuthenticatorID &&
                                                                            pec.PersonUniqueIdentifier == desiredPersonUniqueIdentifier);
         }
 

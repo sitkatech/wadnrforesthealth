@@ -1469,9 +1469,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="PersonEnvironmentCredentialID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="int" Nullable="false" />
-    <Property Name="DeploymentEnvironmentID" Type="int" Nullable="false" />
     <Property Name="AuthenticatorID" Type="int" Nullable="false" />
-    <Property Name="PersonUniqueIdentifier" Type="varchar" MaxLength="100" />
+    <Property Name="PersonUniqueIdentifier" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">
     <Key>

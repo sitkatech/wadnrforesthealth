@@ -30,11 +30,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonEnvironmentCredential(int personEnvironmentCredentialID, int personID, int deploymentEnvironmentID, int authenticatorID, string personUniqueIdentifier) : this()
+        public PersonEnvironmentCredential(int personEnvironmentCredentialID, int personID, int authenticatorID, string personUniqueIdentifier) : this()
         {
             this.PersonEnvironmentCredentialID = personEnvironmentCredentialID;
             this.PersonID = personID;
-            this.DeploymentEnvironmentID = deploymentEnvironmentID;
             this.AuthenticatorID = authenticatorID;
             this.PersonUniqueIdentifier = personUniqueIdentifier;
         }
@@ -42,36 +41,36 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonEnvironmentCredential(int personID, int deploymentEnvironmentID, int authenticatorID) : this()
+        public PersonEnvironmentCredential(int personID, int authenticatorID, string personUniqueIdentifier) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonEnvironmentCredentialID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.PersonID = personID;
-            this.DeploymentEnvironmentID = deploymentEnvironmentID;
             this.AuthenticatorID = authenticatorID;
+            this.PersonUniqueIdentifier = personUniqueIdentifier;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public PersonEnvironmentCredential(Person person, DeploymentEnvironment deploymentEnvironment, Authenticator authenticator) : this()
+        public PersonEnvironmentCredential(Person person, Authenticator authenticator, string personUniqueIdentifier) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonEnvironmentCredentialID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.PersonID = person.PersonID;
             this.Person = person;
             person.PersonEnvironmentCredentials.Add(this);
-            this.DeploymentEnvironmentID = deploymentEnvironment.DeploymentEnvironmentID;
             this.AuthenticatorID = authenticator.AuthenticatorID;
+            this.PersonUniqueIdentifier = personUniqueIdentifier;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static PersonEnvironmentCredential CreateNewBlank(Person person, DeploymentEnvironment deploymentEnvironment, Authenticator authenticator)
+        public static PersonEnvironmentCredential CreateNewBlank(Person person, Authenticator authenticator)
         {
-            return new PersonEnvironmentCredential(person, deploymentEnvironment, authenticator);
+            return new PersonEnvironmentCredential(person, authenticator, default(string));
         }
 
         /// <summary>
@@ -109,14 +108,12 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int PersonEnvironmentCredentialID { get; set; }
         public int PersonID { get; set; }
-        public int DeploymentEnvironmentID { get; set; }
         public int AuthenticatorID { get; set; }
         public string PersonUniqueIdentifier { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonEnvironmentCredentialID; } set { PersonEnvironmentCredentialID = value; } }
 
         public virtual Person Person { get; set; }
-        public DeploymentEnvironment DeploymentEnvironment { get { return DeploymentEnvironment.AllLookupDictionary[DeploymentEnvironmentID]; } }
         public Authenticator Authenticator { get { return Authenticator.AllLookupDictionary[AuthenticatorID]; } }
 
         public static class FieldLengths
