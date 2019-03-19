@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="IndexViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="InteractionEventIndexViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -25,14 +25,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
-    public class IndexViewData : FirmaViewData
+    public class InteractionEventIndexViewData : FirmaViewData
     {
         public readonly InteractionEventGridSpec InteractionEventGridSpec;
         public readonly string InteractionEventGridName;
         public readonly string InteractionEventGridDataUrl;
 
 
-        public IndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
+        public InteractionEventIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
             PageTitle = $"Full Interaction/Event List";
 

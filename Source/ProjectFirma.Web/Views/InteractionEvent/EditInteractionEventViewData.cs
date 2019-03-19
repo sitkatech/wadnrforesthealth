@@ -29,15 +29,15 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     public class EditInteractionEventViewData : FirmaUserControlViewData
     {
 
-        public EditInteractionEventType EditInteractionEventType { get; set; }
+        public EditInteractionEventEditType EditInteractionEventEditType { get; set; }
         public IEnumerable<SelectListItem> InteractionEventTypes { get; }
         
 
-        public EditInteractionEventViewData(EditInteractionEventType editInteractionEventType, IEnumerable<Models.InteractionEventType> interactionEventTypes)
+        public EditInteractionEventViewData(EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes)
         {
             InteractionEventTypes = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
 
-            EditInteractionEventType = editInteractionEventType;
+            EditInteractionEventEditType = editInteractionEventEditType;
         }
 
     }

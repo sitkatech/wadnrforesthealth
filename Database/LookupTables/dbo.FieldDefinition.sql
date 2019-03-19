@@ -155,5 +155,6 @@ VALUES
 (331, N'EstimatedTravelCost', N'Estimated Travel Cost', N'<p>The estimated travel costs to complete all stages of project implementation.</p>'),
 (332, N'InvoiceID', N'Invoice ID', N'<p>The System-unique identifier for a given Invoice.</p>'),
 (333, N'InvoiceLineItem', N'Invoice Line Item', N'<p>A line item on an invoice which includes an amount and the associated funding source/grant.</p>'),
-(334, N'InteractionEvent', N'Interaction/Event', N'<p>Placeholder definition for Interaction/Event description.</p>')
-
+(334, N'InteractionEvent', N'Interaction/Event', N'<p>Placeholder definition for Interaction/Event description.</p>'),
+(335, N'InteractionEventType', N'Interaction/Event Type', N'<p>Placeholder definition for Interaction/Event Type description.</p>'),
+(336, N'InteractionEventStaff', N'Interaction/Event Staff', N'<p>Placeholder definition for Interaction/Event Staff description.</p>')

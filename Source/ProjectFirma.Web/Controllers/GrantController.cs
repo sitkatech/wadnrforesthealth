@@ -337,7 +337,7 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public ViewResult Index()
         {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullProjectList);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullGrantList);
             var viewData = new GrantIndexViewData(CurrentPerson, firmaPage);
             return RazorView<GrantIndex, GrantIndexViewData>(viewData);
         }

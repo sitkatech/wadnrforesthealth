@@ -29,3 +29,8 @@ create table dbo.InteractionEvent(
 ) 
 
 
+
+insert into dbo.FirmaPageType(FirmaPageTypeID, FirmaPageTypeName, FirmaPageTypeDisplayName, FirmaPageRenderTypeID)
+values (62, 'InteractionEventList', 'Interaction/Event List', 1);
+
+insert into dbo.FirmaPage(FirmaPageTypeID) values(62);

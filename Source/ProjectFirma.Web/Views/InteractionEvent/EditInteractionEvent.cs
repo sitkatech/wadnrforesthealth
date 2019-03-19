@@ -26,37 +26,38 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     {
     }
 
-    public abstract class EditInteractionEventType
+    // named this way to avoid confusion with Models.InteractionEvent.InteractionEventType
+    public abstract class EditInteractionEventEditType
     {
         public readonly string IntroductoryText;
 
-        internal EditInteractionEventType(string introductoryText)
+        internal EditInteractionEventEditType(string introductoryText)
         {
             IntroductoryText = introductoryText;
         }
 
-        public static readonly EditInteractionEventTypeNewInteractionEvent NewInteractionEvent = EditInteractionEventTypeNewInteractionEvent.Instance;
-        public static readonly EditInteractionEventTypeExistingInteractionEvent ExistingInteractionEvent = EditInteractionEventTypeExistingInteractionEvent.Instance;
+        public static readonly EditInteractionEventEditTypeNewInteractionEventEdit NewInteractionEventEdit = EditInteractionEventEditTypeNewInteractionEventEdit.Instance;
+        public static readonly EditInteractionEventEditTypeExistingInteractionEventEdit ExistingInteractionEventEdit = EditInteractionEventEditTypeExistingInteractionEventEdit.Instance;
     }
 
-    public class EditInteractionEventTypeNewInteractionEvent : EditInteractionEventType
+    public class EditInteractionEventEditTypeNewInteractionEventEdit : EditInteractionEventEditType
     {
-        private EditInteractionEventTypeNewInteractionEvent(string introductoryText) : base(introductoryText)
+        private EditInteractionEventEditTypeNewInteractionEventEdit(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditInteractionEventTypeNewInteractionEvent Instance = new EditInteractionEventTypeNewInteractionEvent(
+        public static readonly EditInteractionEventEditTypeNewInteractionEventEdit Instance = new EditInteractionEventEditTypeNewInteractionEventEdit(
             $"<p>Enter basic information about the {Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}.</p>");
     }
 
-    public class EditInteractionEventTypeExistingInteractionEvent : EditInteractionEventType
+    public class EditInteractionEventEditTypeExistingInteractionEventEdit : EditInteractionEventEditType
     {
-        private EditInteractionEventTypeExistingInteractionEvent(string introductoryText) : base(introductoryText)
+        private EditInteractionEventEditTypeExistingInteractionEventEdit(string introductoryText) : base(introductoryText)
         {
         }
 
-        public static readonly EditInteractionEventTypeExistingInteractionEvent Instance =
-            new EditInteractionEventTypeExistingInteractionEvent(
+        public static readonly EditInteractionEventEditTypeExistingInteractionEventEdit Instance =
+            new EditInteractionEventEditTypeExistingInteractionEventEdit(
                 $"<p>Update this {Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}'s information.</p>");
     }
 

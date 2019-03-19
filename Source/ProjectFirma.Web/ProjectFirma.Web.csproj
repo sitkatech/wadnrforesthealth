@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -489,6 +489,8 @@
     <Compile Include="Controllers\InteractionEventController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
+    <Compile Include="Models\InteractionEvent.cs" />
+    <Compile Include="Models\InteractionEventModelExtensions.cs" />
     <Compile Include="Models\InvoiceApprovalStatus.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
@@ -564,8 +566,7 @@
     <Compile Include="Security\AgreementsViewFeature.cs" />
     <Compile Include="Security\AgreementsViewFullListFeature.cs" />
     <Compile Include="Security\CostSharePDFFilledInFeature.cs" />
-    <Compile Include="Security\InteractionEventCreateFeature.cs" />
-    <Compile Include="Security\InteractionEventEditAsAdminFeature.cs" />
+    <Compile Include="Security\InteractionEventManageFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationNoteEditAsAdminFeature.cs" />
@@ -667,6 +668,9 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventIndexViewData.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventIndex.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItem.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItemViewData.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItemViewModel.cs" />
@@ -1292,6 +1296,7 @@
     <Content Include="Views\Invoice\EditInvoice.cshtml" />
     <Content Include="Views\Invoice\EditInvoiceLineItem.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
+    <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
