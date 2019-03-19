@@ -24,10 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.ProgramIndex;
 
 namespace ProjectFirma.Web.Views.TreatmentActivity
 {
-    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject
+    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject, IEditProgramIndexViewModel
     {
  
         public int ProjectID { get; set; }
@@ -45,6 +49,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
         [DisplayName("Program Index")]
         public int? ProgramIndexID { get; set; }
+        public string ProgramIndexSearchCriteria { get; set; }
+
         [DisplayName("Project Code")]
         public int? ProjectCodeID { get; set; }
 
@@ -97,6 +103,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
         [DisplayName("Other Treatment")]
         public decimal TreatmentActivityOtherTreatmentAcres { get; set; }
 
+        public string ProjectCodeSearchCriteria { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -111,7 +119,9 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
             ProgramIndexID = treatmentActivity.ProgramIndexID;
+            ProgramIndexSearchCriteria = treatmentActivity.ProgramIndex?.ProgramIndexAbbrev;
             ProjectCodeID = treatmentActivity.ProjectCodeID;
+            ProjectCodeSearchCriteria = treatmentActivity.ProjectCode?.ProjectCodeAbbrev;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
             TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
             TreatmentActivityFootprintAcres = treatmentActivity.TreatmentActivityFootprintAcres;
@@ -138,6 +148,17 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             if (TreatmentActivityEndDate != null && TreatmentActivityEndDate.Value < TreatmentActivityStartDate)
             {
                 yield return new ValidationResult("End Date cannot be before Start Date");
+            }
+
+            if (!GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(ProjectCodeSearchCriteria))
+            {
+                // .. Then ProjectCode must have been looked up successfully. If this
+                // failed, we don't have a valid ProjectCode.
+                if (ProjectCodeID == null)
+                {
+                    yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
+                        FirmaValidationMessages.ProjectCodeInvalid, m => m.ProjectCodesString);
+                }
             }
         }
 
