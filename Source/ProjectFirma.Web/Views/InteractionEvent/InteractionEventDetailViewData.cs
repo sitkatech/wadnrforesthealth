@@ -40,9 +40,9 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public bool UserHasInteractionEventManagePermissions { get; set; }
 
-        public InteractionEventDetailAngularViewData AngularViewData { get; set; }
+        
 
-        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent, IEnumerable<Person> allPeople) : base(currentPerson)
+        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent) : base(currentPerson)
         {
             IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
             EditInteractionEventUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
@@ -50,26 +50,12 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             EditInteractionEventProjectsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventProjects(interactionEvent.PrimaryKey));
             UserHasInteractionEventManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
             InteractionEvent = interactionEvent;
-            var allContacts = allPeople.OrderBy(x => x.LastName).Select(x => new PersonSimple(x)).ToList();
-            AngularViewData = new InteractionEventDetailAngularViewData(interactionEvent, allContacts);
+            
+            
         }
 
         
     }
 
-    public class InteractionEventDetailAngularViewData
-    {
-        public List<PersonSimple> AllContacts { get; set; }
-        public string SaveInteractionEventContactUrl { get; }
-        public int InteractionEventID { get; }
-
-        public InteractionEventDetailAngularViewData(Models.InteractionEvent interactionEvent, List<PersonSimple> allContacts)
-        {
-            AllContacts = allContacts;
-            SaveInteractionEventContactUrl =
-                SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.SaveInteractionEventContact(interactionEvent.InteractionEventID));
-            InteractionEventID = interactionEvent.InteractionEventID;
-        }
-
-    }
+    
 }

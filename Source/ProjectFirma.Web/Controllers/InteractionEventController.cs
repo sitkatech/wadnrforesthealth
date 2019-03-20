@@ -102,11 +102,10 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult InteractionEventDetail(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            var allPeople = HttpRequestStorage.DatabaseEntities.People;
 
-            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, allPeople);
-            var viewModel = new InteractionEventDetailViewModel(interactionEvent.InteractionEventContacts.ToList());
-            return RazorView<InteractionEventDetail, InteractionEventDetailViewData, InteractionEventDetailViewModel>(viewData, viewModel);
+            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent);
+
+            return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
         }
 
         [HttpPost]

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -675,9 +675,10 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventContacts.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewData.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewModel.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewModel.cs" />
-    <Compile Include="Views\InteractionEvent\InteractionEventDetailViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
@@ -1310,6 +1311,7 @@
     <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />
+    <Content Include="Views\InteractionEvent\EditInteractionEventContacts.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

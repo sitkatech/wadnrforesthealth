@@ -32,18 +32,8 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 {
     public class EditInteractionEventContactsViewModel : FormViewModel, IValidatableObject
     {
-        public int InteractionEventContactID { get; set; }
+        public List<InteractionEventContact> InteractionEventContacts { get; }
 
-        //[FieldDefinitionDisplay(FieldDefinitionEnum.InteractionEvent)]
-        [Required]
-        public int InteractionEventTypeID { get; set; }
-        [Required]
-        public DateTime Date { get; set; }
-        [Required]
-        public string Title { get; set; }
-        public string Description { get; set; }
-        [Required]
-        public int DNRStaffPersonID { get; set; }
 
         
 
@@ -54,31 +44,20 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
         }
 
-        public EditInteractionEventContactsViewModel(Models.InteractionEvent interactionEvent)
+        public EditInteractionEventContactsViewModel(Models.InteractionEvent interactionEvent, IEnumerable<InteractionEventContact> interactionEventContacts)
         {
-            InteractionEventTypeID = interactionEvent.InteractionEventTypeID;
-            Date = interactionEvent.InteractionEventDate;
-            Title = interactionEvent.InteractionEventTitle;
-            Description = interactionEvent.InteractionEventDescription;
-            DNRStaffPersonID = interactionEvent.StaffPersonID;
+            InteractionEventContacts = interactionEventContacts.ToList();
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Title == "")
-            {
-                yield return new SitkaValidationResult<EditInteractionEventViewModel, string>(
-                    FirmaValidationMessages.InteractionEventMustHaveTitle, m => m.Title);
-            }
+            return null;
         }
 
         public void UpdateModel(Models.InteractionEvent interactionEvent, Person currentPerson)
         {
-            interactionEvent.InteractionEventTypeID = InteractionEventTypeID;
-            interactionEvent.InteractionEventDate = Date;
-            interactionEvent.InteractionEventTitle = Title;
-            interactionEvent.InteractionEventDescription = Description;
-            interactionEvent.StaffPersonID = DNRStaffPersonID;
+
         }
     }
 }
