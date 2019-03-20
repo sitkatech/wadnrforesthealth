@@ -35,21 +35,18 @@ namespace ProjectFirma.Web.Models
             return person;
         }
 
-        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, string desiredPersonUniqueIdentifier)
+        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, Authenticator authenticator, string desiredPersonUniqueIdentifier)
         {
             Check.EnsureNotNull(desiredPersonUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
 
-            // Make sure the GUID we are looking up aligns with the environment (Local,QA, Prod) and authentication method (ADFS, SAW).
-            var desiredAuthenticator = AuthenticatorHelper.GetAuthenticator(desiredPersonUniqueIdentifier);
-
-            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, desiredAuthenticator));
+            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, authenticator));
 
             return person;
         }
 
-        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, Authenticator desiredAuthenticator)
+        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, Authenticator authenticator)
         {
-            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.Authenticator.AuthenticatorID == desiredAuthenticator.AuthenticatorID &&
+            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.Authenticator.AuthenticatorID == authenticator.AuthenticatorID &&
                                                                            pec.PersonUniqueIdentifier == desiredPersonUniqueIdentifier);
         }
 

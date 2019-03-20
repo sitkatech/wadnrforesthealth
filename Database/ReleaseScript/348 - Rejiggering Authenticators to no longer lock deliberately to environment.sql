@@ -50,6 +50,41 @@ alter table dbo.PersonEnvironmentCredential
 add constraint AK_PersonEnvironmentCredential_AuthenticatorID_PersonUniqueIdentifier unique (AuthenticatorID, PersonUniqueIdentifier)
 GO
 
+create table dbo.PersonAllowedAuthenticator
+(
+    PersonAllowedAuthenticatorID int identity(1,1) not null,
+    PersonID int not null,
+    AuthenticatorID int not null, 
+    CONSTRAINT AK_PersonAllowedAuthenticator_PersonID_AuthenticatorID unique clustered (PersonID, AuthenticatorID),
+    CONSTRAINT PK_PersonAllowedAuthenticator_PersonAllowedAuthenticatorID PRIMARY KEY (PersonAllowedAuthenticatorID)
+)
+GO
+
+insert into dbo.PersonAllowedAuthenticator(PersonID, AuthenticatorID)
+select p.PersonID, p.AllowedAuthenticatorID
+from Person as p
+GO
+
+insert into dbo.PersonAllowedAuthenticator(PersonID, AuthenticatorID)
+select p.PersonID, 3
+from Person as p
+where p.AllowedAuthenticatorID = 2
+GO
+
+alter table dbo.PersonAllowedAuthenticator add constraint FK_PersonAllowedAuthenticator_Person_PersonID FOREIGN KEY (PersonID) REFERENCES dbo.Person (PersonID)
+GO
+
+alter table dbo.PersonAllowedAuthenticator add constraint FK_PersonAllowedAuthenticator_Authenticator_AuthenticatorID FOREIGN KEY (AuthenticatorID) REFERENCES dbo.Authenticator (AuthenticatorID)
+GO
+
+alter table dbo.person
+drop constraint FK_Person_Authenticator_AllowedAuthenticatorID_AuthenticatorID
+GO
+
+alter table dbo.Person
+drop column AllowedAuthenticatorID
+GO
+
 --rollback tran
 
 --select * from PersonEnvironmentCredential

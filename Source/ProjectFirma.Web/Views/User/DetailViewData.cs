@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Linq;
 using System.Web;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Controllers;
@@ -57,7 +59,7 @@ namespace ProjectFirma.Web.Views.User
         public readonly string UserAgreementsGridName;
         public readonly string UserAgreementsGridDataUrl;
 
-        public readonly Authenticator Authenticator;
+        public readonly string AuthenticatorsDisplayString;
 
         public DetailViewData(Person currentPerson,
             Person personToView,
@@ -89,7 +91,7 @@ namespace ProjectFirma.Web.Views.User
                     $"Edit Roles for User - {personToView.FullNameFirstLast}",
                     true)
                 : new HtmlString(string.Empty);
-            Authenticator = Authenticator.ToType(Person.AllowedAuthenticatorID);
+            AuthenticatorsDisplayString = string.Join(", ", Person.PersonAllowedAuthenticators.OrderBy(x => x.Authenticator.AuthenticatorFullName).Select(x =>$"{x.Authenticator.AuthenticatorFullName} ({x.Authenticator.AuthenticatorName})"));
 
             BasicProjectInfoGridSpec = basicProjectInfoGridSpec;
             BasicProjectInfoGridName = basicProjectInfoGridName;

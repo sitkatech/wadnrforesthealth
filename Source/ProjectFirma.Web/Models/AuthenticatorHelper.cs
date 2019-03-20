@@ -1,18 +1,18 @@
-﻿namespace ProjectFirma.Web.Models
+﻿using System.Collections.Generic;
+
+namespace ProjectFirma.Web.Models
 {
     public static class AuthenticatorHelper
     {
-        public static Authenticator GetAuthenticator(string uniqueIdentifier)
+        public static List<Authenticator> GetAuthenticators(string uniqueIdentifier)
         {
             // There is likely a far better way to detect this, but this will work for now.
             if (uniqueIdentifier.Contains("@dnr.wa.lcl") || uniqueIdentifier.Contains("@dnr.wa.gov"))
             {
-                return Authenticator.ADFS;
+                return new List<Authenticator> {Authenticator.ADFS};
             }
 
-            // INCOMPLETE!!
-            // Assume SAW if not ADFS
-            return Authenticator.SAWTEST;
+            return new List<Authenticator> {Authenticator.SAWTEST, Authenticator.SAWPROD };
         }
     }
 }

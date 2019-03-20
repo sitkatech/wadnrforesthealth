@@ -54,6 +54,7 @@
     <EntitySet Name="PerformanceMeasureSubcategory" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategory" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategoryOption" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonAllowedAuthenticator" EntityType="ProjectFirma.Web.Models.Store.PersonAllowedAuthenticator" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonEnvironmentCredential" EntityType="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
@@ -483,6 +484,10 @@
     <AssociationSet Name="FK_Person_Vendor_VendorID" Association="ProjectFirma.Web.Models.Store.FK_Person_Vendor_VendorID">
       <End Role="Vendor" EntitySet="Vendor" />
       <End Role="People" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonAllowedAuthenticator_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonAllowedAuthenticator_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="PersonAllowedAuthenticators" EntitySet="PersonAllowedAuthenticator" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
@@ -1460,8 +1465,15 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
-    <Property Name="AllowedAuthenticatorID" Type="int" Nullable="false" />
     <Property Name="VendorID" Type="int" />
+  </EntityType>
+  <EntityType Name="PersonAllowedAuthenticator">
+    <Key>
+      <PropertyRef Name="PersonAllowedAuthenticatorID" />
+    </Key>
+    <Property Name="PersonAllowedAuthenticatorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="AuthenticatorID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PersonEnvironmentCredential">
     <Key>
@@ -3304,6 +3316,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="People">
         <PropertyRef Name="VendorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonAllowedAuthenticator_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="PersonAllowedAuthenticators" Type="ProjectFirma.Web.Models.Store.PersonAllowedAuthenticator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PersonAllowedAuthenticators">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
