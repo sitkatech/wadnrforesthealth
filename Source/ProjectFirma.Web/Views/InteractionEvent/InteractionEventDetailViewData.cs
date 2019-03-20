@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             UserHasInteractionEventManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
             InteractionEvent = interactionEvent;
             var allContacts = allPeople.OrderBy(x => x.LastName).Select(x => new PersonSimple(x)).ToList();
-            AngularViewData = new InteractionEventDetailAngularViewData(allContacts);
+            AngularViewData = new InteractionEventDetailAngularViewData(interactionEvent, allContacts);
         }
 
         
@@ -60,9 +60,15 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     public class InteractionEventDetailAngularViewData
     {
         public List<PersonSimple> AllContacts { get; set; }
-        public InteractionEventDetailAngularViewData(List<PersonSimple> allContacts)
+        public string SaveInteractionEventContactUrl { get; }
+        public int InteractionEventID { get; }
+
+        public InteractionEventDetailAngularViewData(Models.InteractionEvent interactionEvent, List<PersonSimple> allContacts)
         {
             AllContacts = allContacts;
+            SaveInteractionEventContactUrl =
+                SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.SaveInteractionEventContact(interactionEvent.InteractionEventID));
+            InteractionEventID = interactionEvent.InteractionEventID;
         }
 
     }

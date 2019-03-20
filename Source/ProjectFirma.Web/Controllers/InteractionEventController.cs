@@ -109,6 +109,28 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<InteractionEventDetail, InteractionEventDetailViewData, InteractionEventDetailViewModel>(viewData, viewModel);
         }
 
+        [HttpPost]
+        [InteractionEventManageFeature]
+        public JsonResult SaveInteractionEventContact(int interactionEventID)
+        {
+            //var thisPerson = HttpRequestStorage.DatabaseEntities.People
+            //    .FirstOrDefault(x => x.PersonID == personID);
+            //var thisInteractionEvent = HttpRequestStorage.DatabaseEntities.InteractionEvents.FirstOrDefault(x => x.InteractionEventID == interactionEventID);
+            var personID = int.Parse(ControllerContext.HttpContext.Request.Form["personID"]);
+
+            if (HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Any(x => x.InteractionEventID == interactionEventID && x.PersonID == personID))
+            {
+                return new JsonResult();
+            }
+            else
+            {
+                var interactionEventContact = new InteractionEventContact(interactionEventID, personID);
+                HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Add(interactionEventContact);
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+                return new JsonResult();
+            }
+        }
+
 
 
         [InteractionEventViewFeature]

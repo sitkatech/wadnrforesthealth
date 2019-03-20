@@ -28,9 +28,19 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
+    public class InteractionEventContactJson
+    {
+        public int PersonID { get; set; }
+
+        public InteractionEventContactJson(InteractionEventContact interactionEventContact)
+        {
+            PersonID = interactionEventContact.PersonID;
+        }
+    }
+
     public class InteractionEventDetailViewModel : FormViewModel, IValidatableObject
     {
-        public List<InteractionEventContact> InteractionEventContacts { get; set; }
+        public List<InteractionEventContactJson> InteractionEventContacts { get; set; }
 
         /// <summary>
         /// Needed by Model Binder
@@ -41,7 +51,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public InteractionEventDetailViewModel(List<InteractionEventContact> interactionEventContacts)
         {
-            InteractionEventContacts = interactionEventContacts;
+            InteractionEventContacts = new List<InteractionEventContactJson>(interactionEventContacts.Select(x => new InteractionEventContactJson(x)));
         }
 
         public void UpdateModel(Models.InteractionEvent interactionEvent, ICollection<InteractionEventContact> interactionEventContacts)

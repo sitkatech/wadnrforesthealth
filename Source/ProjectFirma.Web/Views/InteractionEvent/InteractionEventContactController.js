@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="InteractionEventContactController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="IAteractionEventContactController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -64,7 +64,17 @@ angular.module("ProjectFirmaApp").controller("InteractionEventContactController"
         $scope.AngularModel.InteractionEventContacts.push({
             PersonID: Number(personID)
         });
+        $scope.resetSelectedContactID();
         //todo: add AJAX call to save contact
+        jQuery.ajax({
+            method: "POST",
+            url: $scope.AngularViewData.SaveInteractionEventContactUrl,
+            data: { personID: personID }
+            })
+            .done(function (msg) {
+                alert("ajax save is complete!");
+
+            });
     };
 
     $scope.removeInteractionEventContact = function(personID) {
@@ -76,8 +86,9 @@ angular.module("ProjectFirmaApp").controller("InteractionEventContactController"
         //todo: add AJAX call to delete contact
     };
 
-
-
+    $scope.resetSelectedContactID = function () {
+        $scope.selectedContactID = "";
+    };
 
 
     $scope.isOptionSelected = function(contact) {
