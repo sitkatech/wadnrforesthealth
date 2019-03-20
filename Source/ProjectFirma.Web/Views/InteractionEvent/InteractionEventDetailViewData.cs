@@ -40,6 +40,8 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public List<InteractionEventContact> InteractionEventContacts { get; set; }
 
+        public List<InteractionEventProject> InteractionEventProjects { get; set; }
+
         public bool UserHasInteractionEventManagePermissions { get; set; }
 
         
@@ -53,6 +55,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             UserHasInteractionEventManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
             InteractionEvent = interactionEvent;
             InteractionEventContacts = interactionEvent.InteractionEventContacts.ToList();
+            InteractionEventProjects = interactionEvent.InteractionEventProjects.ToList();
 
 
         }

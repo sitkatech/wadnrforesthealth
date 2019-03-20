@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Antlr.Runtime.Misc;
 using ApprovalUtilities.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -32,20 +33,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 {
     public class EditInteractionEventProjectsViewModel : FormViewModel, IValidatableObject
     {
-        public int InteractionEventContactID { get; set; }
-
-        //[FieldDefinitionDisplay(FieldDefinitionEnum.InteractionEvent)]
-        [Required]
-        public int InteractionEventTypeID { get; set; }
-        [Required]
-        public DateTime Date { get; set; }
-        [Required]
-        public string Title { get; set; }
-        public string Description { get; set; }
-        [Required]
-        public int DNRStaffPersonID { get; set; }
-
-        
+        public List<InteractionEventProjectSimple> InteractionEventProjects { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -54,31 +42,32 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
         }
 
-        public EditInteractionEventProjectsViewModel(Models.InteractionEvent interactionEvent)
+        public EditInteractionEventProjectsViewModel(IEnumerable<InteractionEventProject> interactionEventProjects)
         {
-            InteractionEventTypeID = interactionEvent.InteractionEventTypeID;
-            Date = interactionEvent.InteractionEventDate;
-            Title = interactionEvent.InteractionEventTitle;
-            Description = interactionEvent.InteractionEventDescription;
-            DNRStaffPersonID = interactionEvent.StaffPersonID;
+            InteractionEventProjects = interactionEventProjects.Select(x => new InteractionEventProjectSimple(){ InteractionEventID = x.InteractionEventID, ProjectID = x.ProjectID}).ToList();
+
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Title == "")
-            {
-                yield return new SitkaValidationResult<EditInteractionEventViewModel, string>(
-                    FirmaValidationMessages.InteractionEventMustHaveTitle, m => m.Title);
-            }
+            return new List<ValidationResult>();
         }
 
-        public void UpdateModel(Models.InteractionEvent interactionEvent, Person currentPerson)
+        public void UpdateModel(Models.InteractionEvent interactionEvent, ICollection<InteractionEventProject> allInteractionEventProjects)
         {
-            interactionEvent.InteractionEventTypeID = InteractionEventTypeID;
-            interactionEvent.InteractionEventDate = Date;
-            interactionEvent.InteractionEventTitle = Title;
-            interactionEvent.InteractionEventDescription = Description;
-            interactionEvent.StaffPersonID = DNRStaffPersonID;
+            var interactionEventProjectsUpdated = InteractionEventProjects.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.ProjectID)).Select(x =>
+                new Models.InteractionEventProject(interactionEvent.InteractionEventID, x.ProjectID)).ToList();
+
+            interactionEvent.InteractionEventProjects.Merge(interactionEventProjectsUpdated,
+                allInteractionEventProjects,
+                (x, y) => x.InteractionEventID == y.InteractionEventID && x.ProjectID == y.ProjectID);
         }
     }
+
+    public class InteractionEventProjectSimple
+    {
+        public int InteractionEventID { get; set; }
+        public int ProjectID { get; set; }
+    }
+
 }
