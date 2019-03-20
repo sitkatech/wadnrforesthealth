@@ -71,7 +71,12 @@ namespace ProjectFirma.Web
             var assertionNode = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion", _xmlNameSpaceManager) as XmlElement;
             return assertionNode == idElement;
         }
-
+        
+        public string GetIssuer()
+        {
+            var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Issuer", _xmlNameSpaceManager);
+            return node?.InnerText;
+        }
         public string GetUserName()
         {
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='user']/saml:AttributeValue", _xmlNameSpaceManager);

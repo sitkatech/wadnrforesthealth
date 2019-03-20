@@ -85,6 +85,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PerformanceMeasure> PerformanceMeasures { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategory> PerformanceMeasureSubcategories { get; set; }
         public virtual DbSet<PerformanceMeasureSubcategoryOption> PerformanceMeasureSubcategoryOptions { get; set; }
+        public virtual DbSet<PersonAllowedAuthenticator> PersonAllowedAuthenticators { get; set; }
         public virtual DbSet<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
@@ -218,11 +219,6 @@ namespace ProjectFirma.Web.Models
 
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
-
-                case "DeploymentEnvironment":
-                    var deploymentEnvironment = DeploymentEnvironment.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(deploymentEnvironment, "DeploymentEnvironment", primaryKey);
-                    return deploymentEnvironment;
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
@@ -422,6 +418,9 @@ namespace ProjectFirma.Web.Models
                     var performanceMeasureType = PerformanceMeasureType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(performanceMeasureType, "PerformanceMeasureType", primaryKey);
                     return performanceMeasureType;
+
+                case "PersonAllowedAuthenticator":
+                    return PersonAllowedAuthenticators.GetPersonAllowedAuthenticator(primaryKey);
 
                 case "PersonEnvironmentCredential":
                     return PersonEnvironmentCredentials.GetPersonEnvironmentCredential(primaryKey);

@@ -323,20 +323,22 @@ namespace ProjectFirma.Web.Controllers
                 return ViewAddContact(viewModel, null);
             }
 
-            var authenticatorToUse = AuthenticatorHelper.GetAuthenticator(viewModel.Email);
-
-            var firmaPerson = new Person(viewModel.FirstName, 
+            var person = new Person(viewModel.FirstName, 
                                          viewModel.LastName,
                                          Role.Unassigned.RoleID, 
                                          DateTime.Now, 
                                          true, 
-                                         false,
-                                         authenticatorToUse.AuthenticatorID)
+                                         false)
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
-            HttpRequestStorage.DatabaseEntities.People.Add(firmaPerson);
+            HttpRequestStorage.DatabaseEntities.People.Add(person);
+
+            var authenticatorsToAllow = AuthenticatorHelper.GetAuthenticators(viewModel.Email);
+            var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
+            HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
+
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
-            SetMessageForDisplay($"Successfully added {firmaPerson.GetFullNameFirstLastAsUrl()}");
+            SetMessageForDisplay($"Successfully added {person.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
 
