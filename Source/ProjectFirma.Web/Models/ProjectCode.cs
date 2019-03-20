@@ -6,19 +6,21 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectCode : IAuditableEntity
     {
-
         public string AuditDescriptionString => ProjectCodeAbbrev;
 
         public static List<ProjectCode> GetListProjectCodesFromCommaDelimitedString(string commaDelimitedListOfProjectCodes)
         {
             List<ProjectCode> projectCodes = new List<ProjectCode>();
 
-            foreach (var code in commaDelimitedListOfProjectCodes.Split(',').Select(s => s.Trim()))
+            if (commaDelimitedListOfProjectCodes != null)
             {
-                var foundCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(x => x.ProjectCodeAbbrev == code);
-                if (foundCode != null)
+                foreach (var code in commaDelimitedListOfProjectCodes.Split(',').Select(s => s.Trim()))
                 {
-                    projectCodes.Add(foundCode);
+                    var foundCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(x => x.ProjectCodeAbbrev == code);
+                    if (foundCode != null)
+                    {
+                        projectCodes.Add(foundCode);
+                    }
                 }
             }
 
