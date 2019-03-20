@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
-    public abstract class InteractionEventDetail : LtInfo.Common.Mvc.TypedWebViewPage<InteractionEventDetailViewData>
+    public abstract class InteractionEventDetail : LtInfo.Common.Mvc.TypedWebViewPage<InteractionEventDetailViewData, InteractionEventDetailViewModel>
     {
     }
 }

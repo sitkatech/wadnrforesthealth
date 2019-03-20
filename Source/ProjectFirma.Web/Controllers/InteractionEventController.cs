@@ -102,11 +102,13 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult InteractionEventDetail(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            var allPeople = HttpRequestStorage.DatabaseEntities.People;
 
-
-            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent);
-            return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
+            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, allPeople);
+            var viewModel = new InteractionEventDetailViewModel(interactionEvent.InteractionEventContacts.ToList());
+            return RazorView<InteractionEventDetail, InteractionEventDetailViewData, InteractionEventDetailViewModel>(viewData, viewModel);
         }
+
 
 
         [InteractionEventViewFeature]
@@ -155,7 +157,7 @@ namespace ProjectFirma.Web.Controllers
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
             //if (!ModelState.IsValid)
             //{
-            //    return InteractionEventProjeactsViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventContactsEdit);
+            //    return InteractionEventProjectsViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventContactsEdit);
             //}
             //viewModel.UpdateModel(interactionEvent, CurrentPerson);
             //return new ModalDialogFormJsonResult();

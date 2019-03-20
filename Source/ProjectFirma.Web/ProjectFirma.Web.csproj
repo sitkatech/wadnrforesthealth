@@ -677,6 +677,7 @@
     <Compile Include="Views\Grant\GrantViewData.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewModel.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewModel.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventDetailViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
@@ -829,6 +830,7 @@
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
     <Content Include="Views\FocusArea\EditBoundaryErrors.cshtml" />
     <Content Include="Views\Grant\Detail.cshtml" />
+    <Content Include="Views\InteractionEvent\InteractionEventContactController.js" />
     <Content Include="Views\ProjectCreate\Regions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
     <Content Include="Views\GrantAllocation\Detail.cshtml" />

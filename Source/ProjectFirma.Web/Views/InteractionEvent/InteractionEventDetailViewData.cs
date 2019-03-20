@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -38,7 +40,9 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public bool UserHasInteractionEventManagePermissions { get; set; }
 
-        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent) : base(currentPerson)
+        public InteractionEventDetailAngularViewData AngularViewData { get; set; }
+
+        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent, IEnumerable<Person> allPeople) : base(currentPerson)
         {
             IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
             EditInteractionEventUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
@@ -46,8 +50,20 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             EditInteractionEventProjectsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventProjects(interactionEvent.PrimaryKey));
             UserHasInteractionEventManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
             InteractionEvent = interactionEvent;
+            var allContacts = allPeople.OrderBy(x => x.LastName).Select(x => new PersonSimple(x)).ToList();
+            AngularViewData = new InteractionEventDetailAngularViewData(allContacts);
         }
 
         
+    }
+
+    public class InteractionEventDetailAngularViewData
+    {
+        public List<PersonSimple> AllContacts { get; set; }
+        public InteractionEventDetailAngularViewData(List<PersonSimple> allContacts)
+        {
+            AllContacts = allContacts;
+        }
+
     }
 }
