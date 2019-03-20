@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Antlr.Runtime.Misc;
 using ApprovalUtilities.Utilities;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -32,10 +33,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 {
     public class EditInteractionEventContactsViewModel : FormViewModel, IValidatableObject
     {
-        public List<InteractionEventContact> InteractionEventContacts { get; }
-
-
-        
+        public List<InteractionEventContactSimple> InteractionEventContacts { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -44,20 +42,32 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
         }
 
-        public EditInteractionEventContactsViewModel(Models.InteractionEvent interactionEvent, IEnumerable<InteractionEventContact> interactionEventContacts)
+        public EditInteractionEventContactsViewModel(IEnumerable<InteractionEventContact> interactionEventContacts)
         {
-            InteractionEventContacts = interactionEventContacts.ToList();
+            InteractionEventContacts = interactionEventContacts.Select(x => new InteractionEventContactSimple(){ InteractionEventID = x.InteractionEventID, PersonID = x.PersonID}).ToList();
 
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return null;
+            return new List<ValidationResult>();
         }
 
-        public void UpdateModel(Models.InteractionEvent interactionEvent, Person currentPerson)
+        public void UpdateModel(Models.InteractionEvent interactionEvent, ICollection<InteractionEventContact> allInteractionEventContacts)
         {
+            var interactionEventContactsUpdated = InteractionEventContacts.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.PersonID)).Select(x =>
+                new Models.InteractionEventContact(interactionEvent.InteractionEventID, x.PersonID)).ToList();
 
+            interactionEvent.InteractionEventContacts.Merge(interactionEventContactsUpdated,
+                allInteractionEventContacts,
+                (x, y) => x.InteractionEventID == y.InteractionEventID && x.PersonID == y.PersonID);
         }
     }
+
+    public class InteractionEventContactSimple
+    {
+        public int InteractionEventID { get; set; }
+        public int PersonID { get; set; }
+    }
+
 }

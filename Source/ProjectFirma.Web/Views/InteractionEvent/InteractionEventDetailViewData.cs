@@ -34,9 +34,11 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public Models.InteractionEvent InteractionEvent { get; set; }
 
-        public string EditInteractionEventUrl { get; set; }
+        public string EditInteractionEventBasicsUrl { get; set; }
         public string EditInteractionEventContactsUrl { get; set; }
         public string EditInteractionEventProjectsUrl { get; set; }
+
+        public List<InteractionEventContact> InteractionEventContacts { get; set; }
 
         public bool UserHasInteractionEventManagePermissions { get; set; }
 
@@ -45,13 +47,14 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent) : base(currentPerson)
         {
             IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
-            EditInteractionEventUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
+            EditInteractionEventBasicsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
             EditInteractionEventContactsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventContacts(interactionEvent.PrimaryKey));
             EditInteractionEventProjectsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventProjects(interactionEvent.PrimaryKey));
             UserHasInteractionEventManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
             InteractionEvent = interactionEvent;
-            
-            
+            InteractionEventContacts = interactionEvent.InteractionEventContacts.ToList();
+
+
         }
 
         

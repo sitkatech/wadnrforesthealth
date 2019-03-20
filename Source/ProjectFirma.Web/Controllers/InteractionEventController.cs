@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
@@ -108,27 +109,27 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
         }
 
-        [HttpPost]
-        [InteractionEventManageFeature]
-        public JsonResult SaveInteractionEventContact(int interactionEventID)
-        {
-            //var thisPerson = HttpRequestStorage.DatabaseEntities.People
-            //    .FirstOrDefault(x => x.PersonID == personID);
-            //var thisInteractionEvent = HttpRequestStorage.DatabaseEntities.InteractionEvents.FirstOrDefault(x => x.InteractionEventID == interactionEventID);
-            var personID = int.Parse(ControllerContext.HttpContext.Request.Form["personID"]);
+        //[HttpPost]
+        //[InteractionEventManageFeature]
+        //public JsonResult SaveInteractionEventContact(int interactionEventID)
+        //{
+        //    //var thisPerson = HttpRequestStorage.DatabaseEntities.People
+        //    //    .FirstOrDefault(x => x.PersonID == personID);
+        //    //var thisInteractionEvent = HttpRequestStorage.DatabaseEntities.InteractionEvents.FirstOrDefault(x => x.InteractionEventID == interactionEventID);
+        //    var personID = int.Parse(ControllerContext.HttpContext.Request.Form["personID"]);
 
-            if (HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Any(x => x.InteractionEventID == interactionEventID && x.PersonID == personID))
-            {
-                return new JsonResult();
-            }
-            else
-            {
-                var interactionEventContact = new InteractionEventContact(interactionEventID, personID);
-                HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Add(interactionEventContact);
-                HttpRequestStorage.DatabaseEntities.SaveChanges();
-                return new JsonResult();
-            }
-        }
+        //    if (HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Any(x => x.InteractionEventID == interactionEventID && x.PersonID == personID))
+        //    {
+        //        return new JsonResult();
+        //    }
+        //    else
+        //    {
+        //        var interactionEventContact = new InteractionEventContact(interactionEventID, personID);
+        //        HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Add(interactionEventContact);
+        //        HttpRequestStorage.DatabaseEntities.SaveChanges();
+        //        return new JsonResult();
+        //    }
+        //}
 
 
 
@@ -145,7 +146,10 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventManageFeature]
         public PartialViewResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
-            throw new NotImplementedException();
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
+            var viewModel = new EditInteractionEventContactsViewModel(interactionEventContacts);
+            return ViewEditInteractionEventContacts(viewModel, interactionEvent);
         }
 
         [HttpPost]
@@ -153,14 +157,27 @@ namespace ProjectFirma.Web.Controllers
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventContactsViewModel viewModel)
         {
+
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            //if (!ModelState.IsValid)
-            //{
-            //    return InteractionEventContactsViewEdit(viewModel, EditInteractionEventContactsEditType.ExistingInteractionEventContactsEdit);
-            //}
-            //viewModel.UpdateModel(interactionEvent, CurrentPerson);
-            //return new ModalDialogFormJsonResult();
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return ViewEditInteractionEventContacts(viewModel, interactionEvent);
+            }
+            HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Load();
+            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Local;
+
+            viewModel.UpdateModel(interactionEvent, interactionEventContacts);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEditInteractionEventContacts(EditInteractionEventContactsViewModel viewModel, InteractionEvent interactionEvent)
+        {
+            var allPeople = HttpRequestStorage.DatabaseEntities.People;
+
+
+            var viewData = new EditInteractionEventContactsViewData(CurrentPerson, interactionEvent.PrimaryKey, allPeople);
+            return RazorPartialView<EditInteractionEventContacts, EditInteractionEventContactsViewData, EditInteractionEventContactsViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
