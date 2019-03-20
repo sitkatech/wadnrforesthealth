@@ -12,12 +12,13 @@ namespace ProjectFirma.Web
         private XmlDocument _xmlDoc;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
 
-        public void LoadXmlFromBase64(string response)
+        public void LoadXmlFromBase64(string base64AdfsSamlResponse)
         {
             var utf8Encoding = new System.Text.UTF8Encoding();
+            var xmlStringAdfsSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64AdfsSamlResponse));
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
-            _xmlDoc.LoadXml(utf8Encoding.GetString(Convert.FromBase64String(response)));
-            _xmlNameSpaceManager = GetNamespaceManager(); //lets construct a "manager" for XPath queries
+            _xmlDoc.LoadXml(xmlStringAdfsSamlResponse);
+            _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
         }
 
         public void Decrypt()
@@ -75,9 +76,9 @@ namespace ProjectFirma.Web
 
         //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesn't work in an XML doc with namespaces
         //see https://stackoverflow.com/questions/7178111/why-is-xmlnamespacemanager-necessary
-        private XmlNamespaceManager GetNamespaceManager()
+        private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
         {
-            var manager = new XmlNamespaceManager(_xmlDoc.NameTable);
+            var manager = new XmlNamespaceManager(xmlDocument.NameTable);
             manager.AddNamespace("ds", SignedXml.XmlDsigNamespaceUrl);
             manager.AddNamespace("saml", "urn:oasis:names:tc:SAML:2.0:assertion");
             manager.AddNamespace("samlp", "urn:oasis:names:tc:SAML:2.0:protocol");
