@@ -624,8 +624,16 @@
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
-          <ScalarProperty Name="AllowedAuthenticatorID" ColumnName="AllowedAuthenticatorID" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonAllowedAuthenticator">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonAllowedAuthenticator">
+        <MappingFragment StoreEntitySet="PersonAllowedAuthenticator">
+          <ScalarProperty Name="PersonAllowedAuthenticatorID" ColumnName="PersonAllowedAuthenticatorID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -634,7 +642,6 @@
         <MappingFragment StoreEntitySet="PersonEnvironmentCredential">
           <ScalarProperty Name="PersonEnvironmentCredentialID" ColumnName="PersonEnvironmentCredentialID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="DeploymentEnvironmentID" ColumnName="DeploymentEnvironmentID" />
           <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
           <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
         </MappingFragment>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -100,8 +100,6 @@
     <Compile Include="Models\Generated\CustomPageImagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CustomPagePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\DatabaseEntities.Context.Binding.cs" />
-    <Compile Include="Models\Generated\DeploymentEnvironment.Binding.cs" />
-    <Compile Include="Models\Generated\DeploymentEnvironmentPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />
@@ -246,6 +244,9 @@
     <Compile Include="Models\Generated\PerformanceMeasureTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Person.Binding.cs" />
     <Compile Include="Models\Generated\Person.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PersonAllowedAuthenticator.Binding.cs" />
+    <Compile Include="Models\Generated\PersonAllowedAuthenticator.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\PersonAllowedAuthenticatorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonEnvironmentCredential.Binding.cs" />
     <Compile Include="Models\Generated\PersonEnvironmentCredential.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PersonEnvironmentCredentialPrimaryKey.Binding.cs" />
@@ -509,7 +510,6 @@
     <Compile Include="Models\InvoiceLineItem.cs" />
     <Compile Include="Models\InvoiceLineItemExtensions.cs" />
     <Compile Include="Models\InvoiceModelExtensions.cs" />
-    <Compile Include="Models\PersonEnvironmentCredential.cs" />
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
     <Compile Include="Models\ProgramIndex.DatabaseContextExtensions.cs" />

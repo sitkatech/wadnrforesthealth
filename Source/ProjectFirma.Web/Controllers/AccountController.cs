@@ -80,12 +80,24 @@ namespace ProjectFirma.Web.Controllers
             samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
             if (samlResponse.IsValid())
             {
+                var sawAuthenticator = DetermineWhichSawAuthenticator(samlResponse);
                 var userName = samlResponse.GetUserName();
                 var fullName = samlResponse.GetName();
                 var email = samlResponse.GetEmail();
-                IdentitySignIn(userName, fullName, email, null, AuthenticationMethod.Saw);
+                IdentitySignIn(userName, fullName, email, null, sawAuthenticator);
             }
             return new RedirectResult(HomeUrl);
+        }
+
+        private static Authenticator DetermineWhichSawAuthenticator(SawSamlResponse samlResponse)
+        {
+            // ReSharper disable once StringLiteralTypo
+            if (samlResponse.GetIssuer()
+                .Contains("test-secureaccess.wa.gov", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return Authenticator.SAWTEST;
+            }
+            return Authenticator.SAWPROD;
         }
 
         [AnonymousUnclassifiedFeature]
@@ -103,13 +115,13 @@ namespace ProjectFirma.Web.Controllers
             var email = adfsSamlResponse.GetEmail();
             var groups = adfsSamlResponse.GetRoleGroups();
 
-            IdentitySignIn(username, firstName + " " + lastName, email, groups, AuthenticationMethod.Adfs);
+            IdentitySignIn(username, firstName + " " + lastName, email, groups, Authenticator.ADFS);
             return new RedirectResult(HomeUrl);
         }
 
-        private void IdentitySignIn(string userName, string name, string email, string groups, AuthenticationMethod authenticationMethod)
+        private void IdentitySignIn(string userName, string name, string email, string groups, Authenticator authenticator)
         {
-            SitkaHttpApplication.Logger.Info($"Logon (IdentitySignIn) - AuthMethod {authenticationMethod.ToString()} userName: {userName} name: {name} email: {email} providerKey: {(string) null} isPersistent: {false}");
+            SitkaHttpApplication.Logger.Info($"Logon (IdentitySignIn) - AuthMethod {authenticator.AuthenticatorName} userName: {userName} name: {name} email: {email} providerKey: {(string) null} isPersistent: {false}");
 
             var names = name.Split(' ');
             string firstName;
@@ -126,7 +138,7 @@ namespace ProjectFirma.Web.Controllers
 
             var roleGroups = !string.IsNullOrWhiteSpace(groups) ? groups.Split(',').ToList() : new List<string>();
 
-            var person = LookupExistingPersonOrProvisionNewPerson(authenticationMethod, userName, firstName, lastName, email, roleGroups);
+            var person = LookupExistingPersonOrProvisionNewPerson(authenticator, userName, firstName, lastName, email, roleGroups);
 
             // add to user here!
             ClaimsIdentityHelper.IdentitySignIn(HttpContext.GetOwinContext().Authentication, person);
@@ -141,7 +153,7 @@ namespace ProjectFirma.Web.Controllers
             return Redirect(returnUrl);
         }
 
-        private static Person LookupExistingPersonOrProvisionNewPerson(AuthenticationMethod authenticationMethod, string username,
+        private static Person LookupExistingPersonOrProvisionNewPerson(Authenticator authenticator, string username,
             string firstName, string lastName, string email, List<string> groups)
         {
             var sendNewUserNotification = false;
@@ -149,11 +161,11 @@ namespace ProjectFirma.Web.Controllers
             string userDetailsString =
                 $"Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
 
-            var authenticatorToRequire = AuthenticatorHelper.GetAuthenticator(username);
-            bool attemptingSawAuthentication = authenticatorToRequire == Authenticator.SAW;
+            bool attemptingSawAuthentication = authenticator.ToEnum == AuthenticatorEnum.SAWTEST ||
+                                               authenticator.ToEnum == AuthenticatorEnum.SAWPROD;
 
             // Always try to validate first using unique identifier, as it is arguably more secure
-            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(username);
+            var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(authenticator, username);
 
             string personLookupSuccess = person != null ? "Found" : "Did NOT find";
             SitkaHttpApplication.Logger.Debug(
@@ -176,8 +188,7 @@ namespace ProjectFirma.Web.Controllers
                     $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Person not found using any available authentication method -- {userDetailsString}");
                 SitkaHttpApplication.Logger.Debug($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Creating new Person for -- {userDetailsString}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
-                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false,
-                    authenticatorToRequire.AuthenticatorID)
+                person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false)
                 {
                     Email = email,
                     LoginName = username,
@@ -185,29 +196,19 @@ namespace ProjectFirma.Web.Controllers
                 };
                 HttpRequestStorage.DatabaseEntities.People.Add(person);
 
+                var authenticatorsToAllow = AuthenticatorHelper.GetAuthenticators(username);
+                var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
+                HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
+
                 // It should be relatively safe to create credentials like this, regardless of environment, since all users start out with minimal roles.
-                var currentDeploymentEnvironment = AuthenticatorHelper.GetDeploymentEnvironment();
-                var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person,
-                    currentDeploymentEnvironment, authenticatorToRequire, username);
-                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(
-                    personEnvironmentCredentialForCurrentEnvironment);
-
-                // If we are logging in to Prod, from ADFS, we *ALSO* create the parallel QA credential.
-                // (We can't do this with SAW since the unique identifier varies.)
-                if (currentDeploymentEnvironment == DeploymentEnvironment.Prod && authenticatorToRequire == Authenticator.ADFS)
-                {
-                    var personEnvironmentCredentialForQa = new PersonEnvironmentCredential(person, DeploymentEnvironment.QA,
-                        authenticatorToRequire, username);
-                    HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForQa);
-                }
-
+                var personEnvironmentCredentialForCurrentEnvironment = new PersonEnvironmentCredential(person, authenticator, username);
+                HttpRequestStorage.DatabaseEntities.PersonEnvironmentCredentials.Add(personEnvironmentCredentialForCurrentEnvironment);
                 sendNewUserNotification = true;
             }
             else
             {
                 // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat(
-                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
+                SitkaHttpApplication.Logger.DebugFormat($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
             }
 
             person.FirstName = firstName;
@@ -216,7 +217,7 @@ namespace ProjectFirma.Web.Controllers
             person.LoginName = username;
             person.UpdateDate = DateTime.Now;
 
-            if (authenticationMethod == AuthenticationMethod.Adfs)
+            if (authenticator.ToEnum == AuthenticatorEnum.ADFS)
             {
                 SitkaHttpApplication.Logger.DebugFormat(
                     $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Mapping ADFS role groups for {userDetailsString}");
@@ -303,12 +304,6 @@ namespace ProjectFirma.Web.Controllers
             }
 
             SitkaSmtpClient.Send(mailMessage);
-        }
-
-        private enum AuthenticationMethod
-        {
-            Adfs,
-            Saw
         }
     }
 }

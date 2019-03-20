@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[PersonEnvironmentCredential]
+//  Source Table: [dbo].[PersonAllowedAuthenticator]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +15,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[PersonEnvironmentCredential] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[PersonEnvironmentCredential]")]
-    public partial class PersonEnvironmentCredential : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[PersonAllowedAuthenticator] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[PersonAllowedAuthenticator]")]
+    public partial class PersonAllowedAuthenticator : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected PersonEnvironmentCredential()
+        protected PersonAllowedAuthenticator()
         {
 
         }
@@ -30,47 +30,44 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonEnvironmentCredential(int personEnvironmentCredentialID, int personID, int authenticatorID, string personUniqueIdentifier) : this()
+        public PersonAllowedAuthenticator(int personAllowedAuthenticatorID, int personID, int authenticatorID) : this()
         {
-            this.PersonEnvironmentCredentialID = personEnvironmentCredentialID;
+            this.PersonAllowedAuthenticatorID = personAllowedAuthenticatorID;
             this.PersonID = personID;
             this.AuthenticatorID = authenticatorID;
-            this.PersonUniqueIdentifier = personUniqueIdentifier;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonEnvironmentCredential(int personID, int authenticatorID, string personUniqueIdentifier) : this()
+        public PersonAllowedAuthenticator(int personID, int authenticatorID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.PersonEnvironmentCredentialID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.PersonAllowedAuthenticatorID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.PersonID = personID;
             this.AuthenticatorID = authenticatorID;
-            this.PersonUniqueIdentifier = personUniqueIdentifier;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public PersonEnvironmentCredential(Person person, Authenticator authenticator, string personUniqueIdentifier) : this()
+        public PersonAllowedAuthenticator(Person person, Authenticator authenticator) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.PersonEnvironmentCredentialID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.PersonAllowedAuthenticatorID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.PersonID = person.PersonID;
             this.Person = person;
-            person.PersonEnvironmentCredentials.Add(this);
+            person.PersonAllowedAuthenticators.Add(this);
             this.AuthenticatorID = authenticator.AuthenticatorID;
-            this.PersonUniqueIdentifier = personUniqueIdentifier;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static PersonEnvironmentCredential CreateNewBlank(Person person, Authenticator authenticator)
+        public static PersonAllowedAuthenticator CreateNewBlank(Person person, Authenticator authenticator)
         {
-            return new PersonEnvironmentCredential(person, authenticator, default(string));
+            return new PersonAllowedAuthenticator(person, authenticator);
         }
 
         /// <summary>
@@ -85,7 +82,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PersonEnvironmentCredential).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PersonAllowedAuthenticator).Name};
 
 
         /// <summary>
@@ -93,7 +90,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.PersonEnvironmentCredentials.Remove(this);
+            dbContext.PersonAllowedAuthenticators.Remove(this);
         }
         
         /// <summary>
@@ -106,19 +103,18 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int PersonEnvironmentCredentialID { get; set; }
+        public int PersonAllowedAuthenticatorID { get; set; }
         public int PersonID { get; set; }
         public int AuthenticatorID { get; set; }
-        public string PersonUniqueIdentifier { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return PersonEnvironmentCredentialID; } set { PersonEnvironmentCredentialID = value; } }
+        public int PrimaryKey { get { return PersonAllowedAuthenticatorID; } set { PersonAllowedAuthenticatorID = value; } }
 
         public virtual Person Person { get; set; }
         public Authenticator Authenticator { get { return Authenticator.AllLookupDictionary[AuthenticatorID]; } }
 
         public static class FieldLengths
         {
-            public const int PersonUniqueIdentifier = 100;
+
         }
     }
 }
