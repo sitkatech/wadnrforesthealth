@@ -109,30 +109,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
         }
 
-        //[HttpPost]
-        //[InteractionEventManageFeature]
-        //public JsonResult SaveInteractionEventContact(int interactionEventID)
-        //{
-        //    //var thisPerson = HttpRequestStorage.DatabaseEntities.People
-        //    //    .FirstOrDefault(x => x.PersonID == personID);
-        //    //var thisInteractionEvent = HttpRequestStorage.DatabaseEntities.InteractionEvents.FirstOrDefault(x => x.InteractionEventID == interactionEventID);
-        //    var personID = int.Parse(ControllerContext.HttpContext.Request.Form["personID"]);
-
-        //    if (HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Any(x => x.InteractionEventID == interactionEventID && x.PersonID == personID))
-        //    {
-        //        return new JsonResult();
-        //    }
-        //    else
-        //    {
-        //        var interactionEventContact = new InteractionEventContact(interactionEventID, personID);
-        //        HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Add(interactionEventContact);
-        //        HttpRequestStorage.DatabaseEntities.SaveChanges();
-        //        return new JsonResult();
-        //    }
-        //}
-
-
-
         [InteractionEventViewFeature]
         public GridJsonNetJObjectResult<InteractionEvent> InteractionEventGridJsonData()
         {
@@ -217,5 +193,36 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            //var interactionEventProje = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
+            var viewModel = new EditInteractionEventLocationSimpleViewModel(interactionEvent.InteractionEventLocationSimple);
+            return ViewEditInteractionEventLocationSimple(viewModel, interactionEvent);
+        }
+
+        [HttpPost]
+        [InteractionEventManageFeature]
+        public PartialViewResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventLocationSimpleViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        private PartialViewResult ViewEditInteractionEventLocationSimple(EditInteractionEventLocationSimpleViewModel viewModel, InteractionEvent interactionEvent)
+        {
+
+            var layerGeoJsons = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Hide);
+            var mapInitJson = new MapInitJson($"interactionEvent_{interactionEvent.InteractionEventID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) { AllowFullScreen = false, DisablePopups = true };
+
+            var mapPostUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.EditInteractionEventLocation(interactionEvent.PrimaryKey, null));
+            var mapFormID = $"editMapForInteractionEventLocation{interactionEvent.InteractionEventID}";
+            var wmsLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
+            var mapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
+           
+            var viewData = new EditInteractionEventLocationSimpleViewData(CurrentPerson, mapInitJson, wmsLayerNames, null, mapPostUrl,mapFormID, mapServiceUrl);
+            return RazorPartialView<EditInteractionEventLocationSimple, EditInteractionEventLocationSimpleViewData, EditInteractionEventLocationSimpleViewModel>(viewData, viewModel);
+        }
     }
 }

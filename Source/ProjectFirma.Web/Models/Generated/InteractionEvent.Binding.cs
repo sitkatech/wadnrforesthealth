@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public InteractionEvent(int interactionEventID, int interactionEventTypeID, int staffPersonID, string interactionEventTitle, string interactionEventDescription, DateTime interactionEventDate) : this()
+        public InteractionEvent(int interactionEventID, int interactionEventTypeID, int staffPersonID, string interactionEventTitle, string interactionEventDescription, DateTime interactionEventDate, DbGeometry interactionEventLocationSimple) : this()
         {
             this.InteractionEventID = interactionEventID;
             this.InteractionEventTypeID = interactionEventTypeID;
@@ -39,6 +39,7 @@ namespace ProjectFirma.Web.Models
             this.InteractionEventTitle = interactionEventTitle;
             this.InteractionEventDescription = interactionEventDescription;
             this.InteractionEventDate = interactionEventDate;
+            this.InteractionEventLocationSimple = interactionEventLocationSimple;
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace ProjectFirma.Web.Models
         public string InteractionEventTitle { get; set; }
         public string InteractionEventDescription { get; set; }
         public DateTime InteractionEventDate { get; set; }
+        public DbGeometry InteractionEventLocationSimple { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return InteractionEventID; } set { InteractionEventID = value; } }
 

@@ -9,11 +9,12 @@ CREATE TABLE [dbo].[InteractionEvent](
 	[InteractionEventTitle] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[InteractionEventDescription] [varchar](3000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[InteractionEventDate] [datetime] NOT NULL,
+	[InteractionEventLocationSimple] [geometry] NULL,
  CONSTRAINT [PK_InteractionEvent_InteractionEventID] PRIMARY KEY CLUSTERED 
 (
 	[InteractionEventID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
 ALTER TABLE [dbo].[InteractionEvent]  WITH CHECK ADD  CONSTRAINT [FK_InteractionEvent_InteractionEventType_InteractionEventTypeID] FOREIGN KEY([InteractionEventTypeID])

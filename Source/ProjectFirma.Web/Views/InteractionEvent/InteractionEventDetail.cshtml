@@ -94,10 +94,6 @@
         </div>
 
     </div>
-
-
-
-
 </div>
 <div class="panel panelFirma">
     <div class="panel-heading panelTitle">
@@ -115,6 +111,20 @@
                     }
 
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panelFirma">
+    <div class="panel-heading panelTitle">
+        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditInteractionEventLocationSimpleUrl, string.Format("Edit {0} - {1}", FieldDefinition.InteractionEvent.FieldDefinitionDisplayName, ViewDataTyped.InteractionEvent.InteractionEventTitle), ViewDataTyped.UserHasInteractionEventManagePermissions) Location
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-11"><strong>Location</strong></div>
+            <div class="col-xs-11">
+
+                @*stub for map stuff*@
             </div>
         </div>
     </div>

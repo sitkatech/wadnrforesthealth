@@ -391,6 +391,7 @@
           <ScalarProperty Name="InteractionEventTitle" ColumnName="InteractionEventTitle" />
           <ScalarProperty Name="InteractionEventDescription" ColumnName="InteractionEventDescription" />
           <ScalarProperty Name="InteractionEventDate" ColumnName="InteractionEventDate" />
+          <ScalarProperty Name="InteractionEventLocationSimple" ColumnName="InteractionEventLocationSimple" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

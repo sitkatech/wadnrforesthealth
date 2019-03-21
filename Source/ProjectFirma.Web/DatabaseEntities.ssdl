@@ -1263,6 +1263,7 @@
     <Property Name="InteractionEventTitle" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="InteractionEventDescription" Type="varchar" MaxLength="3000" />
     <Property Name="InteractionEventDate" Type="datetime" Nullable="false" />
+    <Property Name="InteractionEventLocationSimple" Type="geometry" />
   </EntityType>
   <EntityType Name="InteractionEventContact">
     <Key>

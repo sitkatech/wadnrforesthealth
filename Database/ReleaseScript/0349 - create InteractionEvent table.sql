@@ -17,15 +17,14 @@ INSERT INTO dbo.InteractionEventType VALUES
  
 
 
-
 create table dbo.InteractionEvent(
 	InteractionEventID int identity(1,1) not null CONSTRAINT [PK_InteractionEvent_InteractionEventID] PRIMARY KEY,
 	InteractionEventTypeID int not null constraint FK_InteractionEvent_InteractionEventType_InteractionEventTypeID references InteractionEventType(InteractionEventTypeID),
 	StaffPersonID int not null constraint FK_InteractionEvent_Person_StaffPersonID_PersonID references Person(PersonID),
 	InteractionEventTitle varchar(255) not null,
 	InteractionEventDescription varchar(3000),
-	InteractionEventDate datetime not null
-	
+	InteractionEventDate datetime not null,
+	InteractionEventLocationSimple geometry null
 ) 
 
 

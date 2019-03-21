@@ -688,6 +688,9 @@
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventIndexViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventIndex.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimpleViewData.cs" />
+    <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimpleViewModel.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItem.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItemViewData.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItemViewModel.cs" />
@@ -837,6 +840,7 @@
     <Content Include="Views\Grant\Detail.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventProjectController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventContactController.js" />
+    <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
     <Content Include="Views\ProjectCreate\Regions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
     <Content Include="Views\GrantAllocation\Detail.cshtml" />
@@ -1318,6 +1322,7 @@
     <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEventContacts.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEventProjects.cshtml" />
+    <Content Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

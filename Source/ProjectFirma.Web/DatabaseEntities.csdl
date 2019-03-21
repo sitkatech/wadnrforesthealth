@@ -1366,6 +1366,7 @@
     <Property Name="InteractionEventTitle" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="InteractionEventDescription" Type="String" MaxLength="3000" Unicode="false" FixedLength="false" />
     <Property Name="InteractionEventDate" Type="DateTime" Nullable="false" />
+    <Property Name="InteractionEventLocationSimple" Type="Geometry" />
     <NavigationProperty Name="InteractionEventType" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_InteractionEventType_InteractionEventTypeID" FromRole="InteractionEvents" ToRole="InteractionEventType" />
     <NavigationProperty Name="StaffPerson" Relationship="ProjectFirma.Web.Models.FK_InteractionEvent_Person_StaffPersonID_PersonID" FromRole="InteractionEventsWhereYouAreTheStaffPerson" ToRole="StaffPerson" />
     <NavigationProperty Name="InteractionEventContacts" Relationship="ProjectFirma.Web.Models.FK_InteractionEventContact_InteractionEvent_InteractionEventID" FromRole="InteractionEvent" ToRole="InteractionEventContacts" />
