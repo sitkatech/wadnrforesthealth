@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Xml;
 using System.Security.Cryptography.Xml;
 using System.Linq;
@@ -92,8 +93,12 @@ namespace ProjectFirma.Web
         {
             try
             {
-                XDocument doc = XDocument.Parse(_xmlDoc.InnerXml);
-                return doc.ToString();
+                var stringWriter = new StringWriter();
+                var xmlTextWriter = new XmlTextWriter(stringWriter);
+                xmlTextWriter.Formatting = Formatting.Indented;
+                _xmlDoc.WriteTo(xmlTextWriter);
+
+                return stringWriter.ToString();
             }
             catch (Exception e)
             {

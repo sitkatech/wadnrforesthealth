@@ -6,6 +6,7 @@
 	version 1.2
 */
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -124,8 +125,12 @@ namespace ProjectFirma.Web
         {
             try
             {
-                XDocument doc = XDocument.Parse(_xmlDoc.InnerXml);
-                return doc.ToString();
+                var stringWriter = new StringWriter();
+                var xmlTextWriter = new XmlTextWriter(stringWriter);
+                xmlTextWriter.Formatting = Formatting.Indented;
+                _xmlDoc.WriteTo(xmlTextWriter);
+
+                return stringWriter.ToString();
             }
             catch (Exception e)
             {

@@ -80,7 +80,8 @@ namespace ProjectFirma.Web.Controllers
             try
             {
                 // SAML providers usually POST the data into this var
-                samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); 
+                samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
+
                 if (samlResponse.IsValid())
                 {
                     var sawAuthenticator = DetermineWhichSawAuthenticator(samlResponse);
@@ -97,7 +98,6 @@ namespace ProjectFirma.Web.Controllers
                 var newException = new Exception(newMessage, ex);
                 throw newException;
             }
-
         }
 
         private static Authenticator DetermineWhichSawAuthenticator(SawSamlResponse samlResponse)
