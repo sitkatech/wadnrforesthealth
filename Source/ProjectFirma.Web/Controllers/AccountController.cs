@@ -26,6 +26,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Email;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -173,8 +174,12 @@ namespace ProjectFirma.Web.Controllers
             return Redirect(returnUrl);
         }
 
-        private static Person LookupExistingPersonOrProvisionNewPerson(Authenticator authenticator, string username,
-            string firstName, string lastName, string email, List<string> groups)
+        private static Person LookupExistingPersonOrProvisionNewPerson(Authenticator authenticator, 
+                                                                       string username,
+                                                                       string firstName,
+                                                                       string lastName,
+                                                                       string email,
+                                                                       List<string> groups)
         {
             var sendNewUserNotification = false;
 
@@ -204,6 +209,10 @@ namespace ProjectFirma.Web.Controllers
                 SitkaHttpApplication.Logger.Info($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Person not found using any available authentication method -- {userDetailsString}");
                 SitkaHttpApplication.Logger.Info($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Creating new Person for -- {userDetailsString}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
+
+                // Make doubly sure the person we are trying to add isn't already there, looking by email.
+                Check.Ensure(HttpRequestStorage.DatabaseEntities.People.FirstOrDefault(p => p.Email.ToLower() == email) == null, $"While attempting to create new Person record for \"{firstName} {lastName}\", discovered there was already a person with Email address \"{email}\"");
+
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false)
                 {
                     Email = email,

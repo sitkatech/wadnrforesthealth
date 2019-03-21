@@ -46,8 +46,9 @@ namespace ProjectFirma.Web.Models
 
         private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, Authenticator authenticator)
         {
-            return person.PersonEnvironmentCredentials.ToList().Any(pec => pec.Authenticator.AuthenticatorID == authenticator.AuthenticatorID &&
-                                                                           pec.PersonUniqueIdentifier == desiredPersonUniqueIdentifier);
+            var relevantPersonCredentials = person.PersonEnvironmentCredentials.ToList();
+            return relevantPersonCredentials.Any(pec =>pec.Authenticator.AuthenticatorID == authenticator.AuthenticatorID &&
+                                                       string.Equals(pec.PersonUniqueIdentifier, desiredPersonUniqueIdentifier, StringComparison.OrdinalIgnoreCase));
         }
 
         public static Person GetPersonByWebServiceAccessToken(this IQueryable<Person> people, Guid webServiceAccessToken)
