@@ -88,8 +88,6 @@ namespace ProjectFirma.Web.Controllers
                     var fullName = samlResponse.GetName();
                     var email = samlResponse.GetEmail();
                     IdentitySignIn(userName, fullName, email, null, sawAuthenticator);
-
-                    //throw new Exception("Fake Exception!");
                 }
                 return new RedirectResult(HomeUrl);
             }
@@ -121,7 +119,7 @@ namespace ProjectFirma.Web.Controllers
             try
             {
                 // SAML providers usually POST the data into this var
-                adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); 
+                adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]);
                 adfsSamlResponse.Decrypt();
 
                 var username = adfsSamlResponse.GetUpn();
@@ -129,8 +127,6 @@ namespace ProjectFirma.Web.Controllers
                 var lastName = adfsSamlResponse.GetLastName();
                 var email = adfsSamlResponse.GetEmail();
                 var groups = adfsSamlResponse.GetRoleGroups();
-
-                //throw new Exception("Fake Exception!");
 
                 IdentitySignIn(username, firstName + " " + lastName, email, groups, Authenticator.ADFS);
                 return new RedirectResult(HomeUrl);
@@ -145,19 +141,6 @@ namespace ProjectFirma.Web.Controllers
 
         private void IdentitySignIn(string userName, string name, string email, string groups, Authenticator authenticator)
         {
-            try
-            {
-
-            }
-            catch (Exception e)
-            {
-
-                //GetSamlAsPrettyPrintXml
-
-                Console.WriteLine(e);
-                throw;
-            }
-
             SitkaHttpApplication.Logger.Info($"Logon (IdentitySignIn) - AuthMethod {authenticator.AuthenticatorName} userName: {userName} name: {name} email: {email} providerKey: {(string) null} isPersistent: {false}");
 
             var names = name.Split(' ');

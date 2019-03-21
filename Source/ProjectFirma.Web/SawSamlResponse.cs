@@ -16,7 +16,7 @@ namespace ProjectFirma.Web
 {
     public class SawSamlResponse
     {
-        private string _originalResponse;
+        private string _originalDecodedResponse;
         private XmlDocument _xmlDoc;
         private readonly X509Certificate2 _certificate;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
@@ -28,9 +28,9 @@ namespace ProjectFirma.Web
 
         public void LoadXmlFromBase64(string base64SawSamlResponse)
         {
-            _originalResponse = base64SawSamlResponse;
             var utf8Encoding = new UTF8Encoding();
             var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64SawSamlResponse));
+            _originalDecodedResponse = xmlStringSawSamlResponse;
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
             _xmlDoc.LoadXml(xmlStringSawSamlResponse);
             _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
@@ -130,7 +130,7 @@ namespace ProjectFirma.Web
             catch (Exception e)
             {
                 // At least show something if we have problems here
-                return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {_originalResponse}";
+                return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {_originalDecodedResponse}";
             }
         }
     }
