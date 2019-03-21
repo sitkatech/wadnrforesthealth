@@ -9,14 +9,14 @@ namespace ProjectFirma.Web
     // ReSharper disable once InconsistentNaming
     public class ADFSSamlResponse
     {
-        private string originalResponse;
+        private string _originalResponse;
         private const string BaseAttributeStatementXPath = "/samlp:Response/saml:EncryptedAssertion/saml:Assertion/saml:AttributeStatement";
         private XmlDocument _xmlDoc;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
 
         public void LoadXmlFromBase64(string base64AdfsSamlResponse)
         {
-            originalResponse = response;
+            _originalResponse = base64AdfsSamlResponse;
             var utf8Encoding = new System.Text.UTF8Encoding();
             var xmlStringAdfsSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64AdfsSamlResponse));
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
@@ -92,13 +92,13 @@ namespace ProjectFirma.Web
         {
             try
             {
-                XDocument doc = XDocument.Parse(originalResponse);
+                XDocument doc = XDocument.Parse(_originalResponse);
                 return doc.ToString();
             }
             catch (Exception e)
             {
                 // At least show something if we have problems here
-                return $"Problem pretty printing XML: {e.Message}. Original ADFS Response: {originalResponse}";
+                return $"Problem pretty printing XML: {e.Message}. Original ADFS Response: {_originalResponse}";
             }
         }
 
