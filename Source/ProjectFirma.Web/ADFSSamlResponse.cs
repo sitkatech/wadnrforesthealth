@@ -2,18 +2,21 @@ using System;
 using System.Xml;
 using System.Security.Cryptography.Xml;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace ProjectFirma.Web
 {
     // ReSharper disable once InconsistentNaming
     public class ADFSSamlResponse
     {
+        private string originalResponse;
         private const string BaseAttributeStatementXPath = "/samlp:Response/saml:EncryptedAssertion/saml:Assertion/saml:AttributeStatement";
         private XmlDocument _xmlDoc;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
 
         public void LoadXmlFromBase64(string response)
         {
+            originalResponse = response;
             var utf8Encoding = new System.Text.UTF8Encoding();
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
             _xmlDoc.LoadXml(utf8Encoding.GetString(Convert.FromBase64String(response)));
@@ -83,5 +86,20 @@ namespace ProjectFirma.Web
             manager.AddNamespace("samlp", "urn:oasis:names:tc:SAML:2.0:protocol");
             return manager;
         }
+
+        public string GetSamlAsPrettyPrintXml()
+        {
+            try
+            {
+                XDocument doc = XDocument.Parse(originalResponse);
+                return doc.ToString();
+            }
+            catch (Exception e)
+            {
+                // At least show something if we have problems here
+                return $"Problem pretty printing XML: {e.Message}. Original ADFS Response: {originalResponse}";
+            }
+        }
+
     }
 }

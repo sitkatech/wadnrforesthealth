@@ -77,23 +77,35 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult SAWPost(string returnUrl)
         {
             var samlResponse = new SawSamlResponse(CertificateHelpers.GetX509Certificate2FromStore(FirmaWebConfiguration.Saml2IDPCertificateThumbPrint));
-            samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
-            if (samlResponse.IsValid())
+            try
             {
-                var sawAuthenticator = DetermineWhichSawAuthenticator(samlResponse);
-                var userName = samlResponse.GetUserName();
-                var fullName = samlResponse.GetName();
-                var email = samlResponse.GetEmail();
-                IdentitySignIn(userName, fullName, email, null, sawAuthenticator);
+                // SAML providers usually POST the data into this var
+                samlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); 
+                if (samlResponse.IsValid())
+                {
+                    var sawAuthenticator = DetermineWhichSawAuthenticator(samlResponse);
+                    var userName = samlResponse.GetUserName();
+                    var fullName = samlResponse.GetName();
+                    var email = samlResponse.GetEmail();
+                    IdentitySignIn(userName, fullName, email, null, sawAuthenticator);
+
+                    //throw new Exception("Fake Exception!");
+                }
+                return new RedirectResult(HomeUrl);
             }
-            return new RedirectResult(HomeUrl);
+            catch (Exception ex)
+            {
+                var newMessage = $"Problem in SAW Login: {ex.Message}. SAML XML:\n\r{samlResponse.GetSamlAsPrettyPrintXml()}";
+                var newException = new Exception(newMessage, ex);
+                throw newException;
+            }
+
         }
 
         private static Authenticator DetermineWhichSawAuthenticator(SawSamlResponse samlResponse)
         {
             // ReSharper disable once StringLiteralTypo
-            if (samlResponse.GetIssuer()
-                .Contains("test-secureaccess.wa.gov", StringComparison.InvariantCultureIgnoreCase))
+            if (samlResponse.GetIssuer().Contains("test-secureaccess.wa.gov", StringComparison.InvariantCultureIgnoreCase))
             {
                 return Authenticator.SAWTEST;
             }
@@ -106,21 +118,46 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult ADFSPost(string returnUrl)
         {
             var adfsSamlResponse = new ADFSSamlResponse();
-            adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); //SAML providers usually POST the data into this var
-            adfsSamlResponse.Decrypt();
+            try
+            {
+                // SAML providers usually POST the data into this var
+                adfsSamlResponse.LoadXmlFromBase64(Request.Form["SAMLResponse"]); 
+                adfsSamlResponse.Decrypt();
 
-            var username = adfsSamlResponse.GetUpn();
-            var firstName = adfsSamlResponse.GetFirstName();
-            var lastName = adfsSamlResponse.GetLastName();
-            var email = adfsSamlResponse.GetEmail();
-            var groups = adfsSamlResponse.GetRoleGroups();
+                var username = adfsSamlResponse.GetUpn();
+                var firstName = adfsSamlResponse.GetFirstName();
+                var lastName = adfsSamlResponse.GetLastName();
+                var email = adfsSamlResponse.GetEmail();
+                var groups = adfsSamlResponse.GetRoleGroups();
 
-            IdentitySignIn(username, firstName + " " + lastName, email, groups, Authenticator.ADFS);
-            return new RedirectResult(HomeUrl);
+                //throw new Exception("Fake Exception!");
+
+                IdentitySignIn(username, firstName + " " + lastName, email, groups, Authenticator.ADFS);
+                return new RedirectResult(HomeUrl);
+            }
+            catch (Exception ex)
+            {
+                var newMessage = $"Problem in ADFS Login: {ex.Message}. SAML XML:\n\r{adfsSamlResponse.GetSamlAsPrettyPrintXml()}";
+                var newException = new Exception(newMessage, ex);
+                throw newException;
+            }
         }
 
         private void IdentitySignIn(string userName, string name, string email, string groups, Authenticator authenticator)
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+
+                //GetSamlAsPrettyPrintXml
+
+                Console.WriteLine(e);
+                throw;
+            }
+
             SitkaHttpApplication.Logger.Info($"Logon (IdentitySignIn) - AuthMethod {authenticator.AuthenticatorName} userName: {userName} name: {name} email: {email} providerKey: {(string) null} isPersistent: {false}");
 
             var names = name.Split(' ');
@@ -147,7 +184,7 @@ namespace ProjectFirma.Web.Controllers
         [AnonymousUnclassifiedFeature]
         public ActionResult LogOff()
         {
-            SitkaHttpApplication.Logger.Debug($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
+            SitkaHttpApplication.Logger.Info($"Logoff - {CurrentPerson.FullNameFirstLast} ({CurrentPerson.Email})");
             ClaimsIdentityHelper.IdentitySignOut(HttpContext.GetOwinContext().Authentication);
             var returnUrl = !string.IsNullOrWhiteSpace(Request["returnUrl"]) ? Request["returnUrl"] : HomeUrl;
             return Redirect(returnUrl);
@@ -158,8 +195,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var sendNewUserNotification = false;
 
-            string userDetailsString =
-                $"Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
+            string userDetailsString = $"Username: {username} FirstName: {firstName} LastName: {lastName} Email: {email}";
 
             bool attemptingSawAuthentication = authenticator.ToEnum == AuthenticatorEnum.SAWTEST ||
                                                authenticator.ToEnum == AuthenticatorEnum.SAWPROD;
@@ -168,14 +204,12 @@ namespace ProjectFirma.Web.Controllers
             var person = HttpRequestStorage.DatabaseEntities.People.GetPersonByPersonUniqueIdentifier(authenticator, username);
 
             string personLookupSuccess = person != null ? "Found" : "Did NOT find";
-            SitkaHttpApplication.Logger.Debug(
-                $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - {personLookupSuccess} by PersonUniqueIdentifier. [{userDetailsString}] ");
+            SitkaHttpApplication.Logger.Info($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - {personLookupSuccess} by PersonUniqueIdentifier. [{userDetailsString}] ");
 
             // For SAW only, we allow ourselves to fall back to email.
             if (person == null && attemptingSawAuthentication)
             {
-                SitkaHttpApplication.Logger.Debug(
-                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Falling back to SAW email authentication --  {userDetailsString}");
+                SitkaHttpApplication.Logger.Info($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Falling back to SAW email authentication --  {userDetailsString}");
                 person = HttpRequestStorage.DatabaseEntities.People.GetPersonByEmail(email);
             }
 
@@ -184,9 +218,8 @@ namespace ProjectFirma.Web.Controllers
             if (person == null)
             {
                 // new user - provision with limited role
-                SitkaHttpApplication.Logger.Debug(
-                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Person not found using any available authentication method -- {userDetailsString}");
-                SitkaHttpApplication.Logger.Debug($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Creating new Person for -- {userDetailsString}");
+                SitkaHttpApplication.Logger.Info($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Person not found using any available authentication method -- {userDetailsString}");
+                SitkaHttpApplication.Logger.Info($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Creating new Person for -- {userDetailsString}");
                 var unknownOrganization = HttpRequestStorage.DatabaseEntities.Organizations.GetUnknownOrganization();
                 person = new Person(firstName, lastName, Role.Unassigned.RoleID, DateTime.Now, true, false)
                 {
@@ -208,7 +241,7 @@ namespace ProjectFirma.Web.Controllers
             else
             {
                 // existing user - sync values
-                SitkaHttpApplication.Logger.DebugFormat($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
+                SitkaHttpApplication.Logger.InfoFormat($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - user record already exists -- syncing local profile for {userDetailsString}");
             }
 
             person.FirstName = firstName;
@@ -219,8 +252,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (authenticator.ToEnum == AuthenticatorEnum.ADFS)
             {
-                SitkaHttpApplication.Logger.DebugFormat(
-                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Mapping ADFS role groups for {userDetailsString}");
+                SitkaHttpApplication.Logger.InfoFormat($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Mapping ADFS role groups for {userDetailsString}");
                 if (groups.Any())
                 {
                     person.RoleID = MapRoleFromClaims(groups).RoleID;
@@ -234,8 +266,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (sendNewUserNotification)
             {
-                SitkaHttpApplication.Logger.DebugFormat(
-                    $"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Sending new user created message for {userDetailsString}");
+                SitkaHttpApplication.Logger.InfoFormat($"In {nameof(LookupExistingPersonOrProvisionNewPerson)} - Sending new user created message for {userDetailsString}");
                 SendNewUserCreatedMessage(person, username);
             }
 

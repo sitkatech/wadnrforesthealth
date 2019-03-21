@@ -10,11 +10,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace ProjectFirma.Web
 {
     public class SawSamlResponse
     {
+        private string originalResponse;
         private XmlDocument _xmlDoc;
         private readonly X509Certificate2 _certificate;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
@@ -26,6 +28,7 @@ namespace ProjectFirma.Web
 
         public void LoadXmlFromBase64(string response)
         {
+            originalResponse = response;
             var utf8Encoding = new UTF8Encoding();
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
             _xmlDoc.LoadXml(utf8Encoding.GetString(Convert.FromBase64String(response)));
@@ -117,6 +120,20 @@ namespace ProjectFirma.Web
             manager.AddNamespace("saml", "urn:oasis:names:tc:SAML:2.0:assertion");
             manager.AddNamespace("samlp", "urn:oasis:names:tc:SAML:2.0:protocol");
             return manager;
+        }
+
+        public string GetSamlAsPrettyPrintXml()
+        {
+            try
+            {
+                XDocument doc = XDocument.Parse(_xmlDoc.InnerXml);
+                return doc.ToString();
+            }
+            catch (Exception e)
+            {
+                // At least show something if we have problems here
+                return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {originalResponse}";
+            }
         }
     }
 }
