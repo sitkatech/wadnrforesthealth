@@ -26,27 +26,24 @@ namespace ProjectFirma.Web
             _certificate = certificate;
         }
 
-        public void LoadXmlFromBase64(string response)
+        public void LoadXmlFromBase64(string base64SawSamlResponse)
         {
             originalResponse = response;
             var utf8Encoding = new UTF8Encoding();
+            var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64SawSamlResponse));
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
-            _xmlDoc.LoadXml(utf8Encoding.GetString(Convert.FromBase64String(response)));
-            _xmlNameSpaceManager = GetNamespaceManager(); //lets construct a "manager" for XPath queries
+            _xmlDoc.LoadXml(xmlStringSawSamlResponse);
+            _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
         }
 
         public bool IsValid()
         {
             var nodeList = _xmlDoc.SelectNodes("//ds:Signature", _xmlNameSpaceManager);
-
-            var signedXml = new SignedXml(_xmlDoc);
-
-            // ReSharper disable once PossibleNullReferenceException
-            if (nodeList.Count == 0)
+            if (nodeList == null || nodeList.Count == 0)
             {
                 return false;
             }
-
+            var signedXml = new SignedXml(_xmlDoc);
             signedXml.LoadXml((XmlElement)nodeList[0]);
             return ValidateSignatureReference(signedXml) && signedXml.CheckSignature(_certificate, true) && !IsExpired();
         }
@@ -80,6 +77,7 @@ namespace ProjectFirma.Web
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Issuer", _xmlNameSpaceManager);
             return node?.InnerText;
         }
+
         public string GetUserName()
         {
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='user']/saml:AttributeValue", _xmlNameSpaceManager);
@@ -113,9 +111,9 @@ namespace ProjectFirma.Web
 
         //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesnt work in an XML doc with namespaces
         //see https://stackoverflow.com/questions/7178111/why-is-xmlnamespacemanager-necessary
-        private XmlNamespaceManager GetNamespaceManager()
+        private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
         {
-            var manager = new XmlNamespaceManager(_xmlDoc.NameTable);
+            var manager = new XmlNamespaceManager(xmlDocument.NameTable);
             manager.AddNamespace("ds", SignedXml.XmlDsigNamespaceUrl);
             manager.AddNamespace("saml", "urn:oasis:names:tc:SAML:2.0:assertion");
             manager.AddNamespace("samlp", "urn:oasis:names:tc:SAML:2.0:protocol");
