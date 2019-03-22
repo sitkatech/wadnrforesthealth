@@ -34,14 +34,14 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     public class InteractionEventGridSpec : GridSpec<Models.InteractionEvent>
     {
 
-        public InteractionEventGridSpec(Models.Person currentPerson)
+        public InteractionEventGridSpec(Models.Person currentPerson, bool showDeleteButton, bool showCreateButton)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()}";
 
             SaveFiltersInCookie = true;
             var userHasManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
-            if (userHasManagePermissions)
+            if (userHasManagePermissions && showCreateButton)
             {
                 var contentUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(t => t.New());
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {ObjectNameSingular}");
@@ -49,10 +49,10 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
 
 
-            //if (userHasManagePermissions)
-            //{
-            //    Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
-            //}
+            if (userHasManagePermissions && showDeleteButton)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasManagePermissions, true), 30, DhtmlxGridColumnFilterType.None);
+            }
             Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 120,
                 DhtmlxGridColumnFilterType.Html);
             Add("Description", x => x.InteractionEventDescription, 200, DhtmlxGridColumnFilterType.Text);

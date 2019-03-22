@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
             PageTitle = $"Full Interaction/Event List";
 
-            InteractionEventGridSpec = new InteractionEventGridSpec(currentPerson);
+            InteractionEventGridSpec = new InteractionEventGridSpec(currentPerson, true, true);
             InteractionEventGridName = "interactionEventsGridName";
             InteractionEventGridDataUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(tc => tc.InteractionEventGridJsonData());
 

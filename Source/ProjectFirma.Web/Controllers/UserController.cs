@@ -33,6 +33,7 @@ using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Agreement;
+using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.Shared.UserStewardshipAreas;
 using Detail = ProjectFirma.Web.Views.User.Detail;
 using DetailViewData = ProjectFirma.Web.Views.User.DetailViewData;
@@ -407,6 +408,19 @@ namespace ProjectFirma.Web.Controllers
                 CustomExcelDownloadUrl = SitkaRoute<UserController>.BuildUrlFromExpression(tc => tc.UserAgreementsExcelDownload(personPrimaryKey))
             };
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Agreement>(agreements, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+
+        [UserViewFeature]
+        public GridJsonNetJObjectResult<InteractionEvent> UserInteractionEventsGridJsonData(PersonPrimaryKey personPrimaryKey)
+        {
+            var person = personPrimaryKey.EntityObject;
+            var interactionEventContacts =
+                person.InteractionEventContacts.Select(ie => ie.InteractionEventID).Distinct().ToList();
+            var interactionEvents = HttpRequestStorage.DatabaseEntities.InteractionEvents.Where(ie => interactionEventContacts.Contains(ie.InteractionEventID)).OrderByDescending(ie => ie.InteractionEventDate).ToList();
+            var gridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InteractionEvent>(interactionEvents, gridSpec);
             return gridJsonNetJObjectResult;
         }
     }

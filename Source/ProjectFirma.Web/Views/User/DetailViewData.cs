@@ -21,12 +21,14 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Linq;
 using System.Web;
+using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.ModalDialog;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Agreement;
+using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.User
@@ -54,6 +56,11 @@ namespace ProjectFirma.Web.Views.User
         public string EditContactUrl { get; }
         public string ProjectsForWhichUserIsAContactGridTitle { get; }
         public string AgreementsForWhichUserIsAContactGridTitle { get; }
+
+        public InteractionEventGridSpec UserInteractionEventsGridSpec { get; }
+        public string UserInteractionEventsGridName { get; }
+        public string UserInteractionEventsGridDataUrl { get; }
+        public string InteractionEventsForWhichUserIsAContactGridTitle { get; }
 
         public readonly AgreementGridSpec UserAgreementsGridSpec;
         public readonly string UserAgreementsGridName;
@@ -121,6 +128,13 @@ namespace ProjectFirma.Web.Views.User
             UserAgreementsGridDataUrl =
                 SitkaRoute<UserController>.BuildUrlFromExpression(
                     tc => tc.UserAgreementsGridJsonData(personToView));
+
+            InteractionEventsForWhichUserIsAContactGridTitle = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
+            UserInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            UserInteractionEventsGridName = "userInteractionEventsFromUserGrid";
+            UserInteractionEventsGridDataUrl =
+                SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserInteractionEventsGridJsonData(CurrentPerson));
+
         }
 
         public readonly HtmlString EditRolesLink;
