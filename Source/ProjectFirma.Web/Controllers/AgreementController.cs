@@ -135,7 +135,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteAgreement(agreement, viewModel);
             }
 
-            var message = $"{FieldDefinition.Grant.GetFieldDefinitionLabel()} \"{agreement.AgreementTitle}\" successfully deleted.";
+            var message = $"{FieldDefinition.Agreement.GetFieldDefinitionLabel()} \"{agreement.AgreementTitle}\" successfully deleted.";
 
             agreement.DeleteFull(HttpRequestStorage.DatabaseEntities);
 
@@ -291,21 +291,43 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult EditAgreementGrantAllocationRelationships(AgreementPrimaryKey agreementPrimaryKey, EditAgreementGrantAllocationsViewModel viewModel)
         {
             // Find relevant agreement
-            var agreementId = agreementPrimaryKey.EntityObject.AgreementID;
-            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == agreementId);
+            var agreement = agreementPrimaryKey.EntityObject;
             Check.EnsureNotNull(agreement);
 
             if (!ModelState.IsValid)
             {
                 return ViewEditAgreementGrantAllocations(viewModel);
             }
-
+            var grantAllocationsCurrentlyOnAgreement = agreement.AgreementGrantAllocations.Select(x => x.GrantAllocationID).ToList();
+            var grantAllocationsFromPost = viewModel.GrantAllocationJsons.Select(x => x.GrantAllocationID).ToList();
+            var countAdded = grantAllocationsFromPost.Except(grantAllocationsCurrentlyOnAgreement).Count();
+            var countDeleted = grantAllocationsCurrentlyOnAgreement.Except(grantAllocationsFromPost).Count();
+             
             viewModel.UpdateModel(agreement);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            int agreementGrantAllocationCount = agreement.AgreementGrantAllocations.Count;
-            SetMessageForDisplay($"{agreementGrantAllocationCount} Grant Allocations successfully saved on Agreement \"{agreement.AgreementTitle}\".");
 
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            var finalMessage = MakeGrantAllocationSuccessMessage(countAdded, countDeleted, agreement);
+            SetMessageForDisplay(finalMessage);
             return new ModalDialogFormJsonResult();
+        }
+
+        private static string MakeGrantAllocationSuccessMessage(int countAdded, int countDeleted, Agreement agreement)
+        {
+            var addedGrantAllocationString = countAdded == 1
+                ? FieldDefinition.GrantAllocation.FieldDefinitionDisplayName
+                : FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized();
+            var deletedGrantAllocationString = countDeleted == 1
+                ? FieldDefinition.GrantAllocation.FieldDefinitionDisplayName
+                : FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized();
+            var addedMessage = countAdded == 0
+                ? string.Empty
+                : $"{countAdded} {addedGrantAllocationString} successfully added to Agreement \"{agreement.AgreementTitle}\".";
+            var deletedMessage = countDeleted == 0
+                ? string.Empty
+                : $"{countDeleted} {deletedGrantAllocationString} successfully removed from Agreement \"{agreement.AgreementTitle}\".";
+
+            var finalMessage = $"{addedMessage} {System.Environment.NewLine} {deletedMessage}";
+            return finalMessage;
         }
 
         [AgreementsViewFeature]
