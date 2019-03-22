@@ -7,6 +7,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.InteractionEvent;
+using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -87,15 +88,35 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventManageFeature]
         public PartialViewResult DeleteInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
-            throw new NotImplementedException();
+            var viewModel = new ConfirmDialogFormViewModel(interactionEventPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteInteractionEvent(interactionEventPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteInteractionEvent(InteractionEvent interactionEvent, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} '{interactionEvent.InteractionEventTitle}'?";
+
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [InteractionEventManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventViewModel viewModel)
+        public ActionResult DeleteInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteInteractionEvent(interactionEvent, viewModel);
+            }
+
+            var message = $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} \"{interactionEvent.InteractionEventTitle}\" successfully deleted.";
+
+            interactionEvent.DeleteFull(HttpRequestStorage.DatabaseEntities);
+
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
