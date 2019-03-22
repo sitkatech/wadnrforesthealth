@@ -131,7 +131,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditInvoiceLineItem(EditInvoiceLineItemViewModel viewModel)
         {
-            var costTypes = HttpRequestStorage.DatabaseEntities.CostTypes.Where(x => x.CostTypeID < 5).ToList();
+            var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).ToList();
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
             var viewData = new EditInvoiceLineItemViewData(grantAllocations, costTypes);
             return RazorPartialView<EditInvoiceLineItem, EditInvoiceLineItemViewData, EditInvoiceLineItemViewModel>(viewData, viewModel);

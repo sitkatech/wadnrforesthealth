@@ -53,6 +53,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 select: function (event, ui) {
                     //set VendorID value and display text in input
                     jQuery("#@Html.IdFor(x => x.VendorID)").val(ui.item.actualValue);
+                    jQuery("#@VendorSearchResults.VendorSearchInputTextboxID").val(ui.item.label);
                     event.preventDefault();
                 },
                 html: true

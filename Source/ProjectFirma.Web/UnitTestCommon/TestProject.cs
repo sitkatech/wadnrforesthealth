@@ -36,7 +36,8 @@ namespace ProjectFirma.Web.UnitTestCommon
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
 
                 var testFocusArea = TestFocusArea.Create();
-                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, testFocusArea);
+                var project = Project.CreateNewBlank(projectType, projectStage, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved);
+                project.FocusArea = testFocusArea;
                 return project;
             }
 
@@ -53,9 +54,9 @@ namespace ProjectFirma.Web.UnitTestCommon
                     false,
                     ProjectLocationSimpleType.None,
                     // TODO: Verify that this is correct or use the correct value
-                    ProjectApprovalStatus.Approved,
-                    focusArea);
-
+                    ProjectApprovalStatus.Approved
+                    );
+                project.FocusArea = focusArea;
                 dbContext.Projects.Add(project);
                 return project;
             }
@@ -67,10 +68,11 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var focusArea = TestFocusArea.Create();
 
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, focusArea)
+                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved)
                 {
                     ProjectID = projectID
                 };
+                project.FocusArea = focusArea;
                 return project;
             }
 

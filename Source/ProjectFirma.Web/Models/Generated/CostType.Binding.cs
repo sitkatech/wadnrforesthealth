@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[CostType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,108 +16,156 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[CostType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[CostType]")]
-    public partial class CostType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class CostType : IHavePrimaryKey
     {
+        public static readonly CostTypeIndirectCosts IndirectCosts = CostTypeIndirectCosts.Instance;
+        public static readonly CostTypeSupplies Supplies = CostTypeSupplies.Instance;
+        public static readonly CostTypePersonnelAndBenefits PersonnelAndBenefits = CostTypePersonnelAndBenefits.Instance;
+        public static readonly CostTypeTravel Travel = CostTypeTravel.Instance;
+        public static readonly CostTypeContractual Contractual = CostTypeContractual.Instance;
+        public static readonly CostTypeAgreements Agreements = CostTypeAgreements.Instance;
+
+        public static readonly List<CostType> All;
+        public static readonly ReadOnlyDictionary<int, CostType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected CostType()
+        static CostType()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
-            this.InvoiceLineItems = new HashSet<InvoiceLineItem>();
+            All = new List<CostType> { IndirectCosts, Supplies, PersonnelAndBenefits, Travel, Contractual, Agreements };
+            AllLookupDictionary = new ReadOnlyDictionary<int, CostType>(All.ToDictionary(x => x.CostTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public CostType(int costTypeID, string costTypeDescription) : this()
+        protected CostType(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType)
         {
-            this.CostTypeID = costTypeID;
-            this.CostTypeDescription = costTypeDescription;
-        }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public CostType(string costTypeDescription) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.CostTypeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.CostTypeDescription = costTypeDescription;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static CostType CreateNewBlank()
-        {
-            return new CostType(default(string));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return GrantAllocations.Any() || InvoiceLineItems.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(CostType).Name, typeof(GrantAllocation).Name, typeof(InvoiceLineItem).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.CostTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in GrantAllocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in InvoiceLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            CostTypeID = costTypeID;
+            CostTypeDescription = costTypeDescription;
+            CostTypeName = costTypeName;
+            IsValidInvoiceLineItemCostType = isValidInvoiceLineItemCostType;
         }
 
         [Key]
-        public int CostTypeID { get; set; }
-        public string CostTypeDescription { get; set; }
+        public int CostTypeID { get; private set; }
+        public string CostTypeDescription { get; private set; }
+        public string CostTypeName { get; private set; }
+        public bool IsValidInvoiceLineItemCostType { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return CostTypeID; } set { CostTypeID = value; } }
+        public int PrimaryKey { get { return CostTypeID; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
-        public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(CostType other)
         {
-            public const int CostTypeDescription = 255;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.CostTypeID == CostTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as CostType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return CostTypeID;
+        }
+
+        public static bool operator ==(CostType left, CostType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(CostType left, CostType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public CostTypeEnum ToEnum { get { return (CostTypeEnum)GetHashCode(); } }
+
+        public static CostType ToType(int enumValue)
+        {
+            return ToType((CostTypeEnum)enumValue);
+        }
+
+        public static CostType ToType(CostTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case CostTypeEnum.Agreements:
+                    return Agreements;
+                case CostTypeEnum.Contractual:
+                    return Contractual;
+                case CostTypeEnum.IndirectCosts:
+                    return IndirectCosts;
+                case CostTypeEnum.PersonnelAndBenefits:
+                    return PersonnelAndBenefits;
+                case CostTypeEnum.Supplies:
+                    return Supplies;
+                case CostTypeEnum.Travel:
+                    return Travel;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum CostTypeEnum
+    {
+        IndirectCosts = 1,
+        Supplies = 2,
+        PersonnelAndBenefits = 3,
+        Travel = 4,
+        Contractual = 5,
+        Agreements = 6
+    }
+
+    public partial class CostTypeIndirectCosts : CostType
+    {
+        private CostTypeIndirectCosts(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypeIndirectCosts Instance = new CostTypeIndirectCosts(1, @"Indirect Costs", @"IndirectCosts", true);
+    }
+
+    public partial class CostTypeSupplies : CostType
+    {
+        private CostTypeSupplies(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypeSupplies Instance = new CostTypeSupplies(2, @"Supplies", @"Supplies", true);
+    }
+
+    public partial class CostTypePersonnelAndBenefits : CostType
+    {
+        private CostTypePersonnelAndBenefits(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypePersonnelAndBenefits Instance = new CostTypePersonnelAndBenefits(3, @"Personnel and Benefits", @"PersonnelAndBenefits", true);
+    }
+
+    public partial class CostTypeTravel : CostType
+    {
+        private CostTypeTravel(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypeTravel Instance = new CostTypeTravel(4, @"Travel", @"Travel", true);
+    }
+
+    public partial class CostTypeContractual : CostType
+    {
+        private CostTypeContractual(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypeContractual Instance = new CostTypeContractual(5, @"Contractual", @"Contractual", true);
+    }
+
+    public partial class CostTypeAgreements : CostType
+    {
+        private CostTypeAgreements(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypeAgreements Instance = new CostTypeAgreements(6, @"Agreements", @"Agreements", false);
     }
 }

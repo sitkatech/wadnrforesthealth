@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int focusAreaID, DateTime? expirationDate, decimal? estimatedIndirectCost, decimal? estimatedPersonnelAndBenefitsCost, decimal? estimatedSuppliesCost, decimal? estimatedTravelCost) : this()
+        public ProjectUpdate(int projectUpdateID, int projectUpdateBatchID, int projectStageID, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int? focusAreaID, DateTime? expirationDate, decimal? estimatedIndirectCost, decimal? estimatedPersonnelAndBenefitsCost, decimal? estimatedSuppliesCost, decimal? estimatedTravelCost) : this()
         {
             this.ProjectUpdateID = projectUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectUpdate(int projectUpdateBatchID, int projectStageID, string projectDescription, int projectLocationSimpleTypeID, int focusAreaID) : this()
+        public ProjectUpdate(int projectUpdateBatchID, int projectStageID, string projectDescription, int projectLocationSimpleTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -63,13 +63,12 @@ namespace ProjectFirma.Web.Models
             this.ProjectStageID = projectStageID;
             this.ProjectDescription = projectDescription;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
-            this.FocusAreaID = focusAreaID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, string projectDescription, ProjectLocationSimpleType projectLocationSimpleType, FocusArea focusArea) : this()
+        public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, string projectDescription, ProjectLocationSimpleType projectLocationSimpleType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -78,17 +77,14 @@ namespace ProjectFirma.Web.Models
             this.ProjectStageID = projectStage.ProjectStageID;
             this.ProjectDescription = projectDescription;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleType.ProjectLocationSimpleTypeID;
-            this.FocusAreaID = focusArea.FocusAreaID;
-            this.FocusArea = focusArea;
-            focusArea.ProjectUpdates.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, FocusArea focusArea)
+        public static ProjectUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType)
         {
-            return new ProjectUpdate(projectUpdateBatch, projectStage, default(string), projectLocationSimpleType, focusArea);
+            return new ProjectUpdate(projectUpdateBatch, projectStage, default(string), projectLocationSimpleType);
         }
 
         /// <summary>
@@ -135,7 +131,7 @@ namespace ProjectFirma.Web.Models
         public DateTime? PlannedDate { get; set; }
         public int ProjectLocationSimpleTypeID { get; set; }
         public int? PrimaryContactPersonID { get; set; }
-        public int FocusAreaID { get; set; }
+        public int? FocusAreaID { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public decimal? EstimatedIndirectCost { get; set; }
         public decimal? EstimatedPersonnelAndBenefitsCost { get; set; }

@@ -68,8 +68,6 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocation = grantAllocation;
             grantAllocation.InvoiceLineItems.Add(this);
             this.CostTypeID = costType.CostTypeID;
-            this.CostType = costType;
-            costType.InvoiceLineItems.Add(this);
             this.InvoiceLineItemAmount = invoiceLineItemAmount;
         }
 
@@ -125,7 +123,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual Invoice Invoice { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
-        public virtual CostType CostType { get; set; }
+        public CostType CostType { get { return CostType.AllLookupDictionary[CostTypeID]; } }
 
         public static class FieldLengths
         {

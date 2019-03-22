@@ -42,6 +42,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
         public int ProjectID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
+        public int ProjectTypeID { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectStage)]
         public int ProjectStageID { get; set; }
 
@@ -55,7 +58,8 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public DateTime? CompletionDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
-        public int FocusAreaID { get; set; }
+        public int? FocusAreaID { get; set; }
+
         [DisplayName("Reviewer Comments")]
         [StringLength(ProjectUpdateBatch.FieldLengths.BasicsComment)]
         public string Comments { get; set; }
@@ -79,6 +83,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             FocusAreaID = projectUpdate.FocusAreaID;
             Comments = comments;
             ProjectID = projectUpdate.ProjectUpdateBatch.ProjectID;
+            ProjectTypeID = projectUpdate.ProjectUpdateBatch.Project.ProjectTypeID;
         }
 
         public void UpdateModel(Models.ProjectUpdate projectUpdate, Person currentPerson)
@@ -120,6 +125,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 yield return new SitkaValidationResult<BasicsViewModel, DateTime?>(
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the Completion Year needs to be less than or equal to the current year",
                     m => m.CompletionDate);
+            }
+
+            var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
+
+            if (!FocusAreaID.HasValue && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID))
+            {
+                var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
+                yield return new SitkaValidationResult<BasicsViewModel, int?>(errorMessage, m => m.FocusAreaID);
             }
         }
     }

@@ -145,7 +145,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div id="InvoiceApprovalStatusComment" class="col-xs-4 control-label">
+        <div id="InvoiceApprovalStatusCommentLabelDiv" class="col-xs-4 control-label">
             @Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment)
         </div>
         <div class="col-xs-6">
@@ -186,20 +186,20 @@
 
             var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
             if (initialLoadCommentIsMandatory) {
-                jQuery("#InvoiceApprovalStatusComment")
+                jQuery("#InvoiceApprovalStatusCommentLabelDiv")
                     .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
             } else {
-                jQuery("#InvoiceApprovalStatusComment")
+                jQuery("#InvoiceApprovalStatusCommentLabelDiv")
                     .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
             }
 
             jQuery("#InvoiceApprovalStatus").on('change', function () {
                 var commentIsMandatory = isInvoiceCommentFieldMandatory();
                 if (commentIsMandatory) {
-                    jQuery("#InvoiceApprovalStatusComment")
+                    jQuery("#InvoiceApprovalStatusCommentLabelDiv")
                         .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, true)');
                 } else {
-                    jQuery("#InvoiceApprovalStatusComment")
+                    jQuery("#InvoiceApprovalStatusCommentLabelDiv")
                         .html('@Html.LabelWithSugarFor(m => m.InvoiceApprovalStatusComment, false)');
                 }
             });

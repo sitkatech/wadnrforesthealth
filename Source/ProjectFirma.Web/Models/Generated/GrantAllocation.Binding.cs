@@ -171,7 +171,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual Grant Grant { get; set; }
-        public virtual CostType CostType { get; set; }
+        public CostType CostType { get { return CostTypeID.HasValue ? CostType.AllLookupDictionary[CostTypeID.Value] : null; } }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }

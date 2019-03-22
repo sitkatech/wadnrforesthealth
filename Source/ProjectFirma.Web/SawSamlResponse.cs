@@ -6,15 +6,18 @@
 	version 1.2
 */
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace ProjectFirma.Web
 {
     public class SawSamlResponse
     {
+        private string _originalDecodedResponse;
         private XmlDocument _xmlDoc;
         private readonly X509Certificate2 _certificate;
         private XmlNamespaceManager _xmlNameSpaceManager; //we need this one to run our XPath queries on the SAML XML
@@ -24,26 +27,24 @@ namespace ProjectFirma.Web
             _certificate = certificate;
         }
 
-        public void LoadXmlFromBase64(string response)
+        public void LoadXmlFromBase64(string base64SawSamlResponse)
         {
             var utf8Encoding = new UTF8Encoding();
+            var xmlStringSawSamlResponse = utf8Encoding.GetString(Convert.FromBase64String(base64SawSamlResponse));
+            _originalDecodedResponse = xmlStringSawSamlResponse;
             _xmlDoc = new XmlDocument {PreserveWhitespace = true, XmlResolver = null};
-            _xmlDoc.LoadXml(utf8Encoding.GetString(Convert.FromBase64String(response)));
-            _xmlNameSpaceManager = GetNamespaceManager(); //lets construct a "manager" for XPath queries
+            _xmlDoc.LoadXml(xmlStringSawSamlResponse);
+            _xmlNameSpaceManager = GetNamespaceManager(_xmlDoc); //lets construct a "manager" for XPath queries
         }
 
         public bool IsValid()
         {
             var nodeList = _xmlDoc.SelectNodes("//ds:Signature", _xmlNameSpaceManager);
-
-            var signedXml = new SignedXml(_xmlDoc);
-
-            // ReSharper disable once PossibleNullReferenceException
-            if (nodeList.Count == 0)
+            if (nodeList == null || nodeList.Count == 0)
             {
                 return false;
             }
-
+            var signedXml = new SignedXml(_xmlDoc);
             signedXml.LoadXml((XmlElement)nodeList[0]);
             return ValidateSignatureReference(signedXml) && signedXml.CheckSignature(_certificate, true) && !IsExpired();
         }
@@ -77,6 +78,7 @@ namespace ProjectFirma.Web
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Issuer", _xmlNameSpaceManager);
             return node?.InnerText;
         }
+
         public string GetUserName()
         {
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='user']/saml:AttributeValue", _xmlNameSpaceManager);
@@ -110,13 +112,31 @@ namespace ProjectFirma.Web
 
         //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesnt work in an XML doc with namespaces
         //see https://stackoverflow.com/questions/7178111/why-is-xmlnamespacemanager-necessary
-        private XmlNamespaceManager GetNamespaceManager()
+        private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
         {
-            var manager = new XmlNamespaceManager(_xmlDoc.NameTable);
+            var manager = new XmlNamespaceManager(xmlDocument.NameTable);
             manager.AddNamespace("ds", SignedXml.XmlDsigNamespaceUrl);
             manager.AddNamespace("saml", "urn:oasis:names:tc:SAML:2.0:assertion");
             manager.AddNamespace("samlp", "urn:oasis:names:tc:SAML:2.0:protocol");
             return manager;
+        }
+
+        public string GetSamlAsPrettyPrintXml()
+        {
+            try
+            {
+                var stringWriter = new StringWriter();
+                var xmlTextWriter = new XmlTextWriter(stringWriter);
+                xmlTextWriter.Formatting = Formatting.Indented;
+                _xmlDoc.WriteTo(xmlTextWriter);
+
+                return stringWriter.ToString();
+            }
+            catch (Exception e)
+            {
+                // At least show something if we have problems here
+                return $"Problem pretty printing XML: {e.Message}. Original SAW Response: {_originalDecodedResponse}";
+            }
         }
     }
 }

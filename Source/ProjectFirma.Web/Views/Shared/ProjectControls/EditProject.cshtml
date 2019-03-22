@@ -1,23 +1,23 @@
 ﻿@*-----------------------------------------------------------------------
-<copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
-Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
-<author>Sitka Technology Group</author>
-</copyright>
+    <copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
 
-<license>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
 
-Source code is available upon request via <support@sitkatech.com>.
-</license>
------------------------------------------------------------------------*@
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views.Shared.ProjectControls
 @using LtInfo.Common.HtmlHelperExtensions
 @using ProjectFirma.Web.Common
@@ -30,95 +30,132 @@ Source code is available upon request via <support@sitkatech.com>.
 
 @using (Html.BeginForm())
 {
-<div class="form-horizontal">
-    <div class="form-group">
-        <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectTypeID, 600, MultiTenantHelpers.GetProjectTypeDisplayNameForProject())</div>
-        <div class="col-xs-8">
-            @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes, string.Format("Select a {0}", MultiTenantHelpers.GetProjectTypeDisplayNameForProject()))
-            @Html.ValidationMessageFor(m => m.ProjectTypeID)
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-4 control-label">@Html.LabelWithSugarFor(m => m.ProjectTypeID, 600, MultiTenantHelpers.GetProjectTypeDisplayNameForProject())</div>
+            <div class="col-xs-8">
+                @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes, string.Format("Select a {0}", MultiTenantHelpers.GetProjectTypeDisplayNameForProject()))
+                @Html.ValidationMessageFor(m => m.ProjectTypeID)
+            </div>
+            @if (ViewDataTyped.ProjectTypeHasBeenSet)
+            {
+                <div class="col-xs-12 col-sm-offset-4 col-sm-8"> <em>Warning: Changing the Project Type may delete previously entered data that doesn't apply to a different Project Type.</em></div>
+            }
         </div>
-        @if (ViewDataTyped.ProjectTypeHasBeenSet)
-        {
-            <div class="col-xs-12 col-sm-offset-4 col-sm-8"> <em>Warning: Changing the Project Type may delete previously entered data that doesn't apply to a different Project Type.</em></div>
-        }
-    </div>
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectName)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectName)
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectName)
+            </div>
         </div>
-        <div class="col-xs-8">
-            @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.ProjectName)
+        <div class="form-group">
+            <div id="focusAreaDiv" class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.FocusAreaID, FieldDefinition.FocusArea.GetFieldDefinitionLabel())
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FocusAreaID)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.FocusAreaID, FieldDefinition.FocusArea.GetFieldDefinitionLabel())
-        </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FocusAreaID, ViewDataTyped.FocusAreas, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FocusAreaID)
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectDescription)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectDescription)
+            </div>
+            <div class="col-xs-8">
+                @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 8), null, new List<string> { "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectDescription)
+            </div>
         </div>
-        <div class="col-xs-8">
-            @Html.TextAreaWithMaxLengthFor(m => m.ProjectDescription, new TextAreaForExtensions.TextAreaDimensions(null, 8), null, new List<string> { "form-control" })
-            @Html.ValidationMessageFor(m => m.ProjectDescription)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ProjectStageID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProjectStageID)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectStageID)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.EstimatedTotalCost)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.EstimatedTotalCost)
+                @Html.ValidationMessageFor(m => m.EstimatedTotalCost)
+            </div>
         </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.ProjectStageID, ViewDataTyped.ProjectStages, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.ProjectStageID)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.PlannedDate)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.PlannedDate, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PlannedDate)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.EstimatedTotalCost)
-        </div>
-        <div class="col-xs-8">
-            @Html.EditorFor(m => m.EstimatedTotalCost)
-            @Html.ValidationMessageFor(m => m.EstimatedTotalCost)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.PlannedDate)
-        </div>
-        <div class="col-xs-8">
-            @Html.EditorFor(m => m.PlannedDate, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.PlannedDate)
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.ExpirationDate)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.ExpirationDate)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
+                @Html.ValidationMessageFor(m => m.ExpirationDate)
+            </div>
         </div>
-        <div class="col-xs-8">
-            @Html.EditorFor(m => m.ExpirationDate, new Dictionary<string, object>() { { "style", "width: auto" }, { "class", "form-control" } })
-            @Html.ValidationMessageFor(m => m.ExpirationDate)
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-xs-4 control-label">
-            @Html.LabelWithSugarFor(m => m.CompletionDate)
-        </div>
-        <div class="col-xs-8">
-            @Html.EditorFor(m => m.CompletionDate, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.CompletionDate)
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.CompletionDate)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.CompletionDate, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CompletionDate)
+            </div>
         </div>
     </div>
-</div>
     @Html.HiddenFor(m => m.ProjectID)
     @Html.HiddenFor(m => m.HasExistingProjectUpdate)
     @Html.HiddenFor(m => m.OldProjectStageID)
 }
+
+
+<script type="text/javascript">
+    jQuery(document)
+        .ready(function() {
+            // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
+            var isInvoiceCommentFieldMandatory = function () {
+                var selectedInvoiceApprovalStatus = jQuery("#ProjectTypeID option:selected").text();
+                // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
+                if (selectedInvoiceApprovalStatus == 'Fuels Reduction') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
+            if (initialLoadCommentIsMandatory) {
+                jQuery("#focusAreaDiv")
+                    .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, true)');
+            } else {
+                jQuery("#focusAreaDiv")
+                    .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
+            }
+
+            jQuery("#ProjectTypeID").on('change', function () {
+                var commentIsMandatory = isInvoiceCommentFieldMandatory();
+                if (commentIsMandatory) {
+                    jQuery("#focusAreaDiv")
+                        .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, true)');
+                } else {
+                    jQuery("#focusAreaDiv")
+                        .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
+                }
+            });
+        });
+</script>

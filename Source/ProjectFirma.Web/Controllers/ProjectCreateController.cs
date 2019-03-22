@@ -184,12 +184,13 @@ namespace ProjectFirma.Web.Controllers
                                       viewModel.ProjectDescription,
                                       false,
                                       ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
-                                      ProjectApprovalStatus.Draft.ProjectApprovalStatusID,
-                                      viewModel.FocusAreaID 
+                                      ProjectApprovalStatus.Draft.ProjectApprovalStatusID
+                                       
                                     )
             {
                 ProposingPerson = CurrentPerson,
-                ProposingDate = DateTime.Now
+                ProposingDate = DateTime.Now,
+                FocusAreaID = viewModel.FocusAreaID
             };
 
             return SaveProjectAndCreateAuditEntry(project, viewModel);
