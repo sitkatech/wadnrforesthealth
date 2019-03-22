@@ -374,6 +374,46 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEvent">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEvent">
+        <MappingFragment StoreEntitySet="InteractionEvent">
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="InteractionEventTypeID" ColumnName="InteractionEventTypeID" />
+          <ScalarProperty Name="StaffPersonID" ColumnName="StaffPersonID" />
+          <ScalarProperty Name="InteractionEventTitle" ColumnName="InteractionEventTitle" />
+          <ScalarProperty Name="InteractionEventDescription" ColumnName="InteractionEventDescription" />
+          <ScalarProperty Name="InteractionEventDate" ColumnName="InteractionEventDate" />
+          <ScalarProperty Name="InteractionEventLocationSimple" ColumnName="InteractionEventLocationSimple" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventContact">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventContact">
+        <MappingFragment StoreEntitySet="InteractionEventContact">
+          <ScalarProperty Name="InteractionEventContactID" ColumnName="InteractionEventContactID" />
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventProject">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventProject">
+        <MappingFragment StoreEntitySet="InteractionEventProject">
+          <ScalarProperty Name="InteractionEventProjectID" ColumnName="InteractionEventProjectID" />
+          <ScalarProperty Name="InteractionEventID" ColumnName="InteractionEventID" />
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InteractionEventType">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.InteractionEventType">
+        <MappingFragment StoreEntitySet="InteractionEventType">
+          <ScalarProperty Name="InteractionEventTypeID" ColumnName="InteractionEventTypeID" />
+          <ScalarProperty Name="InteractionEventTypeName" ColumnName="InteractionEventTypeName" />
+          <ScalarProperty Name="InteractionEventTypeDisplayName" ColumnName="InteractionEventTypeDisplayName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Invoice">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Invoice">
         <MappingFragment StoreEntitySet="Invoice">

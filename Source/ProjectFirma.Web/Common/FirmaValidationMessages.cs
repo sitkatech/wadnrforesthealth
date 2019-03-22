@@ -52,6 +52,8 @@ namespace ProjectFirma.Web.Common
         public static readonly string InvoiceApprovalStatusCommentIsRequiredIfStatusIsDenied =
             $"You must provide a comment describing why the {FieldDefinition.Invoice.GetFieldDefinitionLabel()} was denied.";
 
+        public static readonly string InteractionEventMustHaveTitle =
+            $"You must provide a title for the given {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}.";
     }
 }
 

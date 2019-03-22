@@ -173,8 +173,8 @@ namespace ProjectFirma.Web.Controllers
             var invoiceApprovalStatus = InvoiceApprovalStatus.All.Single(g => g.InvoiceApprovalStatusID == viewModel.InvoiceApprovalStatusID);
             var invoiceMatchAmountType = InvoiceMatchAmountType.AllLookupDictionary[viewModel.InvoiceMatchAmountTypeID];
             var invoiceStatus = InvoiceStatus.AllLookupDictionary[viewModel.InvoiceStatusID];
-            var agreement = Invoice.CreateNewBlank(preparedByPerson, invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus);
-            viewModel.UpdateModel(agreement, CurrentPerson);
+            var invoice = Invoice.CreateNewBlank(preparedByPerson, invoiceApprovalStatus, invoiceMatchAmountType, invoiceStatus);
+            viewModel.UpdateModel(invoice, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 

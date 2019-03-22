@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypePriorityAreasList PriorityAreasList = FirmaPageTypePriorityAreasList.Instance;
         public static readonly FirmaPageTypeFullAgreementList FullAgreementList = FirmaPageTypeFullAgreementList.Instance;
         public static readonly FirmaPageTypeFullInvoiceList FullInvoiceList = FirmaPageTypeFullInvoiceList.Instance;
+        public static readonly FirmaPageTypeInteractionEventList InteractionEventList = FirmaPageTypeInteractionEventList.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -63,7 +64,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList, FullAgreementList, FullInvoiceList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, FundingSourcesList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList, FullAgreementList, FullInvoiceList, InteractionEventList };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -167,6 +168,8 @@ namespace ProjectFirma.Web.Models
                     return HomeMapInfo;
                 case FirmaPageTypeEnum.HomePage:
                     return HomePage;
+                case FirmaPageTypeEnum.InteractionEventList:
+                    return InteractionEventList;
                 case FirmaPageTypeEnum.InternalSetupNotes:
                     return InternalSetupNotes;
                 case FirmaPageTypeEnum.ManageProjectCustomAttributeTypeInstructions:
@@ -250,7 +253,8 @@ namespace ProjectFirma.Web.Models
         RegionsList = 58,
         PriorityAreasList = 59,
         FullAgreementList = 60,
-        FullInvoiceList = 61
+        FullInvoiceList = 61,
+        InteractionEventList = 62
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -467,5 +471,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeFullInvoiceList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeFullInvoiceList Instance = new FirmaPageTypeFullInvoiceList(61, @"FullInvoiceList", @"Full Invoice List", 1);
+    }
+
+    public partial class FirmaPageTypeInteractionEventList : FirmaPageType
+    {
+        private FirmaPageTypeInteractionEventList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeInteractionEventList Instance = new FirmaPageTypeInteractionEventList(62, @"InteractionEventList", @"Interaction/Event List", 1);
     }
 }

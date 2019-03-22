@@ -207,4 +207,9 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<InvoiceController>.BuildUrlFromExpression(c => c.Index());
     }
+
+    public partial class FirmaPageTypeInteractionEventList
+    {
+        public override string GetViewUrl() => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.Index());
+    }
 }
