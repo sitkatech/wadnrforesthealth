@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[PlannedDate] [datetime] NULL,
 	[ProjectLocationSimpleTypeID] [int] NOT NULL,
 	[PrimaryContactPersonID] [int] NULL,
-	[FocusAreaID] [int] NOT NULL,
+	[FocusAreaID] [int] NULL,
 	[ExpirationDate] [datetime] NULL,
 	[EstimatedIndirectCost] [money] NULL,
 	[EstimatedPersonnelAndBenefitsCost] [money] NULL,

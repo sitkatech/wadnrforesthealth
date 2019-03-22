@@ -44,8 +44,9 @@ namespace ProjectFirma.Web.Models
         }
 
         public ProjectUpdate(ProjectUpdateBatch projectUpdateBatch) : this(projectUpdateBatch, projectUpdateBatch.Project.ProjectStage, projectUpdateBatch.Project.ProjectDescription, 
-                                                                           projectUpdateBatch.Project.ProjectLocationSimpleType, projectUpdateBatch.Project.FocusArea)
+                                                                           projectUpdateBatch.Project.ProjectLocationSimpleType)
         {
+            this.FocusAreaID = projectUpdateBatch.Project.FocusAreaID;
             var project = projectUpdateBatch.Project;
             LoadUpdateFromProject(project);
             LoadSimpleLocationFromProject(project);            

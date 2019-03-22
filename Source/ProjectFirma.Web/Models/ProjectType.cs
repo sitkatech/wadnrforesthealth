@@ -37,7 +37,6 @@ namespace ProjectFirma.Web.Models
         {
             List<int> requiredProjectTypeIDs = new List<int>()
             {
-                ProjectTypeIDForestHealth,
                 ProjectTypeIDFuelsReduction
             };
 

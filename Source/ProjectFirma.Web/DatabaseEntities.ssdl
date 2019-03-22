@@ -1536,7 +1536,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ReviewedByPersonID" Type="int" />
     <Property Name="DefaultBoundingBox" Type="geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
-    <Property Name="FocusAreaID" Type="int" Nullable="false" />
+    <Property Name="FocusAreaID" Type="int" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ExpirationDate" Type="datetime" />
@@ -1932,7 +1932,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PlannedDate" Type="datetime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="int" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="int" />
-    <Property Name="FocusAreaID" Type="int" Nullable="false" />
+    <Property Name="FocusAreaID" Type="int" />
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="EstimatedIndirectCost" Type="money" />
     <Property Name="EstimatedPersonnelAndBenefitsCost" Type="money" />
@@ -3376,7 +3376,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Project_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="1" />
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FocusArea">
@@ -4264,7 +4264,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="1" />
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="0..1" />
     <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.Store.ProjectUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FocusArea">

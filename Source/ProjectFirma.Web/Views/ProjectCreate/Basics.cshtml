@@ -135,7 +135,7 @@ Source code is available upon request via <support@sitkatech.com>.
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-12 col-sm-4 control-label">
+            <div id="focusAreaDiv" class="col-xs-12 col-sm-4 control-label">
                 @Html.LabelWithSugarFor(m => m.FocusAreaID)
             </div>
             <div class="col-xs-12 col-sm-8">
@@ -154,3 +154,40 @@ Source code is available upon request via <support@sitkatech.com>.
         <button type="submit" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
     </div>
 }
+
+
+<script type="text/javascript">
+    jQuery(document)
+        .ready(function() {
+            // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
+            var isInvoiceCommentFieldMandatory = function () {
+                var selectedInvoiceApprovalStatus = jQuery("#ProjectTypeID option:selected").text();
+                // Only Invoices with an InvoiceApprovalStatus of 'Denied' have mandatory comment field
+                if (selectedInvoiceApprovalStatus == 'Fuels Reduction') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            var initialLoadCommentIsMandatory = isInvoiceCommentFieldMandatory();
+            if (initialLoadCommentIsMandatory) {
+                jQuery("#focusAreaDiv")
+                    .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, true)');
+            } else {
+                jQuery("#focusAreaDiv")
+                    .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
+            }
+
+            jQuery("#ProjectTypeID").on('change', function () {
+                var commentIsMandatory = isInvoiceCommentFieldMandatory();
+                if (commentIsMandatory) {
+                    jQuery("#focusAreaDiv")
+                        .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, true)');
+                } else {
+                    jQuery("#focusAreaDiv")
+                        .html('@Html.LabelWithSugarFor(m => m.FocusAreaID, false)');
+                }
+            });
+        });
+</script>

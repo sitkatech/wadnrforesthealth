@@ -1748,7 +1748,7 @@
     <Property Name="ReviewedByPersonID" Type="Int32" />
     <Property Name="DefaultBoundingBox" Type="Geometry" />
     <Property Name="NoExpendituresToReportExplanation" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
+    <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="ExpirationDate" Type="DateTime" />
@@ -2251,7 +2251,7 @@
     <Property Name="PlannedDate" Type="DateTime" />
     <Property Name="ProjectLocationSimpleTypeID" Type="Int32" Nullable="false" />
     <Property Name="PrimaryContactPersonID" Type="Int32" />
-    <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
+    <Property Name="FocusAreaID" Type="Int32" />
     <Property Name="ExpirationDate" Type="DateTime" />
     <Property Name="EstimatedIndirectCost" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="EstimatedPersonnelAndBenefitsCost" Type="Decimal" Precision="19" Scale="4" />
@@ -2976,7 +2976,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Project_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="1" />
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="0..1" />
     <End Role="Projects" Type="ProjectFirma.Web.Models.Project" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FocusArea">
@@ -2988,7 +2988,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectUpdate_FocusArea_FocusAreaID">
-    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="1" />
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="0..1" />
     <End Role="ProjectUpdates" Type="ProjectFirma.Web.Models.ProjectUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FocusArea">

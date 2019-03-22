@@ -2334,11 +2334,14 @@ namespace ProjectFirma.Web.Controllers
             var originalImages = new List<IFileResourcePhoto>(project.ProjectImages);
             var updatedImages = new List<IFileResourcePhoto>(projectUpdateBatch.ProjectImageUpdates);
 
-            var dummyProject = Project.CreateNewBlank(ProjectType.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
+            var dummyProject = Project.CreateNewBlank(
+                ProjectType.CreateNewBlank(TaxonomyBranch.CreateNewBlank(TaxonomyTrunk.CreateNewBlank())),
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
-                ProjectApprovalStatus.Approved,
-                FocusArea.CreateNewBlank(FocusAreaStatus.Completed, Region.CreateNewBlank()));
+                ProjectApprovalStatus.Approved
+            );
+
+            dummyProject.FocusArea = FocusArea.CreateNewBlank(FocusAreaStatus.Completed, Region.CreateNewBlank());
 
             var dummyProjectUpdateBatch = ProjectUpdateBatch.CreateNewBlank(dummyProject, CurrentPerson, ProjectUpdateState.Created);
 

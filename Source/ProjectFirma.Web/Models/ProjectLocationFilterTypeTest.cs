@@ -40,7 +40,8 @@ namespace ProjectFirma.Web.Models
                 ProjectStage.Completed,
                 ProjectLocationSimpleType.None,
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                ProjectApprovalStatus.Approved, focusArea);
+                ProjectApprovalStatus.Approved);
+            project.FocusArea = focusArea;
 
             project.ProjectLocationPoint = DbGeometry.PointFromText("POINT(29.11 40.11)", 4326);
 
