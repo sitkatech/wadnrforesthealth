@@ -42,6 +42,7 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
@@ -217,6 +218,11 @@ namespace ProjectFirma.Web.Controllers
             var treamentActivityGridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
+            var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            var projectInteractionEventsGridDataUrl =
+                SitkaRoute<ProjectController>.BuildUrlFromExpression(pc =>
+                    pc.ProjectInteractionEventsGridJsonData(project.PrimaryKey));
+
             var projectPeopleDetailViewData = new ProjectPeopleDetailViewData(project.ProjectPeople.Select(x=>new ProjectPersonRelationship(project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
             var projectCustomAttributeSimples = new ProjectCustomAttributes(project).Attributes.ToList();
             var projectAttributesViewData = new ProjectAttributesViewData( projectCustomAttributeTypes, projectCustomAttributeSimples, false);
@@ -256,9 +262,20 @@ namespace ProjectFirma.Web.Controllers
                 projectOrganizationsDetailViewData,
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID, projectPeopleDetailViewData,
-                treamentActivityGridSpec, treatmentActivityGridDataUrl, editProjectRegionUrl, editProjectPriorityAreaUrl
-                );
+                treamentActivityGridSpec, treatmentActivityGridDataUrl, editProjectRegionUrl, editProjectPriorityAreaUrl,
+                projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
             return RazorView<Detail, DetailViewData>(viewData);
+        }
+
+        [ProjectViewFeature]
+        public GridJsonNetJObjectResult<InteractionEvent> ProjectInteractionEventsGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var interactionEvents =
+                project.InteractionEventProjects.Where(ie => ie.ProjectID == project.ProjectID).Select(ie => ie.InteractionEvent).Distinct().ToList();
+            var gridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InteractionEvent>(interactionEvents, gridSpec);
+            return gridJsonNetJObjectResult;
         }
 
         private static ProjectExpendituresDetailViewData BuildProjectExpendituresDetailViewData(Project project)

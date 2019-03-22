@@ -416,9 +416,8 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<InteractionEvent> UserInteractionEventsGridJsonData(PersonPrimaryKey personPrimaryKey)
         {
             var person = personPrimaryKey.EntityObject;
-            var interactionEventContacts =
-                person.InteractionEventContacts.Select(ie => ie.InteractionEventID).Distinct().ToList();
-            var interactionEvents = HttpRequestStorage.DatabaseEntities.InteractionEvents.Where(ie => interactionEventContacts.Contains(ie.InteractionEventID)).OrderByDescending(ie => ie.InteractionEventDate).ToList();
+            var interactionEvents =
+                person.InteractionEventContacts.Where(ie => ie.PersonID == person.PersonID).Select(ie => ie.InteractionEvent).ToList();
             var gridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InteractionEvent>(interactionEvents, gridSpec);
             return gridJsonNetJObjectResult;
