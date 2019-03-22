@@ -10,7 +10,6 @@
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
-    <EntitySet Name="CostType" EntityType="ProjectFirma.Web.Models.CostType" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.CurrentBiennium" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
@@ -176,14 +175,6 @@
     <AssociationSet Name="FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID" Association="ProjectFirma.Web.Models.FK_ClassificationPerformanceMeasure_PerformanceMeasure_PerformanceMeasureID">
       <End Role="PerformanceMeasure" EntitySet="PerformanceMeasure" />
       <End Role="ClassificationPerformanceMeasures" EntitySet="ClassificationPerformanceMeasure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_CostType_CostTypeID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID">
-      <End Role="CostType" EntitySet="CostType" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_InvoiceLineItem_CostType_CostTypeID" Association="ProjectFirma.Web.Models.FK_InvoiceLineItem_CostType_CostTypeID">
-      <End Role="CostType" EntitySet="CostType" />
-      <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_County_StateProvince_StateProvinceID" Association="ProjectFirma.Web.Models.FK_County_StateProvince_StateProvinceID">
       <End Role="StateProvince" EntitySet="StateProvince" />
@@ -1006,15 +997,6 @@
     <Property Name="ClassificationSystemListPageContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Classifications" Relationship="ProjectFirma.Web.Models.FK_Classification_ClassificationSystem_ClassificationSystemID" FromRole="ClassificationSystem" ToRole="Classifications" />
   </EntityType>
-  <EntityType Name="CostType">
-    <Key>
-      <PropertyRef Name="CostTypeID" />
-    </Key>
-    <Property Name="CostTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CostTypeDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="CostType" ToRole="GrantAllocations" />
-    <NavigationProperty Name="InvoiceLineItems" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_CostType_CostTypeID" FromRole="CostType" ToRole="InvoiceLineItems" />
-  </EntityType>
   <EntityType Name="County">
     <Key>
       <PropertyRef Name="CountyID" />
@@ -1220,7 +1202,6 @@
     <Property Name="OrganizationID" Type="Int32" />
     <Property Name="RegionID" Type="Int32" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
-    <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_CostType_CostTypeID" FromRole="GrantAllocations" ToRole="CostType" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
@@ -1360,7 +1341,6 @@
     <Property Name="CostTypeID" Type="Int32" Nullable="false" />
     <Property Name="InvoiceLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="InvoiceLineItemNote" Type="String" MaxLength="8000" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="CostType" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_CostType_CostTypeID" FromRole="InvoiceLineItems" ToRole="CostType" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="InvoiceLineItems" ToRole="GrantAllocation" />
     <NavigationProperty Name="Invoice" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_Invoice_InvoiceID" FromRole="InvoiceLineItems" ToRole="Invoice" />
   </EntityType>
@@ -2752,30 +2732,6 @@
       </Principal>
       <Dependent Role="ClassificationPerformanceMeasures">
         <PropertyRef Name="PerformanceMeasureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_CostType_CostTypeID">
-    <End Role="CostType" Type="ProjectFirma.Web.Models.CostType" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CostType">
-        <PropertyRef Name="CostTypeID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="CostTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InvoiceLineItem_CostType_CostTypeID">
-    <End Role="CostType" Type="ProjectFirma.Web.Models.CostType" Multiplicity="1" />
-    <End Role="InvoiceLineItems" Type="ProjectFirma.Web.Models.InvoiceLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CostType">
-        <PropertyRef Name="CostTypeID" />
-      </Principal>
-      <Dependent Role="InvoiceLineItems">
-        <PropertyRef Name="CostTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

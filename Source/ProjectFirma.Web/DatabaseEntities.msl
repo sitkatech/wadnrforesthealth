@@ -110,14 +110,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CostType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CostType">
-        <MappingFragment StoreEntitySet="CostType">
-          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
-          <ScalarProperty Name="CostTypeDescription" ColumnName="CostTypeDescription" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="County">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.County">
         <MappingFragment StoreEntitySet="County">

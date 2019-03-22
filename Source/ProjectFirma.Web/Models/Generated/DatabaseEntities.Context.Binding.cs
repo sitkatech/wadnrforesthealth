@@ -37,7 +37,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
-        public virtual DbSet<CostType> CostTypes { get; set; }
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<CurrentBiennium> CurrentBiennia { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
@@ -197,7 +196,9 @@ namespace ProjectFirma.Web.Models
                     return ClassificationSystems.GetClassificationSystem(primaryKey);
 
                 case "CostType":
-                    return CostTypes.GetCostType(primaryKey);
+                    var costType = CostType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(costType, "CostType", primaryKey);
+                    return costType;
 
                 case "County":
                     return Counties.GetCounty(primaryKey);
