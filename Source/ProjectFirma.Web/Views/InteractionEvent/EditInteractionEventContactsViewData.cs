@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     public class EditInteractionEventContactsViewData : FirmaViewData
     {
 
-        public EditInteractionEventContactsAngularViewData AngularViewData { get; set; }
+        //public EditInteractionEventContactsAngularViewData AngularViewData { get; set; }
         public bool UserCanManageContacts { get; set; }
         public string AddContactUrl { get; set; }
 
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
 
             var allContacts = allPeople.OrderBy(x => x.LastName).Select(x => new PersonSimple(x)).ToList();
-            AngularViewData = new EditInteractionEventContactsAngularViewData(interactionEventPrimaryKey, allContacts);
+            //AngularViewData = new EditInteractionEventContactsAngularViewData(interactionEventPrimaryKey, allContacts);
             UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
         }
@@ -50,16 +50,5 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         }
     }
 
-    public class EditInteractionEventContactsAngularViewData
-    {
-        public List<PersonSimple> AllContacts { get; set; }
-        public int InteractionEventID { get; }
-
-        public EditInteractionEventContactsAngularViewData(int interactionEventPrimaryKey, List<PersonSimple> allContacts)
-        {
-            AllContacts = allContacts;
-            InteractionEventID = interactionEventPrimaryKey;
-        }
-
-    }
+    
 }

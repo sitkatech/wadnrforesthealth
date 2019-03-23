@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -42,7 +43,7 @@ namespace ProjectFirma.Web.Controllers
 
             var interactionEvent = new InteractionEvent(viewModel.InteractionEventTypeID, viewModel.DNRStaffPersonID,
                 viewModel.Title, viewModel.Date);
-            viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            viewModel.UpdateModel(interactionEvent, CurrentPerson, new List<InteractionEventProject>());
             HttpRequestStorage.DatabaseEntities.InteractionEvents.Add(interactionEvent);
             SetMessageForDisplay($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} \"{interactionEvent.InteractionEventTitle}\" successfully created.");
             return new ModalDialogFormJsonResult();
@@ -53,12 +54,9 @@ namespace ProjectFirma.Web.Controllers
             var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes.ToList();
             var dnrStaffPeople = HttpRequestStorage.DatabaseEntities.People.Where(p =>
                 p.Organization.OrganizationName == Organization.OrganizationWADNR).OrderBy(p => p.LastName).ToList();
-            
+            var allProjects = HttpRequestStorage.DatabaseEntities.Projects;
 
-            var viewData = new EditInteractionEventViewData(editInteractionEventEditType,
-                interactionEventTypes,
-                dnrStaffPeople
-            );
+            var viewData = new EditInteractionEventViewData(editInteractionEventEditType, interactionEventTypes, dnrStaffPeople, viewModel.InteractionEventID, allProjects);
             return RazorPartialView<EditInteractionEvent, EditInteractionEventViewData, EditInteractionEventViewModel>(viewData, viewModel);
         }
 
@@ -66,7 +64,8 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventManageFeature]
         public PartialViewResult EditInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
-            var viewModel = new EditInteractionEventViewModel(interactionEventPrimaryKey.EntityObject);
+            var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
+            var viewModel = new EditInteractionEventViewModel(interactionEventPrimaryKey.EntityObject, interactionEventProjects);
             return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventEdit);
         }
 
@@ -80,7 +79,14 @@ namespace ProjectFirma.Web.Controllers
             {
                 return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventEdit);
             }
-            viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Load();
+            var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Local;
+            viewModel.UpdateModel(interactionEvent, CurrentPerson, interactionEventProjects);
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            
+
             return new ModalDialogFormJsonResult();
         }
 
@@ -171,7 +177,6 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewEditInteractionEventContacts(EditInteractionEventContactsViewModel viewModel, InteractionEvent interactionEvent)
         {
             var allPeople = HttpRequestStorage.DatabaseEntities.People;
-
 
             var viewData = new EditInteractionEventContactsViewData(CurrentPerson, interactionEvent.PrimaryKey, allPeople);
             return RazorPartialView<EditInteractionEventContacts, EditInteractionEventContactsViewData, EditInteractionEventContactsViewModel>(viewData, viewModel);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -837,7 +837,7 @@
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
     <Content Include="Views\FocusArea\EditBoundaryErrors.cshtml" />
     <Content Include="Views\Grant\Detail.cshtml" />
-    <Content Include="Views\InteractionEvent\InteractionEventProjectController.js" />
+    <Content Include="Views\InteractionEvent\InteractionEventController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventContactController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
     <Content Include="Views\ProjectCreate\Regions.cshtml" />

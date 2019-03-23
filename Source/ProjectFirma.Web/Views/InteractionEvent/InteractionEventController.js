@@ -18,7 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-angular.module("ProjectFirmaApp").controller("InteractionEventProjectController", function ($scope, angularModelAndViewData) {
+angular.module("ProjectFirmaApp").controller("InteractionEventController", function ($scope, angularModelAndViewData) {
     $scope.ProjectToAdd = null;
 
     $scope.$watch(function() {
@@ -79,7 +79,7 @@ angular.module("ProjectFirmaApp").controller("InteractionEventProjectController"
     };
 
 
-    $scope.isOptionSelected = function(project) {
+    $scope.isOptionSelectedProject = function(project) {
 
         return _.any($scope.AngularModel.InteractionEventProjects,
             function(pos) {

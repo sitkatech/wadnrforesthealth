@@ -30,7 +30,7 @@
     {
         return {
             AngularModel: @Html.Raw(JObject.FromObject(Model)),
-            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.AngularViewData))
+            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
         };
     });
     jQuery(document).ready(function () {
