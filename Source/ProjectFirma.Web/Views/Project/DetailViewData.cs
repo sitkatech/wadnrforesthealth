@@ -20,10 +20,12 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using LtInfo.Common;
+using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectUpdate;
 using ProjectFirma.Web.Views.Shared;
@@ -115,26 +117,36 @@ namespace ProjectFirma.Web.Views.Project
         
         public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
 
+
+        public InteractionEventGridSpec ProjectInteractionEventsGridSpec { get; }
+        public string ProjectInteractionEventsGridName { get;  }
+        public string ProjectInteractionEventsGridDataUrl { get;}
+
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
-            ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData, ProjectLocationSummaryViewData projectLocationSummaryViewData,
+            ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
+            ProjectLocationSummaryViewData projectLocationSummaryViewData,
             ProjectFundingDetailViewData projectFundingDetailViewData,
             PerformanceMeasureExpectedSummaryViewData performanceMeasureExpectedSummaryViewData,
             PerformanceMeasureReportedValuesGroupedViewData performanceMeasureReportedValuesGroupedViewData,
             ProjectExpendituresDetailViewData projectExpendituresDetailViewData,
-            ImageGalleryViewData imageGalleryViewData, EntityNotesViewData projectNotesViewData, EntityNotesViewData internalNotesViewData,
+            ImageGalleryViewData imageGalleryViewData, EntityNotesViewData projectNotesViewData,
+            EntityNotesViewData internalNotesViewData,
             EntityExternalLinksViewData entityExternalLinksViewData,
             ProjectBasicsTagsViewData projectBasicsTagsViewData, bool userHasProjectAdminPermissions,
             bool userHasEditProjectPermissions, bool userHasProjectUpdatePermissions,
             bool userHasPerformanceMeasureActualManagePermissions, string mapFormID,
             string editSimpleProjectLocationUrl, string editDetailedProjectLocationUrl,
             string editProjectOrganizationsUrl, string editPerformanceMeasureExpectedsUrl,
-            string editPerformanceMeasureActualsUrl, string editReportedExpendituresUrl, AuditLogsGridSpec auditLogsGridSpec, string auditLogsGridDataUrl,
+            string editPerformanceMeasureActualsUrl, string editReportedExpendituresUrl,
+            AuditLogsGridSpec auditLogsGridSpec, string auditLogsGridDataUrl,
             string editExternalLinksUrl, ProjectNotificationGridSpec projectNotificationGridSpec,
             string projectNotificationGridName, string projectNotificationGridDataUrl, bool userCanEditProposal,
-            ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData, List<Models.ClassificationSystem> classificationSystems,
+            ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData,
+            List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec, string treatmentActivityGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl
-            )
+            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec,
+            string treatmentActivityGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl,
+            InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl)
             : base(currentPerson, project)
         {
             PageTitle = project.DisplayName.ToEllipsifiedStringClean(110);
@@ -353,6 +365,10 @@ namespace ProjectFirma.Web.Views.Project
             TreatmentActivityProjectDetailGridSpec = treatmentActivityProjectDetailGridSpec;
             TreatmentActivityGridName = "treatmentActivityGrid";
             TreatmentActivityGridDataUrl = treatmentActivityGridDataUrl;
+
+            ProjectInteractionEventsGridSpec = projectInteractionEventsGridSpec;
+            ProjectInteractionEventsGridName = "projectInteractionEventsGrid";
+            ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
         }
     }
 }

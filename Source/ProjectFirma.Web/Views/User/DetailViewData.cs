@@ -133,7 +133,7 @@ namespace ProjectFirma.Web.Views.User
             UserInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
             UserInteractionEventsGridName = "userInteractionEventsFromUserGrid";
             UserInteractionEventsGridDataUrl =
-                SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserInteractionEventsGridJsonData(CurrentPerson));
+                SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserInteractionEventsGridJsonData(personToView));
 
         }
 
