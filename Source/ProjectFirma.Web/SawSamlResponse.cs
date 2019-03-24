@@ -6,12 +6,14 @@
 	version 1.2
 */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
-using System.Xml.Linq;
+using LtInfo.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web
 {
@@ -79,16 +81,26 @@ namespace ProjectFirma.Web
             return node?.InnerText;
         }
 
-        public string GetUserName()
-        {
-            var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='user']/saml:AttributeValue", _xmlNameSpaceManager);
-            return node?.InnerText;
-        }
-
-        public string GetName()
+        private string GetName()
         {
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='name']/saml:AttributeValue", _xmlNameSpaceManager);
             return node?.InnerText;
+        }
+
+        public string GetFirstName()
+        {
+            var fullName = GetName();
+            var names = fullName.Split(' ');
+            var firstName = names.Length == 2 ? names[0] : fullName;
+            return firstName;
+        }
+
+        public string GetLastName()
+        {
+            var fullName = GetName();
+            var names = fullName.Split(' ');
+            var lastName = names.Length == 2 ? names[1] : "";
+            return lastName;
         }
 
         public string GetEmail()
@@ -97,6 +109,22 @@ namespace ProjectFirma.Web
             var node = _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='email']/saml:AttributeValue", _xmlNameSpaceManager) ??
                            _xmlDoc.SelectSingleNode("/samlp:Response/saml:Assertion/saml:AttributeStatement/saml:Attribute[@Name='http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress']/saml:AttributeValue", _xmlNameSpaceManager);
             return node?.InnerText;
+        }
+
+        public List<string> GetRoleGroups()
+        {
+            // We're not using any group claims from SAW, so leave it blank
+            return new List<string>();
+        }
+
+        public Authenticator GetWhichSawAuthenticator()
+        {
+            // ReSharper disable once StringLiteralTypo
+            if (GetIssuer().Contains("test-secureaccess.wa.gov", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return Authenticator.SAWTEST;
+            }
+            return Authenticator.SAWPROD;
         }
 
         private bool IsExpired()
@@ -111,7 +139,11 @@ namespace ProjectFirma.Web
         }
 
         //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesnt work in an XML doc with namespaces
+
+
         //see https://stackoverflow.com/questions/7178111/why-is-xmlnamespacemanager-necessary
+
+
         private static XmlNamespaceManager GetNamespaceManager(XmlDocument xmlDocument)
         {
             var manager = new XmlNamespaceManager(xmlDocument.NameTable);

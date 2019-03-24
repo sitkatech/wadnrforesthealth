@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Web;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using ProjectFirma.Web.Common;
@@ -15,6 +16,7 @@ namespace ProjectFirma.Web.Models
 
         public static void IdentitySignIn(IAuthenticationManager authenticationManager, Person person)
         {
+            HttpRequestStorage.Person = person;
             authenticationManager.SignIn(new AuthenticationProperties
             {
                 AllowRefresh = true,
@@ -54,6 +56,7 @@ namespace ProjectFirma.Web.Models
                 // This parsing out of depends on the write of data into ClaimTypes.Name
                 var personID = int.Parse(claimsPrincipal.Identity.Name);
                 var person = HttpRequestStorage.DatabaseEntities.People.GetPerson(personID);
+                Check.Require(person.IsActive, $"Account for {person.Email} is not active.");
                 return person;
             }
             catch (Exception ex)

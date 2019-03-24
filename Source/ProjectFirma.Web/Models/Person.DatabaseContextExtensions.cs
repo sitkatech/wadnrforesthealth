@@ -35,22 +35,6 @@ namespace ProjectFirma.Web.Models
             return person;
         }
 
-        public static Person GetPersonByPersonUniqueIdentifier(this IQueryable<Person> people, Authenticator authenticator, string desiredPersonUniqueIdentifier)
-        {
-            Check.EnsureNotNull(desiredPersonUniqueIdentifier, "Must look for a particular PersonUniqueIdentifier, not null!");
-
-            var person = people.ToList().SingleOrDefault(p => IsMatchingPersonEnvironmentCredentials(p, desiredPersonUniqueIdentifier, authenticator));
-
-            return person;
-        }
-
-        private static bool IsMatchingPersonEnvironmentCredentials(Person person, string desiredPersonUniqueIdentifier, Authenticator authenticator)
-        {
-            var relevantPersonCredentials = person.PersonEnvironmentCredentials.ToList();
-            return relevantPersonCredentials.Any(pec =>pec.Authenticator.AuthenticatorID == authenticator.AuthenticatorID &&
-                                                       string.Equals(pec.PersonUniqueIdentifier, desiredPersonUniqueIdentifier, StringComparison.OrdinalIgnoreCase));
-        }
-
         public static Person GetPersonByWebServiceAccessToken(this IQueryable<Person> people, Guid webServiceAccessToken)
         {
             var person = people.SingleOrDefault(x => x.WebServiceAccessToken == webServiceAccessToken);

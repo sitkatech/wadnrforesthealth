@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[Person](
 	[OrganizationID] [int] NULL,
 	[ReceiveSupportEmails] [bit] NOT NULL,
 	[WebServiceAccessToken] [uniqueidentifier] NULL,
-	[LoginName] [varchar](128) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[MiddleName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Notes] [varchar](500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[PersonAddress] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,

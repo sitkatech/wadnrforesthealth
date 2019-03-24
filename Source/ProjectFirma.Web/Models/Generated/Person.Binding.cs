@@ -45,7 +45,6 @@ namespace ProjectFirma.Web.Models
             this.PerformanceMeasureNotesWhereYouAreTheUpdatePerson = new HashSet<PerformanceMeasureNote>();
             this.PeopleWhereYouAreTheAddedByPerson = new HashSet<Person>();
             this.PersonAllowedAuthenticators = new HashSet<PersonAllowedAuthenticator>();
-            this.PersonEnvironmentCredentials = new HashSet<PersonEnvironmentCredential>();
             this.PersonStewardOrganizations = new HashSet<PersonStewardOrganization>();
             this.PersonStewardRegions = new HashSet<PersonStewardRegion>();
             this.PersonStewardTaxonomyBranches = new HashSet<PersonStewardTaxonomyBranch>();
@@ -73,7 +72,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string loginName, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID) : this()
+        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID) : this()
         {
             this.PersonID = personID;
             this.FirstName = firstName;
@@ -88,7 +87,6 @@ namespace ProjectFirma.Web.Models
             this.OrganizationID = organizationID;
             this.ReceiveSupportEmails = receiveSupportEmails;
             this.WebServiceAccessToken = webServiceAccessToken;
-            this.LoginName = loginName;
             this.MiddleName = middleName;
             this.Notes = notes;
             this.PersonAddress = personAddress;
@@ -141,13 +139,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementPeople.Any() || AuditLogs.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicesWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonEnvironmentCredentials.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProjectsWhereYouAreThePrimaryContactPerson.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdatesWhereYouAreThePrimaryContactPerson.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TreatmentActivitiesWhereYouAreTheTreatmentActivityContact.Any();
+            return AgreementPeople.Any() || AuditLogs.Any() || FileResourcesWhereYouAreTheCreatePerson.Any() || GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || GrantAllocationProgramManagers.Any() || GrantNotesWhereYouAreTheCreatedByPerson.Any() || GrantNotesWhereYouAreTheLastUpdatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any() || GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any() || InteractionEventsWhereYouAreTheStaffPerson.Any() || InteractionEventContacts.Any() || InvoicesWhereYouAreThePreparedByPerson.Any() || Notifications.Any() || OrganizationsWhereYouAreThePrimaryContactPerson.Any() || PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any() || PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any() || PeopleWhereYouAreTheAddedByPerson.Any() || PersonAllowedAuthenticators.Any() || PersonStewardOrganizations.Any() || PersonStewardRegions.Any() || PersonStewardTaxonomyBranches.Any() || ProjectsWhereYouAreThePrimaryContactPerson.Any() || ProjectsWhereYouAreTheProposingPerson.Any() || ProjectsWhereYouAreTheReviewedByPerson.Any() || ProjectInternalNotesWhereYouAreTheCreatePerson.Any() || ProjectInternalNotesWhereYouAreTheUpdatePerson.Any() || ProjectLocationStagings.Any() || ProjectLocationStagingUpdates.Any() || ProjectNotesWhereYouAreTheCreatePerson.Any() || ProjectNotesWhereYouAreTheUpdatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any() || ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any() || ProjectPeople.Any() || ProjectPersonUpdates.Any() || ProjectUpdatesWhereYouAreThePrimaryContactPerson.Any() || ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any() || ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any() || SupportRequestLogsWhereYouAreTheRequestPerson.Any() || SystemAttributesWhereYouAreThePrimaryContactPerson.Any() || TreatmentActivitiesWhereYouAreTheTreatmentActivityContact.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(FileResource).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(Invoice).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PerformanceMeasureNote).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonEnvironmentCredential).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(FileResource).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(Invoice).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PerformanceMeasureNote).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -277,11 +275,6 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in PersonEnvironmentCredentials.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in PersonStewardOrganizations.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -407,7 +400,6 @@ namespace ProjectFirma.Web.Models
         public int? OrganizationID { get; set; }
         public bool ReceiveSupportEmails { get; set; }
         public Guid? WebServiceAccessToken { get; set; }
-        public string LoginName { get; set; }
         public string MiddleName { get; set; }
         public string Notes { get; set; }
         public string PersonAddress { get; set; }
@@ -438,7 +430,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<Person> PeopleWhereYouAreTheAddedByPerson { get; set; }
         public virtual Person AddedByPerson { get; set; }
         public virtual ICollection<PersonAllowedAuthenticator> PersonAllowedAuthenticators { get; set; }
-        public virtual ICollection<PersonEnvironmentCredential> PersonEnvironmentCredentials { get; set; }
         public virtual ICollection<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual ICollection<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual ICollection<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
@@ -471,7 +462,6 @@ namespace ProjectFirma.Web.Models
             public const int LastName = 100;
             public const int Email = 255;
             public const int Phone = 30;
-            public const int LoginName = 128;
             public const int MiddleName = 100;
             public const int Notes = 500;
             public const int PersonAddress = 255;

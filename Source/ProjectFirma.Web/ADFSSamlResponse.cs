@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Security.Cryptography.Xml;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace ProjectFirma.Web
 {
@@ -43,12 +43,6 @@ namespace ProjectFirma.Web
             encryptedXml.DecryptDocument();
         }
 
-        public string GetUpn()
-        {
-            var node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPath}/saml:Attribute[@Name='http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn']/saml:AttributeValue", _xmlNameSpaceManager);
-            return node?.InnerText;
-        }
-
         public string GetFirstName()
         {
             var node = _xmlDoc.SelectSingleNode($"{BaseAttributeStatementXPath}/saml:Attribute[@Name=\'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/firstname\']/saml:AttributeValue", _xmlNameSpaceManager);
@@ -67,15 +61,14 @@ namespace ProjectFirma.Web
             return node?.InnerText;
         }
 
-        public string GetRoleGroups()
+        public List<string> GetRoleGroups()
         {
             var nodes = _xmlDoc.SelectNodes($"{BaseAttributeStatementXPath}/saml:Attribute[@Name='http://schemas.xmlsoap.org/claims/Group']/saml:AttributeValue", _xmlNameSpaceManager);
             if (nodes != null && nodes.Count > 0)
             {
-                return string.Join(",", nodes.Cast<XmlNode>().Select(x => x.InnerText));
+                return nodes.Cast<XmlNode>().Select(x => x.InnerText).ToList();
             }
-
-            return null;
+            return new List<string>();
         }
 
         //returns namespace manager, we need one b/c MS says so... Otherwise XPath doesn't work in an XML doc with namespaces

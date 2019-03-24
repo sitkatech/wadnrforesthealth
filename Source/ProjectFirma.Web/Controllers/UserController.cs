@@ -332,7 +332,7 @@ namespace ProjectFirma.Web.Controllers
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.People.Add(person);
 
-            var authenticatorsToAllow = AuthenticatorHelper.GetAuthenticators(viewModel.Email);
+            var authenticatorsToAllow = AuthenticatorHelper.GetAuthenticatorsForEmailAddress(viewModel.Email);
             var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
             HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
 

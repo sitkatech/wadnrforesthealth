@@ -45,7 +45,6 @@ namespace ProjectFirma.Web.Views.User
             Add("Email", a => a.Email, 200);
             Add($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", a => GetOrganizationShortNameUrl(a), 200);
             Add("Phone", a => a.Phone.ToPhoneNumberString(), 100);
-            Add("Username", a => a.IsFullUser() ? a.LoginName?.ToString() : "N/A", 200);
             Add("Last Activity", a => a.IsFullUser() ? a.LastActivityDate : null, 120);
             Add("Role", a => a.IsFullUser() ? a.Role.GetDisplayNameAsUrl() : new HtmlString("N/A"), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add("Active?", a => a.IsFullUser() ? a.IsActive.ToYesNo() : "N/A", 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
@@ -53,7 +52,7 @@ namespace ProjectFirma.Web.Views.User
             Add($"{Models.FieldDefinition.OrganizationPrimaryContact.GetFieldDefinitionLabel()} for Organizations", a => a.PrimaryContactOrganizations.Count, 120);
             Add("Added On", x => x.CreateDate, 130, DhtmlxGridColumnFormatType.Date);
             Add("Added By", x => x.AddedByPerson == null ? new HtmlString("") : x.AddedByPerson.GetFullNameFirstLastAsUrl(), 200, DhtmlxGridColumnFilterType.Html);
-            Add("Authentication Method", x => string.Join(", ", x.PersonAllowedAuthenticators.OrderBy(paa => paa.Authenticator.AuthenticatorName).Select(paa => paa.Authenticator.AuthenticatorName)), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Authentication Methods", x => string.Join(", ", x.PersonAllowedAuthenticators.OrderBy(paa => paa.Authenticator.AuthenticatorName).Select(paa => paa.Authenticator.AuthenticatorName)), 75, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
 
         private static HtmlString GetOrganizationShortNameUrl(Person person)
