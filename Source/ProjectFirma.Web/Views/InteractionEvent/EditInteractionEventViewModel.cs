@@ -54,16 +54,18 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         /// </summary>
         public EditInteractionEventViewModel()
         {
+            Date = DateTime.Now;
+            InteractionEventProjects = new List<InteractionEventProjectSimple>();
         }
 
-        public EditInteractionEventViewModel(Models.InteractionEvent interactionEvent, IEnumerable<InteractionEventProject> interactionEventProjects)
+        public EditInteractionEventViewModel(Models.InteractionEvent interactionEvent)
         {
             InteractionEventTypeID = interactionEvent.InteractionEventTypeID;
             Date = interactionEvent.InteractionEventDate;
             Title = interactionEvent.InteractionEventTitle;
             Description = interactionEvent.InteractionEventDescription;
             DNRStaffPersonID = interactionEvent.StaffPersonID;
-            InteractionEventProjects = interactionEventProjects.Select(x => new InteractionEventProjectSimple() { InteractionEventID = x.InteractionEventID, ProjectID = x.ProjectID }).ToList();
+            InteractionEventProjects = interactionEvent.InteractionEventProjects.Select(x => new InteractionEventProjectSimple() { InteractionEventID = x.InteractionEventID, ProjectID = x.ProjectID }).ToList();
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -82,12 +84,16 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             interactionEvent.InteractionEventTitle = Title;
             interactionEvent.InteractionEventDescription = Description;
             interactionEvent.StaffPersonID = DNRStaffPersonID;
-            var interactionEventProjectsUpdated = InteractionEventProjects.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.ProjectID)).Select(x =>
-                new Models.InteractionEventProject(interactionEvent.InteractionEventID, x.ProjectID)).ToList();
+            if (InteractionEventProjects != null)
+            {
+                var interactionEventProjectsUpdated = InteractionEventProjects
+                    .Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.ProjectID)).Select(x =>
+                        new Models.InteractionEventProject(interactionEvent.InteractionEventID, x.ProjectID)).ToList();
 
-            interactionEvent.InteractionEventProjects.Merge(interactionEventProjectsUpdated,
-                allInteractionEventProjects,
-                (x, y) => x.InteractionEventID == y.InteractionEventID && x.ProjectID == y.ProjectID);
+                interactionEvent.InteractionEventProjects.Merge(interactionEventProjectsUpdated,
+                    allInteractionEventProjects,
+                    (x, y) => x.InteractionEventID == y.InteractionEventID && x.ProjectID == y.ProjectID);
+            }
         }
     }
 }

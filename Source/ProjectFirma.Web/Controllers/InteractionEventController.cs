@@ -64,8 +64,7 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventManageFeature]
         public PartialViewResult EditInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
-            var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
-            var viewModel = new EditInteractionEventViewModel(interactionEventPrimaryKey.EntityObject, interactionEventProjects);
+            var viewModel = new EditInteractionEventViewModel(interactionEventPrimaryKey.EntityObject);
             return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventEdit);
         }
 
