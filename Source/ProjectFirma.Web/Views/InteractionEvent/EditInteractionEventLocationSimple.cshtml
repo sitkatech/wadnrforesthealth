@@ -25,7 +25,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using Newtonsoft.Json.Linq
 @inherits ProjectFirma.Web.Views.InteractionEvent.EditInteractionEventLocationSimple
 
-<script type="text/javascript" src="@Url.Content("~/Views/InteractionEvent/InteractionEventLocationSimpleController.js")"></script>
+
 <script type="text/javascript">
     // <![CDATA[
     angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
@@ -67,7 +67,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @Html.ValidationSummary()
 <div class="row" ng-app="ProjectFirmaApp" ng-controller="InteractionEventLocationSimpleController">
     <div class="col-xs-12 col-md-5 col-lg-4">
-        @*<form method="POST" action="@ViewDataTyped.MapPostUrl" id="@ViewDataTyped.MapFormID">*@
+        <form method="POST" action="@ViewDataTyped.MapPostUrl" id="@ViewDataTyped.MapFormID">
             @Html.LabelWithSugarFor(FieldDefinition.InteractionEventLocation)
             <span><sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></span>
 
@@ -88,7 +88,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     </tr>
                 </table>
             </div>
-        @*</form>*@
+        </form>
     </div>
     <div class="col-xs-12 col-md-7 col-lg-8" id="mapContainer">
         <p>

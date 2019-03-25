@@ -61,18 +61,16 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public void UpdateModel(Models.InteractionEvent interactionEvent)
         {
-            interactionEvent.InteractionEventLocationSimple = DbSpatialHelper.MakeDbGeometryFromCoordinates(InteractionEventLocationPointX.Value, InteractionEventLocationPointY.Value, MapInitJson.CoordinateSystemId);
+            if (InteractionEventLocationPointX != null && InteractionEventLocationPointY != null)
+            {
+                interactionEvent.InteractionEventLocationSimple = DbSpatialHelper.MakeDbGeometryFromCoordinates(InteractionEventLocationPointX.Value, InteractionEventLocationPointY.Value, MapInitJson.CoordinateSystemId);
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return GetValidationResults();
+            return new List<ValidationResult>();
         }
 
-        public IEnumerable<ValidationResult> GetValidationResults()
-        {
-            var errors = new List<ValidationResult>();
-            return errors;
-        }
     }
 }

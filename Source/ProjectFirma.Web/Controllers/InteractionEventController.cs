@@ -131,9 +131,16 @@ namespace ProjectFirma.Web.Controllers
         {
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
 
-            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent);
+            var mapLocationFormID = GetMapLocationFormID(interactionEventPrimaryKey);
+
+            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, mapLocationFormID);
 
             return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
+        }
+
+        private string GetMapLocationFormID(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            return $"editMapForInteractionEventLocation{interactionEventPrimaryKey}";
         }
 
         [InteractionEventViewFeature]
@@ -156,9 +163,20 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpPost]
         [InteractionEventManageFeature]
-        public PartialViewResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventLocationSimpleViewModel viewModel)
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventLocationSimpleViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditInteractionEventLocationSimple(viewModel, interactionEvent);
+            }
+
+            viewModel.UpdateModel(interactionEvent);
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            return new ModalDialogFormJsonResult();
         }
 
         private PartialViewResult ViewEditInteractionEventLocationSimple(EditInteractionEventLocationSimpleViewModel viewModel, InteractionEvent interactionEvent)
@@ -168,7 +186,7 @@ namespace ProjectFirma.Web.Controllers
             var mapInitJson = new MapInitJson($"interactionEvent_{interactionEvent.InteractionEventID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) { AllowFullScreen = false, DisablePopups = true };
 
             var mapPostUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.EditInteractionEventLocation(interactionEvent.PrimaryKey, null));
-            var mapFormID = $"editMapForInteractionEventLocation{interactionEvent.InteractionEventID}";
+            var mapFormID = GetMapLocationFormID(interactionEvent.PrimaryKey);
             var wmsLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
             var mapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
            
