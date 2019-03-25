@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using GeoJSON.Net.Feature;
+using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -133,7 +135,27 @@ namespace ProjectFirma.Web.Controllers
 
             var mapLocationFormID = GetMapLocationFormID(interactionEventPrimaryKey);
 
-            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, mapLocationFormID);
+            //the following variables are plural because the MapInitJson constructor is expecting List<>s but InteractionEvents only have a single location point associated with them.
+            var layers = new List<LayerGeoJson>();
+            var locationFeatures = new List<Feature>();
+            BoundingBox boundingBox = null;
+
+            if (interactionEvent.InteractionEventLocationSimple != null)
+            {
+                locationFeatures.Add(DbGeometryToGeoJsonHelper.FromDbGeometry(interactionEvent.InteractionEventLocationSimple));
+                boundingBox = new BoundingBox(new Point(interactionEvent.InteractionEventLocationSimple), 0.5m);
+            }
+
+            if (locationFeatures.Any())
+            {
+                layers.Add(new LayerGeoJson($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} Location",
+                    new FeatureCollection(locationFeatures), "yellow", 1,
+                    LayerInitialVisibility.Show));
+            }
+
+            
+            var interactionEventLocationMapInitJson = new MapInitJson($"interactionEvent_{interactionEvent.InteractionEventID}_mapID", 10, layers, boundingBox);
+            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, mapLocationFormID, interactionEventLocationMapInitJson);
 
             return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
         }

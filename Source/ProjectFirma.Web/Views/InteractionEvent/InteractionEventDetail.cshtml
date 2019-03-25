@@ -21,6 +21,8 @@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.ModalDialog
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Models
 @inherits ProjectFirma.Web.Views.InteractionEvent.InteractionEventDetail
 @section JavascriptAndStylesContent
@@ -29,6 +31,15 @@
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="@Url.Content("~/Views/InteractionEvent/InteractionEventController.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/InteractionEvent/InteractionEventLocationSimpleController.js")"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            var mapInitJson = @Html.Raw(JObject.FromObject(ViewDataTyped.InteractionEventLocationSummaryMapInitJson).ToString(Formatting.None));
+            if (mapInitJson.Layers != null && mapInitJson.Layers.length > 0) {
+                window.Sitka.map = new ProjectFirmaMaps.Map(mapInitJson);
+            }
+        });
+    </script>
+
 }
 
 
@@ -101,7 +112,18 @@
         <div class="row">
             <div class="col-xs-11"><strong>Location</strong></div>
             <div class="col-xs-11">
-
+                @if (ViewDataTyped.InteractionEvent.InteractionEventLocationSimple != null)
+                {
+                    <div>
+                        <div id="@ViewDataTyped.InteractionEventLocationSummaryMapInitJson.MapDivID" style="height: 390px">
+                        </div>
+                        <span style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</span>
+                    </div>
+                }
+                else
+                {
+                    <p>@string.Format("No {0} Location set.", FieldDefinition.InteractionEvent.FieldDefinitionDisplayName)</p>
+                }
 
             </div>
         </div>

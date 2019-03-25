@@ -45,9 +45,11 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public string LocationMapFormID { get; }
 
+        public MapInitJson InteractionEventLocationSummaryMapInitJson { get; set; }
 
 
-        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent, string locationMapFormID) : base(currentPerson)
+
+        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent, string locationMapFormID, MapInitJson interactionEventLocationSummaryMapInitJson) : base(currentPerson)
         {
             IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
             EditInteractionEventBasicsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
@@ -59,6 +61,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             InteractionEventContacts = interactionEvent.InteractionEventContacts.ToList();
             InteractionEventProjects = interactionEvent.InteractionEventProjects.ToList();
             LocationMapFormID = locationMapFormID;
+            InteractionEventLocationSummaryMapInitJson = interactionEventLocationSummaryMapInitJson;
 
 
         }
