@@ -147,48 +147,9 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [InteractionEventManageFeature]
-        public PartialViewResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey)
-        {
-            var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
-            var viewModel = new EditInteractionEventContactsViewModel(interactionEventContacts);
-            return ViewEditInteractionEventContacts(viewModel, interactionEvent);
-        }
-
-        [HttpPost]
-        [InteractionEventManageFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventContactsViewModel viewModel)
-        {
-
-            var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInteractionEventContacts(viewModel, interactionEvent);
-            }
-            HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Load();
-            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Local;
-
-            viewModel.UpdateModel(interactionEvent, interactionEventContacts);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditInteractionEventContacts(EditInteractionEventContactsViewModel viewModel, InteractionEvent interactionEvent)
-        {
-            var allPeople = HttpRequestStorage.DatabaseEntities.People;
-
-            var viewData = new EditInteractionEventContactsViewData(CurrentPerson, interactionEvent.PrimaryKey, allPeople);
-            return RazorPartialView<EditInteractionEventContacts, EditInteractionEventContactsViewData, EditInteractionEventContactsViewModel>(viewData, viewModel);
-        }
-
-
-        [HttpGet]
-        [InteractionEventManageFeature]
         public PartialViewResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            //var interactionEventProje = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
             var viewModel = new EditInteractionEventLocationSimpleViewModel(interactionEvent.InteractionEventLocationSimple);
             return ViewEditInteractionEventLocationSimple(viewModel, interactionEvent);
         }
