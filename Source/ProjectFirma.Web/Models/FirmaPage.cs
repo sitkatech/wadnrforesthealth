@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
         public static FirmaPage GetFirmaPageByPageType(FirmaPageType firmaPageType)
         {
             var firmaPage = HttpRequestStorage.DatabaseEntities.FirmaPages.SingleOrDefault(x => x.FirmaPageTypeID == firmaPageType.FirmaPageTypeID);
-            Check.RequireNotNull(firmaPage);
+            Check.RequireNotNull(firmaPage, $"Could not find FirmaPage with FirmaPageType \"{firmaPageType.FirmaPageTypeDisplayName}\" ({firmaPageType.FirmaPageTypeID})");
             return firmaPage;
         }
 
