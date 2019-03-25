@@ -258,9 +258,6 @@
     <Compile Include="Models\Generated\PersonAllowedAuthenticator.Binding.cs" />
     <Compile Include="Models\Generated\PersonAllowedAuthenticator.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\PersonAllowedAuthenticatorPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\PersonEnvironmentCredential.Binding.cs" />
-    <Compile Include="Models\Generated\PersonEnvironmentCredential.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\PersonEnvironmentCredentialPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganization.Binding.cs" />
     <Compile Include="Models\Generated\PersonStewardOrganization.DatabaseContextExtensions.cs" />

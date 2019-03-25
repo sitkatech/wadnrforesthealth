@@ -651,7 +651,6 @@
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="ReceiveSupportEmails" ColumnName="ReceiveSupportEmails" />
           <ScalarProperty Name="WebServiceAccessToken" ColumnName="WebServiceAccessToken" />
-          <ScalarProperty Name="LoginName" ColumnName="LoginName" />
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
@@ -666,16 +665,6 @@
           <ScalarProperty Name="PersonAllowedAuthenticatorID" ColumnName="PersonAllowedAuthenticatorID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
           <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PersonEnvironmentCredential">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PersonEnvironmentCredential">
-        <MappingFragment StoreEntitySet="PersonEnvironmentCredential">
-          <ScalarProperty Name="PersonEnvironmentCredentialID" ColumnName="PersonEnvironmentCredentialID" />
-          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="AuthenticatorID" ColumnName="AuthenticatorID" />
-          <ScalarProperty Name="PersonUniqueIdentifier" ColumnName="PersonUniqueIdentifier" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

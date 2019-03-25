@@ -24,7 +24,6 @@
 @using LtInfo.Common
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.DhtmlWrappers
-@using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
@@ -81,7 +80,7 @@
     <div class="col-md-6">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, string.Format("Edit Contact"), 950, ViewDataTyped.UserHasEditBasicsPermission)
+                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContactUrl, "Edit Contact", 950, ViewDataTyped.UserHasEditBasicsPermission)
                 Basics
             </div>
             <div class="panel-body">
@@ -97,13 +96,6 @@
                     <div class="col-xs-5 fieldLabel text-right">Phone</div>
                     <div class="col-xs-7">@ViewDataTyped.Person.Phone</div>
                 </div>
-                @if (!ViewDataTyped.PersonIsMereContact)
-                {
-                    <div class="row">
-                        <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Username.GetFieldDefinitionLabel()</div>
-                        <div class="col-xs-7">@ViewDataTyped.Person.LoginName</div>
-                    </div>
-                }
                 <div class="row">
                     <div class="col-xs-5 fieldLabel text-right">@FieldDefinition.Organization.GetFieldDefinitionLabel()</div>
                     <div class="col-xs-7">@ViewDataTyped.Person.Organization.GetDisplayNameAsUrl()</div>

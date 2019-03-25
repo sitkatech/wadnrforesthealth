@@ -58,7 +58,6 @@
     <EntitySet Name="PerformanceMeasureSubcategoryOption" EntityType="ProjectFirma.Web.Models.Store.PerformanceMeasureSubcategoryOption" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="ProjectFirma.Web.Models.Store.Person" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonAllowedAuthenticator" EntityType="ProjectFirma.Web.Models.Store.PersonAllowedAuthenticator" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PersonEnvironmentCredential" EntityType="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
@@ -507,10 +506,6 @@
     <AssociationSet Name="FK_PersonAllowedAuthenticator_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonAllowedAuthenticator_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="PersonAllowedAuthenticators" EntitySet="PersonAllowedAuthenticator" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PersonEnvironmentCredential_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonEnvironmentCredential_Person_PersonID">
-      <End Role="Person" EntitySet="Person" />
-      <End Role="PersonEnvironmentCredentials" EntitySet="PersonEnvironmentCredential" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardOrganization_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardOrganization_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
@@ -1508,7 +1503,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="OrganizationID" Type="int" />
     <Property Name="ReceiveSupportEmails" Type="bit" Nullable="false" />
     <Property Name="WebServiceAccessToken" Type="uniqueidentifier" />
-    <Property Name="LoginName" Type="varchar" MaxLength="128" />
     <Property Name="MiddleName" Type="varchar" MaxLength="100" />
     <Property Name="Notes" Type="varchar" MaxLength="500" />
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
@@ -1522,15 +1516,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonAllowedAuthenticatorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="AuthenticatorID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PersonEnvironmentCredential">
-    <Key>
-      <PropertyRef Name="PersonEnvironmentCredentialID" />
-    </Key>
-    <Property Name="PersonEnvironmentCredentialID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="PersonID" Type="int" Nullable="false" />
-    <Property Name="AuthenticatorID" Type="int" Nullable="false" />
-    <Property Name="PersonUniqueIdentifier" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="PersonStewardOrganization">
     <Key>
@@ -3423,18 +3408,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
         <PropertyRef Name="PersonID" />
       </Principal>
       <Dependent Role="PersonAllowedAuthenticators">
-        <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PersonEnvironmentCredential_Person_PersonID">
-    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
-    <End Role="PersonEnvironmentCredentials" Type="ProjectFirma.Web.Models.Store.PersonEnvironmentCredential" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="PersonEnvironmentCredentials">
         <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
