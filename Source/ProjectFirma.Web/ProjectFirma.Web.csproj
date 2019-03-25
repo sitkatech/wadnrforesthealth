@@ -484,6 +484,7 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\FirmaPageTypeTest.cs" />
     <Compile Include="Models\CostType.cs" />
     <Compile Include="Models\AuthenticatorHelper.cs" />
     <Compile Include="Models\ClaimsIdentityException.cs" />

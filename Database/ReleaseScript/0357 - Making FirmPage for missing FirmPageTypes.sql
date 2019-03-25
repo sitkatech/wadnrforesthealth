@@ -1,0 +1,6 @@
+insert into FirmaPage(FirmaPageTypeID, FirmaPageContent)
+values (57, null)
+insert into FirmaPage(FirmaPageTypeID, FirmaPageContent)
+values (58, null)
+insert into FirmaPage(FirmaPageTypeID, FirmaPageContent)
+values (59, null)
