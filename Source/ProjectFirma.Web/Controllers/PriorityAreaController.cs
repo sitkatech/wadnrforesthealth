@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Controllers
             };
 
             var mapInitJson = new MapInitJson("priorityAreaIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.PriorityAreasList);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }

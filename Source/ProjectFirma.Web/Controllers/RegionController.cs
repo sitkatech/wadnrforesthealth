@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Controllers
             };
 
             var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.RegionsList);
             var viewData = new IndexViewData(CurrentPerson, mapInitJson, firmaPage);
             return RazorView<Index, IndexViewData>(viewData);
         }
