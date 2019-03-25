@@ -676,11 +676,8 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventProjects.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventContacts.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewData.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewData.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewModel.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
@@ -1320,7 +1317,6 @@
     <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEventContacts.cshtml" />
-    <Content Include="Views\InteractionEvent\EditInteractionEventProjects.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />

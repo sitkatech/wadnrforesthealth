@@ -52,7 +52,6 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
             EditInteractionEventBasicsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
             EditInteractionEventContactsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventContacts(interactionEvent.PrimaryKey));
-            EditInteractionEventProjectsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventProjects(interactionEvent.PrimaryKey));
             EditInteractionEventLocationSimpleUrl =
                 SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x =>
                     x.EditInteractionEventLocation(interactionEvent.PrimaryKey));

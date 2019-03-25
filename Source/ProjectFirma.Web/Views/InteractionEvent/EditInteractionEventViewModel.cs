@@ -96,4 +96,10 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             }
         }
     }
+
+    public class InteractionEventProjectSimple
+    {
+        public int InteractionEventID { get; set; }
+        public int ProjectID { get; set; }
+    }
 }
