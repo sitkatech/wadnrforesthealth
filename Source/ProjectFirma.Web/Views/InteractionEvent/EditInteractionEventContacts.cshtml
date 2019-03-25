@@ -72,7 +72,7 @@
                     <option ng-repeat="contact in getAvailableContactsForInteractionEvents()"
                             ng-bind="contact.FullName"
                             ng-value="contact.PersonID"
-                            ng-selected="isOptionSelected(contact)"></option>
+                            ng-selected="isOptionSelectedContact(contact)"></option>
                 </select>
                 <button type="button" class="btn btn-sm btn-firma" ng-click="addInteractionEventContact(selectedContactID)" ng-disabled="!selectedContactID">
                     <span class="glyphicon glyphicon-plus"></span>

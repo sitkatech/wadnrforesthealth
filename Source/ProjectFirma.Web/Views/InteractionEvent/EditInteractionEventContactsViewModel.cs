@@ -64,10 +64,6 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         }
     }
 
-    public class InteractionEventContactSimple
-    {
-        public int InteractionEventID { get; set; }
-        public int PersonID { get; set; }
-    }
+
 
 }

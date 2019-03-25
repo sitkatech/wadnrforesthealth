@@ -47,6 +47,8 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public List<InteractionEventProjectSimple> InteractionEventProjects { get; set; }
 
+        public List<InteractionEventContactSimple> InteractionEventContacts { get; set; }
+
 
 
         /// <summary>
@@ -56,6 +58,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
             Date = DateTime.Now;
             InteractionEventProjects = new List<InteractionEventProjectSimple>();
+            InteractionEventContacts = new List<InteractionEventContactSimple>();
         }
 
         public EditInteractionEventViewModel(Models.InteractionEvent interactionEvent)
@@ -66,6 +69,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             Description = interactionEvent.InteractionEventDescription;
             DNRStaffPersonID = interactionEvent.StaffPersonID;
             InteractionEventProjects = interactionEvent.InteractionEventProjects.Select(x => new InteractionEventProjectSimple() { InteractionEventID = x.InteractionEventID, ProjectID = x.ProjectID }).ToList();
+            InteractionEventContacts = interactionEvent.InteractionEventContacts.Select(x => new InteractionEventContactSimple() { InteractionEventID = x.InteractionEventID, PersonID = x.PersonID }).ToList();
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -77,7 +81,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             }
         }
 
-        public void UpdateModel(Models.InteractionEvent interactionEvent, Person currentPerson, ICollection<InteractionEventProject> allInteractionEventProjects)
+        public void UpdateModel(Models.InteractionEvent interactionEvent, Person currentPerson, ICollection<InteractionEventProject> allInteractionEventProjects, ICollection<InteractionEventContact> allInteractionEventContacts)
         {
             interactionEvent.InteractionEventTypeID = InteractionEventTypeID;
             interactionEvent.InteractionEventDate = Date;
@@ -94,6 +98,16 @@ namespace ProjectFirma.Web.Views.InteractionEvent
                     allInteractionEventProjects,
                     (x, y) => x.InteractionEventID == y.InteractionEventID && x.ProjectID == y.ProjectID);
             }
+
+            if (InteractionEventContacts != null)
+            {
+                var interactionEventContactsUpdated = InteractionEventContacts.Where(x => ModelObjectHelpers.IsRealPrimaryKeyValue(x.PersonID)).Select(x =>
+                    new Models.InteractionEventContact(interactionEvent.InteractionEventID, x.PersonID)).ToList();
+
+                interactionEvent.InteractionEventContacts.Merge(interactionEventContactsUpdated,
+                    allInteractionEventContacts,
+                    (x, y) => x.InteractionEventID == y.InteractionEventID && x.PersonID == y.PersonID);
+            }
         }
     }
 
@@ -101,5 +115,11 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     {
         public int InteractionEventID { get; set; }
         public int ProjectID { get; set; }
+    }
+
+    public class InteractionEventContactSimple
+    {
+        public int InteractionEventID { get; set; }
+        public int PersonID { get; set; }
     }
 }

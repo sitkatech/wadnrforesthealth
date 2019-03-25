@@ -27,6 +27,7 @@ using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
@@ -40,22 +41,28 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         public EditInteractionEventAngularViewData AngularViewData { get; set; }
         public bool UserCanManageContacts { get; set; }
         public string AddContactUrl { get; set; }
-        public string AddProjectUrl { get; set; }
 
 
-        public EditInteractionEventViewData(EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> staffPeople, int interactionEventPrimaryKey, IEnumerable<Models.Project> allProjects)
+
+        public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> allPeople, int interactionEventPrimaryKey, IEnumerable<Models.Project> allProjects)
         {
             InteractionEventTypes = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
+
             // Sorted and filtered on controller
             StaffPeople =
-                staffPeople.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                allPeople.Where(p =>
+                    p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLast);
 
             EditInteractionEventEditType = editInteractionEventEditType;
 
-            var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();
-            AngularViewData = new EditInteractionEventAngularViewData(interactionEventPrimaryKey, new List<PersonSimple>(), allProjectSimples);
-            AddProjectUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();      
+
+            UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            var allContactSimples = allPeople.Select(x => new PersonSimple(x)).ToList();
+
+            AngularViewData = new EditInteractionEventAngularViewData(interactionEventPrimaryKey, allContactSimples, allProjectSimples);
         }
 
 
@@ -63,7 +70,6 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         {
             public List<PersonSimple> AllContacts { get; }
             public int InteractionEventID { get; }
-
             public List<ProjectSimple> AllProjects { get; }
 
             public EditInteractionEventAngularViewData(int interactionEventPrimaryKey, List<PersonSimple> allContacts, List<ProjectSimple> allProjects)

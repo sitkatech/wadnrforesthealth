@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Controllers
 
             var interactionEvent = new InteractionEvent(viewModel.InteractionEventTypeID, viewModel.DNRStaffPersonID,
                 viewModel.Title, viewModel.Date);
-            viewModel.UpdateModel(interactionEvent, CurrentPerson, new List<InteractionEventProject>());
+            viewModel.UpdateModel(interactionEvent, CurrentPerson, new List<InteractionEventProject>(), new List<InteractionEventContact>());
             HttpRequestStorage.DatabaseEntities.InteractionEvents.Add(interactionEvent);
             SetMessageForDisplay($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} \"{interactionEvent.InteractionEventTitle}\" successfully created.");
             return new ModalDialogFormJsonResult();
@@ -52,11 +52,10 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult InteractionEventViewEdit(EditInteractionEventViewModel viewModel, EditInteractionEventEditType editInteractionEventEditType)
         {
             var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes.ToList();
-            var dnrStaffPeople = HttpRequestStorage.DatabaseEntities.People.Where(p =>
-                p.Organization.OrganizationName == Organization.OrganizationWADNR).OrderBy(p => p.LastName).ToList();
+            var allPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ToList();
             var allProjects = HttpRequestStorage.DatabaseEntities.Projects;
 
-            var viewData = new EditInteractionEventViewData(editInteractionEventEditType, interactionEventTypes, dnrStaffPeople, viewModel.InteractionEventID, allProjects);
+            var viewData = new EditInteractionEventViewData(CurrentPerson, editInteractionEventEditType, interactionEventTypes, allPeople, viewModel.InteractionEventID, allProjects);
             return RazorPartialView<EditInteractionEvent, EditInteractionEventViewData, EditInteractionEventViewModel>(viewData, viewModel);
         }
 
@@ -80,11 +79,13 @@ namespace ProjectFirma.Web.Controllers
             }
             HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Load();
             var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Local;
-            viewModel.UpdateModel(interactionEvent, CurrentPerson, interactionEventProjects);
+
+            HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Load();
+            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Local;
+
+            viewModel.UpdateModel(interactionEvent, CurrentPerson, interactionEventProjects, interactionEventContacts);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-
-            
 
             return new ModalDialogFormJsonResult();
         }

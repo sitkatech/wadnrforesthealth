@@ -29,63 +29,6 @@ angular.module("ProjectFirmaApp").controller("InteractionEventContactController"
     });
 
 
-    $scope.getAvailableContactsForInteractionEvents = function () {
-        var contactsForInteractionEvents = $scope.AngularViewData.AllContacts;
-
-        var usedPeople = $scope.AngularModel.InteractionEventContacts;
-        var usedPersonIDs = _.map(usedPeople,
-            function (f) {
-                return f.PersonID;
-            });
-
-        var filteredList = _.filter(contactsForInteractionEvents,
-            function (f) {
-                return !_.includes(usedPersonIDs, f.PersonID);
-            });
-
-        return filteredList;
-    };
-
-    $scope.chosenContactsForInteractionEvent = function() {
-        var chosenContacts = $scope.AngularModel.InteractionEventContacts;
-
-        var contacts = _.map(chosenContacts,
-            function(s) {
-                var contact =
-                    Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllContacts,
-                        "PersonID",
-                        s.PersonID);
-                return contact;
-            });
-        return contacts;
-    };
-
-    $scope.addInteractionEventContact = function(personID) {
-        $scope.AngularModel.InteractionEventContacts.push({
-            PersonID: Number(personID)
-        });
-        $scope.resetSelectedContactID();
-    };
-
-    $scope.removeInteractionEventContact = function(personID) {
-        _.remove($scope.AngularModel.InteractionEventContacts,
-            function(pos) {
-                return pos.PersonID == personID;
-            });
-    };
-
-    $scope.resetSelectedContactID = function () {
-        $scope.selectedContactID = "";
-    };
-
-
-    $scope.isOptionSelected = function(contact) {
-
-        return _.any($scope.AngularModel.InteractionEventContacts,
-            function(pos) {
-                return pos.PersonID == contact.PersonID;
-            });
-    };
 
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;

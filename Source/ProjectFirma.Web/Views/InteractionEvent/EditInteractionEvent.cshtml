@@ -135,11 +135,61 @@
                 </span><span ng-bind="project.DisplayName"></span>
             </div>
         </div>
+        
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Select the @FieldDefinition.Contact.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.InteractionEvent.GetFieldDefinitionLabel().</p>
+                    @if (ViewDataTyped.UserCanManageContacts)
+                    {
+                        <p>If you do not see the contact listed, you can <a href="@ViewDataTyped.AddContactUrl" target="_blank">Add a @FieldDefinition.Contact.GetFieldDefinitionLabel()</a></p>
+                    }
+                    else
+                    {
+                        <p>If you do not see the contact listed, you can use the Help Menu to request support.</p>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                @*Selectpicker*@
+                <div class="col-md-12">
+                    <div class="input-group" style="width: 100%;">
+                        <select class="selectpicker" id="@Html.IdFor(x => x.InteractionEventContacts)" ng-model="selectedContactID" data-width="100%" data-live-search="true" data-size="8">
+                            <option value="" disabled selected>Select one</option>
+                            <option ng-repeat="contact in getAvailableContactsForInteractionEvents()"
+                                    ng-bind="contact.FullName"
+                                    ng-value="contact.PersonID"
+                                    ng-selected="isOptionSelectedContact(contact)"></option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-firma" ng-click="addInteractionEventContact(selectedContactID)" ng-disabled="!selectedContactID">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-repeat="contact in chosenContactsForInteractionEvent()" style="margin-top: 5px;">
+                @*Selections*@
+                <div class="col-md-12">
+                    <span>
+                        <a href="#" ng-click="removeInteractionEventContact(contact.PersonID); $event.preventDefault();">
+                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.InteractionEventContact.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.InteractionEventContact.GetFieldDefinitionLabel()"></i>
+                        </a>
+                    </span><span ng-bind="contact.FullName"></span>
+                </div>
+            </div>
+
+
+
+
 
         
-            <div ng-repeat="interactionEventProject in AngularModel.InteractionEventProjects">
-                <input type="hidden" name="@Html.NameFor(x => x.InteractionEventProjects[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{interactionEventProject.ProjectID}}" />
-            </div>
+        <div ng-repeat="interactionEventProject in AngularModel.InteractionEventProjects">
+            <input type="hidden" name="@Html.NameFor(x => x.InteractionEventProjects[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{interactionEventProject.ProjectID}}" />
+        </div>
+        <div ng-repeat="interactionEventContact in AngularModel.InteractionEventContacts">
+            <input type="hidden" name="@Html.NameFor(x => x.InteractionEventContacts[0].PersonID).ToString().Replace("0", "{{$index}}")" value="{{interactionEventContact.PersonID}}" />
+        </div>
         
     </div>
 

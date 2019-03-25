@@ -36,7 +36,6 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public string EditInteractionEventBasicsUrl { get; set; }
         public string EditInteractionEventContactsUrl { get; set; }
-        public string EditInteractionEventProjectsUrl { get; set; }
         public string EditInteractionEventLocationSimpleUrl { get; set; }
 
         public List<InteractionEventContact> InteractionEventContacts { get; set; }
