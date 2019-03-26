@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public InteractionEventIndexViewData(Person currentPerson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = $"Full Interaction/Event List";
+            PageTitle = $"Full {Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()} List";
 
             InteractionEventGridSpec = new InteractionEventGridSpec(currentPerson);
             InteractionEventGridName = "interactionEventsGridName";

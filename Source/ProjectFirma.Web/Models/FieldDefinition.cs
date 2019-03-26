@@ -18,11 +18,14 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using System.Data.Entity.Infrastructure.Pluralization;
 using System.Web;
+using LtInfo.Common.DesignByContract;
+using LtInfo.Common.HtmlHelperExtensions;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
-using LtInfo.Common.HtmlHelperExtensions;
 
 namespace ProjectFirma.Web.Models
 {
@@ -73,8 +76,37 @@ namespace ProjectFirma.Web.Models
             return fieldDefinitionData != null && fieldDefinitionData.FieldDefinitionDataValueHtmlString != null;
         }
 
+        private string GetSlashedNamePluralized(string originalFieldDefinitionLabel)
+        {
+            Check.Ensure(originalFieldDefinitionLabel.Contains("/"));
+
+            var allSlashedSections = originalFieldDefinitionLabel.Split('/');
+            string finalString = string.Empty;
+            foreach (var slashedSection in allSlashedSections)
+            {
+                string currentSlashedSectionPluralized = PluralizationService.Pluralize(slashedSection);
+                if (finalString == String.Empty)
+                {
+                    finalString += currentSlashedSectionPluralized;
+                }
+                else
+                {
+                    finalString += "/" + currentSlashedSectionPluralized;
+                }
+            }
+            return finalString;
+        }
+
         public string GetFieldDefinitionLabelPluralized()
         {
+            // Names with slashes get special treatment
+            string fieldDefinitionLabel = GetFieldDefinitionLabel();
+            if (fieldDefinitionLabel.Contains("/"))
+            {
+                return GetSlashedNamePluralized(fieldDefinitionLabel);
+            }
+
+            // Otherwise, just let .NET handle it
             return PluralizationService.Pluralize(GetFieldDefinitionLabel());
         }
 
