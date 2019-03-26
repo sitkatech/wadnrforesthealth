@@ -232,7 +232,7 @@
                     @*Display grant allocations in descending order according to grant number year*@
                     @foreach (var currentAgreementGrantAllocation in CurrentAgreementGrantAllocationsInSortedOrder())
                     {
-                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.Grant.GrantNumber @currentAgreementGrantAllocation.GrantAllocation.ProjectName</a>
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
                         <br/>
                     }
                 </div>

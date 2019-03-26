@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public Money InvoiceLineItemAmount { get; set; }
 
         [Required]
-        [DisplayName("Grant")]
+        [DisplayName("Grant Allocation")]
         public int GrantAllocationID { get; set; }
 
         [DisplayName("Note")]

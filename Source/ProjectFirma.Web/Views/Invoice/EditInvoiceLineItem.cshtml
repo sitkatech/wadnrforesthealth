@@ -23,6 +23,7 @@
 @using LtInfo.Common.Mvc
 @using ProjectFirma.Web.Models
 @inherits ProjectFirma.Web.Views.Invoice.EditInvoiceLineItem
+
 @using (Html.BeginForm())
 {
 <div class="form-horizontal">
@@ -40,7 +41,7 @@
             @Html.LabelWithSugarFor(m => m.GrantAllocationID)
         </div>
         <div class="col-sm-8">
-            @Html.DropDownListFor(m => m.GrantAllocationID, ViewDataTyped.GrantAllocations, new { @class = "form-control", style = "width:auto" })
+            @Html.SearchableDropDownListFor(m => m.GrantAllocationID, ViewDataTyped.GrantAllocations, new { @class = "form-control selectpicker", style = "width:auto" })
             @Html.ValidationMessageFor(m => m.GrantAllocationID)
         </div>
     </div>
