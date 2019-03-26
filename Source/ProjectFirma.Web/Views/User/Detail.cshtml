@@ -153,7 +153,7 @@
                     <div class="row">
                         <div class="col-xs-4 fieldLabel text-right">Role</div>
                         <div class="col-xs-8">
-                            @if (ViewDataTyped.UserHasEditBasicsPermission)
+                            @if (ViewDataTyped.UserHasViewEverythingPermissions)
                             {
                                 @ViewDataTyped.Person.Role.GetDisplayNameAsUrl()
                             }
