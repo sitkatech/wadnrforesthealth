@@ -92,16 +92,11 @@ namespace ProjectFirma.Web.Views.InteractionEvent
                         userHasManagePermissions), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 150,
-                DhtmlxGridColumnFilterType.Html);
+            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 150, DhtmlxGridColumnFilterType.Html);
             Add("Description", x => x.InteractionEventDescription, 200, DhtmlxGridColumnFilterType.Text);
-            Add("Date", x => x.InteractionEventDate.ToShortDateString(), 80,
-                DhtmlxGridColumnFilterType.FormattedNumeric);
-            Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(),
-                x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180,
-                DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast,
-                180, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Date", x => x.InteractionEventDate.ToShortDateString(), 80, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(), x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast, 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
     }
 }
