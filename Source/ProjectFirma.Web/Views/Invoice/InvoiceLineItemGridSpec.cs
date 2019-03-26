@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.Invoice
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
             Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.Text);
-            Add("Grant Allocation", x => x.GrantAllocation.ProjectName, 125, DhtmlxGridColumnFilterType.Text);
+            Add("Grant Allocation", x => x.GrantAllocation.GrantAllocationName, 125, DhtmlxGridColumnFilterType.Text);
             Add("Amount", x => x.InvoiceLineItemAmount, 70, DhtmlxGridColumnFormatType.Currency);
             Add("Note", x => x.InvoiceLineItemNote, 250, DhtmlxGridColumnFilterType.Text);
            

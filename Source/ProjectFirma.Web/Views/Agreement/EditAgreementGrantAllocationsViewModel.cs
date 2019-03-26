@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.Agreement
     public class GrantAllocationJson
     {
         public int GrantAllocationID { get; set; }
-        public string ProjectName { get; set; }
+        public string GrantAllocationName { get; set; }
         public string GrantNumber { get; set; }
 
         // For use by model binder
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.Agreement
         {
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantNumber = grantAllocation.Grant.GrantNumber;
-            this.ProjectName = grantAllocation.ProjectName;
+            this.GrantAllocationName = grantAllocation.GrantAllocationName;
         }
 
         public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.GrantAllocation> grantAllocations)

@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             , EntityNotesViewData grantAllocationNoteInternalsViewData)
             : base(currentPerson, grantAllocation)
         {
-            PageTitle = grantAllocation.ProjectName.ToEllipsifiedStringClean(110);
+            PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Detail";
 
             GrantAllocationBasicsViewData = grantAllocationBasicsViewData;

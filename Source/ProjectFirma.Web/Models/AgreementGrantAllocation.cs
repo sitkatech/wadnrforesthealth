@@ -8,7 +8,7 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString
         {
-            get { return this.GrantAllocation != null ? this.GrantAllocation.ProjectName : "NullGrantAllocation"; }
+            get { return this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "NullGrantAllocation"; }
 
         }
 

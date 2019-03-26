@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectName)]
         [Required]
-        public string ProjectName { get; set; }
+        public string GrantAllocationName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Organization)]
         [Required]
@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
         {
-            ProjectName = grantAllocation.ProjectName;
+            GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
             ProgramIndexID = grantAllocation.ProgramIndexID;
@@ -104,10 +104,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ProjectName == "")
+            if (GrantAllocationName == "")
             {
                 yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
-                    FirmaValidationMessages.OrganizationNameUnique, m => m.ProjectName);
+                    FirmaValidationMessages.OrganizationNameUnique, m => m.GrantAllocationName);
             }
 
             // If there is something entered by the user in the Program Index text field..
@@ -142,7 +142,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)
         {
-            grantAllocation.ProjectName = ProjectName;
+            grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.GrantID = GrantID;
             grantAllocation.ProgramIndexID = ProgramIndexID;

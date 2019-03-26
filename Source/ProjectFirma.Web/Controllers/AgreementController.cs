@@ -267,7 +267,7 @@ namespace ProjectFirma.Web.Controllers
             // All the Grant Allocations to show in the picker, for new associations.
             var grantAllocationsThatCanBeSelectedForNewAssociations = allPossibleGrantAllocations.Except(existingAssociatedGrantAllocationsForAgreement).ToList();
             // Build select list
-            var selectableGrantAllocations = grantAllocationsThatCanBeSelectedForNewAssociations.OrderBy(x => x.ProjectName).ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.ProjectName);
+            var selectableGrantAllocations = grantAllocationsThatCanBeSelectedForNewAssociations.OrderBy(x => x.GrantAllocationName).ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.GrantAllocationName);
 
             var viewData = new EditAgreementGrantAllocationsViewData(agreement, selectableGrantAllocations);
             return RazorPartialView<EditAgreementGrantAllocations, EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>(viewData, viewModel);

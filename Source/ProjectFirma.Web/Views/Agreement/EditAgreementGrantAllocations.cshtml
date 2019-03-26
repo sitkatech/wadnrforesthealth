@@ -128,7 +128,7 @@
         {
             <div ng-repeat="grantAllocationJson in AngularModel.GrantAllocationJsons">
                 <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.GrantAllocationID}}" />
-                <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].ProjectName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.ProjectName}}" />
+                <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.ProjectName}}" />
             </div>
         }
     </div>

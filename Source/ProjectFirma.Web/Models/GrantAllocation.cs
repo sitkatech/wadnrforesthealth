@@ -13,7 +13,7 @@ namespace ProjectFirma.Web.Models
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
         public string ProgramIndexDisplay => ProgramIndexID.HasValue ? ProgramIndex.ProgramIndexAbbrev : string.Empty;
 
-        public string GrantNumberAndGrantAllocationNameForDisplay => $"{Grant.GrantNumber} {ProjectName}";
+        public string GrantNumberAndGrantAllocationNameForDisplay => $"{Grant.GrantNumber} {GrantAllocationName}";
         // ReSharper disable once InconsistentNaming
         public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID: -1;
         public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Models
 
         public string AuditDescriptionString
         {
-            get { return ProjectName; }
+            get { return GrantAllocationName; }
         }
 
         public List<int> ProgramManagerPersonIDs

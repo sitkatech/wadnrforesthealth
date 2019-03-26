@@ -1144,7 +1144,7 @@
     </Key>
     <Property Name="GrantAllocationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantID" Type="int" Nullable="false" />
-    <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
+    <Property Name="GrantAllocationName" Type="nvarchar" MaxLength="100" />
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
     <Property Name="AllocationAmount" Type="money" />

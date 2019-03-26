@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.Grant
         public GrantAllocationExcelSpec()
         {
             AddColumn(Models.FieldDefinition.GrantNumber.FieldDefinitionDisplayName, x => x.Grant.GrantNumber);
-            AddColumn(Models.FieldDefinition.ProjectName.FieldDefinitionDisplayName, x => x.ProjectName);
+            AddColumn(Models.FieldDefinition.GrantAllocationName.FieldDefinitionDisplayName, x => x.GrantAllocationName);
             AddColumn(Models.FieldDefinition.ProgramManager.FieldDefinitionDisplayName, x => x.GetAllProgramManagerPersonNamesAsString());
             AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
             AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);

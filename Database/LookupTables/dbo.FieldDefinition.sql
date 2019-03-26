@@ -160,4 +160,5 @@ VALUES
 (336, N'DNRStaffPerson', N'DNR Staff Person', N'<p>Placeholder definition for DNR Staff Person assigned to an Interaction/Event.</p>'),
 (337, N'InteractionEventContact', N'Interaction/Event Contact', N'<p>Placeholder definition for Interaction/Event Contact description.</p>'),
 (338, N'InteractionEventProject', N'Interaction/Event Project', N'<p>Placeholder definition for Interaction/Event Project description.</p>'),
-(339, N'InteractionEventLocation', N'Interaction/Event Location', N'<p>Placeholder definition for Interaction/Event Location description.</p>')
+(339, N'InteractionEventLocation', N'Interaction/Event Location', N'<p>Placeholder definition for Interaction/Event Location description.</p>'),
+(340, N'GrantAllocationName', 'Grant Allocation Name', N'<p>Placeholder definition for Grant Allocation Name description.</p>')

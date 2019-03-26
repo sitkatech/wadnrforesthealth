@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteGrantAllocation(GrantAllocation grantAllocation, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} '{grantAllocation.ProjectName}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} '{grantAllocation.GrantAllocationName}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteGrantAllocation(grantAllocation, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.ProjectName}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\" successfully deleted.";
             grantAllocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -334,12 +334,12 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantAllocation.GrantAllocationNotes)),
                 SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationNote(grantAllocationPrimaryKey)),
-                grantAllocation.ProjectName,
+                grantAllocation.GrantAllocationName,
                 userHasEditGrantAllocationPermissions);
             var grantAllocationNoteInternalsViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantAllocation.GrantAllocationNoteInternals)),
                 SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationNoteInternal(grantAllocationPrimaryKey)),
-                grantAllocation.ProjectName,
+                grantAllocation.GrantAllocationName,
                 userHasEditGrantAllocationPermissions);
 
             var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData);

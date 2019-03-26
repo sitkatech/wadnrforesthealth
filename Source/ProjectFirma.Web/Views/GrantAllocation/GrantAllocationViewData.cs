@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         protected GrantAllocationViewData(Person currentPerson, Models.GrantAllocation grantAllocation) : base(currentPerson, null)
         {
             GrantAllocation = grantAllocation;
-            HtmlPageTitle = grantAllocation.ProjectName;
+            HtmlPageTitle = grantAllocation.GrantAllocationName;
             EntityName = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             EditGrantAllocationUrl = grantAllocation.GetEditUrl();
             UserHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);

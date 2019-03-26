@@ -1,0 +1,1 @@
+sp_rename 'dbo.GrantAllocation.ProjectName', 'GrantAllocationName', 'COLUMN';

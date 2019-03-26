@@ -276,7 +276,7 @@
         <MappingFragment StoreEntitySet="GrantAllocation">
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="GrantID" ColumnName="GrantID" />
-          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="GrantAllocationName" ColumnName="GrantAllocationName" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
