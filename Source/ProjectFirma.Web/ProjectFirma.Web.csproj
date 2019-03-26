@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -674,12 +674,6 @@
     <Compile Include="Views\FocusArea\IndexViewData.cs" />
     <Compile Include="Views\FocusArea\ProjectsIncludingLeadImplementingGridSpec.cs" />
     <Compile Include="Views\Grant\GrantViewData.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventProjects.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventContacts.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewData.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewData.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventProjectsViewModel.cs" />
-    <Compile Include="Views\InteractionEvent\EditInteractionEventContactsViewModel.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetail.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventDetailViewData.cs" />
     <Compile Include="Views\InteractionEvent\InteractionEventGridSpec.cs" />
@@ -835,8 +829,7 @@
     <Content Include="Views\FocusArea\ImportGdbFile.cshtml" />
     <Content Include="Views\FocusArea\EditBoundaryErrors.cshtml" />
     <Content Include="Views\Grant\Detail.cshtml" />
-    <Content Include="Views\InteractionEvent\InteractionEventProjectController.js" />
-    <Content Include="Views\InteractionEvent\InteractionEventContactController.js" />
+    <Content Include="Views\InteractionEvent\InteractionEventController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
     <Content Include="Views\ProjectCreate\Regions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
@@ -1317,8 +1310,6 @@
     <Content Include="Views\InteractionEvent\EditInteractionEvent.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />
-    <Content Include="Views\InteractionEvent\EditInteractionEventContacts.cshtml" />
-    <Content Include="Views\InteractionEvent\EditInteractionEventProjects.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />

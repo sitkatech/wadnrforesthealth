@@ -18,8 +18,9 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-angular.module("ProjectFirmaApp").controller("InteractionEventProjectController", function ($scope, angularModelAndViewData) {
+angular.module("ProjectFirmaApp").controller("InteractionEventController", function ($scope, angularModelAndViewData) {
     $scope.ProjectToAdd = null;
+    $scope.PersonToAdd = null;
 
     $scope.$watch(function() {
         jQuery(".selectpicker").selectpicker("refresh");
@@ -79,13 +80,72 @@ angular.module("ProjectFirmaApp").controller("InteractionEventProjectController"
     };
 
 
-    $scope.isOptionSelected = function(project) {
+    $scope.isOptionSelectedProject = function(project) {
 
         return _.any($scope.AngularModel.InteractionEventProjects,
             function(pos) {
                 return pos.ProjectID == project.ProjectID;
             });
     };
+
+    $scope.getAvailableContactsForInteractionEvents = function () {
+        var contactsForInteractionEvents = $scope.AngularViewData.AllContacts;
+
+        var usedPeople = $scope.AngularModel.InteractionEventContacts;
+        var usedPersonIDs = _.map(usedPeople,
+            function (f) {
+                return f.PersonID;
+            });
+
+        var filteredList = _.filter(contactsForInteractionEvents,
+            function (f) {
+                return !_.includes(usedPersonIDs, f.PersonID);
+            });
+
+        return filteredList;
+    };
+
+    $scope.chosenContactsForInteractionEvent = function () {
+        var chosenContacts = $scope.AngularModel.InteractionEventContacts;
+
+        var contacts = _.map(chosenContacts,
+            function (s) {
+                var contact =
+                    Sitka.Methods.findElementInJsonArray($scope.AngularViewData.AllContacts,
+                        "PersonID",
+                        s.PersonID);
+                return contact;
+            });
+        return contacts;
+    };
+
+    $scope.addInteractionEventContact = function (personID) {
+        $scope.AngularModel.InteractionEventContacts.push({
+            PersonID: Number(personID)
+        });
+        $scope.resetSelectedContactID();
+    };
+
+    $scope.removeInteractionEventContact = function (personID) {
+        _.remove($scope.AngularModel.InteractionEventContacts,
+            function (pos) {
+                return pos.PersonID == personID;
+            });
+    };
+
+    $scope.resetSelectedContactID = function () {
+        $scope.selectedContactID = "";
+    };
+
+
+    $scope.isOptionSelectedContact = function (contact) {
+
+        return _.any($scope.AngularModel.InteractionEventContacts,
+            function (pos) {
+                return pos.PersonID == contact.PersonID;
+            });
+    };
+
 
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;

@@ -86,9 +86,12 @@ function createBootstrapDialogForm(element, dialogDivID, dialogContentDivId, jav
         var form = findBootstrapDialogForm(optionalDialogFormId, dialogDiv);
         // Do not submit if the form
         // does not pass client side validation
-        if (!form.valid()) {
+        if (!form.valid())
+        {
+            //console.log('Form found is not valid');
             return false;
         }
+        //console.log('Form appears to be valid, submitting');
         form.submit();
         return true;
     });

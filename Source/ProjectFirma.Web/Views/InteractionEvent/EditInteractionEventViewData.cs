@@ -19,31 +19,85 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
 {
     public class EditInteractionEventViewData : FirmaUserControlViewData
     {
-
-        public EditInteractionEventEditType EditInteractionEventEditType { get; set; }
+        public EditInteractionEventEditType EditInteractionEventEditType { get; }
         public IEnumerable<SelectListItem> InteractionEventTypes { get; }
         public IEnumerable<SelectListItem> StaffPeople { get; }
-        
 
-        public EditInteractionEventViewData(EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> staffPeople)
+        public EditInteractionEventAngularViewData AngularViewData { get; set; }
+        public bool UserCanManageContacts { get; set; }
+        public string AddContactUrl { get; set; }
+
+        public string PostUrl { get; set; }
+
+
+        private string GetPostUrl(int interactionEventPrimaryKey)
+        {
+            if (this.EditInteractionEventEditType == EditInteractionEventEditType.NewInteractionEventEdit)
+            {
+                return SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.New());
+            }
+
+            if (this.EditInteractionEventEditType == EditInteractionEventEditType.ExistingInteractionEventEdit)
+            {
+                return SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.EditInteractionEvent(interactionEventPrimaryKey));
+            }
+
+            throw new Exception($"Unhandled EditInteractionEventEditType: {this.EditInteractionEventEditType.ToString()}");
+        }
+
+
+        public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> allPeople, int interactionEventID, IEnumerable<Models.Project> allProjects)
         {
             InteractionEventTypes = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
+
             // Sorted and filtered on controller
             StaffPeople =
-                staffPeople.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                allPeople.Where(p =>
+                    p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLast);
 
             EditInteractionEventEditType = editInteractionEventEditType;
+
+            var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();      
+
+            UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
+            var allContactSimples = allPeople.Select(x => new PersonSimple(x)).ToList();
+
+            AngularViewData = new EditInteractionEventAngularViewData(interactionEventID, allContactSimples, allProjectSimples);
+
+            PostUrl = GetPostUrl(interactionEventID);
         }
 
+
+        public class EditInteractionEventAngularViewData
+        {
+            public List<PersonSimple> AllContacts { get; }
+            public int InteractionEventID { get; }
+            public List<ProjectSimple> AllProjects { get; }
+
+            public EditInteractionEventAngularViewData(int interactionEventPrimaryKey, List<PersonSimple> allContacts, List<ProjectSimple> allProjects)
+            {
+                AllContacts = allContacts;
+                InteractionEventID = interactionEventPrimaryKey;
+                AllProjects = allProjects;
+            }
+
+        }
     }
 }

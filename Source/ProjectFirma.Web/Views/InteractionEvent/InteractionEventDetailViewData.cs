@@ -35,8 +35,6 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         public Models.InteractionEvent InteractionEvent { get; set; }
 
         public string EditInteractionEventBasicsUrl { get; set; }
-        public string EditInteractionEventContactsUrl { get; set; }
-        public string EditInteractionEventProjectsUrl { get; set; }
         public string EditInteractionEventLocationSimpleUrl { get; set; }
 
         public List<InteractionEventContact> InteractionEventContacts { get; set; }
@@ -45,14 +43,16 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public bool UserHasInteractionEventManagePermissions { get; set; }
 
-        
+        public string LocationMapFormID { get; }
 
-        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent) : base(currentPerson)
+        public MapInitJson InteractionEventLocationSummaryMapInitJson { get; set; }
+
+
+
+        public InteractionEventDetailViewData(Person currentPerson, Models.InteractionEvent interactionEvent, string locationMapFormID, MapInitJson interactionEventLocationSummaryMapInitJson) : base(currentPerson)
         {
             IndexUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index());
             EditInteractionEventBasicsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEvent(interactionEvent.PrimaryKey));
-            EditInteractionEventContactsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventContacts(interactionEvent.PrimaryKey));
-            EditInteractionEventProjectsUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.EditInteractionEventProjects(interactionEvent.PrimaryKey));
             EditInteractionEventLocationSimpleUrl =
                 SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x =>
                     x.EditInteractionEventLocation(interactionEvent.PrimaryKey));
@@ -60,6 +60,8 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             InteractionEvent = interactionEvent;
             InteractionEventContacts = interactionEvent.InteractionEventContacts.ToList();
             InteractionEventProjects = interactionEvent.InteractionEventProjects.ToList();
+            LocationMapFormID = locationMapFormID;
+            InteractionEventLocationSummaryMapInitJson = interactionEventLocationSummaryMapInitJson;
 
 
         }

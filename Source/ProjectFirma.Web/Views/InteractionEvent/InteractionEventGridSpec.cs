@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
@@ -36,6 +37,26 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public InteractionEventGridSpec(Models.Person currentPerson)
         {
+            InteractionEventGridSpecConstructorImpl(currentPerson, null, null);
+        }
+
+        public InteractionEventGridSpec(Models.Person currentPerson, Models.Project projectToAssociate)
+        {
+            InteractionEventGridSpecConstructorImpl(currentPerson, projectToAssociate, null);
+        }
+
+        public InteractionEventGridSpec(Models.Person currentPerson, Models.Person personToAssociate)
+        {
+            InteractionEventGridSpecConstructorImpl(currentPerson, null, personToAssociate);
+        }
+
+        private void InteractionEventGridSpecConstructorImpl(Person currentPerson, Models.Project optionalProjectToAssociate, Person optionalPersonToAssociate)
+        {
+            // ReSharper disable twice ConditionIsAlwaysTrueOrFalse
+            Check.Ensure( (optionalProjectToAssociate == null && optionalPersonToAssociate == null) ||
+                                   (optionalProjectToAssociate == null && optionalPersonToAssociate != null) ||
+                                   (optionalProjectToAssociate != null && optionalPersonToAssociate == null));
+
             ObjectNameSingular = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()}";
 
@@ -43,27 +64,44 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             var userHasManagePermissions = new InteractionEventManageFeature().HasPermissionByPerson(currentPerson);
             if (userHasManagePermissions)
             {
+
                 var contentUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(t => t.New());
+                if (optionalPersonToAssociate != null)
+                {
+                   contentUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(t => t.NewForAPerson(optionalPersonToAssociate));
+                }
+                else if (optionalProjectToAssociate != null)
+                {
+                    contentUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(t => t.NewForAProject(optionalProjectToAssociate));
+                }
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {ObjectNameSingular}");
             }
 
+            if (userHasManagePermissions)
+            {
+                Add(string.Empty,
+                    x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasManagePermissions, true),
+                    30, DhtmlxGridColumnFilterType.None);
+            }
 
+            if (userHasManagePermissions)
+            {
+                Add(string.Empty,
+                    x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
+                        new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.InteractionEventTitle}"),
+                        userHasManagePermissions), 30, DhtmlxGridColumnFilterType.None);
+            }
 
-            //if (userHasManagePermissions)
-            //{
-            //    Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
-            //}
-            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 120,
+            Add("Title", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InteractionEventTitle), 150,
                 DhtmlxGridColumnFilterType.Html);
             Add("Description", x => x.InteractionEventDescription, 200, DhtmlxGridColumnFilterType.Text);
             Add("Date", x => x.InteractionEventDate.ToShortDateString(), 80,
                 DhtmlxGridColumnFilterType.FormattedNumeric);
             Add(Models.FieldDefinition.InteractionEventType.ToGridHeaderString(),
-                x => x.InteractionEventType?.InteractionEventTypeDisplayName, 120,
+                x => x.InteractionEventType?.InteractionEventTypeDisplayName, 180,
                 DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.DNRStaffPerson.ToGridHeaderString(), x => x.StaffPerson.FullNameFirstLast,
                 180, DhtmlxGridColumnFilterType.SelectFilterStrict);
-
         }
     }
 }

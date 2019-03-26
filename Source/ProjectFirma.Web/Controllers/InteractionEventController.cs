@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using GeoJSON.Net.Feature;
+using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.InteractionEvent;
+using ProjectFirma.Web.Views.Shared;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -20,12 +24,27 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<InteractionEventIndex, InteractionEventIndexViewData>(viewData);
         }
 
-
         [HttpGet]
         [InteractionEventManageFeature]
         public PartialViewResult New()
         {
             var viewModel = new EditInteractionEventViewModel();
+            return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult NewForAProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var viewModel = new EditInteractionEventViewModel(projectPrimaryKey.EntityObject);
+            return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult NewForAPerson(PersonPrimaryKey personPrimaryKey)
+        {
+            var viewModel = new EditInteractionEventViewModel(personPrimaryKey.EntityObject);
             return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
         }
 
@@ -41,7 +60,7 @@ namespace ProjectFirma.Web.Controllers
 
             var interactionEvent = new InteractionEvent(viewModel.InteractionEventTypeID, viewModel.DNRStaffPersonID,
                 viewModel.Title, viewModel.Date);
-            viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            viewModel.UpdateModel(interactionEvent, CurrentPerson, new List<InteractionEventProject>(), new List<InteractionEventContact>());
             HttpRequestStorage.DatabaseEntities.InteractionEvents.Add(interactionEvent);
             SetMessageForDisplay($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} \"{interactionEvent.InteractionEventTitle}\" successfully created.");
             return new ModalDialogFormJsonResult();
@@ -50,14 +69,10 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult InteractionEventViewEdit(EditInteractionEventViewModel viewModel, EditInteractionEventEditType editInteractionEventEditType)
         {
             var interactionEventTypes = HttpRequestStorage.DatabaseEntities.InteractionEventTypes.ToList();
-            var dnrStaffPeople = HttpRequestStorage.DatabaseEntities.People.Where(p =>
-                p.Organization.OrganizationName == Organization.OrganizationWADNR).OrderBy(p => p.LastName).ToList();
-            
+            var allPeople = HttpRequestStorage.DatabaseEntities.People.OrderBy(x => x.LastName).ToList();
+            var allProjects = HttpRequestStorage.DatabaseEntities.Projects;
 
-            var viewData = new EditInteractionEventViewData(editInteractionEventEditType,
-                interactionEventTypes,
-                dnrStaffPeople
-            );
+            var viewData = new EditInteractionEventViewData(CurrentPerson, editInteractionEventEditType, interactionEventTypes, allPeople, viewModel.InteractionEventID, allProjects);
             return RazorPartialView<EditInteractionEvent, EditInteractionEventViewData, EditInteractionEventViewModel>(viewData, viewModel);
         }
 
@@ -79,7 +94,16 @@ namespace ProjectFirma.Web.Controllers
             {
                 return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.ExistingInteractionEventEdit);
             }
-            viewModel.UpdateModel(interactionEvent, CurrentPerson);
+            HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Load();
+            var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Local;
+
+            HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Load();
+            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Local;
+
+            viewModel.UpdateModel(interactionEvent, CurrentPerson, interactionEventProjects, interactionEventContacts);
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
             return new ModalDialogFormJsonResult();
         }
 
@@ -87,15 +111,35 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventManageFeature]
         public PartialViewResult DeleteInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
-            throw new NotImplementedException();
+            var viewModel = new ConfirmDialogFormViewModel(interactionEventPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteInteractionEvent(interactionEventPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteInteractionEvent(InteractionEvent interactionEvent, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} '{interactionEvent.InteractionEventTitle}'?";
+
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [InteractionEventManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventViewModel viewModel)
+        public ActionResult DeleteInteractionEvent(InteractionEventPrimaryKey interactionEventPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteInteractionEvent(interactionEvent, viewModel);
+            }
+
+            var message = $"{FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} \"{interactionEvent.InteractionEventTitle}\" successfully deleted.";
+
+            interactionEvent.DeleteFull(HttpRequestStorage.DatabaseEntities);
+
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
         }
 
         [HttpGet]
@@ -104,9 +148,36 @@ namespace ProjectFirma.Web.Controllers
         {
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
 
-            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent);
+            var mapLocationFormID = GetMapLocationFormID(interactionEventPrimaryKey);
+
+            //the following variables are plural because the MapInitJson constructor is expecting List<>s but InteractionEvents only have a single location point associated with them.
+            var layers = new List<LayerGeoJson>();
+            var locationFeatures = new List<Feature>();
+            BoundingBox boundingBox = null;
+
+            if (interactionEvent.InteractionEventLocationSimple != null)
+            {
+                locationFeatures.Add(DbGeometryToGeoJsonHelper.FromDbGeometry(interactionEvent.InteractionEventLocationSimple));
+                boundingBox = new BoundingBox(new Point(interactionEvent.InteractionEventLocationSimple), 0.5m);
+            }
+
+            if (locationFeatures.Any())
+            {
+                layers.Add(new LayerGeoJson($"{FieldDefinition.InteractionEvent.FieldDefinitionDisplayName} Location",
+                    new FeatureCollection(locationFeatures), "yellow", 1,
+                    LayerInitialVisibility.Show));
+            }
+
+            
+            var interactionEventLocationMapInitJson = new MapInitJson($"interactionEvent_{interactionEvent.InteractionEventID}_mapID", 10, layers, boundingBox);
+            var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, mapLocationFormID, interactionEventLocationMapInitJson);
 
             return RazorView<InteractionEventDetail, InteractionEventDetailViewData>(viewData);
+        }
+
+        private string GetMapLocationFormID(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            return $"editMapForInteractionEventLocation{interactionEventPrimaryKey}";
         }
 
         [InteractionEventViewFeature]
@@ -120,94 +191,29 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [InteractionEventManageFeature]
-        public PartialViewResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey)
-        {
-            var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
-            var viewModel = new EditInteractionEventContactsViewModel(interactionEventContacts);
-            return ViewEditInteractionEventContacts(viewModel, interactionEvent);
-        }
-
-        [HttpPost]
-        [InteractionEventManageFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditInteractionEventContacts(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventContactsViewModel viewModel)
-        {
-
-            var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInteractionEventContacts(viewModel, interactionEvent);
-            }
-            HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Load();
-            var interactionEventContacts = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Local;
-
-            viewModel.UpdateModel(interactionEvent, interactionEventContacts);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEditInteractionEventContacts(EditInteractionEventContactsViewModel viewModel, InteractionEvent interactionEvent)
-        {
-            var allPeople = HttpRequestStorage.DatabaseEntities.People;
-
-
-            var viewData = new EditInteractionEventContactsViewData(CurrentPerson, interactionEvent.PrimaryKey, allPeople);
-            return RazorPartialView<EditInteractionEventContacts, EditInteractionEventContactsViewData, EditInteractionEventContactsViewModel>(viewData, viewModel);
-        }
-
-        [HttpGet]
-        [InteractionEventManageFeature]
-        public PartialViewResult EditInteractionEventProjects(InteractionEventPrimaryKey interactionEventPrimaryKey)
-        {
-            var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
-            var viewModel = new EditInteractionEventProjectsViewModel(interactionEventProjects);
-            return ViewEditInteractionEventProjects(viewModel, interactionEvent);
-        }
-
-        private PartialViewResult ViewEditInteractionEventProjects(EditInteractionEventProjectsViewModel viewModel, InteractionEvent interactionEvent)
-        {
-            var allProjects = HttpRequestStorage.DatabaseEntities.Projects;
-
-
-            var viewData = new EditInteractionEventProjectsViewData(CurrentPerson, interactionEvent.PrimaryKey, allProjects);
-            return RazorPartialView<EditInteractionEventProjects, EditInteractionEventProjectsViewData, EditInteractionEventProjectsViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [InteractionEventManageFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditInteractionEventProjects(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventProjectsViewModel viewModel)
-        {
-            var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEditInteractionEventProjects(viewModel, interactionEvent);
-            }
-            HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Load();
-            var interactionEventProjects = HttpRequestStorage.DatabaseEntities.InteractionEventProjects.Local;
-
-            viewModel.UpdateModel(interactionEvent, interactionEventProjects);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            return new ModalDialogFormJsonResult();
-        }
-
-        [HttpGet]
-        [InteractionEventManageFeature]
         public PartialViewResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey)
         {
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
-            //var interactionEventProje = HttpRequestStorage.DatabaseEntities.InteractionEventContacts.Where(x => x.InteractionEventID == interactionEventPrimaryKey.PrimaryKeyValue);
             var viewModel = new EditInteractionEventLocationSimpleViewModel(interactionEvent.InteractionEventLocationSimple);
             return ViewEditInteractionEventLocationSimple(viewModel, interactionEvent);
         }
 
         [HttpPost]
         [InteractionEventManageFeature]
-        public PartialViewResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventLocationSimpleViewModel viewModel)
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditInteractionEventLocation(InteractionEventPrimaryKey interactionEventPrimaryKey, EditInteractionEventLocationSimpleViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditInteractionEventLocationSimple(viewModel, interactionEvent);
+            }
+
+            viewModel.UpdateModel(interactionEvent);
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            return new ModalDialogFormJsonResult();
         }
 
         private PartialViewResult ViewEditInteractionEventLocationSimple(EditInteractionEventLocationSimpleViewModel viewModel, InteractionEvent interactionEvent)
@@ -217,7 +223,7 @@ namespace ProjectFirma.Web.Controllers
             var mapInitJson = new MapInitJson($"interactionEvent_{interactionEvent.InteractionEventID}_EditMap", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox(), false) { AllowFullScreen = false, DisablePopups = true };
 
             var mapPostUrl = SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.EditInteractionEventLocation(interactionEvent.PrimaryKey, null));
-            var mapFormID = $"editMapForInteractionEventLocation{interactionEvent.InteractionEventID}";
+            var mapFormID = GetMapLocationFormID(interactionEvent.PrimaryKey);
             var wmsLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
             var mapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
            
