@@ -33,6 +33,7 @@
 @using MoreLinq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
+@using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views.ProjectFunding
 @using ProjectFirma.Web.Views.Shared.ProjectCostShare
 @using ProjectFirma.Web.Views.Shared.ProjectDocument
@@ -456,19 +457,11 @@
                     <div class="panel-heading panelTitle">
                         <h3>@FieldDefinition.Project.GetFieldDefinitionLabel() @FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()</h3>
                     </div>
-                    @if (ViewDataTyped.Project.InteractionEventProjects.Any())
-                    {
-                        <div class="panel-body">
-                            @Html.DhtmlxGrid(ViewDataTyped.ProjectInteractionEventsGridSpec, ViewDataTyped.ProjectInteractionEventsGridName, ViewDataTyped.ProjectInteractionEventsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    <div class="panel-body">
+                        @Html.DhtmlxGrid(ViewDataTyped.ProjectInteractionEventsGridSpec, ViewDataTyped.ProjectInteractionEventsGridName, ViewDataTyped.ProjectInteractionEventsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
 
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="panel-body">
-                            <p class="systemText">No @FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized() identified for this @FieldDefinition.Project.GetFieldDefinitionLabel(). To associate one or more, go to the <a href="@Html.Raw(SitkaRoute<InteractionEventController>.BuildUrlFromExpression(x => x.Index()))">Interaction Event</a> page.</p>
-                        </div>
-                    }
+                    </div>
+
                 </div>
 
 
