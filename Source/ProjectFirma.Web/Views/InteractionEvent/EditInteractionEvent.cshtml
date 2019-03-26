@@ -20,6 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @inherits ProjectFirma.Web.Views.InteractionEvent.EditInteractionEvent
 
@@ -49,8 +50,10 @@
 
 @Html.ValidationSummary()
 
-@using (Html.BeginForm())
-{
+<form method="POST" action="@ViewDataTyped.PostUrl">
+
+@*@using (Html.BeginForm())*@
+@*{*@
     <div class="form-horizontal">
 
         <div class="form-group">
@@ -196,4 +199,5 @@
 
 
     @Html.HiddenFor(m => m.InteractionEventID)
-}
+@*}*@
+</form>

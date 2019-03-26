@@ -218,7 +218,7 @@ namespace ProjectFirma.Web.Controllers
             var treamentActivityGridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
             var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
 
-            var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, project);
             var projectInteractionEventsGridDataUrl =
                 SitkaRoute<ProjectController>.BuildUrlFromExpression(pc =>
                     pc.ProjectInteractionEventsGridJsonData(project.PrimaryKey));
@@ -273,7 +273,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var interactionEvents =
                 project.InteractionEventProjects.Where(ie => ie.ProjectID == project.ProjectID).Select(ie => ie.InteractionEvent).Distinct().ToList();
-            var gridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            var gridSpec = new InteractionEventGridSpec(CurrentPerson, project);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InteractionEvent>(interactionEvents, gridSpec);
             return gridJsonNetJObjectResult;
         }

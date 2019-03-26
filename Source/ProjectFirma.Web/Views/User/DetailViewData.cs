@@ -130,7 +130,7 @@ namespace ProjectFirma.Web.Views.User
                     tc => tc.UserAgreementsGridJsonData(personToView));
 
             InteractionEventsForWhichUserIsAContactGridTitle = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabelPluralized()} for which {Person.FullNameFirstLast} is a {Models.FieldDefinition.Contact.GetFieldDefinitionLabel()}";
-            UserInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, false, false);
+            UserInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, personToView);
             UserInteractionEventsGridName = "userInteractionEventsFromUserGrid";
             UserInteractionEventsGridDataUrl =
                 SitkaRoute<UserController>.BuildUrlFromExpression(x => x.UserInteractionEventsGridJsonData(personToView));

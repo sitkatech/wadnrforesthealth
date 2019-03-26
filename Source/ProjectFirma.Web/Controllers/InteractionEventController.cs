@@ -24,12 +24,27 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<InteractionEventIndex, InteractionEventIndexViewData>(viewData);
         }
 
-
         [HttpGet]
         [InteractionEventManageFeature]
         public PartialViewResult New()
         {
             var viewModel = new EditInteractionEventViewModel();
+            return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult NewForAProject(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var viewModel = new EditInteractionEventViewModel(projectPrimaryKey.EntityObject);
+            return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
+        }
+
+        [HttpGet]
+        [InteractionEventManageFeature]
+        public PartialViewResult NewForAPerson(PersonPrimaryKey personPrimaryKey)
+        {
+            var viewModel = new EditInteractionEventViewModel(personPrimaryKey.EntityObject);
             return InteractionEventViewEdit(viewModel, EditInteractionEventEditType.NewInteractionEventEdit);
         }
 
@@ -168,7 +183,7 @@ namespace ProjectFirma.Web.Controllers
         [InteractionEventViewFeature]
         public GridJsonNetJObjectResult<InteractionEvent> InteractionEventGridJsonData()
         {
-            var gridSpec = new InteractionEventGridSpec(CurrentPerson, true, true);
+            var gridSpec = new InteractionEventGridSpec(CurrentPerson);
             var interactionEvents = HttpRequestStorage.DatabaseEntities.InteractionEvents.OrderByDescending(x => x.InteractionEventDate).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InteractionEvent>(interactionEvents, gridSpec);
             return gridJsonNetJObjectResult;

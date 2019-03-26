@@ -45,9 +45,9 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         [Required]
         public int DNRStaffPersonID { get; set; }
 
-        public List<InteractionEventProjectSimple> InteractionEventProjects { get; set; }
+        public List<InteractionEventProjectSimpleJson> InteractionEventProjects { get; set; }
 
-        public List<InteractionEventContactSimple> InteractionEventContacts { get; set; }
+        public List<InteractionEventContactSimpleJson> InteractionEventContacts { get; set; }
 
 
 
@@ -57,19 +57,41 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         public EditInteractionEventViewModel()
         {
             Date = DateTime.Now;
-            InteractionEventProjects = new List<InteractionEventProjectSimple>();
-            InteractionEventContacts = new List<InteractionEventContactSimple>();
+            InteractionEventProjects = new List<InteractionEventProjectSimpleJson>();
+            InteractionEventContacts = new List<InteractionEventContactSimpleJson>();
+        }
+
+        public EditInteractionEventViewModel(Models.Project project)
+        {
+            Date = DateTime.Now;
+            var interactionEventProjectSimples = new List<InteractionEventProjectSimpleJson>();
+            interactionEventProjectSimples.Add(new InteractionEventProjectSimpleJson(InteractionEventID, project.ProjectID));
+            InteractionEventProjects = interactionEventProjectSimples;
+
+            InteractionEventContacts = new List<InteractionEventContactSimpleJson>();
+
+        }
+
+        public EditInteractionEventViewModel(Person userToAssociate)
+        {
+            Date = DateTime.Now;
+            InteractionEventProjects = new List<InteractionEventProjectSimpleJson>();
+
+            var interactionEventContactSimples = new List<InteractionEventContactSimpleJson>();
+            interactionEventContactSimples.Add(new InteractionEventContactSimpleJson(InteractionEventID, userToAssociate.PersonID));
+            InteractionEventContacts = interactionEventContactSimples;
         }
 
         public EditInteractionEventViewModel(Models.InteractionEvent interactionEvent)
         {
+            InteractionEventID = interactionEvent.InteractionEventID;
             InteractionEventTypeID = interactionEvent.InteractionEventTypeID;
             Date = interactionEvent.InteractionEventDate;
             Title = interactionEvent.InteractionEventTitle;
             Description = interactionEvent.InteractionEventDescription;
             DNRStaffPersonID = interactionEvent.StaffPersonID;
-            InteractionEventProjects = interactionEvent.InteractionEventProjects.Select(x => new InteractionEventProjectSimple() { InteractionEventID = x.InteractionEventID, ProjectID = x.ProjectID }).ToList();
-            InteractionEventContacts = interactionEvent.InteractionEventContacts.Select(x => new InteractionEventContactSimple() { InteractionEventID = x.InteractionEventID, PersonID = x.PersonID }).ToList();
+            InteractionEventProjects = interactionEvent.InteractionEventProjects.Select(x => new InteractionEventProjectSimpleJson(x.InteractionEvent, x.Project)).ToList();
+            InteractionEventContacts = interactionEvent.InteractionEventContacts.Select(x => new InteractionEventContactSimpleJson(x.InteractionEvent, x.Person)).ToList();
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -111,14 +133,46 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         }
     }
 
-    public class InteractionEventProjectSimple
+    public class InteractionEventProjectSimpleJson
     {
+        public InteractionEventProjectSimpleJson()
+        {
+        }
+
+        public InteractionEventProjectSimpleJson(Models.InteractionEvent interactionEvent, Models.Project project)
+        {
+            InteractionEventID = interactionEvent.InteractionEventID;
+            ProjectID = project.ProjectID;
+        }
+
+        public InteractionEventProjectSimpleJson(int interactionEventID, int projectID)
+        {
+            InteractionEventID = interactionEventID;
+            ProjectID = projectID;
+        }
+
         public int InteractionEventID { get; set; }
         public int ProjectID { get; set; }
     }
 
-    public class InteractionEventContactSimple
+    public class InteractionEventContactSimpleJson
     {
+        public InteractionEventContactSimpleJson()
+        {
+        }
+
+        public InteractionEventContactSimpleJson(Models.InteractionEvent interactionEvent, Person person)
+        {
+            InteractionEventID = interactionEvent.InteractionEventID;
+            PersonID = person.PersonID;
+        }
+
+        public InteractionEventContactSimpleJson(int interactionEventID, int personID)
+        {
+            InteractionEventID = interactionEventID;
+            PersonID = personID;
+        }
+
         public int InteractionEventID { get; set; }
         public int PersonID { get; set; }
     }

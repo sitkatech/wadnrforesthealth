@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -33,7 +34,6 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 {
     public class EditInteractionEventViewData : FirmaUserControlViewData
     {
-
         public EditInteractionEventEditType EditInteractionEventEditType { get; }
         public IEnumerable<SelectListItem> InteractionEventTypes { get; }
         public IEnumerable<SelectListItem> StaffPeople { get; }
@@ -42,9 +42,26 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         public bool UserCanManageContacts { get; set; }
         public string AddContactUrl { get; set; }
 
+        public string PostUrl { get; set; }
 
 
-        public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> allPeople, int interactionEventPrimaryKey, IEnumerable<Models.Project> allProjects)
+        private string GetPostUrl(int interactionEventPrimaryKey)
+        {
+            if (this.EditInteractionEventEditType == EditInteractionEventEditType.NewInteractionEventEdit)
+            {
+                return SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.New());
+            }
+
+            if (this.EditInteractionEventEditType == EditInteractionEventEditType.ExistingInteractionEventEdit)
+            {
+                return SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.EditInteractionEvent(interactionEventPrimaryKey));
+            }
+
+            throw new Exception($"Unhandled EditInteractionEventEditType: {this.EditInteractionEventEditType.ToString()}");
+        }
+
+
+        public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> allPeople, int interactionEventID, IEnumerable<Models.Project> allProjects)
         {
             InteractionEventTypes = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
 
@@ -62,7 +79,9 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
             var allContactSimples = allPeople.Select(x => new PersonSimple(x)).ToList();
 
-            AngularViewData = new EditInteractionEventAngularViewData(interactionEventPrimaryKey, allContactSimples, allProjectSimples);
+            AngularViewData = new EditInteractionEventAngularViewData(interactionEventID, allContactSimples, allProjectSimples);
+
+            PostUrl = GetPostUrl(interactionEventID);
         }
 
 
