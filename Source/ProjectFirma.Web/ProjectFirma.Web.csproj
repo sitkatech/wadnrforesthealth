@@ -1257,7 +1257,9 @@
     <Content Include="ScriptsCustom\FancyboxReady.js" />
     <Content Include="ScriptsCustom\FancyboxReady.min.js" />
     <Content Include="ScriptsCustom\GoogleAnalytics.js" />
-    <Content Include="ScriptsCustom\GoogleAnalytics.min.js" />
+    <Content Include="ScriptsCustom\GoogleAnalytics.min.js">
+      <DependentUpon>GoogleAnalytics.js</DependentUpon>
+    </Content>
     <Content Include="ScriptsCustom\Maps\ProjectFirmaMaps.GeoServerMap.js" />
     <Content Include="ScriptsCustom\Maps\ProjectFirmaMaps.GeoServerMap.min.js" />
     <Content Include="ScriptsCustom\Maps\ProjectFirmaMaps.js" />
