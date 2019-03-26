@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.Invoice
 
             if (invoiceFileExistsOnAtLeastOne)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl()), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Invoice file"), 30, DhtmlxGridColumnFilterType.None);
             }
 
             Add("Invoice ID", x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InvoiceID.ToString()), 50);

@@ -549,12 +549,12 @@ namespace LtInfo.Common.DhtmlWrappers
             return MakeEditIconAsHyperlinkBootstrap(editUrl, true);
         }
 
-        public static HtmlString MakeFileDownloadIconAsHyperlinkBootstrap(string fileDownloadUrl)
+        public static HtmlString MakeFileDownloadIconAsHyperlinkBootstrap(string fileDownloadUrl, string titleHoverText)
         {
             var dictionary = new Dictionary<string,string>();
             dictionary.Add("target", "_blank");
             return !string.IsNullOrEmpty(fileDownloadUrl) ? UrlTemplate.MakeHrefString(fileDownloadUrl,
-                $"{FileIconBootstrap}<span style=\"display:none\">Download agreement file</span>", "Download agreement file", dictionary) : new HtmlString(string.Empty);
+                $"{FileIconBootstrap}<span style=\"display:none\">{titleHoverText}</span>", titleHoverText, dictionary) : new HtmlString(string.Empty);
         }
 
         /// <summary>

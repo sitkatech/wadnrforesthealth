@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Views.Agreement
 
             if (agreementFileExistsOnAtLeastOne)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl()), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), "Download Agreement file"), 30, DhtmlxGridColumnFilterType.None);
             }
             Add(Models.FieldDefinition.AgreementType.ToGridHeaderString("Type"), x => x.AgreementType?.AgreementTypeAbbrev, 70, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.AgreementNumber.ToGridHeaderString("Number"), x => x.AgreementNumber, 100, DhtmlxGridColumnFilterType.Html);
