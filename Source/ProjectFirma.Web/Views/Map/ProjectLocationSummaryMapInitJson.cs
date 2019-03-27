@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Models;
 
@@ -56,6 +57,21 @@ namespace ProjectFirma.Web.Views.Map
                 {
                     Layers.Add(new LayerGeoJson($"{Models.FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Detail - {locationType.ProjectLocationTypeDisplayName}", detailedLocationsByTypeGeoJsonFeatureCollection, locationType.ProjectLocationTypeMapLayerColor, 1, LayerInitialVisibility.Show));
                 }
+            }
+
+
+            if (project is Models.Project projectAsProject)
+            {
+                var interactionEventsFeatureCollection = projectAsProject.InteractionEventProjects.Select(x => x.InteractionEvent).ToGeoJsonFeatureCollection();
+
+                if (interactionEventsFeatureCollection != null)
+                {
+                    var layerName = $"{Models.FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} Locations";
+
+                    Layers.Add(new LayerGeoJson(layerName, interactionEventsFeatureCollection, "yellow", 1,
+                        LayerInitialVisibility.Show));
+                }
+
             }
 
 
