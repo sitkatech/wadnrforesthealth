@@ -168,7 +168,6 @@ namespace ProjectFirma.Web.Controllers
                     LayerInitialVisibility.Show));
             }
 
-            
             var interactionEventLocationMapInitJson = new MapInitJson($"interactionEvent_{interactionEvent.InteractionEventID}_mapID", 10, layers, boundingBox);
             var viewData = new InteractionEventDetailViewData(CurrentPerson, interactionEvent, mapLocationFormID, interactionEventLocationMapInitJson);
 
