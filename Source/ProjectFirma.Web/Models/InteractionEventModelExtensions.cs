@@ -32,6 +32,15 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetInteractionEventsLayerGeoJson(this IEnumerable<InteractionEvent> interactionEvents)
         {
+            var interactionEventFeatureCollection = interactionEvents.ToGeoJsonFeatureCollection();
+
+            var layerName = $"All {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} Locations";
+
+            return new LayerGeoJson(layerName, interactionEventFeatureCollection, "yellow", 1, LayerInitialVisibility.Hide);
+        }
+
+        public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<InteractionEvent> interactionEvents)
+        {
             var featureCollection = new FeatureCollection();
 
             foreach (var interactionEvent in interactionEvents)
@@ -42,11 +51,7 @@ namespace ProjectFirma.Web.Models
                 }
             }
 
-            var layerName = $"All {FieldDefinition.InteractionEvent.GetFieldDefinitionLabel()} Locations";
-
-            return new LayerGeoJson(layerName, featureCollection, "yellow", 1, LayerInitialVisibility.Hide);
+            return featureCollection;
         }
-
-
     }
 }
