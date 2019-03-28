@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -17,6 +18,7 @@ namespace ProjectFirma.Web.Models
         // ReSharper disable once InconsistentNaming
         public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID: -1;
         public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
+        public string DivisionNameDisplay => Division != null ? Division.DivisionDisplayName : string.Empty;
 
         [NotNull]
         public List<ProjectCode> ProjectCodes

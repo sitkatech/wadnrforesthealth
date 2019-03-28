@@ -1153,6 +1153,7 @@
     <Property Name="FederalFundCodeID" Type="int" />
     <Property Name="OrganizationID" Type="int" />
     <Property Name="RegionID" Type="int" />
+    <Property Name="DivisionID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>

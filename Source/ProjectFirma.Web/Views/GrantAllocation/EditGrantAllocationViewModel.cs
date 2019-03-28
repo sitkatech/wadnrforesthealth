@@ -57,6 +57,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public int? FederalFundCodeID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.Division)]
+        public int? DivisionID { get; set; }
+
         [FieldDefinitionDisplay(FieldDefinitionEnum.Region)]
         public int? RegionID { get; set; }
 
@@ -88,6 +91,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
             ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeAbbrev).Aggregate((x, y) => x + ", " + y) : string.Empty;
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
+            DivisionID = grantAllocation.DivisionID;
             RegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
             StartDate = grantAllocation.StartDate;
@@ -148,6 +152,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.ProgramIndexID = ProgramIndexID;
             grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProjectCodesString);
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
+            grantAllocation.DivisionID = DivisionID;
             grantAllocation.RegionID = RegionID;
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;

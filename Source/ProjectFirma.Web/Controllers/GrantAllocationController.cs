@@ -269,7 +269,6 @@ namespace ProjectFirma.Web.Controllers
             {
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
             }
-            // Listify the ProjectCodes
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
@@ -279,6 +278,7 @@ namespace ProjectFirma.Web.Controllers
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
             var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var divisions = Division.All;
             var regions = HttpRequestStorage.DatabaseEntities.Regions;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
             var programManagers =
@@ -288,6 +288,7 @@ namespace ProjectFirma.Web.Controllers
                 organizations,
                 grantTypes,
                 grants,
+                divisions,
                 regions,
                 federalFundCodes,
                 programManagers

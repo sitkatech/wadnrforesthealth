@@ -285,6 +285,7 @@
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

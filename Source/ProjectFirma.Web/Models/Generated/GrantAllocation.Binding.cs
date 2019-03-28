@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID, int? divisionID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Models
             this.FederalFundCodeID = federalFundCodeID;
             this.OrganizationID = organizationID;
             this.RegionID = regionID;
+            this.DivisionID = divisionID;
         }
 
         /// <summary>
@@ -161,6 +162,7 @@ namespace ProjectFirma.Web.Models
         public int? FederalFundCodeID { get; set; }
         public int? OrganizationID { get; set; }
         public int? RegionID { get; set; }
+        public int? DivisionID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
@@ -176,6 +178,7 @@ namespace ProjectFirma.Web.Models
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Region Region { get; set; }
+        public Division Division { get { return DivisionID.HasValue ? Division.AllLookupDictionary[DivisionID.Value] : null; } }
 
         public static class FieldLengths
         {

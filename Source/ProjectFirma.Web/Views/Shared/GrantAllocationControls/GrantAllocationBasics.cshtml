@@ -128,6 +128,14 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-3">
+            @Html.LabelWithSugarFor(FieldDefinition.Division)
+        </div>
+        <div class="col-sm-9">
+            <span>@ViewDataTyped.GrantAllocation.DivisionNameDisplay</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
             @Html.LabelWithSugarFor(FieldDefinition.Region)
         </div>
         <div class="col-sm-9">

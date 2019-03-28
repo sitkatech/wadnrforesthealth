@@ -220,6 +220,11 @@ namespace ProjectFirma.Web.Models
                 case "CustomPage":
                     return CustomPages.GetCustomPage(primaryKey);
 
+                case "Division":
+                    var division = Division.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(division, "Division", primaryKey);
+                    return division;
+
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
 
