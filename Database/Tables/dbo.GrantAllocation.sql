@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[FederalFundCodeID] [int] NULL,
 	[OrganizationID] [int] NULL,
 	[RegionID] [int] NULL,
+	[DivisionID] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
@@ -30,6 +31,11 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[CostType] ([CostTypeID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_CostType_CostTypeID]
+GO
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Division_DivisionID] FOREIGN KEY([DivisionID])
+REFERENCES [dbo].[Division] ([DivisionID])
+GO
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Division_DivisionID]
 GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_FederalFundCode_FederalFundCodeID] FOREIGN KEY([FederalFundCodeID])
 REFERENCES [dbo].[FederalFundCode] ([FederalFundCodeID])

@@ -269,7 +269,6 @@ namespace ProjectFirma.Web.Controllers
             {
                 return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
             }
-            // Listify the ProjectCodes
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
