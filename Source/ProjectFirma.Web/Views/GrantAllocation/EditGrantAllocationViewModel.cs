@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public int GrantAllocationID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ProjectName)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationName)]
         [Required]
         public string GrantAllocationName { get; set; }
 
