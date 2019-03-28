@@ -70,7 +70,5 @@ namespace ProjectFirma.Web.Views.Grant
             Add(Models.FieldDefinition.Organization.ToGridHeaderString(), x => x.Organization != null ? x.Organization.OrganizationName : string.Empty, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
         }
 
-        
-
     }
 }
