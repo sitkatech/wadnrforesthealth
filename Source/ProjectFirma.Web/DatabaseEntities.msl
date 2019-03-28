@@ -286,6 +286,7 @@
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
+          <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

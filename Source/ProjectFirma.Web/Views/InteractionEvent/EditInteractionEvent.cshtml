@@ -76,8 +76,8 @@
             <div class="col-xs-3 control-label">
                 @Html.LabelWithSugarFor(m => m.Title, "Title")
             </div>
-            <div class="col-xs-8">
-                @Html.EditorFor(m => m.Title, new { style = "width: 100%;", @class = "form-control" })
+            <div class="col-xs-6">
+                @Html.TextBoxFor(m => m.Title, new { style = "width: 100%;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Title)
             </div>
         </div>

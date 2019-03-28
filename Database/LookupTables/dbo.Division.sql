@@ -1,7 +1,7 @@
 
 delete from dbo.Division
 
-insert dbo.Division (DivisionName, DivisionDisplayName) 
+insert dbo.Division (DivisionID, DivisionName, DivisionDisplayName) 
 values 
-('ForestHealth', 'DNR Headquarters - Forest Health'),
-('Wildfire', 'DNR Headquarters - Wildfire')
+(1, 'ForestHealth', 'DNR Headquarters - Forest Health'),
+(2, 'Wildfire', 'DNR Headquarters - Wildfire')

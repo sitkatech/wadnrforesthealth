@@ -111,19 +111,19 @@ namespace ProjectFirma.Web.Models
 
     public enum DivisionEnum
     {
-        ForestHealth = 5,
-        Wildfire = 6
+        ForestHealth = 1,
+        Wildfire = 2
     }
 
     public partial class DivisionForestHealth : Division
     {
         private DivisionForestHealth(int divisionID, string divisionName, string divisionDisplayName) : base(divisionID, divisionName, divisionDisplayName) {}
-        public static readonly DivisionForestHealth Instance = new DivisionForestHealth(5, @"ForestHealth", @"DNR Headquarters - Forest Health");
+        public static readonly DivisionForestHealth Instance = new DivisionForestHealth(1, @"ForestHealth", @"DNR Headquarters - Forest Health");
     }
 
     public partial class DivisionWildfire : Division
     {
         private DivisionWildfire(int divisionID, string divisionName, string divisionDisplayName) : base(divisionID, divisionName, divisionDisplayName) {}
-        public static readonly DivisionWildfire Instance = new DivisionWildfire(6, @"Wildfire", @"DNR Headquarters - Wildfire");
+        public static readonly DivisionWildfire Instance = new DivisionWildfire(2, @"Wildfire", @"DNR Headquarters - Wildfire");
     }
 }

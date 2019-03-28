@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Division](
-	[DivisionID] [int] IDENTITY(1,1) NOT NULL,
+	[DivisionID] [int] NOT NULL,
 	[DivisionName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[DivisionDisplayName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_Division_DivisionID] PRIMARY KEY CLUSTERED 

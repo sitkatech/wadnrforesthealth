@@ -20,6 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Models
+@using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProgramIndex
 @using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.EditGrantAllocation
@@ -60,6 +61,8 @@
     // ]]>
 </script>
 
+<p>If you do not see the contact listed for @FieldDefinition.GrantManager.GetFieldDefinitionLabel(), you can <a href="@ViewDataTyped.AddContactUrl" target="_blank">Add a @FieldDefinition.Contact.GetFieldDefinitionLabel()</a></p>
+
 @using (Html.BeginForm())
 {
 <div class="form-horizontal">
@@ -89,6 +92,15 @@
         <div class="col-xs-6">
             @Html.DropDownListFor(m => m.OrganizationID, ViewDataTyped.Organizations, new { style = "width: auto;", @class = "form-control" })
             @Html.ValidationMessageFor(m => m.OrganizationID)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantManagerID)
+        </div>
+        <div class="col-xs-6">
+            @Html.SearchableDropDownListFor(m => m.GrantManagerID, ViewDataTyped.GrantManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
+            @Html.ValidationMessageFor(m => m.GrantManagerID)
         </div>
     </div>
     <div class="form-group">

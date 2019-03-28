@@ -247,6 +247,10 @@
       <End Role="Organization" EntitySet="Organization" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_Person_GrantManagerID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Person_GrantManagerID_PersonID">
+      <End Role="GrantManager" EntitySet="Person" />
+      <End Role="GrantAllocationsWhereYouAreTheGrantManager" EntitySet="GrantAllocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_ProgramIndex_ProgramIndexID">
       <End Role="ProgramIndex" EntitySet="ProgramIndex" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
@@ -1154,6 +1158,7 @@
     <Property Name="OrganizationID" Type="int" />
     <Property Name="RegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
+    <Property Name="GrantManagerID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -2630,6 +2635,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_Person_GrantManagerID_PersonID">
+    <End Role="GrantManager" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantAllocationsWhereYouAreTheGrantManager" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantManager">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationsWhereYouAreTheGrantManager">
+        <PropertyRef Name="GrantManagerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

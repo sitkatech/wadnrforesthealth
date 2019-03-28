@@ -281,8 +281,7 @@ namespace ProjectFirma.Web.Controllers
             var divisions = Division.All;
             var regions = HttpRequestStorage.DatabaseEntities.Regions;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
-            var programManagers =
-                HttpRequestStorage.DatabaseEntities.People.Where(x => x.RoleID == Role.ProjectSteward.RoleID);
+            var people = HttpRequestStorage.DatabaseEntities.People.ToList();
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
                 organizations,
@@ -291,7 +290,7 @@ namespace ProjectFirma.Web.Controllers
                 divisions,
                 regions,
                 federalFundCodes,
-                programManagers
+                people
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }

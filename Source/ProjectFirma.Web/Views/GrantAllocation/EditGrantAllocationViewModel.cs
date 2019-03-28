@@ -75,6 +75,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramManager)]
         public List<int> ProgramManagerPersonIDs { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantManager)]
+        public int? GrantManagerID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -97,6 +100,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             StartDate = grantAllocation.StartDate;
             EndDate = grantAllocation.EndDate;
             ProgramManagerPersonIDs = grantAllocation.ProgramManagerPersonIDs;
+            GrantManagerID = grantAllocation.GrantManagerID;
         }
 
         public static int CountWordsSeparatedByWhitespaceOrCommaInString(string stringToCheck)
@@ -157,6 +161,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;
             grantAllocation.EndDate = EndDate;
+            grantAllocation.GrantManagerID = GrantManagerID;
 
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();

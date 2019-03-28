@@ -1,5 +1,5 @@
 CREATE TABLE [dbo].[Division](
-	[DivisionID] [int] IDENTITY(1,1) NOT NULL,
+	[DivisionID] [int] NOT NULL,
 	[DivisionName] [varchar](200) NOT NULL,
 	[DivisionDisplayName] [varchar](200) NOT NULL
  CONSTRAINT [PK_Division_DivisionID] PRIMARY KEY CLUSTERED 
@@ -13,10 +13,10 @@ CREATE TABLE [dbo].[Division](
 ) ON [PRIMARY]
 GO
 
-insert dbo.Division (DivisionName, DivisionDisplayName) 
+insert dbo.Division (DivisionID, DivisionName, DivisionDisplayName) 
 values 
-('ForestHealth', 'DNR Headquarters - Forest Health'),
-('Wildfire', 'DNR Headquarters - Wildfire')
+(1, 'ForestHealth', 'DNR Headquarters - Forest Health'),
+(2, 'Wildfire', 'DNR Headquarters - Wildfire')
 GO
 
 alter table dbo.GrantAllocation

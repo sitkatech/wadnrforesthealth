@@ -28,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.Mvc;
 using MoreLinq;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
@@ -42,10 +43,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> Regions { get; }
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
         public IEnumerable<SelectListItem> ProgramManagers { get; }
+        public IEnumerable<SelectListItem> GrantManagers { get; }
+        public string AddContactUrl { get; }
 
 
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantType> grantTypes, List<Models.Grant> grants, IEnumerable<Models.Division> divisions, IEnumerable<Models.Region> regions, IEnumerable<Models.FederalFundCode> federalFundCodes, IEnumerable<Models.Person> programManagers)
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantType> grantTypes, List<Models.Grant> grants, IEnumerable<Models.Division> divisions, IEnumerable<Models.Region> regions, IEnumerable<Models.FederalFundCode> federalFundCodes, List<Models.Person> people)
         {
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
@@ -55,12 +58,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             
             FederalFundCodes = federalFundCodes.OrderBy(x => x.FederalFundCodeAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
-            ProgramManagers = programManagers.OrderBy(x => x.FullNameLastFirst)
+            GrantManagers = people.OrderBy(x => x.FullNameLastFirst)
+                .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FullNameFirstLastAndOrgShortName);
+            ProgramManagers = people.Where(x => x.RoleID == Models.Role.ProjectSteward.RoleID).OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
 
 
             EditGrantAllocationType = editGrantAllocationType;
+            AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
         }
 
     }
