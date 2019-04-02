@@ -40,11 +40,5 @@
     "inputFiles": [
       "Content/css/style-WashingtonDepartmentOfNaturalResources.css"
     ]
-  },
-  {
-    "outputFileName": "ScriptsCustom/GoogleAnalytics.min.js",
-    "inputFiles": [
-      "ScriptsCustom/GoogleAnalytics.js"
-    ]
   }
 ]
