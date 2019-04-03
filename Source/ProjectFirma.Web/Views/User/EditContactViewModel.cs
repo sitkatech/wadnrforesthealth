@@ -7,12 +7,18 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using System.Text.RegularExpressions;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Views.Vendor;
 
 namespace ProjectFirma.Web.Views.User
 {
     public class EditContactViewModel : FormViewModel, IValidatableObject, IEditVendorViewModel
     {
+        /// <summary>
+        /// Only here so we have access to it in the Validator function. Not actually being edited. -- SLG
+        /// </summary>
+        [DisplayName("PersonID")]
+        public int PersonID { get; set; }
 
         [Required]
         [DisplayName("First Name")]
@@ -57,6 +63,7 @@ namespace ProjectFirma.Web.Views.User
 
         public EditContactViewModel(Person person)
         {
+            PersonID = person.PersonID;
             FirstName = person.FirstName;
             MiddleName = person.MiddleName;
             LastName = person.LastName;
@@ -87,10 +94,30 @@ namespace ProjectFirma.Web.Views.User
                 person.LastName = LastName;
                 person.Email = Email;
             }
+
+            SetAuthenticatorsForGivenEmailAddress(this, person);
+        }
+
+        public static void SetAuthenticatorsForGivenEmailAddress(EditContactViewModel viewModel, Person personBeingEdited)
+        {
+            if (!string.IsNullOrEmpty(viewModel.Email) && viewModel.Email != personBeingEdited.Email)
+            {
+                // Clear existing Authenticators (if any)
+                personBeingEdited.PersonAllowedAuthenticators.Clear();
+                Check.Ensure(!personBeingEdited.PersonAllowedAuthenticators.Any());
+
+                // Set the allowed authenticators
+                var authenticatorsToAllow = AuthenticatorHelper.GetAuthenticatorsForEmailAddress(viewModel.Email);
+                var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(personBeingEdited, x));
+                HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var editContactViewModel = (EditContactViewModel)validationContext.ObjectInstance;
+            var thePersonBeingEdited = HttpRequestStorage.DatabaseEntities.People.SingleOrDefault(p => p.PersonID == editContactViewModel.PersonID);
+
             if (Phone != null)
             {
                 Regex strip = new Regex(@"[()\-\s]"); // don't worry about whitespace characters or "phone-number" characters
@@ -98,15 +125,34 @@ namespace ProjectFirma.Web.Views.User
                 if (phoneNumberToTest.Length != 10 || //number of digits in an american phone number
                     !phoneNumberToTest.All(char.IsDigit)) // phone numbers must be digits
                 {
-                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number was invalid.",
-                        m => m.Phone);
+                    yield return new SitkaValidationResult<EditContactViewModel, string>("Phone Number was invalid.", m => m.Phone);
                 }
             }
 
-            if (Email != null && !FirmaHelpers.IsValidEmail(Email))
+            bool emailProvided = Email != null;
+            if (emailProvided && !FirmaHelpers.IsValidEmail(Email))
             {
-                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address was invalid.",
-                    m => m.Email);
+                yield return new SitkaValidationResult<EditContactViewModel, string>("Email Address was invalid.", m => m.Email);
+            }
+
+            // If Person record is being created, or email is being changed, make sure someone does not already have the given email address
+            bool existingUserHasGivenEmailAddressAlready = HttpRequestStorage.DatabaseEntities.People.Any(p => p.Email == Email);
+            bool personIsBeingCreated = thePersonBeingEdited == null;
+
+            // Create case
+            if (emailProvided && personIsBeingCreated && existingUserHasGivenEmailAddressAlready)
+            {
+                yield return new SitkaValidationResult<EditContactViewModel, string>($"Email Address \"{Email}\" already in use.", m => m.Email);
+            }
+
+            // Edit case
+            if (!personIsBeingCreated)
+            {
+                bool personsEmailIsChanging = thePersonBeingEdited.Email != Email;
+                if (emailProvided && personsEmailIsChanging && existingUserHasGivenEmailAddressAlready)
+                {
+                    yield return new SitkaValidationResult<EditContactViewModel, string>($"Email Address \"{Email}\" already in use.", m => m.Email);
+                }
             }
         }
     }

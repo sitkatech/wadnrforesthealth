@@ -333,15 +333,14 @@ namespace ProjectFirma.Web.Controllers
                 { PersonAddress = viewModel.Address, Email = viewModel.Email, Phone = viewModel.Phone, OrganizationID = viewModel.OrganizationID, AddedByPersonID = CurrentPerson.PersonID};
             HttpRequestStorage.DatabaseEntities.People.Add(person);
 
-            var authenticatorsToAllow = AuthenticatorHelper.GetAuthenticatorsForEmailAddress(viewModel.Email);
-            var personAllowedAuthenticators = authenticatorsToAllow.Select(x => new PersonAllowedAuthenticator(person, x));
-            HttpRequestStorage.DatabaseEntities.PersonAllowedAuthenticators.AddRange(personAllowedAuthenticators);
+            EditContactViewModel.SetAuthenticatorsForGivenEmailAddress(viewModel, person);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             SetMessageForDisplay($"Successfully added {person.GetFullNameFirstLastAsUrl()}");
             return new ModalDialogFormJsonResult();
         }
+
 
         private PartialViewResult ViewAddContact(EditContactViewModel viewModel, Person person)
         {
