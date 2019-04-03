@@ -34,43 +34,55 @@ namespace ProjectFirma.Web.Models
     {
         public static HtmlString GetFullNameFirstLastAsUrl(this Person person)
         {
-            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameFirstLast);
+            return person != null ? UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameFirstLast) : new HtmlString(null);
         }
 
         public static HtmlString GetFullNameLastFirstAsUrl(this Person person)
         {
-            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameLastFirst);
+            return person != null ? UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FullNameLastFirst) : new HtmlString(null);
         }
 
         public static HtmlString GetFullNameFirstLastAndOrgAsUrl(this Person person)
         {
+            if (person == null)
+            {
+                return new HtmlString(null);
+            }
             var userUrl = person.GetFullNameFirstLastAsUrl();
-            var orgUrl = person.Organization.GetDisplayNameAsUrl();
+            var orgUrl = person.Organization?.GetDisplayNameAsUrl();
             return new HtmlString($"{userUrl} - {orgUrl}");
         }
 
         public static HtmlString GetFullNameFirstLastAndOrgShortNameAsUrl(this Person person)
         {
+            if (person == null)
+            {
+                return new HtmlString(null);
+            }
             var userUrl = person.GetFullNameFirstLastAsUrl();
-            var orgUrl = person.Organization.GetShortNameAsUrl();
+            var orgUrl = person.Organization?.GetShortNameAsUrl();
             return new HtmlString($"{userUrl} ({orgUrl})");
         }
 
         public static HtmlString GetFullNameFirstLastAsStringAndOrgAsUrl(this Person person)
         {
+            if (person == null)
+            {
+                return new HtmlString(null);
+            }
             var userString = person.FullNameFirstLast;
-            var orgUrl = person.Organization.GetShortNameAsUrl();
+            var orgUrl = person.Organization?.GetShortNameAsUrl();
             return new HtmlString($"{userString} - {orgUrl}");
         }
 
         public static HtmlString GetFirstNameAsUrl(this Person person)
         {
-            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FirstName);
+            return person != null ? UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.FirstName) : new HtmlString(null);
         }
 
         public static HtmlString GetLastNameAsUrl(this Person person)
         {
-            return UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.LastName);
+            return person != null ? UrlTemplate.MakeHrefString(person.GetDetailUrl(), person.LastName) : new HtmlString(null);
         }
 
         public static string GetEditUrl(this Person person)

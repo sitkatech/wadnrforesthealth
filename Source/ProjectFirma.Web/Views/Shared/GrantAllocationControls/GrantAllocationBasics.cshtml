@@ -25,15 +25,6 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @inherits GrantAllocationBasics
 
-@functions 
-{
-    private string GetProgramMangerPersonFullNames(GrantAllocationBasicsViewData viewDataTyped)
-    {
-        return viewDataTyped.GrantAllocation.GetAllProgramManagerPersonNamesAsString();
-    }
-
-}
-
 <style>
     .basicsLayout .row {
         margin-left: 0;
@@ -67,7 +58,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.Organization)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.OrganizationDisplayName</span>
+            <span>@ViewDataTyped.GrantAllocation.Organization.GetDisplayNameAsUrl()</span>
         </div>
     </div>
     <div class="row">
@@ -75,7 +66,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantManager)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.GrantManagerDisplayName</span>
+            <span>@ViewDataTyped.GrantAllocation.GrantManager.GetFullNameFirstLastAsUrl()</span>
         </div>
     </div>
     <div class="row">
@@ -83,7 +74,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.ProgramManager)
         </div>
         <div class="col-sm-9">
-            <span>@GetProgramMangerPersonFullNames(ViewDataTyped)</span>
+            <span>@ViewDataTyped.GrantAllocation.GetAllProgramManagerPersonNamesAsUrls()</span>
         </div>
     </div>
     <div class="row">
@@ -107,7 +98,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.GrantAllocation.Grant.GrantNumber</span>
+            <span>@ViewDataTyped.GrantAllocation.Grant.GetGrantNumberAsUrl()</span>
         </div>
     </div>
     <div class="row">
@@ -147,7 +138,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.Region)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.GrantAllocation.RegionNameDisplay</span>
+            <span>@ViewDataTyped.GrantAllocation.Region.GetDisplayNameAsUrl()</span>
         </div>
     </div>
     <div class="row">

@@ -97,7 +97,7 @@
                                         @Html.LabelWithSugarFor(FieldDefinition.Organization)
                                     </div>
                                     <div class="col-sm-9">
-                                        <span id="Organization">@ViewDataTyped.Grant.Organization.OrganizationName</span>
+                                        <span id="Organization">@ViewDataTyped.Grant.Organization.GetDisplayNameAsUrl()</span>
                                     </div>
                                 </div>
                                 <div class="row">
