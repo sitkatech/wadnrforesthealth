@@ -37,11 +37,16 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         //[FieldDefinitionDisplay(FieldDefinitionEnum.InteractionEvent)]
         [Required]
         public int InteractionEventTypeID { get; set; }
+
         [Required]
         public DateTime Date { get; set; }
+
         [Required]
         public string Title { get; set; }
+
+        [StringLength(Models.InteractionEvent.FieldLengths.InteractionEventDescription)]
         public string Description { get; set; }
+
         [Required]
         public int DNRStaffPersonID { get; set; }
 

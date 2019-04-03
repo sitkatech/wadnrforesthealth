@@ -59,7 +59,7 @@
                 @Html.LabelWithSugarFor(m => m.InteractionEventTypeID, "Type")
             </div>
             <div class="col-xs-6">
-                @Html.DropDownListFor(m => m.InteractionEventTypeID, ViewDataTyped.InteractionEventTypes, new { style = "width: 100%;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.InteractionEventTypeID, ViewDataTyped.InteractionEventTypesSelectListItems, new { style = "width: 100%;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.InteractionEventTypeID)
             </div>
         </div>
@@ -86,7 +86,7 @@
                 @Html.LabelWithSugarFor(m => m.Description, "Description")
             </div>
             <div class="col-xs-6">
-                @Html.TextAreaFor(m => m.Description, new { style = "width: 100%;", @class = "form-control" })
+                @Html.TextAreaWithMaxLengthFor(m => m.Description, new TextAreaForExtensions.TextAreaDimensions(null, 4), null, new List<string> { "form-control" })
                 @Html.ValidationMessageFor(m => m.Description)
             </div>
         </div>
@@ -95,7 +95,7 @@
                 @Html.LabelWithSugarFor(m => m.DNRStaffPersonID, "DNR Staff Person")
             </div>
             <div class="col-xs-6">
-                @Html.DropDownListFor(m => m.DNRStaffPersonID, ViewDataTyped.StaffPeople, new { style = "width: auto;", @class = "form-control" })
+                @Html.DropDownListFor(m => m.DNRStaffPersonID, ViewDataTyped.StaffPeopleSelectListItems, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.DNRStaffPersonID)
             </div>
         </div>

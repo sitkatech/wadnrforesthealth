@@ -29,16 +29,12 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Spatial;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
-using ProjectFirma.Web.Views.ProjectUpdate;
 
 namespace ProjectFirma.Web.Models
 {
