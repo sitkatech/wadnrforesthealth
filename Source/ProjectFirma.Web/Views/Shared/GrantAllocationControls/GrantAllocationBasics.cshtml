@@ -25,15 +25,6 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @inherits GrantAllocationBasics
 
-@functions 
-{
-    private string GetProgramMangerPersonFullNames(GrantAllocationBasicsViewData viewDataTyped)
-    {
-        return viewDataTyped.GrantAllocation.GetAllProgramManagerPersonNamesAsString();
-    }
-
-}
-
 <style>
     .basicsLayout .row {
         margin-left: 0;
@@ -83,7 +74,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.ProgramManager)
         </div>
         <div class="col-sm-9">
-            <span>@GetProgramMangerPersonFullNames(ViewDataTyped)</span>
+            <span>@ViewDataTyped.GrantAllocation.GetAllProgramManagerPersonNamesAsUrls()</span>
         </div>
     </div>
     <div class="row">

@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using JetBrains.Annotations;
 using ProjectFirma.Web.Common;
 
@@ -55,6 +56,24 @@ namespace ProjectFirma.Web.Models
         public string GetAllProgramManagerPersonNamesAsString()
         {
             return string.Join(", ", this.ProgramManagerPersons.Select(pmp => pmp.FullNameFirstLast));
+        }
+
+        public HtmlString GetAllProgramManagerPersonNamesAsUrls()
+        {
+            var programManagerUrlsList = this.ProgramManagerPersons.Select(pmp => pmp.GetFullNameFirstLastAsUrl()).ToList();
+            var programManagerUrlsStringBuilder = new StringBuilder();
+            foreach (var programManagerUrl in programManagerUrlsList)
+            {
+                if (programManagerUrlsStringBuilder.Length < 1)
+                {
+                    programManagerUrlsStringBuilder.Append(programManagerUrl);
+                }
+                else
+                {
+                    programManagerUrlsStringBuilder.Append(", " + programManagerUrl);
+                }
+            }
+            return new HtmlString(programManagerUrlsStringBuilder.ToString());
         }
 
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
