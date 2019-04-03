@@ -67,7 +67,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.Organization)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.OrganizationDisplayName</span>
+            <span>@ViewDataTyped.GrantAllocation.Organization.GetDisplayNameAsUrl()</span>
         </div>
     </div>
     <div class="row">
@@ -75,7 +75,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantManager)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.GrantManagerDisplayName</span>
+            <span>@ViewDataTyped.GrantAllocation.GrantManager.GetFullNameFirstLastAsUrl()</span>
         </div>
     </div>
     <div class="row">
