@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -63,6 +64,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
         public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, List<Models.Person> allPeople, int interactionEventID, IEnumerable<Models.Project> allProjects)
         {
+            Check.Ensure(allPeople.All(p => p != null), "One or more Person records in allPeople is NULL");
             InteractionEventTypesSelectListItems = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
 
             // Sorted and filtered on controller
