@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             InteractionEventTypesSelectListItems = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
 
             // Sorted and filtered on controller
-            var allPeopleInWadnrOrganization = allPeople.Where(p => p.Organization != null && p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToList();
+            var allPeopleInWadnrOrganization = allPeople.Where(p => p?.Organization != null && p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToList();
             StaffPeopleSelectListItems = allPeopleInWadnrOrganization.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast);
 
             EditInteractionEventEditType = editInteractionEventEditType;
