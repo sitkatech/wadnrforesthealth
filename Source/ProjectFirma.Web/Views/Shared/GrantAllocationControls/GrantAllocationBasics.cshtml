@@ -98,7 +98,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.GrantAllocation.Grant.GrantNumber</span>
+            <span>@ViewDataTyped.GrantAllocation.Grant.GetGrantNumberAsUrl()</span>
         </div>
     </div>
     <div class="row">
@@ -138,7 +138,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.Region)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.GrantAllocation.RegionNameDisplay</span>
+            <span>@ViewDataTyped.GrantAllocation.Region.GetDisplayNameAsUrl()</span>
         </div>
     </div>
     <div class="row">
