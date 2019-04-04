@@ -45,14 +45,14 @@ namespace ProjectFirma.Web.Models
         public Feature MakeFeatureWithRelevantProperties()
         {
             var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(RegionLocation);
-            feature.Properties.Add("Region", GetDisplayNameAsUrl().ToString());
+            feature.Properties.Add("Region", this.GetRegionDisplayNameAsUrl().ToString());
             return feature;
         }
 
-        public HtmlString GetDisplayNameAsUrl()
-        {
-            return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
-        }
+        //public HtmlString GetDisplayNameAsUrl()
+        //{
+        //    return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
+        //}
 
         public string GetDetailUrl()
         {
