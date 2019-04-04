@@ -20,8 +20,10 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
@@ -77,6 +79,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantManager)]
         public int? GrantManagerID { get; set; }
+
+        [DisplayName("Grant Allocation File Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase GrantAllocationFileResourceData { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -165,6 +171,19 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
+
+            if (GrantAllocationFileResourceData != null)
+            {
+                var currentGrantAllocationFileResource = grantAllocation.GrantAllocationFileResource;
+                grantAllocation.GrantAllocationFileResource = null;
+                // Delete old grantAllocation file, if present
+                if (currentGrantAllocationFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentGrantAllocationFileResource);
+                }
+                grantAllocation.GrantAllocationFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantAllocationFileResourceData, currentPerson);
+            }
         }
     }
 }

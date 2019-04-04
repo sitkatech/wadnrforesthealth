@@ -215,6 +215,10 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
+      <End Role="GrantAllocationFileResource" EntitySet="FileResource" />
+      <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" EntitySet="GrantAllocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
       <End Role="InvoiceFileResource" EntitySet="FileResource" />
       <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
@@ -1110,6 +1114,7 @@
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="FileResourcesWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
     <NavigationProperty Name="FirmaHomePageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaHomePageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaHomePageImages" />
     <NavigationProperty Name="FirmaPageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaPageImages" />
+    <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" FromRole="GrantAllocationFileResource" ToRole="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" />
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
@@ -1230,8 +1235,10 @@
     <Property Name="RegionID" Type="Int32" />
     <Property Name="DivisionID" Type="Int32" />
     <Property Name="GrantManagerID" Type="Int32" />
+    <Property Name="GrantAllocationFileResourceID" Type="Int32" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
+    <NavigationProperty Name="GrantAllocationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" FromRole="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" ToRole="GrantAllocationFileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
@@ -2907,6 +2914,18 @@
       </Principal>
       <Dependent Role="FirmaPageImages">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
+    <End Role="GrantAllocationFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
+    <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource">
+        <PropertyRef Name="GrantAllocationFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

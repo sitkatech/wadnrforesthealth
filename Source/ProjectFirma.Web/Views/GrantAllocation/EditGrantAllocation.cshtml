@@ -176,37 +176,18 @@
             @Html.ValidationMessageFor(m => m.EndDate)
         </div>
     </div>
-    <div class="form-group">
-
-        @*<div class="form-group">
-                <div class="col-xs-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.TotalAwardAmount)
-                </div>
-                <div class="col-xs-8">
-                    @Html.EditorFor(m => m.TotalAwardAmount)
-                    @Html.ValidationMessageFor(m => m.TotalAwardAmount)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.GrantStartDate)
-                </div>
-                <div class="col-xs-8">
-                    @Html.EditorFor(m => m.GrantStartDate, new { style = "width: auto;", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.GrantStartDate)
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.GrantEndDate)
-                </div>
-                <div class="col-xs-8">
-                    @Html.EditorFor(m => m.GrantEndDate, new { style = "width: auto;", @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.GrantEndDate)
-                </div>
-            </div>*@
+    <div class="form-group form-group-tight">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(x => x.GrantAllocationFileResourceData)
+        </div>
+        <div class="col-xs-8">
+            @Html.EditorFor(x => x.GrantAllocationFileResourceData)
+            @*<span class="smallExplanationText">
+                            Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                        </span>*@
+            @Html.ValidationMessageFor(x => x.GrantAllocationFileResourceData)
+        </div>
     </div>
-
 </div>
     @Html.HiddenFor(m => m.GrantAllocationID)
 }
