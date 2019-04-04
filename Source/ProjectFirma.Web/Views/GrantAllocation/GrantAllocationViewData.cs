@@ -35,6 +35,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string BackToGrantAllocationsText { get; set; }
 
         public string GrantAllocationsListUrl { get; set; }
+        
+        
 
         protected GrantAllocationViewData(Person currentPerson, Models.GrantAllocation grantAllocation) : base(currentPerson, null)
         {
