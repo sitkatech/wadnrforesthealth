@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             var projectFundingSourceExpendituresFromProjectUpdate =
                 projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.Select(
-                    x => new ProjectFundingSourceExpenditure(project.ProjectID, x.FundingSource.FundingSourceID, x.CalendarYear, x.ExpenditureAmount, x.GrantAllocationID)).ToList();
+                    x => new ProjectFundingSourceExpenditure(project.ProjectID, x.CalendarYear, x.ExpenditureAmount, x.GrantAllocationID)).ToList();
             project.ProjectFundingSourceExpenditures.Merge(projectFundingSourceExpendituresFromProjectUpdate,
                 allProjectFundingSourceExpenditures,
                 (x, y) => x.ProjectID == y.ProjectID && x.CalendarYear == y.CalendarYear && x.FundingSourceID == y.FundingSourceID,

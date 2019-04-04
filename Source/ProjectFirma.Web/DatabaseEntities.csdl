@@ -2025,7 +2025,7 @@
     </Key>
     <Property Name="ProjectFundingSourceExpenditureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
+    <Property Name="FundingSourceID" Type="Int32" />
     <Property Name="CalendarYear" Type="Int32" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
@@ -3126,7 +3126,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="0..1" />
     <End Role="ProjectFundingSourceExpenditures" Type="ProjectFirma.Web.Models.ProjectFundingSourceExpenditure" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FundingSource">

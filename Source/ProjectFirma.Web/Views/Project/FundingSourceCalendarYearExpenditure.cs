@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.Project
         {
             get { return FundingSource == null ? "Unknown" : FundingSource.DisplayName; }
         }
-        public string OrganizationName
+        public string FundinSourceOrganizationName
         {
             get { return FundingSource == null ? "Unknown" : FundingSource.Organization.DisplayName; }
         }
@@ -46,35 +46,61 @@ namespace ProjectFirma.Web.Views.Project
         {
             get { return FundingSource == null ? new HtmlString("Unknown") : FundingSource.DisplayNameAsUrl; }
         }
-        public HtmlString OrganizationNameAsUrl
+        public HtmlString FundingSourceOrganizationNameAsUrl
         {
             get { return FundingSource == null ? new HtmlString("Unknown") : FundingSource.Organization.GetDisplayNameAsUrl(); }
         }
 
+        //Grant Allocation area
+        public readonly Models.GrantAllocation GrantAllocation;
+        public int GrantAllocationID
+        {
+            get { return GrantAllocation == null ? ModelObjectHelpers.NotYetAssignedID : GrantAllocation.GrantAllocationID; }
+        }
+        public string GrantAllocationName
+        {
+            get { return GrantAllocation == null ? "Unknown" : GrantAllocation.DisplayName; }
+        }
+        public string GrantAllocationOrganizationName
+        {
+            get { return GrantAllocation == null ? "Unknown" : GrantAllocation.Organization.DisplayName; }
+        }
+        public HtmlString GrantAllocationNameAsUrl
+        {
+            get { return GrantAllocation == null ? new HtmlString("Unknown") : GrantAllocation.DisplayNameAsUrl; }
+        }
+        public HtmlString GrantAllocationOrganizationNameAsUrl
+        {
+            get { return GrantAllocation == null ? new HtmlString("Unknown") : GrantAllocation.Organization.GetDisplayNameAsUrl(); }
+        }
+
+
+
         public readonly Dictionary<int, decimal?> CalendarYearExpenditure;
         public string DisplayCssClass;
 
-        public FundingSourceCalendarYearExpenditure(Models.FundingSource fundingSource, Dictionary<int, decimal?> calendarYearExpenditure, string displayCssClass)
+        public FundingSourceCalendarYearExpenditure(Models.FundingSource fundingSource, Models.GrantAllocation grantAllocation, Dictionary<int, decimal?> calendarYearExpenditure, string displayCssClass)
         {
             FundingSource = fundingSource;
+            GrantAllocation = grantAllocation;
             CalendarYearExpenditure = calendarYearExpenditure;
             DisplayCssClass = displayCssClass;
         }
 
-        public FundingSourceCalendarYearExpenditure(Dictionary<int, decimal?> calendarYearExpenditure) : this(null, calendarYearExpenditure, null)
+        public FundingSourceCalendarYearExpenditure(Dictionary<int, decimal?> calendarYearExpenditure) : this(null, null, calendarYearExpenditure, null)
         {
         }
 
         public static List<FundingSourceCalendarYearExpenditure> CreateFromFundingSourcesAndCalendarYears(List<IFundingSourceExpenditure> fundingSourceExpenditures, List<int> calendarYears)
         {
-            var distinctFundingSources = fundingSourceExpenditures.Select(x => x.FundingSource).Distinct(new HavePrimaryKeyComparer<Models.FundingSource>());
+            var distinctGrantAllocations = fundingSourceExpenditures.Select(x => x.GrantAllocation).Distinct(new HavePrimaryKeyComparer<Models.GrantAllocation>());
             var fundingSourcesCrossJoinCalendarYears =
-                distinctFundingSources.Select(x => new FundingSourceCalendarYearExpenditure(x, calendarYears.ToDictionary<int, int, decimal?>(calendarYear => calendarYear, calendarYear => null), null))
+                distinctGrantAllocations.Select(ga => new FundingSourceCalendarYearExpenditure(null, ga, calendarYears.ToDictionary<int, int, decimal?>(calendarYear => calendarYear, calendarYear => null), null))
                     .ToList();
 
-            foreach (var projectFundingSourceExpenditure in fundingSourceExpenditures.GroupBy(x => x.FundingSourceID))
+            foreach (var projectFundingSourceExpenditure in fundingSourceExpenditures.GroupBy(x => x.GrantAllocationID))
             {
-                var current = fundingSourcesCrossJoinCalendarYears.Single(x => x.FundingSourceID == projectFundingSourceExpenditure.Key);
+                var current = fundingSourcesCrossJoinCalendarYears.Single(x => x.GrantAllocationID == projectFundingSourceExpenditure.Key);
                 foreach (var calendarYear in calendarYears)
                 {
                     current.CalendarYearExpenditure[calendarYear] =
@@ -87,8 +113,9 @@ namespace ProjectFirma.Web.Views.Project
         public static FundingSourceCalendarYearExpenditure Clone(FundingSourceCalendarYearExpenditure fundingSourceCalendarYearExpenditureToDiff, string displayCssClass)
         {
             return new FundingSourceCalendarYearExpenditure(fundingSourceCalendarYearExpenditureToDiff.FundingSource,
-                fundingSourceCalendarYearExpenditureToDiff.CalendarYearExpenditure.ToDictionary(x => x.Key, x => x.Value),
-                displayCssClass);
+                                                            fundingSourceCalendarYearExpenditureToDiff.GrantAllocation,
+                                                            fundingSourceCalendarYearExpenditureToDiff.CalendarYearExpenditure.ToDictionary(x => x.Key, x => x.Value),
+                                                            displayCssClass);
         }
     }
 }

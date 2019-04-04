@@ -34,10 +34,10 @@
                     <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>
                     <th class="text-right">Total</th>
                 </tr>
-                @foreach (var projectFundingSourceRequest in ViewDataTyped.FundingSourceRequestAmounts.OrderBy(x => x.FundingSource.DisplayName))
+                @foreach (var projectFundingSourceRequest in ViewDataTyped.FundingSourceRequestAmounts.OrderBy(x => x.GrantAllocation.DisplayName))
                 {
                     <tr>
-                        <td>@Html.Raw(projectFundingSourceRequest.FundingSource.DisplayNameAsUrl)</td>
+                        <td>@Html.Raw(projectFundingSourceRequest.GrantAllocation.DisplayNameAsUrl)</td>
                         <th class="text-right">@projectFundingSourceRequest.SecuredAmount.ToStringCurrency()</th>
                         <th class="text-right">@projectFundingSourceRequest.UnsecuredAmount.ToStringCurrency()</th>
                         <th class="text-right">@((projectFundingSourceRequest.UnsecuredAmount + projectFundingSourceRequest.SecuredAmount).ToStringCurrency())</th>
@@ -57,6 +57,6 @@
     }
     else
     {
-        <p class="systemText">No @FieldDefinition.FundingSource.GetFieldDefinitionLabel() identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+        <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
     }
 </div>

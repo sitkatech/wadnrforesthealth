@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public class ViewDataForAngularClass
         {
-            public readonly List<FundingSourceSimple> AllFundingSources;
+            public readonly List<GrantAllocationSimple> AllFundingSources;
             // Actually a ProjectID
             public readonly int ProjectID;
             public readonly decimal EstimatedTotalCost;
@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             public readonly decimal EstimatedTravelCost;
 
             public ViewDataForAngularClass(Models.Project projectProposedBatch,
-                List<FundingSourceSimple> allFundingSources,
+                List<GrantAllocationSimple> allFundingSources,
                 decimal estimatedTotalCost, decimal estimatedIndirectCost, decimal estimatedPersonnelAndBenefitsCost, decimal estimatedSuppliesCost, decimal estimatedTravelCost)
             {
                 AllFundingSources = allFundingSources;

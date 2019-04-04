@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Models
     public class ProjectFundingSourceExpenditureBulk
     {
         public int ProjectID { get; set; }
-        public int FundingSourceID { get; set; }
+        public int? FundingSourceID { get; set; }
         public int GrantAllocationID { get; set; }
         public List<CalendarYearMonetaryAmount> CalendarYearExpenditures { get; set; }
 
@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Models
             // ReSharper disable PossibleInvalidOperationException
             return
                 CalendarYearExpenditures.Where(x => x.MonetaryAmount.HasValue)
-                    .Select(x => new ProjectFundingSourceExpenditure(ProjectID, FundingSourceID, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
+                    .Select(x => new ProjectFundingSourceExpenditure(ProjectID, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
                     .ToList();
             // ReSharper restore PossibleInvalidOperationException
         }
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Models
             // ReSharper disable PossibleInvalidOperationException
             return
                 CalendarYearExpenditures.Where(x => x.MonetaryAmount.HasValue)
-                    .Select(x => new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch.ProjectUpdateBatchID, FundingSourceID, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
+                    .Select(x => new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch.ProjectUpdateBatchID, FundingSourceID.Value, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
                     .ToList();
             // ReSharper restore PossibleInvalidOperationException
         }

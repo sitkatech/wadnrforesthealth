@@ -4,7 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using JetBrains.Annotations;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -20,6 +22,14 @@ namespace ProjectFirma.Web.Models
         public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID: -1;
         public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
         public string DivisionNameDisplay => Division != null ? Division.DivisionDisplayName : string.Empty;
+
+        public string DisplayName => this.GrantAllocationName;
+        public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, DisplayName);
+
+        public string SummaryUrl
+        {
+            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.GrantAllocationDetail(GrantAllocationID)); }
+        }
 
         [NotNull]
         public List<ProjectCode> ProjectCodes

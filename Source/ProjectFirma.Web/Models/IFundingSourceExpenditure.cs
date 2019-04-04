@@ -23,7 +23,9 @@ namespace ProjectFirma.Web.Models
     public interface IFundingSourceExpenditure : ICalendarYearMonetaryAmount
     {
         FundingSource FundingSource { get; }
+        GrantAllocation GrantAllocation { get; }
         int FundingSourceID { get; }
+        int GrantAllocationID { get; }
 
         decimal ExpenditureAmount { get; }
     }

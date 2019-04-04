@@ -29,7 +29,7 @@
     <div style="overflow-x: auto">
         <table class="table table-striped table-condensed table-hover">
             <tr>
-                <th>@Html.LabelWithSugarFor(FieldDefinition.FundingSource)</th>
+                <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
                 @foreach (var calendarYear in ViewDataTyped.CalendarYearStrings.OrderByDescending(x => x.CalendarYear))
                 {
                     <th class="text-right">
@@ -38,10 +38,10 @@
                 }
                 <th class="text-right">Total</th>
             </tr>
-            @foreach (var fundingSourceExpenditure in ViewDataTyped.FundingSourceExpenditures.OrderBy(x => x.FundingSourceName))
+            @foreach (var fundingSourceExpenditure in ViewDataTyped.FundingSourceExpenditures.OrderBy(x => x.GrantAllocationName))
             {
                 <tr>
-                    <td>@Html.Raw(fundingSourceExpenditure.FundingSourceNameAsUrl)</td>
+                    <td>@Html.Raw(fundingSourceExpenditure.GrantAllocationNameAsUrl)</td>
                     @foreach (var calendarYear in fundingSourceExpenditure.CalendarYearExpenditure.Keys.OrderByDescending(x => x))
                     {
                         <td class="text-right">@fundingSourceExpenditure.CalendarYearExpenditure[calendarYear].ToStringCurrency()</td>

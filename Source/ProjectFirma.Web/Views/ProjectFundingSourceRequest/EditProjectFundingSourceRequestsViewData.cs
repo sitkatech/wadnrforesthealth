@@ -26,14 +26,14 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
 {
     public class EditProjectFundingSourceRequestsViewData : FirmaUserControlViewData
     {
-        public readonly List<FundingSourceSimple> AllGrantAllocations;
+        public readonly List<GrantAllocationSimple> AllGrantAllocations;
         public readonly List<ProjectSimple> AllProjects;
         public readonly int? ProjectID;
         public readonly int? GrantAllocationID;
         public readonly bool FromGrantAllocation;
 
         private EditProjectFundingSourceRequestsViewData(List<ProjectSimple> allProjects,
-            List<FundingSourceSimple> allGrantAllocations,
+            List<GrantAllocationSimple> allGrantAllocations,
             int? projectID,
             int? grantAllocationID)
         {
@@ -48,13 +48,13 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         }
 
         public EditProjectFundingSourceRequestsViewData(ProjectSimple project,
-            List<FundingSourceSimple> allGrantAllocations)
+            List<GrantAllocationSimple> allGrantAllocations)
             : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID, null)
         {
         }
 
-        public EditProjectFundingSourceRequestsViewData(FundingSourceSimple fundingSource, List<ProjectSimple> allProjects)
-            : this(allProjects, new List<FundingSourceSimple> {fundingSource}, null, fundingSource.GrantAllocationID)
+        public EditProjectFundingSourceRequestsViewData(GrantAllocationSimple grantAllocation, List<ProjectSimple> allProjects)
+            : this(allProjects, new List<GrantAllocationSimple> {grantAllocation}, null, grantAllocation.GrantAllocationID)
         {
         }
 

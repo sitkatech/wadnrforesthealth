@@ -1745,7 +1745,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectFundingSourceExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" Nullable="false" />
+    <Property Name="FundingSourceID" Type="int" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
@@ -3792,7 +3792,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="0..1" />
     <End Role="ProjectFundingSourceExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceExpenditure" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FundingSource">

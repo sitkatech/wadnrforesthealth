@@ -20,9 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Models
 {
-    public class FundingSourceSimple
+    public class GrantAllocationSimple
     {
-        public FundingSourceSimple(GrantAllocation grantAllocation)
+        public GrantAllocationSimple(GrantAllocation grantAllocation)
         {
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             OrganizationID = grantAllocation.BottommostOrganization.OrganizationID;

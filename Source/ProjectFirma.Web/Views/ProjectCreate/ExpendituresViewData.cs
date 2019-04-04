@@ -47,14 +47,14 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public class ViewDataForAngularClass
         {
             public readonly List<int> CalendarYearRange;
-            public readonly List<FundingSourceSimple> AllFundingSources;
+            public readonly List<GrantAllocationSimple> AllFundingSources;
             public readonly int ProjectID;
             public readonly int MaxYear;
             public readonly bool UseFiscalYears;
             public readonly bool ShowNoExpendituresExplanation;
 
             public ViewDataForAngularClass(Models.Project project,
-                List<FundingSourceSimple> allFundingSources,
+                List<GrantAllocationSimple> allFundingSources,
                 List<int> calendarYearRange, bool showNoExpendituresExplanation)
             {
                 CalendarYearRange = calendarYearRange;

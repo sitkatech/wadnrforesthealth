@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditProjectFundingSourceExpenditures(Project project, EditProjectFundingSourceExpendituresViewModel viewModel, List<int> calendarYearRangeForExpenditures)
         {
-            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var showNoExpendituresExplanation = project.GetExpendituresExemptReportingYears().Any();
             var viewData = new EditProjectFundingSourceExpendituresViewData(new ProjectSimple(project), allGrantAllocations, calendarYearRangeForExpenditures, showNoExpendituresExplanation);
             return RazorPartialView<EditProjectFundingSourceExpenditures, EditProjectFundingSourceExpendituresViewData, EditProjectFundingSourceExpendituresViewModel>(viewData, viewModel);

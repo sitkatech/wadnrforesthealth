@@ -1594,7 +1594,7 @@
     <Compile Include="Models\AuditLog.DatabaseContextExtensions.cs" />
     <Compile Include="Models\EntityNote.cs" />
     <Compile Include="Models\ExternalLink.cs" />
-    <Compile Include="Models\FundingSourceSimple.cs" />
+    <Compile Include="Models\GrantAllocationSimple.cs" />
     <Compile Include="Models\BoundingBoxTest.cs" />
     <Compile Include="Models\IEntityExternalLink.cs" />
     <Compile Include="Models\IProjectLocation.cs" />

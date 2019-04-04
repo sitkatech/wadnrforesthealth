@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditure(int projectFundingSourceExpenditureID, int projectID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
+        public ProjectFundingSourceExpenditure(int projectFundingSourceExpenditureID, int projectID, int? fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
         {
             this.ProjectFundingSourceExpenditureID = projectFundingSourceExpenditureID;
             this.ProjectID = projectID;
@@ -43,13 +43,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditure(int projectID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
+        public ProjectFundingSourceExpenditure(int projectID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceExpenditureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
-            this.FundingSourceID = fundingSourceID;
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
             this.GrantAllocationID = grantAllocationID;
@@ -58,16 +57,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectFundingSourceExpenditure(Project project, FundingSource fundingSource, int calendarYear, decimal expenditureAmount, GrantAllocation grantAllocation) : this()
+        public ProjectFundingSourceExpenditure(Project project, int calendarYear, decimal expenditureAmount, GrantAllocation grantAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceExpenditureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectID = project.ProjectID;
             this.Project = project;
             project.ProjectFundingSourceExpenditures.Add(this);
-            this.FundingSourceID = fundingSource.FundingSourceID;
-            this.FundingSource = fundingSource;
-            fundingSource.ProjectFundingSourceExpenditures.Add(this);
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
@@ -78,9 +74,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectFundingSourceExpenditure CreateNewBlank(Project project, FundingSource fundingSource, GrantAllocation grantAllocation)
+        public static ProjectFundingSourceExpenditure CreateNewBlank(Project project, GrantAllocation grantAllocation)
         {
-            return new ProjectFundingSourceExpenditure(project, fundingSource, default(int), default(decimal), grantAllocation);
+            return new ProjectFundingSourceExpenditure(project, default(int), default(decimal), grantAllocation);
         }
 
         /// <summary>
@@ -118,7 +114,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectFundingSourceExpenditureID { get; set; }
         public int ProjectID { get; set; }
-        public int FundingSourceID { get; set; }
+        public int? FundingSourceID { get; set; }
         public int CalendarYear { get; set; }
         public decimal ExpenditureAmount { get; set; }
         public int GrantAllocationID { get; set; }

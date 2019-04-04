@@ -29,9 +29,11 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Views.FundingSource;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using ProjectFirma.Web.Views.Shared.SortOrder;
 using DetailViewData = ProjectFirma.Web.Views.GrantAllocation.DetailViewData;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -322,7 +324,7 @@ namespace ProjectFirma.Web.Controllers
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.SingleOrDefault(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             if (grantAllocation == null)
             {
                 throw new Exception($"Could not find GrantAllocationID # {grantAllocationPrimaryKey.PrimaryKeyValue}; has it been deleted?");
@@ -342,7 +344,24 @@ namespace ProjectFirma.Web.Controllers
                 grantAllocation.GrantAllocationName,
                 userHasEditGrantAllocationPermissions);
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData);
+            var taxonomyTrunks = HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.ToList().SortByOrderThenName().ToList();
+
+            const string chartTitle = "Reported Expenditures";
+            var chartContainerID = chartTitle.Replace(" ", "");
+
+            // If ProjectFundingSourceExpenditures is empty, ToGoogleChart returns null...
+            var googleChart = grantAllocation.ProjectFundingSourceExpenditures
+                .ToGoogleChart(x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
+                    taxonomyTrunks.Select(x => x.DisplayName).ToList(),
+                    x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
+                    chartContainerID,
+                    grantAllocation.DisplayName);
+
+            // Which makes this guy bork (bork bork bork)
+            googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.None);
+            var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 350, false);
+
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
     }

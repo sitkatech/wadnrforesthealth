@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using LtInfo.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -31,11 +32,13 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string NewGrantAllocationNoteUrl { get; set; }
         public EntityNotesViewData GrantAllocationNotesViewData { get; set; }
         public EntityNotesViewData GrantAllocationNoteInternalsViewData { get; set; }
+        public ViewGoogleChartViewData ViewGoogleChartViewData { get; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
             , EntityNotesViewData grantAllocationNotesViewData
-            , EntityNotesViewData grantAllocationNoteInternalsViewData)
+            , EntityNotesViewData grantAllocationNoteInternalsViewData
+            , ViewGoogleChartViewData viewGoogleChartViewData)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
@@ -46,6 +49,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             NewGrantAllocationNoteUrl = grantAllocation.GetNewNoteUrl();
             GrantAllocationNoteInternalsViewData = grantAllocationNoteInternalsViewData;
+
+            ViewGoogleChartViewData = viewGoogleChartViewData;
         }
     }
 }

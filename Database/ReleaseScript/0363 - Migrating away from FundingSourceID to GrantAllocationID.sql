@@ -34,6 +34,9 @@ GO
 alter table dbo.ProjectFundingSourceExpenditure
 alter column GrantAllocationID int not null
 GO
+alter table dbo.ProjectFundingSourceExpenditure
+alter column FundingSourceID int null
+GO
 
 
 
@@ -169,6 +172,23 @@ set FundingSourceName = 'OBSOLETE_SHOULD_USE_GRANT_ALLOCATION_' + FundingSourceN
 select * from dbo.FundingSource
 
 
+
+--AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear
+
+
+ALTER TABLE [dbo].[ProjectFundingSourceExpenditure] 
+drop CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear]
+GO
+
+/****** Object:  Index [AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear]    Script Date: 4/4/2019 1:21:17 PM ******/
+ALTER TABLE [dbo].[ProjectFundingSourceExpenditure] 
+ADD  CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_GrantAllocationID_CalendarYear] UNIQUE NONCLUSTERED 
+(
+	[ProjectID] ASC,
+	GrantAllocationID ASC,
+	[CalendarYear] ASC
+) ON [PRIMARY]
+GO
 
 
 

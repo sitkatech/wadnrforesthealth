@@ -21,6 +21,7 @@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @using ProjectFirma.Web.Views.Shared.TextControls
@@ -63,7 +64,7 @@
 <div class="col-sm-12 col-md-9 col-lg-10">
 
     <div class="row">
-        <div class="col-sm-12" style="padding: 0px;">
+        <div class="col-lg-5" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
@@ -73,6 +74,25 @@
                 </div>
                 <div class="panel-body">
                     @{ GrantAllocationBasics.RenderPartialView(Html, ViewDataTyped.GrantAllocationBasicsViewData);}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
+                    {
+                        <div style="border-radius: 8px; background-color: white; height: 410px; margin-right: auto; margin-left: auto; width: 600px">
+                            @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="systemText">No expenditures to report for this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel().</p>
+                    }
                 </div>
             </div>
         </div>

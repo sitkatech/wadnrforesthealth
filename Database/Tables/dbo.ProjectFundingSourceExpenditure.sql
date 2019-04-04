@@ -5,7 +5,7 @@ GO
 CREATE TABLE [dbo].[ProjectFundingSourceExpenditure](
 	[ProjectFundingSourceExpenditureID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[FundingSourceID] [int] NOT NULL,
+	[FundingSourceID] [int] NULL,
 	[CalendarYear] [int] NOT NULL,
 	[ExpenditureAmount] [money] NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
@@ -13,10 +13,10 @@ CREATE TABLE [dbo].[ProjectFundingSourceExpenditure](
 (
 	[ProjectFundingSourceExpenditureID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_GrantAllocationID_CalendarYear] UNIQUE NONCLUSTERED 
 (
 	[ProjectID] ASC,
-	[FundingSourceID] ASC,
+	[GrantAllocationID] ASC,
 	[CalendarYear] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
