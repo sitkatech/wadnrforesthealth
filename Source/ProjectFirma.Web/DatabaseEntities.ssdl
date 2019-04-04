@@ -223,6 +223,10 @@
       <End Role="Organization" EntitySet="Organization" />
       <End Role="FundingSources" EntitySet="FundingSource" />
     </AssociationSet>
+    <AssociationSet Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
+      <End Role="GrantFileResource" EntitySet="FileResource" />
+      <End Role="GrantsWhereYouAreTheGrantFileResource" EntitySet="Grant" />
+    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
       <End Role="Grants" EntitySet="Grant" />
@@ -1145,6 +1149,7 @@
     <Property Name="ShortName" Type="varchar" MaxLength="64" />
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="GrantFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -2568,6 +2573,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="FundingSources">
         <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
+    <End Role="GrantFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="GrantsWhereYouAreTheGrantFileResource" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantsWhereYouAreTheGrantFileResource">
+        <PropertyRef Name="GrantFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

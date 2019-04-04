@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Views.Grant
         public string NewGrantNoteUrl { get; set; }
         public EntityNotesViewData GrantNotesViewData { get; set; }
         public EntityNotesViewData InternalGrantNotesViewData { get; set; }
+        public bool ShowDownload { get; set; }
 
         public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
@@ -38,6 +39,8 @@ namespace ProjectFirma.Web.Views.Grant
             NewGrantNoteUrl = grant.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
+            // Used for creating file download link, if file available
+            ShowDownload = grant.GrantFileResource != null;
         }
     }
 }
