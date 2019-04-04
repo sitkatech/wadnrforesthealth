@@ -174,8 +174,6 @@ select * from dbo.FundingSource
 
 
 --AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear
-
-
 ALTER TABLE [dbo].[ProjectFundingSourceExpenditure] 
 drop CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear]
 GO
@@ -190,8 +188,18 @@ ADD  CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_GrantAllocationID_
 ) ON [PRIMARY]
 GO
 
+--AK_ProjectFundingSourceRequest_ProjectID_FundingSourceID
+ALTER TABLE [dbo].ProjectFundingSourceRequest 
+drop CONSTRAINT [AK_ProjectFundingSourceRequest_ProjectID_FundingSourceID]
+GO
 
-
+ALTER TABLE [dbo].ProjectFundingSourceRequest 
+ADD  CONSTRAINT [AK_ProjectFundingSourceRequest_ProjectID_GrantAllocationID] UNIQUE NONCLUSTERED 
+(
+	[ProjectID] ASC,
+	GrantAllocationID ASC
+) ON [PRIMARY]
+GO
 
 --rollback tran
 
