@@ -77,18 +77,18 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditProjectFundingSourceRequests(FundingSource fundingSource,
-            EditProjectFundingSourceRequestsViewModel viewModel)
+        private PartialViewResult ViewEditProjectFundingSourceRequests(GrantAllocation grantAllocation,
+                                                                       EditProjectFundingSourceRequestsViewModel viewModel)
         {
             var allProjects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Select(x => new ProjectSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditProjectFundingSourceRequestsViewData(new FundingSourceSimple(fundingSource), allProjects);
+            var viewData = new EditProjectFundingSourceRequestsViewData(new FundingSourceSimple(grantAllocation), allProjects);
             return RazorPartialView<EditProjectFundingSourceRequests, EditProjectFundingSourceRequestsViewData, EditProjectFundingSourceRequestsViewModel>(viewData, viewModel);
         }
 
         private PartialViewResult ViewEditProjectFundingSourceRequests(Project project, EditProjectFundingSourceRequestsViewModel viewModel)
         {
-            var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditProjectFundingSourceRequestsViewData(new ProjectSimple(project), allFundingSources);
+            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var viewData = new EditProjectFundingSourceRequestsViewData(new ProjectSimple(project), allGrantAllocations);
             return RazorPartialView<EditProjectFundingSourceRequests, EditProjectFundingSourceRequestsViewData, EditProjectFundingSourceRequestsViewModel>(viewData, viewModel);
         }
     }

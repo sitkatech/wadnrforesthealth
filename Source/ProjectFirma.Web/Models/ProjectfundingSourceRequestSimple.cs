@@ -14,7 +14,7 @@
             : this()
         {
             ProjectID = projectFundingSourceRequest.ProjectID;
-            FundingSourceID = projectFundingSourceRequest.FundingSourceID;
+            GrantAllocationID = projectFundingSourceRequest.GrantAllocationID;
             UnsecuredAmount = projectFundingSourceRequest.UnsecuredAmount;
             SecuredAmount = projectFundingSourceRequest.SecuredAmount;
         }
@@ -22,24 +22,24 @@
         public ProjectFundingSourceRequestSimple(ProjectFundingSourceRequestUpdate projectFundingSourceRequestUpdate)
         {
             ProjectID = projectFundingSourceRequestUpdate.ProjectUpdateBatchID;
-            FundingSourceID = projectFundingSourceRequestUpdate.FundingSourceID;
+            GrantAllocationID = projectFundingSourceRequestUpdate.GrantAllocationID;
             UnsecuredAmount = projectFundingSourceRequestUpdate.UnsecuredAmount;
             SecuredAmount = projectFundingSourceRequestUpdate.SecuredAmount;
         }
 
         public ProjectFundingSourceRequest ToProjectFundingSourceRequest()
         {
-            return new ProjectFundingSourceRequest(ProjectID, FundingSourceID){SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
+            return new ProjectFundingSourceRequest(ProjectID, GrantAllocationID){SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
         }
 
         public int ProjectID { get; set; }
-        public int FundingSourceID { get; set; }
+        public int GrantAllocationID { get; set; }
         public decimal? SecuredAmount { get; set; }
         public decimal? UnsecuredAmount { get; set; }
 
         public ProjectFundingSourceRequestUpdate ToProjectFundingSourceRequestUpdate()
         {
-            return new ProjectFundingSourceRequestUpdate(ProjectID, FundingSourceID){SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
+            return new ProjectFundingSourceRequestUpdate(ProjectID, GrantAllocationID){SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
         }
 
         public bool AreBothValuesZero()

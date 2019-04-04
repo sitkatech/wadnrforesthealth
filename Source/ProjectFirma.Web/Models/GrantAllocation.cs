@@ -127,5 +127,21 @@ namespace ProjectFirma.Web.Models
             return null;
         }
 
+        /// <summary>
+        /// This is a bit speculative, and may not be what we really need. -- SLG
+        /// </summary>
+        public Organization BottommostOrganization
+        {
+            get
+            {
+                if (this.Organization != null)
+                {
+                    return this.Organization;
+                }
+
+                return this.Grant.Organization;
+            }
+        }
+
     }
 }

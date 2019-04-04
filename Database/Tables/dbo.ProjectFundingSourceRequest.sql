@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[ProjectFundingSourceRequest](
 	[FundingSourceID] [int] NOT NULL,
 	[SecuredAmount] [money] NULL,
 	[UnsecuredAmount] [money] NULL,
+	[GrantAllocationID] [int] NULL,
  CONSTRAINT [PK_ProjectFundingSourceRequest_ProjectFundingSourceRequestID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectFundingSourceRequestID] ASC
@@ -24,6 +25,11 @@ ALTER TABLE [dbo].[ProjectFundingSourceRequest]  WITH CHECK ADD  CONSTRAINT [FK_
 REFERENCES [dbo].[FundingSource] ([FundingSourceID])
 GO
 ALTER TABLE [dbo].[ProjectFundingSourceRequest] CHECK CONSTRAINT [FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID]
+GO
+ALTER TABLE [dbo].[ProjectFundingSourceRequest]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceRequest_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
+GO
+ALTER TABLE [dbo].[ProjectFundingSourceRequest] CHECK CONSTRAINT [FK_ProjectFundingSourceRequest_GrantAllocation_GrantAllocationID]
 GO
 ALTER TABLE [dbo].[ProjectFundingSourceRequest]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceRequest_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])

@@ -30,13 +30,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceRequest(int projectFundingSourceRequestID, int projectID, int fundingSourceID, decimal? securedAmount, decimal? unsecuredAmount) : this()
+        public ProjectFundingSourceRequest(int projectFundingSourceRequestID, int projectID, int fundingSourceID, decimal? securedAmount, decimal? unsecuredAmount, int? grantAllocationID) : this()
         {
             this.ProjectFundingSourceRequestID = projectFundingSourceRequestID;
             this.ProjectID = projectID;
             this.FundingSourceID = fundingSourceID;
             this.SecuredAmount = securedAmount;
             this.UnsecuredAmount = unsecuredAmount;
+            this.GrantAllocationID = grantAllocationID;
         }
 
         /// <summary>
@@ -112,11 +113,13 @@ namespace ProjectFirma.Web.Models
         public int FundingSourceID { get; set; }
         public decimal? SecuredAmount { get; set; }
         public decimal? UnsecuredAmount { get; set; }
+        public int? GrantAllocationID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectFundingSourceRequestID; } set { ProjectFundingSourceRequestID = value; } }
 
         public virtual Project Project { get; set; }
         public virtual FundingSource FundingSource { get; set; }
+        public virtual GrantAllocation GrantAllocation { get; set; }
 
         public static class FieldLengths
         {

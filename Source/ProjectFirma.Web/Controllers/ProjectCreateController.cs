@@ -466,13 +466,14 @@ namespace ProjectFirma.Web.Controllers
 
         private ViewResult ViewExpectedFunding(Project project, ExpectedFundingViewModel viewModel)
         {
-            var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            //var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var estimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
             var estimatedIndirectCost = project.EstimatedIndirectCost.GetValueOrDefault();
             var estimatedPersonnelAndBenefitsCost = project.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
             var estimatedSuppliesCost = project.EstimatedSuppliesCost.GetValueOrDefault();
             var estimatedTravelCost = project.EstimatedTravelCost.GetValueOrDefault();
-            var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allFundingSources, estimatedTotalCost, estimatedIndirectCost, estimatedPersonnelAndBenefitsCost, estimatedSuppliesCost, estimatedTravelCost);
+            var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allGrantAllocations, estimatedTotalCost, estimatedIndirectCost, estimatedPersonnelAndBenefitsCost, estimatedSuppliesCost, estimatedTravelCost);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsExpectedFundingSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPerformanceMeasureSectionComplete;
@@ -551,11 +552,11 @@ namespace ProjectFirma.Web.Controllers
 
         private ViewResult ViewExpenditures(Project project, List<int> calendarYearRange, ExpendituresViewModel viewModel)
         {
-            var allFundingSources = HttpRequestStorage.DatabaseEntities.FundingSources.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new FundingSourceSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var expendituresExemptReportingYears = project.GetExpendituresExemptReportingYears();
             var showNoExpendituresExplanation = expendituresExemptReportingYears.Any();
             var viewDataForAngularEditor = new ExpendituresViewData.ViewDataForAngularClass(project,
-                allFundingSources,
+                allGrantAllocations,
                 calendarYearRange, showNoExpendituresExplanation);
             var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
             var fromFundingSourcesAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(

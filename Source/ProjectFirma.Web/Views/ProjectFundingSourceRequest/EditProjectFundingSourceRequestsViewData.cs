@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         }
 
         public EditProjectFundingSourceRequestsViewData(FundingSourceSimple fundingSource, List<ProjectSimple> allProjects)
-            : this(allProjects, new List<FundingSourceSimple> {fundingSource}, null, fundingSource.FundingSourceID)
+            : this(allProjects, new List<FundingSourceSimple> {fundingSource}, null, fundingSource.GrantAllocationID)
         {
         }
 

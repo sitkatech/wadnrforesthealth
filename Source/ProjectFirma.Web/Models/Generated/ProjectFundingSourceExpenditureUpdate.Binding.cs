@@ -30,13 +30,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(int projectFundingSourceExpenditureUpdateID, int projectUpdateBatchID, int fundingSourceID, int calendarYear, decimal expenditureAmount) : this()
+        public ProjectFundingSourceExpenditureUpdate(int projectFundingSourceExpenditureUpdateID, int projectUpdateBatchID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int? grantAllocationID) : this()
         {
             this.ProjectFundingSourceExpenditureUpdateID = projectFundingSourceExpenditureUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
             this.FundingSourceID = fundingSourceID;
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
+            this.GrantAllocationID = grantAllocationID;
         }
 
         /// <summary>
@@ -116,11 +117,13 @@ namespace ProjectFirma.Web.Models
         public int FundingSourceID { get; set; }
         public int CalendarYear { get; set; }
         public decimal ExpenditureAmount { get; set; }
+        public int? GrantAllocationID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectFundingSourceExpenditureUpdateID; } set { ProjectFundingSourceExpenditureUpdateID = value; } }
 
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
         public virtual FundingSource FundingSource { get; set; }
+        public virtual GrantAllocation GrantAllocation { get; set; }
 
         public static class FieldLengths
         {

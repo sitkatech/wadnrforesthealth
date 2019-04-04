@@ -22,20 +22,17 @@ namespace ProjectFirma.Web.Models
 {
     public class FundingSourceSimple
     {
-        /// <summary>
-        /// Constructor for building a new simple object with the POCO class
-        /// </summary>
-        public FundingSourceSimple(FundingSource fundingSource)
+        public FundingSourceSimple(GrantAllocation grantAllocation)
         {
-            FundingSourceID = fundingSource.FundingSourceID;
-            OrganizationID = fundingSource.OrganizationID;
-            OrganizationName = fundingSource.Organization.OrganizationShortNameIfAvailable;
-            FundingSourceName = fundingSource.FundingSourceName;
-            IsActive = fundingSource.IsActive;
-            DisplayName = fundingSource.DisplayName;
+            this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            OrganizationID = grantAllocation.BottommostOrganization.OrganizationID;
+            OrganizationName = grantAllocation.BottommostOrganization.OrganizationShortNameIfAvailable;
+            FundingSourceName = grantAllocation.GrantAllocationName;
+            IsActive = true; 
+            DisplayName = grantAllocation.GrantAllocationName;
         }
 
-        public int FundingSourceID { get; set; }
+        public int GrantAllocationID { get; set; }
         public int OrganizationID { get; set; }
         public string FundingSourceName { get; set; }
         public bool IsActive { get; set; }

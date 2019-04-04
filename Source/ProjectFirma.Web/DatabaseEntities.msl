@@ -249,6 +249,7 @@
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="FundingSourceDescription" ColumnName="FundingSourceDescription" />
           <ScalarProperty Name="FundingSourceAmount" ColumnName="FundingSourceAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -892,6 +893,7 @@
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
           <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -903,6 +905,7 @@
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
           <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -914,6 +917,7 @@
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
           <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -925,6 +929,7 @@
           <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
           <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

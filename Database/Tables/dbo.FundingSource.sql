@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[FundingSource](
 	[IsActive] [bit] NOT NULL,
 	[FundingSourceDescription] [varchar](500) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FundingSourceAmount] [money] NULL,
+	[GrantAllocationID] [int] NULL,
  CONSTRAINT [PK_FundingSource_FundingSourceID] PRIMARY KEY CLUSTERED 
 (
 	[FundingSourceID] ASC
@@ -20,6 +21,11 @@ CREATE TABLE [dbo].[FundingSource](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[FundingSource]  WITH CHECK ADD  CONSTRAINT [FK_FundingSource_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
+REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
+GO
+ALTER TABLE [dbo].[FundingSource] CHECK CONSTRAINT [FK_FundingSource_GrantAllocation_GrantAllocationID]
 GO
 ALTER TABLE [dbo].[FundingSource]  WITH CHECK ADD  CONSTRAINT [FK_FundingSource_Organization_OrganizationID] FOREIGN KEY([OrganizationID])
 REFERENCES [dbo].[Organization] ([OrganizationID])
