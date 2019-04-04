@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Collections.Generic;
 using System.Linq;
 using LtInfo.Common;
+using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
@@ -42,13 +43,18 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public ProjectCalendarYearExpendituresGridSpec ProjectCalendarYearExpendituresGridSpec { get; }
         public string ProjectCalendarYearExpendituresGridName { get; }
         public string ProjectCalendarYearExpendituresGridDataUrl { get; }
-        public readonly List<int> CalendarYearsForProjectExpenditures;
+        public List<int> CalendarYearsForProjectExpenditures { get; }
+
+        public GridSpec<Models.ProjectFundingSourceRequest> ProjectFundingSourceRequestsGridSpec { get; }
+        public string ProjectFundingSourceRequestsGridName { get; }
+        public string ProjectFundingSourceRequestsGridDataUrl { get; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
             , EntityNotesViewData grantAllocationNotesViewData
             , EntityNotesViewData grantAllocationNoteInternalsViewData
-            , ViewGoogleChartViewData viewGoogleChartViewData)
+            , ViewGoogleChartViewData viewGoogleChartViewData
+            , GridSpec<Models.ProjectFundingSourceRequest> projectFundingSourceRequestsGridSpec)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
@@ -73,8 +79,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 SaveFiltersInCookie = true
             };
 
-            ProjectCalendarYearExpendituresGridName = "projectsCalendarYearExpendituresFromFundingSourceGrid";
+            ProjectCalendarYearExpendituresGridName = "projectsCalendarYearExpendituresFromGrantAllocationGrid";
             ProjectCalendarYearExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectCalendarYearExpendituresGridJsonData(grantAllocation));
+
+            ProjectFundingSourceRequestsGridSpec = projectFundingSourceRequestsGridSpec;
+            ProjectFundingSourceRequestsGridName = "projectsFundingSourceRequestsFromGrantAllocationGrid";
+            ProjectFundingSourceRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectFundingSourceRequestsGridJsonData(grantAllocation));
         }
     }
 }
