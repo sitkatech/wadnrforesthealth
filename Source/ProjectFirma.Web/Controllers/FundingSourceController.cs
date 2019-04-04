@@ -208,8 +208,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var fundingSource = fundingSourcePrimaryKey.EntityObject;
             var projectFundingSourceExpenditures = fundingSource.ProjectFundingSourceExpenditures.ToList();
-            var calendarYearRangeForExpenditures =
-                projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(fundingSource);
+            // WARNING - This will cause a crash!
+            var calendarYearRangeForExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(null);
             var gridSpec = new ProjectCalendarYearExpendituresGridSpec(calendarYearRangeForExpenditures);
             var projectFundingSources = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectFundingSourceExpenditures,
                 calendarYearRangeForExpenditures);

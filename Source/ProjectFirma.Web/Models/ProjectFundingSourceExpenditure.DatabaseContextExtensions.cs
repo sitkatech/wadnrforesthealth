@@ -34,14 +34,14 @@ namespace ProjectFirma.Web.Models
             return FirmaDateUtilities.CalculateCalendarYearRangeForExpendituresAccountingForExistingYears(existingYears, project, DateTime.Today.Year);
         }
 
-        public static List<int> CalculateCalendarYearRangeForExpenditures(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, FundingSource fundingSource)
+        public static List<int> CalculateCalendarYearRangeForExpenditures(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, GrantAllocation grantAllocation)
         {
             var existingYears = projectFundingSourceExpenditures.Select(x => x.CalendarYear).ToList();
-            var fundingSourceProjectsWhereYouAreTheFundingSourceMinCalendarYear = fundingSource.ProjectsWhereYouAreTheFundingSourceMinCalendarYear;
+            var grantAllocationProjectsWhereYouAreTheGrantAllocationMinCalendarYear = grantAllocation.ProjectsWhereYouAreTheGrantAllocationMinCalendarYear;
             return FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(existingYears,
-                fundingSourceProjectsWhereYouAreTheFundingSourceMinCalendarYear.HasValue ?
-                (DateTime?) new DateTime(fundingSourceProjectsWhereYouAreTheFundingSourceMinCalendarYear.Value, 1, 1) : null,
-                fundingSource.ProjectsWhereYouAreTheFundingSourceMaxCalendarYear,
+                grantAllocationProjectsWhereYouAreTheGrantAllocationMinCalendarYear.HasValue ?
+                (DateTime?) new DateTime(grantAllocationProjectsWhereYouAreTheGrantAllocationMinCalendarYear.Value, 1, 1) : null,
+                grantAllocation.ProjectsWhereYouAreTheGrantAllocationMaxCalendarYear,
                 DateTime.Today.Year,
                 MultiTenantHelpers.GetMinimumYear(),
                 null);

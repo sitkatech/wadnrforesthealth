@@ -59,7 +59,8 @@ namespace ProjectFirma.Web.Views.FundingSource
             EditFundingSourceUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Edit(fundingSource));
 
             var projectFundingSourceExpenditures = FundingSource.ProjectFundingSourceExpenditures.ToList();
-            CalendarYearsForProjectExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(fundingSource);
+            // WARNING -- This will cause a crash!
+            CalendarYearsForProjectExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(null);
 
             ProjectCalendarYearExpendituresGridSpec = new ProjectCalendarYearExpendituresGridSpec(CalendarYearsForProjectExpenditures)
             {

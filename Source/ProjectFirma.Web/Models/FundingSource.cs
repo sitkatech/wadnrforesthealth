@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
         {
             get { return SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.DeleteFundingSource(FundingSourceID)); }
         }
-
+        
         public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, DisplayName);
 
         public string DisplayName =>

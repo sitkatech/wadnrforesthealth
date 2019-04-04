@@ -31,6 +31,7 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.FundingSource;
 using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.SortOrder;
@@ -364,5 +365,29 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
+
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<ProjectCalendarYearExpenditure> ProjectCalendarYearExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var projectFundingSourceExpenditures = grantAllocation.ProjectFundingSourceExpenditures.ToList();
+            var calendarYearRangeForExpenditures =
+                projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
+            var gridSpec = new ProjectCalendarYearExpendituresGridSpec(calendarYearRangeForExpenditures);
+            var projectGrantAllocations = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectFundingSourceExpenditures, calendarYearRangeForExpenditures);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectCalendarYearExpenditure>(projectGrantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<ProjectFundingSourceRequest> ProjectFundingSourceRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var projectFundingSourceRequests = grantAllocation.ProjectFundingSourceRequests.ToList();
+            var gridSpec = new ProjectFundingSourceRequestsGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectFundingSourceRequest>(projectFundingSourceRequests, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
     }
 }

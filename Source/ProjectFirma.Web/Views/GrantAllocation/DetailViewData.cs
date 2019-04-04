@@ -18,8 +18,14 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Collections.Generic;
+using System.Linq;
 using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.FundingSource;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
@@ -33,6 +39,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public EntityNotesViewData GrantAllocationNotesViewData { get; set; }
         public EntityNotesViewData GrantAllocationNoteInternalsViewData { get; set; }
         public ViewGoogleChartViewData ViewGoogleChartViewData { get; }
+        public ProjectCalendarYearExpendituresGridSpec ProjectCalendarYearExpendituresGridSpec { get; }
+        public string ProjectCalendarYearExpendituresGridName { get; }
+        public string ProjectCalendarYearExpendituresGridDataUrl { get; }
+        public readonly List<int> CalendarYearsForProjectExpenditures;
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
@@ -51,6 +61,20 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationNoteInternalsViewData = grantAllocationNoteInternalsViewData;
 
             ViewGoogleChartViewData = viewGoogleChartViewData;
+
+
+            var projectFundingSourceExpenditures = GrantAllocation.ProjectFundingSourceExpenditures.ToList();
+            CalendarYearsForProjectExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
+
+            ProjectCalendarYearExpendituresGridSpec = new ProjectCalendarYearExpendituresGridSpec(CalendarYearsForProjectExpenditures)
+            {
+                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}",
+                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}",
+                SaveFiltersInCookie = true
+            };
+
+            ProjectCalendarYearExpendituresGridName = "projectsCalendarYearExpendituresFromFundingSourceGrid";
+            ProjectCalendarYearExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectCalendarYearExpendituresGridJsonData(grantAllocation));
         }
     }
 }
