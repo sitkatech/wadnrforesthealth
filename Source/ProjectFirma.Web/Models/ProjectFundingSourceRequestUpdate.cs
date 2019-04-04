@@ -32,8 +32,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectFundingSourceRequestUpdates = project.ProjectFundingSourceRequests.Select(
                 projectFundingSourceRequest =>
-                    new ProjectFundingSourceRequestUpdate(projectUpdateBatch,
-                        projectFundingSourceRequest.FundingSource)
+                    new ProjectFundingSourceRequestUpdate(projectUpdateBatch, projectFundingSourceRequest.FundingSource, projectFundingSourceRequest.GrantAllocation)
                     {
                         SecuredAmount = projectFundingSourceRequest.SecuredAmount,
                         UnsecuredAmount = projectFundingSourceRequest.UnsecuredAmount
@@ -47,7 +46,7 @@ namespace ProjectFirma.Web.Models
             var project = projectUpdateBatch.Project;
             var projectFundingSourceExpectedFundingFromProjectUpdate = projectUpdateBatch
                 .ProjectFundingSourceRequestUpdates
-                .Select(x => new ProjectFundingSourceRequest(project.ProjectID, x.FundingSource.FundingSourceID)
+                .Select(x => new ProjectFundingSourceRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
                     {
                         SecuredAmount = x.SecuredAmount,
                         UnsecuredAmount = x.UnsecuredAmount
@@ -55,7 +54,7 @@ namespace ProjectFirma.Web.Models
                 ).ToList();
             project.ProjectFundingSourceRequests.Merge(projectFundingSourceExpectedFundingFromProjectUpdate,
                 allProjectFundingSourceRequests,
-                (x, y) => x.ProjectID == y.ProjectID && x.FundingSourceID == y.FundingSourceID,
+                (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
                     x.SecuredAmount = y.SecuredAmount;

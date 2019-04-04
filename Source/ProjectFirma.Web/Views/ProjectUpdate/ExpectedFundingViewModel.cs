@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 yield break;
             }
 
-            if (ProjectFundingSourceRequests.GroupBy(x => x.FundingSourceID).Any(x => x.Count() > 1))
+            if (ProjectFundingSourceRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
             {
                 yield return new ValidationResult("Each Funding Source can only be used once.");
             }
@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 {
                     var fundingSource =
                         HttpRequestStorage.DatabaseEntities.FundingSources.Single(x =>
-                            x.FundingSourceID == projectFundingSourceRequest.FundingSourceID);
+                            x.FundingSourceID == projectFundingSourceRequest.GrantAllocationID);
                     yield return new ValidationResult(
                         $"Secured Funding and Unsecured Funding cannot both be zero for funding source: {fundingSource.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
                 }

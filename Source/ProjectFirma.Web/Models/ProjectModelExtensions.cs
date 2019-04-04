@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ProjectFirma.Web.Controllers;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
@@ -155,9 +156,10 @@ namespace ProjectFirma.Web.Models
         public static List<ProjectOrganizationRelationship> GetFundingOrganizations(this Project project)
         {
             var relationshipTypeFunder = new RelationshipType(ModelObjectHelpers.NotYetAssignedID, "Funder", false, false, false, string.Empty, true, true);
-            var fundingOrganizations = project.ProjectFundingSourceExpenditures.Select(x => x.FundingSource.Organization)
-                .Union(project.ProjectFundingSourceRequests.Select(x => x.FundingSource.Organization)).Distinct()
+            var fundingOrganizations = project.ProjectFundingSourceExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
+                .Union(project.ProjectFundingSourceRequests.Select(x => x.GrantAllocation.BottommostOrganization)).Distinct()
                 .Select(x => new ProjectOrganizationRelationship(project, x, relationshipTypeFunder));
+            Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), "Must have Organization set for all Funding Organizations");
             return fundingOrganizations.ToList();
         }
 

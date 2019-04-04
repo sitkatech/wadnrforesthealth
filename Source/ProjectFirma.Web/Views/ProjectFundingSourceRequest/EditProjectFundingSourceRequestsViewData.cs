@@ -19,35 +19,37 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.Presentation;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
 {
     public class EditProjectFundingSourceRequestsViewData : FirmaUserControlViewData
     {
-        public readonly List<FundingSourceSimple> AllFundingSources;
+        public readonly List<FundingSourceSimple> AllGrantAllocations;
         public readonly List<ProjectSimple> AllProjects;
         public readonly int? ProjectID;
-        public readonly int? FundingSourceID;
-        public readonly bool FromFundingSource;
+        public readonly int? GrantAllocationID;
+        public readonly bool FromGrantAllocation;
 
         private EditProjectFundingSourceRequestsViewData(List<ProjectSimple> allProjects,
-            List<FundingSourceSimple> allFundingSources,
+            List<FundingSourceSimple> allGrantAllocations,
             int? projectID,
-            int? fundingSourceID)
+            int? grantAllocationID)
         {
-            AllFundingSources = allFundingSources;
+            AllGrantAllocations = allGrantAllocations;
             ProjectID = projectID;
-            FundingSourceID = fundingSourceID;
+            GrantAllocationID = grantAllocationID;
             AllProjects = allProjects;
+
             
-            var displayMode = FundingSourceID.HasValue ? EditorDisplayMode.FromFundingSource : EditorDisplayMode.FromProject;
-            FromFundingSource = displayMode == EditorDisplayMode.FromFundingSource;
+            var displayMode = GrantAllocationID.HasValue ? EditorDisplayMode.FromGrantAllocation : EditorDisplayMode.FromProject;
+            FromGrantAllocation = displayMode == EditorDisplayMode.FromGrantAllocation;
         }
 
         public EditProjectFundingSourceRequestsViewData(ProjectSimple project,
-            List<FundingSourceSimple> allFundingSources)
-            : this(new List<ProjectSimple> { project }, allFundingSources, project.ProjectID, null)
+            List<FundingSourceSimple> allGrantAllocations)
+            : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID, null)
         {
         }
 
@@ -59,7 +61,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         public enum EditorDisplayMode
         {
             FromProject,
-            FromFundingSource
+            FromGrantAllocation
         }
     }
 }

@@ -88,8 +88,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
             if (ProjectFundingSourceRequests != null)
             {
                 // Completely rebuild the list
-                projectFundingSourceRequestsUpdated = ProjectFundingSourceRequests
-                    .Select(x => x.ToProjectFundingSourceRequest()).ToList();
+                projectFundingSourceRequestsUpdated = ProjectFundingSourceRequests.Select(x => x.ToProjectFundingSourceRequest()).ToList();
             }
 
             if (ForProject ?? false) // never null
@@ -108,12 +107,14 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
 
             currentProjectFundingSourceRequests.Merge(projectFundingSourceRequestsUpdated,
                 allProjectFundingSourceRequests,
-                (x, y) => x.ProjectID == y.ProjectID && x.FundingSourceID == y.FundingSourceID,
+                (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
                     x.SecuredAmount = y.SecuredAmount;
                     x.UnsecuredAmount = y.UnsecuredAmount;
+                    x.FundingSourceID = null;
                 });
+            
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -123,7 +124,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
                 yield break;
             }
 
-            if (ProjectFundingSourceRequests.GroupBy(x => x.FundingSourceID).Any(x => x.Count() > 1))
+            if (ProjectFundingSourceRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
             {
                 yield return new ValidationResult("Each funding source can only be used once.");
             }
@@ -132,11 +133,9 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
             {
                 if (projectFundingSourceRequest.AreBothValuesZero())
                 {
-                    var fundingSource =
-                        HttpRequestStorage.DatabaseEntities.FundingSources.Single(x =>
-                            x.FundingSourceID == projectFundingSourceRequest.FundingSourceID);
+                    var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x => x.GrantAllocationID == projectFundingSourceRequest.GrantAllocationID);
                     yield return new ValidationResult(
-                        $"Secured Funding and Unsecured Funding cannot both be zero for funding source: {fundingSource.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
+                        $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.GrantAllocationName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
                 }
             }
         }

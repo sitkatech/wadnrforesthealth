@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditure(int projectFundingSourceExpenditureID, int projectID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int? grantAllocationID) : this()
+        public ProjectFundingSourceExpenditure(int projectFundingSourceExpenditureID, int projectID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
         {
             this.ProjectFundingSourceExpenditureID = projectFundingSourceExpenditureID;
             this.ProjectID = projectID;
@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditure(int projectID, int fundingSourceID, int calendarYear, decimal expenditureAmount) : this()
+        public ProjectFundingSourceExpenditure(int projectID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceExpenditureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -52,12 +52,13 @@ namespace ProjectFirma.Web.Models
             this.FundingSourceID = fundingSourceID;
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
+            this.GrantAllocationID = grantAllocationID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectFundingSourceExpenditure(Project project, FundingSource fundingSource, int calendarYear, decimal expenditureAmount) : this()
+        public ProjectFundingSourceExpenditure(Project project, FundingSource fundingSource, int calendarYear, decimal expenditureAmount, GrantAllocation grantAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceExpenditureID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -69,14 +70,17 @@ namespace ProjectFirma.Web.Models
             fundingSource.ProjectFundingSourceExpenditures.Add(this);
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
+            this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            this.GrantAllocation = grantAllocation;
+            grantAllocation.ProjectFundingSourceExpenditures.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectFundingSourceExpenditure CreateNewBlank(Project project, FundingSource fundingSource)
+        public static ProjectFundingSourceExpenditure CreateNewBlank(Project project, FundingSource fundingSource, GrantAllocation grantAllocation)
         {
-            return new ProjectFundingSourceExpenditure(project, fundingSource, default(int), default(decimal));
+            return new ProjectFundingSourceExpenditure(project, fundingSource, default(int), default(decimal), grantAllocation);
         }
 
         /// <summary>
@@ -117,7 +121,7 @@ namespace ProjectFirma.Web.Models
         public int FundingSourceID { get; set; }
         public int CalendarYear { get; set; }
         public decimal ExpenditureAmount { get; set; }
-        public int? GrantAllocationID { get; set; }
+        public int GrantAllocationID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectFundingSourceExpenditureID; } set { ProjectFundingSourceExpenditureID = value; } }
 

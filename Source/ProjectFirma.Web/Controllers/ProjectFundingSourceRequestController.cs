@@ -65,14 +65,13 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private static ActionResult UpdateProjectFundingSourceRequests(
-            EditProjectFundingSourceRequestsViewModel viewModel,
-            List<ProjectFundingSourceRequest> currentProjectFundingSourceRequests, Project project)
+        private static ActionResult UpdateProjectFundingSourceRequests(EditProjectFundingSourceRequestsViewModel viewModel,
+                                                                       List<ProjectFundingSourceRequest> currentProjectFundingSourceRequests, 
+                                                                       Project project)
         {
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
             var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Local;
             viewModel.UpdateModel(currentProjectFundingSourceRequests, allProjectFundingSourceRequests, project);
-
             
             return new ModalDialogFormJsonResult();
         }

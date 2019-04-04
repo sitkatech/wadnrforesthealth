@@ -5,10 +5,10 @@ GO
 CREATE TABLE [dbo].[ProjectFundingSourceRequest](
 	[ProjectFundingSourceRequestID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[FundingSourceID] [int] NOT NULL,
+	[FundingSourceID] [int] NULL,
 	[SecuredAmount] [money] NULL,
 	[UnsecuredAmount] [money] NULL,
-	[GrantAllocationID] [int] NULL,
+	[GrantAllocationID] [int] NOT NULL,
  CONSTRAINT [PK_ProjectFundingSourceRequest_ProjectFundingSourceRequestID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectFundingSourceRequestID] ASC

@@ -28,6 +28,7 @@ namespace ProjectFirma.Web.Models
     {
         public int ProjectID { get; set; }
         public int FundingSourceID { get; set; }
+        public int GrantAllocationID { get; set; }
         public List<CalendarYearMonetaryAmount> CalendarYearExpenditures { get; set; }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace ProjectFirma.Web.Models
         {
             ProjectID = projectFundingSourceExpenditure.ProjectID;
             FundingSourceID = projectFundingSourceExpenditure.FundingSourceID;
+            GrantAllocationID = projectFundingSourceExpenditure.GrantAllocationID;
             CalendarYearExpenditures = new List<CalendarYearMonetaryAmount>();
             Add(projectFundingSourceExpenditures);
             // we need to fill in the other calendar years with blanks
@@ -56,6 +58,7 @@ namespace ProjectFirma.Web.Models
         {
             ProjectID = projectFundingSourceExpenditureUpdate.ProjectUpdateBatch.ProjectID;
             FundingSourceID = projectFundingSourceExpenditureUpdate.FundingSourceID;
+            GrantAllocationID = projectFundingSourceExpenditureUpdate.GrantAllocationID;
             CalendarYearExpenditures = new List<CalendarYearMonetaryAmount>();
             Add(projectFundingSourceExpenditureUpdates);
             // we need to fill in the other calendar years with blanks
@@ -65,13 +68,13 @@ namespace ProjectFirma.Web.Models
 
         public static List<ProjectFundingSourceExpenditureBulk> MakeFromList(List<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, List<int> calendarYears)
         {
-            var groupedByProjectFundingSource = projectFundingSourceExpenditures.GroupBy(x => new {x.ProjectID, x.FundingSourceID});
+            var groupedByProjectFundingSource = projectFundingSourceExpenditures.GroupBy(x => new {x.ProjectID, x.GrantAllocationID});
             return groupedByProjectFundingSource.Select(grouping => new ProjectFundingSourceExpenditureBulk(grouping.First(), grouping.ToList(), calendarYears)).ToList();
         }
 
         public static List<ProjectFundingSourceExpenditureBulk> MakeFromList(List<ProjectFundingSourceExpenditureUpdate> projectFundingSourceExpenditureUpdates, List<int> calendarYearsToPopulate)
         {
-            var groupedByProjectFundingSource = projectFundingSourceExpenditureUpdates.GroupBy(x => new {x.ProjectUpdateBatchID, x.FundingSourceID});
+            var groupedByProjectFundingSource = projectFundingSourceExpenditureUpdates.GroupBy(x => new {x.ProjectUpdateBatchID, x.GrantAllocationID});
             return groupedByProjectFundingSource.Select(grouping => new ProjectFundingSourceExpenditureBulk(grouping.First(), grouping.ToList(), calendarYearsToPopulate)).ToList();
         }
 
@@ -87,15 +90,15 @@ namespace ProjectFirma.Web.Models
 
         public void Add(ProjectFundingSourceExpenditure projectFundingSourceExpenditure)
         {
-            Check.Require(projectFundingSourceExpenditure.ProjectID == ProjectID && projectFundingSourceExpenditure.FundingSourceID == FundingSourceID,
-                "Row doesn't align with collection mismatch ProjectID and FundingSourceID");
+            Check.Require(projectFundingSourceExpenditure.ProjectID == ProjectID && projectFundingSourceExpenditure.GrantAllocationID == GrantAllocationID,
+                "Row doesn't align with collection mismatch ProjectID and GrantAllocationID");
             CalendarYearExpenditures.Add(new CalendarYearMonetaryAmount(projectFundingSourceExpenditure.CalendarYear, projectFundingSourceExpenditure.ExpenditureAmount));
         }
 
         public void Add(ProjectFundingSourceExpenditureUpdate projectFundingSourceExpenditureUpdate)
         {
-            Check.Require(projectFundingSourceExpenditureUpdate.ProjectUpdateBatch.ProjectID == ProjectID && projectFundingSourceExpenditureUpdate.FundingSourceID == FundingSourceID,
-                "Row doesn't align with collection mismatch ProjectID and FundingSourceID");
+            Check.Require(projectFundingSourceExpenditureUpdate.ProjectUpdateBatch.ProjectID == ProjectID && projectFundingSourceExpenditureUpdate.GrantAllocationID == GrantAllocationID,
+                "Row doesn't align with collection mismatch ProjectID and GrantAllocationID");
             CalendarYearExpenditures.Add(new CalendarYearMonetaryAmount(projectFundingSourceExpenditureUpdate.CalendarYear, projectFundingSourceExpenditureUpdate.ExpenditureAmount));
         }
 
@@ -104,7 +107,7 @@ namespace ProjectFirma.Web.Models
             // ReSharper disable PossibleInvalidOperationException
             return
                 CalendarYearExpenditures.Where(x => x.MonetaryAmount.HasValue)
-                    .Select(x => new ProjectFundingSourceExpenditure(ProjectID, FundingSourceID, x.CalendarYear, x.MonetaryAmount.Value))
+                    .Select(x => new ProjectFundingSourceExpenditure(ProjectID, FundingSourceID, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
                     .ToList();
             // ReSharper restore PossibleInvalidOperationException
         }
@@ -114,7 +117,7 @@ namespace ProjectFirma.Web.Models
             // ReSharper disable PossibleInvalidOperationException
             return
                 CalendarYearExpenditures.Where(x => x.MonetaryAmount.HasValue)
-                    .Select(x => new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch.ProjectUpdateBatchID, FundingSourceID, x.CalendarYear, x.MonetaryAmount.Value))
+                    .Select(x => new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch.ProjectUpdateBatchID, FundingSourceID, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
                     .ToList();
             // ReSharper restore PossibleInvalidOperationException
         }

@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
     [TestFixture]
     public class EditProjectFundingSourceExpendituresViewModelTest
     {
+        /*
         [Ignore]
         [Test]
         public void AllViewModelFieldsAreSetFromConstructorTest()
@@ -55,5 +56,6 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
             // Assert
             Assert.That(viewModel.ProjectFundingSourceExpenditures.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));
         }
+        */
     }
 }

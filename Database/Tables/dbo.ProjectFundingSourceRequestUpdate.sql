@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[ProjectFundingSourceRequestUpdate](
 	[FundingSourceID] [int] NOT NULL,
 	[SecuredAmount] [money] NULL,
 	[UnsecuredAmount] [money] NULL,
-	[GrantAllocationID] [int] NULL,
+	[GrantAllocationID] [int] NOT NULL,
  CONSTRAINT [PK_ProjectFundingSourceRequestUpdate_ProjectFundingSourceRequestUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectFundingSourceRequestUpdateID] ASC

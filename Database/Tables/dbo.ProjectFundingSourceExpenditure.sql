@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[ProjectFundingSourceExpenditure](
 	[FundingSourceID] [int] NOT NULL,
 	[CalendarYear] [int] NOT NULL,
 	[ExpenditureAmount] [money] NOT NULL,
-	[GrantAllocationID] [int] NULL,
+	[GrantAllocationID] [int] NOT NULL,
  CONSTRAINT [PK_ProjectFundingSourceExpenditure_ProjectFundingSourceExpenditureID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectFundingSourceExpenditureID] ASC

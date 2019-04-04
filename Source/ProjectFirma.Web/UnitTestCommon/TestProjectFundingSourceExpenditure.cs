@@ -30,25 +30,26 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var project = TestProject.Create();
                 var fundingSource = TestFundingSource.Create();
-                return Create(project, fundingSource);
+                var grantAllocation = TestGrantAllocation.Create();
+                return Create(project, fundingSource, grantAllocation);
             }
 
-            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource)
+            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource, GrantAllocation grantAllocation)
             {
-                var projectFundingSourceExpenditure = ProjectFundingSourceExpenditure.CreateNewBlank(project, fundingSource);
+                var projectFundingSourceExpenditure = ProjectFundingSourceExpenditure.CreateNewBlank(project, fundingSource, grantAllocation);
                 return projectFundingSourceExpenditure;
             }
 
-            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource, int calendarYear)
+            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource, GrantAllocation grantAllocation, int calendarYear)
             {
-                var projectFundingSourceExpenditure = Create(project, fundingSource);
+                var projectFundingSourceExpenditure = Create(project, fundingSource, grantAllocation);
                 projectFundingSourceExpenditure.CalendarYear = calendarYear;
                 return projectFundingSourceExpenditure;
             }
 
-            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource, int calendarYear, decimal expenditureAmount)
+            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
             {
-                var projectFundingSourceExpenditure = Create(project, fundingSource, calendarYear);
+                var projectFundingSourceExpenditure = Create(project, fundingSource, grantAllocation, calendarYear);
                 projectFundingSourceExpenditure.ExpenditureAmount = expenditureAmount;
                 return projectFundingSourceExpenditure;
             }

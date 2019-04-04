@@ -27,14 +27,14 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             OrganizationID = grantAllocation.BottommostOrganization.OrganizationID;
             OrganizationName = grantAllocation.BottommostOrganization.OrganizationShortNameIfAvailable;
-            FundingSourceName = grantAllocation.GrantAllocationName;
+            GrantAllocationName = grantAllocation.GrantAllocationName;
             IsActive = true; 
             DisplayName = grantAllocation.GrantAllocationName;
         }
 
         public int GrantAllocationID { get; set; }
         public int OrganizationID { get; set; }
-        public string FundingSourceName { get; set; }
+        public string GrantAllocationName { get; set; }
         public bool IsActive { get; set; }
 
         public string OrganizationName { get; set; }

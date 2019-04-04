@@ -31,6 +31,9 @@ ALTER TABLE [dbo].[ProjectFundingSourceExpenditure]  WITH CHECK ADD  CONSTRAINT 
 REFERENCES [dbo].GrantAllocation (GrantAllocationID)
 GO
 
+alter table dbo.ProjectFundingSourceExpenditure
+alter column GrantAllocationID int not null
+GO
 
 
 
@@ -62,6 +65,12 @@ ALTER TABLE [dbo].[ProjectFundingSourceRequest]  WITH CHECK ADD  CONSTRAINT [FK_
 REFERENCES [dbo].GrantAllocation (GrantAllocationID)
 GO
 
+alter table dbo.ProjectFundingSourceRequest
+alter column GrantAllocationID int not null
+go
+alter table dbo.ProjectFundingSourceRequest
+alter column FundingSourceID int null
+GO
 
 
 -- ProjectFundingSourceRequestUpdate 
@@ -86,6 +95,10 @@ select * from dbo.ProjectFundingSourceRequestUpdate
 
 ALTER TABLE [dbo].[ProjectFundingSourceRequestUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectFundingSourceRequestUpdate_GrantAllocation_GrantAllocationID] FOREIGN KEY(GrantAllocationID)
 REFERENCES [dbo].GrantAllocation (GrantAllocationID)
+GO
+
+alter table dbo.ProjectFundingSourceRequestUpdate
+alter column GrantAllocationID int not null
 GO
 
 
@@ -114,6 +127,9 @@ ALTER TABLE [dbo].[ProjectFundingSourceExpenditureUpdate]  WITH CHECK ADD  CONST
 REFERENCES [dbo].GrantAllocation (GrantAllocationID)
 GO
 
+alter table dbo.ProjectFundingSourceExpenditureUpdate
+alter column GrantAllocationID int not null
+GO
 
 
 -- FundingSource 

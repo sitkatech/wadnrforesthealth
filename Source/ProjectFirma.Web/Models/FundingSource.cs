@@ -31,6 +31,11 @@ namespace ProjectFirma.Web.Models
 {
     public partial class FundingSource : IAuditableEntity
     {
+        /// <summary>
+        /// This is TEMPORARY, and just a compiler crutch until we can remove FundingSourceID completely from relevant classes where it appears
+        /// </summary>
+        public const int FAKE_FUNDING_SOURCE_ID_OF_EVIL = -999;
+
         public string EditUrl
         {
             get { return SitkaRoute<FundingSourceController>.BuildUrlFromExpression(t => t.Edit(FundingSourceID)); }

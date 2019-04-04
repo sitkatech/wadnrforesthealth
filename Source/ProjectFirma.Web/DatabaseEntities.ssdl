@@ -1748,7 +1748,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectFundingSourceExpenditureUpdate">
     <Key>
@@ -1759,7 +1759,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
-    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectFundingSourceRequest">
     <Key>
@@ -1767,10 +1767,10 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectFundingSourceRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" Nullable="false" />
+    <Property Name="FundingSourceID" Type="int" />
     <Property Name="SecuredAmount" Type="money" />
     <Property Name="UnsecuredAmount" Type="money" />
-    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectFundingSourceRequestUpdate">
     <Key>
@@ -1781,7 +1781,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="FundingSourceID" Type="int" Nullable="false" />
     <Property Name="SecuredAmount" Type="money" />
     <Property Name="UnsecuredAmount" Type="money" />
-    <Property Name="GrantAllocationID" Type="int" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectImage">
     <Key>
@@ -3804,7 +3804,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceExpenditure_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="0..1" />
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectFundingSourceExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceExpenditure" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GrantAllocation">
@@ -3840,7 +3840,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceExpenditureUpdate_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="0..1" />
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectFundingSourceExpenditureUpdates" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceExpenditureUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GrantAllocation">
@@ -3864,7 +3864,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="1" />
+    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="0..1" />
     <End Role="ProjectFundingSourceRequests" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceRequest" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="FundingSource">
@@ -3876,7 +3876,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceRequest_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="0..1" />
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectFundingSourceRequests" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceRequest" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GrantAllocation">
@@ -3912,7 +3912,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProjectFundingSourceRequestUpdate_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="0..1" />
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectFundingSourceRequestUpdates" Type="ProjectFirma.Web.Models.Store.ProjectFundingSourceRequestUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GrantAllocation">
