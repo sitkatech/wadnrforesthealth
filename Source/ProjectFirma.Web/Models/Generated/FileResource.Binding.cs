@@ -30,6 +30,7 @@ namespace ProjectFirma.Web.Models
             this.FieldDefinitionDataImages = new HashSet<FieldDefinitionDataImage>();
             this.FirmaHomePageImages = new HashSet<FirmaHomePageImage>();
             this.FirmaPageImages = new HashSet<FirmaPageImage>();
+            this.GrantsWhereYouAreTheGrantFileResource = new HashSet<Grant>();
             this.GrantAllocationsWhereYouAreTheGrantAllocationFileResource = new HashSet<GrantAllocation>();
             this.InvoicesWhereYouAreTheInvoiceFileResource = new HashSet<Invoice>();
             this.OrganizationsWhereYouAreTheLogoFileResource = new HashSet<Organization>();
@@ -105,13 +106,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantAllocationsWhereYouAreTheGrantAllocationFileResource.Any() || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
+            return AgreementsWhereYouAreTheAgreementFileResource.Any() || ClassificationsWhereYouAreTheKeyImageFileResource.Any() || CustomPageImages.Any() || FieldDefinitionDataImages.Any() || FirmaHomePageImages.Any() || FirmaPageImages.Any() || GrantsWhereYouAreTheGrantFileResource.Any() || GrantAllocationsWhereYouAreTheGrantAllocationFileResource.Any() || InvoicesWhereYouAreTheInvoiceFileResource.Any() || OrganizationsWhereYouAreTheLogoFileResource.Any() || ProjectDocuments.Any() || ProjectDocumentUpdates.Any() || ProjectImages.Any() || ProjectImageUpdates.Any() || SystemAttributesWhereYouAreTheBannerLogoFileResource.Any() || SystemAttributesWhereYouAreTheSquareLogoFileResource.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(GrantAllocation).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};
 
 
         /// <summary>
@@ -162,6 +163,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in FirmaPageImages.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantsWhereYouAreTheGrantFileResource.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -230,6 +236,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual ICollection<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual ICollection<FirmaPageImage> FirmaPageImages { get; set; }
+        public virtual ICollection<Grant> GrantsWhereYouAreTheGrantFileResource { get; set; }
         public virtual ICollection<GrantAllocation> GrantAllocationsWhereYouAreTheGrantAllocationFileResource { get; set; }
         public virtual ICollection<Invoice> InvoicesWhereYouAreTheInvoiceFileResource { get; set; }
         public virtual ICollection<Organization> OrganizationsWhereYouAreTheLogoFileResource { get; set; }

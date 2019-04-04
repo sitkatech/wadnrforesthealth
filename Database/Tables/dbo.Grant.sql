@@ -16,12 +16,18 @@ CREATE TABLE [dbo].[Grant](
 	[ShortName] [varchar](64) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[GrantStatusID] [int] NOT NULL,
 	[OrganizationID] [int] NOT NULL,
+	[GrantFileResourceID] [int] NULL,
  CONSTRAINT [PK_Grant_GrantID] PRIMARY KEY CLUSTERED 
 (
 	[GrantID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[Grant]  WITH CHECK ADD  CONSTRAINT [FK_Grant_FileResource_GrantFileResourceID_FileResourceID] FOREIGN KEY([GrantFileResourceID])
+REFERENCES [dbo].[FileResource] ([FileResourceID])
+GO
+ALTER TABLE [dbo].[Grant] CHECK CONSTRAINT [FK_Grant_FileResource_GrantFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[Grant]  WITH CHECK ADD  CONSTRAINT [FK_Grant_GrantStatus_GrantStatusID] FOREIGN KEY([GrantStatusID])
 REFERENCES [dbo].[GrantStatus] ([GrantStatusID])
