@@ -46,130 +46,130 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <div class="basicsLayout">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationName)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.GrantAllocationName</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.Organization)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.Organization.GetDisplayNameAsUrl()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantManager)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.GrantManager.GetFullNameFirstLastAsUrl()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.ProgramManager)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.GetAllProgramManagerPersonNamesAsUrls()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantStatus)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.Grant.GrantStatus.GrantStatusName</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantType)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.Grant.GrantTypeDisplay</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantNumber)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.Grant.GetGrantNumberAsUrl()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.ProgramIndex)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.ProgramIndexDisplay</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.CFDA)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.Grant.CFDANumber</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.Division)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.DivisionNameDisplay</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.Region)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.Region.GetDisplayNameAsUrl()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.AllocationAmount)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.AllocationAmount.ToStringCurrency()</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.StartDateDisplay</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantEndDate)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.EndDateDisplay</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.FederalFundCode)
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             <span>@ViewDataTyped.GrantAllocation.FederalFundCodeDisplay</span>
         </div>
     </div>
