@@ -91,23 +91,23 @@ namespace ProjectFirma.Web.Views.Project
         {
         }
 
-        public static List<FundingSourceCalendarYearExpenditure> CreateFromFundingSourcesAndCalendarYears(List<IFundingSourceExpenditure> fundingSourceExpenditures, List<int> calendarYears)
+        public static List<FundingSourceCalendarYearExpenditure> CreateFromFundingSourcesAndCalendarYears(List<IGrantAllocationExpenditure> grantAllocationExpenditures, List<int> calendarYears)
         {
-            var distinctGrantAllocations = fundingSourceExpenditures.Select(x => x.GrantAllocation).Distinct(new HavePrimaryKeyComparer<Models.GrantAllocation>());
-            var fundingSourcesCrossJoinCalendarYears =
+            var distinctGrantAllocations = grantAllocationExpenditures.Select(x => x.GrantAllocation).Distinct(new HavePrimaryKeyComparer<Models.GrantAllocation>());
+            var grantAllocationsCrossJoinCalendarYears =
                 distinctGrantAllocations.Select(ga => new FundingSourceCalendarYearExpenditure(null, ga, calendarYears.ToDictionary<int, int, decimal?>(calendarYear => calendarYear, calendarYear => null), null))
                     .ToList();
 
-            foreach (var projectFundingSourceExpenditure in fundingSourceExpenditures.GroupBy(x => x.GrantAllocationID))
+            foreach (var grantAllocationExpenditure in grantAllocationExpenditures.GroupBy(x => x.GrantAllocationID))
             {
-                var current = fundingSourcesCrossJoinCalendarYears.Single(x => x.GrantAllocationID == projectFundingSourceExpenditure.Key);
+                var current = grantAllocationsCrossJoinCalendarYears.Single(x => x.GrantAllocationID == grantAllocationExpenditure.Key);
                 foreach (var calendarYear in calendarYears)
                 {
                     current.CalendarYearExpenditure[calendarYear] =
-                        projectFundingSourceExpenditure.Where(fundingSourceExpenditure => fundingSourceExpenditure.CalendarYear == calendarYear).Select(x => x.MonetaryAmount).Sum();
+                        grantAllocationExpenditure.Where(gae => gae.CalendarYear == calendarYear).Select(x => x.MonetaryAmount).Sum();
                 }
             }
-            return fundingSourcesCrossJoinCalendarYears;
+            return grantAllocationsCrossJoinCalendarYears;
         }
 
         public static FundingSourceCalendarYearExpenditure Clone(FundingSourceCalendarYearExpenditure fundingSourceCalendarYearExpenditureToDiff, string displayCssClass)

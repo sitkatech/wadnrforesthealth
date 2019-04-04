@@ -73,12 +73,12 @@ namespace ProjectFirma.Web.Controllers
             var layers = Region.GetRegionAndAssociatedProjectLayers(region, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(region.RegionLocation));
 
-            var projectFundingSourceExpenditures = associatedProjects.SelectMany(x => x.ProjectFundingSourceExpenditures);
+            var projectGrantAllocationExpenditures = associatedProjects.SelectMany(x => x.ProjectGrantAllocationExpenditures);
             var organizationTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypes.ToList();
 
             const string chartTitle = "Reported Expenditures By Organization Type";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var googleChart = projectFundingSourceExpenditures.ToGoogleChart(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
+            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
                 organizationTypes.Select(x => x.OrganizationTypeName).ToList(),
                 x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
                 chartContainerID,

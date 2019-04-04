@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceExpenditureController.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationExpenditureController.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -25,62 +25,64 @@ using System.Web.Mvc;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.ProjectFundingSourceExpenditure;
+//using ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Views.ProjectFundingSourceExpenditure;
+using ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class ProjectFundingSourceExpenditureController : FirmaBaseController
+    public class ProjectGrantAllocationExpenditureController : FirmaBaseController
     {
         [HttpGet]
         [ProjectEditAsAdminFeature]
-        public PartialViewResult EditProjectFundingSourceExpendituresForProject(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult EditProjectGrantAllocationExpendituresForProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
+            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var calendarYearRange = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
             var projectExemptReportingYears = project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
             var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
             projectExemptReportingYears.AddRange(calendarYearRange.Where(x => !currentExemptedYears.Contains(x)).Select((x, index) => new ProjectExemptReportingYearSimple(-(index + 1), project.ProjectID, x)));
             var calendarYearRangeForExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var projectFundingSourceExpenditureBulks = ProjectFundingSourceExpenditureBulk.MakeFromList(projectFundingSourceExpenditures, calendarYearRangeForExpenditures);
-            var viewModel = new EditProjectFundingSourceExpendituresViewModel(project, projectFundingSourceExpenditureBulks, projectExemptReportingYears);
-            return ViewEditProjectFundingSourceExpenditures(project, viewModel, calendarYearRangeForExpenditures);
+            var projectFundingSourceExpenditureBulks = ProjectGrantAllocationExpenditureBulk.MakeFromList(projectFundingSourceExpenditures, calendarYearRangeForExpenditures);
+            var viewModel = new EditProjectGrantAllocationExpendituresViewModel(project, projectFundingSourceExpenditureBulks, projectExemptReportingYears);
+            return ViewEditProjectGrantAllocationExpenditures(project, viewModel, calendarYearRangeForExpenditures);
         }
 
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectFundingSourceExpendituresForProject(ProjectPrimaryKey projectPrimaryKey, EditProjectFundingSourceExpendituresViewModel viewModel)
+        public ActionResult EditProjectGrantAllocationExpendituresForProject(ProjectPrimaryKey projectPrimaryKey, EditProjectGrantAllocationExpendituresViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentProjectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
+            var currentProjectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             if (!ModelState.IsValid)
             {
-                var calendarYearRangeForExpenditures = currentProjectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-                return ViewEditProjectFundingSourceExpenditures(project, viewModel, calendarYearRangeForExpenditures);
+                var calendarYearRangeForExpenditures = currentProjectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
+                return ViewEditProjectGrantAllocationExpenditures(project, viewModel, calendarYearRangeForExpenditures);
             }
 
-            return UpdateProjectFundingSourceExpenditures(viewModel, currentProjectFundingSourceExpenditures, project);
+            return UpdateProjectGrantAllocationExpenditures(viewModel, currentProjectGrantAllocationExpenditures, project);
         }
 
-        private static ActionResult UpdateProjectFundingSourceExpenditures(
-            EditProjectFundingSourceExpendituresViewModel viewModel,
-            List<ProjectFundingSourceExpenditure> currentProjectFundingSourceExpenditures, Project project)
+        private static ActionResult UpdateProjectGrantAllocationExpenditures(
+            EditProjectGrantAllocationExpendituresViewModel viewModel,
+            List<ProjectGrantAllocationExpenditure> currentProjectGrantAllocationExpenditures, Project project)
         {
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Local;
-            viewModel.UpdateModel(currentProjectFundingSourceExpenditures, allProjectFundingSourceExpenditures, project);
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Load();
+            var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
+            viewModel.UpdateModel(currentProjectGrantAllocationExpenditures, allProjectGrantAllocationExpenditures, project);
 
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditProjectFundingSourceExpenditures(Project project, EditProjectFundingSourceExpendituresViewModel viewModel, List<int> calendarYearRangeForExpenditures)
+        private PartialViewResult ViewEditProjectGrantAllocationExpenditures(Project project, EditProjectGrantAllocationExpendituresViewModel viewModel, List<int> calendarYearRangeForExpenditures)
         {
             var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var showNoExpendituresExplanation = project.GetExpendituresExemptReportingYears().Any();
-            var viewData = new EditProjectFundingSourceExpendituresViewData(new ProjectSimple(project), allGrantAllocations, calendarYearRangeForExpenditures, showNoExpendituresExplanation);
-            return RazorPartialView<EditProjectFundingSourceExpenditures, EditProjectFundingSourceExpendituresViewData, EditProjectFundingSourceExpendituresViewModel>(viewData, viewModel);
+            var viewData = new EditProjectGrantAllocationExpendituresViewData(new ProjectSimple(project), allGrantAllocations, calendarYearRangeForExpenditures, showNoExpendituresExplanation);
+            return RazorPartialView<EditProjectGrantAllocationExpenditures, EditProjectGrantAllocationExpendituresViewData, EditProjectGrantAllocationExpendituresViewModel>(viewData, viewModel);
         }
     }
 }

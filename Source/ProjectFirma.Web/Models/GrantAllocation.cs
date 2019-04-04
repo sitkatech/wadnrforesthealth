@@ -155,12 +155,12 @@ namespace ProjectFirma.Web.Models
 
         public int? ProjectsWhereYouAreTheGrantAllocationMinCalendarYear
         {
-            get { return ProjectFundingSourceExpenditures.Any() ? ProjectFundingSourceExpenditures.Min(x => x.CalendarYear) : (int?)null; }
+            get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Min(x => x.CalendarYear) : (int?)null; }
         }
 
         public int? ProjectsWhereYouAreTheGrantAllocationMaxCalendarYear
         {
-            get { return ProjectFundingSourceExpenditures.Any() ? ProjectFundingSourceExpenditures.Max(x => x.CalendarYear) : (int?)null; }
+            get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Max(x => x.CalendarYear) : (int?)null; }
         }
 
     }

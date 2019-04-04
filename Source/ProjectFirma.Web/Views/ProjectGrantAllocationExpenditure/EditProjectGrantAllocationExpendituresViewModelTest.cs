@@ -27,7 +27,7 @@ using NUnit.Framework;
 namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
 {
     [TestFixture]
-    public class EditProjectFundingSourceExpendituresViewModelTest
+    public class EditProjectGrantAllocationExpendituresViewModelTest
     {
         /*
         [Ignore]

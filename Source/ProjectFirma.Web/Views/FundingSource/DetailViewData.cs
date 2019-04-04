@@ -56,11 +56,11 @@ namespace ProjectFirma.Web.Views.FundingSource
             EntityName = $"{Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel()}";
             UserHasFundingSourceManagePermissions = new FundingSourceEditFeature().HasPermission(CurrentPerson, fundingSource).HasPermission;
             UserHasProjectFundingSourceExpenditureManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
-            EditFundingSourceUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Edit(fundingSource));
+            //EditFundingSourceUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Edit(fundingSource));
 
-            var projectFundingSourceExpenditures = FundingSource.ProjectFundingSourceExpenditures.ToList();
+            //var projectFundingSourceExpenditures = FundingSource.ProjectFundingSourceExpenditures.ToList();
             // WARNING -- This will cause a crash!
-            CalendarYearsForProjectExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(null);
+            //CalendarYearsForProjectExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(null);
 
             ProjectCalendarYearExpendituresGridSpec = new ProjectCalendarYearExpendituresGridSpec(CalendarYearsForProjectExpenditures)
             {
@@ -70,12 +70,12 @@ namespace ProjectFirma.Web.Views.FundingSource
             };
 
             ProjectCalendarYearExpendituresGridName = "projectsCalendarYearExpendituresFromFundingSourceGrid";
-            ProjectCalendarYearExpendituresGridDataUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(tc => tc.ProjectCalendarYearExpendituresGridJsonData(fundingSource));
-            ManageFundingSourcesUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Index());
+            //ProjectCalendarYearExpendituresGridDataUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(tc => tc.ProjectCalendarYearExpendituresGridJsonData(fundingSource));
+            //ManageFundingSourcesUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Index());
 
             ProjectFundingSourceRequestsGridSpec = projectFundingSourceRequestsGridSpec;
             ProjectFundingSourceRequestsGridName = "projectsFundingSourceRequestsFromFundingSourceGrid";
-            ProjectFundingSourceRequestsGridDataUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(tc => tc.ProjectFundingSourceRequestsGridJsonData(fundingSource));
+            //ProjectFundingSourceRequestsGridDataUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(tc => tc.ProjectFundingSourceRequestsGridJsonData(fundingSource));
         }
     }
 }

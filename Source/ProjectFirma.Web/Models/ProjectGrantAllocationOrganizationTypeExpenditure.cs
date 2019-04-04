@@ -23,24 +23,24 @@ using System.Linq;
 
 namespace ProjectFirma.Web.Models
 {
-    public class ProjectFundingSourceOrganizationTypeExpenditure
+    public class ProjectGrantAllocationOrganizationTypeExpenditure
     {
         public readonly Project Project;
-        public readonly FundingSource FundingSource;
+        public readonly GrantAllocation GrantAllocation;
         public readonly decimal ExpenditureAmount;
 
-        public ProjectFundingSourceOrganizationTypeExpenditure(Project project, FundingSource fundingSource, decimal expenditureAmount)
+        public ProjectGrantAllocationOrganizationTypeExpenditure(Project project, GrantAllocation grantAllocation, decimal expenditureAmount)
         {
             Project = project;
-            FundingSource = fundingSource;
+            GrantAllocation = grantAllocation;
             ExpenditureAmount = expenditureAmount;
         }
 
-        public static List<ProjectFundingSourceOrganizationTypeExpenditure> MakeFromProjectFundingSourceExpenditures(List<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures)
+        public static List<ProjectGrantAllocationOrganizationTypeExpenditure> MakeFromProjectFundingSourceExpenditures(List<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures)
         {
             return
-                projectFundingSourceExpenditures.GroupBy(x => new {x.Project, x.FundingSource})
-                    .Select(x => new ProjectFundingSourceOrganizationTypeExpenditure(x.Key.Project, x.Key.FundingSource, x.Sum(y => y.ExpenditureAmount)))
+                projectGrantAllocationExpenditures.GroupBy(x => new {x.Project, x.GrantAllocation})
+                    .Select(x => new ProjectGrantAllocationOrganizationTypeExpenditure(x.Key.Project, x.Key.GrantAllocation, x.Sum(y => y.ExpenditureAmount)))
                     .ToList();
         }
     }

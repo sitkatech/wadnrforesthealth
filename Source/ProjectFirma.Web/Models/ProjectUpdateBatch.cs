@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Models
             ProjectUpdate.CreateFromProject(projectUpdateBatch);
 
             // expenditures
-            ProjectFundingSourceExpenditureUpdate.CreateFromProject(projectUpdateBatch);
+            ProjectGrantAllocationExpenditureUpdate.CreateFromProject(projectUpdateBatch);
 
             // project expenditures exempt reporting years
             ProjectExemptReportingYearUpdate.CreateExpendituresExemptReportingYearsFromProject(projectUpdateBatch);
@@ -238,16 +238,16 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(performanceMeasuresExemptReportingYears);
         }
 
-        public void DeleteProjectFundingSourceExpenditureUpdates()
+        public void DeleteProjectGrantAllocationExpenditureUpdates()
         {
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.DeleteProjectFundingSourceExpenditureUpdate(ProjectFundingSourceExpenditureUpdates);
-            RefreshFromDatabase(ProjectFundingSourceExpenditureUpdates);
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditureUpdates.DeleteProjectGrantAllocationExpenditureUpdate(ProjectGrantAllocationExpenditureUpdates);
+            RefreshFromDatabase(ProjectGrantAllocationExpenditureUpdates);
         }
 
         public void DeleteProjectFundingSourceRequestUpdates()
         {
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.DeleteProjectFundingSourceRequestUpdate(ProjectFundingSourceRequestUpdates);
-            RefreshFromDatabase(ProjectFundingSourceRequestUpdates);
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.DeleteProjectGrantAllocationRequestUpdate(ProjectGrantAllocationRequestUpdates);
+            RefreshFromDatabase(ProjectGrantAllocationRequestUpdates);
         }
 
         public void DeletePerformanceMeasureActualUpdates()
@@ -424,7 +424,7 @@ namespace ProjectFirma.Web.Models
             return ValidateExpenditures();
         }
 
-        public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectFundingSourceRequestSimple> newProjectFundingSourceRequests)
+        public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectGrantAllocationRequestSimple> newProjectFundingSourceRequests)
         {
             return new ExpectedFundingValidationResult();
         }
@@ -442,7 +442,7 @@ namespace ProjectFirma.Web.Models
                 var yearsExpected = ProjectUpdate.GetProjectUpdatePlanningDesignStartToCompletionDateRange();
                 var validateExpenditures = ExpendituresValidationResult.ValidateImpl(
                     this.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList(),
-                    NoExpendituresToReportExplanation, yearsExpected, new List<IFundingSourceExpenditure>(ProjectFundingSourceExpenditureUpdates));
+                    NoExpendituresToReportExplanation, yearsExpected, new List<IGrantAllocationExpenditure>(ProjectGrantAllocationExpenditureUpdates));
                 return validateExpenditures;
             }
             return new List<string>();
@@ -531,7 +531,7 @@ namespace ProjectFirma.Web.Models
             //IList<ProjectBudget> projectBudgets, 
             Person currentPerson, DateTime transitionDate,
             IList<ProjectExemptReportingYear> projectExemptReportingYears,
-            IList<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures,
+            IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
             IList<PerformanceMeasureActual> performanceMeasureActuals,
             IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
             IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
@@ -547,7 +547,7 @@ namespace ProjectFirma.Web.Models
         {
             Check.Require(IsSubmitted, $"You cannot approve a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} update that has not been submitted!");
             CommitChangesToProject(projectExemptReportingYears,
-                projectFundingSourceExpenditures,
+                projectGrantAllocationExpenditures,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
 //                projectBudgets,
                 performanceMeasureActuals,
@@ -586,14 +586,14 @@ namespace ProjectFirma.Web.Models
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
 //            IList<ProjectBudget> projectBudgets,
                 IList<ProjectExemptReportingYear> projectExemptReportingYears,
-                IList<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures,
+                IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
                 IList<PerformanceMeasureActual> performanceMeasureActuals,
                 IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
                 IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
                 IList<ProjectPriorityArea> projectPriorityAreas,
                 IList<ProjectRegion> projectRegions,
-                IList<ProjectGrantAllocationRequest> projectFundingSourceRequests,
+                IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
                 IList<ProjectCustomAttribute> allProjectCustomAttributes,
@@ -604,10 +604,10 @@ namespace ProjectFirma.Web.Models
             ProjectUpdate.CommitChangesToProject(Project);
 
             // expenditures
-            ProjectFundingSourceExpenditureUpdate.CommitChangesToProject(this, projectFundingSourceExpenditures);
+            ProjectGrantAllocationExpenditureUpdate.CommitChangesToProject(this, projectGrantAllocationExpenditures);
 
             // expected funding
-            ProjectGrantAllocationRequestUpdate.CommitChangesToProject(this, projectFundingSourceRequests);
+            ProjectGrantAllocationRequestUpdate.CommitChangesToProject(this, projectGrantAllocationRequests);
 
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //  project budgets

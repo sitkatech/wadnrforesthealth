@@ -103,10 +103,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
-        public virtual DbSet<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
-        public virtual DbSet<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
-        public virtual DbSet<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
-        public virtual DbSet<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
+        public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual DbSet<ProjectInternalNote> ProjectInternalNotes { get; set; }
@@ -511,17 +511,17 @@ namespace ProjectFirma.Web.Models
                 case "ProjectExternalLinkUpdate":
                     return ProjectExternalLinkUpdates.GetProjectExternalLinkUpdate(primaryKey);
 
-                case "ProjectFundingSourceExpenditure":
-                    return ProjectFundingSourceExpenditures.GetProjectFundingSourceExpenditure(primaryKey);
+                case "ProjectGrantAllocationExpenditure":
+                    return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
 
-                case "ProjectFundingSourceExpenditureUpdate":
-                    return ProjectFundingSourceExpenditureUpdates.GetProjectFundingSourceExpenditureUpdate(primaryKey);
+                case "ProjectGrantAllocationExpenditureUpdate":
+                    return ProjectGrantAllocationExpenditureUpdates.GetProjectGrantAllocationExpenditureUpdate(primaryKey);
 
-                case "ProjectFundingSourceRequest":
-                    return ProjectFundingSourceRequests.GetProjectFundingSourceRequest(primaryKey);
+                case "ProjectGrantAllocationRequest":
+                    return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);
 
-                case "ProjectFundingSourceRequestUpdate":
-                    return ProjectFundingSourceRequestUpdates.GetProjectFundingSourceRequestUpdate(primaryKey);
+                case "ProjectGrantAllocationRequestUpdate":
+                    return ProjectGrantAllocationRequestUpdates.GetProjectGrantAllocationRequestUpdate(primaryKey);
 
                 case "ProjectImage":
                     return ProjectImages.GetProjectImage(primaryKey);

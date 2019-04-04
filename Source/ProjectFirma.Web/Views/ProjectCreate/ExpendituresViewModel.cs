@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         [DisplayName("Show Validation Warnings?")]
         public bool ShowValidationWarnings { get; set; }
 
-        public List<ProjectFundingSourceExpenditureBulk> ProjectFundingSourceExpenditures { get; set; }
+        public List<ProjectGrantAllocationExpenditureBulk> ProjectGrantAllocationExpenditureBulks { get; set; }
         public string Explanation { get; set; }
 
         public List<ProjectExemptReportingYearSimple> ProjectExemptReportingYears { get; set; }
@@ -51,25 +51,25 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
         }
 
-        public ExpendituresViewModel(List<Models.ProjectFundingSourceExpenditure> projectFundingSourceExpenditures,
-            List<int> calendarYearsToPopulate, Models.Project project,
-            List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
+        public ExpendituresViewModel(List<Models.ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
+                                     List<int> calendarYearsToPopulate, Models.Project project,
+                                     List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
         {
             ProjectExemptReportingYears = projectExemptReportingYears;
             Explanation = project.NoExpendituresToReportExplanation;
-            ProjectFundingSourceExpenditures = ProjectFundingSourceExpenditureBulk.MakeFromList(projectFundingSourceExpenditures, calendarYearsToPopulate);
+            ProjectGrantAllocationExpenditureBulks = ProjectGrantAllocationExpenditureBulk.MakeFromList(projectGrantAllocationExpenditures, calendarYearsToPopulate);
             ShowValidationWarnings = true;
         }
 
         public void UpdateModel(Models.Project project,
-            List<Models.ProjectFundingSourceExpenditure> currentProjectFundingSourceExpenditures,
-            IList<Models.ProjectFundingSourceExpenditure> allProjectFundingSourceExpenditures)
+                                List<Models.ProjectGrantAllocationExpenditure> currentProjectGrantAllocationExpenditures,
+                                IList<Models.ProjectGrantAllocationExpenditure> allProjectGrantAllocationExpenditures)
         {
-            var projectFundingSourceExpendituresUpdated = new List<Models.ProjectFundingSourceExpenditure>();
-            if (ProjectFundingSourceExpenditures != null)
+            var projectGrantAllocationExpendituresUpdated = new List<Models.ProjectGrantAllocationExpenditure>();
+            if (ProjectGrantAllocationExpenditureBulks != null)
             {
                 // Completely rebuild the list
-                projectFundingSourceExpendituresUpdated = ProjectFundingSourceExpenditures.SelectMany(x => x.ToProjectFundingSourceExpenditures()).ToList();
+                projectGrantAllocationExpendituresUpdated = ProjectGrantAllocationExpenditureBulks.SelectMany(x => x.ToProjectGrantAllocationExpenditures()).ToList();
             }
 
 
@@ -91,9 +91,9 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             project.NoExpendituresToReportExplanation = Explanation;
 
-            currentProjectFundingSourceExpenditures.Merge(projectFundingSourceExpendituresUpdated,
-                allProjectFundingSourceExpenditures,
-                (x, y) => x.ProjectID == y.ProjectID && x.FundingSourceID == y.FundingSourceID && x.CalendarYear == y.CalendarYear,
+            currentProjectGrantAllocationExpenditures.Merge(projectGrantAllocationExpendituresUpdated,
+                allProjectGrantAllocationExpenditures,
+                (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID && x.CalendarYear == y.CalendarYear,
                 (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);
         }
 
@@ -106,7 +106,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         {
             var errors = new List<ValidationResult>();
             var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == ProjectID);
-            var validationErrors = ExpendituresValidationResult.Validate(ProjectFundingSourceExpenditures,
+            var validationErrors = ExpendituresValidationResult.Validate(ProjectGrantAllocationExpenditureBulks,
                 ProjectExemptReportingYears, Explanation, project.GetProjectUpdatePlanningDesignStartToCompletionDateRange());
             errors.AddRange(validationErrors.Select(x => new ValidationResult(x)));
 

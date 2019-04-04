@@ -172,7 +172,7 @@ namespace ProjectFirma.Web.Controllers
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
             var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
             var editPerformanceMeasureActualsUrl = SitkaRoute<PerformanceMeasureActualController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureActualsForProject(project));
-            var editReportedExpendituresUrl = SitkaRoute<ProjectFundingSourceExpenditureController>.BuildUrlFromExpression(c => c.EditProjectFundingSourceExpendituresForProject(project));
+            var editReportedExpendituresUrl = SitkaRoute<ProjectGrantAllocationExpenditureController>.BuildUrlFromExpression(c => c.EditProjectGrantAllocationExpendituresForProject(project));
             var editExternalLinksUrl = SitkaRoute<ProjectExternalLinkController>.BuildUrlFromExpression(c => c.EditProjectExternalLinks(project));
 
             var priorityAreas = project.GetProjectPriorityAreas().ToList();
@@ -187,7 +187,7 @@ namespace ProjectFirma.Web.Controllers
             var performanceMeasureExpectedsSummaryViewData = new PerformanceMeasureExpectedSummaryViewData(new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.OrderBy(x=>x.PerformanceMeasure.PerformanceMeasureSortOrder)));
             var performanceMeasureReportedValuesGroupedViewData = BuildPerformanceMeasureReportedValuesGroupedViewData(project);
             var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
-            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectFundingSourceRequests));
+            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests));
             var imageGalleryViewData = BuildImageGalleryViewData(project, CurrentPerson);
             var projectNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(project.ProjectNotes)),
@@ -280,9 +280,9 @@ namespace ProjectFirma.Web.Controllers
 
         private static ProjectExpendituresDetailViewData BuildProjectExpendituresDetailViewData(Project project)
         {
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
+            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var calendarYearsForFundingSourceExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var fromFundingSourcesAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(new List<IFundingSourceExpenditure>(projectFundingSourceExpenditures),
+            var fromFundingSourcesAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(new List<IGrantAllocationExpenditure>(projectFundingSourceExpenditures),
                 calendarYearsForFundingSourceExpenditures);
             var projectExpendituresDetailViewData = new ProjectExpendituresDetailViewData(
                 fromFundingSourcesAndCalendarYears,
@@ -435,7 +435,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectFundingSourceRequests).Include(x => x.ProjectFundingSourceExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests).Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -552,10 +552,10 @@ namespace ProjectFirma.Web.Controllers
                 $"Reported {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}", performanceMeasureActualExcelSpec, performanceMeasureActuals);
             workSheets.Add(wsPerformanceMeasureActuals);
 
-            var projectFundingSourceExpenditureSpec = new ProjectFundingSourceExpenditureExcelSpec();
-            var projectFundingSourceExpenditures = (projects.SelectMany(p => p.ProjectFundingSourceExpenditures)).ToList();
-            var wsProjectFundingSourceExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectFundingSourceExpenditureSpec, projectFundingSourceExpenditures);
-            workSheets.Add(wsProjectFundingSourceExpenditures);
+            var projectFundingSourceExpenditureSpec = new ProjectGrantAllocationExpenditureExcelSpec();
+            var projectFundingSourceExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();
+            var wsProjectGrantAllocationExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectFundingSourceExpenditureSpec, projectFundingSourceExpenditures);
+            workSheets.Add(wsProjectGrantAllocationExpenditures);
 
             MultiTenantHelpers.GetClassificationSystems().ForEach(c =>
             {

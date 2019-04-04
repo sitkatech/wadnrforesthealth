@@ -26,12 +26,12 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static List<int> CalculateCalendarYearRangeForExpenditures(this IList<ProjectFundingSourceExpenditureUpdate> projectFundingSourceExpenditureUpdates, ProjectUpdate projectUpdate)
+        public static List<int> CalculateCalendarYearRangeForExpenditures(this IList<ProjectGrantAllocationExpenditureUpdate> projectGrantAllocationExpenditureUpdates, ProjectUpdate projectUpdate)
         {
             if (projectUpdate.GetCompletionYear() < projectUpdate.GetImplementationStartYear()) return new List<int>();
             if (projectUpdate.GetCompletionYear() < projectUpdate.PlannedDate.GetValueOrDefault().Year) return new List<int>();
 
-            var existingYears = projectFundingSourceExpenditureUpdates.Select(x => x.CalendarYear).ToList();
+            var existingYears = projectGrantAllocationExpenditureUpdates.Select(x => x.CalendarYear).ToList();
             return FirmaDateUtilities.CalculateCalendarYearRangeForExpendituresAccountingForExistingYears(existingYears, projectUpdate, FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting());
         }
     }

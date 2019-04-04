@@ -115,8 +115,9 @@ namespace ProjectFirma.Web.Models
             if (MultiTenantHelpers.GetRelationshipTypeToReportInAccomplishmentsDashboard() == null)
             {
                 // Default is Funding Organizations
-                var organizations = ProjectFundingSourceExpenditures.Select(x => x.FundingSource.Organization)
-                    .Union(ProjectFundingSourceRequests.Select(x => x.FundingSource.Organization))
+                var organizations = ProjectGrantAllocationExpenditures.Select(x => x.FundingSource.Organization)
+                    .Union(ProjectGrantAllocationRequests
+                        .Select(x => x.FundingSource.Organization))
                     .Distinct(new HavePrimaryKeyComparer<Organization>());
                 return organizations;
             }
@@ -137,15 +138,15 @@ namespace ProjectFirma.Web.Models
 
         public decimal? GetSecuredFunding()
         {
-            return ProjectFundingSourceRequests.Any()
-                ? (decimal?) ProjectFundingSourceRequests.Sum(x => x.SecuredAmount.GetValueOrDefault())
+            return ProjectGrantAllocationRequests.Any()
+                ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.SecuredAmount.GetValueOrDefault())
                 : null;
         }
 
         public decimal? GetUnsecuredFunding()
         {
-            return ProjectFundingSourceRequests.Any()
-                ? (decimal?) ProjectFundingSourceRequests.Sum(x => x.UnsecuredAmount.GetValueOrDefault())
+            return ProjectGrantAllocationRequests.Any()
+                ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.UnsecuredAmount.GetValueOrDefault())
                 : null;
         }
 
@@ -168,8 +169,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                return ProjectFundingSourceExpenditures.Any()
-                    ? ProjectFundingSourceExpenditures.Sum(x => x.ExpenditureAmount)
+                return ProjectGrantAllocationExpenditures.Any()
+                    ? ProjectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount)
                     : (decimal?) null;
             }
         }
@@ -592,7 +593,7 @@ namespace ProjectFirma.Web.Models
         {
             var sortOrder = 0;
             var googlePieChartSlices = new List<GooglePieChartSlice>();
-            var expendituresDictionary = ProjectFundingSourceExpenditures.Where(x => x.ExpenditureAmount > 0)
+            var expendituresDictionary = ProjectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0)
                 .GroupBy(x => x.FundingSource, new HavePrimaryKeyComparer<FundingSource>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.ExpenditureAmount));
 
@@ -624,10 +625,10 @@ namespace ProjectFirma.Web.Models
             var sortOrder = 0;
             var googlePieChartSlices = new List<GooglePieChartSlice>();
 
-            var securedAmountsDictionary = ProjectFundingSourceRequests.Where(x => x.SecuredAmount > 0)
+            var securedAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.SecuredAmount > 0)
                 .GroupBy(x => x.FundingSource, new HavePrimaryKeyComparer<FundingSource>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.SecuredAmount));
-            var unsecuredAmountsDictionary = ProjectFundingSourceRequests.Where(x => x.UnsecuredAmount > 0)
+            var unsecuredAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.UnsecuredAmount > 0)
                 .GroupBy(x => x.FundingSource, new HavePrimaryKeyComparer<FundingSource>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.UnsecuredAmount));
 

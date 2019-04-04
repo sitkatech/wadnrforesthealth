@@ -27,7 +27,7 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectFundingSourceExpenditure : IAuditableEntity, IFundingSourceExpenditure
+    public partial class ProjectGrantAllocationExpenditure : IAuditableEntity, IGrantAllocationExpenditure
     {
         public decimal? MonetaryAmount
         {
@@ -44,21 +44,21 @@ namespace ProjectFirma.Web.Models
             get
             {
                 var project = HttpRequestStorage.DatabaseEntities.Projects.Find(ProjectID);
-                var fundingSource = HttpRequestStorage.DatabaseEntities.FundingSources.Find(FundingSourceID);
+                var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
-                var fundingSourceName = fundingSource != null ? fundingSource.AuditDescriptionString : ViewUtilities.NotFoundString;
+                var grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var expenditureAmount = ExpenditureAmountDisplay;
-                return $"Project: {projectName}, Funding Source: {fundingSourceName}, Year: {CalendarYear},  Expenditure: {expenditureAmount}";
+                return $"Project: {projectName}, Grant Allocation: {grantAllocationName}, Year: {CalendarYear},  Expenditure: {expenditureAmount}";
             }
         }
 
-        public static IEnumerable<CalendarYearReportedValue> ToCalendarYearReportedValues(IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures)
+        public static IEnumerable<CalendarYearReportedValue> ToCalendarYearReportedValues(IEnumerable<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures)
         {
             var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();
             return yearRange.OrderBy(cy => cy).Select(cy =>
             {
-                var pmavForThisCalendaYear = projectFundingSourceExpenditures.Where(x => x.CalendarYear == cy).ToList();
-                return new CalendarYearReportedValue(cy, pmavForThisCalendaYear.Any() ? (double?) pmavForThisCalendaYear.Sum(y => y.ExpenditureAmount) : null);
+                var pmavForThisCalendarYear = projectGrantAllocationExpenditures.Where(x => x.CalendarYear == cy).ToList();
+                return new CalendarYearReportedValue(cy, pmavForThisCalendarYear.Any() ? (double?) pmavForThisCalendarYear.Sum(y => y.ExpenditureAmount) : null);
             });
         }
     }

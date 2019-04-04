@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[ProjectFundingSourceExpenditureUpdate]
+//  Source Table: [dbo].[ProjectGrantAllocationRequest]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +15,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[ProjectFundingSourceExpenditureUpdate] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[ProjectFundingSourceExpenditureUpdate]")]
-    public partial class ProjectFundingSourceExpenditureUpdate : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[ProjectGrantAllocationRequest] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[ProjectGrantAllocationRequest]")]
+    public partial class ProjectGrantAllocationRequest : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected ProjectFundingSourceExpenditureUpdate()
+        protected ProjectGrantAllocationRequest()
         {
 
         }
@@ -30,53 +30,49 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(int projectFundingSourceExpenditureUpdateID, int projectUpdateBatchID, int? fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
+        public ProjectGrantAllocationRequest(int projectGrantAllocationRequestID, int projectID, int? fundingSourceID, decimal? securedAmount, decimal? unsecuredAmount, int grantAllocationID) : this()
         {
-            this.ProjectFundingSourceExpenditureUpdateID = projectFundingSourceExpenditureUpdateID;
-            this.ProjectUpdateBatchID = projectUpdateBatchID;
+            this.ProjectGrantAllocationRequestID = projectGrantAllocationRequestID;
+            this.ProjectID = projectID;
             this.FundingSourceID = fundingSourceID;
-            this.CalendarYear = calendarYear;
-            this.ExpenditureAmount = expenditureAmount;
+            this.SecuredAmount = securedAmount;
+            this.UnsecuredAmount = unsecuredAmount;
             this.GrantAllocationID = grantAllocationID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(int projectUpdateBatchID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
+        public ProjectGrantAllocationRequest(int projectID, int grantAllocationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectFundingSourceExpenditureUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectGrantAllocationRequestID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ProjectUpdateBatchID = projectUpdateBatchID;
-            this.CalendarYear = calendarYear;
-            this.ExpenditureAmount = expenditureAmount;
+            this.ProjectID = projectID;
             this.GrantAllocationID = grantAllocationID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(ProjectUpdateBatch projectUpdateBatch, int calendarYear, decimal expenditureAmount, GrantAllocation grantAllocation) : this()
+        public ProjectGrantAllocationRequest(Project project, GrantAllocation grantAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.ProjectFundingSourceExpenditureUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
-            this.ProjectUpdateBatch = projectUpdateBatch;
-            projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.Add(this);
-            this.CalendarYear = calendarYear;
-            this.ExpenditureAmount = expenditureAmount;
+            this.ProjectGrantAllocationRequestID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.ProjectID = project.ProjectID;
+            this.Project = project;
+            project.ProjectGrantAllocationRequests.Add(this);
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
-            grantAllocation.ProjectFundingSourceExpenditureUpdates.Add(this);
+            grantAllocation.ProjectGrantAllocationRequests.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectFundingSourceExpenditureUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation)
+        public static ProjectGrantAllocationRequest CreateNewBlank(Project project, GrantAllocation grantAllocation)
         {
-            return new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch, default(int), default(decimal), grantAllocation);
+            return new ProjectGrantAllocationRequest(project, grantAllocation);
         }
 
         /// <summary>
@@ -91,7 +87,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectFundingSourceExpenditureUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectGrantAllocationRequest).Name};
 
 
         /// <summary>
@@ -99,7 +95,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.ProjectFundingSourceExpenditureUpdates.Remove(this);
+            dbContext.ProjectGrantAllocationRequests.Remove(this);
         }
         
         /// <summary>
@@ -112,16 +108,16 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int ProjectFundingSourceExpenditureUpdateID { get; set; }
-        public int ProjectUpdateBatchID { get; set; }
+        public int ProjectGrantAllocationRequestID { get; set; }
+        public int ProjectID { get; set; }
         public int? FundingSourceID { get; set; }
-        public int CalendarYear { get; set; }
-        public decimal ExpenditureAmount { get; set; }
+        public decimal? SecuredAmount { get; set; }
+        public decimal? UnsecuredAmount { get; set; }
         public int GrantAllocationID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return ProjectFundingSourceExpenditureUpdateID; } set { ProjectFundingSourceExpenditureUpdateID = value; } }
+        public int PrimaryKey { get { return ProjectGrantAllocationRequestID; } set { ProjectGrantAllocationRequestID = value; } }
 
-        public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
+        public virtual Project Project { get; set; }
         public virtual FundingSource FundingSource { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
 

@@ -24,12 +24,12 @@ namespace ProjectFirma.Web.UnitTestCommon
 {
     public static partial class TestFramework
     {
-        public static class TestProjectFundingSourceExpenditureUpdate
+        public static class TestProjectGrantAllocationExpenditureUpdate
         {
-            public static ProjectFundingSourceExpenditureUpdate Create(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
+            public static ProjectGrantAllocationExpenditureUpdate Create(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
             {
-                var projectFundingSourceExpenditureUpdate = new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch, calendarYear, expenditureAmount, grantAllocation);
-                return projectFundingSourceExpenditureUpdate;
+                var projectGrantAllocationExpenditureUpdate = new ProjectGrantAllocationExpenditureUpdate(projectUpdateBatch, calendarYear, expenditureAmount, grantAllocation);
+                return projectGrantAllocationExpenditureUpdate;
             }
         }
     }

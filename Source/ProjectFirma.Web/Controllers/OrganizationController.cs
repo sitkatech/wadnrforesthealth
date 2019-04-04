@@ -207,7 +207,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();
             var projectFundingSourceExpenditures =
-                organization.FundingSources.SelectMany(x => x.ProjectFundingSourceExpenditures);
+                organization.FundingSources.SelectMany(x => x.ProjectGrantAllocationExpenditures);
 
             var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.FundingSource.GetFieldDefinitionLabel()}";
             var chartContainerID = chartTitle.Replace(" ", "");
@@ -229,11 +229,11 @@ namespace ProjectFirma.Web.Controllers
             var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();
 
             var projects = organization.GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(currentPerson).ToList();
-            var projectFundingSourceExpenditures = projects.SelectMany(x => x.ProjectFundingSourceExpenditures).Where(x => x.FundingSource.Organization != organization);
+            var projectFundingSourceExpenditures = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.FundingSource.Organization != organization);
             
             var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.OrganizationType.GetFieldDefinitionLabel()}";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var filterValues = projects.SelectMany(x => x.ProjectFundingSourceExpenditures).Where(x => x.FundingSource.Organization != organization).Select(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName).Distinct().ToList();
+            var filterValues = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.FundingSource.Organization != organization).Select(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName).Distinct().ToList();
 
             var googleChart = projectFundingSourceExpenditures.ToGoogleChart(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
                 filterValues,
@@ -258,7 +258,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteOrganization(Organization organization, ConfirmDialogFormViewModel viewModel)
         {
-            var projectFundingSourceExpenditureTotal = organization.FundingSources.Sum(x => x.ProjectFundingSourceExpenditures.Sum(y => y.ExpenditureAmount)).ToStringCurrency();
+            var projectFundingSourceExpenditureTotal = organization.FundingSources.Sum(x => x.ProjectGrantAllocationExpenditures.Sum(y => y.ExpenditureAmount)).ToStringCurrency();
             var confirmMessage = $"Organization \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.FundingSources.Count} funding sources that fund a total of {projectFundingSourceExpenditureTotal} across various projects.<br /><br />Are you sure you want to delete this Organization?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
@@ -333,21 +333,21 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [OrganizationViewFeature]
-        public GridJsonNetJObjectResult<ProjectFundingSourceExpenditure> ProjectFundingSourceExpendituresForOrganizationGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
+        public GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpendituresForOrganizationGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
         {
             var organization = organizationPrimaryKey.EntityObject;
             
             // received
             var projects = organization.GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(CurrentPerson).ToList();
-            var projectFundingSourceExpenditures = projects.SelectMany(x => x.ProjectFundingSourceExpenditures).Where(x => x.FundingSource.Organization != organization).ToList();
+            var projectFundingSourceExpenditures = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.FundingSource.Organization != organization).ToList();
 
             // provided
-            projectFundingSourceExpenditures.AddRange(organization.FundingSources.SelectMany(x => x.ProjectFundingSourceExpenditures));
+            projectFundingSourceExpenditures.AddRange(organization.FundingSources.SelectMany(x => x.ProjectGrantAllocationExpenditures));
 
             var projectFundingSourceExpendituresToShow =
                 projectFundingSourceExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
-            var gridSpec = new ProjectFundingSourceExpendituresForOrganizationGridSpec(organization);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectFundingSourceExpenditure>(projectFundingSourceExpendituresToShow, gridSpec);
+            var gridSpec = new ProjectGrantAllocationExpendituresForOrganizationGridSpec(organization);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure>(projectFundingSourceExpendituresToShow, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

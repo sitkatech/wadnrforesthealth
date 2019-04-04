@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 namespace ProjectFirma.Web.Models
 {
-    public interface IProjectBudgetAmount : IFundingSourceExpenditure
+    public interface IProjectBudgetAmount : IGrantAllocationExpenditure
     {
         int ProjectID { get; }
         ProjectCostType ProjectCostType { get; }

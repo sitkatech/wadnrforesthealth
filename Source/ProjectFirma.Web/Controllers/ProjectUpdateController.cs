@@ -522,8 +522,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
-            var projectFundingSourceExpenditureUpdates = projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList();
-            var calendarYearRange = projectFundingSourceExpenditureUpdates.CalculateCalendarYearRangeForExpenditures(projectUpdateBatch.ProjectUpdate);
+            var projectGrantAllocationExpenditureUpdates = projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.ToList();
+            var calendarYearRange = projectGrantAllocationExpenditureUpdates.CalculateCalendarYearRangeForExpenditures(projectUpdateBatch.ProjectUpdate);
             var projectExemptReportingYears = projectUpdateBatch.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
             var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
             projectExemptReportingYears.AddRange(
@@ -545,15 +545,15 @@ namespace ProjectFirma.Web.Controllers
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
-            var projectFundingSourceExpenditureUpdates = projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList();
-            var calendarYearRange = projectFundingSourceExpenditureUpdates.CalculateCalendarYearRangeForExpenditures(projectUpdateBatch.ProjectUpdate);
+            var projectGrantAllocationExpenditureUpdates = projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.ToList();
+            var calendarYearRange = projectGrantAllocationExpenditureUpdates.CalculateCalendarYearRangeForExpenditures(projectUpdateBatch.ProjectUpdate);
             if (!ModelState.IsValid)
             {
                 return ViewExpenditures(projectUpdateBatch, calendarYearRange, viewModel);
             }
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditureUpdates.Local;
-            viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceExpenditureUpdates, allProjectFundingSourceExpenditures);
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditureUpdates.Load();
+            var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditureUpdates.Local;
+            viewModel.UpdateModel(projectUpdateBatch, projectGrantAllocationExpenditureUpdates, allProjectGrantAllocationExpenditures);
             if (projectUpdateBatch.IsSubmitted)
             {
                 projectUpdateBatch.ExpendituresComment = viewModel.Comments;
@@ -572,12 +572,12 @@ namespace ProjectFirma.Web.Controllers
             var expendituresValidationResult = projectUpdateBatch.ValidateExpenditures();
 
             var viewDataForAngularEditor = new ExpendituresViewData.ViewDataForAngularClass(project, allGrantAllocations, calendarYearRange, showNoExpendituresExplanation);
-            var projectFundingSourceExpenditures = projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList();
-            var fromFundingSourcesAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(
-                new List<IFundingSourceExpenditure>(projectFundingSourceExpenditures),
+            var projectGrantAllocationExpenditures = projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.ToList();
+            var fromGrantAllocationAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(
+                new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
                 calendarYearRange);
             var projectExpendituresSummaryViewData = new ProjectExpendituresDetailViewData(
-                fromFundingSourcesAndCalendarYears, calendarYearRange.Select(x => new CalendarYearString(x)).ToList(),
+                fromGrantAllocationAndCalendarYears, calendarYearRange.Select(x => new CalendarYearString(x)).ToList(),
                 FirmaHelpers.CalculateYearRanges(projectExemptReportingYearUpdates.Select(x => x.CalendarYear)),
                 projectUpdateBatch.NoExpendituresToReportExplanation);
 
@@ -603,12 +603,12 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
             projectUpdateBatch.DeleteExpendituresProjectExemptReportingYearUpdates();
-            projectUpdateBatch.DeleteProjectFundingSourceExpenditureUpdates();
+            projectUpdateBatch.DeleteProjectGrantAllocationExpenditureUpdates();
 
             // refresh the data
             projectUpdateBatch.SyncExpendituresYearsExemptionExplanation();
             ProjectExemptReportingYearUpdate.CreateExpendituresExemptReportingYearsFromProject(projectUpdateBatch);
-            ProjectFundingSourceExpenditureUpdate.CreateFromProject(projectUpdateBatch);
+            ProjectGrantAllocationExpenditureUpdate.CreateFromProject(projectUpdateBatch);
             projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
@@ -632,7 +632,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
-            var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
+            var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectFundingSourceRequestUpdates,
                 projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost, project.EstimatedIndirectCost, project.EstimatedPersonnelAndBenefitsCost, project.EstimatedSuppliesCost, project.EstimatedTravelCost);
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
@@ -653,9 +653,9 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewExpectedFunding(projectUpdateBatch, viewModel);
             }
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Load();
-            var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList();
-            var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequestUpdates.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Load();
+            var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
+            var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Local;
             viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding, projectUpdateBatch.ProjectUpdate);
             if (projectUpdateBatch.IsSubmitted)
             {
@@ -683,7 +683,7 @@ namespace ProjectFirma.Web.Controllers
                 estimatedPersonnelAndBenefitsCost, 
                 estimatedSuppliesCost, 
                 estimatedTravelCost);
-            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectFundingSourceRequestUpdates));
+            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates));
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, projectFundingDetailViewData, GetUpdateStatus(projectUpdateBatch), expectedFundingValidationResult);
             return RazorView<ExpectedFunding, ExpectedFundingViewData, ExpectedFundingViewModel>(viewData, viewModel);
@@ -1480,10 +1480,10 @@ namespace ProjectFirma.Web.Controllers
 
             HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Load();
             var allProjectExemptReportingYears = HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Local;
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceExpenditures.Local;
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
-            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Load();
+            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
+            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //HttpRequestStorage.DatabaseEntities.ProjectBudgets.Load();
             //var allProjectBudgets = HttpRequestStorage.DatabaseEntities.ProjectBudgets.Local;
@@ -2062,27 +2062,27 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {FieldDefinition.Project.GetFieldDefinitionLabel()} Update for {FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
 
-            var projectFundingSourceExpendituresOriginal = project.ProjectFundingSourceExpenditures.ToList();
-            var calendarYearsOriginal = projectFundingSourceExpendituresOriginal.CalculateCalendarYearRangeForExpenditures(project);
-            var projectFundingSourceExpendituresUpdated = projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList();
+            var projectGrantAllocationExpendituresOriginal = project.ProjectGrantAllocationExpenditures.ToList();
+            var calendarYearsOriginal = projectGrantAllocationExpendituresOriginal.CalculateCalendarYearRangeForExpenditures(project);
+            var projectFundingSourceExpendituresUpdated = projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.ToList();
             var calendarYearsUpdated = projectFundingSourceExpendituresUpdated.CalculateCalendarYearRangeForExpenditures(projectUpdateBatch.ProjectUpdate);
 
-            var originalHtml = GeneratePartialViewForOriginalExpenditures(new List<IFundingSourceExpenditure>(projectFundingSourceExpendituresOriginal),
+            var originalHtml = GeneratePartialViewForOriginalExpenditures(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpendituresOriginal),
                 calendarYearsOriginal,
-                new List<IFundingSourceExpenditure>(projectFundingSourceExpendituresUpdated),
+                new List<IGrantAllocationExpenditure>(projectFundingSourceExpendituresUpdated),
                 calendarYearsUpdated);
 
-            var updatedHtml = GeneratePartialViewForModifiedExpenditures(new List<IFundingSourceExpenditure>(projectFundingSourceExpendituresOriginal),
+            var updatedHtml = GeneratePartialViewForModifiedExpenditures(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpendituresOriginal),
                 calendarYearsOriginal,
-                new List<IFundingSourceExpenditure>(projectFundingSourceExpendituresUpdated),
+                new List<IGrantAllocationExpenditure>(projectFundingSourceExpendituresUpdated),
                 calendarYearsUpdated);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
-        private string GeneratePartialViewForOriginalExpenditures(List<IFundingSourceExpenditure> projectFundingSourceExpendituresOriginal,
+        private string GeneratePartialViewForOriginalExpenditures(List<IGrantAllocationExpenditure> projectFundingSourceExpendituresOriginal,
             List<int> calendarYearsOriginal,
-            List<IFundingSourceExpenditure> projectFundingSourceExpendituresUpdated,
+            List<IGrantAllocationExpenditure> projectFundingSourceExpendituresUpdated,
             List<int> calendarYearsUpdated)
         {
             var grantAllocationsInOriginal = projectFundingSourceExpendituresOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
@@ -2122,9 +2122,9 @@ namespace ProjectFirma.Web.Controllers
             }
         }
 
-        private string GeneratePartialViewForModifiedExpenditures(List<IFundingSourceExpenditure> projectFundingSourceExpendituresOriginal,
+        private string GeneratePartialViewForModifiedExpenditures(List<IGrantAllocationExpenditure> projectFundingSourceExpendituresOriginal,
             List<int> calendarYearsOriginal,
-            List<IFundingSourceExpenditure> projectFundingSourceExpendituresUpdated,
+            List<IGrantAllocationExpenditure> projectFundingSourceExpendituresUpdated,
             List<int> calendarYearsUpdated)
         {
             var grantAllocationsInOriginal = projectFundingSourceExpendituresOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
@@ -2166,10 +2166,10 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update for {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
-            var projectFundingSourceRequestsOriginal = new List<IGrantAllocationRequestAmount>(project.ProjectFundingSourceRequests.ToList());
-            var projectFundingSourceRequestsUpdated = new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectFundingSourceRequestUpdates.ToList());
-            var originalHtml = GeneratePartialViewForOriginalFundingRequests(projectFundingSourceRequestsOriginal, projectFundingSourceRequestsUpdated);
-            var updatedHtml = GeneratePartialViewForModifiedFundingRequests(projectFundingSourceRequestsOriginal, projectFundingSourceRequestsUpdated);
+            var grantAllocationRequestsOriginal = new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests.ToList());
+            var projectGrantAllocationRequestsUpdated = new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList());
+            var originalHtml = GeneratePartialViewForOriginalFundingRequests(grantAllocationRequestsOriginal, projectGrantAllocationRequestsUpdated);
+            var updatedHtml = GeneratePartialViewForModifiedFundingRequests(grantAllocationRequestsOriginal, projectGrantAllocationRequestsUpdated);
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 

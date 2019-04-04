@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectFundingSourceRequests.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectFundingSourceExpenditures.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,9 +18,12 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
+
+using ProjectFirma.Web.Views.ProjectFundingSourceExpenditure;
+
+namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
 {
-    public abstract class EditProjectFundingSourceRequests : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectFundingSourceRequestsViewData, EditProjectFundingSourceRequestsViewModel>
+    public abstract class EditProjectGrantAllocationExpenditures : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectGrantAllocationExpendituresViewData, EditProjectGrantAllocationExpendituresViewModel>
     {
     }
 }

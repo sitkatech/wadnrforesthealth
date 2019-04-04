@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceExpenditure.DatabaseContextExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationExpenditure.DatabaseContextExtensions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -28,15 +28,15 @@ namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
     {
-        public static List<int> CalculateCalendarYearRangeForExpenditures(this IList<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, Project project)
+        public static List<int> CalculateCalendarYearRangeForExpenditures(this IList<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures, Project project)
         {
-            var existingYears = projectFundingSourceExpenditures.Select(x => x.CalendarYear).ToList();
+            var existingYears = projectGrantAllocationExpenditures.Select(x => x.CalendarYear).ToList();
             return FirmaDateUtilities.CalculateCalendarYearRangeForExpendituresAccountingForExistingYears(existingYears, project, DateTime.Today.Year);
         }
 
-        public static List<int> CalculateCalendarYearRangeForExpenditures(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures, GrantAllocation grantAllocation)
+        public static List<int> CalculateCalendarYearRangeForExpenditures(this IEnumerable<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures, GrantAllocation grantAllocation)
         {
-            var existingYears = projectFundingSourceExpenditures.Select(x => x.CalendarYear).ToList();
+            var existingYears = projectGrantAllocationExpenditures.Select(x => x.CalendarYear).ToList();
             var grantAllocationProjectsWhereYouAreTheGrantAllocationMinCalendarYear = grantAllocation.ProjectsWhereYouAreTheGrantAllocationMinCalendarYear;
             return FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(existingYears,
                 grantAllocationProjectsWhereYouAreTheGrantAllocationMinCalendarYear.HasValue ?
@@ -47,37 +47,37 @@ namespace ProjectFirma.Web.Models
                 null);
         }
 
-        public static GoogleChartJson ToGoogleChart(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures,
-            Func<ProjectFundingSourceExpenditure, string> filterFunction,
+        public static GoogleChartJson ToGoogleChart(this IEnumerable<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
+            Func<ProjectGrantAllocationExpenditure, string> filterFunction,
             List<string> filterValues,
-            Func<ProjectFundingSourceExpenditure, IComparable> sortFunction,
+            Func<ProjectGrantAllocationExpenditure, IComparable> sortFunction,
             string chartContainerID,
             string chartTitle)
         {
-            var projectFundingSourceExpenditureList = projectFundingSourceExpenditures.ToList();
-            if (!projectFundingSourceExpenditureList.Any())
+            var projectGrantAllocationExpenditureList = projectGrantAllocationExpenditures.ToList();
+            if (!projectGrantAllocationExpenditureList.Any())
             {
                 return null;
             }
-            var beginCalendarYear = projectFundingSourceExpenditureList.Min(x => x.CalendarYear);
-            var endCalendarYear = projectFundingSourceExpenditureList.Max(x => x.CalendarYear);
+            var beginCalendarYear = projectGrantAllocationExpenditureList.Min(x => x.CalendarYear);
+            var endCalendarYear = projectGrantAllocationExpenditureList.Max(x => x.CalendarYear);
             var rangeOfYears = FirmaDateUtilities.GetRangeOfYears(beginCalendarYear, endCalendarYear);
 
-            return projectFundingSourceExpenditureList.ToGoogleChart(filterFunction, filterValues, sortFunction, rangeOfYears, chartContainerID, chartTitle, GoogleChartType.AreaChart, true);
+            return projectGrantAllocationExpenditureList.ToGoogleChart(filterFunction, filterValues, sortFunction, rangeOfYears, chartContainerID, chartTitle, GoogleChartType.AreaChart, true);
         }
 
         //TODO: The GetFullCategoryYearDictionary and GetGoogleChartDataTable functions are probably fine in this Extension class, but the ToGoogleChart functions are more about display and probably could be in a better location
-        public static GoogleChartJson ToGoogleChart(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures,
-            Func<ProjectFundingSourceExpenditure, string> filterFunction,
+        public static GoogleChartJson ToGoogleChart(this IEnumerable<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
+            Func<ProjectGrantAllocationExpenditure, string> filterFunction,
             List<string> filterValues,
-            Func<ProjectFundingSourceExpenditure, IComparable> sortFunction,
+            Func<ProjectGrantAllocationExpenditure, IComparable> sortFunction,
             List<int> rangeOfYears,
             string chartContainerID,
             string chartTitle,
             GoogleChartType googleChartType,
             bool isStacked)
         {
-            var fullCategoryYearDictionary = GetFullCategoryYearDictionary(projectFundingSourceExpenditures, filterFunction, filterValues, sortFunction, rangeOfYears);
+            var fullCategoryYearDictionary = GetFullCategoryYearDictionary(projectGrantAllocationExpenditures, filterFunction, filterValues, sortFunction, rangeOfYears);
             var googleChartDataTable = GetGoogleChartDataTable(fullCategoryYearDictionary, rangeOfYears, googleChartType);
             var googleChartAxis = new GoogleChartAxis("Annual Expenditures", MeasurementUnitTypeEnum.Dollars, GoogleChartAxisLabelFormat.Short);
             var googleChartConfiguration = new GoogleChartConfiguration(chartTitle,
@@ -91,10 +91,10 @@ namespace ProjectFirma.Web.Models
             return googleChart;
         }
 
-        public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures,
-            Func<ProjectFundingSourceExpenditure, string> filterFunction,
+        public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<ProjectGrantAllocationExpenditure> projectFundingSourceExpenditures,
+            Func<ProjectGrantAllocationExpenditure, string> filterFunction,
             List<string> filterValues,
-            Func<ProjectFundingSourceExpenditure, IComparable> sortFunction,
+            Func<ProjectGrantAllocationExpenditure, IComparable> sortFunction,
             List<int> rangeOfYears)
         {
             var fullCategoryYearDictionary = filterValues.ToDictionary(x => x, x => rangeOfYears.ToDictionary(y => y, y => 0m));

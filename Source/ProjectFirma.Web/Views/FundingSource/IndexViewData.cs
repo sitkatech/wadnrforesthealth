@@ -46,11 +46,11 @@ namespace ProjectFirma.Web.Views.FundingSource
 
             if (new FundingSourceCreateFeature().HasPermissionByPerson(currentPerson))
             {
-                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(SitkaRoute<FundingSourceController>.BuildUrlFromExpression(t => t.New()), $"Create a new {Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel()}");
+                //GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(SitkaRoute<FundingSourceController>.BuildUrlFromExpression(t => t.New()), $"Create a new {Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel()}");
             }
 
             GridName = "fundingSourcesGrid";
-            GridDataUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
+            //GridDataUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
         }
     }
 }

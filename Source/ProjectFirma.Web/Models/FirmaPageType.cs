@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Models
 
     public partial class FirmaPageTypeFundingSourcesList
     {
-        public override string GetViewUrl() => SitkaRoute<FundingSourceController>.BuildUrlFromExpression(x => x.Index());
+        public override string GetViewUrl() => null;
     }
 
     public partial class FirmaPageTypeOrganizationsList

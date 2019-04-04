@@ -119,9 +119,9 @@ namespace ProjectFirma.Web.Views.Project
         }
     }
 
-    public class ProjectFundingSourceExpenditureExcelSpec : ExcelWorksheetSpec<Models.ProjectFundingSourceExpenditure>
+    public class ProjectGrantAllocationExpenditureExcelSpec : ExcelWorksheetSpec<Models.ProjectGrantAllocationExpenditure>
     {
-        public ProjectFundingSourceExpenditureExcelSpec()
+        public ProjectGrantAllocationExpenditureExcelSpec()
         {
             AddColumn($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} ID", x => x.Project.ProjectID);
             AddColumn($"{Models.FieldDefinition.ProjectName.GetFieldDefinitionLabel()}", x => x.Project.ProjectName);

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectFundingSourceExpendituresViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectGrantAllocationExpendituresViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -28,13 +28,13 @@ using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.ProjectUpdate;
 
-namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
+namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
 {
-    public class EditProjectFundingSourceExpendituresViewModel : FormViewModel, IValidatableObject
+    public class EditProjectGrantAllocationExpendituresViewModel : FormViewModel, IValidatableObject
     {
         public int ProjectID { get; set; }
 
-        public List<ProjectFundingSourceExpenditureBulk> ProjectFundingSourceExpenditures { get; set; }
+        public List<ProjectGrantAllocationExpenditureBulk> ProjectGrantAllocationExpenditures { get; set; }
         public string Explanation { get; set; }
 
         public List<ProjectExemptReportingYearSimple> ProjectExemptReportingYears { get; set; }
@@ -42,28 +42,28 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public EditProjectFundingSourceExpendituresViewModel()
+        public EditProjectGrantAllocationExpendituresViewModel()
         {
         }
 
-        public EditProjectFundingSourceExpendituresViewModel(Models.Project project,
-            List<ProjectFundingSourceExpenditureBulk> projectFundingSourceExpenditureBulks,
-            List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
+        public EditProjectGrantAllocationExpendituresViewModel(Models.Project project,
+                                                                List<ProjectGrantAllocationExpenditureBulk> projectFundingSourceExpenditureBulks,
+                                                                List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
         {
-            ProjectFundingSourceExpenditures = projectFundingSourceExpenditureBulks;
+            ProjectGrantAllocationExpenditures = projectFundingSourceExpenditureBulks;
             ProjectExemptReportingYears = projectExemptReportingYears;
             Explanation = project.NoExpendituresToReportExplanation;
             ProjectID = project.ProjectID;
         }
 
-        public void UpdateModel(List<Models.ProjectFundingSourceExpenditure> currentProjectFundingSourceExpenditures,
-            IList<Models.ProjectFundingSourceExpenditure> allProjectFundingSourceExpenditures, Models.Project project)
+        public void UpdateModel(List<Models.ProjectGrantAllocationExpenditure> currentProjectGrantAllocationExpenditures,
+            IList<Models.ProjectGrantAllocationExpenditure> allProjectGrantAllocationExpenditures, Models.Project project)
         {
-            var projectFundingSourceExpendituresUpdated = new List<Models.ProjectFundingSourceExpenditure>();
-            if (ProjectFundingSourceExpenditures != null)
+            var projectFundingSourceExpendituresUpdated = new List<Models.ProjectGrantAllocationExpenditure>();
+            if (ProjectGrantAllocationExpenditures != null)
             {
                 // Completely rebuild the list
-                projectFundingSourceExpendituresUpdated = ProjectFundingSourceExpenditures.SelectMany(x => x.ToProjectFundingSourceExpenditures()).ToList();
+                projectFundingSourceExpendituresUpdated = ProjectGrantAllocationExpenditures.SelectMany(x => x.ToProjectGrantAllocationExpenditures()).ToList();
             }
 
             var currentProjectExemptYears = project.GetExpendituresExemptReportingYears();
@@ -84,8 +84,8 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
 
             project.NoExpendituresToReportExplanation = Explanation;
 
-            currentProjectFundingSourceExpenditures.Merge(projectFundingSourceExpendituresUpdated,
-                allProjectFundingSourceExpenditures,
+            currentProjectGrantAllocationExpenditures.Merge(projectFundingSourceExpendituresUpdated,
+                allProjectGrantAllocationExpenditures,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID && x.CalendarYear == y.CalendarYear,
                 (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);
         }
@@ -94,7 +94,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
         {
             var errors = new List<ValidationResult>();
             var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == ProjectID);
-            var validationErrors = ExpendituresValidationResult.Validate(ProjectFundingSourceExpenditures, ProjectExemptReportingYears, Explanation, project.GetProjectUpdatePlanningDesignStartToCompletionDateRange());
+            var validationErrors = ExpendituresValidationResult.Validate(ProjectGrantAllocationExpenditures, ProjectExemptReportingYears, Explanation, project.GetProjectUpdatePlanningDesignStartToCompletionDateRange());
             errors.AddRange(validationErrors.Select(x => new ValidationResult(x)));
             return errors;
         }

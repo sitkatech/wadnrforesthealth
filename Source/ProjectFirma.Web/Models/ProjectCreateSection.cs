@@ -236,7 +236,7 @@ namespace ProjectFirma.Web.Models
             {
                 return false;
             }
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
+            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var validationResults = new ExpendituresViewModel(projectFundingSourceExpenditures,
                     projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
                     project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList()) {ProjectID = project.ProjectID}

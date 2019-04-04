@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            projectUpdateBatch.ProjectFundingSourceRequestUpdates = project.ProjectFundingSourceRequests.Select(
+            projectUpdateBatch.ProjectGrantAllocationRequestUpdates = project.ProjectGrantAllocationRequests.Select(
                 projectFundingSourceRequest =>
                     new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, projectFundingSourceRequest.GrantAllocation)
                     {
@@ -45,14 +45,14 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             var projectFundingSourceExpectedFundingFromProjectUpdate = projectUpdateBatch
-                .ProjectFundingSourceRequestUpdates
+                .ProjectGrantAllocationRequestUpdates
                 .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
                     {
                         SecuredAmount = x.SecuredAmount,
                         UnsecuredAmount = x.UnsecuredAmount
                     }
                 ).ToList();
-            project.ProjectFundingSourceRequests.Merge(projectFundingSourceExpectedFundingFromProjectUpdate,
+            project.ProjectGrantAllocationRequests.Merge(projectFundingSourceExpectedFundingFromProjectUpdate,
                 allProjectFundingSourceRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>

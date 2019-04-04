@@ -38,12 +38,12 @@ namespace ProjectFirma.Web.Models
 
         public string EditUrl
         {
-            get { return SitkaRoute<FundingSourceController>.BuildUrlFromExpression(t => t.Edit(FundingSourceID)); }
+            get { return null; }
         }
 
         public string DeleteUrl
         {
-            get { return SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.DeleteFundingSource(FundingSourceID)); }
+            get { return null; }
         }
         
         public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, DisplayName);
@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Models
 
         public string SummaryUrl
         {
-            get { return SitkaRoute<FundingSourceController>.BuildUrlFromExpression(x => x.Detail(FundingSourceID)); }
+            get { return null; }
         }
 
         public static bool IsFundingSourceNameUnique(IEnumerable<FundingSource> fundingSources, string fundingSourceName, int currentFundingSourceID)
@@ -79,19 +79,19 @@ namespace ProjectFirma.Web.Models
 
         public int? ProjectsWhereYouAreTheFundingSourceMinCalendarYear
         {
-            get { return ProjectFundingSourceExpenditures.Any() ? ProjectFundingSourceExpenditures.Min(x => x.CalendarYear) : (int?) null; }
+            get { return null; }
         }
 
         public int? ProjectsWhereYouAreTheFundingSourceMaxCalendarYear
         {
-            get { return ProjectFundingSourceExpenditures.Any() ? ProjectFundingSourceExpenditures.Max(x => x.CalendarYear) : (int?) null; }
+            get { return null; }
         }
 
         public string AuditDescriptionString => FundingSourceName;
 
         public List<Project> GetAssociatedProjects(Person person)
         {
-            return ProjectFundingSourceExpenditures.Select(x => x.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
+            return null;
         }
     }
 }

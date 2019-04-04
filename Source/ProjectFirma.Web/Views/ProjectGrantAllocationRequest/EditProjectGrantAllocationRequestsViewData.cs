@@ -18,13 +18,13 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System.Collections.Generic;
-using DocumentFormat.OpenXml.Presentation;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
+namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 {
-    public class EditProjectFundingSourceRequestsViewData : FirmaUserControlViewData
+    public class EditProjectGrantAllocationRequestsViewData : FirmaUserControlViewData
     {
         public readonly List<GrantAllocationSimple> AllGrantAllocations;
         public readonly List<ProjectSimple> AllProjects;
@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         public readonly int? GrantAllocationID;
         public readonly bool FromGrantAllocation;
 
-        private EditProjectFundingSourceRequestsViewData(List<ProjectSimple> allProjects,
+        private EditProjectGrantAllocationRequestsViewData(List<ProjectSimple> allProjects,
             List<GrantAllocationSimple> allGrantAllocations,
             int? projectID,
             int? grantAllocationID)
@@ -47,13 +47,13 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
             FromGrantAllocation = displayMode == EditorDisplayMode.FromGrantAllocation;
         }
 
-        public EditProjectFundingSourceRequestsViewData(ProjectSimple project,
+        public EditProjectGrantAllocationRequestsViewData(ProjectSimple project,
             List<GrantAllocationSimple> allGrantAllocations)
             : this(new List<ProjectSimple> { project }, allGrantAllocations, project.ProjectID, null)
         {
         }
 
-        public EditProjectFundingSourceRequestsViewData(GrantAllocationSimple grantAllocation, List<ProjectSimple> allProjects)
+        public EditProjectGrantAllocationRequestsViewData(GrantAllocationSimple grantAllocation, List<ProjectSimple> allProjects)
             : this(allProjects, new List<GrantAllocationSimple> {grantAllocation}, null, grantAllocation.GrantAllocationID)
         {
         }

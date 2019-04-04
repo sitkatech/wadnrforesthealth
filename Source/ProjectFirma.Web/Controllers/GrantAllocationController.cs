@@ -351,7 +351,7 @@ namespace ProjectFirma.Web.Controllers
             var chartContainerID = chartTitle.Replace(" ", "");
 
             // If ProjectFundingSourceExpenditures is empty, ToGoogleChart returns null...
-            var googleChart = grantAllocation.ProjectFundingSourceExpenditures
+            var googleChart = grantAllocation.ProjectGrantAllocationExpenditures
                 .ToGoogleChart(x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
                     taxonomyTrunks.Select(x => x.DisplayName).ToList(),
                     x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
@@ -377,11 +377,11 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<ProjectCalendarYearExpenditure> ProjectCalendarYearExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var projectFundingSourceExpenditures = grantAllocation.ProjectFundingSourceExpenditures.ToList();
+            var projectGrantAllocationExpenditures = grantAllocation.ProjectGrantAllocationExpenditures.ToList();
             var calendarYearRangeForExpenditures =
-                projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
+                projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
             var gridSpec = new ProjectCalendarYearExpendituresGridSpec(calendarYearRangeForExpenditures);
-            var projectGrantAllocations = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectFundingSourceExpenditures, calendarYearRangeForExpenditures);
+            var projectGrantAllocations = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectGrantAllocationExpenditures, calendarYearRangeForExpenditures);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectCalendarYearExpenditure>(projectGrantAllocations, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -390,9 +390,9 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectFundingSourceRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var projectFundingSourceRequests = grantAllocation.ProjectFundingSourceRequests.ToList();
+            var projectGrantAllocationRequests = grantAllocation.ProjectGrantAllocationRequests.ToList();
             var gridSpec = new ProjectFundingSourceRequestsGridSpec();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectFundingSourceRequests, gridSpec);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectGrantAllocationRequests, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

@@ -69,8 +69,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ViewGoogleChartViewData = viewGoogleChartViewData;
 
 
-            var projectFundingSourceExpenditures = GrantAllocation.ProjectFundingSourceExpenditures.ToList();
-            CalendarYearsForProjectExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
+            var projectGrantAllocationExpenditures = GrantAllocation.ProjectGrantAllocationExpenditures.ToList();
+            CalendarYearsForProjectExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
 
             ProjectCalendarYearExpendituresGridSpec = new ProjectCalendarYearExpendituresGridSpec(CalendarYearsForProjectExpenditures)
             {

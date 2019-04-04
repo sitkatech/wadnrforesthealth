@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Views.Project
             UnsecuredFunding = Project.GetUnsecuredFunding() != null ? Project.GetUnsecuredFunding().ToStringCurrency() : "";
 
 
-            FundingRequest = project.ProjectFundingSourceRequests.Any() ? project.ProjectFundingSourceRequests.Sum(x => x.UnsecuredAmount).ToStringCurrency() : ViewUtilities.Unknown;
+            FundingRequest = project.ProjectGrantAllocationRequests.Any() ? project.ProjectGrantAllocationRequests.Sum(x => x.UnsecuredAmount).ToStringCurrency() : ViewUtilities.Unknown;
             CustomFactSheetTextViewData = new ViewPageContentViewData(firmaPageFactSheetCustomText, false);
         }
 

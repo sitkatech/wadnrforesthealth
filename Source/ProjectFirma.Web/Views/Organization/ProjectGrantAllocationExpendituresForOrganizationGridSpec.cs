@@ -11,9 +11,9 @@ using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.Organization
 {    
-    public class ProjectFundingSourceExpendituresForOrganizationGridSpec : GridSpec<Models.ProjectFundingSourceExpenditure>
+    public class ProjectGrantAllocationExpendituresForOrganizationGridSpec : GridSpec<Models.ProjectGrantAllocationExpenditure>
     {
-        public ProjectFundingSourceExpendituresForOrganizationGridSpec(Models.Organization organization)
+        public ProjectGrantAllocationExpendituresForOrganizationGridSpec(Models.Organization organization)
         {
             Add(Models.FieldDefinition.Project.ToGridHeaderString(),
                 a => UrlTemplate.MakeHrefString(a.Project.GetDetailUrl(), a.Project.DisplayName),

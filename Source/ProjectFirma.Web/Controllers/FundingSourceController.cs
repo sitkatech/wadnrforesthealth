@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Controllers
 {
     public class FundingSourceController : FirmaBaseController
     {
+        /*
         [FundingSourceViewFeature]
         public ViewResult Index()
         {
@@ -225,6 +226,7 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new ProjectFundingSourceRequestsGridSpec();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectFundingSourceRequests, gridSpec);
             return gridJsonNetJObjectResult;
-        }
+        }*/
     }
+    
 }

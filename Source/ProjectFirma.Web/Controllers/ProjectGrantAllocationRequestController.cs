@@ -27,68 +27,68 @@ using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.ProjectFundingSourceRequest;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Views.ProjectGrantAllocationRequest;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class ProjectFundingSourceRequestController : FirmaBaseController
+    public class ProjectGrantAllocationRequestController : FirmaBaseController
     {
         [HttpGet]
         [ProjectEditAsAdminFeature]
-        public PartialViewResult EditProjectFundingSourceRequestsForProject(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult EditProjectGrantAllocationRequestsForProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentProjectFundingSourceRequests = project.ProjectFundingSourceRequests.ToList();
+            var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
             Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
             Money projectEstimatedIndirectCost = project.EstimatedIndirectCost.GetValueOrDefault();
             Money projectEstimatedPersonnelAndBenefitsCost = project.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
             Money projectEstimatedSuppliesCost = project.EstimatedSuppliesCost.GetValueOrDefault();
             Money projectEstimatedTravelCost = project.EstimatedTravelCost.GetValueOrDefault();
 
-            var viewModel = new EditProjectFundingSourceRequestsViewModel(currentProjectFundingSourceRequests, true, projectEstimatedTotalCost, projectEstimatedIndirectCost, projectEstimatedPersonnelAndBenefitsCost, projectEstimatedSuppliesCost, projectEstimatedTravelCost);
-            return ViewEditProjectFundingSourceRequests(project, viewModel);
+            var viewModel = new EditProjectGrantAllocationRequestsViewModel(currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost, projectEstimatedIndirectCost, projectEstimatedPersonnelAndBenefitsCost, projectEstimatedSuppliesCost, projectEstimatedTravelCost);
+            return ViewEditProjectGrantAllocationRequests(project, viewModel);
         }
 
         [HttpPost]
         [ProjectEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditProjectFundingSourceRequestsForProject(ProjectPrimaryKey projectPrimaryKey, EditProjectFundingSourceRequestsViewModel viewModel)
+        public ActionResult EditProjectGrantAllocationRequestsForProject(ProjectPrimaryKey projectPrimaryKey, EditProjectGrantAllocationRequestsViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
-            var currentProjectFundingSourceRequests = project.ProjectFundingSourceRequests.ToList();
+            var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
             if (!ModelState.IsValid)
             {
-                return ViewEditProjectFundingSourceRequests(project, viewModel);
+                return ViewEditProjectGrantAllocationRequests(project, viewModel);
             }
-            return UpdateProjectFundingSourceRequests(viewModel, currentProjectFundingSourceRequests, project);
+            return UpdateProjectGrantAllocationRequests(viewModel, currentProjectGrantAllocationRequests, project);
         }
 
 
-        private static ActionResult UpdateProjectFundingSourceRequests(EditProjectFundingSourceRequestsViewModel viewModel,
-                                                                       List<ProjectGrantAllocationRequest> currentProjectFundingSourceRequests, 
+        private static ActionResult UpdateProjectGrantAllocationRequests(EditProjectGrantAllocationRequestsViewModel viewModel,
+                                                                       List<ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests, 
                                                                        Project project)
         {
-            HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();
-            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Local;
-            viewModel.UpdateModel(currentProjectFundingSourceRequests, allProjectFundingSourceRequests, project);
+            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
+            var allProjectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
+            viewModel.UpdateModel(currentProjectGrantAllocationRequests, allProjectGrantAllocationRequests, project);
             
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewEditProjectFundingSourceRequests(GrantAllocation grantAllocation,
-                                                                       EditProjectFundingSourceRequestsViewModel viewModel)
+        private PartialViewResult ViewEditProjectGrantAllocationRequests(GrantAllocation grantAllocation,
+                                                                       EditProjectGrantAllocationRequestsViewModel viewModel)
         {
             var allProjects = HttpRequestStorage.DatabaseEntities.Projects.ToList().GetActiveProjects().Select(x => new ProjectSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditProjectFundingSourceRequestsViewData(new GrantAllocationSimple(grantAllocation), allProjects);
-            return RazorPartialView<EditProjectFundingSourceRequests, EditProjectFundingSourceRequestsViewData, EditProjectFundingSourceRequestsViewModel>(viewData, viewModel);
+            var viewData = new EditProjectGrantAllocationRequestsViewData(new GrantAllocationSimple(grantAllocation), allProjects);
+            return RazorPartialView<EditProjectGrantAllocationRequests, EditProjectGrantAllocationRequestsViewData, EditProjectGrantAllocationRequestsViewModel>(viewData, viewModel);
         }
 
-        private PartialViewResult ViewEditProjectFundingSourceRequests(Project project, EditProjectFundingSourceRequestsViewModel viewModel)
+        private PartialViewResult ViewEditProjectGrantAllocationRequests(Project project, EditProjectGrantAllocationRequestsViewModel viewModel)
         {
             var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var viewData = new EditProjectFundingSourceRequestsViewData(new ProjectSimple(project), allGrantAllocations);
-            return RazorPartialView<EditProjectFundingSourceRequests, EditProjectFundingSourceRequestsViewData, EditProjectFundingSourceRequestsViewModel>(viewData, viewModel);
+            var viewData = new EditProjectGrantAllocationRequestsViewData(new ProjectSimple(project), allGrantAllocations);
+            return RazorPartialView<EditProjectGrantAllocationRequests, EditProjectGrantAllocationRequestsViewData, EditProjectGrantAllocationRequestsViewModel>(viewData, viewModel);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="TestProjectFundingSourceExpenditure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="TestProjectGrantAllocationExpenditure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -24,30 +24,29 @@ namespace ProjectFirma.Web.UnitTestCommon
 {
     public static partial class TestFramework
     {
-        public static class TestProjectFundingSourceExpenditure
+        public static class TestProjectGrantAllocationExpenditure
         {
-            public static ProjectFundingSourceExpenditure Create()
+            public static ProjectGrantAllocationExpenditure Create()
             {
                 var project = TestProject.Create();
-                //var fundingSource = TestFundingSource.Create();
                 var grantAllocation = TestGrantAllocation.Create();
                 return Create(project, grantAllocation);
             }
 
-            public static ProjectFundingSourceExpenditure Create(Project project, GrantAllocation grantAllocation)
+            public static ProjectGrantAllocationExpenditure Create(Project project, GrantAllocation grantAllocation)
             {
-                var projectFundingSourceExpenditure = ProjectFundingSourceExpenditure.CreateNewBlank(project, grantAllocation);
+                var projectFundingSourceExpenditure = ProjectGrantAllocationExpenditure.CreateNewBlank(project, grantAllocation);
                 return projectFundingSourceExpenditure;
             }
 
-            public static ProjectFundingSourceExpenditure Create(Project project, GrantAllocation grantAllocation, int calendarYear)
+            public static ProjectGrantAllocationExpenditure Create(Project project, GrantAllocation grantAllocation, int calendarYear)
             {
                 var projectFundingSourceExpenditure = Create(project, grantAllocation);
                 projectFundingSourceExpenditure.CalendarYear = calendarYear;
                 return projectFundingSourceExpenditure;
             }
 
-            public static ProjectFundingSourceExpenditure Create(Project project, FundingSource fundingSource, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
+            public static ProjectGrantAllocationExpenditure Create(Project project, FundingSource fundingSource, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
             {
                 var projectFundingSourceExpenditure = Create(project, grantAllocation, calendarYear);
                 projectFundingSourceExpenditure.ExpenditureAmount = expenditureAmount;

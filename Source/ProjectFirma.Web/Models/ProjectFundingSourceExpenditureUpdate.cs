@@ -24,7 +24,7 @@ using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectFundingSourceExpenditureUpdate : IFundingSourceExpenditure
+    public partial class ProjectGrantAllocationExpenditureUpdate : IGrantAllocationExpenditure
     {
         public decimal? MonetaryAmount
         {
@@ -39,24 +39,26 @@ namespace ProjectFirma.Web.Models
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            projectUpdateBatch.ProjectFundingSourceExpenditureUpdates =
-                project.ProjectFundingSourceExpenditures.Select(
-                    projectFundingSourceExpenditure =>
-                        new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch,
-                            projectFundingSourceExpenditure.CalendarYear,
-                            projectFundingSourceExpenditure.ExpenditureAmount,
-                            projectFundingSourceExpenditure.GrantAllocation)).ToList();
+            projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates = project.ProjectGrantAllocationExpenditures.Select(pfse => MakeNewProjectGrantAllocationExpenditureUpdate(projectUpdateBatch, pfse)).ToList();
         }
 
-        public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectFundingSourceExpenditure> allProjectFundingSourceExpenditures)
+        private static ProjectGrantAllocationExpenditureUpdate MakeNewProjectGrantAllocationExpenditureUpdate(ProjectUpdateBatch projectUpdateBatch, ProjectGrantAllocationExpenditure projectGrantAllocationExpenditure)
+        {
+            return new ProjectGrantAllocationExpenditureUpdate(projectUpdateBatch,
+                projectGrantAllocationExpenditure.CalendarYear,
+                projectGrantAllocationExpenditure.ExpenditureAmount,
+                projectGrantAllocationExpenditure.GrantAllocation);
+        }
+
+        public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectGrantAllocationExpenditure> allProjectGrantAllocationExpenditures)
         {
             var project = projectUpdateBatch.Project;
-            var projectFundingSourceExpendituresFromProjectUpdate =
-                projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.Select(
-                    x => new ProjectFundingSourceExpenditure(project.ProjectID, x.CalendarYear, x.ExpenditureAmount, x.GrantAllocationID)).ToList();
-            project.ProjectFundingSourceExpenditures.Merge(projectFundingSourceExpendituresFromProjectUpdate,
-                allProjectFundingSourceExpenditures,
-                (x, y) => x.ProjectID == y.ProjectID && x.CalendarYear == y.CalendarYear && x.FundingSourceID == y.FundingSourceID,
+            var projectGrantAllocationExpendituresFromProjectUpdate =
+                projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.Select(
+                    x => new ProjectGrantAllocationExpenditure(project.ProjectID, x.CalendarYear, x.ExpenditureAmount, x.GrantAllocationID)).ToList();
+            project.ProjectGrantAllocationExpenditures.Merge(projectGrantAllocationExpendituresFromProjectUpdate,
+                allProjectGrantAllocationExpenditures,
+                (x, y) => x.ProjectID == y.ProjectID && x.CalendarYear == y.CalendarYear && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);
         }
     }

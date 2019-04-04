@@ -24,39 +24,35 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.ProjectFundingSourceExpenditure
 {
-    public class EditProjectFundingSourceExpendituresViewData : FirmaUserControlViewData
+    public class EditProjectGrantAllocationExpendituresViewData : FirmaUserControlViewData
     {
         public List<int> CalendarYearRange { get; }
         public List<GrantAllocationSimple> AllGrantAllocationSimples { get; }
         public List<ProjectSimple> AllProjects { get; }
         public int? ProjectID { get; }
-        public int? FundingSourceID { get; }
         public int? GrantAllocationID { get; }
-        public bool FromFundingSource { get; }
         public bool FromGrantAllocation { get; }
         public bool UseFiscalYears { get; }
         public bool ShowNoExpendituresExplanation { get; }
 
-        private EditProjectFundingSourceExpendituresViewData(List<ProjectSimple> allProjects,
-            List<GrantAllocationSimple> allGrantAllocationSimples, int? projectID, int? fundingSourceID, int? grantAllocationID,
+        private EditProjectGrantAllocationExpendituresViewData(List<ProjectSimple> allProjects,
+            List<GrantAllocationSimple> allGrantAllocationSimples, int? projectID, int? grantAllocationID,
             List<int> calendarYearRange, bool showNoExpendituresExplanation)
         {
             CalendarYearRange = calendarYearRange;
             AllGrantAllocationSimples = allGrantAllocationSimples;
             ProjectID = projectID;
-            FundingSourceID = fundingSourceID;
             GrantAllocationID = grantAllocationID;
             AllProjects = allProjects;
-            FromFundingSource = false;
             FromGrantAllocation = false;
             UseFiscalYears = MultiTenantHelpers.UseFiscalYears();
             ShowNoExpendituresExplanation = showNoExpendituresExplanation;
         }
 
-        public EditProjectFundingSourceExpendituresViewData(ProjectSimple project,
+        public EditProjectGrantAllocationExpendituresViewData(ProjectSimple project,
             List<GrantAllocationSimple> allGrantAllocationSimples, List<int> calendarYearRangeForExpenditures,
             bool showNoExpendituresExplanation)
-            : this(new List<ProjectSimple> { project }, allGrantAllocationSimples, project.ProjectID, null, null, calendarYearRangeForExpenditures, showNoExpendituresExplanation)
+            : this(new List<ProjectSimple> { project }, allGrantAllocationSimples, project.ProjectID, null, calendarYearRangeForExpenditures, showNoExpendituresExplanation)
         {
         }
     }

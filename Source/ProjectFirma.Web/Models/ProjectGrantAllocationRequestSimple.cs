@@ -1,16 +1,16 @@
 ﻿namespace ProjectFirma.Web.Models
 {
-    public class ProjectFundingSourceRequestSimple
+    public class ProjectGrantAllocationRequestSimple
     {
 
         /// <summary>
         /// Needed by ModelBinder
         /// </summary>
-        public ProjectFundingSourceRequestSimple()
+        public ProjectGrantAllocationRequestSimple()
         {
         }
         
-        public ProjectFundingSourceRequestSimple(ProjectGrantAllocationRequest projectGrantAllocationRequest)
+        public ProjectGrantAllocationRequestSimple(ProjectGrantAllocationRequest projectGrantAllocationRequest)
             : this()
         {
             ProjectID = projectGrantAllocationRequest.ProjectID;
@@ -19,7 +19,7 @@
             SecuredAmount = projectGrantAllocationRequest.SecuredAmount;
         }
 
-        public ProjectFundingSourceRequestSimple(ProjectGrantAllocationRequestUpdate projectGrantAllocationRequestUpdate)
+        public ProjectGrantAllocationRequestSimple(ProjectGrantAllocationRequestUpdate projectGrantAllocationRequestUpdate)
         {
             ProjectID = projectGrantAllocationRequestUpdate.ProjectUpdateBatchID;
             GrantAllocationID = projectGrantAllocationRequestUpdate.GrantAllocationID;

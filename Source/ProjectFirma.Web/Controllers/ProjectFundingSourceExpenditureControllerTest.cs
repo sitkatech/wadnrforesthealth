@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceExpenditureControllerTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationExpenditureControllerTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -29,13 +29,13 @@ using NUnit.Framework;
 namespace ProjectFirma.Web.Controllers
 {
     [TestFixture]
-    public class ProjectFundingSourceExpenditureControllerTest
+    public class ProjectGrantAllocationExpenditureControllerTest
     {
         [Test]
         public void ProjectWithNoExpendituresShouldReturnEmptyDictionary()
         {
             var project = TestFramework.TestProject.Create();
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
+            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectFundingSourceExpenditures);
 
             var fullOrganizationTypeAndYearDictionary = projectFundingSourceExpenditures.GetFullCategoryYearDictionary(x => x.FundingSource.Organization.DisplayName,
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Controllers
             Assert.That(fullOrganizationTypeAndYearDictionary, Is.Empty);
         }
 
-        private static List<int> GetRangeOfYears(List<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures)
+        private static List<int> GetRangeOfYears(List<ProjectGrantAllocationExpenditure> projectFundingSourceExpenditures)
         {
             if (!projectFundingSourceExpenditures.Any())
                 return new List<int>();
@@ -64,12 +64,12 @@ namespace ProjectFirma.Web.Controllers
             var fundingSource = TestFramework.TestFundingSource.Create(organization, "test funding source 1");
             var grantAllocation = TestFramework.TestGrantAllocation.Create();
 
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource, grantAllocation, 2010, 100.00m);
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource, grantAllocation, 2011, 100.00m);
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource, grantAllocation, 2012, 100.00m);
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource, grantAllocation, 2013, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2010, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2011, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2012, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2013, 100.00m);
 
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
+            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectFundingSourceExpenditures);
             var fullOrganizationTypeAndYearDictionary = projectFundingSourceExpenditures.GetFullCategoryYearDictionary(x => x.FundingSource.Organization.DisplayName,
                 new List<string> {"test organization 1"}, x => x.FundingSource.Organization.DisplayName, rangeOfYears);
@@ -179,14 +179,14 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        private static List<ProjectFundingSourceExpenditure> BuildExpenditures(string organizationName, string fundingSourceName, string grantAllocationName, Dictionary<int, decimal> yearAndExpenditureDictionary)
+        private static List<ProjectGrantAllocationExpenditure> BuildExpenditures(string organizationName, string fundingSourceName, string grantAllocationName, Dictionary<int, decimal> yearAndExpenditureDictionary)
         {
             var project = TestFramework.TestProject.Create();
             var organization = TestFramework.TestOrganization.Create(organizationName);
             var fundingSource = TestFramework.TestFundingSource.CreateWithoutChangingName(organization, fundingSourceName);
             var grantAllocation = TestFramework.TestGrantAllocation.CreateWithoutChangingName(organization, fundingSourceName);
 
-            return yearAndExpenditureDictionary.Select(x => TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource, x.Key, x.Value)).ToList();
+            return yearAndExpenditureDictionary.Select(x => TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, x.Key, x.Value)).ToList();
 
         }
         */

@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [StringLength(ProjectUpdateBatch.FieldLengths.ExpendituresComment)]
         public string Comments { get; set; }
 
-        public List<ProjectFundingSourceRequestSimple> ProjectFundingSourceRequests { get; set; }
+        public List<ProjectGrantAllocationRequestSimple> ProjectFundingSourceRequests { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         [JsonIgnore]
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public ExpectedFundingViewModel(List<ProjectGrantAllocationRequestUpdate> projectFundingSourceRequestUpdates,
             string comments, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
-            ProjectFundingSourceRequests = projectFundingSourceRequestUpdates.Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
+            ProjectFundingSourceRequests = projectFundingSourceRequestUpdates.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             Comments = comments;
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;

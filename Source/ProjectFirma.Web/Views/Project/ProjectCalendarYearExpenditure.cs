@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Project
             CalendarYearExpenditure = calendarYearExpenditure;
         }
 
-        public static List<ProjectCalendarYearExpenditure> CreateFromProjectsAndCalendarYears(List<Models.ProjectFundingSourceExpenditure> projectProjectExpenditures, List<int> calendarYears)
+        public static List<ProjectCalendarYearExpenditure> CreateFromProjectsAndCalendarYears(List<Models.ProjectGrantAllocationExpenditure> projectProjectExpenditures, List<int> calendarYears)
         {
             var distinctProjects = projectProjectExpenditures.Select(x => x.Project).Distinct(new HavePrimaryKeyComparer<Models.Project>());
             var projectsCrossJoinCalendarYears =

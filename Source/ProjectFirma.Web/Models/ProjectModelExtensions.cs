@@ -156,8 +156,8 @@ namespace ProjectFirma.Web.Models
         public static List<ProjectOrganizationRelationship> GetFundingOrganizations(this Project project)
         {
             var relationshipTypeFunder = new RelationshipType(ModelObjectHelpers.NotYetAssignedID, "Funder", false, false, false, string.Empty, true, true);
-            var fundingOrganizations = project.ProjectFundingSourceExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
-                .Union(project.ProjectFundingSourceRequests.Select(x => x.GrantAllocation.BottommostOrganization)).Distinct()
+            var fundingOrganizations = project.ProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
+                .Union(project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation.BottommostOrganization)).Distinct()
                 .Select(x => new ProjectOrganizationRelationship(project, x, relationshipTypeFunder));
             Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), "Must have Organization set for all Funding Organizations");
             return fundingOrganizations.ToList();
