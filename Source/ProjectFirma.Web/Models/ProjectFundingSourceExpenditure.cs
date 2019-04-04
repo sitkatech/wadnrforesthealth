@@ -52,8 +52,6 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        int IFundingSourceExpenditure.FundingSourceID => throw new NotImplementedException("Stop using FundingSourceID");
-
         public static IEnumerable<CalendarYearReportedValue> ToCalendarYearReportedValues(IEnumerable<ProjectFundingSourceExpenditure> projectFundingSourceExpenditures)
         {
             var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();

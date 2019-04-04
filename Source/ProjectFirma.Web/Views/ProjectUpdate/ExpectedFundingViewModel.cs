@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             
         }
 
-        public ExpectedFundingViewModel(List<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates,
+        public ExpectedFundingViewModel(List<ProjectGrantAllocationRequestUpdate> projectFundingSourceRequestUpdates,
             string comments, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequestUpdates.Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
@@ -82,10 +82,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
-            List<ProjectFundingSourceRequestUpdate> currentProjectFundingSourceRequestUpdates,
-            IList<ProjectFundingSourceRequestUpdate> allProjectFundingSourceRequestUpdates, Models.ProjectUpdate projectUpdate)
+            List<ProjectGrantAllocationRequestUpdate> currentProjectFundingSourceRequestUpdates,
+            IList<ProjectGrantAllocationRequestUpdate> allProjectFundingSourceRequestUpdates, Models.ProjectUpdate projectUpdate)
         {
-            var projectFundingSourceRequestUpdatesUpdated = new List<ProjectFundingSourceRequestUpdate>();
+            var projectFundingSourceRequestUpdatesUpdated = new List<ProjectGrantAllocationRequestUpdate>();
             if (ProjectFundingSourceRequests != null)
             {
                 // Completely rebuild the list

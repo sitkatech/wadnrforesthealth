@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(int projectFundingSourceExpenditureUpdateID, int projectUpdateBatchID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
+        public ProjectFundingSourceExpenditureUpdate(int projectFundingSourceExpenditureUpdateID, int projectUpdateBatchID, int? fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
         {
             this.ProjectFundingSourceExpenditureUpdateID = projectFundingSourceExpenditureUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -43,13 +43,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(int projectUpdateBatchID, int fundingSourceID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
+        public ProjectFundingSourceExpenditureUpdate(int projectUpdateBatchID, int calendarYear, decimal expenditureAmount, int grantAllocationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceExpenditureUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectUpdateBatchID = projectUpdateBatchID;
-            this.FundingSourceID = fundingSourceID;
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
             this.GrantAllocationID = grantAllocationID;
@@ -58,16 +57,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectFundingSourceExpenditureUpdate(ProjectUpdateBatch projectUpdateBatch, FundingSource fundingSource, int calendarYear, decimal expenditureAmount, GrantAllocation grantAllocation) : this()
+        public ProjectFundingSourceExpenditureUpdate(ProjectUpdateBatch projectUpdateBatch, int calendarYear, decimal expenditureAmount, GrantAllocation grantAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceExpenditureUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
             this.ProjectUpdateBatch = projectUpdateBatch;
             projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.Add(this);
-            this.FundingSourceID = fundingSource.FundingSourceID;
-            this.FundingSource = fundingSource;
-            fundingSource.ProjectFundingSourceExpenditureUpdates.Add(this);
             this.CalendarYear = calendarYear;
             this.ExpenditureAmount = expenditureAmount;
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
@@ -78,9 +74,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectFundingSourceExpenditureUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, FundingSource fundingSource, GrantAllocation grantAllocation)
+        public static ProjectFundingSourceExpenditureUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation)
         {
-            return new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch, fundingSource, default(int), default(decimal), grantAllocation);
+            return new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch, default(int), default(decimal), grantAllocation);
         }
 
         /// <summary>
@@ -118,7 +114,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectFundingSourceExpenditureUpdateID { get; set; }
         public int ProjectUpdateBatchID { get; set; }
-        public int FundingSourceID { get; set; }
+        public int? FundingSourceID { get; set; }
         public int CalendarYear { get; set; }
         public decimal ExpenditureAmount { get; set; }
         public int GrantAllocationID { get; set; }

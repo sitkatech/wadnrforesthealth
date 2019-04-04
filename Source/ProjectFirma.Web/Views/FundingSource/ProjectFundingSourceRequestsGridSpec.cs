@@ -6,7 +6,7 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.FundingSource
 {
-    public class ProjectFundingSourceRequestsGridSpec : GridSpec<Models.ProjectFundingSourceRequest>
+    public class ProjectFundingSourceRequestsGridSpec : GridSpec<Models.ProjectGrantAllocationRequest>
     {
         public ProjectFundingSourceRequestsGridSpec()
         {

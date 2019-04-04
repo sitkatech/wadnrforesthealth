@@ -44,11 +44,11 @@ namespace ProjectFirma.Web.Views.FundingSource
         public readonly string ProjectCalendarYearExpendituresGridDataUrl;
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
 
-        public readonly GridSpec<Models.ProjectFundingSourceRequest> ProjectFundingSourceRequestsGridSpec;
+        public readonly GridSpec<Models.ProjectGrantAllocationRequest> ProjectFundingSourceRequestsGridSpec;
         public readonly string ProjectFundingSourceRequestsGridName;
         public readonly string ProjectFundingSourceRequestsGridDataUrl;
 
-        public DetailViewData(Person currentPerson, Models.FundingSource fundingSource, ViewGoogleChartViewData viewGoogleChartViewData, GridSpec<Models.ProjectFundingSourceRequest> projectFundingSourceRequestsGridSpec) : base(currentPerson)
+        public DetailViewData(Person currentPerson, Models.FundingSource fundingSource, ViewGoogleChartViewData viewGoogleChartViewData, GridSpec<Models.ProjectGrantAllocationRequest> projectFundingSourceRequestsGridSpec) : base(currentPerson)
         {
             ViewGoogleChartViewData = viewGoogleChartViewData;
             FundingSource = fundingSource;

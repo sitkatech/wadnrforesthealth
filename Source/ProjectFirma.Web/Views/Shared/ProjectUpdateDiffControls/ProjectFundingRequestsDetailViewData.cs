@@ -25,9 +25,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
 {
     public class ProjectFundingRequestsDetailViewData : FirmaUserControlViewData
     {
-        public readonly List<FundingSourceRequestAmount> FundingSourceRequestAmounts;
+        public readonly List<GrantAllocationRequestAmount> FundingSourceRequestAmounts;
 
-        public ProjectFundingRequestsDetailViewData(List<FundingSourceRequestAmount> fundingSourceRequestAmounts)
+        public ProjectFundingRequestsDetailViewData(List<GrantAllocationRequestAmount> fundingSourceRequestAmounts)
         {
             FundingSourceRequestAmounts = fundingSourceRequestAmounts;
         }

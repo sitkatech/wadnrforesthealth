@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         private static ActionResult UpdateProjectFundingSourceRequests(EditProjectFundingSourceRequestsViewModel viewModel,
-                                                                       List<ProjectFundingSourceRequest> currentProjectFundingSourceRequests, 
+                                                                       List<ProjectGrantAllocationRequest> currentProjectFundingSourceRequests, 
                                                                        Project project)
         {
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceRequests.Load();

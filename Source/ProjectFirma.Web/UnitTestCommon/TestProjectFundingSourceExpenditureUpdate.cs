@@ -26,9 +26,9 @@ namespace ProjectFirma.Web.UnitTestCommon
     {
         public static class TestProjectFundingSourceExpenditureUpdate
         {
-            public static ProjectFundingSourceExpenditureUpdate Create(ProjectUpdateBatch projectUpdateBatch, FundingSource fundingSource, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
+            public static ProjectFundingSourceExpenditureUpdate Create(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
             {
-                var projectFundingSourceExpenditureUpdate = new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch, fundingSource, calendarYear, expenditureAmount, grantAllocation);
+                var projectFundingSourceExpenditureUpdate = new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch, calendarYear, expenditureAmount, grantAllocation);
                 return projectFundingSourceExpenditureUpdate;
             }
         }

@@ -27,7 +27,7 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectFundingSourceRequest : IAuditableEntity, IFundingSourceRequestAmount
+    public partial class ProjectGrantAllocationRequest : IAuditableEntity, IGrantAllocationRequestAmount
     {
         public string AuditDescriptionString
         {
@@ -41,5 +41,6 @@ namespace ProjectFirma.Web.Models
                 return $"Project: {projectName}, Funding Source: {fundingSourceName}, Request Amount: {expenditureAmount}";
             }
         }
+
     }
 }

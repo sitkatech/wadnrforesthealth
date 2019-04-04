@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public string ProjectCalendarYearExpendituresGridDataUrl { get; }
         public List<int> CalendarYearsForProjectExpenditures { get; }
 
-        public GridSpec<Models.ProjectFundingSourceRequest> ProjectFundingSourceRequestsGridSpec { get; }
+        public GridSpec<Models.ProjectGrantAllocationRequest> ProjectFundingSourceRequestsGridSpec { get; }
         public string ProjectFundingSourceRequestsGridName { get; }
         public string ProjectFundingSourceRequestsGridDataUrl { get; }
 
@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             , EntityNotesViewData grantAllocationNotesViewData
             , EntityNotesViewData grantAllocationNoteInternalsViewData
             , ViewGoogleChartViewData viewGoogleChartViewData
-            , GridSpec<Models.ProjectFundingSourceRequest> projectFundingSourceRequestsGridSpec)
+            , GridSpec<Models.ProjectGrantAllocationRequest> projectFundingSourceRequestsGridSpec)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);

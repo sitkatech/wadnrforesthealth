@@ -1,8 +1,7 @@
 ﻿namespace ProjectFirma.Web.Models
 {
-    public interface IFundingSourceRequestAmount
+    public interface IGrantAllocationRequestAmount
     {
-        FundingSource FundingSource { get; }
         GrantAllocation GrantAllocation { get; }
         decimal? SecuredAmount { get; }
         decimal? UnsecuredAmount { get; }

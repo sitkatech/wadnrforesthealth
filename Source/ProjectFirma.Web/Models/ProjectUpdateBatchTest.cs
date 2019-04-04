@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Models
             var fundingSource1 = TestFramework.TestFundingSource.Create(organization1, "Funding Source 1");
             var grantAllocation1 = TestFramework.TestGrantAllocation.Create();
 
-            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, fundingSource1, grantAllocation1, currentYear, 2000);
+            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, currentYear, 2000);
             projectUpdate.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID;
             projectUpdate.ProjectLocationNotes = "No location for now";
 
@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Models
                             new List<ProjectLocation>(),
                             new List<ProjectPriorityArea>(),
                             new List<ProjectRegion>(),
-                            new List<ProjectFundingSourceRequest>(),
+                            new List<ProjectGrantAllocationRequest>(),
                             new List<ProjectOrganization>(),
                             new List<ProjectDocument>(),
                             new List<ProjectCustomAttribute>(),
@@ -138,7 +138,7 @@ namespace ProjectFirma.Web.Models
                 new List<ProjectLocation>(),
                 new List<ProjectPriorityArea>(),
                 new List<ProjectRegion>(),
-                new List<ProjectFundingSourceRequest>(),
+                new List<ProjectGrantAllocationRequest>(),
                 new List<ProjectOrganization>(),
                 new List<ProjectDocument>(),
                 new List<ProjectCustomAttribute>(),
@@ -488,8 +488,8 @@ namespace ProjectFirma.Web.Models
             var fundingSource1 = TestFramework.TestFundingSource.Create(organization1, "Funding Source 1");
             var grantAllocation1 = TestFramework.TestGrantAllocation.Create();
 
-            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, fundingSource1, grantAllocation1, currentYear + 2, 1000); // record after current year
-            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, fundingSource1, grantAllocation1, projectUpdate.PlannedDate.GetValueOrDefault().Year - 2, 2000); // record before start year
+            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, currentYear + 2, 1000); // record after current year
+            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, projectUpdate.PlannedDate.GetValueOrDefault().Year - 2, 2000); // record before start year
             AssertExpenditureYears(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList(),
                 projectUpdate.PlannedDate.GetValueOrDefault().Year,
                 currentYear,
@@ -497,8 +497,8 @@ namespace ProjectFirma.Web.Models
                 false,
                 "Has start year and completion year after current year, expenditure record outside of validatable range, expect range of start year to current year to be missing");
 
-            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, fundingSource1, grantAllocation1, projectUpdate.PlannedDate.GetValueOrDefault().Year, 3000); // record at start year
-            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, fundingSource1, grantAllocation1, projectUpdate.GetCompletionYear().Value, 4000); // record at completion year
+            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, projectUpdate.PlannedDate.GetValueOrDefault().Year, 3000); // record at start year
+            TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, projectUpdate.GetCompletionYear().Value, 4000); // record at completion year
             AssertExpenditureYears(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList(),
                 projectUpdate.PlannedDate.GetValueOrDefault().Year,
                 currentYear,
@@ -509,7 +509,7 @@ namespace ProjectFirma.Web.Models
             // fill in the other years missing
             FirmaDateUtilities.GetRangeOfYears(projectUpdate.PlannedDate.GetValueOrDefault().Year, projectUpdate.GetCompletionYear().Value)
                 .GetMissingYears(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList().Select(x => x.CalendarYear)).ToList()
-                .ForEach(x => TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, fundingSource1, grantAllocation1, x, 5000));
+                .ForEach(x => TestFramework.TestProjectFundingSourceExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, x, 5000));
             AssertExpenditureYears(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList(),
                 projectUpdate.PlannedDate.GetValueOrDefault().Year,
                 currentYear,

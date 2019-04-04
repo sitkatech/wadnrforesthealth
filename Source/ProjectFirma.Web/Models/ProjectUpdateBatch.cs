@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Models
             projectUpdateBatch.SyncExpendituresYearsExemptionExplanation();
 
             // Expected Funding
-            ProjectFundingSourceRequestUpdate.CreateFromProject(projectUpdateBatch);
+            ProjectGrantAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
 
             // performance measures
             // TODO Neutered Per WA DNR #1446. May decide to bring it back later
@@ -538,7 +538,7 @@ namespace ProjectFirma.Web.Models
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
             IList<ProjectPriorityArea> projectPriorityAreas, 
             IList<ProjectRegion> projectRegions, 
-            IList<ProjectFundingSourceRequest> projectFundingSourceRequests,
+            IList<ProjectGrantAllocationRequest> projectFundingSourceRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
             IList<ProjectCustomAttribute> allProjectCustomAttributes,
@@ -593,7 +593,7 @@ namespace ProjectFirma.Web.Models
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
                 IList<ProjectPriorityArea> projectPriorityAreas,
                 IList<ProjectRegion> projectRegions,
-                IList<ProjectFundingSourceRequest> projectFundingSourceRequests,
+                IList<ProjectGrantAllocationRequest> projectFundingSourceRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
                 IList<ProjectDocument> allProjectDocuments,
                 IList<ProjectCustomAttribute> allProjectCustomAttributes,
@@ -607,7 +607,7 @@ namespace ProjectFirma.Web.Models
             ProjectFundingSourceExpenditureUpdate.CommitChangesToProject(this, projectFundingSourceExpenditures);
 
             // expected funding
-            ProjectFundingSourceRequestUpdate.CommitChangesToProject(this, projectFundingSourceRequests);
+            ProjectGrantAllocationRequestUpdate.CommitChangesToProject(this, projectFundingSourceRequests);
 
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
             //  project budgets

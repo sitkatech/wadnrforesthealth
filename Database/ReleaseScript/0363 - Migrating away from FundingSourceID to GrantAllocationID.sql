@@ -104,6 +104,10 @@ alter table dbo.ProjectFundingSourceRequestUpdate
 alter column GrantAllocationID int not null
 GO
 
+alter table dbo.ProjectFundingSourceRequestUpdate
+alter column FundingSourceID int null
+GO
+
 
 
 -- ProjectFundingSourceExpenditureUpdate 
@@ -132,6 +136,10 @@ GO
 
 alter table dbo.ProjectFundingSourceExpenditureUpdate
 alter column GrantAllocationID int not null
+GO
+
+alter table dbo.ProjectFundingSourceExpenditureUpdate
+alter column FundingSourceID int null
 GO
 
 
@@ -200,6 +208,13 @@ ADD  CONSTRAINT [AK_ProjectFundingSourceRequest_ProjectID_GrantAllocationID] UNI
 	GrantAllocationID ASC
 ) ON [PRIMARY]
 GO
+
+EXEC sp_rename 'dbo.ProjectFundingSourceRequest', 'ProjectGrantAllocationRequest';
+EXEC sp_rename 'dbo.ProjectFundingSourceRequestUpdate', 'ProjectGrantAllocationRequestUpdate'; 
+
+
+EXEC sp_rename 'dbo.ProjectFundingSourceExpenditure', 'ProjectGrantAllocationExpenditure';
+EXEC sp_rename 'dbo.ProjectFundingSourceExpenditureUpdate', 'ProjectGrantAllocationExpenditureUpdate'; 
 
 --rollback tran
 

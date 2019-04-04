@@ -43,7 +43,6 @@ namespace ProjectFirma.Web.Models
                 project.ProjectFundingSourceExpenditures.Select(
                     projectFundingSourceExpenditure =>
                         new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch,
-                            projectFundingSourceExpenditure.FundingSource,
                             projectFundingSourceExpenditure.CalendarYear,
                             projectFundingSourceExpenditure.ExpenditureAmount,
                             projectFundingSourceExpenditure.GrantAllocation)).ToList();

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceRequestUpdate(int projectFundingSourceRequestUpdateID, int projectUpdateBatchID, int fundingSourceID, decimal? securedAmount, decimal? unsecuredAmount, int grantAllocationID) : this()
+        public ProjectFundingSourceRequestUpdate(int projectFundingSourceRequestUpdateID, int projectUpdateBatchID, int? fundingSourceID, decimal? securedAmount, decimal? unsecuredAmount, int grantAllocationID) : this()
         {
             this.ProjectFundingSourceRequestUpdateID = projectFundingSourceRequestUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
@@ -43,29 +43,25 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectFundingSourceRequestUpdate(int projectUpdateBatchID, int fundingSourceID, int grantAllocationID) : this()
+        public ProjectFundingSourceRequestUpdate(int projectUpdateBatchID, int grantAllocationID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceRequestUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectUpdateBatchID = projectUpdateBatchID;
-            this.FundingSourceID = fundingSourceID;
             this.GrantAllocationID = grantAllocationID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectFundingSourceRequestUpdate(ProjectUpdateBatch projectUpdateBatch, FundingSource fundingSource, GrantAllocation grantAllocation) : this()
+        public ProjectFundingSourceRequestUpdate(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectFundingSourceRequestUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
             this.ProjectUpdateBatch = projectUpdateBatch;
             projectUpdateBatch.ProjectFundingSourceRequestUpdates.Add(this);
-            this.FundingSourceID = fundingSource.FundingSourceID;
-            this.FundingSource = fundingSource;
-            fundingSource.ProjectFundingSourceRequestUpdates.Add(this);
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.ProjectFundingSourceRequestUpdates.Add(this);
@@ -74,9 +70,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectFundingSourceRequestUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, FundingSource fundingSource, GrantAllocation grantAllocation)
+        public static ProjectFundingSourceRequestUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, GrantAllocation grantAllocation)
         {
-            return new ProjectFundingSourceRequestUpdate(projectUpdateBatch, fundingSource, grantAllocation);
+            return new ProjectFundingSourceRequestUpdate(projectUpdateBatch, grantAllocation);
         }
 
         /// <summary>
@@ -114,7 +110,7 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectFundingSourceRequestUpdateID { get; set; }
         public int ProjectUpdateBatchID { get; set; }
-        public int FundingSourceID { get; set; }
+        public int? FundingSourceID { get; set; }
         public decimal? SecuredAmount { get; set; }
         public decimal? UnsecuredAmount { get; set; }
         public int GrantAllocationID { get; set; }

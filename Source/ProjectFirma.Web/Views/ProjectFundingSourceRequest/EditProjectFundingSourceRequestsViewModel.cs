@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
         }
 
         public EditProjectFundingSourceRequestsViewModel(
-            List<Models.ProjectFundingSourceRequest> projectFundingSourceRequests, bool forProject, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
+            List<Models.ProjectGrantAllocationRequest> projectFundingSourceRequests, bool forProject, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
             ProjectFundingSourceRequests = projectFundingSourceRequests
                 .Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
@@ -81,10 +81,10 @@ namespace ProjectFirma.Web.Views.ProjectFundingSourceRequest
             ForProject = forProject;
         }
 
-        public void UpdateModel(List<Models.ProjectFundingSourceRequest> currentProjectFundingSourceRequests,
-            IList<Models.ProjectFundingSourceRequest> allProjectFundingSourceRequests, Models.Project project)
+        public void UpdateModel(List<Models.ProjectGrantAllocationRequest> currentProjectFundingSourceRequests,
+            IList<Models.ProjectGrantAllocationRequest> allProjectFundingSourceRequests, Models.Project project)
         {
-            var projectFundingSourceRequestsUpdated = new List<Models.ProjectFundingSourceRequest>();
+            var projectFundingSourceRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectFundingSourceRequests != null)
             {
                 // Completely rebuild the list

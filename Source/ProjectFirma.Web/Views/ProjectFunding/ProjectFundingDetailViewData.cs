@@ -25,9 +25,9 @@ namespace ProjectFirma.Web.Views.ProjectFunding
 {
     public class ProjectFundingDetailViewData : FirmaViewData
     {
-        public readonly List<IFundingSourceRequestAmount> FundingSourceRequestAmounts;
+        public readonly List<IGrantAllocationRequestAmount> FundingSourceRequestAmounts;
 
-        public ProjectFundingDetailViewData(Person currentPerson, List<IFundingSourceRequestAmount> fundingSourceRequestAmounts) : base(currentPerson)
+        public ProjectFundingDetailViewData(Person currentPerson, List<IGrantAllocationRequestAmount> fundingSourceRequestAmounts) : base(currentPerson)
         {
             FundingSourceRequestAmounts = fundingSourceRequestAmounts;
         }

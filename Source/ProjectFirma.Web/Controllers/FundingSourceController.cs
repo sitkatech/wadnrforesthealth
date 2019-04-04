@@ -218,12 +218,12 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [FundingSourceViewFeature]
-        public GridJsonNetJObjectResult<ProjectFundingSourceRequest> ProjectFundingSourceRequestsGridJsonData(FundingSourcePrimaryKey fundingSourcePrimaryKey)
+        public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectFundingSourceRequestsGridJsonData(FundingSourcePrimaryKey fundingSourcePrimaryKey)
         {
             var fundingSource = fundingSourcePrimaryKey.EntityObject;
             var projectFundingSourceRequests = fundingSource.ProjectFundingSourceRequests.ToList();
             var gridSpec = new ProjectFundingSourceRequestsGridSpec();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectFundingSourceRequest>(projectFundingSourceRequests, gridSpec);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectFundingSourceRequests, gridSpec);
             return gridJsonNetJObjectResult;
         }
     }

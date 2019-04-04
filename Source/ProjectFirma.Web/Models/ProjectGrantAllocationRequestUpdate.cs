@@ -25,14 +25,14 @@ using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectFundingSourceRequestUpdate : IFundingSourceRequestAmount
+    public partial class ProjectGrantAllocationRequestUpdate : IGrantAllocationRequestAmount
     {
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectFundingSourceRequestUpdates = project.ProjectFundingSourceRequests.Select(
                 projectFundingSourceRequest =>
-                    new ProjectFundingSourceRequestUpdate(projectUpdateBatch, projectFundingSourceRequest.FundingSource, projectFundingSourceRequest.GrantAllocation)
+                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, projectFundingSourceRequest.GrantAllocation)
                     {
                         SecuredAmount = projectFundingSourceRequest.SecuredAmount,
                         UnsecuredAmount = projectFundingSourceRequest.UnsecuredAmount
@@ -41,12 +41,12 @@ namespace ProjectFirma.Web.Models
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch,
-            IList<ProjectFundingSourceRequest> allProjectFundingSourceRequests)
+            IList<ProjectGrantAllocationRequest> allProjectFundingSourceRequests)
         {
             var project = projectUpdateBatch.Project;
             var projectFundingSourceExpectedFundingFromProjectUpdate = projectUpdateBatch
                 .ProjectFundingSourceRequestUpdates
-                .Select(x => new ProjectFundingSourceRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
+                .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
                     {
                         SecuredAmount = x.SecuredAmount,
                         UnsecuredAmount = x.UnsecuredAmount

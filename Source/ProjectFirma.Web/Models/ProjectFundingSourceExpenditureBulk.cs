@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Models
             // ReSharper disable PossibleInvalidOperationException
             return
                 CalendarYearExpenditures.Where(x => x.MonetaryAmount.HasValue)
-                    .Select(x => new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch.ProjectUpdateBatchID, FundingSourceID.Value, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
+                    .Select(x => new ProjectFundingSourceExpenditureUpdate(projectUpdateBatch.ProjectUpdateBatchID, x.CalendarYear, x.MonetaryAmount.Value, GrantAllocationID))
                     .ToList();
             // ReSharper restore PossibleInvalidOperationException
         }
