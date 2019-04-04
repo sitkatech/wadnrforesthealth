@@ -216,5 +216,14 @@ EXEC sp_rename 'dbo.ProjectFundingSourceRequestUpdate', 'ProjectGrantAllocationR
 EXEC sp_rename 'dbo.ProjectFundingSourceExpenditure', 'ProjectGrantAllocationExpenditure';
 EXEC sp_rename 'dbo.ProjectFundingSourceExpenditureUpdate', 'ProjectGrantAllocationExpenditureUpdate'; 
 
+
+exec sp_rename 'ProjectGrantAllocationExpenditure.ProjectFundingSourceExpenditureID', 'ProjectGrantAllocationExpenditureID'
+exec sp_rename 'ProjectGrantAllocationExpenditureUpdate.ProjectFundingSourceExpenditureUpdateID', 'ProjectGrantAllocationExpenditureUpdateID'
+exec sp_rename 'ProjectGrantAllocationRequest.ProjectFundingSourceRequestID', 'ProjectGrantAllocationRequestID'
+exec sp_rename 'ProjectGrantAllocationRequestUpdate.ProjectFundingSourceRequestUpdateID', 'ProjectGrantAllocationRequestUpdateID'
+
+
+
+
 --rollback tran
 
