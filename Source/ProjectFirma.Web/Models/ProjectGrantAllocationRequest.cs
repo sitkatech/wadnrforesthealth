@@ -18,9 +18,7 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using ProjectFirma.Web.Common;
 using LtInfo.Common;
 using LtInfo.Common.Views;
@@ -34,11 +32,11 @@ namespace ProjectFirma.Web.Models
             get
             {
                 var project = HttpRequestStorage.DatabaseEntities.Projects.Find(ProjectID);
-                var fundingSource = HttpRequestStorage.DatabaseEntities.FundingSources.Find(FundingSourceID);
+                var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
-                var fundingSourceName = fundingSource != null ? fundingSource.AuditDescriptionString : ViewUtilities.NotFoundString;
+                var grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var expenditureAmount = UnsecuredAmount.ToStringCurrency();
-                return $"Project: {projectName}, Funding Source: {fundingSourceName}, Request Amount: {expenditureAmount}";
+                return $"Project: {projectName}, Grant Allocation: {grantAllocationName}, Request Amount: {expenditureAmount}";
             }
         }
 
