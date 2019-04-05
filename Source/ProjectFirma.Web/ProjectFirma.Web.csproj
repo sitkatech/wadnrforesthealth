@@ -1291,6 +1291,7 @@
     <Content Include="Views\CustomPage\Index.cshtml" />
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
+    <Content Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.CreateFromGrantAllocationsAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailController.js" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
@@ -1583,7 +1584,7 @@
     <Compile Include="Models\IProjectLocation.cs" />
     <Compile Include="Models\IProjectLocationStaging.cs" />
     <Compile Include="Models\ProjectExternalLinkUpdate.cs" />
-    <Compile Include="Models\ProjectFundingSourceExpenditureUpdate.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\ProjectGrantAllocationExpenditureUpdate.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ProjectBasicsUpdateDiff.cs" />
     <Compile Include="Models\ProjectUpdateTest.cs" />
@@ -1677,7 +1678,7 @@
     <Compile Include="Views\Project\FullProjectListSimple.cs" />
     <Compile Include="Views\Project\FullProjectListSimpleViewData.cs" />
     <Compile Include="Views\Project\GrantAllocationCalendarYearExpenditure.cs" />
-    <Compile Include="Views\Project\FundingSourceCalendarYearExpenditureTest.cs" />
+    <Compile Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.cs" />
     <Compile Include="Views\Project\Index.cs" />
     <Compile Include="Views\Project\IndexGridSpec.cs" />
     <Compile Include="Views\Project\IndexViewData.cs" />
@@ -2192,7 +2193,7 @@
     <Compile Include="Models\ProjectLocationFilterType.cs" />
     <Compile Include="Models\OrganizationModelExtensions.cs" />
     <Compile Include="Models\PerformanceMeasureModelExtensions.cs" />
-    <Compile Include="Models\ProjectFundingSourceExpenditure.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\ProjectGrantAllocationExpenditure.DatabaseContextExtensions.cs" />
     <Compile Include="Models\ICalendarYearMonetaryAmount.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\AuditLogEventType.cs" />
@@ -2278,7 +2279,7 @@
     <Compile Include="Models\AuditLogTest.cs" />
     <Compile Include="UnitTestCommon\TestPerformanceMeasureExpectedSubcategoryOption.cs" />
     <Compile Include="UnitTestCommon\TestPerformanceMeasureActualSubcategoryOption.cs" />
-    <Compile Include="UnitTestCommon\TestProjectFundingSourceExpenditureUpdate.cs" />
+    <Compile Include="UnitTestCommon\TestProjectGrantAllocationExpenditureUpdate.cs" />
     <Compile Include="UnitTestCommon\TestPerformanceMeasureNote.cs" />
     <Compile Include="UnitTestCommon\TestProjectNoteUpdate.cs" />
     <Compile Include="UnitTestCommon\TestProjectExemptReportingYear.cs" />
@@ -2289,7 +2290,7 @@
     <Compile Include="UnitTestCommon\TestPerformanceMeasureSubcategory.cs" />
     <Compile Include="UnitTestCommon\TestPerformanceMeasureActual.cs" />
     <Compile Include="UnitTestCommon\TestPerformanceMeasureExpected.cs" />
-    <Compile Include="UnitTestCommon\TestProjectFundingSourceExpenditure.cs" />
+    <Compile Include="UnitTestCommon\TestProjectGrantAllocationExpenditure.cs" />
     <Compile Include="UnitTestCommon\TestProjectClassification.cs" />
     <Compile Include="UnitTestCommon\TestClassification.cs" />
     <Compile Include="UnitTestCommon\TestTag.cs" />
@@ -2526,7 +2527,6 @@
     <Content Include="Views\ProjectUpdate\PerformanceMeasuresController.js" />
     <Content Include="Views\ProjectUpdate\ExpendituresController.js" />
     <Content Include="Views\Project\FeaturedProjectController.js" />
-    <Content Include="Views\Project\FundingSourceCalendarYearExpenditureTest.CreateFromFundingSourcesAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Project\ProjectCalendarYearExpenditureTest.CreateFromProjectsAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Results\ProjectMapViewDataTest.EnsureProjectMapCustomizationSignatureTest.approved.txt" />
     <Content Include="Views\Shared\PerformanceMeasureControls\PerformanceMeasureExpectedController.js" />
@@ -3844,7 +3844,6 @@
   <ItemGroup>
     <Folder Include="Content\img\MimeTypeIcons\" />
     <Folder Include="Content\themes\base\minified\images\" />
-    <Folder Include="Views\FundingSource\" />
     <Folder Include="Views\Help\" />
     <Folder Include="Views\ProjectGeospatialArea\" />
   </ItemGroup>
