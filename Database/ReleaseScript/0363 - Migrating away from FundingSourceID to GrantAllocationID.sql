@@ -180,7 +180,6 @@ set FundingSourceName = 'OBSOLETE_SHOULD_USE_GRANT_ALLOCATION_' + FundingSourceN
 select * from dbo.FundingSource
 
 
-
 --AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear
 ALTER TABLE [dbo].[ProjectFundingSourceExpenditure] 
 drop CONSTRAINT [AK_ProjectFundingSourceExpenditure_ProjectID_FundingSourceID_CalendarYear]
@@ -320,6 +319,18 @@ where FieldDefinitionID = (select FieldDefinitionID from dbo.FieldDefinition whe
 
 delete from dbo.FieldDefinition
 where FieldDefinitionName = 'FundingSource'
+
+
+---Updating dbo.SupportRequestType
+update dbo.SupportRequestType set SupportRequestTypeName = 'NewOrganizationOrGrantAllocation', SupportRequestTypeDisplayName='Need an Organization or Grant Allocation added to the list'
+where SupportRequestTypeID = 4
+
+--remove FirmaPageType and FirmaPage for FundingSourceList
+delete from dbo.FirmaPage
+where FirmaPageTypeID = (select FirmaPageTypeID from dbo.FirmaPageType where FirmaPageTypeName = 'FundingSourcesList')
+
+delete from dbo.FirmaPageType
+where FirmaPageTypeName = 'FundingSourcesList'
 
 --rollback tran
 

@@ -11,7 +11,6 @@ values
 (11, 'ProjectTypeList', 'Project Type List', 1),
 (13, 'TaxonomyBranchList', 'Taxonomy Branch List', 1),
 (14, 'TaxonomyTrunkList', 'Taxonomy Trunk List', 1),
-(15, 'FundingSourcesList', 'Funding Sources List', 1),
 (16, 'OrganizationsList', 'Organizations List', 1),
 (18, 'MyProjects', 'My Projects', 1),
 (22, 'ProjectMap', 'Project Map', 1),

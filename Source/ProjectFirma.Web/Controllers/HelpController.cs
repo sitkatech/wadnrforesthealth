@@ -106,7 +106,7 @@ namespace ProjectFirma.Web.Controllers
         [HttpGet]
         public PartialViewResult MissingGrantAllocation()
         {
-            return ViewSupport(SupportRequestTypeEnum.NewOrganizationOrFundingSource, string.Empty);
+            return ViewSupport(SupportRequestTypeEnum.NewOrganizationOrGrantAllocation, string.Empty);
         }
 
         [AnonymousUnclassifiedFeature]
