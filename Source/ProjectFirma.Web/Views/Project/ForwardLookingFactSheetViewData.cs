@@ -46,11 +46,11 @@ namespace ProjectFirma.Web.Views.Project
         public GoogleChartJson GoogleChartJson { get; }
         public string EstimatedTotalCost { get; }
 
-        public string NoFundingSourceIdentified { get; }
+        public string NoGrantAllocationIdentified { get; }
         public string SecuredFunding { get; }
         public string UnsecuredFunding { get; }
 
-        public string FundingRequest { get; }
+        public string GrandAllocation { get; }
         public int CalculatedChartHeight { get; }
         public string FactSheetPdfUrl { get; }
 
@@ -61,12 +61,11 @@ namespace ProjectFirma.Web.Views.Project
 
         public ViewPageContentViewData CustomFactSheetTextViewData { get; }
 
-
         public ForwardLookingFactSheetViewData(Person currentPerson,
             Models.Project project,
             ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson,
             GoogleChartJson googleChartJson,
-            List<GooglePieChartSlice> fundingSourceRequestAmountGooglePieChartSlices, Models.FirmaPage firmaPageFactSheetCustomText) : base(currentPerson, project)
+            List<GooglePieChartSlice> grantAllocationRequestAmountGooglePieChartSlices, Models.FirmaPage firmaPageFactSheetCustomText) : base(currentPerson, project)
         {
             PageTitle = project.DisplayName;
             BreadCrumbTitle = "Fact Sheet";
@@ -82,7 +81,7 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
             GoogleChartJson = googleChartJson;
-            GrantAllocationRequestAmountGooglePieChartSlices = fundingSourceRequestAmountGooglePieChartSlices;
+            GrantAllocationRequestAmountGooglePieChartSlices = grantAllocationRequestAmountGooglePieChartSlices;
 
             //Dynamically resize chart based on how much space the legend requires
             CalculatedChartHeight = 350 - (GrantAllocationRequestAmountGooglePieChartSlices.Count <= 2
@@ -114,12 +113,11 @@ namespace ProjectFirma.Web.Views.Project
             TaxonomyBranchName = project.ProjectType == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.ProjectType.TaxonomyBranch.DisplayName;
             ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             EstimatedTotalCost = Project.EstimatedTotalCost.HasValue ? Project.EstimatedTotalCost.ToStringCurrency() : "";
-            NoFundingSourceIdentified = project.GetNoFundingSourceIdentifiedAmount() != null ? Project.GetNoFundingSourceIdentifiedAmount().ToStringCurrency() : "";
+            NoGrantAllocationIdentified = project.GetNoGrantAllocationIdentifiedAmount() != null ? Project.GetNoGrantAllocationIdentifiedAmount().ToStringCurrency() : "";
             SecuredFunding = Project.GetSecuredFunding() != null ? Project.GetSecuredFunding().ToStringCurrency() : "";
             UnsecuredFunding = Project.GetUnsecuredFunding() != null ? Project.GetUnsecuredFunding().ToStringCurrency() : "";
 
-
-            FundingRequest = project.ProjectGrantAllocationRequests.Any() ? project.ProjectGrantAllocationRequests.Sum(x => x.UnsecuredAmount).ToStringCurrency() : ViewUtilities.Unknown;
+            GrandAllocation = project.ProjectGrantAllocationRequests.Any() ? project.ProjectGrantAllocationRequests.Sum(x => x.UnsecuredAmount).ToStringCurrency() : ViewUtilities.Unknown;
             CustomFactSheetTextViewData = new ViewPageContentViewData(firmaPageFactSheetCustomText, false);
         }
 

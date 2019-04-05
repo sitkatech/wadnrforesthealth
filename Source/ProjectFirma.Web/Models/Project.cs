@@ -150,15 +150,15 @@ namespace ProjectFirma.Web.Models
                 : null;
         }
 
-        public decimal? GetNoFundingSourceIdentifiedAmount()
+        public decimal? GetNoGrantAllocationIdentifiedAmount()
         {
             decimal? securedFunding = GetSecuredFunding() == null ? null : GetSecuredFunding();
             decimal? unsecuredFunding = GetUnsecuredFunding() == null ? null : GetUnsecuredFunding();
 
-            var noFundingSourceIdentifiedAmount = (EstimatedTotalCost ?? 0) - (securedFunding + unsecuredFunding ?? 0);
-            if (noFundingSourceIdentifiedAmount >= 0)
+            var noGrantAllocationIdentifiedAmount = (EstimatedTotalCost ?? 0) - (securedFunding + unsecuredFunding ?? 0);
+            if (noGrantAllocationIdentifiedAmount >= 0)
             {
-                return noFundingSourceIdentifiedAmount;
+                return noGrantAllocationIdentifiedAmount;
             }
 
             return null;
@@ -620,7 +620,7 @@ namespace ProjectFirma.Web.Models
             return googlePieChartSlices;
         }
 
-        public List<GooglePieChartSlice> GetFundingSourceRequestGooglePieChartSlices()
+        public List<GooglePieChartSlice> GetGrantAllocationRequestGooglePieChartSlices()
         {
             var sortOrder = 0;
             var googlePieChartSlices = new List<GooglePieChartSlice>();
@@ -652,10 +652,10 @@ namespace ProjectFirma.Web.Models
                 });
 
             unsecuredAmountsDictionary.OrderBy(x => x.Key.GrantAllocationName).ForEach(
-                (fundingSourceDictionaryItem, index) =>
+                (grantAllocationDictionaryItem, index) =>
                 {
-                    var fundingSource = fundingSourceDictionaryItem.Key;
-                    var fundingAmount = fundingSourceDictionaryItem.Value;
+                    var grantAllocation = grantAllocationDictionaryItem.Key;
+                    var fundingAmount = grantAllocationDictionaryItem.Value;
 
                     var luminosity = 100.0 * (unsecuredAmountsDictionary.Count - index - 1) /
                                      unsecuredAmountsDictionary.Count + 120;
@@ -663,7 +663,7 @@ namespace ProjectFirma.Web.Models
                         luminosity));
 
                     googlePieChartSlices.Add(new GooglePieChartSlice(
-                        "Targeted Funding: " + fundingSource.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
+                        "Targeted Funding: " + grantAllocation.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
                         sortOrder++, color));
                 });
 
@@ -672,14 +672,14 @@ namespace ProjectFirma.Web.Models
 
         public List<GooglePieChartSlice> GetRequestAmountGooglePieChartSlices()
         {
-            var requestAmountsDictionary = GetFundingSourceRequestGooglePieChartSlices();
-            var noFundingSourceIdentifiedAmount =
+            var requestAmountsDictionary = GetGrantAllocationRequestGooglePieChartSlices();
+            var noGrantAllocationIdentifiedAmount =
                 Convert.ToDouble(EstimatedTotalCost ?? 0) - requestAmountsDictionary.Sum(x => x.Value);
-            if (noFundingSourceIdentifiedAmount > 0)
+            if (noGrantAllocationIdentifiedAmount > 0)
             {
                 var sortOrder = requestAmountsDictionary.Any() ? requestAmountsDictionary.Max(x => x.SortOrder) + 1 : 0;
-                requestAmountsDictionary.Add(new GooglePieChartSlice("No Funding Source Identified",
-                    noFundingSourceIdentifiedAmount, sortOrder, "#dbdbdb"));
+                requestAmountsDictionary.Add(new GooglePieChartSlice("No Grant Allocation Identified",
+                    noGrantAllocationIdentifiedAmount, sortOrder, "#dbdbdb"));
             }
 
             return requestAmountsDictionary;
