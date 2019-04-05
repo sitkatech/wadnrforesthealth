@@ -84,8 +84,8 @@ namespace ProjectFirma.Web.Controllers
         public const string ProjectAttributesPartialViewPath = "~/Views/Shared/ProjectControls/ProjectAttributes.cshtml";
         public const string PerformanceMeasureReportedValuesPartialViewPath = "~/Views/Shared/PerformanceMeasureControls/PerformanceMeasureReportedValuesSummary.cshtml";
         public const string ProjectExpendituresPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectExpendituresSummary.cshtml";
-        public const string ProjectExpectedFundingPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectFundingRequestsDetail.cshtml";
-        public const string TransporationBudgetsPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectBudgetSummary.cshtml";
+        public const string ProjectExpectedFundingPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectGrantAllocationRequestsDetail.cshtml";
+        public const string TransportationBudgetsPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectBudgetSummary.cshtml";
         public const string ImageGalleryPartialViewPath = "~/Views/Shared/ImageGallery.cshtml";
         public const string ExternalLinksPartialViewPath = "~/Views/Shared/TextControls/EntityExternalLinks.cshtml";
         public const string EntityNotesPartialViewPath = "~/Views/Shared/TextControls/EntityNotes.cshtml";
@@ -573,7 +573,7 @@ namespace ProjectFirma.Web.Controllers
 
             var viewDataForAngularEditor = new ExpendituresViewData.ViewDataForAngularClass(project, allGrantAllocations, calendarYearRange, showNoExpendituresExplanation);
             var projectGrantAllocationExpenditures = projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.ToList();
-            var fromGrantAllocationAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(
+            var fromGrantAllocationAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(
                 new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
                 calendarYearRange);
             var projectExpendituresSummaryViewData = new ProjectExpendituresDetailViewData(
@@ -2089,19 +2089,19 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationsInUpdated = projectFundingSourceExpendituresUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
             var grantAllocationsOnlyInOriginal = grantAllocationsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x)).ToList();
 
-            var grantAllocationCalendarYearExpenditures = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(projectFundingSourceExpendituresOriginal, calendarYearsOriginal);
+            var grantAllocationCalendarYearExpenditures = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectFundingSourceExpendituresOriginal, calendarYearsOriginal);
             // we need to zero out calendar year values only in original
             foreach (var grantAllocationCalendarYearExpenditure in grantAllocationCalendarYearExpenditures)
             {
                 ZeroOutExpenditure(grantAllocationCalendarYearExpenditure, calendarYearsOriginal.Except(calendarYearsUpdated));
             }
 
-            var grantAllocationCalendarYearExpendituresUpdated = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(projectFundingSourceExpendituresUpdated, calendarYearsUpdated);
+            var grantAllocationCalendarYearExpendituresUpdated = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectFundingSourceExpendituresUpdated, calendarYearsUpdated);
 
             // find the ones that are only in the modified set and add them and mark them as "added"
             grantAllocationCalendarYearExpenditures.AddRange(
                 grantAllocationCalendarYearExpendituresUpdated.Where(x => !grantAllocationsInOriginal.Contains(x.GrantAllocationID))
-                    .Select(x => FundingSourceCalendarYearExpenditure.Clone(x, HtmlDiffContainer.DisplayCssClassAddedElement))
+                    .Select(x => GrantAllocationCalendarYearExpenditure.Clone(x, HtmlDiffContainer.DisplayCssClassAddedElement))
                     .ToList());
             // find the ones only in original and mark them as "deleted"
             grantAllocationCalendarYearExpenditures.Where(x => grantAllocationsOnlyInOriginal.Contains(x.GrantAllocationID)).ForEach(x =>
@@ -2114,11 +2114,11 @@ namespace ProjectFirma.Web.Controllers
             return GeneratePartialViewForExpendituresAsString(grantAllocationCalendarYearExpenditures, calendarYearStrings);
         }
 
-        private static void ZeroOutExpenditure(FundingSourceCalendarYearExpenditure fundingSourceCalendarYearExpenditure, IEnumerable<int> calendarYearsToZeroOut)
+        private static void ZeroOutExpenditure(GrantAllocationCalendarYearExpenditure grantAllocationCalendarYearExpenditure, IEnumerable<int> calendarYearsToZeroOut)
         {
             foreach (var calendarYear in calendarYearsToZeroOut)
             {
-                fundingSourceCalendarYearExpenditure.CalendarYearExpenditure[calendarYear] = 0;
+                grantAllocationCalendarYearExpenditure.CalendarYearExpenditure[calendarYear] = 0;
             }
         }
 
@@ -2131,13 +2131,13 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationsInUpdated = projectFundingSourceExpendituresUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
             var grantAllocationsOnlyInUpdated = grantAllocationsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x)).ToList();
 
-            var grantAllocationCalendarYearExpendituresOriginal = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(projectFundingSourceExpendituresOriginal, calendarYearsOriginal);
-            var grantAllocationCalendarYearExpendituresUpdated = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(projectFundingSourceExpendituresUpdated, calendarYearsUpdated);
+            var grantAllocationCalendarYearExpendituresOriginal = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectFundingSourceExpendituresOriginal, calendarYearsOriginal);
+            var grantAllocationCalendarYearExpendituresUpdated = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectFundingSourceExpendituresUpdated, calendarYearsUpdated);
 
             // find the ones that are only in the original set and add them and mark them as "deleted"
             grantAllocationCalendarYearExpendituresUpdated.AddRange(
                 grantAllocationCalendarYearExpendituresOriginal.Where(x => !grantAllocationsInUpdated.Contains(x.GrantAllocationID))
-                    .Select(x => FundingSourceCalendarYearExpenditure.Clone(x, HtmlDiffContainer.DisplayCssClassDeletedElement))
+                    .Select(x => GrantAllocationCalendarYearExpenditure.Clone(x, HtmlDiffContainer.DisplayCssClassDeletedElement))
                     .ToList());
             // find the ones only in modified and mark them as "added"
             grantAllocationCalendarYearExpendituresUpdated.Where(x => grantAllocationsOnlyInUpdated.Contains(x.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
@@ -2146,7 +2146,7 @@ namespace ProjectFirma.Web.Controllers
             return GeneratePartialViewForExpendituresAsString(grantAllocationCalendarYearExpendituresUpdated, calendarYearStrings);
         }
 
-        private string GeneratePartialViewForExpendituresAsString(List<FundingSourceCalendarYearExpenditure> fundingSourceCalendarYearExpenditures, List<CalendarYearString> calendarYearStrings)
+        private string GeneratePartialViewForExpendituresAsString(List<GrantAllocationCalendarYearExpenditure> fundingSourceCalendarYearExpenditures, List<CalendarYearString> calendarYearStrings)
         {
             var viewData = new ProjectExpendituresSummaryViewData(fundingSourceCalendarYearExpenditures, calendarYearStrings);
             var partialViewAsString = RenderPartialViewToString(ProjectExpendituresPartialViewPath, viewData);
@@ -2201,7 +2201,7 @@ namespace ProjectFirma.Web.Controllers
 
         private string GeneratePartialViewForExpectedFundingAsString(List<GrantAllocationRequestAmount> grantAllocationRequestAmounts)
         {
-            var viewData = new ProjectFundingRequestsDetailViewData(grantAllocationRequestAmounts);
+            var viewData = new ProjectGrantAllocationRequestsDetailViewData(grantAllocationRequestAmounts);
             var partialViewAsString = RenderPartialViewToString(ProjectExpectedFundingPartialViewPath, viewData);
             return partialViewAsString;
         }

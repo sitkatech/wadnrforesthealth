@@ -1,6 +1,6 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingRequestsDetail.cs" company="Tahoe Regional Planning Agency">
-Copyright (c) Tahoe Regional Planning Agency. All rights reserved.
+<copyright file="ProjectFundingRequestsDetailViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
 
@@ -18,17 +18,18 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Web.Mvc;
-using LtInfo.Common.HtmlHelperExtensions;
-using LtInfo.Common.Mvc;
+using System.Collections.Generic;
+using ProjectFirma.Web.Views.Project;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
 {
-    public abstract class ProjectFundingRequestsDetail : TypedWebPartialViewPage<ProjectFundingRequestsDetailViewData>
+    public class ProjectGrantAllocationRequestsDetailViewData : FirmaUserControlViewData
     {
-        public static void RenderPartialView(HtmlHelper html, ProjectFundingRequestsDetailViewData viewData)
+        public readonly List<GrantAllocationRequestAmount> GrantAllocationRequestAmounts;
+
+        public ProjectGrantAllocationRequestsDetailViewData(List<GrantAllocationRequestAmount> grantAllocationRequestAmounts)
         {
-            html.RenderRazorSitkaPartial<ProjectFundingRequestsDetail, ProjectFundingRequestsDetailViewData>(viewData);
+            GrantAllocationRequestAmounts = grantAllocationRequestAmounts;
         }
     }
 }

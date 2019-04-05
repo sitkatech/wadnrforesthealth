@@ -13,10 +13,10 @@ CREATE TABLE [dbo].[ProjectGrantAllocationExpenditureUpdate](
 (
 	[ProjectGrantAllocationExpenditureUpdateID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatchID_FundingSourceID_CalendarYear] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatchID_GrantAllocationID_CalendarYear] UNIQUE NONCLUSTERED 
 (
 	[ProjectUpdateBatchID] ASC,
-	[FundingSourceID] ASC,
+	[GrantAllocationID] ASC,
 	[CalendarYear] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]

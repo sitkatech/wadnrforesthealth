@@ -209,13 +209,45 @@ ADD  CONSTRAINT [AK_ProjectFundingSourceRequest_ProjectID_GrantAllocationID] UNI
 ) ON [PRIMARY]
 GO
 
+
+
+--AK_ProjectFundingSourceRequestUpdate_ProjectID_FundingSourceID
+ALTER TABLE [dbo].ProjectFundingSourceRequestUpdate 
+drop CONSTRAINT [AK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatchID_FundingSourceID]
+GO
+
+ALTER TABLE [dbo].ProjectFundingSourceRequestUpdate 
+ADD  CONSTRAINT [AK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatchID_GrantAllocationID] UNIQUE NONCLUSTERED 
+(
+	ProjectUpdateBatchID ASC,
+	GrantAllocationID ASC
+) ON [PRIMARY]
+GO
+
+
+
+
+
+-- AK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatchID_FundingSourceID_CalendarYear
+ALTER TABLE [dbo].ProjectFundingSourceExpenditureUpdate 
+drop CONSTRAINT AK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatchID_FundingSourceID_CalendarYear
+GO
+
+ALTER TABLE [dbo].ProjectFundingSourceExpenditureUpdate 
+ADD  CONSTRAINT AK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatchID_GrantAllocationID_CalendarYear UNIQUE NONCLUSTERED 
+(
+	ProjectUpdateBatchID ASC,
+	GrantAllocationID ASC,
+	CalendarYear
+) ON [PRIMARY]
+GO
+
+
 EXEC sp_rename 'dbo.ProjectFundingSourceRequest', 'ProjectGrantAllocationRequest';
 EXEC sp_rename 'dbo.ProjectFundingSourceRequestUpdate', 'ProjectGrantAllocationRequestUpdate'; 
 
-
 EXEC sp_rename 'dbo.ProjectFundingSourceExpenditure', 'ProjectGrantAllocationExpenditure';
 EXEC sp_rename 'dbo.ProjectFundingSourceExpenditureUpdate', 'ProjectGrantAllocationExpenditureUpdate'; 
-
 
 exec sp_rename 'ProjectGrantAllocationExpenditure.ProjectFundingSourceExpenditureID', 'ProjectGrantAllocationExpenditureID'
 exec sp_rename 'ProjectGrantAllocationExpenditureUpdate.ProjectFundingSourceExpenditureUpdateID', 'ProjectGrantAllocationExpenditureUpdateID'
@@ -224,11 +256,10 @@ exec sp_rename 'ProjectGrantAllocationRequestUpdate.ProjectFundingSourceRequestU
 
 exec sp_rename 'AK_ProjectFundingSourceExpenditure_ProjectID_GrantAllocationID_CalendarYear', 'AK_ProjectGrantAllocationExpenditure_ProjectID_GrantAllocationID_CalendarYear', 'OBJECT'
 exec sp_rename 'PK_ProjectFundingSourceExpenditure_ProjectFundingSourceExpenditureID', 'PK_ProjectGrantAllocationExpenditure_ProjectGrantAllocationExpenditureID', 'OBJECT'
-exec sp_rename 'AK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatchID_FundingSourceID_CalendarYear', 'AK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatchID_FundingSourceID_CalendarYear', 'OBJECT'
+
 exec sp_rename 'PK_ProjectFundingSourceExpenditureUpdate_ProjectFundingSourceExpenditureUpdateID', 'PK_ProjectGrantAllocationExpenditureUpdate_ProjectGrantAllocationExpenditureUpdateID', 'OBJECT'
 exec sp_rename 'AK_ProjectFundingSourceRequest_ProjectID_GrantAllocationID', 'AK_ProjectGrantAllocationRequest_ProjectID_GrantAllocationID', 'OBJECT'
 exec sp_rename 'PK_ProjectFundingSourceRequest_ProjectFundingSourceRequestID', 'PK_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID', 'OBJECT'
-exec sp_rename 'AK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatchID_FundingSourceID', 'AK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatchID_FundingSourceID', 'OBJECT'
 exec sp_rename 'PK_ProjectFundingSourceRequestUpdate_ProjectFundingSourceRequestUpdateID', 'PK_ProjectGrantAllocationRequestUpdate_ProjectGrantAllocationRequestUpdateID', 'OBJECT'
 
 exec sp_rename 'FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID', 'FK_ProjectGrantAllocationExpenditure_FundingSource_FundingSourceID', 'OBJECT'
@@ -244,6 +275,13 @@ exec sp_rename 'FK_ProjectFundingSourceRequest_Project_ProjectID', 'FK_ProjectGr
 
 exec sp_rename 'FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'OBJECT'
 exec sp_rename 'FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'OBJECT'
+
+
+-- These were fun
+exec sp_rename 'AK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatchID_GrantAllocationID_CalendarYear', 'AK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatchID_GrantAllocationID_CalendarYear', 'OBJECT'
+exec sp_rename 'AK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatchID_GrantAllocationID', 'AK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatchID_GrantAllocationID', 'OBJECT'
+
+
 
 
 

@@ -282,7 +282,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var calendarYearsForFundingSourceExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var fromFundingSourcesAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(new List<IGrantAllocationExpenditure>(projectFundingSourceExpenditures),
+            var fromFundingSourcesAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectFundingSourceExpenditures),
                 calendarYearsForFundingSourceExpenditures);
             var projectExpendituresDetailViewData = new ProjectExpendituresDetailViewData(
                 fromFundingSourcesAndCalendarYears,

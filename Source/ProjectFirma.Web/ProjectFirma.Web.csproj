@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -1041,8 +1041,8 @@
     <Compile Include="Views\Shared\ProjectLocationControls\EditProjectBoundingBoxViewModel.cs" />
     <Compile Include="Views\Shared\ProjectOrganization\ProjectOrganizationsDetail.cs" />
     <Compile Include="Views\Shared\ProjectOrganization\ProjectOrganizationsDetailViewData.cs" />
-    <Compile Include="Views\Shared\ProjectUpdateDiffControls\ProjectFundingRequestsDetail.cs" />
-    <Compile Include="Views\Shared\ProjectUpdateDiffControls\ProjectFundingRequestsDetailViewData.cs" />
+    <Compile Include="Views\Shared\ProjectUpdateDiffControls\ProjectGrantAllocationRequestsDetail.cs" />
+    <Compile Include="Views\Shared\ProjectUpdateDiffControls\ProjectGrantAllocationRequestsDetailViewData.cs" />
     <Compile Include="Models\IHaveASortOrder.cs" />
     <Compile Include="Views\Shared\SortOrder\SortOrderHelper.cs" />
     <Compile Include="Views\Shared\RelatedPerformanceMeasures.cs" />
@@ -1693,7 +1693,7 @@
     <Compile Include="Views\Project\FeaturedListViewData.cs" />
     <Compile Include="Views\Project\FullProjectListSimple.cs" />
     <Compile Include="Views\Project\FullProjectListSimpleViewData.cs" />
-    <Compile Include="Views\Project\FundingSourceCalendarYearExpenditure.cs" />
+    <Compile Include="Views\Project\GrantAllocationCalendarYearExpenditure.cs" />
     <Compile Include="Views\Project\FundingSourceCalendarYearExpenditureTest.cs" />
     <Compile Include="Views\Project\Index.cs" />
     <Compile Include="Views\Project\IndexGridSpec.cs" />
@@ -1871,7 +1871,7 @@
     <Content Include="Views\ProjectFunding\ProjectFundingDetail.cshtml" />
     <Content Include="Views\ProjectGrantAllocationRequest\EditProjectGrantAllocationRequests.cshtml" />
     <Content Include="Views\ProjectUpdate\ExpectedFunding.cshtml" />
-    <Content Include="Views\Shared\ProjectUpdateDiffControls\ProjectFundingRequestsDetail.cshtml" />
+    <Content Include="Views\Shared\ProjectUpdateDiffControls\ProjectGrantAllocationRequestsDetail.cshtml" />
     <Content Include="Views\ProjectCreate\ExpectedFunding.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MoneyWholeNumber.cshtml" />
     <Content Include="Views\Project\ForwardLookingFactSheet.cshtml" />

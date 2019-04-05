@@ -22,7 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using ProjectFirma.Web.Views.Shared.ProjectUpdateDiffControls
 @using LtInfo.Common
 @using LtInfo.Common.HtmlHelperExtensions
-@inherits ProjectFundingRequestsDetail
+@inherits ProjectGrantAllocationRequestsDetail
 
 <table class="summaryLayout">
     <colgroup>
@@ -32,43 +32,43 @@ Source code is available upon request via <support@sitkatech.com>.
         <col>
     </colgroup>
     <tr>
-        <th>@Html.LabelWithSugarFor(FieldDefinition.FundingSource)</th>
+        <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
         <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</th>
         <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>
         <th style="text-align: right">Total</th>
     </tr>
-    @foreach (var fundingSourceRequestAmount in ViewDataTyped.FundingSourceRequestAmounts.OrderBy(x => x.FundingSource.FundingSourceName))
+    @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.GrantAllocation.GrantAllocationName))
     {
-        <tr class="@fundingSourceRequestAmount.DisplayCssClass">
-            <td>@fundingSourceRequestAmount.FundingSource.DisplayNameAsUrl</td>
-            <td class="@fundingSourceRequestAmount.DisplayCssClass" style="text-align: right">
-                <span >@fundingSourceRequestAmount.SecuredAmount.ToStringCurrency()</span>
+        <tr class="@grantAllocationRequestAmount.DisplayCssClass">
+            <td>@grantAllocationRequestAmount.GrantAllocation.DisplayNameAsUrl</td>
+            <td class="@grantAllocationRequestAmount.DisplayCssClass" style="text-align: right">
+                <span >@grantAllocationRequestAmount.SecuredAmount.ToStringCurrency()</span>
             </td>
-            <td class="@fundingSourceRequestAmount.DisplayCssClass" style="text-align: right">
-                <span >@fundingSourceRequestAmount.UnsecuredAmount.ToStringCurrency()</span>
+            <td class="@grantAllocationRequestAmount.DisplayCssClass" style="text-align: right">
+                <span >@grantAllocationRequestAmount.UnsecuredAmount.ToStringCurrency()</span>
             </td>
             <th style="text-align: right">
-                <span >@((fundingSourceRequestAmount.SecuredAmount + fundingSourceRequestAmount.UnsecuredAmount).ToStringCurrency())</span>
+                <span >@((grantAllocationRequestAmount.SecuredAmount + grantAllocationRequestAmount.UnsecuredAmount).ToStringCurrency())</span>
             </th>
         </tr>
     }
-    @if (ViewDataTyped.FundingSourceRequestAmounts.Any())
+    @if (ViewDataTyped.GrantAllocationRequestAmounts.Any())
     {
         <tr>
             <th>Total</th>
             <td style="text-align: right">
-                <span >@ViewDataTyped.FundingSourceRequestAmounts.Sum(x => x.SecuredAmount).ToStringCurrency()</span>
+                <span >@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.SecuredAmount).ToStringCurrency()</span>
             </td>
             <td style="text-align: right">
-                <span >@ViewDataTyped.FundingSourceRequestAmounts.Sum(x => x.UnsecuredAmount).ToStringCurrency()</span>
+                <span >@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.UnsecuredAmount).ToStringCurrency()</span>
             </td>
             <th style="text-align: right">
-                <span >@ViewDataTyped.FundingSourceRequestAmounts.Sum(x => x.SecuredAmount + x.UnsecuredAmount).ToStringCurrency()</span>
+                <span >@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.SecuredAmount + x.UnsecuredAmount).ToStringCurrency()</span>
             </th>
         </tr>
     }
 </table>
-@if (!ViewDataTyped.FundingSourceRequestAmounts.Any())
+@if (!ViewDataTyped.GrantAllocationRequestAmounts.Any())
 {
     <p class="systemText">No expected funding has been reported for this project.</p>
 }
