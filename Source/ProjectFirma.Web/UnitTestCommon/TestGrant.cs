@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.UnitTestCommon
 
             private static string GetTestGrantName(Organization organization, string grantName)
             {
-                return string.Format("{0}{1}", organization.OrganizationName, grantName);
+                return $"{organization.OrganizationName}{grantName}";
             }
 
 

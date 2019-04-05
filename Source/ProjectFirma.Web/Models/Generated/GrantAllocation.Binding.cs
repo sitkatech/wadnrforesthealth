@@ -25,7 +25,6 @@ namespace ProjectFirma.Web.Models
         protected GrantAllocation()
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
-            this.FundingSources = new HashSet<FundingSource>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
@@ -94,13 +93,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || FundingSources.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(FundingSource).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -126,11 +125,6 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in AgreementGrantAllocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
-            foreach(var x in FundingSources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -199,7 +193,6 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
-        public virtual ICollection<FundingSource> FundingSources { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }

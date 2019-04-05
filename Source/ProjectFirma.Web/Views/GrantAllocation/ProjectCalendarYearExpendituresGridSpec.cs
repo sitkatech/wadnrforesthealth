@@ -18,16 +18,17 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System.Collections.Generic;
 using System.Globalization;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Project;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Views.Project;
 
-namespace ProjectFirma.Web.Views.FundingSource
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class ProjectCalendarYearExpendituresGridSpec : GridSpec<ProjectCalendarYearExpenditure>
     {

@@ -29,6 +29,7 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
+    /*
     public partial class FundingSource : IAuditableEntity
     {
         /// <summary>
@@ -94,4 +95,5 @@ namespace ProjectFirma.Web.Models
             return null;
         }
     }
+    */
 }

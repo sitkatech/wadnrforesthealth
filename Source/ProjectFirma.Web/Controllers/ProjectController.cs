@@ -808,10 +808,10 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return results;
         }
 
-        public static GoogleChartDataTable GetProjectFactSheetGoogleChartDataTable(List<GooglePieChartSlice> fundingSourceExpenditures)
+        public static GoogleChartDataTable GetProjectFactSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditures)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn($"{FieldDefinition.FundingSource.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
-            var chartRowCs = fundingSourceExpenditures.Select(x =>
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var chartRowCs = grantAllocationExpenditures.Select(x =>
             {
                 var organizationTypeRowV = new GoogleChartRowV(x.Label);
                 var formattedValue = GoogleChartJson.GetFormattedValue(x.Value, MeasurementUnitType.Dollars);

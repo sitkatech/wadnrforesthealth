@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Common
         public static readonly string GrantNoteIsEmptyText = $"{FieldDefinition.GrantNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
         public static readonly string GrantAllocationNoteIsEmptyText = $"{FieldDefinition.GrantAllocationNote.GetFieldDefinitionLabel()} is empty text. Please enter a note before saving.";
         public static readonly string OrganizationShortNameUnique = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} short name already exists.";
-        public static readonly string FundingSourceNameUnique = $"{FieldDefinition.FundingSource.GetFieldDefinitionLabel()} name already exists.";
+        //public static readonly string FundingSourceNameUnique = $"{FieldDefinition.FundingSource.GetFieldDefinitionLabel()} name already exists.";
         public static readonly string ClassificationNameUnique = $"{FieldDefinition.Classification.GetFieldDefinitionLabel()} name already exists.";
         public static readonly string PerformanceMeasureNameUnique = $"{FieldDefinition.PerformanceMeasure.GetFieldDefinitionLabel()} name already exists.";
         public static readonly string ExplanationNecessaryForProjectExemptYears = $"Please provide an explanation of why the {FieldDefinition.ReportingYear.GetFieldDefinitionLabelPluralized()} are exempt.";

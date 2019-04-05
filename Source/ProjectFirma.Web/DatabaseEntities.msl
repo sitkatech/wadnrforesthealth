@@ -240,19 +240,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FundingSource">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FundingSource">
-        <MappingFragment StoreEntitySet="FundingSource">
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="FundingSourceName" ColumnName="FundingSourceName" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="FundingSourceDescription" ColumnName="FundingSourceDescription" />
-          <ScalarProperty Name="FundingSourceAmount" ColumnName="FundingSourceAmount" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Grant">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Grant">
         <MappingFragment StoreEntitySet="Grant">

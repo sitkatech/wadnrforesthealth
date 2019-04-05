@@ -303,7 +303,7 @@
                     @if (ViewDataTyped.ExpenditureGooglePieChartSlices.Any())
                     {
                         <div class="text-center">
-                            <strong>Expenditures by @FieldDefinition.FundingSource.GetFieldDefinitionLabel() to Date: @ViewDataTyped.Project.ProjectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount).ToStringCurrency()</strong>
+                            <strong>Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Date: @ViewDataTyped.Project.ProjectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount).ToStringCurrency()</strong>
                         </div>
                         <div id="@ViewDataTyped.GoogleChartJson.ChartContainerID" class="googleChart" style="height: @(ViewDataTyped.CalculatedChartHeight)px;"></div>
                         <div class="captionText">

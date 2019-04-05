@@ -23,7 +23,6 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.Store.FundingSource" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
@@ -218,14 +217,6 @@
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FundingSource_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_FundingSource_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="FundingSources" EntitySet="FundingSource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_FundingSource_Organization_OrganizationID">
-      <End Role="Organization" EntitySet="Organization" />
-      <End Role="FundingSources" EntitySet="FundingSource" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -1116,18 +1107,6 @@
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="FeatureClassName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GeoJson" Type="varchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="FundingSource">
-    <Key>
-      <PropertyRef Name="FundingSourceID" />
-    </Key>
-    <Property Name="FundingSourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
-    <Property Name="FundingSourceDescription" Type="varchar" MaxLength="500" />
-    <Property Name="FundingSourceAmount" Type="money" />
-    <Property Name="GrantAllocationID" Type="int" />
   </EntityType>
   <EntityType Name="Grant">
     <Key>
@@ -2556,30 +2535,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="FocusAreaLocationStagings">
         <PropertyRef Name="FocusAreaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FundingSource_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="0..1" />
-    <End Role="FundingSources" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="FundingSources">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FundingSource_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Store.Organization" Multiplicity="1" />
-    <End Role="FundingSources" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organization">
-        <PropertyRef Name="OrganizationID" />
-      </Principal>
-      <Dependent Role="FundingSources">
-        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

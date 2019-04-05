@@ -1,10 +1,10 @@
-﻿using ProjectFirma.Web.Models;
-using LtInfo.Common;
+﻿using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.FundingSource
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class ProjectFundingSourceRequestsGridSpec : GridSpec<Models.ProjectGrantAllocationRequest>
     {

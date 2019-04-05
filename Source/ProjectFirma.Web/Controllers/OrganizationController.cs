@@ -206,12 +206,12 @@ namespace ProjectFirma.Web.Controllers
         private static ViewGoogleChartViewData GetCalendarYearExpendituresFromOrganizationFundingSourcesLineChartViewData(Organization organization)
         {
             var yearRange = FirmaDateUtilities.GetRangeOfYearsForReporting();
-            var projectFundingSourceExpenditures = organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures);
+            var projectGrantAllocationExpenditures = organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures);
 
-            var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.FundingSource.GetFieldDefinitionLabel()}";
+            var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var filterValues = organization.FundingSources.Select(x => x.FundingSourceName).ToList();
-            var googleChart = projectFundingSourceExpenditures.ToGoogleChart(x => x.GrantAllocation.GrantAllocationName,
+            var filterValues = organization.GrantAllocations.Select(x => x.GrantAllocationName).ToList();
+            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.GrantAllocationName,
                 filterValues,
                 x => x.GrantAllocation.GrantAllocationName,
                 yearRange,
@@ -258,7 +258,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewDeleteOrganization(Organization organization, ConfirmDialogFormViewModel viewModel)
         {
             var projectFundingSourceExpenditureTotal = organization.GrantAllocations.Sum(x => x.ProjectGrantAllocationExpenditures.Sum(y => y.ExpenditureAmount)).ToStringCurrency();
-            var confirmMessage = $"Organization \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.FundingSources.Count} funding sources that fund a total of {projectFundingSourceExpenditureTotal} across various projects.<br /><br />Are you sure you want to delete this Organization?";
+            var confirmMessage = $"Organization \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.GrantAllocations.Count} Grant Allocations that fund a total of {projectFundingSourceExpenditureTotal} across various projects.<br /><br />Are you sure you want to delete this Organization?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }

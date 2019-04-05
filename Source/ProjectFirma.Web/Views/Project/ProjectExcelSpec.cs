@@ -125,7 +125,7 @@ namespace ProjectFirma.Web.Views.Project
         {
             AddColumn($"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} ID", x => x.Project.ProjectID);
             AddColumn($"{Models.FieldDefinition.ProjectName.GetFieldDefinitionLabel()}", x => x.Project.ProjectName);
-            AddColumn($"{Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel()}", x => x.GrantAllocation.GrantAllocationName);
+            AddColumn($"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", x => x.GrantAllocation.GrantAllocationName);
             AddColumn($"Funding {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", x => x.GrantAllocation.BottommostOrganization.OrganizationName);
             AddColumn(Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabel(), x => x.GrantAllocation.BottommostOrganization.OrganizationType?.OrganizationTypeName);
             AddColumn("Calendar Year", x => x.CalendarYear);

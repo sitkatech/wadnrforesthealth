@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.ExcelWorkbookUtilities;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -35,7 +34,6 @@ using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.SortOrder;
-using DetailViewData = ProjectFirma.Web.Views.GrantAllocation.DetailViewData;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers

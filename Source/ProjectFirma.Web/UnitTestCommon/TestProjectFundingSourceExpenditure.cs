@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 return projectFundingSourceExpenditure;
             }
 
-            public static ProjectGrantAllocationExpenditure Create(Project project, FundingSource fundingSource, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
+            public static ProjectGrantAllocationExpenditure Create(Project project, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
             {
                 var projectFundingSourceExpenditure = Create(project, grantAllocation, calendarYear);
                 projectFundingSourceExpenditure.ExpenditureAmount = expenditureAmount;

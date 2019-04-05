@@ -23,7 +23,6 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
-    <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
@@ -266,14 +265,6 @@
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FundingSource_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_FundingSource_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="FundingSources" EntitySet="FundingSource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID">
-      <End Role="Organization" EntitySet="Organization" />
-      <End Role="FundingSources" EntitySet="FundingSource" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -1177,20 +1168,6 @@
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
   </EntityType>
-  <EntityType Name="FundingSource">
-    <Key>
-      <PropertyRef Name="FundingSourceID" />
-    </Key>
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="FundingSourceDescription" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
-    <Property Name="FundingSourceAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationID" Type="Int32" />
-    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_FundingSource_GrantAllocation_GrantAllocationID" FromRole="FundingSources" ToRole="GrantAllocation" />
-    <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="FundingSources" ToRole="Organization" />
-  </EntityType>
   <EntityType Name="Grant">
     <Key>
       <PropertyRef Name="GrantID" />
@@ -1234,7 +1211,6 @@
     <Property Name="GrantManagerID" Type="Int32" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
-    <NavigationProperty Name="FundingSources" Relationship="ProjectFirma.Web.Models.FK_FundingSource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="FundingSources" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
@@ -1464,7 +1440,6 @@
     <Property Name="VendorID" Type="Int32" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Organization" ToRole="Agreements" />
     <NavigationProperty Name="LogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="OrganizationsWhereYouAreTheLogoFileResource" ToRole="LogoFileResource" />
-    <NavigationProperty Name="FundingSources" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="Organization" ToRole="FundingSources" />
     <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Organization" ToRole="Grants" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="Organization" ToRole="GrantAllocations" />
     <NavigationProperty Name="OrganizationType" Relationship="ProjectFirma.Web.Models.FK_Organization_OrganizationType_OrganizationTypeID" FromRole="Organizations" ToRole="OrganizationType" />
@@ -3070,30 +3045,6 @@
       </Principal>
       <Dependent Role="ProjectUpdates">
         <PropertyRef Name="FocusAreaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FundingSource_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="0..1" />
-    <End Role="FundingSources" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="FundingSources">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_FundingSource_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="1" />
-    <End Role="FundingSources" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organization">
-        <PropertyRef Name="OrganizationID" />
-      </Principal>
-      <Dependent Role="FundingSources">
-        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

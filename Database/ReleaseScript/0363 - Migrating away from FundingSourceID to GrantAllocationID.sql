@@ -311,7 +311,9 @@ alter table dbo.ProjectGrantAllocationExpenditure
 drop column FundingSourceID
 
 
+---------------- At last, we can drop FundingSource
 
+drop table dbo.FundingSource
 
 
 

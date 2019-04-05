@@ -58,16 +58,17 @@ namespace ProjectFirma.Web.Controllers
         [Test]
         public void SimpleProjectSumsCorrectly()
         {
-            var project = TestFramework.TestProject.Create();            
+            var project = TestFramework.TestProject.Create();
 
             var organization = TestFramework.TestOrganization.Create("test organization 1");
-            var fundingSource = TestFramework.TestFundingSource.Create(organization, "test funding source 1");
+            var grant = TestFramework.TestGrant.Create(organization, "test grant 1");
+            var fundingSource = TestFramework.TestGrantAllocation.Create(grant, "test grant allocation 1");
             var grantAllocation = TestFramework.TestGrantAllocation.Create();
 
-            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2010, 100.00m);
-            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2011, 100.00m);
-            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2012, 100.00m);
-            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, fundingSource, grantAllocation, 2013, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2010, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2011, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2012, 100.00m);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2013, 100.00m);
 
             var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectFundingSourceExpenditures);

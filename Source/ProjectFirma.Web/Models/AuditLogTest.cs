@@ -118,8 +118,7 @@ namespace ProjectFirma.Web.Models
             Assert.That(result, Is.EqualTo(testProject.AuditDescriptionString));
         }
 
-        [Test]
-        public void TestFundingSourceAuditLogging()
+        public void TestGrantAllocationAuditLogging()
         {
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
@@ -129,38 +128,51 @@ namespace ProjectFirma.Web.Models
 
             // Make a test funding source and save it
             var dbContext = HttpRequestStorage.DatabaseEntities;
-            var testFundingSource = TestFramework.TestFundingSource.Create(dbContext);
+            var testGrantAllocation = TestFramework.TestGrantAllocation.Create(dbContext);
             var testOrganization = TestFramework.TestOrganization.Create(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
-            // Check that the audit log mentions this FundingSource
+            // Check that the audit log mentions this GrantAllocation
             System.Diagnostics.Trace.WriteLine(
-                $"Looking for {FieldDefinition.FundingSource.GetFieldDefinitionLabel()} named \"{testFundingSource.FundingSourceName}\" in Audit Log database entries.");
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testFundingSource.FundingSourceName)));
+                $"Looking for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} named \"{testGrantAllocation.GrantAllocationName}\" in Audit Log database entries.");
+            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testGrantAllocation.GrantAllocationName)));
 
             // Change audit logging
             // --------------------
 
             // Make changes to the Funding Source
-            var newFundingSourceName = TestFramework.MakeTestName("New Funding Source Name");
-            testFundingSource.FundingSourceName = newFundingSourceName;
-            testFundingSource.Organization = testOrganization;
+            var newGrantAllocationName = TestFramework.MakeTestName("New Funding Source Name");
+            testGrantAllocation.GrantAllocationName = newGrantAllocationName;
+            testGrantAllocation.Organization = testOrganization;
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
-            // Check that the audit log mentions this NEW FundingSource name
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newFundingSourceName)));
+            // Check that the audit log mentions this NEW GrantAllocation name
+            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newGrantAllocationName)));
 
             // Delete audit logging
             // --------------------
 
-            testFundingSource.DeleteFull(dbContext);
+            testGrantAllocation.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-            // Check that the audit log mentions this FundingSource name as deleted
+            // Check that the audit log mentions this GrantAllocation name as deleted
             Check.Assert(
                 HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
-                    al => al.TableName == "FundingSource" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testFundingSource.FundingSourceID) != null,
+                    al => al.TableName == "GrantAllocation" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testGrantAllocation.GrantAllocationID) != null,
                 "Could not find deleted Funding Source record");
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [Test]
         public void TestProjectTypeAuditLogging()

@@ -27,8 +27,10 @@ using NUnit.Framework;
 
 namespace ProjectFirma.Web.Views.FundingSource
 {
+    // These tests should be move/ported to GrantAllocation, yes?
+    /*
     [TestFixture]
-    public class EditViewModelTest
+    public class FundingSourceEditViewModelTest
     {
         [Test]
         public void AllViewModelFieldsAreSetFromConstructorTest()
@@ -102,4 +104,5 @@ namespace ProjectFirma.Web.Views.FundingSource
             Assert.That(isValid, Is.True, "Should pass validation");
         }
     }
+    */
 }

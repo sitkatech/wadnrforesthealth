@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public readonly string RefreshUrl;
         public readonly string DiffUrl;
         public readonly ProjectExpendituresDetailViewData ProjectExpendituresDetailViewData;
-        public readonly string RequestFundingSourceUrl;
+        public readonly string RequestGrantAllocationUrl;
         public readonly ViewDataForAngularClass ViewDataForAngular;
         
         public ExpendituresViewData(Person currentPerson, Models.Project project, ViewDataForAngularClass viewDataForAngularClass, ProjectExpendituresDetailViewData projectExpendituresDetailViewData, ProposalSectionsStatus proposalSectionsStatus)
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpenditures(project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffExpenditures(project));
-            RequestFundingSourceUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
+            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
         }
 

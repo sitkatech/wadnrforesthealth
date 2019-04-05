@@ -73,8 +73,8 @@ namespace ProjectFirma.Web.Models
             Assert.That(preconditionException.Message, Is.StringContaining($"You cannot submit a {FieldDefinition.Project.GetFieldDefinitionLabel()} update that is not ready to be submitted"));
             TestFramework.TestPerformanceMeasureActualUpdate.Create(projectUpdateBatch, currentYear, 1000);
             var organization1 = TestFramework.TestOrganization.Create("Org1");
-            var fundingSource1 = TestFramework.TestFundingSource.Create(organization1, "Funding Source 1");
-            var grantAllocation1 = TestFramework.TestGrantAllocation.Create();
+            var grant1 = TestFramework.TestGrant.Create(organization1, "grant 1");
+            var grantAllocation1 = TestFramework.TestGrantAllocation.Create(grant1, "Grant Allocation 1");
 
             TestFramework.TestProjectGrantAllocationExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, currentYear, 2000);
             projectUpdate.ProjectLocationSimpleTypeID = ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID;
@@ -485,8 +485,8 @@ namespace ProjectFirma.Web.Models
             projectUpdate.PlannedDate = new DateTime(currentYear - 1,1,1);
             projectUpdate.CompletionDate = new DateTime(currentYear + 2,1,1);
             var organization1 = TestFramework.TestOrganization.Create("Org1");
-            var fundingSource1 = TestFramework.TestFundingSource.Create(organization1, "Funding Source 1");
-            var grantAllocation1 = TestFramework.TestGrantAllocation.Create();
+            var grant1 = TestFramework.TestGrant.Create(organization1, "Grant 1");
+            var grantAllocation1 = TestFramework.TestGrantAllocation.Create(grant1, "Grant Allocation 1");
 
             TestFramework.TestProjectGrantAllocationExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, currentYear + 2, 1000); // record after current year
             TestFramework.TestProjectGrantAllocationExpenditureUpdate.Create(projectUpdateBatch, grantAllocation1, projectUpdate.PlannedDate.GetValueOrDefault().Year - 2, 2000); // record before start year
