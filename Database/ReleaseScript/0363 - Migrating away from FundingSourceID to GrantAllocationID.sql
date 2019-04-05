@@ -315,7 +315,11 @@ drop column FundingSourceID
 
 drop table dbo.FundingSource
 
+delete from dbo.FieldDefinitionData
+where FieldDefinitionID = (select FieldDefinitionID from dbo.FieldDefinition where FieldDefinitionName = 'FundingSource')
 
+delete from dbo.FieldDefinition
+where FieldDefinitionName = 'FundingSource'
 
 --rollback tran
 

@@ -1395,7 +1395,6 @@
     <Compile Include="Security\FieldDefinitionViewFeature.cs" />
     <Compile Include="Security\PerformanceMeasureNoteViewFeature.cs" />
     <Compile Include="Security\PerformanceMeasureViewFeature.cs" />
-    <Compile Include="Security\InvestmentByFundingSourceViewFeature.cs" />
     <Compile Include="Security\TaxonomyBranchViewFeature.cs" />
     <Compile Include="Security\TaxonomyBranchManageFeature.cs" />
     <Compile Include="Security\ProjectCreateNewFeature.cs" />
