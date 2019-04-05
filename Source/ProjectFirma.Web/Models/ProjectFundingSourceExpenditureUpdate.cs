@@ -24,7 +24,7 @@ using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectGrantAllocationExpenditureUpdate : IGrantAllocationExpenditure
+    public partial class ProjectGrantAllocationExpenditureUpdate : IGrantAllocationExpenditure, IAuditableEntity
     {
         public decimal? MonetaryAmount
         {
@@ -60,6 +60,16 @@ namespace ProjectFirma.Web.Models
                 allProjectGrantAllocationExpenditures,
                 (x, y) => x.ProjectID == y.ProjectID && x.CalendarYear == y.CalendarYear && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);
+        }
+
+        public string AuditDescriptionString
+        {
+            get
+            {
+                string grantAllocationID = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationID.ToString() : "none";
+                string grantAllocationName = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "none";
+                return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} ExpenditureAmount: {this.ExpenditureAmountDisplay}";
+            }
         }
     }
 }

@@ -632,8 +632,8 @@ namespace ProjectFirma.Web.Controllers
             {
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
-            var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
-            var viewModel = new ExpectedFundingViewModel(projectFundingSourceRequestUpdates,
+            var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
+            var viewModel = new ExpectedFundingViewModel(projectGrantAllocationRequestUpdates,
                 projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost, project.EstimatedIndirectCost, project.EstimatedPersonnelAndBenefitsCost, project.EstimatedSuppliesCost, project.EstimatedTravelCost);
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
         }
@@ -654,9 +654,9 @@ namespace ProjectFirma.Web.Controllers
                 return ViewExpectedFunding(projectUpdateBatch, viewModel);
             }
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Load();
-            var projectFundingSourceRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
-            var allProjectFundingSourceExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Local;
-            viewModel.UpdateModel(projectUpdateBatch, projectFundingSourceRequestUpdates, allProjectFundingSourceExpectedFunding, projectUpdateBatch.ProjectUpdate);
+            var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
+            var allProjectGrantAllocationExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Local;
+            viewModel.UpdateModel(projectUpdateBatch, projectGrantAllocationRequestUpdates, allProjectGrantAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate);
             if (projectUpdateBatch.IsSubmitted)
             {
                 projectUpdateBatch.ExpectedFundingComment = viewModel.Comments;
@@ -669,7 +669,7 @@ namespace ProjectFirma.Web.Controllers
         private ViewResult ViewExpectedFunding(ProjectUpdateBatch projectUpdateBatch, ExpectedFundingViewModel viewModel)
         {
             var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var expectedFundingValidationResult = projectUpdateBatch.ValidateExpectedFunding(viewModel.ProjectFundingSourceRequests);
+            var expectedFundingValidationResult = projectUpdateBatch.ValidateExpectedFunding(viewModel.ProjectGrantAllocationRequests);
             var estimatedTotalCost = projectUpdateBatch.ProjectUpdate.EstimatedTotalCost.GetValueOrDefault();
             var estimatedIndirectCost = projectUpdateBatch.ProjectUpdate.EstimatedIndirectCost.GetValueOrDefault();
             var estimatedPersonnelAndBenefitsCost = projectUpdateBatch.ProjectUpdate.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();

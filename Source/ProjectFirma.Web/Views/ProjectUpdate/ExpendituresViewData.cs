@@ -49,19 +49,19 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public class ViewDataForAngularClass
         {
             public readonly List<int> CalendarYearRange;
-            public readonly List<GrantAllocationSimple> AllFundingSources;
+            public readonly List<GrantAllocationSimple> AllGrantAllocations;
             public readonly int ProjectID;
             public readonly int MaxYear;
             public readonly bool UseFiscalYears;
             public readonly bool ShowNoExpendituresExplanation;
 
             public ViewDataForAngularClass(Models.Project project,
-                List<GrantAllocationSimple> allFundingSources,
+                List<GrantAllocationSimple> allGrantAllocations,
                 List<int> calendarYearRange, bool showNoExpendituresExplanation)
             {
                 CalendarYearRange = calendarYearRange;
                 ShowNoExpendituresExplanation = showNoExpendituresExplanation;
-                AllFundingSources = allFundingSources;
+                AllGrantAllocations = allGrantAllocations;
                 ProjectID = project.ProjectID;
                 
                 MaxYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();

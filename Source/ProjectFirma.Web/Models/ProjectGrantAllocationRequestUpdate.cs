@@ -25,7 +25,7 @@ using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class ProjectGrantAllocationRequestUpdate : IGrantAllocationRequestAmount
+    public partial class ProjectGrantAllocationRequestUpdate : IGrantAllocationRequestAmount, IAuditableEntity
     {
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
@@ -60,6 +60,16 @@ namespace ProjectFirma.Web.Models
                     x.SecuredAmount = y.SecuredAmount;
                     x.UnsecuredAmount = y.UnsecuredAmount;
                 });
+        }
+
+        public string AuditDescriptionString
+        {
+            get
+            {
+                string grantAllocationID = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationID.ToString(): "none";
+                string grantAllocationName = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "none";
+                return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} SecuredAmount: {this.SecuredAmount} UnsecuredAmount: {this.UnsecuredAmount}";
+            }
         }
     }
 }
