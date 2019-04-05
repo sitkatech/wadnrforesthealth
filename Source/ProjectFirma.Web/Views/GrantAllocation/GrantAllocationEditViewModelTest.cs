@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             Assert.That(viewModel.GrantAllocationID, Is.EqualTo(grantAllocation.GrantAllocationID));
             Assert.That(viewModel.GrantAllocationName, Is.EqualTo(grantAllocation.GrantAllocationName));
             Assert.That(viewModel.OrganizationID, Is.EqualTo(grantAllocation.OrganizationID));
-            //Assert.That(viewModel.IsActive, Is.EqualTo(fundingSource.IsActive));
+            //Assert.That(viewModel.IsActive, Is.EqualTo(grantAllocation.IsActive));
         }
 
         [Test]

@@ -161,19 +161,6 @@ namespace ProjectFirma.Web.Models
                 "Could not find deleted Funding Source record");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         [Test]
         public void TestProjectTypeAuditLogging()
         {
@@ -187,8 +174,8 @@ namespace ProjectFirma.Web.Models
             var testProjectType = TestFramework.TestProjectType.Create(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
-            // Check that the audit log mentions this FundingSource
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for ProjectType named \"{0}\" in Audit Log database entries.", testProjectType.ProjectTypeName));
+            // Check that the audit log mentions this ProjectType
+            System.Diagnostics.Trace.WriteLine($"Looking for ProjectType named \"{testProjectType.ProjectTypeName}\" in Audit Log database entries.");
             Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testProjectType.ProjectTypeName)));
 
             // Change audit logging

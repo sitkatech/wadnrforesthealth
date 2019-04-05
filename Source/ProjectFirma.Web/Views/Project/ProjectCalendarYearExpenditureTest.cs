@@ -46,13 +46,13 @@ namespace ProjectFirma.Web.Views.Project
             var calendarYears = new List<int> {2010, 2011, 2012, 2013, 2014};
             var projects = new List<Models.Project> {project1, project2, project3, project4};
 
-            var fundingSource = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation = TestFramework.TestGrantAllocation.Create();
 
-            var projectProjectExpenditure1 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project1, fundingSource, 2010, 1000);
-            var projectProjectExpenditure2 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project1, fundingSource, 2011, 2000);
-            var projectProjectExpenditure3 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project2, fundingSource, 2012, 3000);
-            var projectProjectExpenditure4 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project3, fundingSource, 2014, 4000);
-            var projectProjectExpenditure5 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project4, fundingSource, 2012, 5000);
+            var projectProjectExpenditure1 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project1, grantAllocation, 2010, 1000);
+            var projectProjectExpenditure2 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project1, grantAllocation, 2011, 2000);
+            var projectProjectExpenditure3 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project2, grantAllocation, 2012, 3000);
+            var projectProjectExpenditure4 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project3, grantAllocation, 2014, 4000);
+            var projectProjectExpenditure5 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project4, grantAllocation, 2012, 5000);
 
             var projectGrantAllocationExpenditures = new List<Models.ProjectGrantAllocationExpenditure>
             {

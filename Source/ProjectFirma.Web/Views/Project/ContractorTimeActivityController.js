@@ -52,9 +52,9 @@ angular.module("ProjectFirmaApp").controller("ContractorTimeActivityController",
         return _.find($scope.AngularViewData.AllFundingSources, function (f) { return fundingSourceId == f.FundingSourceID; });
     };
 
-    $scope.contractorTimeActivitiesForFundingSource = function(fundingSource, ignoreBlanks) {
+    $scope.contractorTimeActivitiesForFundingSource = function (grantAllocation, ignoreBlanks) {
         var filtered = _.filter($scope.AngularModel.ContractorTimeActivities,
-            function (a) { return a.FundingSourceID == fundingSource.FundingSourceID; });
+            function (a) { return a.GrantAllocationID == grantAllocation.GrantAllocationID; });
         if (!ignoreBlanks) {
             var a = [];
             for (var i = 0; i < filtered.length - 1; i++) {
@@ -105,12 +105,12 @@ angular.module("ProjectFirmaApp").controller("ContractorTimeActivityController",
         return filtered;
     };
 
-    $scope.createNewRow = function (projectID, fundingSourceID)
+    $scope.createNewRow = function (projectID, grantAllocationID)
     {
-        var fundingSource = $scope.getFundingSource(fundingSourceID);
+        var grantAllocation = $scope.getGrantAllocation(grantAllocationID);
         var newContractorTimeActivity = {
             ProjectID: projectID,
-            FundingSourceID: fundingSource.FundingSourceID,
+            GrantAllocationID: grantAllocation.GrantAllocationID
         };
         return newContractorTimeActivity;
     };

@@ -365,7 +365,7 @@
                             </div>
                             @if (ViewDataTyped.Project.ContractorTimeActivities.Any())
                             {
-                                var contractorTimeActivities = ViewDataTyped.Project.ContractorTimeActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
+                                var contractorTimeActivities = ViewDataTyped.Project.ContractorTimeActivities.GroupBy(x => x.GrantAllocation).OrderBy(x => x.Key.DisplayName).ToList();
                                 <div class="row">
                                     <div class="col-sm-2"><strong>Staff Time Hours:</strong></div>
                                     <div class="col-sm-2 text-right">
@@ -384,10 +384,10 @@
                                 </div>
                                 <br />
                                 <table class="table table-striped table-condensed table-hover">
-                                    @foreach (var fundingSource in contractorTimeActivities)
+                                    @foreach (var grantAllocation in contractorTimeActivities)
                                     {
                                         <tr>
-                                            <th colspan="7">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
+                                            <th colspan="7">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel(): @grantAllocation.Key.DisplayNameAsUrl</th>
                                         </tr>
                                         <tr>
                                             <th>Start Date</th>
@@ -397,7 +397,7 @@
                                             <th class="text-right">Rate</th>
                                             <th class="text-right">Total Amount</th>
                                         </tr>
-                                        foreach (var contractorTimeActivity in fundingSource.OrderBy(x => x.ContractorTimeActivityStartDate))
+                                        foreach (var contractorTimeActivity in grantAllocation.OrderBy(x => x.ContractorTimeActivityStartDate))
                                         {
                                             <tr>
                                                 <td>@contractorTimeActivity.ContractorTimeActivityStartDate.ToShortDateString()</td>
