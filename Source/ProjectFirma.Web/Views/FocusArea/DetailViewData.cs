@@ -41,8 +41,6 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
 
-        public readonly string ProjectGrantAllocationExpendituresForFocusAreaGridName;
-
         public readonly string ManageGrantAllocationsUrl;
         public readonly string IndexUrl;
 
