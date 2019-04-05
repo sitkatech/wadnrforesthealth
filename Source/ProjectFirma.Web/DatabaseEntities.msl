@@ -890,7 +890,6 @@
         <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditure">
           <ScalarProperty Name="ProjectGrantAllocationExpenditureID" ColumnName="ProjectGrantAllocationExpenditureID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
           <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
@@ -902,7 +901,6 @@
         <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditureUpdate">
           <ScalarProperty Name="ProjectGrantAllocationExpenditureUpdateID" ColumnName="ProjectGrantAllocationExpenditureUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
           <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
@@ -914,7 +912,6 @@
         <MappingFragment StoreEntitySet="ProjectGrantAllocationRequest">
           <ScalarProperty Name="ProjectGrantAllocationRequestID" ColumnName="ProjectGrantAllocationRequestID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
           <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
@@ -926,7 +923,6 @@
         <MappingFragment StoreEntitySet="ProjectGrantAllocationRequestUpdate">
           <ScalarProperty Name="ProjectGrantAllocationRequestUpdateID" ColumnName="ProjectGrantAllocationRequestUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
           <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />

@@ -276,10 +276,40 @@ exec sp_rename 'FK_ProjectFundingSourceRequest_Project_ProjectID', 'FK_ProjectGr
 exec sp_rename 'FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'OBJECT'
 exec sp_rename 'FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID', 'OBJECT'
 
-
 -- These were fun
 exec sp_rename 'AK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatchID_GrantAllocationID_CalendarYear', 'AK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatchID_GrantAllocationID_CalendarYear', 'OBJECT'
 exec sp_rename 'AK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatchID_GrantAllocationID', 'AK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatchID_GrantAllocationID', 'OBJECT'
+
+
+
+-- 1 --
+alter table dbo.ProjectGrantAllocationExpenditureUpdate
+drop constraint FK_ProjectGrantAllocationExpenditureUpdate_FundingSource_FundingSourceID
+
+alter table dbo.ProjectGrantAllocationExpenditureUpdate
+drop column FundingSourceID
+
+-- 2 --
+alter table dbo.ProjectGrantAllocationRequestUpdate
+drop constraint FK_ProjectGrantAllocationRequestUpdate_FundingSource_FundingSourceID
+
+alter table dbo.ProjectGrantAllocationRequestUpdate
+drop column FundingSourceID
+
+-- 3-- 
+alter table dbo.ProjectGrantAllocationRequest
+drop constraint FK_ProjectGrantAllocationRequest_FundingSource_FundingSourceID
+
+alter table dbo.ProjectGrantAllocationRequest
+drop column FundingSourceID
+
+-- 4 -- 
+alter table dbo.ProjectGrantAllocationExpenditure
+drop constraint FK_ProjectGrantAllocationExpenditure_FundingSource_FundingSourceID
+
+alter table dbo.ProjectGrantAllocationExpenditure
+drop column FundingSourceID
+
 
 
 

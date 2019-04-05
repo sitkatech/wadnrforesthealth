@@ -5,7 +5,6 @@ GO
 CREATE TABLE [dbo].[ProjectGrantAllocationRequest](
 	[ProjectGrantAllocationRequestID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[FundingSourceID] [int] NULL,
 	[SecuredAmount] [money] NULL,
 	[UnsecuredAmount] [money] NULL,
 	[GrantAllocationID] [int] NOT NULL,
@@ -20,11 +19,6 @@ CREATE TABLE [dbo].[ProjectGrantAllocationRequest](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationRequest]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGrantAllocationRequest_FundingSource_FundingSourceID] FOREIGN KEY([FundingSourceID])
-REFERENCES [dbo].[FundingSource] ([FundingSourceID])
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationRequest] CHECK CONSTRAINT [FK_ProjectGrantAllocationRequest_FundingSource_FundingSourceID]
 GO
 ALTER TABLE [dbo].[ProjectGrantAllocationRequest]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
 REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])

@@ -623,10 +623,6 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectExternalLinkUpdates" EntitySet="ProjectExternalLinkUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
@@ -634,10 +630,6 @@
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditureUpdate_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -647,10 +639,6 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationRequest_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
@@ -658,10 +646,6 @@
     <AssociationSet Name="FK_ProjectGrantAllocationRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequest_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequestUpdate_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1745,7 +1729,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectGrantAllocationExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
@@ -1756,7 +1739,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectGrantAllocationExpenditureUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" />
     <Property Name="CalendarYear" Type="int" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
@@ -1767,7 +1749,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectGrantAllocationRequestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" />
     <Property Name="SecuredAmount" Type="money" />
     <Property Name="UnsecuredAmount" Type="money" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
@@ -1778,7 +1759,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectGrantAllocationRequestUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="FundingSourceID" Type="int" />
     <Property Name="SecuredAmount" Type="money" />
     <Property Name="UnsecuredAmount" Type="money" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
@@ -3791,18 +3771,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditure_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="0..1" />
-    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditures">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditure" Multiplicity="*" />
@@ -3824,18 +3792,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="ProjectGrantAllocationExpenditures">
         <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="0..1" />
-    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
-        <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3863,18 +3819,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectGrantAllocationRequest_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="0..1" />
-    <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationRequests">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequest" Multiplicity="*" />
@@ -3896,18 +3840,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="ProjectGrantAllocationRequests">
         <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectGrantAllocationRequestUpdate_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.Store.FundingSource" Multiplicity="0..1" />
-    <End Role="ProjectGrantAllocationRequestUpdates" Type="ProjectFirma.Web.Models.Store.ProjectGrantAllocationRequestUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectGrantAllocationRequestUpdates">
-        <PropertyRef Name="FundingSourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

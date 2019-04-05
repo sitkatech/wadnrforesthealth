@@ -5,7 +5,6 @@ GO
 CREATE TABLE [dbo].[ProjectGrantAllocationExpenditureUpdate](
 	[ProjectGrantAllocationExpenditureUpdateID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
-	[FundingSourceID] [int] NULL,
 	[CalendarYear] [int] NOT NULL,
 	[ExpenditureAmount] [money] NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
@@ -21,11 +20,6 @@ CREATE TABLE [dbo].[ProjectGrantAllocationExpenditureUpdate](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationExpenditureUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGrantAllocationExpenditureUpdate_FundingSource_FundingSourceID] FOREIGN KEY([FundingSourceID])
-REFERENCES [dbo].[FundingSource] ([FundingSourceID])
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationExpenditureUpdate] CHECK CONSTRAINT [FK_ProjectGrantAllocationExpenditureUpdate_FundingSource_FundingSourceID]
 GO
 ALTER TABLE [dbo].[ProjectGrantAllocationExpenditureUpdate]  WITH CHECK ADD  CONSTRAINT [FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID] FOREIGN KEY([GrantAllocationID])
 REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])

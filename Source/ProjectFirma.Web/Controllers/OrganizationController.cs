@@ -335,18 +335,18 @@ namespace ProjectFirma.Web.Controllers
         [OrganizationViewFeature]
         public GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpendituresForOrganizationGridJsonData(OrganizationPrimaryKey organizationPrimaryKey)
         {
-            var organization = organizationPrimaryKey.EntityObject;
+            var givenOrganization = organizationPrimaryKey.EntityObject;
             
             // received
-            var projects = organization.GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(CurrentPerson).ToList();
-            var projectFundingSourceExpenditures = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.FundingSource.Organization != organization).ToList();
+            var projects = givenOrganization.GetAllActiveProjectsAndProposalsWhereOrganizationIsStewardOrPrimaryContact(CurrentPerson).ToList();
+            var projectFundingSourceExpenditures = projects.SelectMany(x => x.ProjectGrantAllocationExpenditures).Where(x => x.FundingSource.Organization != givenOrganization).ToList();
 
             // provided
-            projectFundingSourceExpenditures.AddRange(organization.FundingSources.SelectMany(x => x.ProjectGrantAllocationExpenditures));
+            projectFundingSourceExpenditures.AddRange(givenOrganization.FundingSources.SelectMany(x => x.ProjectGrantAllocationExpenditures));
 
             var projectFundingSourceExpendituresToShow =
                 projectFundingSourceExpenditures.Where(x => x.ExpenditureAmount > 0).ToList();
-            var gridSpec = new ProjectGrantAllocationExpendituresForOrganizationGridSpec(organization);
+            var gridSpec = new ProjectGrantAllocationExpendituresForOrganizationGridSpec(givenOrganization);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationExpenditure>(projectFundingSourceExpendituresToShow, gridSpec);
             return gridJsonNetJObjectResult;
         }
