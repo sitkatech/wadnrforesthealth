@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             {
                 // Completely rebuild the list
                 projectGrantAllocationRequestsUpdated = ProjectGrantAllocationRequestSimples
-                    .Select(x => x.ToProjectFundingSourceRequest()).ToList();
+                    .Select(x => x.ToProjectGrantAllocationRequest()).ToList();
             }
 
             currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsUpdated,

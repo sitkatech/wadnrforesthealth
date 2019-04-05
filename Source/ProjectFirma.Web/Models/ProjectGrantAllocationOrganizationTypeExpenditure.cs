@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceOrganizationTypeExpenditure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationOrganizationTypeExpenditure.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Models
             ExpenditureAmount = expenditureAmount;
         }
 
-        public static List<ProjectGrantAllocationOrganizationTypeExpenditure> MakeFromProjectFundingSourceExpenditures(List<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures)
+        public static List<ProjectGrantAllocationOrganizationTypeExpenditure> MakeFromProjectGrantAllocationExpenditures(List<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures)
         {
             return
                 projectGrantAllocationExpenditures.GroupBy(x => new {x.Project, x.GrantAllocation})

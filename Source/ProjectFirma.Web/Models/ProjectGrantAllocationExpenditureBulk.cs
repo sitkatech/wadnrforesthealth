@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceExpenditureBulk.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationExpenditureBulk.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -51,11 +51,10 @@ namespace ProjectFirma.Web.Models
         }
 
         private ProjectGrantAllocationExpenditureBulk(ProjectGrantAllocationExpenditureUpdate projectGrantAllocationExpenditureUpdate,
-            List<ProjectGrantAllocationExpenditureUpdate> projectGrantAllocationExpenditureUpdates,
-            IEnumerable<int> calendarYearsToPopulate)
+                                                      List<ProjectGrantAllocationExpenditureUpdate> projectGrantAllocationExpenditureUpdates,
+                                                      IEnumerable<int> calendarYearsToPopulate)
         {
             ProjectID = projectGrantAllocationExpenditureUpdate.ProjectUpdateBatch.ProjectID;
-            //FundingSourceID = projectGrantAllocationExpenditureUpdate.FundingSourceID;
             GrantAllocationID = projectGrantAllocationExpenditureUpdate.GrantAllocationID;
             CalendarYearExpenditures = new List<CalendarYearMonetaryAmount>();
             Add(projectGrantAllocationExpenditureUpdates);

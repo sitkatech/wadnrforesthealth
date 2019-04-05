@@ -41,8 +41,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
 
-        //public readonly ProjectFundingSourceExpendituresForFocusAreaGridSpec ProjectFundingSourceExpendituresForFocusAreaGridSpec;
-        public readonly string ProjectFundingSourceExpendituresForFocusAreaGridName;
+        public readonly string ProjectGrantAllocationExpendituresForFocusAreaGridName;
 
         public readonly string ManageGrantAllocationsUrl;
         public readonly string IndexUrl;
@@ -54,9 +53,9 @@ namespace ProjectFirma.Web.Views.FocusArea
         public int NumberOfProjectsContributedTo { get; }
 
         public DetailViewData(Person currentPerson,
-            Models.FocusArea focusArea,
-            MapInitJson mapInitJson,
-            bool hasSpatialData) : base(currentPerson)
+                              Models.FocusArea focusArea,
+                              MapInitJson mapInitJson,
+                              bool hasSpatialData) : base(currentPerson)
         {
             FocusArea = focusArea;
             PageTitle = focusArea.FocusAreaName;

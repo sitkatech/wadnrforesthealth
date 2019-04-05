@@ -27,7 +27,7 @@
             SecuredAmount = projectGrantAllocationRequestUpdate.SecuredAmount;
         }
 
-        public ProjectGrantAllocationRequest ToProjectFundingSourceRequest()
+        public ProjectGrantAllocationRequest ToProjectGrantAllocationRequest()
         {
             return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID) {SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
         }
@@ -37,7 +37,7 @@
         public decimal? SecuredAmount { get; set; }
         public decimal? UnsecuredAmount { get; set; }
 
-        public ProjectGrantAllocationRequestUpdate ToProjectFundingSourceRequestUpdate()
+        public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate()
         {
             return new ProjectGrantAllocationRequestUpdate(ProjectID, GrantAllocationID) {SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
         }

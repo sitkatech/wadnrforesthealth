@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
-        /// Stand-in for what used to be FundingSource.FixedLengthDisplayName
+        /// Stand-in for what used to be GrantAllocation.FixedLengthDisplayName
         /// </summary>
         public string FixedLengthDisplayName
         {

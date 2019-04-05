@@ -35,22 +35,22 @@ namespace ProjectFirma.Web.UnitTestCommon
 
             public static ProjectGrantAllocationExpenditure Create(Project project, GrantAllocation grantAllocation)
             {
-                var projectFundingSourceExpenditure = ProjectGrantAllocationExpenditure.CreateNewBlank(project, grantAllocation);
-                return projectFundingSourceExpenditure;
+                var projectGrantAllocationExpenditure = ProjectGrantAllocationExpenditure.CreateNewBlank(project, grantAllocation);
+                return projectGrantAllocationExpenditure;
             }
 
             public static ProjectGrantAllocationExpenditure Create(Project project, GrantAllocation grantAllocation, int calendarYear)
             {
-                var projectFundingSourceExpenditure = Create(project, grantAllocation);
-                projectFundingSourceExpenditure.CalendarYear = calendarYear;
-                return projectFundingSourceExpenditure;
+                var projectGrantAllocationExpenditure = Create(project, grantAllocation);
+                projectGrantAllocationExpenditure.CalendarYear = calendarYear;
+                return projectGrantAllocationExpenditure;
             }
 
             public static ProjectGrantAllocationExpenditure Create(Project project, GrantAllocation grantAllocation, int calendarYear, decimal expenditureAmount)
             {
-                var projectFundingSourceExpenditure = Create(project, grantAllocation, calendarYear);
-                projectFundingSourceExpenditure.ExpenditureAmount = expenditureAmount;
-                return projectFundingSourceExpenditure;
+                var projectGrantAllocationExpenditure = Create(project, grantAllocation, calendarYear);
+                projectGrantAllocationExpenditure.ExpenditureAmount = expenditureAmount;
+                return projectGrantAllocationExpenditure;
             }
         }
     }

@@ -671,12 +671,12 @@ namespace ProjectFirma.Web.Models
             Assert.That(result.PerformanceMeasureActualUpdatesWithWarnings, Is.Empty, "Should have no warnings");
         }
 
-        private static void AssertExpenditureYears(List<ProjectGrantAllocationExpenditureUpdate> projectFundingSourceExpenditureUpdates,
-            int startYear,
-            int currentYear,
-            ProjectUpdateBatch projectUpdateBatch,
-            bool isValid,
-            string assertionMessage)
+        private static void AssertExpenditureYears(List<ProjectGrantAllocationExpenditureUpdate> projectGrantAllocationExpenditureUpdates,
+                                                   int startYear,
+                                                   int currentYear,
+                                                   ProjectUpdateBatch projectUpdateBatch,
+                                                   bool isValid,
+                                                   string assertionMessage)
         {
             var result = projectUpdateBatch.ValidateExpendituresAndForceValidation();
             if (isValid)
@@ -688,9 +688,9 @@ namespace ProjectFirma.Web.Models
                 Assert.That(result, Is.Not.Empty, "Should be not valid");
             }
 
-            var currentYearsEntered = projectFundingSourceExpenditureUpdates.Select(y => y.CalendarYear).Distinct().ToList();
+            var currentYearsEntered = projectGrantAllocationExpenditureUpdates.Select(y => y.CalendarYear).Distinct().ToList();
             var expectedMissingYears = FirmaDateUtilities.GetRangeOfYears(startYear, currentYear).Where(x => !currentYearsEntered.Contains(x)).ToList();
-            var grantAllocations = projectFundingSourceExpenditureUpdates.Select(x => x.GrantAllocation).Distinct().ToList();
+            var grantAllocations = projectGrantAllocationExpenditureUpdates.Select(x => x.GrantAllocation).Distinct().ToList();
             if (!grantAllocations.Any())
             {
                 if (expectedMissingYears.Any())
@@ -713,7 +713,7 @@ namespace ProjectFirma.Web.Models
                     Assert.That(result,
                         Is.EquivalentTo(new List<string>
                         {
-                            $"Missing Expenditures for Funding Source '{grantAllocations.First().DisplayName}' for the following years: {string.Join(", ", expectedMissingYears)}"
+                            $"Missing Expenditures for Grant Allocation '{grantAllocations.First().DisplayName}' for the following years: {string.Join(", ", expectedMissingYears)}"
                         }),
                         assertionMessage);
                 }
@@ -725,19 +725,19 @@ namespace ProjectFirma.Web.Models
         }
 
         private static void AssertPerformanceMeasures(List<PerformanceMeasureActualUpdate> performanceMeasureActualUpdates,
-            int startYear,
-            int currentYear,
-            ProjectUpdateBatch projectUpdateBatch,
-            bool isValid,
-            string assertionMessage)
+                                                      int startYear,
+                                                      int currentYear,
+                                                      ProjectUpdateBatch projectUpdateBatch,
+                                                      bool isValid,
+                                                      string assertionMessage)
         {
             var result = projectUpdateBatch.ValidatePerformanceMeasures();
-            Assert.That(result.IsValid, Is.EqualTo(isValid), string.Format("Should be {0}", isValid ? " valid" : "not valid"));
+            Assert.That(result.IsValid, Is.EqualTo(isValid), $"Should be {(isValid ? " valid" : "not valid")}");
 
             var currentYearsEntered = performanceMeasureActualUpdates.Select(y => y.CalendarYear).Distinct().ToList();
             var missingReportedValues = performanceMeasureActualUpdates.Where(x => !x.ActualValue.HasValue).ToList();
             var expectedMissingYears = FirmaDateUtilities.GetRangeOfYears(startYear, currentYear).Where(x => !currentYearsEntered.Contains(x)).ToList();
-            var missingYearsMessage = string.Format("for {0}", string.Join(", ", expectedMissingYears));
+            var missingYearsMessage = $"for {string.Join(", ", expectedMissingYears)}";
             if (expectedMissingYears.Any() && missingReportedValues.Any())
             {
                 Assert.That(result.GetWarningMessages(),

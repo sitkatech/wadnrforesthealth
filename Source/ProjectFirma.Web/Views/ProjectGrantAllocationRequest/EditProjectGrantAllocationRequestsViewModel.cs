@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
             if (ProjectGrantAllocationRequests != null)
             {
                 // Completely rebuild the list
-                projectGrantAllocationRequestsUpdated = ProjectGrantAllocationRequests.Select(x => x.ToProjectFundingSourceRequest()).ToList();
+                projectGrantAllocationRequestsUpdated = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
             }
 
             if (ForProject ?? false) // never null

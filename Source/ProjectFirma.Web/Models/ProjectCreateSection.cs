@@ -236,9 +236,9 @@ namespace ProjectFirma.Web.Models
             {
                 return false;
             }
-            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var validationResults = new ExpendituresViewModel(projectFundingSourceExpenditures,
-                    projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
+            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
+            var validationResults = new ExpendituresViewModel(projectGrantAllocationExpenditures,
+                    projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
                     project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList()) {ProjectID = project.ProjectID}
                 .GetValidationResults();
             return !validationResults.Any();

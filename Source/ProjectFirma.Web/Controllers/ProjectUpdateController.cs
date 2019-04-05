@@ -706,7 +706,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            projectUpdateBatch.DeleteProjectFundingSourceRequestUpdates();
+            projectUpdateBatch.DeleteProjectGrantAllocationRequestUpdates();
             // refresh data
             ProjectGrantAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
             projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
@@ -1481,7 +1481,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Load();
             var allProjectExemptReportingYears = HttpRequestStorage.DatabaseEntities.ProjectExemptReportingYears.Local;
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Load();
-            var allProjectFundingSourceExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
+            var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
             var allprojectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
@@ -1517,7 +1517,7 @@ namespace ProjectFirma.Web.Controllers
             projectUpdateBatch.Approve(CurrentPerson,
                 DateTime.Now,
                 allProjectExemptReportingYears,
-                allProjectFundingSourceExpenditures,
+                allProjectGrantAllocationExpenditures,
                 // TODO: Neutered per #1136; most likely will bring back when BOR project starts
 //                allProjectBudgets,
                 allPerformanceMeasureActuals,
@@ -2080,16 +2080,16 @@ namespace ProjectFirma.Web.Controllers
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
-        private string GeneratePartialViewForOriginalExpenditures(List<IGrantAllocationExpenditure> projectFundingSourceExpendituresOriginal,
-            List<int> calendarYearsOriginal,
-            List<IGrantAllocationExpenditure> projectGrantAllocationExpendituresUpdated,
-            List<int> calendarYearsUpdated)
+        private string GeneratePartialViewForOriginalExpenditures(List<IGrantAllocationExpenditure> projectGrantAllocationExpendituresOriginal,
+                                                                  List<int> calendarYearsOriginal,
+                                                                  List<IGrantAllocationExpenditure> projectGrantAllocationExpendituresUpdated,
+                                                                  List<int> calendarYearsUpdated)
         {
-            var grantAllocationsInOriginal = projectFundingSourceExpendituresOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
+            var grantAllocationsInOriginal = projectGrantAllocationExpendituresOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
             var grantAllocationsInUpdated = projectGrantAllocationExpendituresUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
             var grantAllocationsOnlyInOriginal = grantAllocationsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x)).ToList();
 
-            var grantAllocationCalendarYearExpenditures = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectFundingSourceExpendituresOriginal, calendarYearsOriginal);
+            var grantAllocationCalendarYearExpenditures = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectGrantAllocationExpendituresOriginal, calendarYearsOriginal);
             // we need to zero out calendar year values only in original
             foreach (var grantAllocationCalendarYearExpenditure in grantAllocationCalendarYearExpenditures)
             {
@@ -2122,16 +2122,16 @@ namespace ProjectFirma.Web.Controllers
             }
         }
 
-        private string GeneratePartialViewForModifiedExpenditures(List<IGrantAllocationExpenditure> projectFundingSourceExpendituresOriginal,
-            List<int> calendarYearsOriginal,
-            List<IGrantAllocationExpenditure> projectGrantAllocationExpendituresUpdated,
-            List<int> calendarYearsUpdated)
+        private string GeneratePartialViewForModifiedExpenditures(List<IGrantAllocationExpenditure> projectGrantAllocationExpendituresOriginal,
+                                                                  List<int> calendarYearsOriginal,
+                                                                  List<IGrantAllocationExpenditure> projectGrantAllocationExpendituresUpdated,
+                                                                  List<int> calendarYearsUpdated)
         {
-            var grantAllocationsInOriginal = projectFundingSourceExpendituresOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
+            var grantAllocationsInOriginal = projectGrantAllocationExpendituresOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
             var grantAllocationsInUpdated = projectGrantAllocationExpendituresUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
             var grantAllocationsOnlyInUpdated = grantAllocationsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x)).ToList();
 
-            var grantAllocationCalendarYearExpendituresOriginal = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectFundingSourceExpendituresOriginal, calendarYearsOriginal);
+            var grantAllocationCalendarYearExpendituresOriginal = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectGrantAllocationExpendituresOriginal, calendarYearsOriginal);
             var grantAllocationCalendarYearExpendituresUpdated = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(projectGrantAllocationExpendituresUpdated, calendarYearsUpdated);
 
             // find the ones that are only in the original set and add them and mark them as "deleted"
@@ -2146,9 +2146,9 @@ namespace ProjectFirma.Web.Controllers
             return GeneratePartialViewForExpendituresAsString(grantAllocationCalendarYearExpendituresUpdated, calendarYearStrings);
         }
 
-        private string GeneratePartialViewForExpendituresAsString(List<GrantAllocationCalendarYearExpenditure> fundingSourceCalendarYearExpenditures, List<CalendarYearString> calendarYearStrings)
+        private string GeneratePartialViewForExpendituresAsString(List<GrantAllocationCalendarYearExpenditure> grantAllocationCalendarYearExpenditures, List<CalendarYearString> calendarYearStrings)
         {
-            var viewData = new ProjectExpendituresSummaryViewData(fundingSourceCalendarYearExpenditures, calendarYearStrings);
+            var viewData = new ProjectExpendituresSummaryViewData(grantAllocationCalendarYearExpenditures, calendarYearStrings);
             var partialViewAsString = RenderPartialViewToString(ProjectExpendituresPartialViewPath, viewData);
             return partialViewAsString;
         }
@@ -2250,9 +2250,9 @@ namespace ProjectFirma.Web.Controllers
         //    List<IProjectBudgetAmount> projectBudgetAmountsUpdated,
         //    List<int> calendarYearsUpdated)
         //{
-        //    var fundingSourcesInOriginal = projectBudgetAmountsOriginal.Select(x => x.FundingSourceID).Distinct().ToList();
-        //    var fundingSourcesInUpdated = projectBudgetAmountsUpdated.Select(x => x.FundingSourceID).Distinct().ToList();
-        //    var fundingSourcesOnlyInOriginal = fundingSourcesInOriginal.Where(x => !fundingSourcesInUpdated.Contains(x)).ToList();
+        //    var grantAllocationsInOriginal = projectBudgetAmountsOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
+        //    var grantAllocationsInUpdated = projectBudgetAmountsUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
+        //    var grantAllocationsOnlyInOriginal = grantAllocationsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x)).ToList();
 
         //    var projectBudgetAmountsInOriginal = ProjectBudgetAmount2.CreateFromProjectBudgets(projectBudgetAmountsOriginal,
         //        calendarYearsOriginal);
@@ -2266,11 +2266,11 @@ namespace ProjectFirma.Web.Controllers
 
         //    // find the ones that are only in the modified set and add them and mark them as "added"
         //    projectBudgetAmountsInOriginal.AddRange(
-        //        projectBudgetAmountsInUpdated.Where(x => !fundingSourcesInOriginal.Contains(x.FundingSourceID))
+        //        projectBudgetAmountsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x.GrantAllocationID))
         //            .Select(x => ProjectBudgetAmount2.Clone(x, HtmlDiffContainer.DisplayCssClassAddedElement))
         //            .ToList());
         //    // find the ones only in original and mark them as "deleted"
-        //    projectBudgetAmountsInOriginal.Where(x => fundingSourcesOnlyInOriginal.Contains(x.FundingSourceID))
+        //    projectBudgetAmountsInOriginal.Where(x => grantAllocationsOnlyInOriginal.Contains(x.GrantAllocationID))
         //        .ForEach(x =>
         //        {
         //            ZeroOutBudget(x, calendarYearsOriginal);
@@ -2297,20 +2297,20 @@ namespace ProjectFirma.Web.Controllers
         //    List<IProjectBudgetAmount> projectBudgetAmountsUpdated,
         //    List<int> calendarYearsUpdated)
         //{
-        //    var fundingSourcesInOriginal = projectBudgetAmountsOriginal.Select(x => x.FundingSourceID).Distinct().ToList();
-        //    var fundingSourcesInUpdated = projectBudgetAmountsUpdated.Select(x => x.FundingSourceID).Distinct().ToList();
-        //    var fundingSourcesOnlyInUpdated = fundingSourcesInUpdated.Where(x => !fundingSourcesInOriginal.Contains(x)).ToList();
+        //    var grantAllocationsInOriginal = projectBudgetAmountsOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
+        //    var grantAllocationsInUpdated = projectBudgetAmountsUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
+        //    var grantAllocationsOnlyInUpdated = grantAllocationsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x)).ToList();
 
         //    var projectBudgetAmountsInOriginal = ProjectBudgetAmount2.CreateFromProjectBudgets(projectBudgetAmountsOriginal, calendarYearsOriginal);
         //    var projectBudgetAmountsInUpdated = ProjectBudgetAmount2.CreateFromProjectBudgets(projectBudgetAmountsUpdated, calendarYearsUpdated);
 
         //    // find the ones that are only in the original set and add them and mark them as "deleted"
         //    projectBudgetAmountsInUpdated.AddRange(
-        //        projectBudgetAmountsInOriginal.Where(x => !fundingSourcesInUpdated.Contains(x.FundingSourceID))
+        //        projectBudgetAmountsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x.GrantAllocationID))
         //            .Select(x => ProjectBudgetAmount2.Clone(x, HtmlDiffContainer.DisplayCssClassDeletedElement))
         //            .ToList());
         //    // find the ones only in modified and mark them as "added"
-        //    projectBudgetAmountsInUpdated.Where(x => fundingSourcesOnlyInUpdated.Contains(x.FundingSourceID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
+        //    projectBudgetAmountsInUpdated.Where(x => grantAllocationsOnlyInUpdated.Contains(x.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
 
         //    var calendarYearStrings = GetCalendarYearStringsForDiffForUpdated(calendarYearsOriginal, calendarYearsUpdated);
         //    return GeneratePartialViewForBudgetsAsString(projectBudgetAmountsInUpdated, calendarYearStrings);

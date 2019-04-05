@@ -38,14 +38,14 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult EditProjectGrantAllocationExpendituresForProject(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearRange = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
+            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
+            var calendarYearRange = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
             var projectExemptReportingYears = project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList();
             var currentExemptedYears = projectExemptReportingYears.Select(x => x.CalendarYear).ToList();
             projectExemptReportingYears.AddRange(calendarYearRange.Where(x => !currentExemptedYears.Contains(x)).Select((x, index) => new ProjectExemptReportingYearSimple(-(index + 1), project.ProjectID, x)));
-            var calendarYearRangeForExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var projectFundingSourceExpenditureBulks = ProjectGrantAllocationExpenditureBulk.MakeFromList(projectFundingSourceExpenditures, calendarYearRangeForExpenditures);
-            var viewModel = new EditProjectGrantAllocationExpendituresViewModel(project, projectFundingSourceExpenditureBulks, projectExemptReportingYears);
+            var calendarYearRangeForExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
+            var projectGrantAllocationExpenditureBulks = ProjectGrantAllocationExpenditureBulk.MakeFromList(projectGrantAllocationExpenditures, calendarYearRangeForExpenditures);
+            var viewModel = new EditProjectGrantAllocationExpendituresViewModel(project, projectGrantAllocationExpenditureBulks, projectExemptReportingYears);
             return ViewEditProjectGrantAllocationExpenditures(project, viewModel, calendarYearRangeForExpenditures);
         }
 

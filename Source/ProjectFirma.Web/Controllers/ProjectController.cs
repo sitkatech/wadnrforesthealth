@@ -407,10 +407,10 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<ForwardLookingFactSheet, ForwardLookingFactSheetViewData>(viewData);
         }
 
-        public static GoogleChartDataTable GetProjectGrantAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> fundingSourceExpenditureGooglePieChartSlices)
+        public static GoogleChartDataTable GetProjectGrantAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditureGooglePieChartSlices)
         {
             var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn("Grant Allocation", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
-            var chartRowCs = fundingSourceExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
+            var chartRowCs = grantAllocationExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
             {
                 var sectorRowV = new GoogleChartRowV(x.Label);
                 var formattedValue = GoogleChartJson.GetFormattedValue(x.Value, MeasurementUnitType.Dollars);
@@ -552,9 +552,9 @@ namespace ProjectFirma.Web.Controllers
                 $"Reported {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}", performanceMeasureActualExcelSpec, performanceMeasureActuals);
             workSheets.Add(wsPerformanceMeasureActuals);
 
-            var projectFundingSourceExpenditureSpec = new ProjectGrantAllocationExpenditureExcelSpec();
-            var projectFundingSourceExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();
-            var wsProjectGrantAllocationExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectFundingSourceExpenditureSpec, projectFundingSourceExpenditures);
+            var projectGrantAllocationExpenditureExcelSpec = new ProjectGrantAllocationExpenditureExcelSpec();
+            var projectGrantAllocationExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();
+            var wsProjectGrantAllocationExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectGrantAllocationExpenditureExcelSpec, projectGrantAllocationExpenditures);
             workSheets.Add(wsProjectGrantAllocationExpenditures);
 
             MultiTenantHelpers.GetClassificationSystems().ForEach(c =>
@@ -790,17 +790,17 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return gridJsonNetJObjectResult;
         }
 
-        public static Dictionary<int, GooglePieChartSlice> GetSlicesForGoogleChart(Dictionary<string, decimal> fundingSourceExpenditures)
+        public static Dictionary<int, GooglePieChartSlice> GetSlicesForGoogleChart(Dictionary<string, decimal> grantAllocationExpenditures)
         {
-            var indexMapping = GetConsistentFundingSourceExpendituresIndexDictionary(fundingSourceExpenditures);
-            return fundingSourceExpenditures.Select(fund => indexMapping[fund.Key]).ToDictionary(index => index, index => new GooglePieChartSlice {Color = FirmaHelpers.DefaultColorRange[index]});
+            var indexMapping = GetConsistentGrantAllocationExpendituresIndexDictionary(grantAllocationExpenditures);
+            return grantAllocationExpenditures.Select(fund => indexMapping[fund.Key]).ToDictionary(index => index, index => new GooglePieChartSlice {Color = FirmaHelpers.DefaultColorRange[index]});
         }
 
-        public static Dictionary<string, int> GetConsistentFundingSourceExpendituresIndexDictionary(Dictionary<string,decimal> fundingSourceExpenditures)
+        public static Dictionary<string, int> GetConsistentGrantAllocationExpendituresIndexDictionary(Dictionary<string,decimal> grantAllocationExpenditures)
         {
             var results = new Dictionary<string, int>();
             var index = 0;
-            foreach (var fund in fundingSourceExpenditures)
+            foreach (var fund in grantAllocationExpenditures)
             {
                 results.Add(fund.Key, index);
                 index++;

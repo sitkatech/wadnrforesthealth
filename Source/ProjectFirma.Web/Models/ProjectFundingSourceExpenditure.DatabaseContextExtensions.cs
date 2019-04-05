@@ -91,14 +91,14 @@ namespace ProjectFirma.Web.Models
             return googleChart;
         }
 
-        public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<ProjectGrantAllocationExpenditure> projectFundingSourceExpenditures,
-            Func<ProjectGrantAllocationExpenditure, string> filterFunction,
-            List<string> filterValues,
-            Func<ProjectGrantAllocationExpenditure, IComparable> sortFunction,
-            List<int> rangeOfYears)
+        public static Dictionary<string, Dictionary<int, decimal>> GetFullCategoryYearDictionary(this IEnumerable<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures,
+                                                                                                 Func<ProjectGrantAllocationExpenditure, string> filterFunction,
+                                                                                                 List<string> filterValues,
+                                                                                                 Func<ProjectGrantAllocationExpenditure, IComparable> sortFunction,
+                                                                                                 List<int> rangeOfYears)
         {
             var fullCategoryYearDictionary = filterValues.ToDictionary(x => x, x => rangeOfYears.ToDictionary(y => y, y => 0m));
-            projectFundingSourceExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList().ForEach(x =>
+            projectGrantAllocationExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList().ForEach(x =>
             {
                 filterValues.ForEach(s =>
                 {

@@ -244,7 +244,7 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectGrantAllocationExpenditureUpdates);
         }
 
-        public void DeleteProjectFundingSourceRequestUpdates()
+        public void DeleteProjectGrantAllocationRequestUpdates()
         {
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.DeleteProjectGrantAllocationRequestUpdate(ProjectGrantAllocationRequestUpdates);
             RefreshFromDatabase(ProjectGrantAllocationRequestUpdates);

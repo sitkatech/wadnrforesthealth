@@ -1359,7 +1359,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectExternalLinkController.cs" />
-    <Compile Include="Controllers\ProjectFundingSourceExpenditureController.cs" />
+    <Compile Include="Controllers\ProjectGrantAllocationExpenditureController.cs" />
     <Compile Include="Controllers\ProjectGrantAllocationExpenditureControllerTest.cs" />
     <Compile Include="Controllers\ProjectImageController.cs" />
     <Compile Include="Controllers\ProjectImageUpdateController.cs" />
@@ -2250,7 +2250,7 @@
     <Compile Include="Models\ProjectExemptReportingYearUpdateSimple.cs" />
     <Compile Include="Models\ProjectGrantAllocationExpenditure.cs" />
     <Compile Include="Models\ProjectGrantAllocationExpenditureBulk.cs" />
-    <Compile Include="Models\ProjectFundingSourceExpenditureUpdate.cs" />
+    <Compile Include="Models\ProjectGrantAllocationExpenditureUpdate.cs" />
     <Compile Include="Models\ProjectGrantAllocationOrganizationTypeExpenditure.cs" />
     <Compile Include="Models\ProjectImage.cs" />
     <Compile Include="Models\ProjectImageUpdate.cs" />

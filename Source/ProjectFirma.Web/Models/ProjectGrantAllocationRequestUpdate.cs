@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceRequestUpdate.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationRequestUpdate.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -31,20 +31,19 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             projectUpdateBatch.ProjectGrantAllocationRequestUpdates = project.ProjectGrantAllocationRequests.Select(
-                projectFundingSourceRequest =>
-                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, projectFundingSourceRequest.GrantAllocation)
+                pgar =>
+                    new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.GrantAllocation)
                     {
-                        SecuredAmount = projectFundingSourceRequest.SecuredAmount,
-                        UnsecuredAmount = projectFundingSourceRequest.UnsecuredAmount
+                        SecuredAmount = pgar.SecuredAmount,
+                        UnsecuredAmount = pgar.UnsecuredAmount
                     }
             ).ToList();
         }
 
-        public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch,
-            IList<ProjectGrantAllocationRequest> allprojectGrantAllocationRequests)
+        public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectGrantAllocationRequest> allProjectGrantAllocationRequests)
         {
             var project = projectUpdateBatch.Project;
-            var projectFundingSourceExpectedFundingFromProjectUpdate = projectUpdateBatch
+            var projectGrantAllocationExpectedFundingFromProjectUpdate = projectUpdateBatch
                 .ProjectGrantAllocationRequestUpdates
                 .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
                     {
@@ -52,8 +51,8 @@ namespace ProjectFirma.Web.Models
                         UnsecuredAmount = x.UnsecuredAmount
                     }
                 ).ToList();
-            project.ProjectGrantAllocationRequests.Merge(projectFundingSourceExpectedFundingFromProjectUpdate,
-                allprojectGrantAllocationRequests,
+            project.ProjectGrantAllocationRequests.Merge(projectGrantAllocationExpectedFundingFromProjectUpdate,
+                allProjectGrantAllocationRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
