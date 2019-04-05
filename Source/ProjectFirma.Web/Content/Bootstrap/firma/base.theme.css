@@ -1199,11 +1199,11 @@ td.stage {
 .systemText {
   font-style: italic;
 }
-#EditFundingSourceExpendituresApp table {
+#EditGrantAllocationExpendituresApp table {
   table-layout: fixed;
 }
-#EditFundingSourceExpendituresApp td,
-#EditFundingSourceExpendituresApp th {
+#EditGrantAllocationExpendituresApp td,
+#EditGrantAllocationExpendituresApp th {
   min-width: 128px;
   width: 128px;
   overflow: hidden;

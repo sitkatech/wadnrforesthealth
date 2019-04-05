@@ -49,10 +49,10 @@ namespace ProjectFirma.Web.Models
             return feature;
         }
 
-        //public HtmlString GetDisplayNameAsUrl()
-        //{
-        //    return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
-        //}
+        public HtmlString GetDisplayNameAsUrl()
+        {
+            return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
+        }
 
         public string GetDetailUrl()
         {

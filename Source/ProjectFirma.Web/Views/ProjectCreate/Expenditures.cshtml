@@ -42,8 +42,8 @@ Source code is available upon request via <support@sitkatech.com>.
     </script>
 }
 
-To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expenditures, add the appropriate @FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized() and then enter the amount contributed by each for the duration defined by your @FieldDefinition.Project.GetFieldDefinitionLabel()'s Planning / Design Start and @FieldDefinition.CompletionDate.GetFieldDefinitionLabel()
-(or, if @FieldDefinition.CompletionDate.GetFieldDefinitionLabel() isn't set, through the current year). If your @FieldDefinition.Project.GetFieldDefinitionLabel() had no expenditures for a given year, enter zero "0" for that year for at least one of its @FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized().
+To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expenditures, add the appropriate @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() and then enter the amount contributed by each for the duration defined by your @FieldDefinition.Project.GetFieldDefinitionLabel()'s Planning / Design Start and @FieldDefinition.CompletionDate.GetFieldDefinitionLabel()
+(or, if @FieldDefinition.CompletionDate.GetFieldDefinitionLabel() isn't set, through the current year). If your @FieldDefinition.Project.GetFieldDefinitionLabel() had no expenditures for a given year, enter zero "0" for that year for at least one of its @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized().
 <hr />
 <div style="margin: 10px 0">
     <p>
@@ -57,7 +57,7 @@ To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expend
     @using (Html.BeginForm())
     {
         @Html.HiddenFor(m=>m.ProjectID);
-        <div ng-app="ProjectFirmaApp" id="EditFundingSourceExpendituresApp" ng-controller="ExpendituresController" style="overflow-x: auto">
+        <div ng-app="ProjectFirmaApp" id="EditGrantAllocationExpendituresApp" ng-controller="ExpendituresController" style="overflow-x: auto">
 
             <hr/>
             <div style="margin-top: 5px">
@@ -169,7 +169,7 @@ To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expend
 
             <div ng-repeat="projectFundingSourceExpenditure in AngularModel.ProjectFundingSourceExpenditures | orderBy:[getFundingSourceName]">
                 <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditureBulks[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceExpenditure.ProjectID}}" />
-                <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditureBulks[0].FundingSourceID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceExpenditure.FundingSourceID}}" />
+                <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditureBulks[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceExpenditure.GrantAllocationID}}" />
                 <div ng-repeat="calendarYearExpenditure in projectFundingSourceExpenditure.CalendarYearExpenditures | orderBy:'CalendarYear'">
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditureBulks[0].CalendarYearExpenditures[1].CalendarYear).ToString().Replace("0", "{{$parent.$index}}").Replace("1", "{{$index}}")" value="{{calendarYearExpenditure.CalendarYear}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditureBulks[0].CalendarYearExpenditures[1].MonetaryAmount).ToString().Replace("0", "{{$parent.$index}}").Replace("1", "{{$index}}")" value="{{calendarYearExpenditure.MonetaryAmount}}" />
