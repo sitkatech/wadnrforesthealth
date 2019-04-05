@@ -957,7 +957,7 @@
     <Compile Include="Security\ProjectApproveFeature.cs" />
     <Compile Include="Security\ProjectDeleteProposalFeature.cs" />
     <Compile Include="Security\ProjectUpdateAdminFeatureWithProjectContext.cs" />
-    <Compile Include="Views\GrantAllocation\ProjectFundingSourceRequestsGridSpec.cs" />
+    <Compile Include="Views\GrantAllocation\ProjectGrantAllocationRequestsGridSpec.cs" />
     <Compile Include="Views\PerformanceMeasure\DownloadChartDataViewModel.cs" />
     <Compile Include="Views\PerformanceMeasure\GoogleChartExcelSpec.cs" />
     <Compile Include="Views\PerformanceMeasure\PerformanceMeasureChartExcelSpec.cs" />
@@ -1360,7 +1360,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ProjectExternalLinkController.cs" />
     <Compile Include="Controllers\ProjectFundingSourceExpenditureController.cs" />
-    <Compile Include="Controllers\ProjectFundingSourceExpenditureControllerTest.cs" />
+    <Compile Include="Controllers\ProjectGrantAllocationExpenditureControllerTest.cs" />
     <Compile Include="Controllers\ProjectImageController.cs" />
     <Compile Include="Controllers\ProjectImageUpdateController.cs" />
     <Compile Include="Controllers\ProjectLocationController.cs" />

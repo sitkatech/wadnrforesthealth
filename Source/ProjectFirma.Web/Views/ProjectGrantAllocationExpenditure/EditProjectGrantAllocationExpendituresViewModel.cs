@@ -59,11 +59,11 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
         public void UpdateModel(List<Models.ProjectGrantAllocationExpenditure> currentProjectGrantAllocationExpenditures,
             IList<Models.ProjectGrantAllocationExpenditure> allProjectGrantAllocationExpenditures, Models.Project project)
         {
-            var projectFundingSourceExpendituresUpdated = new List<Models.ProjectGrantAllocationExpenditure>();
+            var projectGrantAllocationExpendituresUpdated = new List<Models.ProjectGrantAllocationExpenditure>();
             if (ProjectGrantAllocationExpenditures != null)
             {
                 // Completely rebuild the list
-                projectFundingSourceExpendituresUpdated = ProjectGrantAllocationExpenditures.SelectMany(x => x.ToProjectGrantAllocationExpenditures()).ToList();
+                projectGrantAllocationExpendituresUpdated = ProjectGrantAllocationExpenditures.SelectMany(x => x.ToProjectGrantAllocationExpenditures()).ToList();
             }
 
             var currentProjectExemptYears = project.GetExpendituresExemptReportingYears();
@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
 
             project.NoExpendituresToReportExplanation = Explanation;
 
-            currentProjectGrantAllocationExpenditures.Merge(projectFundingSourceExpendituresUpdated,
+            currentProjectGrantAllocationExpenditures.Merge(projectGrantAllocationExpendituresUpdated,
                 allProjectGrantAllocationExpenditures,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID && x.CalendarYear == y.CalendarYear,
                 (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);

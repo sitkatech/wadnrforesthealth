@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch,
-            IList<ProjectGrantAllocationRequest> allProjectFundingSourceRequests)
+            IList<ProjectGrantAllocationRequest> allprojectGrantAllocationRequests)
         {
             var project = projectUpdateBatch.Project;
             var projectFundingSourceExpectedFundingFromProjectUpdate = projectUpdateBatch
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models
                     }
                 ).ToList();
             project.ProjectGrantAllocationRequests.Merge(projectFundingSourceExpectedFundingFromProjectUpdate,
-                allProjectFundingSourceRequests,
+                allprojectGrantAllocationRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {

@@ -280,13 +280,13 @@ namespace ProjectFirma.Web.Controllers
 
         private static ProjectExpendituresDetailViewData BuildProjectExpendituresDetailViewData(Project project)
         {
-            var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var calendarYearsForFundingSourceExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var fromFundingSourcesAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectFundingSourceExpenditures),
-                calendarYearsForFundingSourceExpenditures);
+            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
+            var calendarYearsForGrantAllocationExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
+            var fromGrantAllocationsAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
+                calendarYearsForGrantAllocationExpenditures);
             var projectExpendituresDetailViewData = new ProjectExpendituresDetailViewData(
-                fromFundingSourcesAndCalendarYears,
-                calendarYearsForFundingSourceExpenditures.Select(x => new CalendarYearString(x)).ToList(),
+                fromGrantAllocationsAndCalendarYears,
+                calendarYearsForGrantAllocationExpenditures.Select(x => new CalendarYearString(x)).ToList(),
                 FirmaHelpers.CalculateYearRanges(project.GetExpendituresExemptReportingYears().Select(x => x.CalendarYear)),
                 project.NoExpendituresToReportExplanation);
             return projectExpendituresDetailViewData;
@@ -389,13 +389,13 @@ namespace ProjectFirma.Web.Controllers
             var mapDivID = $"project_{project.ProjectID}_Map";
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
             var chartName = $"ProjectFundingRequestSheet{project.ProjectID}PieChart";
-            var fundingSourceRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
+            var grantAllocationRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
             var googleChartDataTable =
-                GetProjectFundingRequestSheetGoogleChartDataTable(fundingSourceRequestAmountGooglePieChartSlices);
+                GetProjectGrantAllocationRequestSheetGoogleChartDataTable(grantAllocationRequestAmountGooglePieChartSlices);
             var googleChartTitle = $"Funding Request by Organization for: {project.ProjectName}";
             var googleChartType = GoogleChartType.PieChart;
             var googleChartConfiguration = new GooglePieChartConfiguration(googleChartTitle, MeasurementUnitTypeEnum.Dollars,
-                fundingSourceRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
+                grantAllocationRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
             var googleChartJson = new GoogleChartJson(string.Empty, chartName, googleChartConfiguration,
                 googleChartType,
                 googleChartDataTable, null);
@@ -403,13 +403,13 @@ namespace ProjectFirma.Web.Controllers
             var firmaPageFactSheetCustomText = FirmaPage.GetFirmaPageByPageType(firmaPageTypeFactSheetCustomText);
 
             var viewData = new ForwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson,
-                googleChartJson, fundingSourceRequestAmountGooglePieChartSlices, firmaPageFactSheetCustomText);
+                googleChartJson, grantAllocationRequestAmountGooglePieChartSlices, firmaPageFactSheetCustomText);
             return RazorView<ForwardLookingFactSheet, ForwardLookingFactSheetViewData>(viewData);
         }
 
-        public static GoogleChartDataTable GetProjectFundingRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> fundingSourceExpenditureGooglePieChartSlices)
+        public static GoogleChartDataTable GetProjectGrantAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> fundingSourceExpenditureGooglePieChartSlices)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn("Funding Source", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn("Grant Allocation", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
             var chartRowCs = fundingSourceExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
             {
                 var sectorRowV = new GoogleChartRowV(x.Label);

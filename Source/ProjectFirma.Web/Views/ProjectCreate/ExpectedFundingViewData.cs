@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ViewDataForAngularClass viewDataForAngularClass) : base(currentPerson, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ViewDataForAngular = viewDataForAngularClass;
-            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
+            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
         }
 
         public class ViewDataForAngularClass

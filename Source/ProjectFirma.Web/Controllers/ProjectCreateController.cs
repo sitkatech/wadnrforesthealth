@@ -493,9 +493,9 @@ namespace ProjectFirma.Web.Controllers
                 return ViewExpectedFunding(project, viewModel);
             }
             HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
-            var projectFundingSourceRequests = project.ProjectGrantAllocationRequests.ToList();
-            var allProjectFundingSourceRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
-            viewModel.UpdateModel(project, projectFundingSourceRequests, allProjectFundingSourceRequests);
+            var projectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
+            var allprojectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
+            viewModel.UpdateModel(project, projectGrantAllocationRequests, allprojectGrantAllocationRequests);
             SetMessageForDisplay("Expected Funding successfully saved.");
             return GoToNextSection(viewModel, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName);
         }

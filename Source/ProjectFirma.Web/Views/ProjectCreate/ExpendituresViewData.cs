@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpenditures(project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffExpenditures(project));
-            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
+            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
         }
 

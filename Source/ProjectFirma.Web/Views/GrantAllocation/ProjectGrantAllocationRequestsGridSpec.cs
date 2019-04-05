@@ -6,9 +6,9 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class ProjectFundingSourceRequestsGridSpec : GridSpec<Models.ProjectGrantAllocationRequest>
+    public class ProjectGrantAllocationRequestsGridSpec : GridSpec<Models.ProjectGrantAllocationRequest>
     {
-        public ProjectFundingSourceRequestsGridSpec()
+        public ProjectGrantAllocationRequestsGridSpec()
         {
             Add(Models.FieldDefinition.Project.ToGridHeaderString(),
                 a => UrlTemplate.MakeHrefString(a.Project.GetDetailUrl(), a.Project.DisplayName),

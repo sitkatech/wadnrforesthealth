@@ -424,7 +424,7 @@ namespace ProjectFirma.Web.Models
             return ValidateExpenditures();
         }
 
-        public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectGrantAllocationRequestSimple> newProjectFundingSourceRequests)
+        public ExpectedFundingValidationResult ValidateExpectedFunding(List<ProjectGrantAllocationRequestSimple> newprojectGrantAllocationRequests)
         {
             return new ExpectedFundingValidationResult();
         }
@@ -538,7 +538,7 @@ namespace ProjectFirma.Web.Models
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
             IList<ProjectPriorityArea> projectPriorityAreas, 
             IList<ProjectRegion> projectRegions, 
-            IList<ProjectGrantAllocationRequest> projectFundingSourceRequests,
+            IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
             IList<ProjectDocument> allProjectDocuments,
             IList<ProjectCustomAttribute> allProjectCustomAttributes,
@@ -558,7 +558,7 @@ namespace ProjectFirma.Web.Models
                 projectLocations,
                 projectPriorityAreas,
                 projectRegions,
-                projectFundingSourceRequests,
+                projectGrantAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
                 allProjectCustomAttributes,

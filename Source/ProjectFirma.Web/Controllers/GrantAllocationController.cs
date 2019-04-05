@@ -347,7 +347,7 @@ namespace ProjectFirma.Web.Controllers
             const string chartTitle = "Reported Expenditures";
             var chartContainerID = chartTitle.Replace(" ", "");
 
-            // If ProjectFundingSourceExpenditures is empty, ToGoogleChart returns null...
+            // If ProjectGrantAllocationExpenditures is empty, ToGoogleChart returns null...
             var googleChart = grantAllocation.ProjectGrantAllocationExpenditures
                 .ToGoogleChart(x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
                     taxonomyTrunks.Select(x => x.DisplayName).ToList(),
@@ -359,14 +359,14 @@ namespace ProjectFirma.Web.Controllers
             googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.None);
             var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 350, false);
 
-            var projectFundingSourceRequestsGridSpec = new ProjectFundingSourceRequestsGridSpec()
+            var projectGrantAllocationRequestsGridSpec = new ProjectGrantAllocationRequestsGridSpec()
             {
                 ObjectNameSingular = "Project",
                 ObjectNamePlural = "Projects",
                 SaveFiltersInCookie = true
             };
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectFundingSourceRequestsGridSpec);
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
@@ -384,11 +384,11 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [GrantAllocationsViewFeature]
-        public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectFundingSourceRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             var projectGrantAllocationRequests = grantAllocation.ProjectGrantAllocationRequests.ToList();
-            var gridSpec = new ProjectFundingSourceRequestsGridSpec();
+            var gridSpec = new ProjectGrantAllocationRequestsGridSpec();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectGrantAllocationRequests, gridSpec);
             return gridJsonNetJObjectResult;
         }
