@@ -38,8 +38,8 @@ namespace ProjectFirma.Web.Controllers
             var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectFundingSourceExpenditures);
 
-            var fullOrganizationTypeAndYearDictionary = projectFundingSourceExpenditures.GetFullCategoryYearDictionary(x => x.FundingSource.Organization.DisplayName,
-                new List<string>(), x => x.FundingSource.Organization.DisplayName, rangeOfYears);
+            var fullOrganizationTypeAndYearDictionary = projectFundingSourceExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
+                new List<string>(), x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
 
             Assert.That(fullOrganizationTypeAndYearDictionary, Is.Empty);
         }
@@ -71,8 +71,8 @@ namespace ProjectFirma.Web.Controllers
 
             var projectFundingSourceExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectFundingSourceExpenditures);
-            var fullOrganizationTypeAndYearDictionary = projectFundingSourceExpenditures.GetFullCategoryYearDictionary(x => x.FundingSource.Organization.DisplayName,
-                new List<string> {"test organization 1"}, x => x.FundingSource.Organization.DisplayName, rangeOfYears);
+            var fullOrganizationTypeAndYearDictionary = projectFundingSourceExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
+                new List<string> {"test organization 1"}, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
 
             Assert.That(fullOrganizationTypeAndYearDictionary.Sum(x => x.Value.Sum(y => y.Value)), Is.EqualTo(400.00m));
         }

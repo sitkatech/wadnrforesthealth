@@ -61,9 +61,9 @@ namespace ProjectFirma.Web.Controllers
 
             const string chartTitle = "Reported Expenditures By Organization Type";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
+            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
                 organizationTypes.Select(x => x.OrganizationTypeName).ToList(),
-                x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
+                x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
                 chartContainerID,
                 chartTitle);
 

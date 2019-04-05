@@ -690,13 +690,14 @@ namespace ProjectFirma.Web.Models
 
             var currentYearsEntered = projectFundingSourceExpenditureUpdates.Select(y => y.CalendarYear).Distinct().ToList();
             var expectedMissingYears = FirmaDateUtilities.GetRangeOfYears(startYear, currentYear).Where(x => !currentYearsEntered.Contains(x)).ToList();
-            var fundingSources = projectFundingSourceExpenditureUpdates.Select(x => x.FundingSource).Distinct().ToList();
-            if (!fundingSources.Any())
+            var grantAllocations = projectFundingSourceExpenditureUpdates.Select(x => x.GrantAllocation).Distinct().ToList();
+            if (!grantAllocations.Any())
             {
                 if (expectedMissingYears.Any())
                 {
                     Assert.That(result,
-                        Is.EquivalentTo(new List<string> { string.Format("Missing Expenditures for {0}", string.Join(", ", expectedMissingYears)) }),
+                        Is.EquivalentTo(new List<string> { $"Missing Expenditures for {string.Join(", ", expectedMissingYears)}"
+                        }),
                         assertionMessage);
                 }
                 else
@@ -712,7 +713,7 @@ namespace ProjectFirma.Web.Models
                     Assert.That(result,
                         Is.EquivalentTo(new List<string>
                         {
-                            string.Format("Missing Expenditures for Funding Source '{0}' for the following years: {1}", fundingSources.First().DisplayName, string.Join(", ", expectedMissingYears))
+                            $"Missing Expenditures for Funding Source '{grantAllocations.First().DisplayName}' for the following years: {string.Join(", ", expectedMissingYears)}"
                         }),
                         assertionMessage);
                 }

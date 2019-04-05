@@ -163,5 +163,22 @@ namespace ProjectFirma.Web.Models
             get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Max(x => x.CalendarYear) : (int?)null; }
         }
 
+        /// <summary>
+        /// Stand-in for what used to be FundingSource.FixedLengthDisplayName
+        /// </summary>
+        public string FixedLengthDisplayName
+        {
+            get
+            {
+                if (BottommostOrganization.IsUnknown)
+                {
+                    return BottommostOrganization.OrganizationShortNameIfAvailable;
+                }
+                var organizationShortNameIfAvailable = $"({Organization.OrganizationShortNameIfAvailable})";
+                return organizationShortNameIfAvailable.Length < 45 ? $"{GrantAllocationName.ToEllipsifiedString(45 - organizationShortNameIfAvailable.Length)} {organizationShortNameIfAvailable}" : $"{GrantAllocationName} {organizationShortNameIfAvailable}";
+            }
+        }
+
+
     }
 }
