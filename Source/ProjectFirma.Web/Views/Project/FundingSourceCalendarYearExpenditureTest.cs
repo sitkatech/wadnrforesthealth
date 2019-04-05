@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="FundingSourceCalendarYearExpenditureTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="GrantAllocationCalendarYearExpenditureTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -28,51 +28,48 @@ using NUnit.Framework;
 namespace ProjectFirma.Web.Views.Project
 {
     [TestFixture]
-    public class FundingSourceCalendarYearExpenditureTest
+    public class GrantAllocationCalendarYearExpenditureTest
     {
-        // DO NOT CHECK IN to develop; this should be fixed. -- SLG & TK
-
-        /*
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CreateFromFundingSourcesAndCalendarYearsTest()
+        public void CreateFromGrantAllocationsAndCalendarYearsTest()
         {
             // Arrange
-            var fundingSource1 = TestFramework.TestFundingSource.Create();
-            fundingSource1.FundingSourceName = "Funding Source 1";
-            var fundingSource2 = TestFramework.TestFundingSource.Create();
-            fundingSource2.FundingSourceName = "Funding Source 2";
-            var fundingSource3 = TestFramework.TestFundingSource.Create();
-            fundingSource3.FundingSourceName = "Funding Source 3";
-            var fundingSource4 = TestFramework.TestFundingSource.Create();
-            fundingSource4.FundingSourceName = "Funding Source 4";
+            var grantAllocation1 = TestFramework.TestGrantAllocation.Create();
+            grantAllocation1.GrantAllocationName = "Grant Allocation 1";
+            var grantAllocation2 = TestFramework.TestGrantAllocation.Create();
+            grantAllocation2.GrantAllocationName = "Grant Allocation 2";
+            var grantAllocation3 = TestFramework.TestGrantAllocation.Create();
+            grantAllocation3.GrantAllocationName = "Grant Allocation 3";
+            var grantAllocation4 = TestFramework.TestGrantAllocation.Create();
+            grantAllocation4.GrantAllocationName = "Grant Allocation 4";
             var calendarYears = new List<int> {2010, 2011, 2012, 2013, 2014};
-            var fundingSources = new List<Models.FundingSource> {fundingSource1, fundingSource2, fundingSource3, fundingSource4};
+            var grantAllocations = new List<Models.GrantAllocation> {grantAllocation1, grantAllocation2, grantAllocation3, grantAllocation4};
 
             var project = TestFramework.TestProject.Create();
 
-            var projectFundingSourceExpenditure1 = TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource1, 2010, 1000);
-            var projectFundingSourceExpenditure2 = TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource1, 2011, 2000);
-            var projectFundingSourceExpenditure3 = TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource2, 2012, 3000);
-            var projectFundingSourceExpenditure4 = TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource3, 2014, 4000);
-            var projectFundingSourceExpenditure5 = TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource4, 2012, 5000);
+            var projectGrantAllocationExpenditure1 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation1, 2010, 1000);
+            var projectGrantAllocationExpenditure2 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation1, 2011, 2000);
+            var projectGrantAllocationExpenditure3 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation2, 2012, 3000);
+            var projectGrantAllocationExpenditure4 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation3, 2014, 4000);
+            var projectGrantAllocationExpenditure5 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation4, 2012, 5000);
 
-            var projectFundingSourceExpenditures = new List<Models.ProjectFundingSourceExpenditure>
+            var projectGrantAllocationExpenditures = new List<Models.ProjectGrantAllocationExpenditure>
             {
-                projectFundingSourceExpenditure1,
-                projectFundingSourceExpenditure2,
-                projectFundingSourceExpenditure3,
-                projectFundingSourceExpenditure4,
-                projectFundingSourceExpenditure5
+                projectGrantAllocationExpenditure1,
+                projectGrantAllocationExpenditure2,
+                projectGrantAllocationExpenditure3,
+                projectGrantAllocationExpenditure4,
+                projectGrantAllocationExpenditure5
             };
 
             // Act
-            var result = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(new List<IFundingSourceExpenditure>(projectFundingSourceExpenditures), calendarYears);
+            var result = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures), calendarYears);
 
             // Assert
-            Assert.That(result.Count, Is.EqualTo(fundingSources.Count));
-            ObjectApproval.ObjectApprover.VerifyWithJson(result.Select(x => new {x.FundingSourceName, x.CalendarYearExpenditure}));
+            Assert.That(result.Count, Is.EqualTo(grantAllocations.Count));
+            ObjectApproval.ObjectApprover.VerifyWithJson(result.Select(x => new {x.GrantAllocationName, x.CalendarYearExpenditure}));
         }
-        */
+        
     }
 }

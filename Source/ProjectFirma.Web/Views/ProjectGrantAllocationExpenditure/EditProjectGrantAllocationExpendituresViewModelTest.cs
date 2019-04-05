@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectFundingSourceExpendituresViewModelTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectGrantAllocationExpendituresViewModelTest.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,40 +19,43 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.UnitTestCommon;
 
 namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
 {
     [TestFixture]
     public class EditProjectGrantAllocationExpendituresViewModelTest
     {
-        /*
         [Ignore]
         [Test]
         public void AllViewModelFieldsAreSetFromConstructorTest()
         {
             // Arrange
-            var fundingSource1 = TestFramework.TestFundingSource.Create();
-            var fundingSource2 = TestFramework.TestFundingSource.Create();
-            var fundingSource3 = TestFramework.TestFundingSource.Create();
-            var fundingSource4 = TestFramework.TestFundingSource.Create();
+            var grantAllocation1 = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation2 = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation3 = TestFramework.TestGrantAllocation.Create();
+            var grantAllocation4 = TestFramework.TestGrantAllocation.Create();
 
             var project = TestFramework.TestProject.Create();
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource1);
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource2);
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource3);
-            TestFramework.TestProjectFundingSourceExpenditure.Create(project, fundingSource4);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation1);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation2);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation3);
+            TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation4);
 
-            var allFundingSources = new List<Models.FundingSource> {fundingSource1, fundingSource2, fundingSource3, fundingSource4};
+            var allGrantAllocations = new List<Models.GrantAllocation> {grantAllocation1, grantAllocation2, grantAllocation3, grantAllocation4};
 
             // Act
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
-            var calendarYearRangeForExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var viewModel = new EditProjectFundingSourceExpendituresViewModel(null, ProjectFundingSourceExpenditureBulk.MakeFromList(projectFundingSourceExpenditures, calendarYearRangeForExpenditures), new List<ProjectExemptReportingYearSimple>());
+            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
+            var calendarYearRangeForExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
+            var viewModel = new EditProjectGrantAllocationExpendituresViewModel(null, ProjectGrantAllocationExpenditureBulk.MakeFromList(projectGrantAllocationExpenditures, calendarYearRangeForExpenditures), new List<ProjectExemptReportingYearSimple>());
 
             // Assert
-            Assert.That(viewModel.ProjectFundingSourceExpenditures.Select(x => x.FundingSourceID), Is.EquivalentTo(allFundingSources.Select(x => x.FundingSourceID)));
+            Assert.That(viewModel.ProjectGrantAllocationExpenditures.Select(x => x.GrantAllocationID), Is.EquivalentTo(allGrantAllocations.Select(x => x.GrantAllocationID)));
         }
-        */
+
     }
 }

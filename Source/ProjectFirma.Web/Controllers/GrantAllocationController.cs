@@ -28,7 +28,6 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
-using ProjectFirma.Web.Views.FundingSource;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;

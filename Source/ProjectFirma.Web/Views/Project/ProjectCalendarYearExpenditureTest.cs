@@ -30,8 +30,6 @@ namespace ProjectFirma.Web.Views.Project
     public class ProjectCalendarYearExpenditureTest
     {
 
-        // DO NOT CHECK IN TO DEVELOP with this disabled -- SLG & TK
-        /*
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CreateFromProjectsAndCalendarYearsTest()
@@ -48,15 +46,15 @@ namespace ProjectFirma.Web.Views.Project
             var calendarYears = new List<int> {2010, 2011, 2012, 2013, 2014};
             var projects = new List<Models.Project> {project1, project2, project3, project4};
 
-            var fundingSource = TestFramework.TestFundingSource.Create();
+            var fundingSource = TestFramework.TestGrantAllocation.Create();
 
-            var projectProjectExpenditure1 = TestFramework.TestProjectFundingSourceExpenditure.Create(project1, fundingSource, 2010, 1000);
-            var projectProjectExpenditure2 = TestFramework.TestProjectFundingSourceExpenditure.Create(project1, fundingSource, 2011, 2000);
-            var projectProjectExpenditure3 = TestFramework.TestProjectFundingSourceExpenditure.Create(project2, fundingSource, 2012, 3000);
-            var projectProjectExpenditure4 = TestFramework.TestProjectFundingSourceExpenditure.Create(project3, fundingSource, 2014, 4000);
-            var projectProjectExpenditure5 = TestFramework.TestProjectFundingSourceExpenditure.Create(project4, fundingSource, 2012, 5000);
+            var projectProjectExpenditure1 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project1, fundingSource, 2010, 1000);
+            var projectProjectExpenditure2 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project1, fundingSource, 2011, 2000);
+            var projectProjectExpenditure3 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project2, fundingSource, 2012, 3000);
+            var projectProjectExpenditure4 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project3, fundingSource, 2014, 4000);
+            var projectProjectExpenditure5 = TestFramework.TestProjectGrantAllocationExpenditure.Create(project4, fundingSource, 2012, 5000);
 
-            var projectFundingSourceExpenditures = new List<Models.ProjectFundingSourceExpenditure>
+            var projectGrantAllocationExpenditures = new List<Models.ProjectGrantAllocationExpenditure>
             {
                 projectProjectExpenditure1,
                 projectProjectExpenditure2,
@@ -66,12 +64,12 @@ namespace ProjectFirma.Web.Views.Project
             };
 
             // Act
-            var result = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectFundingSourceExpenditures, calendarYears);
+            var result = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectGrantAllocationExpenditures, calendarYears);
 
             // Assert
             Assert.That(result.Count, Is.EqualTo(projects.Count));
             ObjectApproval.ObjectApprover.VerifyWithJson(result.Select(x => new {x.Project.DisplayName, x.CalendarYearExpenditure}));
         }
-        */
+
     }
 }
