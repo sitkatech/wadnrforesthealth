@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static GrantAllocation Create(DatabaseEntities dbContext)
             {
                 var grant = TestFramework.TestGrant.Insert(dbContext);
-                string testGrantAllocationName = TestFramework.MakeTestName("Test Funding Source");
+                string testGrantAllocationName = TestFramework.MakeTestName("Test Grant Allocation Name");
                 var grantAllocation = new GrantAllocation(grant);
                 grantAllocation.GrantAllocationName = testGrantAllocationName;
 

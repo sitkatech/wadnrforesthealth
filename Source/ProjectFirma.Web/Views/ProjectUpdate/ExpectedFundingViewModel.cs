@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
             {
-                yield return new ValidationResult("Each Funding Source can only be used once.");
+                yield return new ValidationResult("Each Grant Allocation can only be used once.");
             }
 
             foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)

@@ -47,10 +47,10 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
         }
 
         public EditProjectGrantAllocationExpendituresViewModel(Models.Project project,
-                                                                List<ProjectGrantAllocationExpenditureBulk> projectFundingSourceExpenditureBulks,
-                                                                List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
+                                                               List<ProjectGrantAllocationExpenditureBulk> projectGrantAllocationExpenditureBulks,
+                                                               List<ProjectExemptReportingYearSimple> projectExemptReportingYears)
         {
-            ProjectGrantAllocationExpenditures = projectFundingSourceExpenditureBulks;
+            ProjectGrantAllocationExpenditures = projectGrantAllocationExpenditureBulks;
             ProjectExemptReportingYears = projectExemptReportingYears;
             Explanation = project.NoExpendituresToReportExplanation;
             ProjectID = project.ProjectID;

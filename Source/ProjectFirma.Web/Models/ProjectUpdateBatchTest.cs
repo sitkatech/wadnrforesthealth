@@ -707,7 +707,7 @@ namespace ProjectFirma.Web.Models
             }
             else
             {
-                // right now the test is constrained to just one funding source
+                // right now the test is constrained to just one grant allocation
                 if (expectedMissingYears.Any())
                 {
                     Assert.That(result,

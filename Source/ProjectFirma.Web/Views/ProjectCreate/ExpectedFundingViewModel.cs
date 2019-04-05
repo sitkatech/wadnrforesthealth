@@ -66,8 +66,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
         public ExpectedFundingViewModel(List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
-            ProjectGrantAllocationRequestSimples = projectGrantAllocationRequests
-                .Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
+            ProjectGrantAllocationRequestSimples = projectGrantAllocationRequests.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
             ProjectEstimatedPersonnelAndBenefitsCost = projectEstimatedPersonnelAndBenefitsCost;
@@ -116,7 +115,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             if (ProjectGrantAllocationRequestSimples.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
             {
-                yield return new ValidationResult("Each funding source can only be used once.");
+                yield return new ValidationResult("Each grant allocation can only be used once.");
             }
 
             foreach (var projectGrantAllocationRequestSimple in ProjectGrantAllocationRequestSimples)

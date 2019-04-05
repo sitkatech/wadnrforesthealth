@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Grant Create(DatabaseEntities dbContext)
             {
                 var organization = TestFramework.TestOrganization.Insert(dbContext);
-                string testGrantName = TestFramework.MakeTestName("Test Funding Source");
+                string testGrantName = TestFramework.MakeTestName("Test Grant Name");
                 var testGrantStatus = GetDefaultGrantStatus();
                 var grant = new Grant(testGrantName, testGrantStatus, organization);
 

@@ -126,7 +126,7 @@ namespace ProjectFirma.Web.Models
             // Create audit logging
             // --------------------
 
-            // Make a test funding source and save it
+            // Make a test grant allocation and save it
             var dbContext = HttpRequestStorage.DatabaseEntities;
             var testGrantAllocation = TestFramework.TestGrantAllocation.Create(dbContext);
             var testOrganization = TestFramework.TestOrganization.Create(dbContext);
@@ -140,8 +140,8 @@ namespace ProjectFirma.Web.Models
             // Change audit logging
             // --------------------
 
-            // Make changes to the Funding Source
-            var newGrantAllocationName = TestFramework.MakeTestName("New Funding Source Name");
+            // Make changes to the grant allocation
+            var newGrantAllocationName = TestFramework.MakeTestName("New Grant Allocation Name");
             testGrantAllocation.GrantAllocationName = newGrantAllocationName;
             testGrantAllocation.Organization = testOrganization;
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
@@ -158,7 +158,7 @@ namespace ProjectFirma.Web.Models
             Check.Assert(
                 HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
                     al => al.TableName == "GrantAllocation" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testGrantAllocation.GrantAllocationID) != null,
-                "Could not find deleted Funding Source record");
+                "Could not find deleted Grant Allocation record");
         }
 
         [Test]

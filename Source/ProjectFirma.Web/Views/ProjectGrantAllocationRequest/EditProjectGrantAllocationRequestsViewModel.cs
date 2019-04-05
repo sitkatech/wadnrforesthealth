@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 if (project == null)
                 {
                     throw new InvalidOperationException(
-                        "Project is required to update Funding Source Requests for a Project");
+                        $"Project is required to update {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Requests for a Project");
                 }
                 project.EstimatedTotalCost = ProjectEstimatedTotalCost;
                 project.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
@@ -124,7 +124,7 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 
             if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
             {
-                yield return new ValidationResult("Each funding source can only be used once.");
+                yield return new ValidationResult("Each grant allocation can only be used once.");
             }
 
             foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)

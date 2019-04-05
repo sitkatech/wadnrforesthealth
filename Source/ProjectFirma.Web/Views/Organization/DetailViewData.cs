@@ -155,7 +155,7 @@ namespace ProjectFirma.Web.Views.Organization
 
             NewGrantAllocationUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.New());
             CanCreateNewGrantAllocation = new GrantAllocationCreateFeature().HasPermissionByPerson(CurrentPerson) &&
-                                        (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create funding sources for their organization
+                                        (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create grant allocations for their organization
                                          CurrentPerson.OrganizationID == organization.OrganizationID);
             ShowProposals = currentPerson.CanViewProposals;
             ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()

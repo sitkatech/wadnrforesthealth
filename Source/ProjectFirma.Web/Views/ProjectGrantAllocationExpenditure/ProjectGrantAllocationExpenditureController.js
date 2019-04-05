@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectFundingSourceExpenditureController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectGrantAllocationExpenditureController.js" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -91,7 +91,7 @@ angular.module("ProjectFirmaApp").controller("ProjectGrantAllocationExpenditureC
 
     $scope.getExpenditureTotalForRow = function (projectGrantAllocationExpenditure)
     {
-        var calendarYearExpendituresAsFlattenedArray = _($scope.AngularModel.ProjectFundingSourceExpenditures).filter(function (pfse) { return pfse.ProjectID == projectGrantAllocationExpenditure.ProjectID && pfse.GrantAllocationID == projectGrantAllocationExpenditure.GrantAllocationID; }).pluck("CalendarYearExpenditures").flatten().value();
+        var calendarYearExpendituresAsFlattenedArray = _($scope.AngularModel.ProjectGrantAllocationExpenditures).filter(function (pfse) { return pfse.ProjectID == projectGrantAllocationExpenditure.ProjectID && pfse.GrantAllocationID == projectGrantAllocationExpenditure.GrantAllocationID; }).pluck("CalendarYearExpenditures").flatten().value();
         return $scope.calculateExpenditureTotal(calendarYearExpendituresAsFlattenedArray);
     };
 

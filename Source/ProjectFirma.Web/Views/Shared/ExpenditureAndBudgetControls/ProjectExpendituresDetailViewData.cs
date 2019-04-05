@@ -26,13 +26,13 @@ namespace ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls
     public class ProjectExpendituresDetailViewData : FirmaUserControlViewData
     {
         public List<CalendarYearString> CalendarYearStrings { get; }
-        public List<GrantAllocationCalendarYearExpenditure> FundingSourceExpenditures { get; }
+        public List<GrantAllocationCalendarYearExpenditure> GrantAllocationCalendarYearExpenditures { get; }
         public List<string> ExemptReportingYears { get; }
         public string ExemptionExplanation { get; }
 
-        public ProjectExpendituresDetailViewData(List<GrantAllocationCalendarYearExpenditure> fundingSourceExpenditures, List<CalendarYearString> calendarYearStrings, List<string> exemptReportingYears, string exemptionExplanation)
+        public ProjectExpendituresDetailViewData(List<GrantAllocationCalendarYearExpenditure> grantAllocationCalendarYearExpenditures, List<CalendarYearString> calendarYearStrings, List<string> exemptReportingYears, string exemptionExplanation)
         {
-            FundingSourceExpenditures = fundingSourceExpenditures;
+            GrantAllocationCalendarYearExpenditures = grantAllocationCalendarYearExpenditures;
             CalendarYearStrings = calendarYearStrings;
             ExemptReportingYears = exemptReportingYears;
             ExemptionExplanation = exemptionExplanation;
