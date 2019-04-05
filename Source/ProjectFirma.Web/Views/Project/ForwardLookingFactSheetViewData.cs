@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.Project
     public class ForwardLookingFactSheetViewData : ProjectViewData
     {
         public List<IGrouping<Models.PerformanceMeasure, PerformanceMeasureExpected>> PerformanceMeasureExpectedValues { get; }
-        public List<GooglePieChartSlice> FundingSourceRequestAmountGooglePieChartSlices { get; }
+        public List<GooglePieChartSlice> GrantAllocationRequestAmountGooglePieChartSlices { get; }
         public Models.ProjectImage KeyPhoto { get; }
         public List<IGrouping<ProjectImageTiming, Models.ProjectImage>> ProjectImagesExceptKeyPhotoGroupedByTiming { get; }
         public int ProjectImagesPerTimingGroup { get; }
@@ -82,12 +82,12 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
             GoogleChartJson = googleChartJson;
-            FundingSourceRequestAmountGooglePieChartSlices = fundingSourceRequestAmountGooglePieChartSlices;
+            GrantAllocationRequestAmountGooglePieChartSlices = fundingSourceRequestAmountGooglePieChartSlices;
 
             //Dynamically resize chart based on how much space the legend requires
-            CalculatedChartHeight = 350 - (FundingSourceRequestAmountGooglePieChartSlices.Count <= 2
-                                        ? FundingSourceRequestAmountGooglePieChartSlices.Count * 24
-                                        : FundingSourceRequestAmountGooglePieChartSlices.Count * 20);
+            CalculatedChartHeight = 350 - (GrantAllocationRequestAmountGooglePieChartSlices.Count <= 2
+                                        ? GrantAllocationRequestAmountGooglePieChartSlices.Count * 24
+                                        : GrantAllocationRequestAmountGooglePieChartSlices.Count * 20);
             FactSheetPdfUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.FactSheetPdf(project));
 
             if (project.ProjectType == null)
@@ -128,7 +128,7 @@ namespace ProjectFirma.Web.Views.Project
             get
             {
                 var legendHtml = "<div>";
-                foreach (var googlePieChartSlice in FundingSourceRequestAmountGooglePieChartSlices.OrderBy(x => x.SortOrder))
+                foreach (var googlePieChartSlice in GrantAllocationRequestAmountGooglePieChartSlices.OrderBy(x => x.SortOrder))
                 {
                     legendHtml += "<div class='chartLegendColorBox' style='display:inline-block; border: solid 6px " + googlePieChartSlice.Color + "'></div> ";
                     legendHtml += "<div style='display:inline-block' >" + googlePieChartSlice.Label + "</div>";
