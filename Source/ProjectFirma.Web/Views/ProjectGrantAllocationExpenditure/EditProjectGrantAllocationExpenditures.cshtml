@@ -31,7 +31,7 @@ Source code is available upon request via <support@sitkatech.com>.
             AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
         };
     });
-    angular.bootstrap(jQuery("#EditFundingSourceExpendituresApp"), ["ProjectFirmaApp"]);
+    angular.bootstrap(jQuery("#EditGrantAllocationExpendituresApp"), ["ProjectFirmaApp"]);
     jQuery(".selectpicker").selectpicker("refresh");
     // ]]>
 </script>
@@ -40,7 +40,7 @@ Source code is available upon request via <support@sitkatech.com>.
     @Html.ValidationSummary()
 </div>
 
-<div ng-app="ProjectFirmaApp" id="EditFundingSourceExpendituresApp" ng-controller="ProjectFundingSourceExpenditureController" style="max-height: 600px; overflow-y: auto">
+<div ng-app="ProjectFirmaApp" id="EditGrantAllocationExpendituresApp" ng-controller="ProjectGrantAllocationExpenditureController" style="max-height: 600px; overflow-y: auto">
     <div style="margin-top: 5px">
         <a style="font-weight: bold; cursor: pointer" ng-click="AngularViewData.ShowNoExpendituresExplanation = !AngularViewData.ShowNoExpendituresExplanation">
             <i ng-class="AngularViewData.ShowNoExpendituresExplanation ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down'" ></i> 
@@ -83,9 +83,9 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
         <br />
     </div>
-    <div ng-repeat="projectFundingSourceExpenditure in AngularModel.ProjectGrantAllocationExpenditures | orderBy:[getGrantAllocationName, getProjectName]">
-        <span class="glyphicon glyphicon-trash" title="Remove row" alt="Remove row" ng-click="deleteRow(projectFundingSourceExpenditure)" style="cursor: pointer"></span>
-        <label ng-bind="@(ViewDataTyped.FromGrantAllocation ? "getProjectName(projectFundingSourceExpenditure)" : "getGrantAllocationName(projectFundingSourceExpenditure)")"></label>
+    <div ng-repeat="projectGrantAllocationExpenditure in AngularModel.ProjectGrantAllocationExpenditures | orderBy:[getGrantAllocationName, getProjectName]">
+        <span class="glyphicon glyphicon-trash" title="Remove row" alt="Remove row" ng-click="deleteRow(projectGrantAllocationExpenditure)" style="cursor: pointer"></span>
+        <label ng-bind="@(ViewDataTyped.FromGrantAllocation ? "getProjectName(projectGrantAllocationExpenditure)" : "getGrantAllocationName(projectGrantAllocationExpenditure)")"></label>
 
         <table class="table table-responsive table-condensed dialogFormLayout"
                style="margin-bottom: 25px; display: block; overflow: auto; background-color: #f1f1f1">
@@ -103,11 +103,11 @@ Source code is available upon request via <support@sitkatech.com>.
             <tbody>
             <tr>
                 <td>Amount:</td>
-                <td ng-repeat="calendarYearExpenditure in projectFundingSourceExpenditure.CalendarYearExpenditures | orderBy:'-CalendarYear'">
+                <td ng-repeat="calendarYearExpenditure in projectGrantAllocationExpenditure.CalendarYearExpenditures | orderBy:'-CalendarYear'">
                     <input style="text-align: right" type="text" ng-model="calendarYearExpenditure.MonetaryAmount" class="sitkaCurrency form-control" style="width: 96px;" ng-currency />
                 </td>
                 <td style="text-align: right; font-weight: bold;">
-                    {{getExpenditureTotalForRow(projectFundingSourceExpenditure) | currency:"$"}}
+                    {{getExpenditureTotalForRow(projectGrantAllocationExpenditure) | currency:"$"}}
                 </td>
             </tr>
             </tbody>
@@ -130,7 +130,7 @@ Source code is available upon request via <support@sitkatech.com>.
             </thead>
             <tbody>
                 <tr style="font-weight: bold;">
-                    <td>All @FieldDefinition.FundingSource.GetFieldDefinitionLabel()s:</td>
+                    <td>All @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()s:</td>
                     <td ng-repeat="calendarYear in getCalendarYearRange()" style="text-align: right">
                         {{getExpenditureTotalForCalendarYear(calendarYear) | currency:"$"}}
                     </td>
@@ -146,10 +146,10 @@ Source code is available upon request via <support@sitkatech.com>.
     {
         @Html.HiddenFor(x => x.ProjectID)
         <input type="hidden" name="@Html.NameFor(x => x.Explanation)" value="{{AngularModel.Explanation}}" />
-        <div ng-repeat="projectFundingSourceExpenditure in AngularModel.ProjectGrantAllocationExpenditures | orderBy:[getGrantAllocationName, getProjectName]">
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditures[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceExpenditure.ProjectID}}" />
-            <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditures[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceExpenditure.GrantAllocationID}}" />
-            <div ng-repeat="calendarYearExpenditure in projectFundingSourceExpenditure.CalendarYearExpenditures | orderBy:'CalendarYear'">
+        <div ng-repeat="projectGrantAllocationExpenditure in AngularModel.ProjectGrantAllocationExpenditures | orderBy:[getGrantAllocationName, getProjectName]">
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditures[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationExpenditure.ProjectID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditures[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationExpenditure.GrantAllocationID}}" />
+            <div ng-repeat="calendarYearExpenditure in projectGrantAllocationExpenditure.CalendarYearExpenditures | orderBy:'CalendarYear'">
                 <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditures[0].CalendarYearExpenditures[1].CalendarYear).ToString().Replace("0", "{{$parent.$index}}").Replace("1", "{{$index}}")" value="{{calendarYearExpenditure.CalendarYear}}" />
                 <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationExpenditures[0].CalendarYearExpenditures[1].MonetaryAmount).ToString().Replace("0", "{{$parent.$index}}").Replace("1", "{{$index}}")" value="{{calendarYearExpenditure.MonetaryAmount}}" />
             </div>

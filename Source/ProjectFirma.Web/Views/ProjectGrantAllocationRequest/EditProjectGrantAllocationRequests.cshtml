@@ -33,7 +33,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
                 };
             });
-        angular.bootstrap(jQuery("#EditFundingSourceRequestsApp"), ["ProjectFirmaApp"]);
+        angular.bootstrap(jQuery("#EditGrantAllocationRequestsApp"), ["ProjectFirmaApp"]);
 
         jQuery(".selectpicker").selectpicker("refresh");
         jQuery(".modal").on("hidden.bs.modal",
@@ -54,7 +54,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <div class="row">
     <div class="col-xs-12">
-        <div ng-app="ProjectFirmaApp" id="EditFundingSourceRequestsApp" ng-controller="ProjectFundingSourceRequestController" style="max-height: 600px;">
+        <div ng-app="ProjectFirmaApp" id="EditGrantAllocationRequestsApp" ng-controller="ProjectGrantAllocationRequestController" style="max-height: 600px;">
 
             @using (Html.BeginForm())
             {
@@ -99,11 +99,11 @@ Source code is available upon request via <support@sitkatech.com>.
 
                     <hr />
                 }
-                <div ng-repeat="projectFundingSourceRequest in AngularModel.ProjectFundingSourceRequests | orderBy:[getGrantAllocationName, getProjectName]">
-                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceRequest.ProjectID}}" />
-                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceRequest.GrantAllocationID}}" />
-                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].UnsecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceRequest.UnsecuredAmount}}" />
-                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].SecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectFundingSourceRequest.SecuredAmount}}" />
+                <div ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequests | orderBy:[getGrantAllocationName, getProjectName]">
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.ProjectID}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.GrantAllocationID}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].UnsecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.UnsecuredAmount}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].SecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.SecuredAmount}}" />
                 </div>
             }
             @if (ViewDataTyped.FromGrantAllocation)
@@ -159,7 +159,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     <br />
                 </div>
             }
-            <table class="dialogFormLayout" style="margin-top: 20px; table-layout: fixed" ng-show="AngularModel.ProjectFundingSourceRequests.length > 0">
+            <table class="dialogFormLayout" style="margin-top: 20px; table-layout: fixed" ng-show="AngularModel.ProjectGrantAllocationRequests.length > 0">
                 <colgroup>
                     <col class="col-xs-1" />
                     <col class="col-xs-4" />
@@ -175,19 +175,19 @@ Source code is available upon request via <support@sitkatech.com>.
                         <th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>
                         <th style="text-align: right;">Total</th>
                     </tr>
-                    <tr ng-repeat="projectFundingSourceRequest in AngularModel.ProjectFundingSourceRequests | orderBy:[getGrantAllocationName, getProjectName]" style="padding-bottom: 2px;">
+                    <tr ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequests | orderBy:[getGrantAllocationName, getProjectName]" style="padding-bottom: 2px;">
                         <td>
-                            <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectFundingSourceRequest)" style="cursor: pointer"></span>
+                            <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectGrantAllocationRequest)" style="cursor: pointer"></span>
                         </td>
-                        <td ng-bind="@(ViewDataTyped.FromGrantAllocation ? "getProjectName(projectFundingSourceRequest)" : "getGrantAllocationName(projectFundingSourceRequest)")">
+                        <td ng-bind="@(ViewDataTyped.FromGrantAllocation ? "getProjectName(projectGrantAllocationRequest)" : "getGrantAllocationName(projectGrantAllocationRequest)")">
                         <td style="text-align: right; padding-right: 17px;">
-                            <input style="float: right; text-align: right" type="text" ng-model="projectFundingSourceRequest.SecuredAmount" class="sitkaCurrency form-control" ng-currency />
+                            <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.SecuredAmount" class="sitkaCurrency form-control" ng-currency />
                         </td>
                         <td style="text-align: right; padding-right: 17px;">
-                            <input style="float: right; text-align: right" type="text" ng-model="projectFundingSourceRequest.UnsecuredAmount" class="sitkaCurrency form-control" ng-currency />
+                            <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.UnsecuredAmount" class="sitkaCurrency form-control" ng-currency />
                         </td>
                         <th style="text-align: right">
-                            {{getRowTotal(projectFundingSourceRequest) | currency:"$"}}
+                            {{getRowTotal(projectGrantAllocationRequest) | currency:"$"}}
                         </th>
                     </tr>
                     <tr style="border-top: 1px solid #eeeeee;">

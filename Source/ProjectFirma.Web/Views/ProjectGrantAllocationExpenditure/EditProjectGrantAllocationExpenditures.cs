@@ -19,8 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using ProjectFirma.Web.Views.ProjectFundingSourceExpenditure;
-
 namespace ProjectFirma.Web.Views.ProjectGrantAllocationExpenditure
 {
     public abstract class EditProjectGrantAllocationExpenditures : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectGrantAllocationExpendituresViewData, EditProjectGrantAllocationExpendituresViewModel>

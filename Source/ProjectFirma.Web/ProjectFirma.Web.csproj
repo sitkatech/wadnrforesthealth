@@ -1857,7 +1857,7 @@
     <Content Include="Views\ProjectCreate\ExpectedFundingController.js" />
     <Content Include="Views\ProjectCreate\ExpendituresController.js" />
     <Content Include="Views\ProjectCreate\PerformanceMeasuresController.js" />
-    <Content Include="Views\ProjectGrantAllocationRequest\ProjectFundingSourceRequestController.js" />
+    <Content Include="Views\ProjectGrantAllocationRequest\ProjectGrantAllocationRequestController.js" />
     <Content Include="Views\Shared\ProjectOrganization\ProjectOrganizationController.js" />
     <Content Include="Views\ProjectUpdate\ExpectedFundingController.js" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationSimpleController.js" />
@@ -1869,7 +1869,7 @@
     <Content Include="Views\Shared\ViewPageContent.cshtml" />
     <Content Include="Views\Shared\ViewGoogleChart.cshtml" />
     <Content Include="Views\ProjectFunding\ProjectFundingDetail.cshtml" />
-    <Content Include="Views\ProjectGrantAllocationRequest\EditProjectFundingSourceRequests.cshtml" />
+    <Content Include="Views\ProjectGrantAllocationRequest\EditProjectGrantAllocationRequests.cshtml" />
     <Content Include="Views\ProjectUpdate\ExpectedFunding.cshtml" />
     <Content Include="Views\Shared\ProjectUpdateDiffControls\ProjectFundingRequestsDetail.cshtml" />
     <Content Include="Views\ProjectCreate\ExpectedFunding.cshtml" />
@@ -2540,7 +2540,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Views\PerformanceMeasure\EditSubcategoriesAndOptionsController.js" />
     <Content Include="Views\ProjectExternalLink\ProjectExternalLinkController.js" />
-    <Content Include="Views\ProjectGrantAllocationExpenditure\ProjectFundingSourceExpenditureController.js" />
+    <Content Include="Views\ProjectGrantAllocationExpenditure\ProjectGrantAllocationExpenditureController.js" />
     <Content Include="Views\Shared\ProjectOrganization\EditOrganizationsViewModelTest.AllViewModelFieldsAreSetFromConstructorTest.approved.txt" />
     <Content Include="Views\ProjectUpdate\PerformanceMeasuresController.js" />
     <Content Include="Views\ProjectUpdate\ExpendituresController.js" />
@@ -3797,7 +3797,7 @@
     <Content Include="Views\Project\MyOrganizationsProjects.cshtml" />
     <Content Include="Views\Project\SearchResults.cshtml" />
     <Content Include="Views\Project\Detail.cshtml" />
-    <Content Include="Views\ProjectGrantAllocationExpenditure\EditProjectFundingSourceExpenditures.cshtml" />
+    <Content Include="Views\ProjectGrantAllocationExpenditure\EditProjectGrantAllocationExpenditures.cshtml" />
     <Content Include="Views\ProjectImageUpdate\Edit.cshtml" />
     <Content Include="Views\ProjectImageUpdate\New.cshtml" />
     <Content Include="Views\ProjectImage\Edit.cshtml" />
