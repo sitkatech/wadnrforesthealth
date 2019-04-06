@@ -107,7 +107,7 @@ Source code is available upon request via <support@sitkatech.com>.
             </p>
         </div>
         <div style="overflow-x: auto" class="form-inline">
-            <table class="table" style="margin-top: 20px; overflow: scroll" ng-show="AngularModel.ProjectGrantAllocationRequests.length > 0">
+            <table class="table" style="margin-top: 20px; overflow: scroll" ng-show="AngularModel.ProjectGrantAllocationRequestSimples.length > 0">
                 <tr>
                     <th></th>
                     <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
@@ -115,7 +115,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>
                     <th style="text-align: right">Total</th>
                 </tr>
-                <tr ng-repeat="projectGrantAllocationRequest in AngularModel.projectGrantAllocationRequestSimples | orderBy:[getGrantAllocationName]">
+                <tr ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequestSimples | orderBy:[getGrantAllocationName]">
                     <td>
                         <span class="glyphicon glyphicon-trash blue" title="Remove row" alt="Remove row" ng-click="deleteRow(projectGrantAllocationRequest)" style="cursor: pointer"></span>
                     </td>
@@ -146,7 +146,7 @@ Source code is available upon request via <support@sitkatech.com>.
         </div>
 
 
-        <div ng-repeat="projectGrantAllocationRequest in AngularModel.projectGrantAllocationRequestSimples | orderBy:[getGrantAllocationName]">
+        <div ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequestSimples | orderBy:[getGrantAllocationName]">
             <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequestSimples[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.ProjectID}}"/>
             <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequestSimples[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.GrantAllocationID}}"/>
             <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequestSimples[0].SecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.SecuredAmount}}"/>
