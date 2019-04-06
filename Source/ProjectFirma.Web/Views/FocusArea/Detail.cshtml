@@ -43,8 +43,6 @@
         jQuery("#overviewTab").on("shown.bs.tab", function () {
             var gridName1 = @(ViewDataTyped.ProjectFocusAreaGridName.ToJS().ToHTMLFormattedString());
             Sitka[gridName1].resizeGridWidths();
-            var gridName2 = @(ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName2].resizeGridWidths();
             _.forOwn(window.GoogleCharts.chartWrappers,
                 function (chartWrapper) {
                     if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {

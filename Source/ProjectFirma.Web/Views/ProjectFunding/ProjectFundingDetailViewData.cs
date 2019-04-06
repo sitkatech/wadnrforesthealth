@@ -25,11 +25,11 @@ namespace ProjectFirma.Web.Views.ProjectFunding
 {
     public class ProjectFundingDetailViewData : FirmaViewData
     {
-        public readonly List<IFundingSourceRequestAmount> FundingSourceRequestAmounts;
+        public readonly List<IGrantAllocationRequestAmount> GrantAllocationRequestAmounts;
 
-        public ProjectFundingDetailViewData(Person currentPerson, List<IFundingSourceRequestAmount> fundingSourceRequestAmounts) : base(currentPerson)
+        public ProjectFundingDetailViewData(Person currentPerson, List<IGrantAllocationRequestAmount> grantAllocationRequestAmounts) : base(currentPerson)
         {
-            FundingSourceRequestAmounts = fundingSourceRequestAmounts;
+            GrantAllocationRequestAmounts = grantAllocationRequestAmounts;
         }
     }
 }

@@ -41,10 +41,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public readonly ProjectsIncludingLeadImplementingGridSpec ProjectsIncludingLeadImplementingGridSpec;
 
-        //public readonly ProjectFundingSourceExpendituresForFocusAreaGridSpec ProjectFundingSourceExpendituresForFocusAreaGridSpec;
-        public readonly string ProjectFundingSourceExpendituresForFocusAreaGridName;
-
-        public readonly string ManageFundingSourcesUrl;
+        public readonly string ManageGrantAllocationsUrl;
         public readonly string IndexUrl;
 
         public readonly MapInitJson MapInitJson;
@@ -54,9 +51,9 @@ namespace ProjectFirma.Web.Views.FocusArea
         public int NumberOfProjectsContributedTo { get; }
 
         public DetailViewData(Person currentPerson,
-            Models.FocusArea focusArea,
-            MapInitJson mapInitJson,
-            bool hasSpatialData) : base(currentPerson)
+                              Models.FocusArea focusArea,
+                              MapInitJson mapInitJson,
+                              bool hasSpatialData) : base(currentPerson)
         {
             FocusArea = focusArea;
             PageTitle = focusArea.FocusAreaName;
@@ -82,7 +79,8 @@ namespace ProjectFirma.Web.Views.FocusArea
                     SaveFiltersInCookie = true
                 };
 
-            ManageFundingSourcesUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Index());
+            //GrantAllocations are accessed from the Grant Index page
+            ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;

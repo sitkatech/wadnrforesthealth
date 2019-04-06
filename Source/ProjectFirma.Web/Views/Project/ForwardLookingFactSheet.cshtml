@@ -18,6 +18,7 @@
     Source code is available upon request via <support@sitkatech.com>.
     </license>
     -----------------------------------------------------------------------*@
+@using DocumentFormat.OpenXml.Drawing
 @using ProjectFirma.Web.Views.Project
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.Shared
@@ -204,7 +205,7 @@
                     <strong style="white-space: nowrap;">No Funding Identified</strong>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3">
-                    @ViewDataTyped.NoFundingSourceIdentified
+                    @ViewDataTyped.NoGrantAllocationIdentified
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3">
                     <strong> @FieldDefinition.UnsecuredFunding.GetFieldDefinitionLabel()</strong>
@@ -335,7 +336,7 @@
             <div style="margin-left: auto; margin-right: auto; page-break-inside: avoid">
                 <h4>Targeted Funding</h4>
                 <div class="chartPanel">
-                    @if (ViewDataTyped.FundingSourceRequestAmountGooglePieChartSlices.Any())
+                    @if (ViewDataTyped.GrantAllocationRequestAmountGooglePieChartSlices.Any())
                     {
                         <div id="@ViewDataTyped.GoogleChartJson.ChartContainerID" class="googleChart" style="height: @(ViewDataTyped.CalculatedChartHeight)px;"></div>
                         <div class="captionText">
@@ -345,7 +346,7 @@
                     else
                     {
                         <div class="text-center">
-                            <p class="systemText">No Targeted Funding Sources identified</p>
+                            <p class="systemText">No Targeted @FieldDefinition.GrantAllocation.FieldDefinitionDisplayName identified</p>
                         </div>
                     }
                 </div>

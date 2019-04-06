@@ -22,6 +22,8 @@ Source code is available upon request via <support@sitkatech.com>.
 using GeoJSON.Net.Feature;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using LtInfo.Common;
 
 namespace ProjectFirma.Web.Models
 {
@@ -30,6 +32,11 @@ namespace ProjectFirma.Web.Models
         public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<Region> regions)
         {
             return new FeatureCollection(regions.Select(x => x.MakeFeatureWithRelevantProperties()).ToList());
+        }
+
+        public static HtmlString GetRegionDisplayNameAsUrl(this Region region)
+        {
+            return region != null ? UrlTemplate.MakeHrefString(region.GetDetailUrl(), region.DisplayName) : new HtmlString(null);
         }
     }
 }

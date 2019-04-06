@@ -93,6 +93,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
         {
+            GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;

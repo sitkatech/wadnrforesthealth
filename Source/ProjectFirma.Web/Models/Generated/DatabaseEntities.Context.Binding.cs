@@ -50,7 +50,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
-        public virtual DbSet<FundingSource> FundingSources { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
@@ -103,10 +102,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
-        public virtual DbSet<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
-        public virtual DbSet<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
-        public virtual DbSet<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
-        public virtual DbSet<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
+        public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual DbSet<ProjectInternalNote> ProjectInternalNotes { get; set; }
@@ -276,9 +275,6 @@ namespace ProjectFirma.Web.Models
                     var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
-
-                case "FundingSource":
-                    return FundingSources.GetFundingSource(primaryKey);
 
                 case "GoogleChartType":
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
@@ -511,17 +507,17 @@ namespace ProjectFirma.Web.Models
                 case "ProjectExternalLinkUpdate":
                     return ProjectExternalLinkUpdates.GetProjectExternalLinkUpdate(primaryKey);
 
-                case "ProjectFundingSourceExpenditure":
-                    return ProjectFundingSourceExpenditures.GetProjectFundingSourceExpenditure(primaryKey);
+                case "ProjectGrantAllocationExpenditure":
+                    return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
 
-                case "ProjectFundingSourceExpenditureUpdate":
-                    return ProjectFundingSourceExpenditureUpdates.GetProjectFundingSourceExpenditureUpdate(primaryKey);
+                case "ProjectGrantAllocationExpenditureUpdate":
+                    return ProjectGrantAllocationExpenditureUpdates.GetProjectGrantAllocationExpenditureUpdate(primaryKey);
 
-                case "ProjectFundingSourceRequest":
-                    return ProjectFundingSourceRequests.GetProjectFundingSourceRequest(primaryKey);
+                case "ProjectGrantAllocationRequest":
+                    return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);
 
-                case "ProjectFundingSourceRequestUpdate":
-                    return ProjectFundingSourceRequestUpdates.GetProjectFundingSourceRequestUpdate(primaryKey);
+                case "ProjectGrantAllocationRequestUpdate":
+                    return ProjectGrantAllocationRequestUpdates.GetProjectGrantAllocationRequestUpdate(primaryKey);
 
                 case "ProjectImage":
                     return ProjectImages.GetProjectImage(primaryKey);

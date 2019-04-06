@@ -304,8 +304,8 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectFundingDetailViewData = projectFundingDetailViewData;
             EditExpectedFundingUrl =
-                SitkaRoute<ProjectFundingSourceRequestController>.BuildUrlFromExpression(c =>
-                    c.EditProjectFundingSourceRequestsForProject(project));
+                SitkaRoute<ProjectGrantAllocationRequestController>.BuildUrlFromExpression(c =>
+                    c.EditProjectGrantAllocationRequestsForProject(project));
 
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
             EditReportedExpendituresUrl = editReportedExpendituresUrl;

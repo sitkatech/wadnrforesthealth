@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [StringLength(ProjectUpdateBatch.FieldLengths.ExpendituresComment)]
         public string Comments { get; set; }
 
-        public List<ProjectFundingSourceExpenditureBulk> ProjectFundingSourceExpenditures { get; set; }
+        public List<ProjectGrantAllocationExpenditureBulk> ProjectGrantAllocationExpenditures { get; set; }
 
         public string Explanation { get; set; }
 
@@ -57,20 +57,20 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             ProjectExemptReportingYears = projectExemptReportingYears;
             Explanation = projectUpdateBatch.NoExpendituresToReportExplanation;
-            ProjectFundingSourceExpenditures = ProjectFundingSourceExpenditureBulk.MakeFromList(projectUpdateBatch.ProjectFundingSourceExpenditureUpdates.ToList(), calendarYearsToPopulate);
+            ProjectGrantAllocationExpenditures = ProjectGrantAllocationExpenditureBulk.MakeFromList(projectUpdateBatch.ProjectGrantAllocationExpenditureUpdates.ToList(), calendarYearsToPopulate);
             ShowValidationWarnings = true;
             Comments = projectUpdateBatch.ExpendituresComment;
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
-            List<ProjectFundingSourceExpenditureUpdate> currentProjectFundingSourceExpenditureUpdates,
-            IList<ProjectFundingSourceExpenditureUpdate> allProjectFundingSourceExpenditureUpdates)
+            List<ProjectGrantAllocationExpenditureUpdate> currentProjectGrantAllocationExpenditureUpdates,
+            IList<ProjectGrantAllocationExpenditureUpdate> allProjectGrantAllocationExpenditureUpdates)
         {
-            var projectFundingSourceExpenditureUpdatesUpdated = new List<ProjectFundingSourceExpenditureUpdate>();
-            if (ProjectFundingSourceExpenditures != null)
+            var projectGrantAllocationExpenditureUpdatesUpdated = new List<ProjectGrantAllocationExpenditureUpdate>();
+            if (ProjectGrantAllocationExpenditures != null)
             {
                 // Completely rebuild the list
-                projectFundingSourceExpenditureUpdatesUpdated = ProjectFundingSourceExpenditures.SelectMany(x => x.ToProjectFundingSourceExpenditureUpdates(projectUpdateBatch)).ToList();
+                projectGrantAllocationExpenditureUpdatesUpdated = ProjectGrantAllocationExpenditures.SelectMany(x => x.ToProjectGrantAllocationExpenditureUpdates(projectUpdateBatch)).ToList();
             }
 
             var currentProjectExemptYears = projectUpdateBatch.GetExpendituresExemptReportingYears();
@@ -91,21 +91,21 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             projectUpdateBatch.NoExpendituresToReportExplanation = Explanation;
 
-            currentProjectFundingSourceExpenditureUpdates.Merge(projectFundingSourceExpenditureUpdatesUpdated,
-                allProjectFundingSourceExpenditureUpdates,
-                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.FundingSourceID == y.FundingSourceID && x.CalendarYear == y.CalendarYear,
+            currentProjectGrantAllocationExpenditureUpdates.Merge(projectGrantAllocationExpenditureUpdatesUpdated,
+                allProjectGrantAllocationExpenditureUpdates,
+                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.GrantAllocationID == y.GrantAllocationID && x.CalendarYear == y.CalendarYear,
                 (x, y) => x.ExpenditureAmount = y.ExpenditureAmount);
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var errors = new List<ValidationResult>();
-            var emptyRows = ProjectFundingSourceExpenditures?.Where(x =>
+            var emptyRows = ProjectGrantAllocationExpenditures?.Where(x =>
                 x.CalendarYearExpenditures.All(y => !y.MonetaryAmount.HasValue));
 
             if (emptyRows?.Any() ?? false)
             {
-                errors.Add(new ValidationResult($"The {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update could not be saved because there are blank rows. Enter a value in all fields or delete funding sources for which there is no expenditure data to report."));
+                errors.Add(new ValidationResult($"The {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update could not be saved because there are blank rows. Enter a value in all fields or delete grant allocations for which there is no expenditure data to report."));
             }
 
             return errors;
