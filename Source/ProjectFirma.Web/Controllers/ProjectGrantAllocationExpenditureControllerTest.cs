@@ -106,7 +106,9 @@ namespace ProjectFirma.Web.Controllers
             var rangeOfYears = FirmaDateUtilities.GetRangeOfYears(beginCalendarYear, endCalendarYear);
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> {"org 1", "org 2"}, x=> x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
+                                                                                                                         new List<string> {"org 1", "org 2"}, 
+                                                                                                                         x=> x.GrantAllocation.BottommostOrganization.DisplayName, 
+                                                                                                                         rangeOfYears);
 
             Assert.That(fullOrganizationTypeAndYearDictionary["org 1"][2012], Is.EqualTo(300.00m));
         }
@@ -181,7 +183,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = TestFramework.TestProject.Create();
             var organization = TestFramework.TestOrganization.Create(organizationName);
-            var grantAllocation = TestFramework.TestGrantAllocation.CreateWithoutChangingName(grantAllocationName);
+            var grantAllocation = TestFramework.TestGrantAllocation.CreateWithoutChangingName(grantAllocationName, organization);
 
             return yearAndExpenditureDictionary.Select(x => TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, x.Key, x.Value)).ToList();
 

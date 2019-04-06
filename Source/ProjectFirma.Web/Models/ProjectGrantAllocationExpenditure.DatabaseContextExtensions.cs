@@ -98,7 +98,9 @@ namespace ProjectFirma.Web.Models
                                                                                                  List<int> rangeOfYears)
         {
             var fullCategoryYearDictionary = filterValues.ToDictionary(x => x, x => rangeOfYears.ToDictionary(y => y, y => 0m));
-            projectGrantAllocationExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList().ForEach(x =>
+
+            var projectGrantAllocationExpendituresByYear = projectGrantAllocationExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList();
+            projectGrantAllocationExpendituresByYear.ForEach(x =>
             {
                 filterValues.ForEach(s =>
                 {

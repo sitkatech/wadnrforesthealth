@@ -26,11 +26,21 @@ namespace ProjectFirma.Web.UnitTestCommon
                 return grantAllocation;
             }
 
-            public static GrantAllocation CreateWithoutChangingName( string grantAllocationName)
+            public static GrantAllocation CreateWithoutChangingName(string grantAllocationName)
             {
                 var grant = TestGrant.Create();
                 var grantAllocation = new GrantAllocation(grant);
                 grantAllocation.GrantAllocationName = grantAllocationName;
+                return grantAllocation;
+            }
+
+            public static GrantAllocation CreateWithoutChangingName(string grantAllocationName, Organization organization)
+            {
+                var grant = TestGrant.Create();
+                var grantAllocation = new GrantAllocation(grant);
+                grantAllocation.GrantAllocationName = grantAllocationName;
+                grantAllocation.Organization = organization;
+                grantAllocation.OrganizationID = organization.OrganizationID;
                 return grantAllocation;
             }
 
