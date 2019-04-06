@@ -20,7 +20,9 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
@@ -70,7 +72,9 @@ namespace ProjectFirma.Web.Views.Grant
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
         public DateTime? GrantEndDate { get; set; }
 
-
+        [DisplayName("Grant File Upload")]
+        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        public HttpPostedFileBase GrantFileResourceData { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -106,6 +110,19 @@ namespace ProjectFirma.Web.Views.Grant
             grant.AwardedFunds = TotalAwardAmount;
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
+
+            if (GrantFileResourceData != null)
+            {
+                var currentGrantFileResource = grant.GrantFileResource;
+                grant.GrantFileResource = null;
+                // Delete old grantAllocation file, if present
+                if (currentGrantFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentGrantFileResource);
+                }
+                grant.GrantFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantFileResourceData, currentPerson);
+            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

@@ -41,6 +41,7 @@
         List<AgreementGrantAllocation> agreementGrantAllocations = ViewDataTyped.Agreement.AgreementGrantAllocations.ToList();
         return AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocations);
     }
+
 }
 
 @section JavascriptAndStylesContent
@@ -233,7 +234,26 @@
                     @foreach (var currentAgreementGrantAllocation in CurrentAgreementGrantAllocationsInSortedOrder())
                     {
                         <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
-                        <br/>
+                        <br />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding: 0px;">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementGrantAllocationRelationshipsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)*@
+                    Projects associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @*Display Projects in alphabetical order according*@
+                    @foreach (var currentAgreementGrantAllocation in CurrentAgreementGrantAllocationsInSortedOrder())
+                    {
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
+                        <br />
                     }
                 </div>
             </div>

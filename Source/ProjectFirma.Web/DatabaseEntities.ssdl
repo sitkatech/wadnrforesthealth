@@ -218,6 +218,10 @@
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
     </AssociationSet>
+    <AssociationSet Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
+      <End Role="GrantFileResource" EntitySet="FileResource" />
+      <End Role="GrantsWhereYouAreTheGrantFileResource" EntitySet="Grant" />
+    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
       <End Role="Grants" EntitySet="Grant" />
@@ -233,6 +237,10 @@
     <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
+      <End Role="GrantAllocationFileResource" EntitySet="FileResource" />
+      <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -1125,6 +1133,7 @@
     <Property Name="ShortName" Type="varchar" MaxLength="64" />
     <Property Name="GrantStatusID" Type="int" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="GrantFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocation">
     <Key>
@@ -1143,6 +1152,7 @@
     <Property Name="RegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
+    <Property Name="GrantAllocationFileResourceID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -2538,6 +2548,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
+    <End Role="GrantFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="GrantsWhereYouAreTheGrantFileResource" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantsWhereYouAreTheGrantFileResource">
+        <PropertyRef Name="GrantFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Grant_GrantStatus_GrantStatusID">
     <End Role="GrantStatus" Type="ProjectFirma.Web.Models.Store.GrantStatus" Multiplicity="1" />
     <End Role="Grants" Type="ProjectFirma.Web.Models.Store.Grant" Multiplicity="*" />
@@ -2583,6 +2605,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="FederalFundCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
+    <End Role="GrantAllocationFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource">
+        <PropertyRef Name="GrantAllocationFileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
