@@ -25,6 +25,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectUpdate;
@@ -121,6 +122,8 @@ namespace ProjectFirma.Web.Views.Project
         public InteractionEventGridSpec ProjectInteractionEventsGridSpec { get; }
         public string ProjectInteractionEventsGridName { get;  }
         public string ProjectInteractionEventsGridDataUrl { get;}
+
+        public List<ProjectAgreementByGrantAllocation> ProjectAgreementByGrantAllocations { get; }
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
@@ -369,6 +372,17 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridSpec = projectInteractionEventsGridSpec;
             ProjectInteractionEventsGridName = "projectInteractionEventsGrid";
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
+
+            ProjectAgreementByGrantAllocations = new List<ProjectAgreementByGrantAllocation>();
+
+            foreach (var projectGrantAllocationRequest in this.Project.ProjectGrantAllocationRequests)
+            {
+                var grantAllocation = projectGrantAllocationRequest.GrantAllocation;
+                foreach (var agreementGrantAllocation in grantAllocation.AgreementGrantAllocations)
+                {
+                    ProjectAgreementByGrantAllocations.Add(new ProjectAgreementByGrantAllocation(grantAllocation, agreementGrantAllocation.Agreement, this.Project));
+                }
+            }
         }
     }
 }

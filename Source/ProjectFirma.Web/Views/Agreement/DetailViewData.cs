@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public string BackToAgreementsText { get; set; }
         public string AgreementsListUrl { get; set; }
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
-        public List<AgreementProjectsByGrantAllocation> AgreementProjectsByGrantAllocations { get; }
+        public List<ProjectAgreementByGrantAllocation> AgreementProjectsByGrantAllocations { get; }
 
 
 
@@ -83,14 +83,14 @@ namespace ProjectFirma.Web.Views.Agreement
 
             List<AgreementGrantAllocation> agreementGrantAllocationsList = agreement.AgreementGrantAllocations.ToList();
             CurrentAgreementGrantAllocationsInSortedOrder = AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocationsList);
-            AgreementProjectsByGrantAllocations = new List<AgreementProjectsByGrantAllocation>();
+            AgreementProjectsByGrantAllocations = new List<ProjectAgreementByGrantAllocation>();
 
             foreach (var agreementGrantAllocation in agreementGrantAllocationsList)
             {
                 var grantAllocation = agreementGrantAllocation.GrantAllocation;
                 foreach (var projectGrantAllocationExpenditures in grantAllocation.ProjectGrantAllocationRequests)
                 {
-                    AgreementProjectsByGrantAllocations.Add(new AgreementProjectsByGrantAllocation(grantAllocation, projectGrantAllocationExpenditures.Project));
+                    AgreementProjectsByGrantAllocations.Add(new ProjectAgreementByGrantAllocation(grantAllocation, Agreement, projectGrantAllocationExpenditures.Project));
                 }
             }
 
@@ -98,17 +98,19 @@ namespace ProjectFirma.Web.Views.Agreement
         }
     }
 
-    public class AgreementProjectsByGrantAllocation
+    public class ProjectAgreementByGrantAllocation
     {
         public Models.GrantAllocation GrantAllocation { get; }
         public Models.Project Project { get; }
+        public Models.Agreement Agreement { get; }
 
 
-        public AgreementProjectsByGrantAllocation(Models.GrantAllocation grantAllocation, Models.Project project)
+        public ProjectAgreementByGrantAllocation(Models.GrantAllocation grantAllocation, Models.Agreement agreement, Models.Project project)
         {
             GrantAllocation = grantAllocation;
             Project = project;
-
+            Agreement = agreement;
         }
+
     }
 }
