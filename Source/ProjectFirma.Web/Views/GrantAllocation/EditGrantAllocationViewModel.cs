@@ -27,6 +27,7 @@ using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Views.ProgramIndex;
 using ProjectFirma.Web.Views.ProjectCode;
@@ -170,6 +171,19 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.EndDate = EndDate;
             grantAllocation.GrantManagerID = GrantManagerID;
 
+            // Who is actually allowed to be a Program Manager for this Grant Allocation?
+            List<Person> personsAllowedToBeProgramManager = new List<Person>();
+            // Anyone who CURRENTLY has the role can keep it, even if their Person record has lost the permission in the meantime
+            personsAllowedToBeProgramManager.AddRange(grantAllocation.GrantAllocationProgramManagers.Select(pm => pm.Person).ToList());
+            // Also, anyone who has the right in the database is allowed
+            personsAllowedToBeProgramManager.AddRange(HttpRequestStorage.DatabaseEntities.People.ToList().Where(p => p.IsProgramManager == true).ToList());
+            personsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Distinct().ToList();
+
+            var personIDsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Select(papm => papm.PersonID).ToList();
+            var personIDsNotAllowed = this.ProgramManagerPersonIDs.Except(personIDsAllowedToBeProgramManager).ToList();
+            Check.Ensure(!personIDsNotAllowed.Any(), $"Found {personIDsNotAllowed.Count} PersonIDs not allowed to be Program Managers attempting to be saved: {string.Join(", ", personIDsNotAllowed)}");
+
+            // Deleting existing records
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
 

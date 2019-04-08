@@ -26,11 +26,13 @@ using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class EditGrantAllocationViewData : FirmaUserControlViewData
     {
+        private readonly IEnumerable<Models.Organization> _organizations;
         public IEnumerable<SelectListItem> Organizations { get; }
 
         public EditGrantAllocationType EditGrantAllocationType { get; set; }
@@ -39,14 +41,23 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> Divisions { get; }
         public IEnumerable<SelectListItem> Regions { get; }
         public IEnumerable<SelectListItem> FederalFundCodes { get; }
-        public IEnumerable<SelectListItem> ProgramManagers { get; }
+        public IEnumerable<SelectListItem> ProgramManagersSelectList { get; }
         public IEnumerable<SelectListItem> GrantManagers { get; }
         public string AddContactUrl { get; }
 
 
 
-        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType, IEnumerable<Models.Organization> organizations, IEnumerable<Models.GrantType> grantTypes, List<Models.Grant> grants, IEnumerable<Models.Division> divisions, IEnumerable<Models.Region> regions, IEnumerable<Models.FederalFundCode> federalFundCodes, List<Models.Person> people)
+        public EditGrantAllocationViewData(EditGrantAllocationType editGrantAllocationType,
+                                        Models.GrantAllocation grantAllocationBeingEdited,
+                                        IEnumerable<ProjectFirma.Web.Models.Organization> organizations,
+                                        IEnumerable<GrantType> grantTypes,
+                                        List<ProjectFirma.Web.Models.Grant> grants,
+                                        IEnumerable<Division> divisions,
+                                        IEnumerable<Models.Region> regions,
+                                        IEnumerable<FederalFundCode> federalFundCodes,
+                                        List<Person> allPeople)
         {
+            _organizations = organizations;
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
             GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
@@ -55,13 +66,22 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             
             FederalFundCodes = federalFundCodes.OrderBy(x => x.FederalFundCodeAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);
-            GrantManagers = people.OrderBy(x => x.FullNameLastFirst)
-                .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
-                    y => y.FullNameFirstLastAndOrgShortName);
-            ProgramManagers = people.Where(x => x.IsProgramManager == true).OrderBy(x => x.FullNameLastFirst)
+            GrantManagers = allPeople.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
 
+            // Include Persons who currently have the right a Program Manager
+            List<Person> peopleWhoAreProgramManagers = allPeople.Where(x => x.IsProgramManager == true).ToList();
+            // Include anyone who was set to be a Program Manager for this GrantAllocation in the past, but who may no longer have the right on their Person record.
+            if (grantAllocationBeingEdited != null)
+            {
+                peopleWhoAreProgramManagers.AddRange(grantAllocationBeingEdited.GrantAllocationProgramManagers.Select(pm => pm.Person));
+            }
+            peopleWhoAreProgramManagers = peopleWhoAreProgramManagers.Distinct().ToList();
+
+            ProgramManagersSelectList = peopleWhoAreProgramManagers.OrderBy(x => x.FullNameLastFirst)
+                .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FullNameFirstLastAndOrgShortName);
 
             EditGrantAllocationType = editGrantAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
