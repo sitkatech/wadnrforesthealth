@@ -1508,6 +1508,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
     <Property Name="VendorID" Type="int" />
+    <Property Name="IsProgramManager" Type="bit" />
   </EntityType>
   <EntityType Name="PersonAllowedAuthenticator">
     <Key>

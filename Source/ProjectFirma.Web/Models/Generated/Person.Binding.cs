@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID) : this()
+        public Person(int personID, string firstName, string lastName, string email, string phone, int roleID, DateTime createDate, DateTime? updateDate, DateTime? lastActivityDate, bool isActive, int? organizationID, bool receiveSupportEmails, Guid? webServiceAccessToken, string middleName, string notes, string personAddress, int? addedByPersonID, int? vendorID, bool? isProgramManager) : this()
         {
             this.PersonID = personID;
             this.FirstName = firstName;
@@ -93,6 +93,7 @@ namespace ProjectFirma.Web.Models
             this.PersonAddress = personAddress;
             this.AddedByPersonID = addedByPersonID;
             this.VendorID = vendorID;
+            this.IsProgramManager = isProgramManager;
         }
 
         /// <summary>
@@ -411,6 +412,7 @@ namespace ProjectFirma.Web.Models
         public string PersonAddress { get; set; }
         public int? AddedByPersonID { get; set; }
         public int? VendorID { get; set; }
+        public bool? IsProgramManager { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonID; } set { PersonID = value; } }
 

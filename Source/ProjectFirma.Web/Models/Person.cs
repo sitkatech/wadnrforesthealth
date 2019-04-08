@@ -64,7 +64,17 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string FullNameFirstLastAndOrgShortName => $"{FirstName} {LastName} ({Organization.OrganizationShortNameIfAvailable})";
+        public string FullNameFirstLastAndOrgShortName
+        {
+            get
+            {
+                if (Organization != null)
+                {
+                    return $"{FullNameFirstLast} ({Organization.OrganizationShortNameIfAvailable})";
+                }
+                return FullNameFirstLast;
+            }
+        }
 
         public string FullNameLastFirst => $"{LastName}, {FirstName}";
 

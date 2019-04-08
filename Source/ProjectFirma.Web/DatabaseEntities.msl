@@ -648,6 +648,7 @@
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="IsProgramManager" ColumnName="IsProgramManager" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

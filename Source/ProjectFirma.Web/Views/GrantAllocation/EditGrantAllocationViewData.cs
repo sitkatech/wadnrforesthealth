@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantManagers = people.OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
-            ProgramManagers = people.Where(x => x.RoleID == Models.Role.ProjectSteward.RoleID).OrderBy(x => x.FullNameLastFirst)
+            ProgramManagers = people.Where(x => x.IsProgramManager == true).OrderBy(x => x.FullNameLastFirst)
                 .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
 
