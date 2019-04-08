@@ -20,23 +20,19 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
     public class EditAgreementGrantAllocationsViewData : FirmaUserControlViewData
     {
-        public readonly IEnumerable<SelectListItem> GrantAllocationSelectListItems;
-        public readonly List<GrantAllocationJson> AllPossibleGrantAllocationJsons;
+        public List<GrantAllocationJson> AllPossibleGrantAllocationJsons { get; }
 
-        public EditAgreementGrantAllocationsViewData(Models.Agreement agreement, IEnumerable<SelectListItem> grantAllocationSelectListItems)
+        public EditAgreementGrantAllocationsViewData()
         {
-            GrantAllocationSelectListItems = grantAllocationSelectListItems;
+
             var databaseEntitiesGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            // Filter to only aligned GrantAllocations
-            var filteredGrantAllocations = databaseEntitiesGrantAllocations.ToList();
-            AllPossibleGrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(filteredGrantAllocations);
+            AllPossibleGrantAllocationJsons = GrantAllocationJson.MakeGrantAllocationJsonsFromGrantAllocations(databaseEntitiesGrantAllocations);
         }
 
     }
