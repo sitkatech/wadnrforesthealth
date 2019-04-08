@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
@@ -373,16 +374,9 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridName = "projectInteractionEventsGrid";
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
-            ProjectAgreementByGrantAllocations = new List<ProjectAgreementByGrantAllocation>();
+            ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
 
-            foreach (var projectGrantAllocationRequest in this.Project.ProjectGrantAllocationRequests)
-            {
-                var grantAllocation = projectGrantAllocationRequest.GrantAllocation;
-                foreach (var agreementGrantAllocation in grantAllocation.AgreementGrantAllocations)
-                {
-                    ProjectAgreementByGrantAllocations.Add(new ProjectAgreementByGrantAllocation(grantAllocation, agreementGrantAllocation.Agreement, this.Project));
-                }
-            }
+            
         }
     }
 }
