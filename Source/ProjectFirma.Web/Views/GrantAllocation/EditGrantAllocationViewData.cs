@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             peopleWhoAreProgramManagers = peopleWhoAreProgramManagers.Distinct().ToList();
 
             ProgramManagersSelectList = peopleWhoAreProgramManagers.OrderBy(x => x.FullNameLastFirst)
-                .ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                .ToSelectList(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLastAndOrgShortName);
 
             EditGrantAllocationType = editGrantAllocationType;
