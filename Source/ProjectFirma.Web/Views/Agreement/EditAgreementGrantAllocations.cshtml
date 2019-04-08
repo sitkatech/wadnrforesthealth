@@ -97,7 +97,7 @@
                                     data-width="100%" data-live-search="true" data-size="8">
                                 <option value="" disabled selected ng-bind="dropdownDefaultOption()">Select one</option>
                                 <option ng-repeat="grantAllocation in getAvailableGrantAllocationsForAgreement()"
-                                        ng-bind="(grantAllocation.GrantNumber) + ' ' + (grantAllocation.ProjectName)"
+                                        ng-bind="(grantAllocation.GrantNumber) + ' ' + (grantAllocation.GrantAllocationName)"
                                         ng-value="grantAllocation.GrantAllocationID"
                                         ng-selected="isOptionSelected(grantAllocation)"></option>
                             </select>
@@ -118,7 +118,7 @@
                                 <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()"></i>
                             </a>
                         </span>
-                        <span ng-bind="(currentGrantAllocationJson.GrantNumber) + ' ' + (currentGrantAllocationJson.ProjectName)"></span>
+                        <span ng-bind="(currentGrantAllocationJson.GrantNumber) + ' ' + (currentGrantAllocationJson.GrantAllocationName)"></span>
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
         {
             <div ng-repeat="grantAllocationJson in AngularModel.GrantAllocationJsons">
                 <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.GrantAllocationID}}" />
-                <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.ProjectName}}" />
+                <input type="hidden" name="@Html.NameFor(x => x.GrantAllocationJsons[0].GrantAllocationName).ToString().Replace("0", "{{$index}}")" value="{{grantAllocationJson.GrantAllocationName}}" />
             </div>
         }
     </div>

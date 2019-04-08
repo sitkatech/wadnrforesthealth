@@ -23,23 +23,9 @@ using System.Linq;
 using JetBrains.Annotations;
 using LtInfo.Common;
 using LtInfo.Common.ModalDialog;
-using MoreLinq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.ProjectFunding;
-using ProjectFirma.Web.Views.ProjectUpdate;
-using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
-using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
-using ProjectFirma.Web.Views.Shared.ProjectControls;
-using ProjectFirma.Web.Views.Shared.ProjectDocument;
-using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
-using ProjectFirma.Web.Views.Shared.ProjectOrganization;
-using ProjectFirma.Web.Views.Shared.ProjectPerson;
-using ProjectFirma.Web.Views.Shared.TextControls;
-using ProjectFirma.Web.Views.TreatmentActivity;
 
 namespace ProjectFirma.Web.Views.Agreement
 {
@@ -59,6 +45,9 @@ namespace ProjectFirma.Web.Views.Agreement
         public string EditAgreementUrl { get; set; }
         public string BackToAgreementsText { get; set; }
         public string AgreementsListUrl { get; set; }
+        public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
+        public List<Models.Project> AgreementProjects { get; }
+
 
 
         public DetailViewData(Person currentPerson, Models.Agreement agreement, bool userHasEditAgreementPermissions)
@@ -91,6 +80,17 @@ namespace ProjectFirma.Web.Views.Agreement
 
             AgreementPersonGridName = "agreementPersonGrid";
             AgreementPersonGridDataUrl = SitkaRoute<AgreementController>.BuildUrlFromExpression(ac => ac.AgreementPersonGridJsonData(agreement.AgreementID));
+
+            List<AgreementGrantAllocation> agreementGrantAllocationsList = agreement.AgreementGrantAllocations.ToList();
+            CurrentAgreementGrantAllocationsInSortedOrder = AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocationsList);
+
+            foreach (var agreementGrantAllocation in agreementGrantAllocationsList)
+            {
+                var grantAllocation = agreementGrantAllocation.GrantAllocation;
+                //var project = grantAllocation.Proj
+            }
+
+
         }
     }
 }

@@ -259,17 +259,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEditAgreementGrantAllocations(EditAgreementGrantAllocationsViewModel viewModel)
         {
-            var agreement = HttpRequestStorage.DatabaseEntities.Agreements.FirstOrDefault(ag => ag.AgreementID == viewModel.AgreementId);
-            // Every single possible Grant Allocation we could associate
-            var allPossibleGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            // All the existing associations (if any) this Agreement already has
-            var existingAssociatedGrantAllocationsForAgreement = agreement.AgreementGrantAllocations.Select(aga => aga.GrantAllocation).ToList();
-            // All the Grant Allocations to show in the picker, for new associations.
-            var grantAllocationsThatCanBeSelectedForNewAssociations = allPossibleGrantAllocations.Except(existingAssociatedGrantAllocationsForAgreement).ToList();
-            // Build select list
-            var selectableGrantAllocations = grantAllocationsThatCanBeSelectedForNewAssociations.OrderBy(x => x.GrantAllocationName).ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.GrantAllocationName);
 
-            var viewData = new EditAgreementGrantAllocationsViewData(agreement, selectableGrantAllocations);
+            var viewData = new EditAgreementGrantAllocationsViewData();
             return RazorPartialView<EditAgreementGrantAllocations, EditAgreementGrantAllocationsViewData, EditAgreementGrantAllocationsViewModel>(viewData, viewModel);
         }
 

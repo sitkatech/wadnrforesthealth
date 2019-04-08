@@ -35,13 +35,6 @@
     {
         return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.GrantAllocationDetail(new GrantAllocationPrimaryKey(currentAgreementGrantAllocation.GrantAllocation)));
     }
-
-    private List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder()
-    {
-        List<AgreementGrantAllocation> agreementGrantAllocations = ViewDataTyped.Agreement.AgreementGrantAllocations.ToList();
-        return AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocations);
-    }
-
 }
 
 @section JavascriptAndStylesContent
@@ -231,7 +224,7 @@
                 </div>
                 <div class="panel-body">
                     @*Display grant allocations in descending order according to grant number year*@
-                    @foreach (var currentAgreementGrantAllocation in CurrentAgreementGrantAllocationsInSortedOrder())
+                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
                     {
                         <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
                         <br />
@@ -245,12 +238,11 @@
         <div class="col-sm-12" style="padding: 0px;">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @*@ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditAgreementGrantAllocationRelationshipsUrl, string.Format("Associate {0} and {1}", FieldDefinition.Agreement.GetFieldDefinitionLabel(), FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()), 750, ViewDataTyped.UserHasEditAgreementPermissions)*@
                     Projects associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
                     @*Display Projects in alphabetical order according*@
-                    @foreach (var currentAgreementGrantAllocation in CurrentAgreementGrantAllocationsInSortedOrder())
+                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
                     {
                         <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
                         <br />
