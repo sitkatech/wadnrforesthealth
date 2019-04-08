@@ -9,7 +9,7 @@ angular.module("ProjectFirmaApp")
             $scope.selectedLocationLeafletID = null;
         
             $scope.IconStyleDefault = new L.icon({
-                iconUrl: 'https://wadnrforesthealth.localhost.projectfirma.com/Content/leaflet/images/marker-icon.png'
+                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+0000ff.png'
             });
             $scope.IconStyleSelected = new L.icon({
                 iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+fff200.png'
