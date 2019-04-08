@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.Agreement
         public string BackToAgreementsText { get; set; }
         public string AgreementsListUrl { get; set; }
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
-        public List<Models.Project> AgreementProjects { get; }
+        public List<AgreementProjectsByGrantAllocation> AgreementProjectsByGrantAllocations { get; }
 
 
 
@@ -83,13 +83,31 @@ namespace ProjectFirma.Web.Views.Agreement
 
             List<AgreementGrantAllocation> agreementGrantAllocationsList = agreement.AgreementGrantAllocations.ToList();
             CurrentAgreementGrantAllocationsInSortedOrder = AgreementGrantAllocation.OrderAgreementGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(agreementGrantAllocationsList);
+            AgreementProjectsByGrantAllocations = new List<AgreementProjectsByGrantAllocation>();
 
             foreach (var agreementGrantAllocation in agreementGrantAllocationsList)
             {
                 var grantAllocation = agreementGrantAllocation.GrantAllocation;
-                //var project = grantAllocation.Proj
+                foreach (var projectGrantAllocationExpenditures in grantAllocation.ProjectGrantAllocationRequests)
+                {
+                    AgreementProjectsByGrantAllocations.Add(new AgreementProjectsByGrantAllocation(grantAllocation, projectGrantAllocationExpenditures.Project));
+                }
             }
 
+
+        }
+    }
+
+    public class AgreementProjectsByGrantAllocation
+    {
+        public Models.GrantAllocation GrantAllocation { get; }
+        public Models.Project Project { get; }
+
+
+        public AgreementProjectsByGrantAllocation(Models.GrantAllocation grantAllocation, Models.Project project)
+        {
+            GrantAllocation = grantAllocation;
+            Project = project;
 
         }
     }

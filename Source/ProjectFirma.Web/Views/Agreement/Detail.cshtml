@@ -226,7 +226,7 @@
                     @*Display grant allocations in descending order according to grant number year*@
                     @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
                     {
-                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
+                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</a>
                         <br />
                     }
                 </div>
@@ -241,12 +241,27 @@
                     Projects associated to this @FieldDefinition.Agreement.GetFieldDefinitionLabel()
                 </div>
                 <div class="panel-body">
-                    @*Display Projects in alphabetical order according*@
-                    @foreach (var currentAgreementGrantAllocation in ViewDataTyped.CurrentAgreementGrantAllocationsInSortedOrder)
-                    {
-                        <a href="@GetAgreementGrantAllocationUrl(currentAgreementGrantAllocation)">@currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationNameForDisplay</a>
-                        <br />
-                    }
+                    <p>
+                        @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Agreement.GetFieldDefinitionLabel() by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <th>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized()</th>
+                            <th>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</th>
+                        </tr>
+                        @foreach (var currentAgreementGrantAllocation in ViewDataTyped.AgreementProjectsByGrantAllocations)
+                        {
+                            <tr>
+                                <td>
+                                    @currentAgreementGrantAllocation.Project.DisplayNameAsUrl
+                                </td>
+                                <td>
+                                    @currentAgreementGrantAllocation.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    
                 </div>
             </div>
         </div>
