@@ -67,8 +67,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
 
             // Sorted and filtered on controller
             StaffPeople =
-                allPeople.Where(p =>
-                    p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                allPeople.Where(p => p.Organization != null && p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
                     y => y.FullNameFirstLast);
 
             EditInteractionEventEditType = editInteractionEventEditType;
