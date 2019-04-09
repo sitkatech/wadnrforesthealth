@@ -18,6 +18,7 @@
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.FieldDefinitionData" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.FileResource" />
+    <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.FileResourceMimeTypeFileExtension" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.FirmaHomePageImage" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.FirmaPage" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
@@ -1128,6 +1129,14 @@
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectImageUpdates" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheBannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="BannerLogoFileResource" ToRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" />
     <NavigationProperty Name="SystemAttributesWhereYouAreTheSquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SquareLogoFileResource" ToRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" />
+  </EntityType>
+  <EntityType Name="FileResourceMimeTypeFileExtension">
+    <Key>
+      <PropertyRef Name="FileResourceMimeTypeFileExtensionID" />
+    </Key>
+    <Property Name="FileResourceMimeTypeFileExtensionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileResourceMimeTypeID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceMimeTypeFileExtensionText" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>

@@ -32,29 +32,15 @@ namespace LtInfo.Common.Mvc
     {
         public List<string> ValidExtensions { get; set; }
 
+        public SitkaFileExtensionsAttribute()
+        {
+        }
+
         public SitkaFileExtensionsAttribute(string fileExtensions)
         {
             ValidExtensions = fileExtensions.ToLower().Split('|').ToList();
         }
 
-        public SitkaFileExtensionsAttribute(string[] fileExtensions)
-        {
-            ValidExtensions = fileExtensions.ToList();
-        }
-
-        public SitkaFileExtensionsAttribute(Type fileExtensionsEnum)
-        {
-            List<string> fileExtensionsToReturn = new List<string>();
-            foreach (var enumValue in Enum.GetValues(fileExtensionsEnum).Cast<>())
-            {
-                if (enumValue is Enum)
-                {
-                    var enumValueAsEnum = enumValue;
-                    fileExtensionsToReturn.Add(enumValueAsEnum.Value);
-                }
-            }
-            ValidExtensions = fileExtensionsToReturn;
-        }
 
         public override bool IsValid(object value)
         {

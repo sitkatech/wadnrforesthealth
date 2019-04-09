@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int? GrantManagerID { get; set; }
 
         [DisplayName("Grant Allocation File Upload")]
-        [SitkaFileExtensions(typeof(FileResourceMimeTypeEnum))]
+        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.ExcelXLSX)]
         public HttpPostedFileBase GrantAllocationFileResourceData { get; set; }
 
         /// <summary>

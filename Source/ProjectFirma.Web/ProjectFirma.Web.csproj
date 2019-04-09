@@ -115,6 +115,9 @@
     <Compile Include="Models\Generated\FileResource.Binding.cs" />
     <Compile Include="Models\Generated\FileResource.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FileResourceMimeType.Binding.cs" />
+    <Compile Include="Models\Generated\FileResourceMimeTypeFileExtension.Binding.cs" />
+    <Compile Include="Models\Generated\FileResourceMimeTypeFileExtension.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\FileResourceMimeTypeFileExtensionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FileResourceMimeTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FileResourcePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FirmaHomePageImage.Binding.cs" />
@@ -486,6 +489,7 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Common\WADNRFileExtensionsAttribute.cs" />
     <Compile Include="Models\FirmaPageTypeTest.cs" />
     <Compile Include="Models\CostType.cs" />
     <Compile Include="Models\AuthenticatorHelper.cs" />
