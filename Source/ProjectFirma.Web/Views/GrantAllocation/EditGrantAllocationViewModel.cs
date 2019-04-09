@@ -28,6 +28,7 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
 using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Views.ProgramIndex;
 using ProjectFirma.Web.Views.ProjectCode;
 
@@ -81,7 +82,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int? GrantManagerID { get; set; }
 
         [DisplayName("Grant Allocation File Upload")]
-        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        [SitkaFileExtensions(typeof(FileResourceMimeTypeEnum))]
         public HttpPostedFileBase GrantAllocationFileResourceData { get; set; }
 
         /// <summary>
@@ -89,6 +90,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// </summary>
         public EditGrantAllocationViewModel()
         {
+            
         }
 
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)

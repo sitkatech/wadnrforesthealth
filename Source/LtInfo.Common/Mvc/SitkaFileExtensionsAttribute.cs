@@ -27,7 +27,7 @@ using System.Web.Mvc;
 
 namespace LtInfo.Common.Mvc
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public class SitkaFileExtensionsAttribute : ValidationAttribute, IClientValidatable
     {
         public List<string> ValidExtensions { get; set; }
@@ -35,6 +35,25 @@ namespace LtInfo.Common.Mvc
         public SitkaFileExtensionsAttribute(string fileExtensions)
         {
             ValidExtensions = fileExtensions.ToLower().Split('|').ToList();
+        }
+
+        public SitkaFileExtensionsAttribute(string[] fileExtensions)
+        {
+            ValidExtensions = fileExtensions.ToList();
+        }
+
+        public SitkaFileExtensionsAttribute(Type fileExtensionsEnum)
+        {
+            List<string> fileExtensionsToReturn = new List<string>();
+            foreach (var enumValue in Enum.GetValues(fileExtensionsEnum).Cast<>())
+            {
+                if (enumValue is Enum)
+                {
+                    var enumValueAsEnum = enumValue;
+                    fileExtensionsToReturn.Add(enumValueAsEnum.Value);
+                }
+            }
+            ValidExtensions = fileExtensionsToReturn;
         }
 
         public override bool IsValid(object value)
