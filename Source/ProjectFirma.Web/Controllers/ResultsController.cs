@@ -97,7 +97,18 @@ namespace ProjectFirma.Web.Controllers
             var interactionEventLayer = HttpRequestStorage.DatabaseEntities.InteractionEvents.GetInteractionEventsLayerGeoJson();
             projectLocationsMapInitJson.Layers.Add(interactionEventLayer);
 
-            var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID, colorByValue.DisplayName, MultiTenantHelpers.GetTopLevelTaxonomyTiers(), currentPersonCanViewProposals);
+            var projectLocationJsons = new List<ProjectLocationJson>();
+            var filteredProjectIDList = projectsToShow.Where(x1 => x1.HasProjectLocationPoint).Where(x => x.ProjectStage.ShouldShowOnMap()).Select(x => x.ProjectID).ToList();
+            projectLocationJsons = HttpRequestStorage.DatabaseEntities.ProjectLocations.Where(pl => filteredProjectIDList.Contains(pl.ProjectID)).ToList().Select(pl => new ProjectLocationJson(pl)).ToList();
+
+            var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID, 
+                                                                              colorByValue.DisplayName, 
+                                                                              MultiTenantHelpers.GetTopLevelTaxonomyTiers(), 
+                                                                              currentPersonCanViewProposals, 
+                                                                              projectLocationsMapInitJson, 
+                                                                              projectLocationsLayerGeoJson,
+                                                                              projectLocationJsons,
+                                                                              ProjectMapGridDisplayType.ShowGrid);
 
             
             var projectLocationFilterTypesAndValues = CreateProjectLocationFilterTypesAndValuesDictionary(currentPersonCanViewProposals);

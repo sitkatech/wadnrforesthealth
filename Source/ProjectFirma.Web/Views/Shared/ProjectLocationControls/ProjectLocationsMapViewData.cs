@@ -19,21 +19,40 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 {
-    public class ProjectLocationsMapViewData : FirmaUserControlViewData
-    {        
-        public readonly string MapDivID;
-        public readonly string LegendTitle;
-        public readonly Dictionary<string, List<ProjectMapLegendElement>> LegendFormats;
 
-        public ProjectLocationsMapViewData(string mapDivID, string legendTitle, List<ITaxonomyTier> topLevelTaxonomyTiers, bool showProposals)
+    public enum ProjectMapGridDisplayType
+    {
+        NoGrid,
+        ShowGrid
+    }
+
+    public class ProjectLocationsMapViewData : FirmaUserControlViewData
+    {
+        public ProjectMapGridDisplayType ProjectMapGridDisplayType { get; }
+        public string MapDivID { get; }
+        public string LegendTitle { get; }
+        public Dictionary<string, List<ProjectMapLegendElement>> LegendFormats { get; }
+        public MapInitJson MapInitJson { get; }
+        public LayerGeoJson LayerGeoJson { get; }
+        public List<ProjectLocationJson> ProjectLocationJsons { get; }
+        //public List<string> GeospatialAreaMapServiceLayerNames { get; }
+        //public List<ProjectLocationTypeJson> ProjectLocationTypeJsons { get; }
+
+        public ProjectLocationsMapViewData(string mapDivID, string legendTitle, List<ITaxonomyTier> topLevelTaxonomyTiers, bool showProposals, MapInitJson mapInitJson, LayerGeoJson layerGeoJson, List<ProjectLocationJson> projectLocationJsons , ProjectMapGridDisplayType projectMapGridDisplayType)
         {
             MapDivID = mapDivID;
             LegendTitle = legendTitle;
             LegendFormats = ProjectMapLegendElement.BuildLegendFormatDictionary(topLevelTaxonomyTiers, showProposals);
+            MapInitJson = mapInitJson;
+            LayerGeoJson = layerGeoJson;
+            ProjectMapGridDisplayType = projectMapGridDisplayType;
+            ProjectLocationJsons = projectLocationJsons;
         }
 
     }

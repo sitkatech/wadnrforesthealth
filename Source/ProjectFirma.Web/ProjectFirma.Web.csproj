@@ -751,6 +751,7 @@
     <Compile Include="Views\ProgramIndex\IEditProgramIndexViewModel.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResults.cs" />
     <Compile Include="Views\ProgramIndex\ProgramIndexSearchResultsViewData.cs" />
+    <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
     <Compile Include="Views\Vendor\IEditVendorViewModel.cs" />
     <Compile Include="Views\Vendor\EditVendor.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
@@ -1293,6 +1294,7 @@
     <Content Include="Views\CustomPage\Edit.cshtml" />
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
     <Content Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.CreateFromGrantAllocationsAndCalendarYearsTest.approved.txt" />
+    <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapController.js" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailController.js" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />
@@ -1772,7 +1774,6 @@
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailViewData.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailViewModel.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMap.cs" />
-    <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationsMapViewData.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationSummary.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectLocationSummaryViewData.cs" />
     <Compile Include="Views\Shared\ProjectLocationControls\ProjectMapCustomization.cs" />
@@ -1907,6 +1908,7 @@
     <Content Include="Views\Vendor\EditVendor.cshtml" />
     <Content Include="Views\ProjectCode\EditProjectCodeWithMultiSelect.cshtml" />
     <Content Include="Views\ProgramIndex\EditProgramIndex.cshtml" />
+    <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationsMap.cshtml" />
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\NuGetPackages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
@@ -3827,7 +3829,6 @@
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationSimple.cshtml" />
     <Content Include="Views\Shared\ProjectLocationControls\ImportGdbFile.cshtml" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetail.cshtml" />
-    <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationsMap.cshtml" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationSummary.cshtml" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectMapPopup.cshtml" />
     <Content Include="Views\Shared\ProjectUpdateDiffControls\ProjectExpendituresSummary.cshtml" />
