@@ -10,7 +10,7 @@ go
 
 update dbo.Person
 set IsProgramManager = 1
-where LastName in ('Ellerbroek','Lampman','Miketa', 'Tate','Johnston','Hersey','Turley','Kohler','DeBell','Armbruster')
+where LastName in ('Ellerbroek','Lampman','Miketa', 'Tate','Johnston','Hersey','Turley','Kohler','DeBell','Armbruster', 'Boles', 'Chambers')
 go
 
 insert into dbo.Person (FirstName, LastName, Email, CreateDate, IsActive, ReceiveSupportEmails, RoleID, IsProgramManager)
@@ -38,7 +38,9 @@ set Email = 'linden.lampman@dnr.wa.gov'
 where LastName = 'Lampman' and FirstName = 'Linden' 
 go
 
---select * from dbo.Person
---where LastName in ('Ellerbroek','Lampman','Miketa', 'Tate','Johnston','Hersey','Turley','Kohler','DeBell','Armbruster')
---and Email is null
---go
+/*
+	select * from dbo.Person
+	where LastName in ('Ellerbroek','Lampman','Miketa', 'Tate','Johnston','Hersey','Turley','Kohler','DeBell','Armbruster', 'Boles', 'Chambers')
+	and Email is null
+	go
+*/
