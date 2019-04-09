@@ -23,7 +23,10 @@ namespace ProjectFirma.Web.Common
                 int currentFileResourceMimeTypeID = currentFileResourceFileExtension.FileResourceMimeTypeID;
                 if (allowedFileResourceMimeTypeIDs.Contains(currentFileResourceMimeTypeID))
                 {
-                    fileExtensionsToReturn.Add(currentFileResourceFileExtension.FileResourceMimeTypeFileExtensionText);
+                    if (!fileExtensionsToReturn.Contains(currentFileResourceFileExtension.FileResourceMimeTypeFileExtensionText))
+                    {
+                        fileExtensionsToReturn.Add(currentFileResourceFileExtension.FileResourceMimeTypeFileExtensionText);
+                    }
                 }
             }
 

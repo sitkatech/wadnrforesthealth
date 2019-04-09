@@ -49,11 +49,6 @@ namespace ProjectFirma.Web.Models
             return feature;
         }
 
-        //public HtmlString GetDisplayNameAsUrl()
-        //{
-        //    return UrlTemplate.MakeHrefString(GetDetailUrl(), DisplayName);
-        //}
-
         public string GetDetailUrl()
         {
             var urlTemplateString = SitkaRoute<RegionController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int));

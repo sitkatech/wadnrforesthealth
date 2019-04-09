@@ -10,8 +10,9 @@ CREATE TABLE [dbo].[FileResourceMimeTypeFileExtension](
 (
 	[FileResourceMimeTypeFileExtensionID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_FileResourceMimeTypeFileExtension_FileResourceMimeTypeFileExtensionText] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_FileResourceMimeTypeFileExtension_FileResourceMimeTypeID_FileResourceMimeTypeFileExtensionText] UNIQUE NONCLUSTERED 
 (
+	[FileResourceMimeTypeID] ASC,
 	[FileResourceMimeTypeFileExtensionText] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
