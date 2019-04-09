@@ -41,17 +41,22 @@ namespace LtInfo.Common.Mvc
             ValidExtensions = fileExtensions.ToLower().Split('|').ToList();
         }
 
-
-        public override bool IsValid(object value)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var file = value as HttpPostedFileBase;
             if (file != null)
             {
                 var fileName = file.FileName.ToLower();
                 var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
-                return isValidExtension;
+                if (!isValidExtension)
+                {
+                    string fileExtension = FileUtility.ExtensionFor(fileName);
+                    string allowedExtensionsString = string.Join(", ", ValidExtensions);
+                    string errorMessage = $"File extension \"{fileExtension}\" is invalid. Allowed extensions: {allowedExtensionsString}";
+                    return new ValidationResult(errorMessage);
+                }
             }
-            return true;
+            return ValidationResult.Success;
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
