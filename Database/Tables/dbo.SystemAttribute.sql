@@ -18,6 +18,7 @@ CREATE TABLE [dbo].[SystemAttribute](
 	[ShowLeadImplementerLogoOnFactSheet] [bit] NOT NULL,
 	[EnableAccomplishmentsDashboard] [bit] NOT NULL,
 	[ProjectStewardshipAreaTypeID] [int] NULL,
+	[SocrataAppToken] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_SystemAttribute_SystemAttributeID] PRIMARY KEY CLUSTERED 
 (
 	[SystemAttributeID] ASC

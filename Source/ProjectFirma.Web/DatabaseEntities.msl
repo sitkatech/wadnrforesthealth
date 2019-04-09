@@ -1307,6 +1307,7 @@
           <ScalarProperty Name="ShowLeadImplementerLogoOnFactSheet" ColumnName="ShowLeadImplementerLogoOnFactSheet" />
           <ScalarProperty Name="EnableAccomplishmentsDashboard" ColumnName="EnableAccomplishmentsDashboard" />
           <ScalarProperty Name="ProjectStewardshipAreaTypeID" ColumnName="ProjectStewardshipAreaTypeID" />
+          <ScalarProperty Name="SocrataAppToken" ColumnName="SocrataAppToken" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

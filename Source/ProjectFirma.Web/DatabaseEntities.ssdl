@@ -2113,6 +2113,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ShowLeadImplementerLogoOnFactSheet" Type="bit" Nullable="false" />
     <Property Name="EnableAccomplishmentsDashboard" Type="bit" Nullable="false" />
     <Property Name="ProjectStewardshipAreaTypeID" Type="int" />
+    <Property Name="SocrataAppToken" Type="varchar" Nullable="false" MaxLength="200" />
   </EntityType>
   <EntityType Name="Tag">
     <Key>

@@ -2481,6 +2481,7 @@
     <Property Name="ShowLeadImplementerLogoOnFactSheet" Type="Boolean" Nullable="false" />
     <Property Name="EnableAccomplishmentsDashboard" Type="Boolean" Nullable="false" />
     <Property Name="ProjectStewardshipAreaTypeID" Type="Int32" />
+    <Property Name="SocrataAppToken" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="BannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" ToRole="BannerLogoFileResource" />
     <NavigationProperty Name="SquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" ToRole="SquareLogoFileResource" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="SystemAttributesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />

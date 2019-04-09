@@ -566,6 +566,8 @@
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\VendorModelExtensions.cs" />
+    <Compile Include="ScheduledJobs\SocrataDataMartUpdateBackgroundJob.cs" />
+    <Compile Include="ScheduledJobs\SocrataScheduledJobsTest.cs" />
     <Compile Include="Security\AgreementCreateFeature.cs" />
     <Compile Include="Security\AgreementDeleteFeature.cs" />
     <Compile Include="Security\AgreementsViewFeature.cs" />
