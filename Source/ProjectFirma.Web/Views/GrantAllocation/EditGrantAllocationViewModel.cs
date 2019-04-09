@@ -180,7 +180,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             personsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Distinct().ToList();
 
             var personIDsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Select(papm => papm.PersonID).ToList();
-            var personIDsNotAllowed = this.ProgramManagerPersonIDs.Except(personIDsAllowedToBeProgramManager).ToList();
+            var personIDsNotAllowed = new List<int>();
+            if (this.ProgramManagerPersonIDs != null)
+            {
+                personIDsNotAllowed = this.ProgramManagerPersonIDs.Except(personIDsAllowedToBeProgramManager).ToList();
+            }
             Check.Ensure(!personIDsNotAllowed.Any(), $"Found {personIDsNotAllowed.Count} PersonIDs not allowed to be Program Managers attempting to be saved: {string.Join(", ", personIDsNotAllowed)}");
 
             // Deleting existing records

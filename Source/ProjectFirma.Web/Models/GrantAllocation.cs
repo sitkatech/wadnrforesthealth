@@ -17,7 +17,10 @@ namespace ProjectFirma.Web.Models
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
         public string ProgramIndexDisplay => ProgramIndexID.HasValue ? ProgramIndex.ProgramIndexAbbrev : string.Empty;
 
-        public string GrantNumberAndGrantAllocationNameForDisplay => $"{Grant.GrantNumber} {GrantAllocationName}";
+        public string GrantNumberAndGrantAllocationDisplayName => $"{Grant.GrantNumber} {GrantAllocationName}";
+
+        public HtmlString GrantNumberAndGrantAllocationDisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, GrantNumberAndGrantAllocationDisplayName);
+
         // ReSharper disable once InconsistentNaming
         public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID: -1;
         public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
