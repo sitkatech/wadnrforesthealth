@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Models
 
         public override List<HtmlString> GetProjectStewardshipAreaHtmlStringList(Person person)
         {
-            return GetPersonStewardRegions(person).Select(x => x.Region.GetDisplayNameAsUrl()).ToList();
+            return GetPersonStewardRegions(person).Select(x => x.Region.GetRegionDisplayNameAsUrl()).ToList();
         }
 
         private List<PersonStewardRegion> GetPersonStewardRegions(Person person)

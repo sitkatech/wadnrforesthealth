@@ -56,8 +56,13 @@ namespace ProjectFirma.Web.Models
 
             return string.Empty;
         }
-            
-         
+
+        public static HtmlString GetAgreementTitleAsUrl(this Agreement agreement)
+        {
+            return agreement != null ? UrlTemplate.MakeHrefString(agreement.GetDetailUrl(), agreement.AgreementTitle) : new HtmlString(null);
+        }
+
+
 
     }
 }

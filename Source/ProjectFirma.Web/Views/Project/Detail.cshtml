@@ -47,8 +47,8 @@
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script src="@Url.Content("~/Views/Shared/PerformanceMeasureControls/PerformanceMeasureExpectedController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/PerformanceMeasureActual/PerformanceMeasureActualController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Views/ProjectFundingSourceExpenditure/ProjectFundingSourceExpenditureController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Views/ProjectFundingSourceRequest/ProjectFundingSourceRequestController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/ProjectGrantAllocationExpenditure/ProjectGrantAllocationExpenditureController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/ProjectGrantAllocationRequest/ProjectGrantAllocationRequestController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/Shared/ProjectOrganization/ProjectOrganizationController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/Shared/ProjectPerson/ProjectPersonController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Views/ProjectExternalLink/ProjectExternalLinkController.js")" type="text/javascript"></script>
@@ -243,40 +243,40 @@
 
                 @*TODO Neutered Per WA DNR #1446. May decide to bring it back later
 
-                    <h2 class="sectionHeader">@MultiTenantHelpers.GetPerformanceMeasureNamePluralized()</h2>
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureExpectedsUrl, "Edit Expected " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasEditProjectPermissions)
-                                Expected @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            @{ PerformanceMeasureExpectedSummary.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureExpectedSummaryViewData); }
-                        </div>
-                    </div>
-                    <div class="panel panelFirma">
-                        <div class="panel-heading panelTitle">
-                            <h3>
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureActualsUrl, "Edit Reported " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasPerformanceMeasureActualManagePermissions)
-                                Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            @if (ViewDataTyped.Project.IsProposal())
-                            {
-                                <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Proposal stage.</p>
-                            }
-                            else if (ViewDataTyped.Project.ProjectStage == ProjectStage.Planned)
-                            {
-                                <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Planning/Design stage.</p>
-                            }
-                            else
-                            {
-                                PerformanceMeasureReportedValuesGrouped.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureReportedValuesGroupedViewData);
-                            }
-                        </div>
-                    </div>*@
+        <h2 class="sectionHeader">@MultiTenantHelpers.GetPerformanceMeasureNamePluralized()</h2>
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h3>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureExpectedsUrl, "Edit Expected " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasEditProjectPermissions)
+                    Expected @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
+                </h3>
+            </div>
+            <div class="panel-body">
+                @{ PerformanceMeasureExpectedSummary.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureExpectedSummaryViewData); }
+            </div>
+        </div>
+        <div class="panel panelFirma">
+            <div class="panel-heading panelTitle">
+                <h3>
+                    @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditPerformanceMeasureActualsUrl, "Edit Reported " + MultiTenantHelpers.GetPerformanceMeasureNamePluralized(), 1000, ViewDataTyped.UserHasPerformanceMeasureActualManagePermissions)
+                    Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized()
+                </h3>
+            </div>
+            <div class="panel-body">
+                @if (ViewDataTyped.Project.IsProposal())
+                {
+                    <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Proposal stage.</p>
+                }
+                else if (ViewDataTyped.Project.ProjectStage == ProjectStage.Planned)
+                {
+                    <p class="systemText">Reported @MultiTenantHelpers.GetPerformanceMeasureNamePluralized() are not relevant for @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() in the Planning/Design stage.</p>
+                }
+                else
+                {
+                    PerformanceMeasureReportedValuesGrouped.RenderPartialView(Html, ViewDataTyped.PerformanceMeasureReportedValuesGroupedViewData);
+                }
+            </div>
+        </div>*@
 
                 <h2 class="sectionHeader">Funding</h2>
                 <div class="panel panelFirma">
@@ -346,6 +346,36 @@
 
                 </div>
 
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() associated to this @FieldDefinition.Project.GetFieldDefinitionLabel()
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            @FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized() Related to this @FieldDefinition.Project.GetFieldDefinitionLabel() by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
+                        </p>
+                        <table class="table">
+                            <tr>
+                                <th>@FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()</th>
+                                <th>@FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()</th>
+                            </tr>
+                            @foreach (var currentProjectAgreement in ViewDataTyped.ProjectAgreementByGrantAllocations)
+                            {
+                                <tr>
+                                    <td>
+                                        @currentProjectAgreement.Agreement.GetAgreementTitleAsUrl()
+                                    </td>
+                                    <td>
+                                        @currentProjectAgreement.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+
+
                 <h2 class="sectionHeader">Activities</h2>
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
@@ -355,76 +385,76 @@
                     </div>
                     <div class="panel-body">
                         @*<div class="row">
-                                <div class="col-sm-6">
-                                    <h4>Contractor Time</h4>
-                                </div>
-                                <div class="col-sm-6 text-right">
-                                    @if (ViewDataTyped.UserHasEditProjectPermissions)
-                                    {<a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditContractorTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>}
-                                </div>
-                            </div>
-                            @if (ViewDataTyped.Project.ContractorTimeActivities.Any())
+                    <div class="col-sm-6">
+                        <h4>Contractor Time</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        @if (ViewDataTyped.UserHasEditProjectPermissions)
+                        {<a class="btn btn-sm btn-firma" href="@ViewDataTyped.EditContractorTimeActivitiesUrl"><span class="glyphicon glyphicon-edit"></span> Edit</a>}
+                    </div>
+                </div>
+                @if (ViewDataTyped.Project.ContractorTimeActivities.Any())
+                {
+                    var contractorTimeActivities = ViewDataTyped.Project.ContractorTimeActivities.GroupBy(x => x.GrantAllocation).OrderBy(x => x.Key.DisplayName).ToList();
+                    <div class="row">
+                        <div class="col-sm-2"><strong>Staff Time Hours:</strong></div>
+                        <div class="col-sm-2 text-right">
+                            <span>
+                                @ViewDataTyped.Project.GetTotalStaffTimeHours()
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2"><strong>Total Cost:</strong></div>
+                        <div class="col-sm-2 text-right">
+                            <span>
+                                @ViewDataTyped.Project.GetTotalStaffTimeAmount().ToStringCurrency()
+                            </span>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-striped table-condensed table-hover">
+                        @foreach (var grantAllocation in contractorTimeActivities)
+                        {
+                            <tr>
+                                <th colspan="7">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel(): @grantAllocation.Key.DisplayNameAsUrl</th>
+                            </tr>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th class="text-right">Hours</th>
+                                <th class="text-right">Acreage</th>
+                                <th class="text-right">Rate</th>
+                                <th class="text-right">Total Amount</th>
+                            </tr>
+                            foreach (var contractorTimeActivity in grantAllocation.OrderBy(x => x.ContractorTimeActivityStartDate))
                             {
-                                var contractorTimeActivities = ViewDataTyped.Project.ContractorTimeActivities.GroupBy(x => x.FundingSource).OrderBy(x => x.Key.DisplayName).ToList();
-                                <div class="row">
-                                    <div class="col-sm-2"><strong>Staff Time Hours:</strong></div>
-                                    <div class="col-sm-2 text-right">
-                                        <span>
-                                            @ViewDataTyped.Project.GetTotalStaffTimeHours()
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2"><strong>Total Cost:</strong></div>
-                                    <div class="col-sm-2 text-right">
-                                        <span>
-                                            @ViewDataTyped.Project.GetTotalStaffTimeAmount().ToStringCurrency()
-                                        </span>
-                                    </div>
-                                </div>
-                                <br />
-                                <table class="table table-striped table-condensed table-hover">
-                                    @foreach (var fundingSource in contractorTimeActivities)
-                                    {
-                                        <tr>
-                                            <th colspan="7">@FieldDefinition.FundingSource.GetFieldDefinitionLabel(): @fundingSource.Key.DisplayNameAsUrl</th>
-                                        </tr>
-                                        <tr>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th class="text-right">Hours</th>
-                                            <th class="text-right">Acreage</th>
-                                            <th class="text-right">Rate</th>
-                                            <th class="text-right">Total Amount</th>
-                                        </tr>
-                                        foreach (var contractorTimeActivity in fundingSource.OrderBy(x => x.ContractorTimeActivityStartDate))
+                                <tr>
+                                    <td>@contractorTimeActivity.ContractorTimeActivityStartDate.ToShortDateString()</td>
+                                    <td>
+                                        @if (contractorTimeActivity.ContractorTimeActivityEndDate != null)
                                         {
-                                            <tr>
-                                                <td>@contractorTimeActivity.ContractorTimeActivityStartDate.ToShortDateString()</td>
-                                                <td>
-                                                    @if (contractorTimeActivity.ContractorTimeActivityEndDate != null)
-                                                    {
-                                                        <text>@contractorTimeActivity.ContractorTimeActivityEndDate.Value.ToShortDateString()</text>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p class="systemText">N/A</p>
-                                                    }
-                                                </td>
-                                                <td class="text-right">@contractorTimeActivity.ContractorTimeActivityAcreage</td>
-                                                <td class="text-right">@contractorTimeActivity.ContractorTimeActivityHours</td>
-                                                <td class="text-right">@contractorTimeActivity.ContractorTimeActivityRate.ToStringCurrency()</td>
-                                                <td class="text-right">@contractorTimeActivity.TotalAmount.ToStringCurrency()</td>
-                                            </tr>
+                                            <text>@contractorTimeActivity.ContractorTimeActivityEndDate.Value.ToShortDateString()</text>
                                         }
-                                    }
-                                </table>
+                                        else
+                                        {
+                                            <p class="systemText">N/A</p>
+                                        }
+                                    </td>
+                                    <td class="text-right">@contractorTimeActivity.ContractorTimeActivityAcreage</td>
+                                    <td class="text-right">@contractorTimeActivity.ContractorTimeActivityHours</td>
+                                    <td class="text-right">@contractorTimeActivity.ContractorTimeActivityRate.ToStringCurrency()</td>
+                                    <td class="text-right">@contractorTimeActivity.TotalAmount.ToStringCurrency()</td>
+                                </tr>
                             }
-                            else
-                            {
-                                <p class="systemText">No Contractor Time identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
-                            }
-                            <hr />*@
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p class="systemText">No Contractor Time identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                }
+                <hr />*@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h4>Treatments</h4>

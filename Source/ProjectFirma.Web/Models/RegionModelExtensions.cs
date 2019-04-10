@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
             return new FeatureCollection(regions.Select(x => x.MakeFeatureWithRelevantProperties()).ToList());
         }
 
-        public static HtmlString GetDisplayNameAsUrl(this Region region)
+        public static HtmlString GetRegionDisplayNameAsUrl(this Region region)
         {
             return region != null ? UrlTemplate.MakeHrefString(region.GetDetailUrl(), region.DisplayName) : new HtmlString(null);
         }

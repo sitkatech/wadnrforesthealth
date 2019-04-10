@@ -92,8 +92,8 @@ namespace ProjectFirma.Web.Models
 
         public static List<Project> GetAllAssociatedProjects(this Organization organization)
         {
-            return organization.FundingSources.SelectMany(x => x.ProjectFundingSourceRequests).Select(x => x.Project)
-                .Union(organization.FundingSources.SelectMany(x => x.ProjectFundingSourceExpenditures)
+            return organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationRequests).Select(x => x.Project)
+                .Union(organization.GrantAllocations.SelectMany(x => x.ProjectGrantAllocationExpenditures)
                     .Select(x => x.Project))
                 .Union(organization.ProjectOrganizations.Select(x => x.Project))
                 .ToList();

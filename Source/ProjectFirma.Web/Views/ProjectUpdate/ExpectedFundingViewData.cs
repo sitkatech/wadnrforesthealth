@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public readonly string DiffUrl;
         public ProjectFundingDetailViewData ProjectFundingDetailViewData { get; set; }
 
-        public readonly string RequestFundingSourceUrl;
+        public readonly string RequestGrantAllocationUrl;
         public readonly ViewDataForAngularClass ViewDataForAngular;
         public readonly SectionCommentsViewData SectionCommentsViewData;
         
@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpectedFunding(projectUpdateBatch.Project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffExpectedFunding(projectUpdateBatch.Project));
-            RequestFundingSourceUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
+            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
             ProjectFundingDetailViewData = projectFundingDetailViewData;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.ExpectedFundingComment, projectUpdateBatch.IsReturned);
             ValidationWarnings = expectedFundingValidationResult.GetWarningMessages();
@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public class ViewDataForAngularClass
         {
-            public readonly List<FundingSourceSimple> AllFundingSources;
+            public readonly List<GrantAllocationSimple> AllGrantAllocationSimples;
             // Actually a ProjectUpdateBatchID
             public readonly int ProjectID;
             public readonly decimal EstimatedTotalCost;
@@ -60,10 +60,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             public readonly decimal EstimatedTravelCost;
 
             public ViewDataForAngularClass(ProjectUpdateBatch projectUpdateBatch,
-                List<FundingSourceSimple> allFundingSources,
+                List<GrantAllocationSimple> allGrantAllocationSimples,
                 decimal estimatedTotalCost, decimal estimatedIndirectCost, decimal estimatedPersonnelAndBenefitsCost, decimal estimatedSuppliesCost, decimal estimatedTravelCost)
             {
-                AllFundingSources = allFundingSources;
+                AllGrantAllocationSimples = allGrantAllocationSimples;
                 ProjectID = projectUpdateBatch.ProjectUpdateBatchID;
                 EstimatedTotalCost = estimatedTotalCost;
                 EstimatedIndirectCost = estimatedIndirectCost;

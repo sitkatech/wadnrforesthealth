@@ -156,6 +156,6 @@ namespace ProjectFirma.Web.Models
     public partial class RoleProjectSteward : Role
     {
         private RoleProjectSteward(int roleID, string roleName, string roleDisplayName, string roleDescription) : base(roleID, roleName, roleDisplayName, roleDescription) {}
-        public static readonly RoleProjectSteward Instance = new RoleProjectSteward(9, @"ProjectSteward", @"Project Steward", @"Users with this role can approve Project Proposals, create new Projects, approve Project Updates, and create Funding Sources for their Organization.");
+        public static readonly RoleProjectSteward Instance = new RoleProjectSteward(9, @"ProjectSteward", @"Project Steward", @"Users with this role can approve Project Proposals, create new Projects, approve Project Updates, and create Grant Allocations for their Organization.");
     }
 }

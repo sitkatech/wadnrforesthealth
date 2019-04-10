@@ -20,8 +20,11 @@
     -----------------------------------------------------------------------*@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.ModalDialog
+@using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
+@using ProjectFirma.Web.Views
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @using ProjectFirma.Web.Views.Shared.TextControls
 
@@ -60,10 +63,10 @@
 </div>
 
 
-<div class="col-sm-12 col-md-9 col-lg-10">
+<div class="col-sm-12">
 
     <div class="row">
-        <div class="col-sm-12" style="padding: 0px;">
+        <div class="col-lg-5">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
@@ -76,11 +79,55 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-7">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
+                    {
+                        <div style="border-radius: 8px; background-color: white; height: 410px; margin-right: auto; margin-left: auto; width: 600px">
+                            @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="systemText">No expenditures to report for this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel().</p>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.ProjectCalendarYearExpendituresGridSpec, ViewDataTyped.ProjectCalendarYearExpendituresGridName, ViewDataTyped.ProjectCalendarYearExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
-        <div class="col-sm-12" style="padding: 0px;">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
@@ -91,7 +138,7 @@
                     <div class="basicsLayout">
                         <strong>Public Notes</strong>
                         @{ EntityNotes.RenderPartialView(Html, ViewDataTyped.GrantAllocationNotesViewData); }
-                                
+
                         @if (new GrantAllocationNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
                         {
                             <strong>Internal Notes</strong>

@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [StringLength(ProjectUpdateBatch.FieldLengths.ExpendituresComment)]
         public string Comments { get; set; }
 
-        public List<ProjectFundingSourceRequestSimple> ProjectFundingSourceRequests { get; set; }
+        public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         [JsonIgnore]
@@ -69,10 +69,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             
         }
 
-        public ExpectedFundingViewModel(List<ProjectFundingSourceRequestUpdate> projectFundingSourceRequestUpdates,
+        public ExpectedFundingViewModel(List<ProjectGrantAllocationRequestUpdate> projectGrantAllocationRequestUpdates,
             string comments, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
         {
-            ProjectFundingSourceRequests = projectFundingSourceRequestUpdates.Select(x => new ProjectFundingSourceRequestSimple(x)).ToList();
+            ProjectGrantAllocationRequests = projectGrantAllocationRequestUpdates.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             Comments = comments;
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
             ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
@@ -82,19 +82,19 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
-            List<ProjectFundingSourceRequestUpdate> currentProjectFundingSourceRequestUpdates,
-            IList<ProjectFundingSourceRequestUpdate> allProjectFundingSourceRequestUpdates, Models.ProjectUpdate projectUpdate)
+            List<ProjectGrantAllocationRequestUpdate> currentProjectGrantAllocationRequestUpdates,
+            IList<ProjectGrantAllocationRequestUpdate> allProjectGrantAllocationRequestUpdates, Models.ProjectUpdate projectUpdate)
         {
-            var projectFundingSourceRequestUpdatesUpdated = new List<ProjectFundingSourceRequestUpdate>();
-            if (ProjectFundingSourceRequests != null)
+            var projectGrantAllocationRequestUpdatesUpdated = new List<ProjectGrantAllocationRequestUpdate>();
+            if (ProjectGrantAllocationRequests != null)
             {
                 // Completely rebuild the list
-                projectFundingSourceRequestUpdatesUpdated = ProjectFundingSourceRequests.Select(x => x.ToProjectFundingSourceRequestUpdate()).ToList();
+                projectGrantAllocationRequestUpdatesUpdated = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequestUpdate()).ToList();
             }
 
-            currentProjectFundingSourceRequestUpdates.Merge(projectFundingSourceRequestUpdatesUpdated,
-                allProjectFundingSourceRequestUpdates,
-                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.FundingSourceID == y.FundingSourceID,
+            currentProjectGrantAllocationRequestUpdates.Merge(projectGrantAllocationRequestUpdatesUpdated,
+                allProjectGrantAllocationRequestUpdates,
+                (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
                     x.SecuredAmount = y.SecuredAmount;
@@ -110,25 +110,25 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (ProjectFundingSourceRequests == null)
+            if (ProjectGrantAllocationRequests == null)
             {
                 yield break;
             }
 
-            if (ProjectFundingSourceRequests.GroupBy(x => x.FundingSourceID).Any(x => x.Count() > 1))
+            if (ProjectGrantAllocationRequests.GroupBy(x => x.GrantAllocationID).Any(x => x.Count() > 1))
             {
-                yield return new ValidationResult("Each Funding Source can only be used once.");
+                yield return new ValidationResult("Each Grant Allocation can only be used once.");
             }
 
-            foreach (var projectFundingSourceRequest in ProjectFundingSourceRequests)
+            foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
             {
-                if (projectFundingSourceRequest.AreBothValuesZero())
+                if (projectGrantAllocationRequest.AreBothValuesZero())
                 {
-                    var fundingSource =
-                        HttpRequestStorage.DatabaseEntities.FundingSources.Single(x =>
-                            x.FundingSourceID == projectFundingSourceRequest.FundingSourceID);
+                    var grantAllocation =
+                        HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x =>
+                            x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
                     yield return new ValidationResult(
-                        $"Secured Funding and Unsecured Funding cannot both be zero for funding source: {fundingSource.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
+                        $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
                 }
             }
         }

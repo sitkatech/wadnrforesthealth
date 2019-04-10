@@ -24,7 +24,6 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
-    <EntitySet Name="FundingSource" EntityType="ProjectFirma.Web.Models.FundingSource" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
@@ -78,10 +77,10 @@
     <EntitySet Name="ProjectExemptReportingYearUpdate" EntityType="ProjectFirma.Web.Models.ProjectExemptReportingYearUpdate" />
     <EntitySet Name="ProjectExternalLink" EntityType="ProjectFirma.Web.Models.ProjectExternalLink" />
     <EntitySet Name="ProjectExternalLinkUpdate" EntityType="ProjectFirma.Web.Models.ProjectExternalLinkUpdate" />
-    <EntitySet Name="ProjectFundingSourceExpenditure" EntityType="ProjectFirma.Web.Models.ProjectFundingSourceExpenditure" />
-    <EntitySet Name="ProjectFundingSourceExpenditureUpdate" EntityType="ProjectFirma.Web.Models.ProjectFundingSourceExpenditureUpdate" />
-    <EntitySet Name="ProjectFundingSourceRequest" EntityType="ProjectFirma.Web.Models.ProjectFundingSourceRequest" />
-    <EntitySet Name="ProjectFundingSourceRequestUpdate" EntityType="ProjectFirma.Web.Models.ProjectFundingSourceRequestUpdate" />
+    <EntitySet Name="ProjectGrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" />
+    <EntitySet Name="ProjectGrantAllocationExpenditureUpdate" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" />
+    <EntitySet Name="ProjectGrantAllocationRequest" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationRequest" />
+    <EntitySet Name="ProjectGrantAllocationRequestUpdate" EntityType="ProjectFirma.Web.Models.ProjectGrantAllocationRequestUpdate" />
     <EntitySet Name="ProjectImage" EntityType="ProjectFirma.Web.Models.ProjectImage" />
     <EntitySet Name="ProjectImageUpdate" EntityType="ProjectFirma.Web.Models.ProjectImageUpdate" />
     <EntitySet Name="ProjectInternalNote" EntityType="ProjectFirma.Web.Models.ProjectInternalNote" />
@@ -276,26 +275,6 @@
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_FundingSource_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID">
-      <End Role="Organization" EntitySet="Organization" />
-      <End Role="FundingSources" EntitySet="FundingSource" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectFundingSourceExpenditures" EntitySet="ProjectFundingSourceExpenditure" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectFundingSourceExpenditureUpdates" EntitySet="ProjectFundingSourceExpenditureUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectFundingSourceRequests" EntitySet="ProjectFundingSourceRequest" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID">
-      <End Role="FundingSource" EntitySet="FundingSource" />
-      <End Role="ProjectFundingSourceRequestUpdates" EntitySet="ProjectFundingSourceRequestUpdate" />
-    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
       <End Role="Grants" EntitySet="Grant" />
@@ -355,6 +334,22 @@
     <AssociationSet Name="FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="InvoiceLineItems" EntitySet="InvoiceLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
       <End Role="CreatedByPerson" EntitySet="Person" />
@@ -720,13 +715,13 @@
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectExternalLinks" EntitySet="ProjectExternalLink" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditure_Project_ProjectID">
+    <AssociationSet Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectFundingSourceExpenditures" EntitySet="ProjectFundingSourceExpenditure" />
+      <End Role="ProjectGrantAllocationExpenditures" EntitySet="ProjectGrantAllocationExpenditure" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_Project_ProjectID">
+    <AssociationSet Name="FK_ProjectGrantAllocationRequest_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectFundingSourceRequests" EntitySet="ProjectFundingSourceRequest" />
+      <End Role="ProjectGrantAllocationRequests" EntitySet="ProjectGrantAllocationRequest" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectImage_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectImage_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -816,13 +811,13 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectExternalLinkUpdates" EntitySet="ProjectExternalLinkUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <AssociationSet Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectFundingSourceExpenditureUpdates" EntitySet="ProjectFundingSourceExpenditureUpdate" />
+      <End Role="ProjectGrantAllocationExpenditureUpdates" EntitySet="ProjectGrantAllocationExpenditureUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectFundingSourceRequestUpdates" EntitySet="ProjectFundingSourceRequestUpdate" />
+      <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectImageUpdate_ProjectImage_ProjectImageID" Association="ProjectFirma.Web.Models.FK_ProjectImageUpdate_ProjectImage_ProjectImageID">
       <End Role="ProjectImage" EntitySet="ProjectImage" />
@@ -1192,22 +1187,6 @@
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
   </EntityType>
-  <EntityType Name="FundingSource">
-    <Key>
-      <PropertyRef Name="FundingSourceID" />
-    </Key>
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="FundingSourceDescription" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
-    <Property Name="FundingSourceAmount" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="FundingSources" ToRole="Organization" />
-    <NavigationProperty Name="ProjectFundingSourceExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceExpenditures" />
-    <NavigationProperty Name="ProjectFundingSourceExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceExpenditureUpdates" />
-    <NavigationProperty Name="ProjectFundingSourceRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequests" />
-    <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="FundingSource" ToRole="ProjectFundingSourceRequestUpdates" />
-  </EntityType>
   <EntityType Name="Grant">
     <Key>
       <PropertyRef Name="GrantID" />
@@ -1265,6 +1244,10 @@
     <NavigationProperty Name="GrantAllocationProgramManagers" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramManagers" />
     <NavigationProperty Name="GrantAllocationProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProjectCodes" />
     <NavigationProperty Name="InvoiceLineItems" Relationship="ProjectFirma.Web.Models.FK_InvoiceLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="InvoiceLineItems" />
+    <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditures" />
+    <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditureUpdates" />
+    <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequests" />
+    <NavigationProperty Name="ProjectGrantAllocationRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequestUpdates" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -1480,7 +1463,6 @@
     <Property Name="VendorID" Type="Int32" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Organization" ToRole="Agreements" />
     <NavigationProperty Name="LogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="OrganizationsWhereYouAreTheLogoFileResource" ToRole="LogoFileResource" />
-    <NavigationProperty Name="FundingSources" Relationship="ProjectFirma.Web.Models.FK_FundingSource_Organization_OrganizationID" FromRole="Organization" ToRole="FundingSources" />
     <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Organization" ToRole="Grants" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="Organization" ToRole="GrantAllocations" />
     <NavigationProperty Name="OrganizationType" Relationship="ProjectFirma.Web.Models.FK_Organization_OrganizationType_OrganizationTypeID" FromRole="Organizations" ToRole="OrganizationType" />
@@ -1702,6 +1684,7 @@
     <Property Name="PersonAddress" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="AddedByPersonID" Type="Int32" />
     <Property Name="VendorID" Type="Int32" />
+    <Property Name="IsProgramManager" Type="Boolean" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
@@ -1859,8 +1842,8 @@
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_Project_ProjectID" FromRole="Project" ToRole="ProjectDocuments" />
     <NavigationProperty Name="ProjectExemptReportingYears" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYear_Project_ProjectID" FromRole="Project" ToRole="ProjectExemptReportingYears" />
     <NavigationProperty Name="ProjectExternalLinks" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLink_Project_ProjectID" FromRole="Project" ToRole="ProjectExternalLinks" />
-    <NavigationProperty Name="ProjectFundingSourceExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditure_Project_ProjectID" FromRole="Project" ToRole="ProjectFundingSourceExpenditures" />
-    <NavigationProperty Name="ProjectFundingSourceRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_Project_ProjectID" FromRole="Project" ToRole="ProjectFundingSourceRequests" />
+    <NavigationProperty Name="ProjectGrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationExpenditures" />
+    <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="Project" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectImages" Relationship="ProjectFirma.Web.Models.FK_ProjectImage_Project_ProjectID" FromRole="Project" ToRole="ProjectImages" />
     <NavigationProperty Name="ProjectInternalNotes" Relationship="ProjectFirma.Web.Models.FK_ProjectInternalNote_Project_ProjectID" FromRole="Project" ToRole="ProjectInternalNotes" />
     <NavigationProperty Name="ProjectLocations" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="Project" ToRole="ProjectLocations" />
@@ -2015,53 +1998,53 @@
     <Property Name="ExternalLinkUrl" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectExternalLinkUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
-  <EntityType Name="ProjectFundingSourceExpenditure">
+  <EntityType Name="ProjectGrantAllocationExpenditure">
     <Key>
-      <PropertyRef Name="ProjectFundingSourceExpenditureID" />
+      <PropertyRef Name="ProjectGrantAllocationExpenditureID" />
     </Key>
-    <Property Name="ProjectFundingSourceExpenditureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectGrantAllocationExpenditureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <Property Name="CalendarYear" Type="Int32" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID" FromRole="ProjectFundingSourceExpenditures" ToRole="FundingSource" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditure_Project_ProjectID" FromRole="ProjectFundingSourceExpenditures" ToRole="Project" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationExpenditures" ToRole="GrantAllocation" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditure_Project_ProjectID" FromRole="ProjectGrantAllocationExpenditures" ToRole="Project" />
   </EntityType>
-  <EntityType Name="ProjectFundingSourceExpenditureUpdate">
+  <EntityType Name="ProjectGrantAllocationExpenditureUpdate">
     <Key>
-      <PropertyRef Name="ProjectFundingSourceExpenditureUpdateID" />
+      <PropertyRef Name="ProjectGrantAllocationExpenditureUpdateID" />
     </Key>
-    <Property Name="ProjectFundingSourceExpenditureUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectGrantAllocationExpenditureUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <Property Name="CalendarYear" Type="Int32" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID" FromRole="ProjectFundingSourceExpenditureUpdates" ToRole="FundingSource" />
-    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectFundingSourceExpenditureUpdates" ToRole="ProjectUpdateBatch" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationExpenditureUpdates" ToRole="GrantAllocation" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectGrantAllocationExpenditureUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
-  <EntityType Name="ProjectFundingSourceRequest">
+  <EntityType Name="ProjectGrantAllocationRequest">
     <Key>
-      <PropertyRef Name="ProjectFundingSourceRequestID" />
+      <PropertyRef Name="ProjectGrantAllocationRequestID" />
     </Key>
-    <Property Name="ProjectFundingSourceRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectGrantAllocationRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <Property Name="SecuredAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="UnsecuredAmount" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID" FromRole="ProjectFundingSourceRequests" ToRole="FundingSource" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequest_Project_ProjectID" FromRole="ProjectFundingSourceRequests" ToRole="Project" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequests" ToRole="GrantAllocation" />
+    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="ProjectGrantAllocationRequests" ToRole="Project" />
   </EntityType>
-  <EntityType Name="ProjectFundingSourceRequestUpdate">
+  <EntityType Name="ProjectGrantAllocationRequestUpdate">
     <Key>
-      <PropertyRef Name="ProjectFundingSourceRequestUpdateID" />
+      <PropertyRef Name="ProjectGrantAllocationRequestUpdateID" />
     </Key>
-    <Property Name="ProjectFundingSourceRequestUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectGrantAllocationRequestUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="FundingSourceID" Type="Int32" Nullable="false" />
     <Property Name="SecuredAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="UnsecuredAmount" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="FundingSource" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID" FromRole="ProjectFundingSourceRequestUpdates" ToRole="FundingSource" />
-    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectFundingSourceRequestUpdates" ToRole="ProjectUpdateBatch" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="GrantAllocation" />
+    <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectGrantAllocationRequestUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectImage">
     <Key>
@@ -2392,8 +2375,8 @@
     <NavigationProperty Name="ProjectDocumentUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectDocumentUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectDocumentUpdates" />
     <NavigationProperty Name="ProjectExemptReportingYearUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExemptReportingYearUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExemptReportingYearUpdates" />
     <NavigationProperty Name="ProjectExternalLinkUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectExternalLinkUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectExternalLinkUpdates" />
-    <NavigationProperty Name="ProjectFundingSourceExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectFundingSourceExpenditureUpdates" />
-    <NavigationProperty Name="ProjectFundingSourceRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectFundingSourceRequestUpdates" />
+    <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectGrantAllocationExpenditureUpdates" />
+    <NavigationProperty Name="ProjectGrantAllocationRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectGrantAllocationRequestUpdates" />
     <NavigationProperty Name="ProjectImageUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectImageUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectImageUpdates" />
     <NavigationProperty Name="ProjectLocationStagingUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationStagingUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectLocationStagingUpdates" />
     <NavigationProperty Name="ProjectLocationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateBatch" ToRole="ProjectLocationUpdates" />
@@ -3113,66 +3096,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_FundingSource_Organization_OrganizationID">
-    <End Role="Organization" Type="ProjectFirma.Web.Models.Organization" Multiplicity="1" />
-    <End Role="FundingSources" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organization">
-        <PropertyRef Name="OrganizationID" />
-      </Principal>
-      <Dependent Role="FundingSources">
-        <PropertyRef Name="OrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectFundingSourceExpenditure_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
-    <End Role="ProjectFundingSourceExpenditures" Type="ProjectFirma.Web.Models.ProjectFundingSourceExpenditure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectFundingSourceExpenditures">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectFundingSourceExpenditureUpdate_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
-    <End Role="ProjectFundingSourceExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectFundingSourceExpenditureUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectFundingSourceExpenditureUpdates">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectFundingSourceRequest_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
-    <End Role="ProjectFundingSourceRequests" Type="ProjectFirma.Web.Models.ProjectFundingSourceRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectFundingSourceRequests">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectFundingSourceRequestUpdate_FundingSource_FundingSourceID">
-    <End Role="FundingSource" Type="ProjectFirma.Web.Models.FundingSource" Multiplicity="1" />
-    <End Role="ProjectFundingSourceRequestUpdates" Type="ProjectFirma.Web.Models.ProjectFundingSourceRequestUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FundingSource">
-        <PropertyRef Name="FundingSourceID" />
-      </Principal>
-      <Dependent Role="ProjectFundingSourceRequestUpdates">
-        <PropertyRef Name="FundingSourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Grant_GrantStatus_GrantStatusID">
     <End Role="GrantStatus" Type="ProjectFirma.Web.Models.GrantStatus" Multiplicity="1" />
     <End Role="Grants" Type="ProjectFirma.Web.Models.Grant" Multiplicity="*" />
@@ -3349,6 +3272,54 @@
         <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="InvoiceLineItems">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectGrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="ProjectGrantAllocationExpenditures">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.ProjectGrantAllocationRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="ProjectGrantAllocationRequests">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="ProjectGrantAllocationRequestUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationRequestUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="ProjectGrantAllocationRequestUpdates">
         <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
@@ -4445,26 +4416,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectFundingSourceExpenditure_Project_ProjectID">
+  <Association Name="FK_ProjectGrantAllocationExpenditure_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="ProjectFundingSourceExpenditures" Type="ProjectFirma.Web.Models.ProjectFundingSourceExpenditure" Multiplicity="*" />
+    <End Role="ProjectGrantAllocationExpenditures" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
         <PropertyRef Name="ProjectID" />
       </Principal>
-      <Dependent Role="ProjectFundingSourceExpenditures">
+      <Dependent Role="ProjectGrantAllocationExpenditures">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectFundingSourceRequest_Project_ProjectID">
+  <Association Name="FK_ProjectGrantAllocationRequest_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="ProjectFundingSourceRequests" Type="ProjectFirma.Web.Models.ProjectFundingSourceRequest" Multiplicity="*" />
+    <End Role="ProjectGrantAllocationRequests" Type="ProjectFirma.Web.Models.ProjectGrantAllocationRequest" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
         <PropertyRef Name="ProjectID" />
       </Principal>
-      <Dependent Role="ProjectFundingSourceRequests">
+      <Dependent Role="ProjectGrantAllocationRequests">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
@@ -4733,26 +4704,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectFundingSourceExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+  <Association Name="FK_ProjectGrantAllocationExpenditureUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectFundingSourceExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectFundingSourceExpenditureUpdate" Multiplicity="*" />
+    <End Role="ProjectGrantAllocationExpenditureUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProjectUpdateBatch">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
-      <Dependent Role="ProjectFundingSourceExpenditureUpdates">
+      <Dependent Role="ProjectGrantAllocationExpenditureUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectFundingSourceRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+  <Association Name="FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectFundingSourceRequestUpdates" Type="ProjectFirma.Web.Models.ProjectFundingSourceRequestUpdate" Multiplicity="*" />
+    <End Role="ProjectGrantAllocationRequestUpdates" Type="ProjectFirma.Web.Models.ProjectGrantAllocationRequestUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProjectUpdateBatch">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
-      <Dependent Role="ProjectFundingSourceRequestUpdates">
+      <Dependent Role="ProjectGrantAllocationRequestUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>

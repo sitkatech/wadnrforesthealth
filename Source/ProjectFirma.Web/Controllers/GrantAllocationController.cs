@@ -24,15 +24,15 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.ExcelWorkbookUtilities;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
-using DetailViewData = ProjectFirma.Web.Views.GrantAllocation.DetailViewData;
+using ProjectFirma.Web.Views.Shared.SortOrder;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
@@ -256,7 +256,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationViewModel(grantAllocation);
-            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation);
         }
 
         [HttpPost]
@@ -267,13 +267,13 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation);
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation);
             }
             viewModel.UpdateModel(grantAllocation, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult GrantAllocationViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType)
+        private PartialViewResult GrantAllocationViewEdit(EditGrantAllocationViewModel viewModel, EditGrantAllocationType editGrantAllocationType, GrantAllocation grantAllocationBeingEdited)
         {
             var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
@@ -284,13 +284,14 @@ namespace ProjectFirma.Web.Controllers
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
 
             var viewData = new EditGrantAllocationViewData(editGrantAllocationType,
-                organizations,
-                grantTypes,
-                grants,
-                divisions,
-                regions,
-                federalFundCodes,
-                people
+                                                            grantAllocationBeingEdited,
+                                                            organizations,
+                                                            grantTypes,
+                                                            grants,
+                                                            divisions,
+                                                            regions,
+                                                            federalFundCodes,
+                                                            people
             );
             return RazorPartialView<EditGrantAllocation, EditGrantAllocationViewData, EditGrantAllocationViewModel>(viewData, viewModel);
         }
@@ -300,7 +301,8 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult New()
         {
             var viewModel = new EditGrantAllocationViewModel();
-            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation);
+            // Null is likely wrong here!!!
+            return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null);
         }
 
         [HttpPost]
@@ -310,7 +312,8 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation);
+                // Null is likely wrong here!!!
+                return GrantAllocationViewEdit(viewModel, EditGrantAllocationType.NewGrantAllocation, null);
             }
             var grant = HttpRequestStorage.DatabaseEntities.Grants.Single(g => g.GrantID == viewModel.GrantID);
             var grantAllocation = GrantAllocation.CreateNewBlank(grant);
@@ -322,7 +325,7 @@ namespace ProjectFirma.Web.Controllers
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.SingleOrDefault(g => g.GrantAllocationID == grantAllocationPrimaryKey.PrimaryKeyValue);
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             if (grantAllocation == null)
             {
                 throw new Exception($"Could not find GrantAllocationID # {grantAllocationPrimaryKey.PrimaryKeyValue}; has it been deleted?");
@@ -342,8 +345,56 @@ namespace ProjectFirma.Web.Controllers
                 grantAllocation.GrantAllocationName,
                 userHasEditGrantAllocationPermissions);
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData);
+            var taxonomyTrunks = HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.ToList().SortByOrderThenName().ToList();
+
+            const string chartTitle = "Reported Expenditures";
+            var chartContainerID = chartTitle.Replace(" ", "");
+
+            // If ProjectGrantAllocationExpenditures is empty, ToGoogleChart returns null...
+            var googleChart = grantAllocation.ProjectGrantAllocationExpenditures
+                .ToGoogleChart(x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
+                    taxonomyTrunks.Select(x => x.DisplayName).ToList(),
+                    x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
+                    chartContainerID,
+                    grantAllocation.DisplayName);
+
+            // Which makes this guy bork (bork bork bork)
+            googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.None);
+            var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 350, false);
+
+            var projectGrantAllocationRequestsGridSpec = new ProjectGrantAllocationRequestsGridSpec()
+            {
+                ObjectNameSingular = "Project",
+                ObjectNamePlural = "Projects",
+                SaveFiltersInCookie = true
+            };
+
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
+
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<ProjectCalendarYearExpenditure> ProjectCalendarYearExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var projectGrantAllocationExpenditures = grantAllocation.ProjectGrantAllocationExpenditures.ToList();
+            var calendarYearRangeForExpenditures =
+                projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(grantAllocation);
+            var gridSpec = new ProjectCalendarYearExpendituresGridSpec(calendarYearRangeForExpenditures);
+            var projectGrantAllocations = ProjectCalendarYearExpenditure.CreateFromProjectsAndCalendarYears(projectGrantAllocationExpenditures, calendarYearRangeForExpenditures);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectCalendarYearExpenditure>(projectGrantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<ProjectGrantAllocationRequest> ProjectGrantAllocationRequestsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var projectGrantAllocationRequests = grantAllocation.ProjectGrantAllocationRequests.ToList();
+            var gridSpec = new ProjectGrantAllocationRequestsGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<ProjectGrantAllocationRequest>(projectGrantAllocationRequests, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
     }
 }

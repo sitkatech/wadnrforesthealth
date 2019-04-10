@@ -172,7 +172,7 @@ namespace ProjectFirma.Web.Controllers
             var editOrganizationsUrl = SitkaRoute<ProjectOrganizationController>.BuildUrlFromExpression(c => c.EditOrganizations(project));
             var editPerformanceMeasureExpectedsUrl = SitkaRoute<PerformanceMeasureExpectedController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureExpectedsForProject(project));
             var editPerformanceMeasureActualsUrl = SitkaRoute<PerformanceMeasureActualController>.BuildUrlFromExpression(c => c.EditPerformanceMeasureActualsForProject(project));
-            var editReportedExpendituresUrl = SitkaRoute<ProjectFundingSourceExpenditureController>.BuildUrlFromExpression(c => c.EditProjectFundingSourceExpendituresForProject(project));
+            var editReportedExpendituresUrl = SitkaRoute<ProjectGrantAllocationExpenditureController>.BuildUrlFromExpression(c => c.EditProjectGrantAllocationExpendituresForProject(project));
             var editExternalLinksUrl = SitkaRoute<ProjectExternalLinkController>.BuildUrlFromExpression(c => c.EditProjectExternalLinks(project));
 
             var priorityAreas = project.GetProjectPriorityAreas().ToList();
@@ -187,7 +187,7 @@ namespace ProjectFirma.Web.Controllers
             var performanceMeasureExpectedsSummaryViewData = new PerformanceMeasureExpectedSummaryViewData(new List<IPerformanceMeasureValue>(project.PerformanceMeasureExpecteds.OrderBy(x=>x.PerformanceMeasure.PerformanceMeasureSortOrder)));
             var performanceMeasureReportedValuesGroupedViewData = BuildPerformanceMeasureReportedValuesGroupedViewData(project);
             var projectExpendituresSummaryViewData = BuildProjectExpendituresDetailViewData(project);
-            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IFundingSourceRequestAmount>(project.ProjectFundingSourceRequests));
+            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests));
             var imageGalleryViewData = BuildImageGalleryViewData(project, CurrentPerson);
             var projectNotesViewData = new EntityNotesViewData(
                 EntityNote.CreateFromEntityNote(new List<IEntityNote>(project.ProjectNotes)),
@@ -280,13 +280,13 @@ namespace ProjectFirma.Web.Controllers
 
         private static ProjectExpendituresDetailViewData BuildProjectExpendituresDetailViewData(Project project)
         {
-            var projectFundingSourceExpenditures = project.ProjectFundingSourceExpenditures.ToList();
-            var calendarYearsForFundingSourceExpenditures = projectFundingSourceExpenditures.CalculateCalendarYearRangeForExpenditures(project);
-            var fromFundingSourcesAndCalendarYears = FundingSourceCalendarYearExpenditure.CreateFromFundingSourcesAndCalendarYears(new List<IFundingSourceExpenditure>(projectFundingSourceExpenditures),
-                calendarYearsForFundingSourceExpenditures);
+            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
+            var calendarYearsForGrantAllocationExpenditures = projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project);
+            var fromGrantAllocationsAndCalendarYears = GrantAllocationCalendarYearExpenditure.CreateFromGrantAllocationsAndCalendarYears(new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures),
+                calendarYearsForGrantAllocationExpenditures);
             var projectExpendituresDetailViewData = new ProjectExpendituresDetailViewData(
-                fromFundingSourcesAndCalendarYears,
-                calendarYearsForFundingSourceExpenditures.Select(x => new CalendarYearString(x)).ToList(),
+                fromGrantAllocationsAndCalendarYears,
+                calendarYearsForGrantAllocationExpenditures.Select(x => new CalendarYearString(x)).ToList(),
                 FirmaHelpers.CalculateYearRanges(project.GetExpendituresExemptReportingYears().Select(x => x.CalendarYear)),
                 project.NoExpendituresToReportExplanation);
             return projectExpendituresDetailViewData;
@@ -389,13 +389,13 @@ namespace ProjectFirma.Web.Controllers
             var mapDivID = $"project_{project.ProjectID}_Map";
             var projectLocationDetailMapInitJson = new ProjectLocationSummaryMapInitJson(project, mapDivID, false);
             var chartName = $"ProjectFundingRequestSheet{project.ProjectID}PieChart";
-            var fundingSourceRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
+            var grantAllocationRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
             var googleChartDataTable =
-                GetProjectFundingRequestSheetGoogleChartDataTable(fundingSourceRequestAmountGooglePieChartSlices);
+                GetProjectGrantAllocationRequestSheetGoogleChartDataTable(grantAllocationRequestAmountGooglePieChartSlices);
             var googleChartTitle = $"Funding Request by Organization for: {project.ProjectName}";
             var googleChartType = GoogleChartType.PieChart;
             var googleChartConfiguration = new GooglePieChartConfiguration(googleChartTitle, MeasurementUnitTypeEnum.Dollars,
-                fundingSourceRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
+                grantAllocationRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
             var googleChartJson = new GoogleChartJson(string.Empty, chartName, googleChartConfiguration,
                 googleChartType,
                 googleChartDataTable, null);
@@ -403,14 +403,14 @@ namespace ProjectFirma.Web.Controllers
             var firmaPageFactSheetCustomText = FirmaPage.GetFirmaPageByPageType(firmaPageTypeFactSheetCustomText);
 
             var viewData = new ForwardLookingFactSheetViewData(CurrentPerson, project, projectLocationDetailMapInitJson,
-                googleChartJson, fundingSourceRequestAmountGooglePieChartSlices, firmaPageFactSheetCustomText);
+                googleChartJson, grantAllocationRequestAmountGooglePieChartSlices, firmaPageFactSheetCustomText);
             return RazorView<ForwardLookingFactSheet, ForwardLookingFactSheetViewData>(viewData);
         }
 
-        public static GoogleChartDataTable GetProjectFundingRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> fundingSourceExpenditureGooglePieChartSlices)
+        public static GoogleChartDataTable GetProjectGrantAllocationRequestSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditureGooglePieChartSlices)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn("Funding Source", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
-            var chartRowCs = fundingSourceExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn("Grant Allocation", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var chartRowCs = grantAllocationExpenditureGooglePieChartSlices.OrderBy(x => x.SortOrder).Select(x =>
             {
                 var sectorRowV = new GoogleChartRowV(x.Label);
                 var formattedValue = GoogleChartJson.GetFormattedValue(x.Value, MeasurementUnitType.Dollars);
@@ -435,7 +435,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectFundingSourceRequests).Include(x => x.ProjectFundingSourceExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests).Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;
         }
@@ -552,10 +552,10 @@ namespace ProjectFirma.Web.Controllers
                 $"Reported {MultiTenantHelpers.GetPerformanceMeasureNamePluralized()}", performanceMeasureActualExcelSpec, performanceMeasureActuals);
             workSheets.Add(wsPerformanceMeasureActuals);
 
-            var projectFundingSourceExpenditureSpec = new ProjectFundingSourceExpenditureExcelSpec();
-            var projectFundingSourceExpenditures = (projects.SelectMany(p => p.ProjectFundingSourceExpenditures)).ToList();
-            var wsProjectFundingSourceExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectFundingSourceExpenditureSpec, projectFundingSourceExpenditures);
-            workSheets.Add(wsProjectFundingSourceExpenditures);
+            var projectGrantAllocationExpenditureExcelSpec = new ProjectGrantAllocationExpenditureExcelSpec();
+            var projectGrantAllocationExpenditures = (projects.SelectMany(p => p.ProjectGrantAllocationExpenditures)).ToList();
+            var wsProjectGrantAllocationExpenditures = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}", projectGrantAllocationExpenditureExcelSpec, projectGrantAllocationExpenditures);
+            workSheets.Add(wsProjectGrantAllocationExpenditures);
 
             MultiTenantHelpers.GetClassificationSystems().ForEach(c =>
             {
@@ -790,17 +790,17 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return gridJsonNetJObjectResult;
         }
 
-        public static Dictionary<int, GooglePieChartSlice> GetSlicesForGoogleChart(Dictionary<string, decimal> fundingSourceExpenditures)
+        public static Dictionary<int, GooglePieChartSlice> GetSlicesForGoogleChart(Dictionary<string, decimal> grantAllocationExpenditures)
         {
-            var indexMapping = GetConsistentFundingSourceExpendituresIndexDictionary(fundingSourceExpenditures);
-            return fundingSourceExpenditures.Select(fund => indexMapping[fund.Key]).ToDictionary(index => index, index => new GooglePieChartSlice {Color = FirmaHelpers.DefaultColorRange[index]});
+            var indexMapping = GetConsistentGrantAllocationExpendituresIndexDictionary(grantAllocationExpenditures);
+            return grantAllocationExpenditures.Select(fund => indexMapping[fund.Key]).ToDictionary(index => index, index => new GooglePieChartSlice {Color = FirmaHelpers.DefaultColorRange[index]});
         }
 
-        public static Dictionary<string, int> GetConsistentFundingSourceExpendituresIndexDictionary(Dictionary<string,decimal> fundingSourceExpenditures)
+        public static Dictionary<string, int> GetConsistentGrantAllocationExpendituresIndexDictionary(Dictionary<string,decimal> grantAllocationExpenditures)
         {
             var results = new Dictionary<string, int>();
             var index = 0;
-            foreach (var fund in fundingSourceExpenditures)
+            foreach (var fund in grantAllocationExpenditures)
             {
                 results.Add(fund.Key, index);
                 index++;
@@ -808,10 +808,10 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
             return results;
         }
 
-        public static GoogleChartDataTable GetProjectFactSheetGoogleChartDataTable(List<GooglePieChartSlice> fundingSourceExpenditures)
+        public static GoogleChartDataTable GetProjectFactSheetGoogleChartDataTable(List<GooglePieChartSlice> grantAllocationExpenditures)
         {
-            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn($"{FieldDefinition.FundingSource.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
-            var chartRowCs = fundingSourceExpenditures.Select(x =>
+            var googleChartColumns = new List<GoogleChartColumn> { new GoogleChartColumn($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}", GoogleChartColumnDataType.String, GoogleChartType.PieChart), new GoogleChartColumn("Expenditures", GoogleChartColumnDataType.Number, GoogleChartType.PieChart) };
+            var chartRowCs = grantAllocationExpenditures.Select(x =>
             {
                 var organizationTypeRowV = new GoogleChartRowV(x.Label);
                 var formattedValue = GoogleChartJson.GetFormattedValue(x.Value, MeasurementUnitType.Dollars);
