@@ -18,6 +18,10 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
+using System.Linq;
+
 namespace ProjectFirma.Web.Models
 {
     public partial class FileResourceMimeType
@@ -26,5 +30,7 @@ namespace ProjectFirma.Web.Models
         {
             get { return $"<img src=\"{FileResourceMimeTypeIconSmallFilename}\" alt=\"Download {FileResourceMimeTypeDisplayName}\" />"; }
         }
+
+        public static string AllValidFileResourceMimeTypesAsPipeDelimitedString => string.Join("|", Enum.GetValues(typeof(FileResourceMimeTypeEnum)));
     }
 }

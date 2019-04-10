@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.Grant
         public DateTime? GrantEndDate { get; set; }
 
         [DisplayName("Grant File Upload")]
-        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public HttpPostedFileBase GrantFileResourceData { get; set; }
 
         /// <summary>

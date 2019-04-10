@@ -44,6 +44,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
         public virtual DbSet<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
+        public virtual DbSet<FileResourceMimeTypeFileExtension> FileResourceMimeTypeFileExtensions { get; set; }
         public virtual DbSet<FileResource> FileResources { get; set; }
         public virtual DbSet<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual DbSet<FirmaPageImage> FirmaPageImages { get; set; }
@@ -237,6 +238,9 @@ namespace ProjectFirma.Web.Models
                     var fieldDefinition = FieldDefinition.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(fieldDefinition, "FieldDefinition", primaryKey);
                     return fieldDefinition;
+
+                case "FileResourceMimeTypeFileExtension":
+                    return FileResourceMimeTypeFileExtensions.GetFileResourceMimeTypeFileExtension(primaryKey);
 
                 case "FileResourceMimeType":
                     var fileResourceMimeType = FileResourceMimeType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
