@@ -94,8 +94,9 @@ namespace ProjectFirma.Web.Controllers
                 projectMapCustomization, "ProjectTypeProjectMap");
 
             var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID,
-                ProjectColorByType.ProjectStage.DisplayName, MultiTenantHelpers.GetTopLevelTaxonomyTiers(),
-                CurrentPerson.CanViewProposals, projectLocationsMapInitJson, projectLocationsLayerGeoJson, null, ProjectMapGridDisplayType.NoGrid);
+                                                                              ProjectColorByType.ProjectStage.DisplayName, 
+                                                                              MultiTenantHelpers.GetTopLevelTaxonomyTiers(),
+                                                                              CurrentPerson.CanViewProposals);
 
             var associatePerformanceMeasureTaxonomyLevel =
                 MultiTenantHelpers.GetAssociatePerformanceMeasureTaxonomyLevel();

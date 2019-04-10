@@ -23,18 +23,6 @@
 @using ProjectFirma.Web.Views.Shared.ProjectLocationControls
 @inherits ProjectFirma.Web.Views.Shared.ProjectLocationControls.ProjectLocationsMap
 
-@functions {
-    private object GetConditionalProjectLocationsMapControllerDivContent()
-    {
-        if (this.ViewDataTyped.ProjectMapGridDisplayType == ProjectMapGridDisplayType.ShowGrid)
-        {
-            return "ng-controller = ProjectLocationsMapController";
-        }
-        return string.Empty;
-    }
-
-}
-
 <style>
     .mapLegendContainer {
         padding: 5px;
@@ -65,85 +53,14 @@
 
 
 
-    <div @GetConditionalProjectLocationsMapControllerDivContent()>
-        <div id="@ViewDataTyped.MapDivID"></div>
-        <div class="mapLegendContainer">
-            <span id="mapLegendTitle">@ViewDataTyped.LegendTitle</span>
-            <div id="mapLegend">
-            </div>
-        </div>
-    @if (this.ViewDataTyped.ProjectMapGridDisplayType == ProjectMapGridDisplayType.ShowGrid)
-    {
-        <div class="mapGridContainer">
-            <table class="table table-bordered table-projectLocations">
-                <thead>
-                <tr>
-                    <th @*data-ng-if="!AngularViewData.IsInCompletedReview"*@></th>
-                    <th style="width: 150px">Feature Name</th>
-                    <th>Feature</th>
-                    <th>Location Type</th>
 
-                    <th style="width: 250px">Notes</th>
-                </tr>
-                </thead>
-                <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
-                    data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-                    data-ng-click="toggleProjectLocationDetails(projectLocation.ProjectLocationLeafletID)">
-                    @* trash icon for deleting *@
-                    <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
-                        <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
-                    @* feature name *@
-                    <td style="width: 200px">
-                        <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
-                               data-ng-model="projectLocation.ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200"/>
-                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
-                            </div>*@
-                        <span ng-if="projectLocation.projectLocationID != null">
-                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}"/>
-                        </span>
-                    </td>
-                    @* feature (line, point, poly) *@
-                    <td>
-                        <span data-ng-bind="projectLocation.ProjectLocationFeatureType"></span>
-                        <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationGeometryWellKnownText"
-                               value="{{projectLocation.ProjectLocationGeometryWellKnownText}}"/>
-                    </td>
-                    @* location type (ProjectLocationType table) *@
-                    <td>
-                        <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
-                                ng-model="projectLocation.ProjectLocationTypeID" required>
-                            <option value="">-- Select type --</option>
-                            <option ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
-                                    value="{{projectLocationType.ProjectLocationTypeID}}" ng-selected="projectLocationType.ProjectLocationTypeID === projectLocation.ProjectLocationTypeID">
-                                {{projectLocationType.ProjectLocationTypeDisplayName}}
-                            </option>
-                        </select>
-
-
-                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>
-                            </div>*@
-                    </td>
-                    @* notes/annotation *@
-                    <td style="width: 250px">
-                        <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocation.ProjectLocationNotes" style="width: 100%" maxlength="500"/>
-                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
-                            </div>*@
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-    }
+<div id="@ViewDataTyped.MapDivID"></div>
+<div class="mapLegendContainer">
+    <span id="mapLegendTitle">@ViewDataTyped.LegendTitle</span>
+    <div id="mapLegend">
     </div>
+</div>
+    
 
 
 <script type="text/javascript">
@@ -255,18 +172,4 @@
         }
         return allLegendsHtml;
     };
-</script>
-<script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationsMapController.js")"></script>
-<script type="text/javascript">
-    // <![CDATA[
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
-        function() {
-            return {
-                "AngularModel": "",
-                "AngularViewData":
-                    @Html.Raw(JObject.FromObject(ViewDataTyped).ToString(Formatting.None)),
-            };
-        });
-    angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationsMapController\"]"), ["ProjectFirmaApp"]);
-    // ]]>
 </script>

@@ -1,6 +1,6 @@
 ﻿
 angular.module("ProjectFirmaApp")
-    .controller("ProjectLocationsMapController",
+    .controller("ProjectMapController",
     function ($scope, angularModelAndViewData) {
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
@@ -107,7 +107,7 @@ angular.module("ProjectFirmaApp")
         };
 
         var getProjectLocationFromProjectLocationJsonsByLeafletID = function (leafletID) {
-            return _.find($scope.AngularModel.ProjectLocationJsons, function (pl) {
+            return _.find($scope.AngularViewData.ProjectLocationJsons, function (pl) {
                 return pl.ProjectLocationLeafletID == leafletID;
             });
         };
@@ -117,35 +117,63 @@ angular.module("ProjectFirmaApp")
         var initializeMap = function () {
                 console.log('initializeMap');
                 var mapInitJson = $scope.AngularViewData.MapInitJson;
-                var editableFeatureJsonObject = $scope.AngularViewData.LayerGeoJson;
-                //projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
+                var layerGeoJsonObject = $scope.AngularViewData.LayerGeoJson;
 
+                debugger;
+
+                
                 projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
 
                 var x = 0;
-                var layerGroup = L.geoJson(editableFeatureJsonObject.GeoJsonFeatureCollection, {
-                    onEachFeature: function (feature, layer) {
-                        if (layer.getLayers) {
-                            layer.getLayers().forEach(function (l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
-                        }
-                        else {
-                            projectFirmaMap.editableFeatureGroup.addLayer(layer);
-                            $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
-                            bindProjectLocationSelectClickEvent(feature, layer);
-                            x++;
-                        }
-                       
-                    }
-                });
+                
 
-                var drawOptions = getDrawOptions(projectFirmaMap.editableFeatureGroup);
-                var drawControl = new L.Control.Draw(drawOptions);
-                projectFirmaMap.map.addControl(drawControl);
-                projectFirmaMap.map.addLayer(projectFirmaMap.editableFeatureGroup);
+            //var layerGroup = L.geoJson(layerGeoJsonObject.GeoJsonFeatureCollection, {
+            //    onEachFeature: function (feature, layer) {
+            //        if (layer.getLayers) {
+            //            //layer.getLayers().forEach(function (l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
+            //        }
+            //        else {
+            //            projectFirmaMap.editableFeatureGroup.addLayer(layer);
+            //            //debugger;
+            //            $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
+            //            bindProjectLocationSelectClickEvent(feature, layer);
+            //            x++;
+            //        }
 
-            };
+            //    }
+            //});
 
+            jQuery.each(projectFirmaMap.projectLocationsLayer._layers, function(index, layer) {
+                if (layer.getLayers) {
+                    //layer.getLayers().forEach(function (l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
+                }
+                else {
+                    //projectFirmaMap.editableFeatureGroup.addLayer(layer);
+                    debugger;
+                    $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
+                    bindProjectLocationSelectClickEvent(layer.feature, layer);
+                    x++;
+                }
+            });
+
+
+
+
+
+
+
+                //var drawOptions = getDrawOptions(projectFirmaMap.editableFeatureGroup);
+                //var drawControl = new L.Control.Draw(drawOptions);
+                //projectFirmaMap.map.addControl(drawControl);
+            projectFirmaMap.map.addLayer(projectFirmaMap.editableFeatureGroup);
+            debugger;
+
+        };
+
+
+        jQuery(document).ready(function() {
             initializeMap();
+        });
 
     });
 

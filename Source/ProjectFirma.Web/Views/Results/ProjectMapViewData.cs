@@ -29,14 +29,14 @@ namespace ProjectFirma.Web.Views.Results
 {
     public class ProjectMapViewData : FirmaViewData
     {
-        public readonly ProjectLocationsMapInitJson ProjectLocationsMapInitJson;
+        public ProjectLocationsMapInitJson ProjectLocationsMapInitJson { get; }
+        public ProjectLocationsMapViewData ProjectLocationsMapViewData { get; }
+        public Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> ProjectLocationFilterTypesAndValues { get; }
+        public string ProjectLocationsUrl { get; }
+        public string FilteredProjectsWithLocationAreasUrl { get; }
+        public ProjectMapViewDataForAngular ProjectMapViewDataForAngular { get; }
 
-        public readonly ProjectLocationsMapViewData ProjectLocationsMapViewData;
-        public readonly Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> ProjectLocationFilterTypesAndValues;
-        public readonly string ProjectLocationsUrl;
-        public readonly string FilteredProjectsWithLocationAreasUrl;
-
-        public ProjectMapViewData(Person currentPerson, Models.FirmaPage firmaPage, ProjectLocationsMapInitJson projectLocationsMapInitJson, ProjectLocationsMapViewData projectLocationsMapViewData, Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> projectLocationFilterTypesAndValues, string projectLocationsUrl, string filteredProjectsWithLocationAreasUrl) : base(currentPerson, firmaPage)
+        public ProjectMapViewData(Person currentPerson, Models.FirmaPage firmaPage, ProjectLocationsMapInitJson projectLocationsMapInitJson, ProjectLocationsMapViewData projectLocationsMapViewData, Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> projectLocationFilterTypesAndValues, string projectLocationsUrl, string filteredProjectsWithLocationAreasUrl, List<ProjectLocationJson> projectLocationJsons) : base(currentPerson, firmaPage)
         {
             PageTitle = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Map";
             ProjectLocationsMapInitJson = projectLocationsMapInitJson;
@@ -44,6 +44,22 @@ namespace ProjectFirma.Web.Views.Results
             ProjectLocationsMapViewData = projectLocationsMapViewData;
             ProjectLocationsUrl = projectLocationsUrl;
             FilteredProjectsWithLocationAreasUrl = filteredProjectsWithLocationAreasUrl;
+            ProjectMapViewDataForAngular = new ProjectMapViewDataForAngular(projectLocationsMapInitJson, projectLocationsMapInitJson.ProjectLocationsLayerGeoJson, projectLocationJsons);
         }
     }
+    public class ProjectMapViewDataForAngular
+    {
+        public MapInitJson MapInitJson { get; }
+        public LayerGeoJson LayerGeoJson { get; }
+        public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
+
+        public ProjectMapViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson layerGeoJson, List<ProjectLocationJson> projectLocationJsons)
+        {
+            MapInitJson = mapInitJson;
+            LayerGeoJson = layerGeoJson;
+            ProjectLocationJsons = projectLocationJsons;
+
+        }
+    }
+
 }
