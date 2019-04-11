@@ -57,7 +57,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.ProjectTypeID, 600, MultiTenantHelpers.GetProjectTypeDisplayNameForProject())
             </div>
             <div class="col-xs-12 col-sm-8">
-                @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes, string.Format("Select a {0}", MultiTenantHelpers.GetProjectTypeDisplayNameForProject()))
+                @Html.SearchableDropDownListFor(x => x.ProjectTypeID, ViewDataTyped.ProjectTypes)
                 @Html.ValidationMessageFor(m => m.ProjectTypeID)
             </div>
             
