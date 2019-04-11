@@ -219,33 +219,33 @@
 
 
                 <div class="mapGridContainer">
-                    <table class="table table-bordered table-projectLocations">
+                    <table class="table table-bordered table-projectMapLocations">
                         <thead>
                             <tr>
-                                <th style="width: 150px">Feature Name</th>
-                                <th>Feature</th>
-                                <th style="width: 250px">Notes</th>
+                                <th style="min-width: 400px">Feature Name</th>
+                                <th style="max-width: 150px;">Feature</th>
+                                <th>Notes</th>
                             </tr>
                         </thead>
-                        <tr data-ng-repeat="projectLocation in AngularViewData.ProjectLocationJsons" class="clickable-row"
-                            data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-                            data-ng-click="toggleProjectLocationDetails(projectLocation.ProjectLocationLeafletID)">
+                        <tr data-ng-repeat="projectMapLocation in AngularViewData.ProjectMapLocationJsons" class="clickable-row"
+                            data-ng-class="{'selectedRow': isSelectedProjectMapLocation(projectMapLocation)}"
+                            data-ng-click="toggleProjectMapLocationDetails(projectMapLocation.ProjectMapLocationLeafletID)">
 
                             @* feature name *@
-                            <td style="width: 200px">
-                                <span data-ng-bind="projectLocation.ProjectLocationName"></span>
+                            <td>
+                                <span data-ng-bind="projectMapLocation.ProjectMapLocationName"></span>
                                
                             </td>
                             @* feature (line, point, poly) *@
                             <td>
-                                <span data-ng-bind="projectLocation.ProjectLocationFeatureType"></span>
-                                <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationGeometryWellKnownText"
-                                       value="{{projectLocation.ProjectLocationGeometryWellKnownText}}" />
+                                <span data-ng-bind="projectMapLocation.ProjectMapLocationFeatureType"></span>
+                                <input type="hidden" name="ProjectMapLocationJsons[{{$index}}].ProjectMapLocationGeometryWellKnownText"
+                                       value="{{projectMapLocation.ProjectMapLocationGeometryWellKnownText}}" />
                             </td>
 
                             @* notes/annotation *@
-                            <td style="width: 250px">
-                                <span data-ng-bind="projectLocation.ProjectLocationNotes"></span>
+                            <td>
+                                <span data-ng-bind="projectMapLocation.ProjectMapLocationNotes"></span>
                             </td>
                         </tr>
                     </table>

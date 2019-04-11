@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.Results
         public string FilteredProjectsWithLocationAreasUrl { get; }
         public ProjectMapViewDataForAngular ProjectMapViewDataForAngular { get; }
 
-        public ProjectMapViewData(Person currentPerson, Models.FirmaPage firmaPage, ProjectLocationsMapInitJson projectLocationsMapInitJson, ProjectLocationsMapViewData projectLocationsMapViewData, Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> projectLocationFilterTypesAndValues, string projectLocationsUrl, string filteredProjectsWithLocationAreasUrl, List<ProjectLocationJson> projectLocationJsons) : base(currentPerson, firmaPage)
+        public ProjectMapViewData(Person currentPerson, Models.FirmaPage firmaPage, ProjectLocationsMapInitJson projectLocationsMapInitJson, ProjectLocationsMapViewData projectLocationsMapViewData, Dictionary<ProjectLocationFilterTypeSimple, IEnumerable<SelectListItem>> projectLocationFilterTypesAndValues, string projectLocationsUrl, string filteredProjectsWithLocationAreasUrl, List<ProjectMapLocationJson> projectMapLocationJsons) : base(currentPerson, firmaPage)
         {
             PageTitle = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Map";
             ProjectLocationsMapInitJson = projectLocationsMapInitJson;
@@ -44,22 +44,43 @@ namespace ProjectFirma.Web.Views.Results
             ProjectLocationsMapViewData = projectLocationsMapViewData;
             ProjectLocationsUrl = projectLocationsUrl;
             FilteredProjectsWithLocationAreasUrl = filteredProjectsWithLocationAreasUrl;
-            ProjectMapViewDataForAngular = new ProjectMapViewDataForAngular(projectLocationsMapInitJson, projectLocationsMapInitJson.ProjectLocationsLayerGeoJson, projectLocationJsons);
+            ProjectMapViewDataForAngular = new ProjectMapViewDataForAngular(projectLocationsMapInitJson, projectLocationsMapInitJson.ProjectLocationsLayerGeoJson, projectMapLocationJsons);
         }
     }
     public class ProjectMapViewDataForAngular
     {
         public MapInitJson MapInitJson { get; }
         public LayerGeoJson LayerGeoJson { get; }
-        public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
+        public List<ProjectMapLocationJson> ProjectMapLocationJsons { get; set; }
 
-        public ProjectMapViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson layerGeoJson, List<ProjectLocationJson> projectLocationJsons)
+        public ProjectMapViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson layerGeoJson, List<ProjectMapLocationJson> projectMapLocationJsons)
         {
             MapInitJson = mapInitJson;
             LayerGeoJson = layerGeoJson;
-            ProjectLocationJsons = projectLocationJsons;
+            ProjectMapLocationJsons = projectMapLocationJsons;
 
         }
+    }
+
+    public class ProjectMapLocationJson
+    {
+        public ProjectMapLocationJson()
+        {
+        }
+
+        //This has been added for the Project Map display
+        public ProjectMapLocationJson(Models.Project x)
+        {
+            ProjectMapLocationName = x.ProjectName;
+            ProjectMapLocationNotes = x.ProjectLocationNotes;
+            ProjectMapLocationFeatureType = x.ProjectLocationPoint.SpatialTypeName;
+            ProjectMapLocationGeometryWellKnownText = x.ProjectLocationPoint.AsText();
+        }
+
+        public string ProjectMapLocationGeometryWellKnownText { get; set; }
+        public string ProjectMapLocationFeatureType { get; set; }
+        public string ProjectMapLocationName { get; set; }
+        public string ProjectMapLocationNotes { get; set; }
     }
 
 }

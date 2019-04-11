@@ -102,25 +102,10 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationGeometryWellKnownText = x.ProjectLocationUpdateGeometry.AsText();
         }
 
-        //This has been added for the Project Map display
-        public ProjectLocationJson(Models.Project x)
-        {
-            ProjectLocationName = x.ProjectName;
-            ProjectLocationNotes = x.ProjectLocationNotes;
-            ProjectLocationTypeID = -1;
-            ProjectLocationTypeName = "TEST DATA";
-            ProjectLocationFeatureType ="Line";
-            ProjectLocationID = x.ProjectID;
-            ProjectLocationGeometryWellKnownText = x.ProjectLocationPoint.AsText();
-        }
-
         public string ProjectLocationGeometryWellKnownText { get; set; }
-
         public int ProjectLocationID { get; set; }
         public string ProjectLocationFeatureType { get; set; }
-
         public int ProjectLocationTypeID { get; set; }
-
         public string ProjectLocationName { get; set; }
         public string ProjectLocationTypeName { get; set; }
         public string ProjectLocationNotes { get; set; }

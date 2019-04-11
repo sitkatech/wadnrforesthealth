@@ -32,9 +32,9 @@ angular.module("ProjectFirmaApp")
                 stroke: true
         };
 
-        $scope.isSelectedProjectLocation = function (projectLocation) {
+        $scope.isSelectedProjectMapLocation = function (projectLocation) {
             if ($scope.selectedLocationLeafletID) {
-                return $scope.selectedLocationLeafletID == projectLocation.ProjectLocationLeafletID;
+                return $scope.selectedLocationLeafletID == projectLocation.ProjectMapLocationLeafletID;
             }
             return false;
         };
@@ -69,9 +69,9 @@ angular.module("ProjectFirmaApp")
 
         };
 
-        $scope.toggleProjectLocationDetails = function (locationLeafletID) {
+        $scope.toggleProjectMapLocationDetails = function (locationLeafletID) {
             $scope.selectedLocationLeafletID = locationLeafletID;
-            console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
+            //console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
             projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
                 var currentLocationLeafletID = layer._leaflet_id;
                 if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
@@ -104,13 +104,11 @@ angular.module("ProjectFirmaApp")
 
         var initializeMap = function () {
             //console.log('initializeMap');
-            var mapInitJson = $scope.AngularViewData.MapInitJson;
-            var layerGeoJsonObject = $scope.AngularViewData.LayerGeoJson;
 
             var x = 0;
             jQuery.each(projectFirmaMap.projectLocationsLayer._layers, function(index, layer) {
                 if (!layer.getLayers) {
-                    $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
+                    $scope.AngularViewData.ProjectMapLocationJsons[x].ProjectMapLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
                     bindProjectLocationSelectClickEvent(layer.feature, layer);
                     x++;
                 }
