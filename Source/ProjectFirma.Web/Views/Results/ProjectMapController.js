@@ -39,9 +39,7 @@ angular.module("ProjectFirmaApp")
             return false;
         };
 
-        $scope.toggleProjectLocationDetails = function (locationLeafletID) {
-            $scope.selectedLocationLeafletID = locationLeafletID;
-            console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
+        var setLayerIconColors = function () {
             projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
                 var currentLocationLeafletID = layer._leaflet_id;
                 if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
@@ -55,7 +53,6 @@ angular.module("ProjectFirmaApp")
                             opacity: 0.6
                         });
                     }
-                    
                 } else {
                     if (layer._icon) {
                         layer.setIcon($scope.IconStyleDefault);
@@ -69,7 +66,26 @@ angular.module("ProjectFirmaApp")
                     }
                 }
             });
+
         };
+
+        $scope.toggleProjectLocationDetails = function (locationLeafletID) {
+            $scope.selectedLocationLeafletID = locationLeafletID;
+            console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
+            projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
+                var currentLocationLeafletID = layer._leaflet_id;
+                if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
+                    if (!Sitka.Methods.isUndefinedNullOrEmpty(layer.feature.properties.PopupUrl)) {
+                        jQuery.get(layer.feature.properties.PopupUrl).done(function (data) {
+                            layer._map.setView(layer._latlng);
+                            layer._map.openPopup(L.popup({ maxWidth: 200 }).setLatLng(layer._latlng).setContent(data).openOn(layer._map));
+                        });
+                    }
+                }
+            });
+            setLayerIconColors();
+        };
+
 
         var bindProjectLocationSelectClickEvent = function (feature, layer) {
             var leafletID = layer._leaflet_id;
@@ -81,19 +97,17 @@ angular.module("ProjectFirmaApp")
                 $scope.$apply(function () {
                     $scope.selectedLocationLeafletID = leafletID;
                 });
-                $scope.toggleProjectLocationDetails(leafletID);
+                setLayerIconColors();
             });
         };
 
 
         var initializeMap = function () {
-                console.log('initializeMap');
-                var mapInitJson = $scope.AngularViewData.MapInitJson;
-                var layerGeoJsonObject = $scope.AngularViewData.LayerGeoJson;
+            //console.log('initializeMap');
+            var mapInitJson = $scope.AngularViewData.MapInitJson;
+            var layerGeoJsonObject = $scope.AngularViewData.LayerGeoJson;
 
-                var x = 0;
-                
-
+            var x = 0;
             jQuery.each(projectFirmaMap.projectLocationsLayer._layers, function(index, layer) {
                 if (!layer.getLayers) {
                     $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
