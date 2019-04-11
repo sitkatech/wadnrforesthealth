@@ -46,7 +46,7 @@ angular.module("ProjectFirmaApp")
         };
 
         var addFeatureToAngularModel = function (newestGeoJson, newestLeafletID, featureTypeName) {
-            console.log('addFeatureToAngularModel');
+            //console.log('addFeatureToAngularModel');
 
             var locationJson = createProjectLocationJson(newestGeoJson, -1, featureTypeName, '', '', newestLeafletID);
             $scope.AngularModel.ProjectLocationJsons.push(locationJson);
@@ -55,7 +55,7 @@ angular.module("ProjectFirmaApp")
         };
 
         $scope.deleteProjectLocationRowAndRefreshMap = function (projectLocationLeafletID) {
-            console.log("inside deleteProjectLocationRowAndRefreshMap: " + projectLocationLeafletID);
+            //console.log("inside deleteProjectLocationRowAndRefreshMap: " + projectLocationLeafletID);
             var layer = projectFirmaMap.editableFeatureGroup.getLayer(projectLocationLeafletID);
             projectFirmaMap.editableFeatureGroup.removeLayer(layer);//remove from map
 
@@ -71,7 +71,7 @@ angular.module("ProjectFirmaApp")
 
         $scope.toggleProjectLocationDetails = function (locationLeafletID) {
             $scope.selectedLocationLeafletID = locationLeafletID;
-            console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
+            //console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
             projectFirmaMap.editableFeatureGroup.eachLayer(function (layer) {
                 var currentLocationLeafletID = layer._leaflet_id;
                 if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
@@ -128,7 +128,7 @@ angular.module("ProjectFirmaApp")
 
 
         var initializeMap = function () {
-                console.log('initializeMap');
+                //console.log('initializeMap');
                 var mapInitJson = $scope.AngularViewData.MapInitJson;
                 var editableFeatureJsonObject = $scope.AngularViewData.EditableLayerGeoJson;
                 projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
@@ -178,7 +178,7 @@ angular.module("ProjectFirmaApp")
                 });
 
                 projectFirmaMap.map.on('draw:edited', function (e) {
-                    console.log('draw:edited called');
+                    //console.log('draw:edited called');
                     var layers = e.layers;
                     layers.eachLayer(function (layer) {
                         var currentLeafletID = layer._leaflet_id;
@@ -192,7 +192,7 @@ angular.module("ProjectFirmaApp")
 
                 projectFirmaMap.map.on('draw:deleted',
                     function(e) {
-                        console.log('draw:deleted called');
+                        //console.log('draw:deleted called');
                         for (var layer in e.layers._layers) {
                             if (e.layers._layers.hasOwnProperty(layer)) {
                                 $scope.deleteProjectLocationRowAndRefreshMap(layer);

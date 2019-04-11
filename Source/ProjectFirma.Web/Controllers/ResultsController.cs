@@ -111,9 +111,9 @@ namespace ProjectFirma.Web.Controllers
             var filteredProjectsWithLocationAreasUrl =
                 SitkaRoute<ResultsController>.BuildUrlFromExpression(x => x.FilteredProjectsWithLocationAreas(null));
 
-            var projectLocationJsons = new List<ProjectLocationJson>();
+            var projectMapLocationJsons = new List<ProjectMapLocationJson>();
             var filteredProjectList = projectsToShow.Where(x1 => x1.HasProjectLocationPoint).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
-            projectLocationJsons = filteredProjectList.ToList().Select(p => new ProjectLocationJson(p)).ToList();
+            projectMapLocationJsons = filteredProjectList.ToList().Select(p => new ProjectMapLocationJson(p)).ToList();
 
             var viewData = new ProjectMapViewData(CurrentPerson,
                                                   firmaPage,
@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.Controllers
                                                   projectLocationFilterTypesAndValues,
                                                   projectLocationsUrl, 
                                                   filteredProjectsWithLocationAreasUrl, 
-                                                  projectLocationJsons);
+                                                  projectMapLocationJsons);
             return RazorView<ProjectMap, ProjectMapViewData>(viewData);
         }
 
