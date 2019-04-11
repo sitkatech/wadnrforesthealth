@@ -47,7 +47,9 @@ namespace ProjectFirma.Web.Controllers
         private static List<int> GetRangeOfYears(List<ProjectGrantAllocationExpenditure> projectGrantAllocationExpenditures)
         {
             if (!projectGrantAllocationExpenditures.Any())
+            {
                 return new List<int>();
+            }
 
             var beginCalendarYear = projectGrantAllocationExpenditures.Min(x => x.CalendarYear);
             var endCalendarYear = projectGrantAllocationExpenditures.Max(x => x.CalendarYear);

@@ -37,6 +37,11 @@ namespace ProjectFirma.Web.Common
             var ceilingYear = currentYearToUse;
             Assert.That(FirmaDateUtilities.CalculateCalendarYearRangeAccountingForExistingYears(new List<int>(), null, null, currentYearToUse, MultiTenantHelpers.GetMinimumYear(), ceilingYear), Is.EquivalentTo(Enumerable.Range(currentYearToUse, 1)));
 
+            // Test GetRangeOfYears with same year twice; should return just the one year
+            Assert.That(FirmaDateUtilities.GetRangeOfYears(currentYearToUse, currentYearToUse).Count == 1);
+            // Test inverted range; should throw
+            Assert.Throws<ArgumentOutOfRangeException>(() => FirmaDateUtilities.GetRangeOfYears(currentYearToUse, currentYearToUse - 1));
+
             // No existing budget records
 
             // Testing if only have a start year
