@@ -32,34 +32,17 @@ angular.module("ProjectFirmaApp")
                 stroke: true
         };
 
-        var createProjectLocationJson = function (wellKnownText, projectLocationId, featureType, locationTypeId, locationName, leafletID) {
-            return {
-                ProjectLocationGeometryWellKnownText: wellKnownText,
-                ProjectLocationID: projectLocationId,
-                ProjectLocationFeatureType: featureType,
-                ProjectLocationTypeID: locationTypeId,
-                ProjectLocationName: locationName,
-                ProjectLocationLeafletID: leafletID
-            };
-        };
-
-        //var addFeatureToAngularModel = function (newestGeoJson, newestLeafletID, featureTypeName) {
-        //    console.log('addFeatureToAngularModel');
-
-        //    var locationJson = createProjectLocationJson(newestGeoJson, -1, featureTypeName, '', '', newestLeafletID);
-        //    $scope.AngularModel.ProjectLocationJsons.push(locationJson);
-        //    $scope.toggleProjectLocationDetails(newestLeafletID);
-        //    $scope.$apply();
-        //};
-
-        $scope.isSelectedProjectLocation = function(projectLocation) {
-            return $scope.selectedLocationLeafletID == projectLocation.ProjectLocationLeafletID;
+        $scope.isSelectedProjectLocation = function (projectLocation) {
+            if ($scope.selectedLocationLeafletID) {
+                return $scope.selectedLocationLeafletID == projectLocation.ProjectLocationLeafletID;
+            }
+            return false;
         };
 
         $scope.toggleProjectLocationDetails = function (locationLeafletID) {
             $scope.selectedLocationLeafletID = locationLeafletID;
             console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
-            projectFirmaMap.editableFeatureGroup.eachLayer(function (layer) {
+            projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
                 var currentLocationLeafletID = layer._leaflet_id;
                 if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
                     if (layer._icon) {
@@ -88,10 +71,6 @@ angular.module("ProjectFirmaApp")
             });
         };
 
-        var getUserFriendlyGeometryType = function(geometry) {
-            return geometry.type.replace("LineString", "Line");
-        };
-
         var bindProjectLocationSelectClickEvent = function (feature, layer) {
             var leafletID = layer._leaflet_id;
             layer.on('click', function (f) {
@@ -106,67 +85,22 @@ angular.module("ProjectFirmaApp")
             });
         };
 
-        var getProjectLocationFromProjectLocationJsonsByLeafletID = function (leafletID) {
-            return _.find($scope.AngularViewData.ProjectLocationJsons, function (pl) {
-                return pl.ProjectLocationLeafletID == leafletID;
-            });
-        };
-
-
 
         var initializeMap = function () {
                 console.log('initializeMap');
                 var mapInitJson = $scope.AngularViewData.MapInitJson;
                 var layerGeoJsonObject = $scope.AngularViewData.LayerGeoJson;
 
-                debugger;
-
-                
-                projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
-
                 var x = 0;
                 
 
-            //var layerGroup = L.geoJson(layerGeoJsonObject.GeoJsonFeatureCollection, {
-            //    onEachFeature: function (feature, layer) {
-            //        if (layer.getLayers) {
-            //            //layer.getLayers().forEach(function (l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
-            //        }
-            //        else {
-            //            projectFirmaMap.editableFeatureGroup.addLayer(layer);
-            //            //debugger;
-            //            $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
-            //            bindProjectLocationSelectClickEvent(feature, layer);
-            //            x++;
-            //        }
-
-            //    }
-            //});
-
             jQuery.each(projectFirmaMap.projectLocationsLayer._layers, function(index, layer) {
-                if (layer.getLayers) {
-                    //layer.getLayers().forEach(function (l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
-                }
-                else {
-                    //projectFirmaMap.editableFeatureGroup.addLayer(layer);
-                    debugger;
+                if (!layer.getLayers) {
                     $scope.AngularViewData.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
                     bindProjectLocationSelectClickEvent(layer.feature, layer);
                     x++;
                 }
             });
-
-
-
-
-
-
-
-                //var drawOptions = getDrawOptions(projectFirmaMap.editableFeatureGroup);
-                //var drawControl = new L.Control.Draw(drawOptions);
-                //projectFirmaMap.map.addControl(drawControl);
-            projectFirmaMap.map.addLayer(projectFirmaMap.editableFeatureGroup);
-            debugger;
 
         };
 
