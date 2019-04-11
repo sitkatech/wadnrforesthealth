@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Net;
-using ApprovalTests;
-using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.GdalOgr;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
@@ -52,66 +54,57 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         public void DownloadSocrataVendorTable()
         {
-            string vendorJsonTempFilePath = DownloadUrlToFile(VendorJsonSocrataUrl);
-            ParseVendorJsonTableIntoTempTable(vendorJsonTempFilePath);
+            // Pull JSON off the page into a local file
+            string vendorTempJson = DownloadSocrataUrlToString(VendorJsonSocrataUrl);
+            // Push that local file into a raw JSON string in the raw staging table
+            int socrataDataMartRawJsonImportID  = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, vendorTempJson);
+            // Use the JSON to refresh the Vendor table
+            VendorImportJson(socrataDataMartRawJsonImportID);
         }
 
-        private string DownloadUrlToFile(string urlToDownload)
+        /// <summary>
+        /// Download the contents of the given URL to a temp file
+        /// </summary>
+        /// <param name="urlToDownload"></param>
+        /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
+        private string DownloadSocrataUrlToString(string urlToDownload)
         {
-            string tempFilename;
             using (WebClient webClient = new WebClient())
             {
-                tempFilename = System.IO.Path.GetTempFileName();
                 // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
-                // See: 
+                // See: http://xxxxx
                 webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
-                webClient.DownloadFile(urlToDownload, tempFilename);
+                return webClient.DownloadString(urlToDownload);
             }
-
-            return tempFilename;
         }
 
-        private void ParseVendorJsonTableIntoTempTable(string pathToVendorJsonFile)
+        private int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString)
         {
-            string vendorImportSql = @"
-                                    if object_id('tempdb.dbo.#vendorSocrataTemp') is not null 
-                                    begin 
-                                        drop table #vendorSocrataTemp
-                                    end
+            SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString);
 
-                                    SELECT vendorTemp.*
-                                    into #vendorSocrataTemp
-                                    FROM OPENROWSET (BULK '{pathToVendorJsonFile}', SINGLE_CLOB) as j
-                                    CROSS APPLY OPENJSON(BulkColumn)
-                                    WITH
-                                    (
-                                        vendor_num nvarchar(256),
-                                        vendor_num_suffix nvarchar(256),
-                                        vendor_name nvarchar(256),
-                                        addr1 nvarchar(256),
-                                        addr2 nvarchar(256),
-                                        addr3 nvarchar(256),
-                                        city nvarchar(256),
-                                        state nvarchar(256),
-                                        zip_code nvarchar(256),
-                                        zip_plus_4 nvarchar(256),
-                                        phone varchar(200),
-                                        vendor_status nvarchar(256),
-                                        vendor_type nvarchar(256),
-                                        billing_agency nvarchar(256),
-                                        billing_subagency nvarchar(256),
-                                        billing_fund nvarchar(256),
-                                        billing_fund_breakout nvarchar(256),
-                                        ccd_ctx_flag nvarchar(256),
-                                        taxpayer_id_num varchar(200),
-                                        email nvarchar(256),
-                                        remarks nvarchar(256),
-                                        last_process_date DateTime
-                                    )
-                                    AS vendorTemp";
-            vendorImportSql = vendorImportSql.Replace("{pathToVendorJsonFile}", pathToVendorJsonFile);
-            var result = ExecAdHocSql(vendorImportSql);
-            //Approvals.Verify(result.TableToHumanReadableString());
+            HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Add(newRawJsonImport);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            // Normally we might return the object here, but this thing is potentially so huge we want to dump it just as soon as we no longer need it.
+            return newRawJsonImport.SocrataDataMartRawJsonImportID;
+        }
+
+        // exec pVendorImportJson @SocrataDataMartRawJsonImportID = 2
+        
+
+
+        private void VendorImportJson(int socrataDataMartRawJsonImportID)
+        {
+            string vendorImportProc = "pVendorImportJson";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         /// <summary>
@@ -120,32 +113,36 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         /// <param name="sqlStatements"></param>
         /// <returns></returns>
-        protected DataTable ExecAdHocSql(string sqlStatements)
+        protected string ExecRawAdHocSql(string sqlStatements)
         {
-            SqlConnection sqlConnection = CreateSqlConnection();
-            DataTable result = ExecuteSql(sqlStatements, sqlConnection);
-            sqlConnection.Close();
+            string result;
+            using (var sqlConnection = CreateAndOpenSqlConnection())
+            {
+                result = ExecuteRawArbitrarySql(sqlStatements, sqlConnection);
+                sqlConnection.Close();
+            }
+
             return result;
         }
 
-        private static DataTable ExecuteSql(string sqlStatements, SqlConnection connection)
+        /// <summary>
+        /// Execute a raw, arbitrary block of SQL
+        /// </summary>
+        /// <param name="sqlStatements">Raw SQL to execute</param>
+        /// <param name="connection">SqlConnection. Must already be open.</param>
+        /// <returns></returns>
+        private string ExecuteRawArbitrarySql(string sqlStatements, SqlConnection connection)
         {
-            using (var comm = new SqlCommand(sqlStatements, connection))
+            using (SqlCommand cmd = new SqlCommand(sqlStatements, connection))
             {
-                comm.CommandType = CommandType.Text;
-                comm.CommandTimeout = SqlCommandTimeoutInSeconds;
-                var sqlResult = TempDbSqlDatabase.ExecuteSqlCommand(comm);
-                if (sqlResult.Tables.Count > 0)
-                {
-                    return sqlResult.Tables[0];
-                }
-                return null;
+                var results = cmd.ExecuteNonQuery().ToString();
+                return results;
             }
         }
 
-        protected SqlConnection CreateSqlConnection()
+        protected SqlConnection CreateAndOpenSqlConnection()
         {
-            var db = new TempDbSqlDatabase();
+            var db = new UnitTestCommon.ProjectFirmaSqlDatabase();
             var sqlConnection = db.CreateConnection();
             sqlConnection.Open();
             return sqlConnection;

@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
     [TestFixture]
-    public class SocrataScheduledJobsTest
+    public class SocrataScheduledJobsTest : FirmaTestWithContext
     {
         [Test]
         [Description("A partial test of Socrata interface. This is just a test to see if we can successfully download the vendor JSON file")]
