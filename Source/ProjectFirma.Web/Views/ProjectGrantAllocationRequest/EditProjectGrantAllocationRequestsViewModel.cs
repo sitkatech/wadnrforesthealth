@@ -22,6 +22,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.Models;
@@ -36,23 +37,27 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTotalCost)]
         [JsonIgnore]
+        [ValidateMoneyInRangeForSqlServer]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedIndirectCost)]
         [JsonIgnore]
+        [ValidateMoneyInRangeForSqlServer]
         public Money? ProjectEstimatedIndirectCost { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedPersonnelAndBenefitsCost)]
         [JsonIgnore]
+        [ValidateMoneyInRangeForSqlServer]
         public Money? ProjectEstimatedPersonnelAndBenefitsCost { get; set; }
-
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedSuppliesCost)]
         [JsonIgnore]
+        [ValidateMoneyInRangeForSqlServer]
         public Money? ProjectEstimatedSuppliesCost { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTravelCost)]
         [JsonIgnore]
+        [ValidateMoneyInRangeForSqlServer]
         public Money? ProjectEstimatedTravelCost { get; set; }
 
         [Required]

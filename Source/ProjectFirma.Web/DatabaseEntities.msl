@@ -190,6 +190,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FileResourceMimeTypeFileExtension">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FileResourceMimeTypeFileExtension">
+        <MappingFragment StoreEntitySet="FileResourceMimeTypeFileExtension">
+          <ScalarProperty Name="FileResourceMimeTypeFileExtensionID" ColumnName="FileResourceMimeTypeFileExtensionID" />
+          <ScalarProperty Name="FileResourceMimeTypeID" ColumnName="FileResourceMimeTypeID" />
+          <ScalarProperty Name="FileResourceMimeTypeFileExtensionText" ColumnName="FileResourceMimeTypeFileExtensionText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FirmaHomePageImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaHomePageImage">
         <MappingFragment StoreEntitySet="FirmaHomePageImage">
@@ -648,6 +657,7 @@
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="IsProgramManager" ColumnName="IsProgramManager" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

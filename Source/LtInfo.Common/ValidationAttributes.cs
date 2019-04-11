@@ -182,4 +182,12 @@ namespace LtInfo.Common
             return (valueAsString != null && Validation.IsValidPhoneNumber(valueAsString)) || valueAsString == null;
         }
     }
+
+    public class ValidateMoneyInRangeForSqlServer : RangeAttribute
+    {
+        // T-SQL limits for Money data type https://docs.microsoft.com/en-us/sql/t-sql/data-types/money-and-smallmoney-transact-sql?view=sql-server-2017
+        public ValidateMoneyInRangeForSqlServer() : base(-922337203685477.5808, 922337203685477.5807)
+        {
+        }
+    }
 }

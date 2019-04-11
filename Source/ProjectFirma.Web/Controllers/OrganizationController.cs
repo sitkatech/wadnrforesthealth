@@ -210,7 +210,7 @@ namespace ProjectFirma.Web.Controllers
 
             var chartTitle = $"{FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()} By {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var filterValues = organization.GrantAllocations.Select(x => x.GrantAllocationName).ToList();
+            var filterValues = organization.GrantAllocations.Select(x => x.GrantAllocationName).Distinct().ToList();
             var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.GrantAllocationName,
                 filterValues,
                 x => x.GrantAllocation.GrantAllocationName,

@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models
             OrganizationName = grantAllocation.BottommostOrganization.OrganizationShortNameIfAvailable;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             IsActive = true; 
-            DisplayName = grantAllocation.GrantAllocationName;
+            DisplayName = grantAllocation.GrantNumberAndGrantAllocationDisplayName;
         }
 
         public int GrantAllocationID { get; set; }

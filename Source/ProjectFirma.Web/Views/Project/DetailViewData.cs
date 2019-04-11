@@ -19,12 +19,14 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.Linq;
 using LtInfo.Common;
 using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectUpdate;
@@ -121,6 +123,8 @@ namespace ProjectFirma.Web.Views.Project
         public InteractionEventGridSpec ProjectInteractionEventsGridSpec { get; }
         public string ProjectInteractionEventsGridName { get;  }
         public string ProjectInteractionEventsGridDataUrl { get;}
+
+        public List<ProjectAgreementByGrantAllocation> ProjectAgreementByGrantAllocations { get; }
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData, ProjectAttributesViewData projectAttributesViewData,
@@ -369,6 +373,10 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridSpec = projectInteractionEventsGridSpec;
             ProjectInteractionEventsGridName = "projectInteractionEventsGrid";
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
+
+            ProjectAgreementByGrantAllocations = ProjectAgreementByGrantAllocation.MakeAgreementProjectsByGrantAllocation(Project.ProjectGrantAllocationRequests.ToList());
+
+            
         }
     }
 }

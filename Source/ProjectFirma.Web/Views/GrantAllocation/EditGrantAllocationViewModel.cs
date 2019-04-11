@@ -27,7 +27,9 @@ using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Views.ProgramIndex;
 using ProjectFirma.Web.Views.ProjectCode;
 
@@ -81,7 +83,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public int? GrantManagerID { get; set; }
 
         [DisplayName("Grant Allocation File Upload")]
-        //[SitkaFileExtensions("jpg|jpeg|gif|png")]
+        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public HttpPostedFileBase GrantAllocationFileResourceData { get; set; }
 
         /// <summary>
@@ -89,6 +91,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// </summary>
         public EditGrantAllocationViewModel()
         {
+            
         }
 
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
@@ -170,6 +173,23 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.EndDate = EndDate;
             grantAllocation.GrantManagerID = GrantManagerID;
 
+            // Who is actually allowed to be a Program Manager for this Grant Allocation?
+            List<Person> personsAllowedToBeProgramManager = new List<Person>();
+            // Anyone who CURRENTLY has the role can keep it, even if their Person record has lost the permission in the meantime
+            personsAllowedToBeProgramManager.AddRange(grantAllocation.GrantAllocationProgramManagers.Select(pm => pm.Person).ToList());
+            // Also, anyone who has the right in the database is allowed
+            personsAllowedToBeProgramManager.AddRange(HttpRequestStorage.DatabaseEntities.People.ToList().Where(p => p.IsProgramManager == true).ToList());
+            personsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Distinct().ToList();
+
+            var personIDsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Select(papm => papm.PersonID).ToList();
+            var personIDsNotAllowed = new List<int>();
+            if (this.ProgramManagerPersonIDs != null)
+            {
+                personIDsNotAllowed = this.ProgramManagerPersonIDs.Except(personIDsAllowedToBeProgramManager).ToList();
+            }
+            Check.Ensure(!personIDsNotAllowed.Any(), $"Found {personIDsNotAllowed.Count} PersonIDs not allowed to be Program Managers attempting to be saved: {string.Join(", ", personIDsNotAllowed)}");
+
+            // Deleting existing records
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
 

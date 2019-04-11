@@ -18,6 +18,7 @@
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionData" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FileResource" EntityType="ProjectFirma.Web.Models.Store.FileResource" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileResourceMimeTypeFileExtension" EntityType="ProjectFirma.Web.Models.Store.FileResourceMimeTypeFileExtension" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaHomePageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaHomePageImage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPage" EntityType="ProjectFirma.Web.Models.Store.FirmaPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.Store.FirmaPageImage" store:Type="Tables" Schema="dbo" />
@@ -1072,6 +1073,14 @@
     <Property Name="CreatePersonID" Type="int" Nullable="false" />
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="FileResourceMimeTypeFileExtension">
+    <Key>
+      <PropertyRef Name="FileResourceMimeTypeFileExtensionID" />
+    </Key>
+    <Property Name="FileResourceMimeTypeFileExtensionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FileResourceMimeTypeID" Type="int" Nullable="false" />
+    <Property Name="FileResourceMimeTypeFileExtensionText" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
   <EntityType Name="FirmaHomePageImage">
     <Key>
       <PropertyRef Name="FirmaHomePageImageID" />
@@ -1509,6 +1518,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonAddress" Type="varchar" MaxLength="255" />
     <Property Name="AddedByPersonID" Type="int" />
     <Property Name="VendorID" Type="int" />
+    <Property Name="IsProgramManager" Type="bit" />
   </EntityType>
   <EntityType Name="PersonAllowedAuthenticator">
     <Key>

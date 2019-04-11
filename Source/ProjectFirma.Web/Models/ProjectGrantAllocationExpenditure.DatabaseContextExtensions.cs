@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LtInfo.Common.DesignByContract;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Shared;
 
@@ -97,8 +98,11 @@ namespace ProjectFirma.Web.Models
                                                                                                  Func<ProjectGrantAllocationExpenditure, IComparable> sortFunction,
                                                                                                  List<int> rangeOfYears)
         {
-            var fullCategoryYearDictionary = filterValues.ToDictionary(x => x, x => rangeOfYears.ToDictionary(y => y, y => 0m));
+            // Not absolutely sure these are happening in the real world, so I'm trapping for them. -- SLG
+            Check.Ensure(filterValues.Count == filterValues.Distinct().Count(), $"Found repeated filterValues: {string.Join(", ", filterValues)}. This will cause problems with dictionary generation below.");
+            Check.Ensure(rangeOfYears.Count == rangeOfYears.Distinct().Count(), $"Found repeated years in rangeOfYears: {string.Join(", ", rangeOfYears)}. This is a bug.");
 
+            var fullCategoryYearDictionary = filterValues.ToDictionary(x => x, x => rangeOfYears.ToDictionary(y => y, y => 0m));
             var projectGrantAllocationExpendituresByYear = projectGrantAllocationExpenditures.OrderBy(sortFunction.Invoke).Where(x => rangeOfYears.Contains(x.CalendarYear)).GroupBy(x => x.CalendarYear).ToList();
             projectGrantAllocationExpendituresByYear.ForEach(x =>
             {
