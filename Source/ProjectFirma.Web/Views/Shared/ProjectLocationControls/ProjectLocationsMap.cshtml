@@ -1,25 +1,26 @@
 ﻿@*-----------------------------------------------------------------------
-<copyright file="ProjectLocationsMap.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
-Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
-<author>Sitka Technology Group</author>
-</copyright>
+    <copyright file="ProjectLocationsMap.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
 
-<license>
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
 
-Source code is available upon request via <support@sitkatech.com>.
-</license>
------------------------------------------------------------------------*@
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Views.Shared.ProjectLocationControls
 @inherits ProjectFirma.Web.Views.Shared.ProjectLocationControls.ProjectLocationsMap
 
 <style>
@@ -36,13 +37,11 @@ Source code is available upon request via <support@sitkatech.com>.
         margin-right: 10px;
     }
 
-    .mapLegendIcon
-    {
+    .mapLegendIcon {
         margin-bottom: -30px;
     }
 
-    .mapLegendElement .maki-marker
-    {
+    .mapLegendElement .maki-marker {
         background-color: blue;
         margin-left: 0 !important;
     }
@@ -53,12 +52,16 @@ Source code is available upon request via <support@sitkatech.com>.
 </style>
 
 
+
+
 <div id="@ViewDataTyped.MapDivID"></div>
 <div class="mapLegendContainer">
-    <span id="mapLegendTitle" >@ViewDataTyped.LegendTitle</span>
+    <span id="mapLegendTitle">@ViewDataTyped.LegendTitle</span>
     <div id="mapLegend">
     </div>
 </div>
+    
+
 
 <script type="text/javascript">
     // we are extending ProjectFirma Maps here with functionality specific to this partial view
@@ -82,22 +85,22 @@ Source code is available upon request via <support@sitkatech.com>.
     };
 
     ProjectFirmaMaps.Map.prototype.changeFilter = function(filterPropertyNameSelected, actualFilter)
-    {        
+    {
         this.mapCustomizationObject.FilterPropertyName = filterPropertyNameSelected;
         this.mapCustomizationObject.FilterPropertyValues = actualFilter;
-        this.addLocationLayers();        
+        this.addLocationLayers();
     };
 
     ProjectFirmaMaps.Map.prototype.changePropertyToColorProjectLocationsBy = function(colorByPropertyName)
     {
         this.mapCustomizationObject.ColorByPropertyName = colorByPropertyName;
-        this.addLocationLayers();        
+        this.addLocationLayers();
     };
 
     ProjectFirmaMaps.Map.prototype.changeClustering = function(areLocationsClustered)
     {
         this.areLocationsClustered = areLocationsClustered;
-        this.addLocationLayers();        
+        this.addLocationLayers();
     };
 
     ProjectFirmaMaps.Map.prototype.addLocationLayers = function()
@@ -145,12 +148,12 @@ Source code is available upon request via <support@sitkatech.com>.
         {
             layer = newLayer;
         }
-        
+
         if (showByDefault)
         {
-            layer.addTo(this.map);    
+            layer.addTo(this.map);
         }
-        
+
         this.layerControl.addOverlay(layer, layerName);
 
         jQuery("#mapLegend").html(this.getLegend());
