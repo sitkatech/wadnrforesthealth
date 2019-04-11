@@ -1,4 +1,7 @@
-﻿namespace ProjectFirma.Web.Models
+﻿using System;
+using LtInfo.Common;
+
+namespace ProjectFirma.Web.Models
 {
     public class ProjectGrantAllocationRequestSimple
     {
@@ -34,7 +37,11 @@
 
         public int ProjectID { get; set; }
         public int GrantAllocationID { get; set; }
+        
+        [ValidateMoneyInRangeForSqlServer]
         public decimal? SecuredAmount { get; set; }
+
+        [ValidateMoneyInRangeForSqlServer]
         public decimal? UnsecuredAmount { get; set; }
 
         public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate()
