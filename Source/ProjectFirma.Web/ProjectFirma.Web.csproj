@@ -666,7 +666,6 @@
     <Compile Include="Views\Grant\GrantIndexViewData.cs" />
     <Compile Include="Views\Grant\GrantExcelSpec.cs" />
     <Compile Include="Views\Grant\GrantIndex.cs" />
-    <Compile Include="Startup.Auth.cs" />
     <Compile Include="Views\Account\Login.cs" />
     <Compile Include="Views\Account\LoginViewData.cs" />
     <Compile Include="Views\FocusArea\ApproveUploadGis.cs" />
