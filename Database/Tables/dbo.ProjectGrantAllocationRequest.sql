@@ -5,8 +5,6 @@ GO
 CREATE TABLE [dbo].[ProjectGrantAllocationRequest](
 	[ProjectGrantAllocationRequestID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[SecuredAmount] [money] NULL,
-	[UnsecuredAmount] [money] NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[TotalAmount] [money] NULL,
  CONSTRAINT [PK_ProjectGrantAllocationRequest_ProjectGrantAllocationRequestID] PRIMARY KEY CLUSTERED 
@@ -30,7 +28,3 @@ ALTER TABLE [dbo].[ProjectGrantAllocationRequest]  WITH CHECK ADD  CONSTRAINT [F
 REFERENCES [dbo].[Project] ([ProjectID])
 GO
 ALTER TABLE [dbo].[ProjectGrantAllocationRequest] CHECK CONSTRAINT [FK_ProjectGrantAllocationRequest_Project_ProjectID]
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationRequest]  WITH CHECK ADD  CONSTRAINT [CK_ProjectFundingSourceRequest_SecuredUnsecuredAmountBothCannotBeZero] CHECK  (([SecuredAmount]<>(0) OR [UnsecuredAmount]<>(0)))
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationRequest] CHECK CONSTRAINT [CK_ProjectFundingSourceRequest_SecuredUnsecuredAmountBothCannotBeZero]
