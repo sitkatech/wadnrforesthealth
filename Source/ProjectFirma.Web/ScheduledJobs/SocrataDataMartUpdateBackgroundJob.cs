@@ -46,10 +46,12 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
 
-            // Pull JSON off the page into a local file
+            // Pull JSON off the page into a (possibly huge) string
             string vendorTempJson = DownloadSocrataUrlToString(VendorJsonSocrataUrl, SocrataDataMartRawJsonImportTableType.Vendor);
-            // Push that local file into a raw JSON string in the raw staging table
+            Logger.Info($"Vendor JSON length: {vendorTempJson.Length}");
+            // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID  = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, vendorTempJson);
+            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
             // Use the JSON to refresh the Vendor table
             VendorImportJson(socrataDataMartRawJsonImportID);
 
@@ -63,7 +65,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
         private string DownloadSocrataUrlToString(string urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
         {
-            Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
+            Logger.Info($"Starting '{JobName}' DownloadSocrataUrlToString");
             try
             {
                 using (WebClient webClient = new WebClient())
@@ -73,7 +75,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
                     string socrataJsonData = webClient.DownloadString(urlToDownload);
 
-                    Logger.Info($"Ending '{JobName}' DownloadSocrataVendorTable");
+                    Logger.Info($"Ending '{JobName}' DownloadSocrataUrlToString");
                     return socrataJsonData;
                 }
             }

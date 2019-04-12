@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Job
             }
 
             GridName = "SocrataJobsGrid";
-            GridDataUrl = SitkaRoute<TagController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
+            GridDataUrl = SitkaRoute<JobController>.BuildUrlFromExpression(tc => tc.JobIndexGridJsonData());
         }
     }
 }

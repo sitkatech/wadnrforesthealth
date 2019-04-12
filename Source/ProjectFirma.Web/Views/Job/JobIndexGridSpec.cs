@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Globalization;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
@@ -42,7 +43,7 @@ namespace ProjectFirma.Web.Views.Job
                 //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
             }
 
-            Add("Create Date", a => a.CreateDate.ToLongDateString(), 200, DhtmlxGridColumnFilterType.FormattedNumeric);
+            Add("Create Date", a => a.CreateDate.ToString(CultureInfo.InvariantCulture), 200, DhtmlxGridColumnFilterType.FormattedNumeric);
             Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.SocrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("JSON Data Length", a => a.RawJsonString.Length, 100);
 
