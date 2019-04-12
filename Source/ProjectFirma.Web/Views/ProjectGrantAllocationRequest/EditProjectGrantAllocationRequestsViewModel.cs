@@ -90,11 +90,11 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         public void UpdateModel(List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
             IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests, Models.Project project)
         {
-            var projectGrantAllocationRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
+            var projectGrantAllocationRequestsModified = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequests != null)
             {
                 // Completely rebuild the list
-                projectGrantAllocationRequestsUpdated = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
+                projectGrantAllocationRequestsModified = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
             }
 
             if (ForProject ?? false) // never null
@@ -111,13 +111,14 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 project.EstimatedTravelCost = ProjectEstimatedTravelCost;
             }
 
-            currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsUpdated,
+            currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsModified,
                 allProjectGrantAllocationRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
                     x.SecuredAmount = y.SecuredAmount;
                     x.UnsecuredAmount = y.UnsecuredAmount;
+                    x.TotalAmount = y.TotalAmount;
                 });
             
         }

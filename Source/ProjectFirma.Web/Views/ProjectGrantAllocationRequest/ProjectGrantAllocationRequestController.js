@@ -63,32 +63,30 @@ angular.module("ProjectFirmaApp").controller("ProjectGrantAllocationRequestContr
 
     $scope.getGrantAllocationName = function (projectGrantAllocationRequest) {
         var grantAllocationToFind = $scope.getGrantAllocation(projectGrantAllocationRequest.GrantAllocationID);
-        return grantAllocationToFind.DisplayName;
+        return grantAllocationToFind.DisplayNameWithAllocationAmount;
     };
 
     $scope.getGrantAllocation = function (grantAllocationID) {
         return _.find($scope.AngularViewData.AllGrantAllocations, function (f) { return grantAllocationID == f.GrantAllocationID; });
     };
 
-    $scope.getUnsecuredTotal = function () {
-        return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequests, function (m, x) { return Number(m) + Number(x.UnsecuredAmount); }, 0));
+    $scope.getColumnTotal = function () {
+        return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequests, function (m, x) { return Number(m) + Number(x.TotalAmount); }, 0));
     };
 
-    $scope.getSecuredTotal = function () {
-        return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequests,
-            function (m, x) { return Number(m) + Number(x.SecuredAmount); },
-            0));
+    $scope.getTotal = function() {
+        return Number($scope.getColumnTotal());
     };
 
-    $scope.getTotal = function () {
-        return Number($scope.getUnsecuredTotal()) + Number($scope.getSecuredTotal());
-    }
+    $scope.getRowTotal = function(projectGrantAllocationRequest) {
+        return Number(projectGrantAllocationRequest.SecuredAmount) +
+            Number(projectGrantAllocationRequest.UnsecuredAmount);
+    };
 
-    $scope.getRowTotal = function (projectGrantAllocationRequest) {
-        return Number(projectGrantAllocationRequest.SecuredAmount) + Number(projectGrantAllocationRequest.UnsecuredAmount);
-    }
-    
-    $scope.findProjectGrantAllocationRequestRow = function(projectID, grantAllocationID) { return _.find($scope.AngularModel.ProjectGrantAllocationRequests, function(pfse) { return pfse.ProjectID == projectID && pfse.GrantAllocationID == grantAllocationID; }); }
+    $scope.findProjectGrantAllocationRequestRow = function(projectID, grantAllocationID) {
+        return _.find($scope.AngularModel.ProjectGrantAllocationRequests,
+            function(pfse) { return pfse.ProjectID == projectID && pfse.GrantAllocationID == grantAllocationID; });
+    };
 
     $scope.addRow = function()
     {

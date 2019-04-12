@@ -103,7 +103,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.ProjectID}}" />
                     <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.GrantAllocationID}}" />
                     @*<input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].UnsecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.UnsecuredAmount}}" />*@
-                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].SecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.SecuredAmount}}" />
+                    <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].TotalAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.TotalAmount}}" />
                 </div>
             }
             @if (ViewDataTyped.FromGrantAllocation)
@@ -171,7 +171,7 @@ Source code is available upon request via <support@sitkatech.com>.
                     <tr>
                         <th></th>
                         <th style="white-space: nowrap">@Html.Raw(ViewDataTyped.FromGrantAllocation ? Html.LabelWithSugarFor(FieldDefinition.Project) : Html.LabelWithSugarFor(FieldDefinition.GrantAllocation))</th>
-                        <th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</th>
+                        <th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</th> @* TODO Update this to "Total Amount" when we add the field definition*@
                         @*<th style="text-align: right; padding-right: 17px;">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>*@
                         @*<th style="text-align: center;">Total</th>*@
                     </tr>
@@ -181,7 +181,7 @@ Source code is available upon request via <support@sitkatech.com>.
                         </td>
                         <td ng-bind="@(ViewDataTyped.FromGrantAllocation ? "getProjectName(projectGrantAllocationRequest)" : "getGrantAllocationName(projectGrantAllocationRequest)")">
                         <td style="text-align: right; padding-right: 17px;">
-                            <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.SecuredAmount" class="sitkaCurrency form-control" ng-currency />
+                            <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.TotalAmount" class="sitkaCurrency form-control" ng-currency />
                         </td>
                         @*<td style="text-align: right; padding-right: 17px;">
                             <input style="float: right; text-align: right" type="text" ng-model="projectGrantAllocationRequest.UnsecuredAmount" class="sitkaCurrency form-control" ng-currency />

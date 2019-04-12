@@ -20,6 +20,7 @@ namespace ProjectFirma.Web.Models
             GrantAllocationID = projectGrantAllocationRequest.GrantAllocationID;
             UnsecuredAmount = projectGrantAllocationRequest.UnsecuredAmount;
             SecuredAmount = projectGrantAllocationRequest.SecuredAmount;
+            TotalAmount = projectGrantAllocationRequest.TotalAmount;
         }
 
         public ProjectGrantAllocationRequestSimple(ProjectGrantAllocationRequestUpdate projectGrantAllocationRequestUpdate)
@@ -28,11 +29,12 @@ namespace ProjectFirma.Web.Models
             GrantAllocationID = projectGrantAllocationRequestUpdate.GrantAllocationID;
             UnsecuredAmount = projectGrantAllocationRequestUpdate.UnsecuredAmount;
             SecuredAmount = projectGrantAllocationRequestUpdate.SecuredAmount;
+            // TODO Add TotalAmount to this once it's in the DB
         }
 
         public ProjectGrantAllocationRequest ToProjectGrantAllocationRequest()
         {
-            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID) {SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
+            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID) {SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount, TotalAmount = TotalAmount};
         }
 
         public int ProjectID { get; set; }
@@ -43,6 +45,9 @@ namespace ProjectFirma.Web.Models
 
         [ValidateMoneyInRangeForSqlServer]
         public decimal? UnsecuredAmount { get; set; }
+
+        [ValidateMoneyInRangeForSqlServer]
+        public decimal? TotalAmount { get; set; }
 
         public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate()
         {
