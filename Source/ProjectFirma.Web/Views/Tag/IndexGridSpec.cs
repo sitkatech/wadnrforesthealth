@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Views.Tag
     public class IndexGridSpec : GridSpec<Models.Tag>
     {
         public IndexGridSpec(bool hasDeletePermissions)
-        {            
+        {
             if (hasDeletePermissions)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);

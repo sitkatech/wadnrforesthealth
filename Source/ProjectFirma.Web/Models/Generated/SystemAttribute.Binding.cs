@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public SystemAttribute(int systemAttributeID, DbGeometry defaultBoundingBox, int minimumYear, int? primaryContactPersonID, int? squareLogoFileResourceID, int? bannerLogoFileResourceID, string recaptchaPublicKey, string recaptchaPrivateKey, bool showApplicationsToThePublic, int taxonomyLevelID, int associatePerfomanceMeasureTaxonomyLevelID, bool isActive, bool showLeadImplementerLogoOnFactSheet, bool enableAccomplishmentsDashboard, int? projectStewardshipAreaTypeID) : this()
+        public SystemAttribute(int systemAttributeID, DbGeometry defaultBoundingBox, int minimumYear, int? primaryContactPersonID, int? squareLogoFileResourceID, int? bannerLogoFileResourceID, string recaptchaPublicKey, string recaptchaPrivateKey, bool showApplicationsToThePublic, int taxonomyLevelID, int associatePerfomanceMeasureTaxonomyLevelID, bool isActive, bool showLeadImplementerLogoOnFactSheet, bool enableAccomplishmentsDashboard, int? projectStewardshipAreaTypeID, string socrataAppToken) : this()
         {
             this.SystemAttributeID = systemAttributeID;
             this.DefaultBoundingBox = defaultBoundingBox;
@@ -47,12 +47,13 @@ namespace ProjectFirma.Web.Models
             this.ShowLeadImplementerLogoOnFactSheet = showLeadImplementerLogoOnFactSheet;
             this.EnableAccomplishmentsDashboard = enableAccomplishmentsDashboard;
             this.ProjectStewardshipAreaTypeID = projectStewardshipAreaTypeID;
+            this.SocrataAppToken = socrataAppToken;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public SystemAttribute(DbGeometry defaultBoundingBox, int minimumYear, bool showApplicationsToThePublic, int taxonomyLevelID, int associatePerfomanceMeasureTaxonomyLevelID, bool isActive, bool showLeadImplementerLogoOnFactSheet, bool enableAccomplishmentsDashboard) : this()
+        public SystemAttribute(DbGeometry defaultBoundingBox, int minimumYear, bool showApplicationsToThePublic, int taxonomyLevelID, int associatePerfomanceMeasureTaxonomyLevelID, bool isActive, bool showLeadImplementerLogoOnFactSheet, bool enableAccomplishmentsDashboard, string socrataAppToken) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.SystemAttributeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -65,12 +66,13 @@ namespace ProjectFirma.Web.Models
             this.IsActive = isActive;
             this.ShowLeadImplementerLogoOnFactSheet = showLeadImplementerLogoOnFactSheet;
             this.EnableAccomplishmentsDashboard = enableAccomplishmentsDashboard;
+            this.SocrataAppToken = socrataAppToken;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public SystemAttribute(DbGeometry defaultBoundingBox, int minimumYear, bool showApplicationsToThePublic, TaxonomyLevel taxonomyLevel, TaxonomyLevel associatePerfomanceMeasureTaxonomyLevel, bool isActive, bool showLeadImplementerLogoOnFactSheet, bool enableAccomplishmentsDashboard) : this()
+        public SystemAttribute(DbGeometry defaultBoundingBox, int minimumYear, bool showApplicationsToThePublic, TaxonomyLevel taxonomyLevel, TaxonomyLevel associatePerfomanceMeasureTaxonomyLevel, bool isActive, bool showLeadImplementerLogoOnFactSheet, bool enableAccomplishmentsDashboard, string socrataAppToken) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.SystemAttributeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -82,6 +84,7 @@ namespace ProjectFirma.Web.Models
             this.IsActive = isActive;
             this.ShowLeadImplementerLogoOnFactSheet = showLeadImplementerLogoOnFactSheet;
             this.EnableAccomplishmentsDashboard = enableAccomplishmentsDashboard;
+            this.SocrataAppToken = socrataAppToken;
         }
 
         /// <summary>
@@ -89,7 +92,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static SystemAttribute CreateNewBlank(TaxonomyLevel taxonomyLevel, TaxonomyLevel associatePerfomanceMeasureTaxonomyLevel)
         {
-            return new SystemAttribute(default(DbGeometry), default(int), default(bool), taxonomyLevel, associatePerfomanceMeasureTaxonomyLevel, default(bool), default(bool), default(bool));
+            return new SystemAttribute(default(DbGeometry), default(int), default(bool), taxonomyLevel, associatePerfomanceMeasureTaxonomyLevel, default(bool), default(bool), default(bool), default(string));
         }
 
         /// <summary>
@@ -140,6 +143,7 @@ namespace ProjectFirma.Web.Models
         public bool ShowLeadImplementerLogoOnFactSheet { get; set; }
         public bool EnableAccomplishmentsDashboard { get; set; }
         public int? ProjectStewardshipAreaTypeID { get; set; }
+        public string SocrataAppToken { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return SystemAttributeID; } set { SystemAttributeID = value; } }
 
@@ -154,6 +158,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int RecaptchaPublicKey = 100;
             public const int RecaptchaPrivateKey = 100;
+            public const int SocrataAppToken = 200;
         }
     }
 }

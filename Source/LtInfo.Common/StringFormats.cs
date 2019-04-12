@@ -40,10 +40,14 @@ namespace LtInfo.Common
         public static string Left(this string thisString, int length)
         {
             if (String.IsNullOrWhiteSpace(thisString))
+            {
                 return String.Empty;
+            }
 
             if (thisString.Length < length)
+            {
                 return thisString;
+            }
             
             return thisString.Substring(0, length);
         }
@@ -308,11 +312,15 @@ namespace LtInfo.Common
             phoneNumber = null;
 
             if (GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(input))
+            {
                 return false;
+            }
 
             var strippedPhone = CleanPhoneNumber(input);
             if (strippedPhone.Length != strippedPhoneLength)
+            {
                 return false;
+            }
 
             phoneNumber = strippedPhone.ToPhoneNumberString();
 
@@ -325,11 +333,14 @@ namespace LtInfo.Common
             {
                 var strippedPhone = CleanPhoneNumber(phoneNumber);
                 if (strippedPhone.Length == 10)
-                    return String.Format("({0}) {1}-{2}", strippedPhone.Substring(0, 3), strippedPhone.Substring(3, 3),
-                                     strippedPhone.Substring(6, 4));
+                {
+                    return $"({strippedPhone.Substring(0, 3)}) {strippedPhone.Substring(3, 3)}-{strippedPhone.Substring(6, 4)}";
+                }
 
                 if (strippedPhone.Length == 7)
-                    return String.Format("{0}-{1}", strippedPhone.Substring(0, 3), strippedPhone.Substring(3, 4));
+                {
+                    return $"{strippedPhone.Substring(0, 3)}-{strippedPhone.Substring(3, 4)}";
+                }
             }
             return null;
         }
@@ -337,7 +348,9 @@ namespace LtInfo.Common
         public static string ToEllipsifiedString(this string fullString, int maxLength)
         {
             if (String.IsNullOrEmpty(fullString) || fullString.Length <= maxLength)
+            {
                 return fullString;
+            }
 
             return fullString.Substring(0, maxLength) + "...";
         }
@@ -350,13 +363,17 @@ namespace LtInfo.Common
         public static string ToEllipsifiedStringClean(this string fullString, int maxLength, string postfix)
         {
             if (String.IsNullOrWhiteSpace(fullString) || (fullString.Length <= maxLength))
+            {
                 return fullString;
+            }
 
             string maxString = fullString.Trim().Substring(0, maxLength);
             int lastIndexOfSpace = maxString.LastIndexOf(' ');
 
             if (lastIndexOfSpace == -1)
+            {
                 return maxString + postfix;
+            }
 
             return maxString.Substring(0, lastIndexOfSpace ) + postfix;
         }
@@ -400,6 +417,18 @@ namespace LtInfo.Common
         public static string ToTitleCase(this string text)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLower());
+        }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
         /// <summary>

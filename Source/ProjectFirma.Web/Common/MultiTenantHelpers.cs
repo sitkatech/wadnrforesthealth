@@ -106,6 +106,11 @@ namespace ProjectFirma.Web.Common
             return GetSystemAttribute().RecaptchaPublicKey;
         }
 
+        public static string GetSocrataAppToken()
+        {
+            return GetSystemAttribute().SocrataAppToken;
+        }
+
         public static List<ITaxonomyTier> GetTopLevelTaxonomyTiers()
         {
             var taxonomyLevel = GetTaxonomyLevel();

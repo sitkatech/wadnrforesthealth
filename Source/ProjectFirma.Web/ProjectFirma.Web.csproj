@@ -445,6 +445,11 @@
     <Compile Include="Models\Generated\RelationshipTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Role.Binding.cs" />
     <Compile Include="Models\Generated\RolePrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\SocrataDataMartRawJsonImport.Binding.cs" />
+    <Compile Include="Models\Generated\SocrataDataMartRawJsonImport.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\SocrataDataMartRawJsonImportPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\SocrataDataMartRawJsonImportTableType.Binding.cs" />
+    <Compile Include="Models\Generated\SocrataDataMartRawJsonImportTableTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\StateProvince.Binding.cs" />
     <Compile Include="Models\Generated\StateProvince.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\StateProvincePrimaryKey.Binding.cs" />
@@ -486,6 +491,7 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Common\WADNRFileExtensionsAttribute.cs" />
     <Compile Include="Models\FirmaPageTypeTest.cs" />
     <Compile Include="Models\CostType.cs" />
@@ -570,6 +576,8 @@
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\VendorModelExtensions.cs" />
+    <Compile Include="ScheduledJobs\SocrataDataMartUpdateBackgroundJob.cs" />
+    <Compile Include="ScheduledJobs\SocrataScheduledJobsTest.cs" />
     <Compile Include="Security\AgreementCreateFeature.cs" />
     <Compile Include="Security\AgreementDeleteFeature.cs" />
     <Compile Include="Security\AgreementsViewFeature.cs" />
@@ -602,6 +610,7 @@
     <Compile Include="Security\FocusAreaViewFeature.cs" />
     <Compile Include="Security\FocusAreaManageFeature.cs" />
     <Compile Include="Security\InvoiceViewFeature.cs" />
+    <Compile Include="Security\JobManageFeature.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityAreaManageFeature.cs" />
     <Compile Include="Security\RegionManageFeature.cs" />
@@ -704,6 +713,9 @@
     <Compile Include="Views\Invoice\InvoiceGridSpec.cs" />
     <Compile Include="Views\Invoice\InvoiceIndex.cs" />
     <Compile Include="Views\Invoice\InvoiceIndexViewData.cs" />
+    <Compile Include="Views\Job\JobIndexViewData.cs" />
+    <Compile Include="Views\Job\JobIndex.cs" />
+    <Compile Include="Views\Job\JobIndexGridSpec.cs" />
     <Compile Include="Views\ProgramIndex\TestBiennium.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectCreate\CustomAttributes.cs" />
@@ -1315,6 +1327,7 @@
     <Content Include="Views\InteractionEvent\InteractionEventIndex.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventDetail.cshtml" />
     <Content Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cshtml" />
+    <Content Include="Views\Job\JobIndex.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
