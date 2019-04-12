@@ -597,7 +597,7 @@ namespace ProjectFirma.Web.Models
                 .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.ExpenditureAmount));
 
-            var groupedGrantAllocations = expendituresDictionary.Keys.GroupBy(x => x.Organization.OrganizationType,
+            var groupedGrantAllocations = expendituresDictionary.Keys.GroupBy(x => x.BottommostOrganization.OrganizationType,
                 new HavePrimaryKeyComparer<OrganizationType>());
             foreach (var groupedGrantAllocation in groupedGrantAllocations)
             {

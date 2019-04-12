@@ -177,7 +177,7 @@ namespace ProjectFirma.Web.Models
                 {
                     return BottommostOrganization.OrganizationShortNameIfAvailable;
                 }
-                var organizationShortNameIfAvailable = $"({Organization.OrganizationShortNameIfAvailable})";
+                var organizationShortNameIfAvailable = $"({BottommostOrganization.OrganizationShortNameIfAvailable})";
                 return organizationShortNameIfAvailable.Length < 45 ? $"{GrantAllocationName.ToEllipsifiedString(45 - organizationShortNameIfAvailable.Length)} {organizationShortNameIfAvailable}" : $"{GrantAllocationName} {organizationShortNameIfAvailable}";
             }
         }
