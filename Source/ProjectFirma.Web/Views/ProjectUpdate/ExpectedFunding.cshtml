@@ -110,8 +110,7 @@ else if (ViewDataTyped.AreProjectBasicsValid)
             <div ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequests | orderBy:[getGrantAllocationName]">
                 <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].ProjectID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.ProjectID}}"/>
                 <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].GrantAllocationID).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.GrantAllocationID}}"/>
-                <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].SecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.SecuredAmount}}"/>
-                <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].UnsecuredAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.UnsecuredAmount}}"/>
+                <input type="hidden" name="@Html.NameFor(x => x.ProjectGrantAllocationRequests[0].TotalAmount).ToString().Replace("0", "{{$index}}")" value="{{projectGrantAllocationRequest.TotalAmount}}"/>
             </div>
             <div class="form-group">
                 <label class="control-label">@FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() to Add:</label>
@@ -140,9 +139,7 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                     <tr>
                         <th></th>
                         <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
-                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</th>
-                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>
-                        <th style="text-align: right">Total</th>
+                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestTotalAmount)</th>
                     </tr>
                     <tr ng-repeat="projectGrantAllocationRequest in AngularModel.ProjectGrantAllocationRequests | orderBy:[getGrantAllocationName]">
                         <td>
@@ -150,23 +147,11 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                         </td>
                         <td ng-bind="getGrantAllocationName(projectGrantAllocationRequest)"></td>
                         <td style="text-align: right">
-                            <input type="text" style="text-align: right" ng-model="projectGrantAllocationRequest.SecuredAmount" class="sitkaCurrency form-control " ng-currency/>
+                            <input type="text" style="text-align: right" ng-model="projectGrantAllocationRequest.TotalAmount" class="sitkaCurrency form-control " ng-currency/>
                         </td>
-                        <td style="text-align: right">
-                            <input type="text" style="text-align: right" ng-model="projectGrantAllocationRequest.UnsecuredAmount" class="sitkaCurrency form-control" ng-currency/>
-                        </td>
-                        <th style="text-align: right">
-                            {{ getRowTotal(projectGrantAllocationRequest) | currency:"$"}}
-                        </th>
                     </tr>
                     <tr>
                         <th colspan="2">Total</th>
-                        <th style="text-align: right">
-                            {{ getSecuredTotal() | currency:"$"}}
-                        </th>
-                        <th style="text-align: right">
-                            {{ getUnsecuredTotal() | currency:"$"}}
-                        </th>
                         <th style="text-align: right">
                             {{getTotal() | currency:"$"}}
                         </th>
@@ -178,38 +163,6 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                 <p>
                     <label class="control-label">Summary of Total @FieldDefinition.Project.GetFieldDefinitionLabel() Costs and Funding:</label>
                 </p>
-                <div class="row">
-                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.EstimatedIndirectCost):</div>
-                    <div class="col-sm-3 text-right">
-                        <span>
-                            {{ AngularViewData.EstimatedIndirectCost | currency:"$"}}
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.EstimatedPersonnelAndBenefitsCost):</div>
-                    <div class="col-sm-3 text-right">
-                        <span>
-                            {{ AngularViewData.EstimatedPersonnelAndBenefitsCost | currency:"$"}}
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.EstimatedSuppliesCost):</div>
-                    <div class="col-sm-3 text-right">
-                        <span>
-                            {{ AngularViewData.EstimatedSuppliesCost | currency:"$"}}
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTravelCost):</div>
-                    <div class="col-sm-3 text-right">
-                        <span>
-                            {{ AngularViewData.EstimatedTravelCost | currency:"$"}}
-                        </span>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.EstimatedTotalCost):</div>
@@ -221,26 +174,11 @@ else if (ViewDataTyped.AreProjectBasicsValid)
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding):</div>
+                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestTotalAmount):</div>
                     <div class="col-sm-3 text-right">
                         <span>
-                            {{getSecuredTotal() | currency:"$"}}
+                            {{getColumnTotal() | currency:"$"}}
                         </span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-4">@Html.LabelWithSugarFor(FieldDefinition.UnfundedNeed):</div>
-                    <div class="col-sm-3 text-right">
-                        <span>
-                            {{ (AngularViewData.EstimatedTotalCost - getSecuredTotal()) | currency:"$"}}
-                        </span>
-                    </div>
-                    <div class="col-sm-5 text-right" ng-show="getUnsecuredTotal() > 0">
-                        (
-                        <span>
-                            {{(getUnsecuredTotal()) | currency:"$"}}
-                        </span> identified as @Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding))
                     </div>
                 </div>
             </div>

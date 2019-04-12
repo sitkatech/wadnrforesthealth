@@ -78,10 +78,6 @@ angular.module("ProjectFirmaApp").controller("ProjectGrantAllocationRequestContr
         return Number($scope.getColumnTotal());
     };
 
-    $scope.getRowTotal = function(projectGrantAllocationRequest) {
-        return Number(projectGrantAllocationRequest.SecuredAmount) +
-            Number(projectGrantAllocationRequest.UnsecuredAmount);
-    };
 
     $scope.findProjectGrantAllocationRequestRow = function(projectID, grantAllocationID) {
         return _.find($scope.AngularModel.ProjectGrantAllocationRequests,
@@ -106,8 +102,7 @@ angular.module("ProjectFirmaApp").controller("ProjectGrantAllocationRequestContr
         var newProjectGrantAllocationRequest = {
             ProjectID: project.ProjectID,
             GrantAllocationID: grantAllocation.GrantAllocationID,
-            SecuredAmount: null,
-            UnsecuredAmount: null
+            TotalAmount: null
     };
         return newProjectGrantAllocationRequest;
     };

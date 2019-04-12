@@ -41,12 +41,8 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var currentProjectGrantAllocationRequests = project.ProjectGrantAllocationRequests.ToList();
             Money projectEstimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
-            Money projectEstimatedIndirectCost = project.EstimatedIndirectCost.GetValueOrDefault();
-            Money projectEstimatedPersonnelAndBenefitsCost = project.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
-            Money projectEstimatedSuppliesCost = project.EstimatedSuppliesCost.GetValueOrDefault();
-            Money projectEstimatedTravelCost = project.EstimatedTravelCost.GetValueOrDefault();
 
-            var viewModel = new EditProjectGrantAllocationRequestsViewModel(currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost, projectEstimatedIndirectCost, projectEstimatedPersonnelAndBenefitsCost, projectEstimatedSuppliesCost, projectEstimatedTravelCost);
+            var viewModel = new EditProjectGrantAllocationRequestsViewModel(currentProjectGrantAllocationRequests, true, projectEstimatedTotalCost);
             return ViewEditProjectGrantAllocationRequests(project, viewModel);
         }
 

@@ -70,15 +70,11 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         }
 
         public ExpectedFundingViewModel(List<ProjectGrantAllocationRequestUpdate> projectGrantAllocationRequestUpdates,
-            string comments, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
+            string comments, Money? projectEstimatedTotalCost)
         {
             ProjectGrantAllocationRequests = projectGrantAllocationRequestUpdates.Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             Comments = comments;
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
-            ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
-            ProjectEstimatedPersonnelAndBenefitsCost = projectEstimatedPersonnelAndBenefitsCost;
-            ProjectEstimatedSuppliesCost = projectEstimatedSuppliesCost;
-            ProjectEstimatedTravelCost = projectEstimatedTravelCost;
         }
 
         public void UpdateModel(ProjectUpdateBatch projectUpdateBatch,
@@ -95,17 +91,9 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             currentProjectGrantAllocationRequestUpdates.Merge(projectGrantAllocationRequestUpdatesUpdated,
                 allProjectGrantAllocationRequestUpdates,
                 (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.GrantAllocationID == y.GrantAllocationID,
-                (x, y) =>
-                {
-                    x.SecuredAmount = y.SecuredAmount;
-                    x.UnsecuredAmount = y.UnsecuredAmount;
-                });
+                (x, y) => { x.TotalAmount = y.TotalAmount; });
 
             projectUpdate.EstimatedTotalCost = ProjectEstimatedTotalCost;
-            projectUpdate.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
-            projectUpdate.EstimatedPersonnelAndBenefitsCost = ProjectEstimatedPersonnelAndBenefitsCost;
-            projectUpdate.EstimatedSuppliesCost = ProjectEstimatedSuppliesCost;
-            projectUpdate.EstimatedTravelCost = ProjectEstimatedTravelCost;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -120,17 +108,17 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 yield return new ValidationResult("Each Grant Allocation can only be used once.");
             }
 
-            foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
-            {
-                if (projectGrantAllocationRequest.AreBothValuesZero())
-                {
-                    var grantAllocation =
-                        HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x =>
-                            x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
-                    yield return new ValidationResult(
-                        $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
-                }
-            }
+            //foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
+            //{
+            //    if (projectGrantAllocationRequest.AreBothValuesZero())
+            //    {
+            //        var grantAllocation =
+            //            HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x =>
+            //                x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
+            //        yield return new ValidationResult(
+            //            $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
+            //    }
+            //}
         }
     }
 }

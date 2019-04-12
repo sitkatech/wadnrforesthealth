@@ -27,7 +27,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectGrantAllocationRequestUpdate : IGrantAllocationRequestAmount, IAuditableEntity
     {
-        public decimal? TotalAmount { get; }
 
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
@@ -36,8 +35,7 @@ namespace ProjectFirma.Web.Models
                 pgar =>
                     new ProjectGrantAllocationRequestUpdate(projectUpdateBatch, pgar.GrantAllocation)
                     {
-                        SecuredAmount = pgar.SecuredAmount,
-                        UnsecuredAmount = pgar.UnsecuredAmount
+                        TotalAmount = pgar.TotalAmount
                     }
             ).ToList();
         }
@@ -49,8 +47,7 @@ namespace ProjectFirma.Web.Models
                 .ProjectGrantAllocationRequestUpdates
                 .Select(x => new ProjectGrantAllocationRequest(project.ProjectID, x.GrantAllocation.GrantAllocationID)
                     {
-                        SecuredAmount = x.SecuredAmount,
-                        UnsecuredAmount = x.UnsecuredAmount
+                        TotalAmount = x.TotalAmount,
                     }
                 ).ToList();
             project.ProjectGrantAllocationRequests.Merge(projectGrantAllocationExpectedFundingFromProjectUpdate,
@@ -58,8 +55,7 @@ namespace ProjectFirma.Web.Models
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
-                    x.SecuredAmount = y.SecuredAmount;
-                    x.UnsecuredAmount = y.UnsecuredAmount;
+                    x.TotalAmount = y.TotalAmount;
                 });
         }
 
@@ -69,7 +65,7 @@ namespace ProjectFirma.Web.Models
             {
                 string grantAllocationID = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationID.ToString(): "none";
                 string grantAllocationName = this.GrantAllocation != null ? this.GrantAllocation.GrantAllocationName : "none";
-                return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} SecuredAmount: {this.SecuredAmount} UnsecuredAmount: {this.UnsecuredAmount}";
+                return $"GrantAllocationID: {grantAllocationID}  Grant Allocation Name: {grantAllocationName} TotalAmount: {this.TotalAmount}";
             }
         }
     }

@@ -131,31 +131,30 @@ namespace ProjectFirma.Web.Models
         public Person GetPrimaryContact() => PrimaryContactPerson ??
                                              GetPrimaryContactOrganization()?.PrimaryContactPerson;
 
-        public decimal? UnfundedNeed()
-        {
-            return EstimatedTotalCost - GetSecuredFunding();
-        }
+        //public decimal? UnfundedNeed()
+        //{
+        //    return EstimatedTotalCost - GetSecuredFunding();
+        //}
 
-        public decimal? GetSecuredFunding()
+        public decimal? GetTotalFunding()
         {
             return ProjectGrantAllocationRequests.Any()
-                ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.SecuredAmount.GetValueOrDefault())
+                ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
                 : null;
         }
 
-        public decimal? GetUnsecuredFunding()
-        {
-            return ProjectGrantAllocationRequests.Any()
-                ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.UnsecuredAmount.GetValueOrDefault())
-                : null;
-        }
+        //public decimal? GetUnsecuredFunding()
+        //{
+        //    return ProjectGrantAllocationRequests.Any()
+        //        ? (decimal?) ProjectGrantAllocationRequests.Sum(x => x.TotalAmount.GetValueOrDefault())
+        //        : null;
+        //}
 
         public decimal? GetNoGrantAllocationIdentifiedAmount()
         {
-            decimal? securedFunding = GetSecuredFunding() == null ? null : GetSecuredFunding();
-            decimal? unsecuredFunding = GetUnsecuredFunding() == null ? null : GetUnsecuredFunding();
+            decimal? totalFunding = GetTotalFunding() == null ? null : GetTotalFunding();
 
-            var noGrantAllocationIdentifiedAmount = (EstimatedTotalCost ?? 0) - (securedFunding + unsecuredFunding ?? 0);
+            var noGrantAllocationIdentifiedAmount = (EstimatedTotalCost ?? 0) - (totalFunding ?? 0);
             if (noGrantAllocationIdentifiedAmount >= 0)
             {
                 return noGrantAllocationIdentifiedAmount;
@@ -597,7 +596,7 @@ namespace ProjectFirma.Web.Models
                 .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.ExpenditureAmount));
 
-            var groupedGrantAllocations = expendituresDictionary.Keys.GroupBy(x => x.Organization.OrganizationType,
+            var groupedGrantAllocations = expendituresDictionary.Keys.GroupBy(x => x.BottommostOrganization.OrganizationType,
                 new HavePrimaryKeyComparer<OrganizationType>());
             foreach (var groupedGrantAllocation in groupedGrantAllocations)
             {
@@ -625,45 +624,26 @@ namespace ProjectFirma.Web.Models
             var sortOrder = 0;
             var googlePieChartSlices = new List<GooglePieChartSlice>();
 
-            var securedAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.SecuredAmount > 0)
+            var totalAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.TotalAmount > 0)
                 .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
-                .ToDictionary(x => x.Key, x => x.Sum(y => y.SecuredAmount));
-            var unsecuredAmountsDictionary = ProjectGrantAllocationRequests.Where(x => x.UnsecuredAmount > 0)
-                .GroupBy(x => x.GrantAllocation, new HavePrimaryKeyComparer<GrantAllocation>())
-                .ToDictionary(x => x.Key, x => x.Sum(y => y.UnsecuredAmount));
+                .ToDictionary(x => x.Key, x => x.Sum(y => y.TotalAmount));
 
             var securedColorHsl = new {hue = 96.0, sat = 60.0};
             var unsecuredColorHsl = new {hue = 33.3, sat = 240.0};
 
-            securedAmountsDictionary.OrderBy(x => x.Key.GrantAllocationName).ForEach(
+            totalAmountsDictionary.OrderBy(x => x.Key.GrantAllocationName).ForEach(
                 (grantAllocationDictionaryItem, index) =>
                 {
                     var grantAllocation = grantAllocationDictionaryItem.Key;
                     var fundingAmount = grantAllocationDictionaryItem.Value;
 
-                    var luminosity = 100.0 * (securedAmountsDictionary.Count - index - 1) /
-                                     securedAmountsDictionary.Count + 120;
+                    var luminosity = 100.0 * (totalAmountsDictionary.Count - index - 1) /
+                                     totalAmountsDictionary.Count + 120;
                     var color = ColorTranslator.ToHtml(new HslColor(securedColorHsl.hue, securedColorHsl.sat,
                         luminosity));
 
                     googlePieChartSlices.Add(new GooglePieChartSlice(
                         "Secured Funding: " + grantAllocation.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
-                        sortOrder++, color));
-                });
-
-            unsecuredAmountsDictionary.OrderBy(x => x.Key.GrantAllocationName).ForEach(
-                (grantAllocationDictionaryItem, index) =>
-                {
-                    var grantAllocation = grantAllocationDictionaryItem.Key;
-                    var fundingAmount = grantAllocationDictionaryItem.Value;
-
-                    var luminosity = 100.0 * (unsecuredAmountsDictionary.Count - index - 1) /
-                                     unsecuredAmountsDictionary.Count + 120;
-                    var color = ColorTranslator.ToHtml(new HslColor(unsecuredColorHsl.hue, unsecuredColorHsl.sat,
-                        luminosity));
-
-                    googlePieChartSlices.Add(new GooglePieChartSlice(
-                        "Targeted Funding: " + grantAllocation.FixedLengthDisplayName, Convert.ToDouble(fundingAmount),
                         sortOrder++, color));
                 });
 

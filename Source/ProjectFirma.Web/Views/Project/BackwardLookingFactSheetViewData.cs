@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Project
     {
         public string EstimatedTotalCost { get; }
         public string NoGrantAllocationIdentified { get; }
-        public string SecuredFunding { get; }
+        public string TotalFunding { get; }
         public string UnsecuredFunding { get; }
         public ImageGalleryViewData ImageGalleryViewData { get; }
         public List<IGrouping<Models.PerformanceMeasure, PerformanceMeasureReportedValue>> PerformanceMeasureReportedValues { get; }
@@ -70,8 +70,7 @@ namespace ProjectFirma.Web.Views.Project
 
             EstimatedTotalCost = Project.EstimatedTotalCost.HasValue ? Project.EstimatedTotalCost.ToStringCurrency() : "";
             NoGrantAllocationIdentified = project.GetNoGrantAllocationIdentifiedAmount() != null ? Project.GetNoGrantAllocationIdentifiedAmount().ToStringCurrency() : "";
-            SecuredFunding = Project.GetSecuredFunding() != null ? Project.GetSecuredFunding().ToStringCurrency() : "";
-            UnsecuredFunding = Project.GetUnsecuredFunding() != null ? Project.GetUnsecuredFunding().ToStringCurrency() : "";
+            TotalFunding = Project.GetTotalFunding() != null ? Project.GetTotalFunding().ToStringCurrency() : "";
 
             const bool userCanAddPhotosToThisProject = false;
             var newPhotoForProjectUrl = string.Empty;
