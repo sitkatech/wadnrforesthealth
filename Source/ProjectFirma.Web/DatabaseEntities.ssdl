@@ -4630,7 +4630,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     <Parameter Name="LastName" Type="varchar" Mode="In" />
   </Function>
   <Function Name="pVendorImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="VendorListJsonFileName" Type="varchar" Mode="In" />
+    <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
   </Function>
   <Function Name="RTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />

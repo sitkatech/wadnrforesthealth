@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Net;
-using LtInfo.Common.DesignByContract;
-using LtInfo.Common.GdalOgr;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -15,9 +12,6 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         private static string VendorJsonSocrataUrl = "https://data.wa.gov/resource/3j9d-77sr.json?$limit=9999999";
         private const int SqlCommandTimeoutInSeconds = 600;
-
-
-
 
         public SocrataDataMartUpdateBackgroundJob(string jobName) : base()
         {
@@ -40,13 +34,9 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' Socrata Data Mart updates");
 
-
-
             //// we're "tenant-agnostic" right now
             //var projectUpdateConfigurations = DbContext.ProjectUpdateConfigurations.ToList();
             //var reminderSubject = "Time to update your Projects";
-
-
 
             //    DbContext.Notifications.AddRange(notifications);
             //    DbContext.SaveChanges();
@@ -54,12 +44,16 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         public void DownloadSocrataVendorTable()
         {
+            Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
+
             // Pull JSON off the page into a local file
-            string vendorTempJson = DownloadSocrataUrlToString(VendorJsonSocrataUrl);
+            string vendorTempJson = DownloadSocrataUrlToString(VendorJsonSocrataUrl, SocrataDataMartRawJsonImportTableType.Vendor);
             // Push that local file into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID  = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, vendorTempJson);
             // Use the JSON to refresh the Vendor table
             VendorImportJson(socrataDataMartRawJsonImportID);
+
+            Logger.Info($"Ending '{JobName}' DownloadSocrataVendorTable");
         }
 
         /// <summary>
@@ -67,34 +61,46 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         /// <param name="urlToDownload"></param>
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
-        private string DownloadSocrataUrlToString(string urlToDownload)
+        private string DownloadSocrataUrlToString(string urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
         {
-            using (WebClient webClient = new WebClient())
+            Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
+            try
             {
-                // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
-                // See: http://xxxxx
-                webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
-                return webClient.DownloadString(urlToDownload);
+                using (WebClient webClient = new WebClient())
+                {
+                    // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
+                    // See: http://xxxxx
+                    webClient.Headers.Add("X-App-Token", MultiTenantHelpers.GetSocrataAppToken());
+                    string socrataJsonData = webClient.DownloadString(urlToDownload);
+
+                    Logger.Info($"Ending '{JobName}' DownloadSocrataVendorTable");
+                    return socrataJsonData;
+                }
+            }
+            catch (Exception exception)
+            {
+                string errorMessage = $"Error downloading Socrata type {socrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeName}, URL {urlToDownload}: {exception.Message}";
+                Logger.Error(errorMessage);
+                throw;
             }
         }
 
         private int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString)
         {
+            Logger.Info($"Starting '{JobName}' ShoveRawJsonStringIntoTable");
             SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString);
 
             HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Add(newRawJsonImport);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
 
             // Normally we might return the object here, but this thing is potentially so huge we want to dump it just as soon as we no longer need it.
+            Logger.Info($"Ending '{JobName}' ShoveRawJsonStringIntoTable");
             return newRawJsonImport.SocrataDataMartRawJsonImportID;
         }
 
-        // exec pVendorImportJson @SocrataDataMartRawJsonImportID = 2
-        
-
-
         private void VendorImportJson(int socrataDataMartRawJsonImportID)
         {
+            Logger.Info($"Starting '{JobName}' VendorImportJson");
             string vendorImportProc = "pVendorImportJson";
             using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
@@ -105,6 +111,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     cmd.ExecuteNonQuery();
                 }
             }
+            Logger.Info($"Ending '{JobName}' VendorImportJson");
         }
 
         /// <summary>
