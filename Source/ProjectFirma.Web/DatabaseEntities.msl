@@ -914,6 +914,7 @@
           <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
           <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

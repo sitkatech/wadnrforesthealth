@@ -65,6 +65,8 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
 
         public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
 
+        //TODO: Get TotalAmount in here, pass to Angular Controller in EditProjectGrantAllocationRequests.cshtml
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>

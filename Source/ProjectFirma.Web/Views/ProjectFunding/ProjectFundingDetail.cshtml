@@ -31,25 +31,25 @@
                 <tr>
                     <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
                     <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.SecuredFunding)</th>
-                    <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>
-                    <th class="text-right">Total</th>
+                    @*<th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.UnsecuredFunding)</th>*@
+                    @*<th class="text-right">Total</th>*@
                 </tr>
                 @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.GrantAllocation.DisplayName))
                 {
                     <tr>
                         <td>@Html.Raw(grantAllocationRequestAmount.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl)</td>
-                        <th class="text-right">@grantAllocationRequestAmount.SecuredAmount.ToStringCurrency()</th>
-                        <th class="text-right">@grantAllocationRequestAmount.UnsecuredAmount.ToStringCurrency()</th>
-                        <th class="text-right">@((grantAllocationRequestAmount.UnsecuredAmount + grantAllocationRequestAmount.SecuredAmount).ToStringCurrency())</th>
+                        <th class="text-right">@grantAllocationRequestAmount.TotalAmount.ToStringCurrency()</th>
+                        @*<th class="text-right">@grantAllocationRequestAmount.UnsecuredAmount.ToStringCurrency()</th>*@
+                        @*<th class="text-right">@((grantAllocationRequestAmount.UnsecuredAmount + grantAllocationRequestAmount.SecuredAmount).ToStringCurrency())</th>*@
                     </tr>
                 }
                 @if (ViewDataTyped.GrantAllocationRequestAmounts.Any())
                 {
                     <tr>
                         <th>Total</th>
-                        <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.SecuredAmount).ToStringCurrency()</th>
-                        <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.UnsecuredAmount).ToStringCurrency()</th>
-                        <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.SecuredAmount + x.UnsecuredAmount).ToStringCurrency()</th>
+                        <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.TotalAmount).ToStringCurrency()</th>
+                        @*<th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.UnsecuredAmount).ToStringCurrency()</th>*@
+                        @*<th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.SecuredAmount + x.UnsecuredAmount).ToStringCurrency()</th>*@
                     </tr>
                 }
             </table>

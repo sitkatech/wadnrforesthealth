@@ -1751,6 +1751,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="SecuredAmount" Type="money" />
     <Property Name="UnsecuredAmount" Type="money" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="TotalAmount" Type="money" />
   </EntityType>
   <EntityType Name="ProjectGrantAllocationRequestUpdate">
     <Key>

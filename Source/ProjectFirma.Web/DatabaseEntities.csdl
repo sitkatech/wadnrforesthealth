@@ -2031,6 +2031,7 @@
     <Property Name="SecuredAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="UnsecuredAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="ProjectGrantAllocationRequests" ToRole="GrantAllocation" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_Project_ProjectID" FromRole="ProjectGrantAllocationRequests" ToRole="Project" />
   </EntityType>

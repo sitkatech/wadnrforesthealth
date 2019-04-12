@@ -5,5 +5,6 @@
         GrantAllocation GrantAllocation { get; }
         decimal? SecuredAmount { get; }
         decimal? UnsecuredAmount { get; }
+        decimal? TotalAmount { get; }
     }
 }
