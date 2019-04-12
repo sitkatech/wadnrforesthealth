@@ -27,6 +27,8 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectGrantAllocationRequestUpdate : IGrantAllocationRequestAmount, IAuditableEntity
     {
+        public decimal? TotalAmount { get; }
+
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
