@@ -44,23 +44,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         [JsonIgnore]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedIndirectCost)]
-        [JsonIgnore]
-        public Money? ProjectEstimatedIndirectCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedPersonnelAndBenefitsCost)]
-        [JsonIgnore]
-        public Money? ProjectEstimatedPersonnelAndBenefitsCost { get; set; }
-
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedSuppliesCost)]
-        [JsonIgnore]
-        public Money? ProjectEstimatedSuppliesCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTravelCost)]
-        [JsonIgnore]
-        public Money? ProjectEstimatedTravelCost { get; set; }
-
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -107,18 +90,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             {
                 yield return new ValidationResult("Each Grant Allocation can only be used once.");
             }
-
-            //foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
-            //{
-            //    if (projectGrantAllocationRequest.AreBothValuesZero())
-            //    {
-            //        var grantAllocation =
-            //            HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x =>
-            //                x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
-            //        yield return new ValidationResult(
-            //            $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.DisplayName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
-            //    }
-            //}
         }
     }
 }

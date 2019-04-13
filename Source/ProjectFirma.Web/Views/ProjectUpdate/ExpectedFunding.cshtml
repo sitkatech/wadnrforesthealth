@@ -70,34 +70,6 @@ else if (ViewDataTyped.AreProjectBasicsValid)
     using (Html.BeginForm())
     {
         <div ng-app="ProjectFirmaApp" ng-controller="ExpectedFundingController">
-            <div class="form-group row">
-                <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedIndirectCost)</div>
-                <div class="col-md-8">
-                    @Html.EditorFor(m => m.ProjectEstimatedIndirectCost)
-                    @Html.ValidationMessageFor(x => x.ProjectEstimatedIndirectCost)
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedPersonnelAndBenefitsCost)</div>
-                <div class="col-md-8">
-                    @Html.EditorFor(m => m.ProjectEstimatedPersonnelAndBenefitsCost)
-                    @Html.ValidationMessageFor(x => x.ProjectEstimatedPersonnelAndBenefitsCost)
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedSuppliesCost)</div>
-                <div class="col-md-8">
-                    @Html.EditorFor(m => m.ProjectEstimatedSuppliesCost)
-                    @Html.ValidationMessageFor(x => x.ProjectEstimatedSuppliesCost)
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTravelCost)</div>
-                <div class="col-md-8">
-                    @Html.EditorFor(m => m.ProjectEstimatedTravelCost)
-                    @Html.ValidationMessageFor(x => x.ProjectEstimatedTravelCost)
-                </div>
-            </div>
 
             <div class="form-group row">
                 <div class="col-md-4 text-right">@Html.LabelWithSugarFor(m => m.ProjectEstimatedTotalCost)</div>
