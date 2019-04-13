@@ -25,7 +25,7 @@ VALUES
 (32, N'ExpirationDate', N'Expiration Date', N'<p>The date the project expires. For more detailed information on implementation stages, see the definition for &quot;Stage&quot;.</p>'),
 (33, N'ReportedValue', N'Reported Value', N'<p>The accomplishments achieved by a project after the accomplishments are realized. Accomplishments can be realized and reported throughout implementation and not only after the entire project is completed.</p>'),
 (34, N'OrganizationType', N'Organization Type', N'<p>A categorization of an organization, e.g. Local, State, Federal or Private.</p>'),
-(35, N'SecuredFunding', N'Secured Funding', N'<p>Funding that has been acquired for a project but may not have necessarily been expended.</p>'),
+(35, N'ProjectGrantAllocationRequestTotalAmount', N'Total Amount', N'<p>Funding that has been acquired for a project.</p>'),
 (36, N'ProjectStage', N'Project Stage', N'<p>Where a project exists in the project life cycle - Planned, Implementation, Complete, Cancelled, etc.</p>'),
 (39, N'ClassificationName', N'Classification Name', N'<p>The name of the grouping in this classification system.</p>'),
 (40, N'EstimatedTotalCost', N'Estimated Total Cost', N'<p>The total estimated cost to complete all stages of project implementation.</p>'),

@@ -16,10 +16,6 @@ CREATE TABLE [dbo].[ProjectUpdate](
 	[PrimaryContactPersonID] [int] NULL,
 	[FocusAreaID] [int] NULL,
 	[ExpirationDate] [datetime] NULL,
-	[EstimatedIndirectCost] [money] NULL,
-	[EstimatedPersonnelAndBenefitsCost] [money] NULL,
-	[EstimatedSuppliesCost] [money] NULL,
-	[EstimatedTravelCost] [money] NULL,
  CONSTRAINT [PK_ProjectUpdate_ProjectUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectUpdateID] ASC

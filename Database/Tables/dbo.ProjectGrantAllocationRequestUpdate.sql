@@ -5,9 +5,8 @@ GO
 CREATE TABLE [dbo].[ProjectGrantAllocationRequestUpdate](
 	[ProjectGrantAllocationRequestUpdateID] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
-	[SecuredAmount] [money] NULL,
-	[UnsecuredAmount] [money] NULL,
 	[GrantAllocationID] [int] NOT NULL,
+	[TotalAmount] [money] NULL,
  CONSTRAINT [PK_ProjectGrantAllocationRequestUpdate_ProjectGrantAllocationRequestUpdateID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectGrantAllocationRequestUpdateID] ASC
@@ -29,7 +28,3 @@ ALTER TABLE [dbo].[ProjectGrantAllocationRequestUpdate]  WITH CHECK ADD  CONSTRA
 REFERENCES [dbo].[ProjectUpdateBatch] ([ProjectUpdateBatchID])
 GO
 ALTER TABLE [dbo].[ProjectGrantAllocationRequestUpdate] CHECK CONSTRAINT [FK_ProjectGrantAllocationRequestUpdate_ProjectUpdateBatch_ProjectUpdateBatchID]
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationRequestUpdate]  WITH CHECK ADD  CONSTRAINT [CK_ProjectFundingSourceRequestUpdate_SecuredUnsecuredAmountBothCannotBeZero] CHECK  (([SecuredAmount]<>(0) OR [UnsecuredAmount]<>(0)))
-GO
-ALTER TABLE [dbo].[ProjectGrantAllocationRequestUpdate] CHECK CONSTRAINT [CK_ProjectFundingSourceRequestUpdate_SecuredUnsecuredAmountBothCannotBeZero]

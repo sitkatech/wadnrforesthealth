@@ -44,22 +44,19 @@ angular.module("ProjectFirmaApp").controller("ExpectedFundingController", functi
 
     $scope.getGrantAllocation = function (grantAllocationID) { return _.find($scope.AngularViewData.AllGrantAllocations, function (f) { return grantAllocationID == f.GrantAllocationID; }); };
 
-    $scope.getUnsecuredTotal = function () {
-        return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequestSimples, function (m, x) { return Number(m) + Number(x.UnsecuredAmount); }, 0));
-    };
 
-    $scope.getSecuredTotal = function () {
+    $scope.getColumnTotal = function () {
         return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequestSimples,
-            function (m, x) { return Number(m) + Number(x.SecuredAmount); },
+            function (m, x) { return Number(m) + Number(x.TotalAmount); },
             0));
     };
 
     $scope.getTotal = function () {
-        return Number($scope.getUnsecuredTotal()) + Number($scope.getSecuredTotal());
+        return Number($scope.getColumnTotal());
     }
 
     $scope.getRowTotal = function (projectGrantAllocationRequest) {
-        return Number(projectGrantAllocationRequest.SecuredAmount) + Number(projectGrantAllocationRequest.UnsecuredAmount);
+        return Number(projectGrantAllocationRequest.TotalAmount);
     }
     
     $scope.findProjectGrantAllocationRequestRow = function(projectID, grantAllocationID) { return _.find($scope.AngularModel.ProjectGrantAllocationRequestSimples, function(pfse) { return pfse.ProjectID == projectID && pfse.GrantAllocationID == grantAllocationID; }); }
@@ -80,8 +77,7 @@ angular.module("ProjectFirmaApp").controller("ExpectedFundingController", functi
         var newProjectGrantAllocationRequest = {
             ProjectID: projectID,
             GrantAllocationID: grantAllocationID,
-            SecuredAmount: null,
-            UnsecuredAmount: null
+            TotalAmount: null
         };
         return newProjectGrantAllocationRequest;
     };

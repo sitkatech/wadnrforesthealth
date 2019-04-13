@@ -40,30 +40,12 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         [ValidateMoneyInRangeForSqlServer]
         public Money? ProjectEstimatedTotalCost { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedIndirectCost)]
-        [JsonIgnore]
-        [ValidateMoneyInRangeForSqlServer]
-        public Money? ProjectEstimatedIndirectCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedPersonnelAndBenefitsCost)]
-        [JsonIgnore]
-        [ValidateMoneyInRangeForSqlServer]
-        public Money? ProjectEstimatedPersonnelAndBenefitsCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedSuppliesCost)]
-        [JsonIgnore]
-        [ValidateMoneyInRangeForSqlServer]
-        public Money? ProjectEstimatedSuppliesCost { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.EstimatedTravelCost)]
-        [JsonIgnore]
-        [ValidateMoneyInRangeForSqlServer]
-        public Money? ProjectEstimatedTravelCost { get; set; }
-
         [Required]
         public bool? ForProject { get; set; }
 
         public List<ProjectGrantAllocationRequestSimple> ProjectGrantAllocationRequests { get; set; }
+
+        //TODO: Get TotalAmount in here, pass to Angular Controller in EditProjectGrantAllocationRequests.cshtml
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -73,26 +55,22 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
         }
 
         public EditProjectGrantAllocationRequestsViewModel(
-            List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, bool forProject, Money? projectEstimatedTotalCost, Money? projectEstimatedIndirectCost, Money? projectEstimatedPersonnelAndBenefitsCost, Money? projectEstimatedSuppliesCost, Money? projectEstimatedTravelCost)
+            List<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequests, bool forProject, Money? projectEstimatedTotalCost)
         {
             ProjectGrantAllocationRequests = projectGrantAllocationRequests
                 .Select(x => new ProjectGrantAllocationRequestSimple(x)).ToList();
             ProjectEstimatedTotalCost = projectEstimatedTotalCost;
-            ProjectEstimatedIndirectCost = projectEstimatedIndirectCost;
-            ProjectEstimatedPersonnelAndBenefitsCost = projectEstimatedPersonnelAndBenefitsCost;
-            ProjectEstimatedSuppliesCost = projectEstimatedSuppliesCost;
-            ProjectEstimatedTravelCost = projectEstimatedTravelCost;
             ForProject = forProject;
         }
 
         public void UpdateModel(List<Models.ProjectGrantAllocationRequest> currentProjectGrantAllocationRequests,
             IList<Models.ProjectGrantAllocationRequest> allProjectGrantAllocationRequests, Models.Project project)
         {
-            var projectGrantAllocationRequestsUpdated = new List<Models.ProjectGrantAllocationRequest>();
+            var projectGrantAllocationRequestsModified = new List<Models.ProjectGrantAllocationRequest>();
             if (ProjectGrantAllocationRequests != null)
             {
                 // Completely rebuild the list
-                projectGrantAllocationRequestsUpdated = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
+                projectGrantAllocationRequestsModified = ProjectGrantAllocationRequests.Select(x => x.ToProjectGrantAllocationRequest()).ToList();
             }
 
             if (ForProject ?? false) // never null
@@ -103,19 +81,14 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                         $"Project is required to update {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Requests for a Project");
                 }
                 project.EstimatedTotalCost = ProjectEstimatedTotalCost;
-                project.EstimatedIndirectCost = ProjectEstimatedIndirectCost;
-                project.EstimatedPersonnelAndBenefitsCost = ProjectEstimatedPersonnelAndBenefitsCost;
-                project.EstimatedSuppliesCost = ProjectEstimatedSuppliesCost;
-                project.EstimatedTravelCost = ProjectEstimatedTravelCost;
             }
 
-            currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsUpdated,
+            currentProjectGrantAllocationRequests.Merge(projectGrantAllocationRequestsModified,
                 allProjectGrantAllocationRequests,
                 (x, y) => x.ProjectID == y.ProjectID && x.GrantAllocationID == y.GrantAllocationID,
                 (x, y) =>
                 {
-                    x.SecuredAmount = y.SecuredAmount;
-                    x.UnsecuredAmount = y.UnsecuredAmount;
+                    x.TotalAmount = y.TotalAmount;
                 });
             
         }
@@ -132,15 +105,15 @@ namespace ProjectFirma.Web.Views.ProjectGrantAllocationRequest
                 yield return new ValidationResult("Each grant allocation can only be used once.");
             }
 
-            foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
-            {
-                if (projectGrantAllocationRequest.AreBothValuesZero())
-                {
-                    var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x => x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
-                    yield return new ValidationResult(
-                        $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.GrantAllocationName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
-                }
-            }
+            //foreach (var projectGrantAllocationRequest in ProjectGrantAllocationRequests)
+            //{
+            //    if (projectGrantAllocationRequest.AreBothValuesZero())
+            //    {
+            //        var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(x => x.GrantAllocationID == projectGrantAllocationRequest.GrantAllocationID);
+            //        yield return new ValidationResult(
+            //            $"Secured Funding and Unsecured Funding cannot both be zero for Grant Allocation: {grantAllocation.GrantAllocationName}. If the amount of secured or unsecured funding is unknown, you can leave the amounts blank.");
+            //    }
+            //}
         }
     }
 }

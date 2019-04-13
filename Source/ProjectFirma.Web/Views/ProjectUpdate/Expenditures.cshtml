@@ -56,9 +56,7 @@ To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expend
     </p>
 
     <div style="width: 300px">@FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.EstimatedTotalCost.ToStringCurrency()</span></div>
-    <div style="width: 300px">@FieldDefinition.SecuredFunding.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.GetSecuredFunding().ToStringCurrency()</span></div>
-    <div style="width: 300px">@FieldDefinition.UnfundedNeed.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.UnfundedNeed.ToStringCurrency()</span></div>
-
+    <div style="width: 300px">@FieldDefinition.ProjectGrantAllocationRequestTotalAmount.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.ProjectUpdateBatch.ProjectUpdate.GetTotalAmount().ToStringCurrency()</span></div>
 </div>
 
 @if (!ViewDataTyped.IsEditable)

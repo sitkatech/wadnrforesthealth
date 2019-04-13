@@ -634,7 +634,7 @@ namespace ProjectFirma.Web.Controllers
             }
             var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
             var viewModel = new ExpectedFundingViewModel(projectGrantAllocationRequestUpdates,
-                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost, project.EstimatedIndirectCost, project.EstimatedPersonnelAndBenefitsCost, project.EstimatedSuppliesCost, project.EstimatedTravelCost);
+                projectUpdateBatch.ExpectedFundingComment, projectUpdate.EstimatedTotalCost);
             return ViewExpectedFunding(projectUpdateBatch, viewModel);
         }
 
@@ -671,18 +671,11 @@ namespace ProjectFirma.Web.Controllers
             var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var expectedFundingValidationResult = projectUpdateBatch.ValidateExpectedFunding(viewModel.ProjectGrantAllocationRequests);
             var estimatedTotalCost = projectUpdateBatch.ProjectUpdate.EstimatedTotalCost.GetValueOrDefault();
-            var estimatedIndirectCost = projectUpdateBatch.ProjectUpdate.EstimatedIndirectCost.GetValueOrDefault();
-            var estimatedPersonnelAndBenefitsCost = projectUpdateBatch.ProjectUpdate.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
-            var estimatedSuppliesCost = projectUpdateBatch.ProjectUpdate.EstimatedSuppliesCost.GetValueOrDefault();
-            var estimatedTravelCost = projectUpdateBatch.ProjectUpdate.EstimatedTravelCost.GetValueOrDefault();
 
             var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(projectUpdateBatch,
                 allGrantAllocations,
-                estimatedTotalCost, 
-                estimatedIndirectCost, 
-                estimatedPersonnelAndBenefitsCost, 
-                estimatedSuppliesCost, 
-                estimatedTravelCost);
+                estimatedTotalCost 
+                );
             var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates));
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, projectFundingDetailViewData, GetUpdateStatus(projectUpdateBatch), expectedFundingValidationResult);
@@ -2181,7 +2174,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationsOnlyInOriginal = grantAllocationsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x)).ToList();
             var grantAllocationRequestAmounts = projectGrantAllocationRequestsOriginal.Select(x => new GrantAllocationRequestAmount(x)).ToList();
             grantAllocationRequestAmounts.AddRange(projectGrantAllocationRequestsUpdated.Where(x => !grantAllocationsInOriginal.Contains(x.GrantAllocation.GrantAllocationID)).Select(x =>
-                new GrantAllocationRequestAmount(x.GrantAllocation, x.SecuredAmount, x.UnsecuredAmount, HtmlDiffContainer.DisplayCssClassAddedElement)));
+                new GrantAllocationRequestAmount(x.GrantAllocation, x.TotalAmount, HtmlDiffContainer.DisplayCssClassAddedElement)));
             grantAllocationRequestAmounts.Where(x => grantAllocationsOnlyInOriginal.Contains(x.GrantAllocation.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
             return GeneratePartialViewForExpectedFundingAsString(grantAllocationRequestAmounts);
         }
@@ -2194,7 +2187,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationsOnlyInUpdated = grantAllocationsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x)).ToList();
             var grantAllocationRequestAmounts = projectGrantAllocationRequestsUpdated.Select(x => new GrantAllocationRequestAmount(x)).ToList();
             grantAllocationRequestAmounts.AddRange(projectGrantAllocationRequestsOriginal.Where(x => !grantAllocationsInUpdated.Contains(x.GrantAllocation.GrantAllocationID)).Select(x =>
-                new GrantAllocationRequestAmount(x.GrantAllocation, x.SecuredAmount, x.UnsecuredAmount, HtmlDiffContainer.DisplayCssClassDeletedElement)));
+                new GrantAllocationRequestAmount(x.GrantAllocation, x.TotalAmount, HtmlDiffContainer.DisplayCssClassDeletedElement)));
             grantAllocationRequestAmounts.Where(x => grantAllocationsOnlyInUpdated.Contains(x.GrantAllocation.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
             return GeneratePartialViewForExpectedFundingAsString(grantAllocationRequestAmounts);
         }

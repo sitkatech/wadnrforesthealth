@@ -30,14 +30,16 @@ namespace ProjectFirma.Web.Models
             GrantAllocationName = grantAllocation.GrantAllocationName;
             IsActive = true; 
             DisplayName = grantAllocation.GrantNumberAndGrantAllocationDisplayName;
+            DisplayNameWithAllocationAmount = grantAllocation.GrantNumberAndGrantAllocationWithAllocationAmountDisplay;
         }
 
-        public int GrantAllocationID { get; set; }
-        public int OrganizationID { get; set; }
-        public string GrantAllocationName { get; set; }
-        public bool IsActive { get; set; }
+        public int GrantAllocationID { get; }
+        public int OrganizationID { get; }
+        public string GrantAllocationName { get; }
+        public bool IsActive { get; }
 
-        public string OrganizationName { get; set; }
-        public string DisplayName { get; set; }
+        public string OrganizationName { get; }
+        public string DisplayName { get; }
+        public string DisplayNameWithAllocationAmount { get; }
     }
 }

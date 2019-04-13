@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation, DateTime? expirationDate, decimal? estimatedIndirectCost, decimal? estimatedPersonnelAndBenefitsCost, decimal? estimatedSuppliesCost, decimal? estimatedTravelCost) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation, DateTime? expirationDate) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -81,10 +81,6 @@ namespace ProjectFirma.Web.Models
             this.NoRegionsExplanation = noRegionsExplanation;
             this.NoPriorityAreasExplanation = noPriorityAreasExplanation;
             this.ExpirationDate = expirationDate;
-            this.EstimatedIndirectCost = estimatedIndirectCost;
-            this.EstimatedPersonnelAndBenefitsCost = estimatedPersonnelAndBenefitsCost;
-            this.EstimatedSuppliesCost = estimatedSuppliesCost;
-            this.EstimatedTravelCost = estimatedTravelCost;
         }
 
         /// <summary>
@@ -311,10 +307,6 @@ namespace ProjectFirma.Web.Models
         public string NoRegionsExplanation { get; set; }
         public string NoPriorityAreasExplanation { get; set; }
         public DateTime? ExpirationDate { get; set; }
-        public decimal? EstimatedIndirectCost { get; set; }
-        public decimal? EstimatedPersonnelAndBenefitsCost { get; set; }
-        public decimal? EstimatedSuppliesCost { get; set; }
-        public decimal? EstimatedTravelCost { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 

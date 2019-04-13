@@ -47,8 +47,7 @@ namespace ProjectFirma.Web.Views.Project
         public string EstimatedTotalCost { get; }
 
         public string NoGrantAllocationIdentified { get; }
-        public string SecuredFunding { get; }
-        public string UnsecuredFunding { get; }
+        public string TotalFunding { get; }
 
         public string GrandAllocation { get; }
         public int CalculatedChartHeight { get; }
@@ -114,10 +113,8 @@ namespace ProjectFirma.Web.Views.Project
             ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             EstimatedTotalCost = Project.EstimatedTotalCost.HasValue ? Project.EstimatedTotalCost.ToStringCurrency() : "";
             NoGrantAllocationIdentified = project.GetNoGrantAllocationIdentifiedAmount() != null ? Project.GetNoGrantAllocationIdentifiedAmount().ToStringCurrency() : "";
-            SecuredFunding = Project.GetSecuredFunding() != null ? Project.GetSecuredFunding().ToStringCurrency() : "";
-            UnsecuredFunding = Project.GetUnsecuredFunding() != null ? Project.GetUnsecuredFunding().ToStringCurrency() : "";
 
-            GrandAllocation = project.ProjectGrantAllocationRequests.Any() ? project.ProjectGrantAllocationRequests.Sum(x => x.UnsecuredAmount).ToStringCurrency() : ViewUtilities.Unknown;
+            GrandAllocation = project.ProjectGrantAllocationRequests.Any() ? project.ProjectGrantAllocationRequests.Sum(x => x.TotalAmount).ToStringCurrency() : ViewUtilities.Unknown;
             CustomFactSheetTextViewData = new ViewPageContentViewData(firmaPageFactSheetCustomText, false);
         }
 
