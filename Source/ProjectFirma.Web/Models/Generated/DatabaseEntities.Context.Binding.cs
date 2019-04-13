@@ -135,6 +135,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
+        public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
         public virtual DbSet<SystemAttribute> SystemAttributes { get; set; }
@@ -661,6 +662,14 @@ namespace ProjectFirma.Web.Models
                     var role = Role.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(role, "Role", primaryKey);
                     return role;
+
+                case "SocrataDataMartRawJsonImport":
+                    return SocrataDataMartRawJsonImports.GetSocrataDataMartRawJsonImport(primaryKey);
+
+                case "SocrataDataMartRawJsonImportTableType":
+                    var socrataDataMartRawJsonImportTableType = SocrataDataMartRawJsonImportTableType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(socrataDataMartRawJsonImportTableType, "SocrataDataMartRawJsonImportTableType", primaryKey);
+                    return socrataDataMartRawJsonImportTableType;
 
                 case "StateProvince":
                     return StateProvinces.GetStateProvince(primaryKey);

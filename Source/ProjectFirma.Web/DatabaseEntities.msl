@@ -1263,6 +1263,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SocrataDataMartRawJsonImport">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport">
+        <MappingFragment StoreEntitySet="SocrataDataMartRawJsonImport">
+          <ScalarProperty Name="SocrataDataMartRawJsonImportID" ColumnName="SocrataDataMartRawJsonImportID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="SocrataDataMartRawJsonImportTableTypeID" ColumnName="SocrataDataMartRawJsonImportTableTypeID" />
+          <ScalarProperty Name="RawJsonString" ColumnName="RawJsonString" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="StateProvince">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.StateProvince">
         <MappingFragment StoreEntitySet="StateProvince">
@@ -1307,6 +1317,7 @@
           <ScalarProperty Name="ShowLeadImplementerLogoOnFactSheet" ColumnName="ShowLeadImplementerLogoOnFactSheet" />
           <ScalarProperty Name="EnableAccomplishmentsDashboard" ColumnName="EnableAccomplishmentsDashboard" />
           <ScalarProperty Name="ProjectStewardshipAreaTypeID" ColumnName="ProjectStewardshipAreaTypeID" />
+          <ScalarProperty Name="SocrataAppToken" ColumnName="SocrataAppToken" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

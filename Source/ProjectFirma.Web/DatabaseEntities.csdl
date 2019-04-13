@@ -108,6 +108,7 @@
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
     <EntitySet Name="Region" EntityType="ProjectFirma.Web.Models.Region" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
+    <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
     <EntitySet Name="SupportRequestLog" EntityType="ProjectFirma.Web.Models.SupportRequestLog" />
     <EntitySet Name="SystemAttribute" EntityType="ProjectFirma.Web.Models.SystemAttribute" />
@@ -2436,6 +2437,15 @@
     <NavigationProperty Name="ProjectOrganizations" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganization_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizations" />
     <NavigationProperty Name="ProjectOrganizationUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectOrganizationUpdate_RelationshipType_RelationshipTypeID" FromRole="RelationshipType" ToRole="ProjectOrganizationUpdates" />
   </EntityType>
+  <EntityType Name="SocrataDataMartRawJsonImport">
+    <Key>
+      <PropertyRef Name="SocrataDataMartRawJsonImportID" />
+    </Key>
+    <Property Name="SocrataDataMartRawJsonImportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+    <Property Name="SocrataDataMartRawJsonImportTableTypeID" Type="Int32" Nullable="false" />
+    <Property Name="RawJsonString" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+  </EntityType>
   <EntityType Name="StateProvince">
     <Key>
       <PropertyRef Name="StateProvinceID" />
@@ -2481,6 +2491,7 @@
     <Property Name="ShowLeadImplementerLogoOnFactSheet" Type="Boolean" Nullable="false" />
     <Property Name="EnableAccomplishmentsDashboard" Type="Boolean" Nullable="false" />
     <Property Name="ProjectStewardshipAreaTypeID" Type="Int32" />
+    <Property Name="SocrataAppToken" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="BannerLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_BannerLogoFileResourceID_FileResourceID" FromRole="SystemAttributesWhereYouAreTheBannerLogoFileResource" ToRole="BannerLogoFileResource" />
     <NavigationProperty Name="SquareLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_FileResource_SquareLogoFileResourceID_FileResourceID" FromRole="SystemAttributesWhereYouAreTheSquareLogoFileResource" ToRole="SquareLogoFileResource" />
     <NavigationProperty Name="PrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="SystemAttributesWhereYouAreThePrimaryContactPerson" ToRole="PrimaryContactPerson" />

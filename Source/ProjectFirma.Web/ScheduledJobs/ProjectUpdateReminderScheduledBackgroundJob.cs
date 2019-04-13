@@ -42,8 +42,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                     var projectUpdateKickOffDate = projectUpdateConfiguration.ProjectUpdateKickOffDate;
                     if (DateTime.Today == projectUpdateKickOffDate.GetValueOrDefault().Date)
                     {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject,
-                                                        projectUpdateConfiguration.ProjectUpdateKickOffIntroContent, true));
+                        var runNotifications = RunNotifications(projects, reminderSubject, projectUpdateConfiguration.ProjectUpdateKickOffIntroContent, true);
+                        notifications.AddRange(runNotifications);
                     }
                 }
 
@@ -51,7 +51,8 @@ namespace ProjectFirma.Web.ScheduledJobs
                 {
                     if (TodayIsReminderDayForProjectUpdateConfiguration(projectUpdateConfiguration))
                     {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject, projectUpdateConfiguration.ProjectUpdateReminderIntroContent, false));
+                        var runNotifications = RunNotifications(projects, reminderSubject, projectUpdateConfiguration.ProjectUpdateReminderIntroContent, false);
+                        notifications.AddRange(runNotifications);
                         // notifyOnAll is false b/c we only send periodic reminders for projects whose updates haven't been submitted yet.
                     }
                 }
@@ -61,8 +62,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                     var projectUpdateCloseOutDate = projectUpdateConfiguration.ProjectUpdateCloseOutDate;
                     if (DateTime.Today == projectUpdateCloseOutDate.GetValueOrDefault().Date)
                     {
-                        notifications.AddRange(RunNotifications(projects, reminderSubject,
-                            projectUpdateConfiguration.ProjectUpdateCloseOutIntroContent, false));
+                        notifications.AddRange(RunNotifications(projects, reminderSubject, projectUpdateConfiguration.ProjectUpdateCloseOutIntroContent, false));
                     }
                 }
 
@@ -71,11 +71,9 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
         }
 
-        private static bool TodayIsReminderDayForProjectUpdateConfiguration(
-            ProjectUpdateConfiguration projectUpdateConfiguration)
+        private static bool TodayIsReminderDayForProjectUpdateConfiguration(ProjectUpdateConfiguration projectUpdateConfiguration)
         {
-            return (DateTime.Today - projectUpdateConfiguration.ProjectUpdateKickOffDate.GetValueOrDefault().Date)
-                   .Days % projectUpdateConfiguration.ProjectUpdateReminderInterval == 0;
+            return (DateTime.Today - projectUpdateConfiguration.ProjectUpdateKickOffDate.GetValueOrDefault().Date).Days % projectUpdateConfiguration.ProjectUpdateReminderInterval == 0;
         }
 
         /// <summary>

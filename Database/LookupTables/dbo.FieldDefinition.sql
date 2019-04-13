@@ -162,4 +162,6 @@ VALUES
 (339, N'InteractionEventLocation', N'Interaction/Event Location', N'<p>Placeholder definition for Interaction/Event Location description.</p>'),
 (340, N'GrantAllocationName', 'Grant Allocation Name', N'<p>Placeholder definition for Grant Allocation Name description.</p>'),
 (341, N'Division', 'Division', N'<p>Placeholder definition for Division description.</p>'),
-(342, N'GrantManager', 'Grant Manager', N'<p>Placeholder definition for Grant Manager description.</p>')
+(342, N'GrantManager', 'Grant Manager', N'<p>Placeholder definition for Grant Manager description.</p>'),
+(343, N'Job', 'Job', N'<p>A foreground or background system job.</p>'),
+(344, N'JobImportTableType', 'Job Import Table Type', N'<p>Type of the Job Import table imported.</p>')
