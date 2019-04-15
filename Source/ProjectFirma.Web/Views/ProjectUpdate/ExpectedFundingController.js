@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 angular.module("ProjectFirmaApp").controller("ExpectedFundingController", function($scope, angularModelAndViewData)
 {
-    console.log("inside angular controller: ExpectedFundingController");
+    //console.log("inside angular controller: ExpectedFundingController");
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
     });
@@ -31,8 +31,8 @@ angular.module("ProjectFirmaApp").controller("ExpectedFundingController", functi
 
     $scope.filteredGrantAllocationSimples = function () {
         var usedGrantAllocationIDs = $scope.getAllUsedGrantAllocationIds();
-        console.log("usedGrantAllocationIDs:" + usedGrantAllocationIDs);
-        console.log("allGrantAllocationSimples:" + $scope.AngularViewData.AllGrantAllocationSimples);
+        //console.log("usedGrantAllocationIDs:" + usedGrantAllocationIDs);
+        //console.log("allGrantAllocationSimples:" + $scope.AngularViewData.AllGrantAllocationSimples);
         return _($scope.AngularViewData.AllGrantAllocationSimples).filter(function (f) { return f.IsActive && !_.includes(usedGrantAllocationIDs, f.GrantAllocationID); })
             .sortBy(function (fs) {
                 return [fs.GrantAllocationName.toLowerCase(), fs.OrganizationName.toLowerCase()];
@@ -48,22 +48,18 @@ angular.module("ProjectFirmaApp").controller("ExpectedFundingController", functi
 
     $scope.getGrantAllocation = function (grantAllocationID) { return _.find($scope.AngularViewData.AllGrantAllocationSimples, function (f) { return grantAllocationID == f.GrantAllocationID; }); };
 
-    $scope.getUnsecuredTotal = function () {
-        return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequests, function (m, x) { return Number(m) + Number(x.UnsecuredAmount); }, 0));
-    };
-
-    $scope.getSecuredTotal = function () {
+    $scope.getColumnTotal = function () {
         return Number(_.reduce($scope.AngularModel.ProjectGrantAllocationRequests,
-            function(m, x) { return Number(m) + Number(x.SecuredAmount); },
+            function(m, x) { return Number(m) + Number(x.TotalAmount); },
             0));
     };
 
     $scope.getTotal = function() {
-        return Number($scope.getUnsecuredTotal()) + Number($scope.getSecuredTotal());
+        return Number($scope.getColumnTotal());
     }
 
     $scope.getRowTotal = function (projectGrantAllocationRequest) {
-        return Number(projectGrantAllocationRequest.SecuredAmount) + Number(projectGrantAllocationRequest.UnsecuredAmount);
+        return Number(projectGrantAllocationRequest.TotalAmount);
     }
     
     $scope.findProjectGrantAllocationRequestRow = function(projectID, grantAllocationID) { return _.find($scope.AngularModel.ProjectGrantAllocationRequests, function(pfse) { return pfse.ProjectID == projectID && pfse.GrantAllocationID == grantAllocationID; }); }
@@ -84,8 +80,7 @@ angular.module("ProjectFirmaApp").controller("ExpectedFundingController", functi
         var newProjectGrantAllocationRequest = {
             ProjectID: projectID,
             GrantAllocationID: grantAllocationID,
-            SecuredAmount: null,
-            UnsecuredAmount: null
+            TotalAmount: null
         };
         return newProjectGrantAllocationRequest;
     };

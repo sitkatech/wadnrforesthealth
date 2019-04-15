@@ -20,7 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 angular.module("ProjectFirmaApp").controller("ExpendituresController", function($scope, angularModelAndViewData)
 {
-    console.log("inside angular controller: ExpendituresController");
+    //console.log("inside angular controller: ExpendituresController");
     $scope.$watch(function () {
         jQuery(".selectpicker").selectpicker("refresh");
     });
@@ -44,8 +44,8 @@ angular.module("ProjectFirmaApp").controller("ExpendituresController", function(
     {
         var usedGrantAllocationIDs = $scope.getAllUsedGrantAllocationIds();
         var projectFundingOrganizationGrantAllocationIDs = _.map($scope.AngularViewData.AllGrantAllocations, function (p) { return p.GrantAllocationID; });
-        console.log("usedGrantAllocationIDs:" + usedGrantAllocationIDs);
-        console.log("$scope.AngularViewData.AllGrantAllocations:" + $scope.AngularViewData.AllGrantAllocations);
+        //console.log("usedGrantAllocationIDs:" + usedGrantAllocationIDs);
+        //console.log("$scope.AngularViewData.AllGrantAllocations:" + $scope.AngularViewData.AllGrantAllocations);
         if ($scope.ShowOnlyProjectFunders)
         {
             projectFundingOrganizationGrantAllocationIDs = $scope.AngularViewData.ProjectFundingOrganizationGrantAllocationIDs;

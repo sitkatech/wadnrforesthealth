@@ -749,10 +749,6 @@
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-          <ScalarProperty Name="EstimatedIndirectCost" ColumnName="EstimatedIndirectCost" />
-          <ScalarProperty Name="EstimatedPersonnelAndBenefitsCost" ColumnName="EstimatedPersonnelAndBenefitsCost" />
-          <ScalarProperty Name="EstimatedSuppliesCost" ColumnName="EstimatedSuppliesCost" />
-          <ScalarProperty Name="EstimatedTravelCost" ColumnName="EstimatedTravelCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -914,9 +910,8 @@
         <MappingFragment StoreEntitySet="ProjectGrantAllocationRequest">
           <ScalarProperty Name="ProjectGrantAllocationRequestID" ColumnName="ProjectGrantAllocationRequestID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
-          <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -925,9 +920,8 @@
         <MappingFragment StoreEntitySet="ProjectGrantAllocationRequestUpdate">
           <ScalarProperty Name="ProjectGrantAllocationRequestUpdateID" ColumnName="ProjectGrantAllocationRequestUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
-          <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1182,10 +1176,6 @@
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-          <ScalarProperty Name="EstimatedIndirectCost" ColumnName="EstimatedIndirectCost" />
-          <ScalarProperty Name="EstimatedPersonnelAndBenefitsCost" ColumnName="EstimatedPersonnelAndBenefitsCost" />
-          <ScalarProperty Name="EstimatedSuppliesCost" ColumnName="EstimatedSuppliesCost" />
-          <ScalarProperty Name="EstimatedTravelCost" ColumnName="EstimatedTravelCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

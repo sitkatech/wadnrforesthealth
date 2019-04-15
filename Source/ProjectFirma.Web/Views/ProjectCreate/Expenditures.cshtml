@@ -50,9 +50,7 @@ To enter your @FieldDefinition.Project.GetFieldDefinitionLabel()'s annual expend
         Other financial information for this @FieldDefinition.Project.GetFieldDefinitionLabel() that might be helpful:
     </p>
     <div style="width: 300px">@FieldDefinition.EstimatedTotalCost.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.Project.EstimatedTotalCost.ToStringCurrency()</span></div>
-    <div style="width: 300px">@FieldDefinition.SecuredFunding.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.Project.GetSecuredFunding().ToStringCurrency()</span></div>
-    <div style="width: 300px">@FieldDefinition.UnfundedNeed.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.Project.UnfundedNeed().ToStringCurrency()</span></div>
-
+    <div style="width: 300px">@FieldDefinition.ProjectGrantAllocationRequestTotalAmount.GetFieldDefinitionLabel(): <span style="float: right; font-weight: bold">@ViewDataTyped.Project.GetTotalFunding().ToStringCurrency()</span></div>
 </div>
     @using (Html.BeginForm())
     {

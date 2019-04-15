@@ -460,7 +460,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult ExpectedFunding(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var viewModel = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(), project.EstimatedTotalCost, project.EstimatedIndirectCost, project.EstimatedPersonnelAndBenefitsCost, project.EstimatedSuppliesCost, project.EstimatedTravelCost);
+            var viewModel = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(), project.EstimatedTotalCost);
             return ViewExpectedFunding(project, viewModel);
         }
 
@@ -468,11 +468,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
             var estimatedTotalCost = project.EstimatedTotalCost.GetValueOrDefault();
-            var estimatedIndirectCost = project.EstimatedIndirectCost.GetValueOrDefault();
-            var estimatedPersonnelAndBenefitsCost = project.EstimatedPersonnelAndBenefitsCost.GetValueOrDefault();
-            var estimatedSuppliesCost = project.EstimatedSuppliesCost.GetValueOrDefault();
-            var estimatedTravelCost = project.EstimatedTravelCost.GetValueOrDefault();
-            var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allGrantAllocations, estimatedTotalCost, estimatedIndirectCost, estimatedPersonnelAndBenefitsCost, estimatedSuppliesCost, estimatedTravelCost);
+            var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(project, allGrantAllocations, estimatedTotalCost);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsExpectedFundingSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPerformanceMeasureSectionComplete;

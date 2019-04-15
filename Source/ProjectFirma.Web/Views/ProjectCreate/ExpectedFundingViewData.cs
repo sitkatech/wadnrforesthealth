@@ -45,26 +45,15 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             // Actually a ProjectID
             public readonly int ProjectID;
             public readonly decimal EstimatedTotalCost;
-            public readonly decimal EstimatedIndirectCost;
-            public readonly decimal EstimatedPersonnelAndBenefitsCost;
-            public readonly decimal EstimatedSuppliesCost;
-            public readonly decimal EstimatedTravelCost;
+
 
             public ViewDataForAngularClass(Models.Project projectProposedBatch,
                                            List<GrantAllocationSimple> allGrantAllocations,
-                                           decimal estimatedTotalCost, 
-                                           decimal estimatedIndirectCost, 
-                                           decimal estimatedPersonnelAndBenefitsCost, 
-                                           decimal estimatedSuppliesCost, 
-                                           decimal estimatedTravelCost)
+                                           decimal estimatedTotalCost)
             {
                 AllGrantAllocations = allGrantAllocations;
                 ProjectID = projectProposedBatch.ProjectID;
                 EstimatedTotalCost = estimatedTotalCost;
-                EstimatedIndirectCost = estimatedIndirectCost;
-                EstimatedPersonnelAndBenefitsCost = estimatedPersonnelAndBenefitsCost;
-                EstimatedSuppliesCost = estimatedSuppliesCost;
-                EstimatedTravelCost = estimatedTravelCost;
             }
         }
     }

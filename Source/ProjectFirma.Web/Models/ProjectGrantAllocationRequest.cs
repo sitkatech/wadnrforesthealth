@@ -35,8 +35,8 @@ namespace ProjectFirma.Web.Models
                 var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Find(GrantAllocationID);
                 var projectName = project != null ? project.AuditDescriptionString : ViewUtilities.NotFoundString;
                 var grantAllocationName = grantAllocation != null ? grantAllocation.AuditDescriptionString : ViewUtilities.NotFoundString;
-                var expenditureAmount = UnsecuredAmount.ToStringCurrency();
-                return $"Project: {projectName}, Grant Allocation: {grantAllocationName}, Request Amount: {expenditureAmount}";
+                var totalRequestAmount = TotalAmount.ToStringCurrency();
+                return $"Project: {projectName}, Grant Allocation: {grantAllocationName}, Total Request Amount: {totalRequestAmount}";
             }
         }
 

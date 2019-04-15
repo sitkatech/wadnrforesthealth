@@ -18,41 +18,36 @@ namespace ProjectFirma.Web.Models
         {
             ProjectID = projectGrantAllocationRequest.ProjectID;
             GrantAllocationID = projectGrantAllocationRequest.GrantAllocationID;
-            UnsecuredAmount = projectGrantAllocationRequest.UnsecuredAmount;
-            SecuredAmount = projectGrantAllocationRequest.SecuredAmount;
+            TotalAmount = projectGrantAllocationRequest.TotalAmount;
         }
 
         public ProjectGrantAllocationRequestSimple(ProjectGrantAllocationRequestUpdate projectGrantAllocationRequestUpdate)
         {
             ProjectID = projectGrantAllocationRequestUpdate.ProjectUpdateBatchID;
             GrantAllocationID = projectGrantAllocationRequestUpdate.GrantAllocationID;
-            UnsecuredAmount = projectGrantAllocationRequestUpdate.UnsecuredAmount;
-            SecuredAmount = projectGrantAllocationRequestUpdate.SecuredAmount;
+            TotalAmount = projectGrantAllocationRequestUpdate.TotalAmount;
         }
 
         public ProjectGrantAllocationRequest ToProjectGrantAllocationRequest()
         {
-            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID) {SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
+            return new ProjectGrantAllocationRequest(ProjectID, GrantAllocationID) {TotalAmount = TotalAmount};
         }
 
         public int ProjectID { get; set; }
         public int GrantAllocationID { get; set; }
         
         [ValidateMoneyInRangeForSqlServer]
-        public decimal? SecuredAmount { get; set; }
-
-        [ValidateMoneyInRangeForSqlServer]
-        public decimal? UnsecuredAmount { get; set; }
+        public decimal? TotalAmount { get; set; }
 
         public ProjectGrantAllocationRequestUpdate ToProjectGrantAllocationRequestUpdate()
         {
-            return new ProjectGrantAllocationRequestUpdate(ProjectID, GrantAllocationID) {SecuredAmount = SecuredAmount, UnsecuredAmount = UnsecuredAmount};
+            return new ProjectGrantAllocationRequestUpdate(ProjectID, GrantAllocationID) {TotalAmount = TotalAmount};
         }
 
-        public bool AreBothValuesZero()
-        {
-            return
-                SecuredAmount == 0 && UnsecuredAmount == 0;
-        }
+        //public bool AreBothValuesZero()
+        //{
+        //    return
+        //        SecuredAmount == 0 && UnsecuredAmount == 0;
+        //}
     }
 }

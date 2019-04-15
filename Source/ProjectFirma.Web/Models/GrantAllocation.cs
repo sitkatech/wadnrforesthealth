@@ -19,6 +19,10 @@ namespace ProjectFirma.Web.Models
 
         public string GrantNumberAndGrantAllocationDisplayName => $"{Grant.GrantNumber} {GrantAllocationName}";
 
+        public string AllocationAmountCurrencyDisplay => $"{AllocationAmount.ToStringCurrency()}";
+
+        public string GrantNumberAndGrantAllocationWithAllocationAmountDisplay => $"{GrantNumberAndGrantAllocationDisplayName} ({AllocationAmountCurrencyDisplay})";
+
         public HtmlString GrantNumberAndGrantAllocationDisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, GrantNumberAndGrantAllocationDisplayName);
 
         // ReSharper disable once InconsistentNaming
@@ -177,7 +181,7 @@ namespace ProjectFirma.Web.Models
                 {
                     return BottommostOrganization.OrganizationShortNameIfAvailable;
                 }
-                var organizationShortNameIfAvailable = $"({Organization.OrganizationShortNameIfAvailable})";
+                var organizationShortNameIfAvailable = $"({BottommostOrganization.OrganizationShortNameIfAvailable})";
                 return organizationShortNameIfAvailable.Length < 45 ? $"{GrantAllocationName.ToEllipsifiedString(45 - organizationShortNameIfAvailable.Length)} {organizationShortNameIfAvailable}" : $"{GrantAllocationName} {organizationShortNameIfAvailable}";
             }
         }
