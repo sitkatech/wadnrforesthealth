@@ -35,32 +35,6 @@ JSON format:
     )
     AS programIndexTemp
 
-    -- Clean leading zeros from 
-
-
-
--- Just show rows we would like to delete
-
--- Inner bits
-select *
-from dbo.ProgramIndex as dbpi
-full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
---where (tpi.program_index_code is null)
-
-
-
-select * from dbo.ProgramIndex as pin
-where pin.ProgramIndexID in 
-(
-    select dbpi.ProgramIndexID
-    from dbo.ProgramIndex as dbpi
-    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
-    where (tpi.program_index_code is null)
-)
-
-
-/*
-
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
 delete from dbo.ProgramIndex 
@@ -73,70 +47,36 @@ where ProgramIndexID in
 )
 
 
-*/
 
-
-
-
-/*
-
-
-
-
-
-
-
+--select * from dbo.ProgramIndex
+--select * from #programIndexSocrataTemp
 
 
 
 -- UPDATE (2nd attempt)
 -- Update values for keys found in both sides
-update dbv
+update dbpi
 set 
-    VendorName = tv.vendor_name,
-    VendorType = tv.vendor_type,
-    BillingAgency = tv.billing_agency,
-    BillingSubAgency = tv.billing_subagency,
-    BillingFund = tv.billing_fund,
-    VendorAddressLine1 = tv.addr1,
-    VendorAddressLine2 = tv.addr2,
-    VendorAddressLine3 = tv.addr3,
-    VendorCity = tv.city,
-    VendorState = tv.[state],
-    VendorZip = tv.zip_code,
-    Remarks = tv.remarks,
-    VendorPhone = tv.phone,
-    VendorStatus = tv.vendor_status,
-    TaxpayerIdNumber = tv.taxpayer_id_num,
-    Email = tv.email
+    Activity = tpi.activity,
+    Biennium = tpi.biennium,
+    Program = tpi.program,
+    Subactivity = tpi.subactivity,
+    Subprogram = tpi.subprogram,
+    ProgramIndexTitle = tpi.title
 from 
-    dbo.Vendor as dbv
-    join #vendorSocrataTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
---    full outer join #vendorSocrataTemp as tv on tv.vendor_num = dbv.StatewideVendorNumber and tv.vendor_num_suffix = dbv.StatewideVendorNumberSuffix
---where  dbv.StatewideVendorNumber is not null and dbv.StatewideVendorNumberSuffix is not null
---       and
---       tv.vendor_num is not null and tv.vendor_num_suffix is not null
+    dbo.ProgramIndex as dbpi
+    join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
     where 
     (
-        isnull(dbv.VendorName, '') != isnull(tv.vendor_name, '') or
-        isnull(dbv.VendorType, '') != isnull(tv.vendor_type, '') or
-        isnull(dbv.BillingAgency, '') != isnull(tv.billing_agency, '') or
-        isnull(dbv.BillingSubAgency, '') != isnull(tv.billing_subagency, '') or
-        isnull(dbv.BillingFund, '') != isnull(tv.billing_fund, '') or
-        isnull(dbv.VendorAddressLine1, '') != isnull(tv.addr1, '') or
-        isnull(dbv.VendorAddressLine2, '') != isnull(tv.addr2, '') or
-        isnull(dbv.VendorAddressLine3, '') != isnull(tv.addr3, '') or
-        isnull(dbv.VendorCity, '') != isnull(tv.city, '') or
-        isnull(dbv.VendorState, '') != isnull(tv.[state], '') or
-        isnull(dbv.VendorZip, '') != isnull(tv.zip_code, '') or
-        isnull(dbv.Remarks, '') != isnull(tv.remarks, '') or
-        isnull(dbv.VendorPhone, '') != isnull(tv.phone, '') or
-        isnull(dbv.VendorStatus, '') != isnull(tv.vendor_status, '') or
-        isnull(dbv.TaxpayerIdNumber, '') != isnull(tv.taxpayer_id_num, '') or
-        isnull(dbv.Email, '') != isnull(tv.email, '')
+        isnull(dbpi.Activity, '') != isnull(tpi.activity, '') or
+        isnull(dbpi.Biennium, '') != isnull(tpi.biennium, '') or
+        isnull(dbpi.Program, '') != isnull(tpi.program, '') or
+        isnull(dbpi.Subactivity, '') != isnull(tpi.subactivity, '') or
+        isnull(dbpi.Subprogram, '') != isnull(tpi.subprogram, '') or
+        isnull(dbpi.ProgramIndexTitle, '') != isnull(tpi.title, '')
     )
 
-
+/*
 -- INSERT (2nd attempt)
 -- Insert values not already found in our table
 insert into dbo.Vendor (VendorName,

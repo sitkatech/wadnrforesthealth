@@ -45,3 +45,7 @@ GO
 
 update ProgramIndex
 set ProgramIndexCode = '00' + ProgramIndexCode
+GO
+
+alter table ProgramIndex
+add Subactivity varchar(max) null
