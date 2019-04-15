@@ -5,29 +5,9 @@ angular.module("ProjectFirmaApp")
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
             $scope.selectedLocationLeafletID = null;
-        
-            $scope.IconStyleSelected = new L.icon({
-                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+fff200.png'
-            });
 
+            $scope.IconStyleSelected = new L.MakiMarkers.icon({ icon: "marker", color: "#fff200", size: "s" });
 
-            $scope.selectedStyle = {
-                fillColor: "#FFFF00",
-                fill: true,
-                fillOpacity: 0.2,
-                color: "#FFFF00",
-                weight: 5,
-                stroke: true
-            };
-
-            $scope.unselectedStyle = {
-                fillColor: "#405d74",
-                fill: true,
-                fillOpacity: 0.2,
-                color: "#405d74",
-                weight: 1,
-                stroke: true
-        };
 
         $scope.isSelectedProjectMapLocation = function (projectLocation) {
             if ($scope.selectedLocationLeafletID) {
@@ -46,17 +26,14 @@ angular.module("ProjectFirmaApp")
                         layer.setStyle({
                             color: '#fff200',
                             fillColor: '#fff200',
-                            weight: 6,
+                            weight: 3,
                             opacity: 0.6
                         });
                     }
                 } else {
                     if (layer._icon) {
-                        var iconColor = layer.feature.properties.ProjectStageColor.replace('#', '');
-                        var iconUrlString = 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+' + iconColor + '.png';
-                        var icon = new L.icon({
-                            iconUrl: iconUrlString
-                        });
+                        var iconColor = layer.feature.properties.ProjectStageColor;
+                        var icon = new L.MakiMarkers.icon({ icon: "marker", color: iconColor, size: "s" });
                         layer.setIcon(icon);
                     } else {
                         layer.setStyle({
