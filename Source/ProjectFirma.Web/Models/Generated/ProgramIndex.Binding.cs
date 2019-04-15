@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(int programIndexID, string programIndexCode, string programIndexTitle, string activity, int? biennium, string program, string subprogram) : this()
+        public ProgramIndex(int programIndexID, string programIndexCode, string programIndexTitle, string activity, int? biennium, string program, string subprogram, string subactivity) : this()
         {
             this.ProgramIndexID = programIndexID;
             this.ProgramIndexCode = programIndexCode;
@@ -40,17 +40,19 @@ namespace ProjectFirma.Web.Models
             this.Biennium = biennium;
             this.Program = program;
             this.Subprogram = subprogram;
+            this.Subactivity = subactivity;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(string programIndexCode) : this()
+        public ProgramIndex(string programIndexCode, string programIndexTitle) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProgramIndexID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProgramIndexCode = programIndexCode;
+            this.ProgramIndexTitle = programIndexTitle;
         }
 
 
@@ -59,7 +61,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProgramIndex CreateNewBlank()
         {
-            return new ProgramIndex(default(string));
+            return new ProgramIndex(default(string), default(string));
         }
 
         /// <summary>
@@ -118,6 +120,7 @@ namespace ProjectFirma.Web.Models
         public int? Biennium { get; set; }
         public string Program { get; set; }
         public string Subprogram { get; set; }
+        public string Subactivity { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 

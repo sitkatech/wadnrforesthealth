@@ -716,6 +716,7 @@
           <ScalarProperty Name="Biennium" ColumnName="Biennium" />
           <ScalarProperty Name="Program" ColumnName="Program" />
           <ScalarProperty Name="Subprogram" ColumnName="Subprogram" />
+          <ScalarProperty Name="Subactivity" ColumnName="Subactivity" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

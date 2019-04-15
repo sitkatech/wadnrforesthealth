@@ -38,14 +38,3 @@ GO
 ALTER TABLE [dbo].SocrataDataMartRawJsonImport  WITH CHECK ADD  CONSTRAINT [FK_SocrataDataMartRawJsonImport_SocrataDataMartRawJsonImportTableType_SocrataDataMartRawJsonImportTableTypeID] FOREIGN KEY(SocrataDataMartRawJsonImportTableTypeID)
 REFERENCES [dbo].SocrataDataMartRawJsonImportTableType (SocrataDataMartRawJsonImportTableTypeID)
 GO
-
--- Changing my mind about trying to adjust ProgramCodes. Re-introducing leading zeros.
-
-
-
-update ProgramIndex
-set ProgramIndexCode = '00' + ProgramIndexCode
-GO
-
-alter table ProgramIndex
-add Subactivity varchar(max) null
