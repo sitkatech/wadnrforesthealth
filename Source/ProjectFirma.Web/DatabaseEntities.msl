@@ -712,8 +712,8 @@
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProgramIndexCode" ColumnName="ProgramIndexCode" />
           <ScalarProperty Name="ProgramIndexTitle" ColumnName="ProgramIndexTitle" />
-          <ScalarProperty Name="Activity" ColumnName="Activity" />
           <ScalarProperty Name="Biennium" ColumnName="Biennium" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
           <ScalarProperty Name="Program" ColumnName="Program" />
           <ScalarProperty Name="Subprogram" ColumnName="Subprogram" />
           <ScalarProperty Name="Subactivity" ColumnName="Subactivity" />

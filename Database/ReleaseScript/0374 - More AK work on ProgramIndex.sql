@@ -14,12 +14,6 @@ alter table dbo.ProgramIndex
 drop constraint AK_ProgramIndex_ProgramIndexCode
 GO
 
-
--- These are wired to all-null ProgramIndexes. They make no sense; unhooking them and killing them.
-update GrantAllocation
-set ProgramIndexID = null
-where ProgramIndexID in (4,5,10)
-
 delete from ProgramIndex where ProgramIndexTitle is null and Biennium is null
 
 alter table dbo.ProgramIndex 

@@ -31,13 +31,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(int programIndexID, string programIndexCode, string programIndexTitle, string activity, string biennium, string program, string subprogram, string subactivity) : this()
+        public ProgramIndex(int programIndexID, string programIndexCode, string programIndexTitle, string biennium, string activity, string program, string subprogram, string subactivity) : this()
         {
             this.ProgramIndexID = programIndexID;
             this.ProgramIndexCode = programIndexCode;
             this.ProgramIndexTitle = programIndexTitle;
-            this.Activity = activity;
             this.Biennium = biennium;
+            this.Activity = activity;
             this.Program = program;
             this.Subprogram = subprogram;
             this.Subactivity = subactivity;
@@ -117,8 +117,8 @@ namespace ProjectFirma.Web.Models
         public int ProgramIndexID { get; set; }
         public string ProgramIndexCode { get; set; }
         public string ProgramIndexTitle { get; set; }
-        public string Activity { get; set; }
         public string Biennium { get; set; }
+        public string Activity { get; set; }
         public string Program { get; set; }
         public string Subprogram { get; set; }
         public string Subactivity { get; set; }
@@ -132,8 +132,8 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProgramIndexCode = 255;
             public const int ProgramIndexTitle = 255;
-            public const int Activity = 200;
             public const int Biennium = 255;
+            public const int Activity = 200;
             public const int Program = 200;
             public const int Subprogram = 200;
         }
