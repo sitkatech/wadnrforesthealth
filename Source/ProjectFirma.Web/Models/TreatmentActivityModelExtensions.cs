@@ -101,7 +101,7 @@ namespace ProjectFirma.Web.Models
 
         public static string GetProjectCodeName(this Models.TreatmentActivity treatmentActivity)
         {
-            return treatmentActivity.ProjectCode == null ? "" : treatmentActivity.ProjectCode.ProjectCodeAbbrev;
+            return treatmentActivity.ProjectCode == null ? "" : treatmentActivity.ProjectCode.ProjectCodeName;
         }
 
         public static string GetProjectTypeName(this Models.TreatmentActivity treatmentActivity)

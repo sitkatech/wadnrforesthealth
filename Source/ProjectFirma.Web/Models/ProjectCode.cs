@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectCode : IAuditableEntity
     {
-        public string AuditDescriptionString => ProjectCodeAbbrev;
+        public string AuditDescriptionString => ProjectCodeName;
 
         public static List<ProjectCode> GetListProjectCodesFromCommaDelimitedString(string commaDelimitedListOfProjectCodes)
         {
@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Models
             {
                 foreach (var code in commaDelimitedListOfProjectCodes.Split(',').Select(s => s.Trim()))
                 {
-                    var foundCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(x => x.ProjectCodeAbbrev == code);
+                    var foundCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.SingleOrDefault(x => x.ProjectCodeName == code);
                     if (foundCode != null)
                     {
                         projectCodes.Add(foundCode);

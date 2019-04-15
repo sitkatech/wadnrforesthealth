@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Common
         /// </summary>
         public static string ToDistinctOrderedCsvList(this ICollection<ProjectCode> projectCodes)
         {
-            return MakeDistinctCaseInsensitiveStringListFromObjectList(projectCodes, x => x.ProjectCodeAbbrev);
+            return MakeDistinctCaseInsensitiveStringListFromObjectList(projectCodes, x => x.ProjectCodeName);
         }
 
         /// <summary>

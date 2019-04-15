@@ -20,6 +20,7 @@ namespace ProjectFirma.Web.Models
     {
         public static readonly SocrataDataMartRawJsonImportTableTypeVendor Vendor = SocrataDataMartRawJsonImportTableTypeVendor.Instance;
         public static readonly SocrataDataMartRawJsonImportTableTypeProgramIndex ProgramIndex = SocrataDataMartRawJsonImportTableTypeProgramIndex.Instance;
+        public static readonly SocrataDataMartRawJsonImportTableTypeProjectCode ProjectCode = SocrataDataMartRawJsonImportTableTypeProjectCode.Instance;
 
         public static readonly List<SocrataDataMartRawJsonImportTableType> All;
         public static readonly ReadOnlyDictionary<int, SocrataDataMartRawJsonImportTableType> AllLookupDictionary;
@@ -29,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static SocrataDataMartRawJsonImportTableType()
         {
-            All = new List<SocrataDataMartRawJsonImportTableType> { Vendor, ProgramIndex };
+            All = new List<SocrataDataMartRawJsonImportTableType> { Vendor, ProgramIndex, ProjectCode };
             AllLookupDictionary = new ReadOnlyDictionary<int, SocrataDataMartRawJsonImportTableType>(All.ToDictionary(x => x.SocrataDataMartRawJsonImportTableTypeID));
         }
 
@@ -99,6 +100,8 @@ namespace ProjectFirma.Web.Models
             {
                 case SocrataDataMartRawJsonImportTableTypeEnum.ProgramIndex:
                     return ProgramIndex;
+                case SocrataDataMartRawJsonImportTableTypeEnum.ProjectCode:
+                    return ProjectCode;
                 case SocrataDataMartRawJsonImportTableTypeEnum.Vendor:
                     return Vendor;
                 default:
@@ -110,7 +113,8 @@ namespace ProjectFirma.Web.Models
     public enum SocrataDataMartRawJsonImportTableTypeEnum
     {
         Vendor = 1,
-        ProgramIndex = 2
+        ProgramIndex = 2,
+        ProjectCode = 3
     }
 
     public partial class SocrataDataMartRawJsonImportTableTypeVendor : SocrataDataMartRawJsonImportTableType
@@ -123,5 +127,11 @@ namespace ProjectFirma.Web.Models
     {
         private SocrataDataMartRawJsonImportTableTypeProgramIndex(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
         public static readonly SocrataDataMartRawJsonImportTableTypeProgramIndex Instance = new SocrataDataMartRawJsonImportTableTypeProgramIndex(2, @"ProgramIndex");
+    }
+
+    public partial class SocrataDataMartRawJsonImportTableTypeProjectCode : SocrataDataMartRawJsonImportTableType
+    {
+        private SocrataDataMartRawJsonImportTableTypeProjectCode(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
+        public static readonly SocrataDataMartRawJsonImportTableTypeProjectCode Instance = new SocrataDataMartRawJsonImportTableTypeProjectCode(3, @"ProjectCode");
     }
 }

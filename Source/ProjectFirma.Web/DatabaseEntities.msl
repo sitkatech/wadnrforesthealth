@@ -767,8 +767,11 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCode">
         <MappingFragment StoreEntitySet="ProjectCode">
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-          <ScalarProperty Name="ProjectCodeAbbrev" ColumnName="ProjectCodeAbbrev" />
+          <ScalarProperty Name="ProjectCodeName" ColumnName="ProjectCodeName" />
           <ScalarProperty Name="ProjectCodeTitle" ColumnName="ProjectCodeTitle" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ProjectStartDate" ColumnName="ProjectStartDate" />
+          <ScalarProperty Name="ProjectEndDate" ColumnName="ProjectEndDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

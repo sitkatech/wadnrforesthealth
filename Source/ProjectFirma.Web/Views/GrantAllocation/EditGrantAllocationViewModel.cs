@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantID = grantAllocation.GrantID;
             ProgramIndexID = grantAllocation.ProgramIndexID;
             ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
-            ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeAbbrev).Aggregate((x, y) => x + ", " + y) : string.Empty;
+            ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeName).Aggregate((x, y) => x + ", " + y) : string.Empty;
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             DivisionID = grantAllocation.DivisionID;
             RegionID = grantAllocation.RegionIDDisplay;
