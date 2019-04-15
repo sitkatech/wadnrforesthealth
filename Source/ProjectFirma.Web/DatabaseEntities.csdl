@@ -26,6 +26,7 @@
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
+    <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantAllocationNoteInternal" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramManager" />
@@ -315,6 +316,10 @@
     <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1224,7 +1229,6 @@
     <Property Name="StartDate" Type="DateTime" />
     <Property Name="EndDate" Type="DateTime" />
     <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="CostTypeID" Type="Int32" />
     <Property Name="ProgramIndexID" Type="Int32" />
     <Property Name="FederalFundCodeID" Type="Int32" />
     <Property Name="OrganizationID" Type="Int32" />
@@ -1240,6 +1244,7 @@
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_ProgramIndex_ProgramIndexID" FromRole="GrantAllocations" ToRole="ProgramIndex" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID" FromRole="GrantAllocations" ToRole="Region" />
+    <NavigationProperty Name="GrantAllocationBudgetLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationBudgetLineItems" />
     <NavigationProperty Name="GrantAllocationNotes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNotes" />
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
     <NavigationProperty Name="GrantAllocationProgramManagers" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramManagers" />
@@ -1249,6 +1254,17 @@
     <NavigationProperty Name="ProjectGrantAllocationExpenditureUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationExpenditureUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationExpenditureUpdates" />
     <NavigationProperty Name="ProjectGrantAllocationRequests" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequest_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequests" />
     <NavigationProperty Name="ProjectGrantAllocationRequestUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="ProjectGrantAllocationRequestUpdates" />
+  </EntityType>
+  <EntityType Name="GrantAllocationBudgetLineItem">
+    <Key>
+      <PropertyRef Name="GrantAllocationBudgetLineItemID" />
+    </Key>
+    <Property Name="GrantAllocationBudgetLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="CostTypeID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationBudgetLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="GrantALlocationBudgetLineItemNote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationBudgetLineItems" ToRole="GrantAllocation" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -3218,6 +3234,18 @@
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationBudgetLineItems" Type="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationBudgetLineItems">
+        <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

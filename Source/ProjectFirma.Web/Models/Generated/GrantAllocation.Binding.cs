@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected GrantAllocation()
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
+            this.GrantAllocationBudgetLineItems = new HashSet<GrantAllocationBudgetLineItem>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramManagers = new HashSet<GrantAllocationProgramManager>();
@@ -39,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? costTypeID, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -47,7 +48,6 @@ namespace ProjectFirma.Web.Models
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.AllocationAmount = allocationAmount;
-            this.CostTypeID = costTypeID;
             this.ProgramIndexID = programIndexID;
             this.FederalFundCodeID = federalFundCodeID;
             this.OrganizationID = organizationID;
@@ -94,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramManagers.Any() || GrantAllocationProjectCodes.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantAllocationProjectCode).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -126,6 +126,11 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in AgreementGrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationBudgetLineItems.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -183,7 +188,6 @@ namespace ProjectFirma.Web.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
-        public int? CostTypeID { get; set; }
         public int? ProgramIndexID { get; set; }
         public int? FederalFundCodeID { get; set; }
         public int? OrganizationID { get; set; }
@@ -195,6 +199,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
+        public virtual ICollection<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
@@ -205,7 +210,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual Grant Grant { get; set; }
-        public CostType CostType { get { return CostTypeID.HasValue ? CostType.AllLookupDictionary[CostTypeID.Value] : null; } }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }

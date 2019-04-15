@@ -26,6 +26,7 @@
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
@@ -263,6 +264,10 @@
     <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1155,7 +1160,6 @@
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
     <Property Name="AllocationAmount" Type="money" />
-    <Property Name="CostTypeID" Type="int" />
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="FederalFundCodeID" Type="int" />
     <Property Name="OrganizationID" Type="int" />
@@ -1163,6 +1167,16 @@
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
     <Property Name="GrantAllocationFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantAllocationBudgetLineItem">
+    <Key>
+      <PropertyRef Name="GrantAllocationBudgetLineItemID" />
+    </Key>
+    <Property Name="GrantAllocationBudgetLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="CostTypeID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
+    <Property Name="GrantALlocationBudgetLineItemNote" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -2692,6 +2706,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationBudgetLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationBudgetLineItems">
+        <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
