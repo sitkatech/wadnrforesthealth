@@ -1,5 +1,5 @@
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND OBJECT_ID = OBJECT_ID('dbo.pProgramIndexImportJson'))
-	DROP PROCEDURE dbo.pProgramIndexImportJson
+    DROP PROCEDURE dbo.pProgramIndexImportJson
 GO
 
 CREATE PROCEDURE dbo.pProgramIndexImportJson
@@ -38,20 +38,16 @@ JSON format:
     AS programIndexTemp
 
 
+--- HACK BLOCK
 
-/*
-select * from #programIndexSocrataTemp as tpi
-where tpi.program_index_code in ('00216', '0021B', '0025N')
-*/
-
-
-
+    select *
+    from dbo.ProgramIndex as dbpi
+    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
+    where (tpi.program_index_code is null and tpi.biennium is null)
 
 
 
-
-
-
+--- HACK BLOCK
 
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
@@ -63,11 +59,6 @@ where ProgramIndexID in
     full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
     where (tpi.program_index_code is null and tpi.biennium is null)
 )
-
-
-
---select * from dbo.ProgramIndex
---select * from #programIndexSocrataTemp
 
 -- UPDATE
 -- Update values for keys found in both sides
@@ -92,7 +83,6 @@ from
         isnull(dbpi.ProgramIndexTitle, '') != isnull(tpi.title, '')
     )
 
-
 -- INSERT 
 -- Insert values not already found in our table
 insert into dbo.ProgramIndex (ProgramIndexCode,
@@ -114,9 +104,6 @@ full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi
 where  (dbpi.ProgramIndexCode is null and dbpi.Biennium is null)
        and
        (tpi.program_index_code is not null and tpi.biennium is not null)
-
-
-
 
 end
 go

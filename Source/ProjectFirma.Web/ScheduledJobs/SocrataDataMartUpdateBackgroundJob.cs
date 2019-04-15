@@ -68,7 +68,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         public void DownloadSocrataProgramIndexTable()
         {
-            Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
+           Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
 
             // Pull JSON off the page into a (possibly huge) string
             var fullUrl = AddMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);

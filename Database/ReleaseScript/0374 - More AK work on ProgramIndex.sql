@@ -25,14 +25,20 @@ delete from ProgramIndex where ProgramIndexTitle is null and Biennium is null
 alter table dbo.ProgramIndex 
 alter column ProgramIndexTitle varchar(255) not null
 
--- Wishful thinking
 
-/*
-alter table dbo.ProgramIndex 
-alter column Activity varchar(255) not null
+-- All the current entries become the current biennium
+update dbo.ProgramIndex
+set Biennium = 2019
+where Biennium is null
 
 alter table dbo.ProgramIndex 
 alter column Biennium varchar(255) not null
+
+
+-- Wishful thinking:
+/*
+alter table dbo.ProgramIndex 
+alter column Activity varchar(255) not null
 
 alter table dbo.ProgramIndex 
 alter column Program varchar(255) not null
