@@ -186,7 +186,7 @@ ProjectFirmaMaps.Map.prototype.bindPopupToFeature = function (layer, feature) {
                 //var popup = e.target.getPopup();
                 self.map.setView(e.target.getLatLng());
                 jQuery.get(feature.properties.PopupUrl).done(function(data) {
-                    layer.bindPopup(data).openPopup({});
+                    layer.bindPopup(data).openPopup();
                 });
 
             });

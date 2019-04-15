@@ -68,7 +68,6 @@ namespace ProjectFirma.Web.Views.Results
         {
         }
 
-        //This has been added for the Project Map display
         public ProjectMapLocationJson(Models.Project x)
         {
             ProjectMapLocationName = x.ProjectName;

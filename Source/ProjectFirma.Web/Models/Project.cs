@@ -421,6 +421,11 @@ namespace ProjectFirma.Web.Models
             feature.Properties.Add("TaxonomyTrunkID",
                 ProjectType.TaxonomyBranch.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture));
             feature.Properties.Add("ProjectStageID", ProjectStageID.ToString(CultureInfo.InvariantCulture));
+            if (ProjectStage != null)
+            {
+                feature.Properties.Add("ProjectStageColor", ProjectStage.ProjectStageColor);
+            }
+
             feature.Properties.Add("Info", DisplayName);
             if (addProjectProperties)
             {
