@@ -125,6 +125,8 @@ angular.module("ProjectFirmaApp")
 
         jQuery(document).on('change', '.leaflet-control-layers-selector',
             function () {
+                // This hardcoding is not great, but TK and SLG both can't see a better way.
+                // This check at least will ensure that the control we looking for actually exists.
                 if (jQuery(this).parents("div.leaflet-control-layers-overlays").find("span:contains('Mapped Projects')").length > 0) {
                     if (jQuery(this).siblings("span:contains(' Mapped Projects')").length > 0) {
                         var checkbox = jQuery(this);
