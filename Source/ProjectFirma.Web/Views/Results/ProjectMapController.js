@@ -6,11 +6,8 @@ angular.module("ProjectFirmaApp")
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
             $scope.selectedLocationLeafletID = null;
         
-            $scope.IconStyleDefault = new L.icon({
-                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+0000ff.png'
-            });
             $scope.IconStyleSelected = new L.icon({
-                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+fff200.png'
+                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+fff200.png'
             });
 
 
@@ -55,7 +52,12 @@ angular.module("ProjectFirmaApp")
                     }
                 } else {
                     if (layer._icon) {
-                        layer.setIcon($scope.IconStyleDefault);
+                        var iconColor = layer.feature.properties.ProjectStageColor.replace('#', '');
+                        var iconUrlString = 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+' + iconColor + '.png';
+                        var icon = new L.icon({
+                            iconUrl: iconUrlString
+                        });
+                        layer.setIcon(icon);
                     } else {
                         layer.setStyle({
                             color: '#02ffff',
@@ -120,6 +122,25 @@ angular.module("ProjectFirmaApp")
         jQuery(document).ready(function() {
             initializeMap();
         });
+
+        jQuery(document).on('change', '.leaflet-control-layers-selector',
+            function () {
+                // This hardcoding is not great, but TK and SLG both can't see a better way.
+                // This check at least will ensure that the control we looking for actually exists.
+                if (jQuery(this).parents("div.leaflet-control-layers-overlays").find("span:contains('Mapped Projects')").length > 0) {
+                    if (jQuery(this).siblings("span:contains(' Mapped Projects')").length > 0) {
+                        var checkbox = jQuery(this);
+                        if (checkbox.is(':checked')) {
+                            jQuery('.mapGridContainer').show();
+                        } else {
+                            jQuery('.mapGridContainer').hide();
+                        }
+                    }
+                } else {
+                    alert("No 'Mapped Projects' layer found. Please contact an admin.");
+                }
+      
+            });
 
     });
 
