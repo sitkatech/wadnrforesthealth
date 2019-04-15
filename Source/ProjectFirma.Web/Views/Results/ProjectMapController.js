@@ -123,6 +123,23 @@ angular.module("ProjectFirmaApp")
             initializeMap();
         });
 
+        jQuery(document).on('change', '.leaflet-control-layers-selector',
+            function() {
+                
+
+                if (jQuery(this).siblings("span:contains('Mapped Projects')")) {
+                    var checkbox = jQuery(this);
+                    if (checkbox.is(':checked')) {
+                        jQuery('.mapGridContainer').show();
+                    } else {
+                        jQuery('.mapGridContainer').hide();
+                    }
+
+                }
+
+                
+            });
+
     });
 
 
