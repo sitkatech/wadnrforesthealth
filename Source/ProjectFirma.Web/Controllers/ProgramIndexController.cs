@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var programIndicesFound = HttpRequestStorage.DatabaseEntities.ProgramIndices.GetProgramIndicesWithoutHistoricRecords()
                 .GetProgramIndexFindResults(term).Take(20);
-            var programIndicesAsListItems = programIndicesFound.Select(p => new ListItem(p.ProgramIndexAbbrev, p.ProgramIndexID.ToString(CultureInfo.InvariantCulture))).ToList();
+            var programIndicesAsListItems = programIndicesFound.Select(p => new ListItem(p.ProgramIndexCode, p.ProgramIndexID.ToString(CultureInfo.InvariantCulture))).ToList();
             var programIndicesAsAnonymousJsonStructure = programIndicesAsListItems.Select(v => new { label = v.Text, value = v.Text, actualValue = v.Value });
             //use JSON structure for jquerys autocomplete functionality
             return Json(programIndicesAsAnonymousJsonStructure, JsonRequestBehavior.AllowGet);

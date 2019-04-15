@@ -6,7 +6,7 @@ delete from dbo.SocrataDataMartRawJsonImportTableType
 */
 
 insert into dbo.SocrataDataMartRawJsonImportTableType(SocrataDataMartRawJsonImportTableTypeID, SocrataDataMartRawJsonImportTableTypeName) values (1, 'Vendor')
-insert into dbo.SocrataDataMartRawJsonImportTableType(SocrataDataMartRawJsonImportTableTypeID, SocrataDataMartRawJsonImportTableTypeName) values (2, 'Payment')
-insert into dbo.SocrataDataMartRawJsonImportTableType(SocrataDataMartRawJsonImportTableTypeID, SocrataDataMartRawJsonImportTableTypeName) values (3, 'PumpkinSpice')
+insert into dbo.SocrataDataMartRawJsonImportTableType(SocrataDataMartRawJsonImportTableTypeID, SocrataDataMartRawJsonImportTableTypeName) values (2, 'ProgramIndex')
+--insert into dbo.SocrataDataMartRawJsonImportTableType(SocrataDataMartRawJsonImportTableTypeID, SocrataDataMartRawJsonImportTableTypeName) values (3, 'PumpkinSpice')
 
 

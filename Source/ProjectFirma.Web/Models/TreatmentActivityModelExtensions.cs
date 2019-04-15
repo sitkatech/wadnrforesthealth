@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
 
         public static string GetProgramIndexName(this Models.TreatmentActivity treatmentActivity)
         {
-            return treatmentActivity.ProgramIndex == null ? "" : treatmentActivity.ProgramIndex.ProgramIndexAbbrev;
+            return treatmentActivity.ProgramIndex == null ? "" : treatmentActivity.ProgramIndex.ProgramIndexCode;
         }
 
         public static string GetProjectCodeName(this Models.TreatmentActivity treatmentActivity)

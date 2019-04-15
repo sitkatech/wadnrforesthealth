@@ -38,5 +38,3 @@ GO
 ALTER TABLE [dbo].SocrataDataMartRawJsonImport  WITH CHECK ADD  CONSTRAINT [FK_SocrataDataMartRawJsonImport_SocrataDataMartRawJsonImportTableType_SocrataDataMartRawJsonImportTableTypeID] FOREIGN KEY(SocrataDataMartRawJsonImportTableTypeID)
 REFERENCES [dbo].SocrataDataMartRawJsonImportTableType (SocrataDataMartRawJsonImportTableTypeID)
 GO
-
---rollback tran

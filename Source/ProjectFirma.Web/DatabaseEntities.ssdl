@@ -1565,9 +1565,12 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
       <PropertyRef Name="ProgramIndexID" />
     </Key>
     <Property Name="ProgramIndexID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProgramIndexAbbrev" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="ProgramIndexCode" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="ProgramIndexTitle" Type="varchar" MaxLength="255" />
-    <Property Name="IsHistoric" Type="bit" Nullable="false" />
+    <Property Name="Activity" Type="varchar" MaxLength="200" />
+    <Property Name="Biennium" Type="int" />
+    <Property Name="Program" Type="varchar" MaxLength="200" />
+    <Property Name="Subprogram" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Project">
     <Key>
@@ -4624,6 +4627,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
   </Function>
   <Function Name="LTrimX" ReturnType="varchar(max)" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="str" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="pProgramIndexImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
   </Function>
   <Function Name="pSetMeToWADNRAdminRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="FirstName" Type="varchar" Mode="In" />

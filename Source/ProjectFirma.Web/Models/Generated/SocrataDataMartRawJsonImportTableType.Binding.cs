@@ -19,8 +19,7 @@ namespace ProjectFirma.Web.Models
     public abstract partial class SocrataDataMartRawJsonImportTableType : IHavePrimaryKey
     {
         public static readonly SocrataDataMartRawJsonImportTableTypeVendor Vendor = SocrataDataMartRawJsonImportTableTypeVendor.Instance;
-        public static readonly SocrataDataMartRawJsonImportTableTypePayment Payment = SocrataDataMartRawJsonImportTableTypePayment.Instance;
-        public static readonly SocrataDataMartRawJsonImportTableTypePumpkinSpice PumpkinSpice = SocrataDataMartRawJsonImportTableTypePumpkinSpice.Instance;
+        public static readonly SocrataDataMartRawJsonImportTableTypeProgramIndex ProgramIndex = SocrataDataMartRawJsonImportTableTypeProgramIndex.Instance;
 
         public static readonly List<SocrataDataMartRawJsonImportTableType> All;
         public static readonly ReadOnlyDictionary<int, SocrataDataMartRawJsonImportTableType> AllLookupDictionary;
@@ -30,7 +29,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static SocrataDataMartRawJsonImportTableType()
         {
-            All = new List<SocrataDataMartRawJsonImportTableType> { Vendor, Payment, PumpkinSpice };
+            All = new List<SocrataDataMartRawJsonImportTableType> { Vendor, ProgramIndex };
             AllLookupDictionary = new ReadOnlyDictionary<int, SocrataDataMartRawJsonImportTableType>(All.ToDictionary(x => x.SocrataDataMartRawJsonImportTableTypeID));
         }
 
@@ -98,10 +97,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case SocrataDataMartRawJsonImportTableTypeEnum.Payment:
-                    return Payment;
-                case SocrataDataMartRawJsonImportTableTypeEnum.PumpkinSpice:
-                    return PumpkinSpice;
+                case SocrataDataMartRawJsonImportTableTypeEnum.ProgramIndex:
+                    return ProgramIndex;
                 case SocrataDataMartRawJsonImportTableTypeEnum.Vendor:
                     return Vendor;
                 default:
@@ -113,8 +110,7 @@ namespace ProjectFirma.Web.Models
     public enum SocrataDataMartRawJsonImportTableTypeEnum
     {
         Vendor = 1,
-        Payment = 2,
-        PumpkinSpice = 3
+        ProgramIndex = 2
     }
 
     public partial class SocrataDataMartRawJsonImportTableTypeVendor : SocrataDataMartRawJsonImportTableType
@@ -123,15 +119,9 @@ namespace ProjectFirma.Web.Models
         public static readonly SocrataDataMartRawJsonImportTableTypeVendor Instance = new SocrataDataMartRawJsonImportTableTypeVendor(1, @"Vendor");
     }
 
-    public partial class SocrataDataMartRawJsonImportTableTypePayment : SocrataDataMartRawJsonImportTableType
+    public partial class SocrataDataMartRawJsonImportTableTypeProgramIndex : SocrataDataMartRawJsonImportTableType
     {
-        private SocrataDataMartRawJsonImportTableTypePayment(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
-        public static readonly SocrataDataMartRawJsonImportTableTypePayment Instance = new SocrataDataMartRawJsonImportTableTypePayment(2, @"Payment");
-    }
-
-    public partial class SocrataDataMartRawJsonImportTableTypePumpkinSpice : SocrataDataMartRawJsonImportTableType
-    {
-        private SocrataDataMartRawJsonImportTableTypePumpkinSpice(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
-        public static readonly SocrataDataMartRawJsonImportTableTypePumpkinSpice Instance = new SocrataDataMartRawJsonImportTableTypePumpkinSpice(3, @"PumpkinSpice");
+        private SocrataDataMartRawJsonImportTableTypeProgramIndex(int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName) : base(socrataDataMartRawJsonImportTableTypeID, socrataDataMartRawJsonImportTableTypeName) {}
+        public static readonly SocrataDataMartRawJsonImportTableTypeProgramIndex Instance = new SocrataDataMartRawJsonImportTableTypeProgramIndex(2, @"ProgramIndex");
     }
 }

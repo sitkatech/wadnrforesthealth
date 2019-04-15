@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Common
         /// </summary>
         public static string ToDistinctOrderedCsvList(this ICollection<ProgramIndex> programIndices)
         {
-            return MakeDistinctCaseInsensitiveStringListFromObjectList(programIndices, x => x.ProgramIndexAbbrev);
+            return MakeDistinctCaseInsensitiveStringListFromObjectList(programIndices, x => x.ProgramIndexCode);
         }
 
         /// <summary>

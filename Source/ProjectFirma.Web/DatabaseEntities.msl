@@ -710,9 +710,12 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramIndex">
         <MappingFragment StoreEntitySet="ProgramIndex">
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
-          <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
+          <ScalarProperty Name="ProgramIndexCode" ColumnName="ProgramIndexCode" />
           <ScalarProperty Name="ProgramIndexTitle" ColumnName="ProgramIndexTitle" />
-          <ScalarProperty Name="IsHistoric" ColumnName="IsHistoric" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="Biennium" ColumnName="Biennium" />
+          <ScalarProperty Name="Program" ColumnName="Program" />
+          <ScalarProperty Name="Subprogram" ColumnName="Subprogram" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

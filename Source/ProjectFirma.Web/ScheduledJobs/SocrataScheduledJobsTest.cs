@@ -13,9 +13,14 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             var socrataJob = new SocrataDataMartUpdateBackgroundJob("SampleJobName");
             socrataJob.DownloadSocrataVendorTable();
+        }
 
-            //Assert.That(info.Where(x => x.FeatureCount == 0).ToList(), Is.Empty, $"All should have at least one {_typeOfFirmaBaseFeature.Name}");
-            //Assert.That(info.Where(x => x.FeatureCount > 1).ToList(), Is.Empty, $"Should have no more than one{_typeOfFirmaBaseFeature.Name}");
+        [Test]
+        [Ignore("The test is valid, but we want to avoid pounding on the web service when we don't have to, as we could get throttled.")]
+        public void DownloadProgramIndexData()
+        {
+            var socrataJob = new SocrataDataMartUpdateBackgroundJob("ProgramIndexTestJob");
+            socrataJob.DownloadSocrataProgramIndexTable();
         }
 
     }

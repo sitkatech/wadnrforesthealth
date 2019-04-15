@@ -10,7 +10,9 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
-        private static string VendorJsonSocrataUrl = "https://data.wa.gov/resource/3j9d-77sr.json?$limit=9999999";
+        private static string VendorJsonSocrataUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
+        private static string ProgramIndexJsonSocrataUrl = "https://data.wa.gov/resource/quhu-28uh.json";
+
         private const int SqlCommandTimeoutInSeconds = 600;
 
         public SocrataDataMartUpdateBackgroundJob(string jobName) : base()
@@ -27,6 +29,11 @@ namespace ProjectFirma.Web.ScheduledJobs
         protected override void RunJobImplementation()
         {
             ProcessRemindersImpl();
+        }
+
+        private string AddMaxLimitTagToUrl(string baseSocrataJsonApiUrl)
+        {
+            return $"{baseSocrataJsonApiUrl}?$limit = 9999999";
         }
 
 
@@ -47,7 +54,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
 
             // Pull JSON off the page into a (possibly huge) string
-            string vendorTempJson = DownloadSocrataUrlToString(VendorJsonSocrataUrl, SocrataDataMartRawJsonImportTableType.Vendor);
+            string vendorTempJson = DownloadSocrataUrlToString(AddMaxLimitTagToUrl(VendorJsonSocrataUrl), SocrataDataMartRawJsonImportTableType.Vendor);
             Logger.Info($"Vendor JSON length: {vendorTempJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID  = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, vendorTempJson);
@@ -57,6 +64,23 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             Logger.Info($"Ending '{JobName}' DownloadSocrataVendorTable");
         }
+
+        public void DownloadSocrataProgramIndexTable()
+        {
+            Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
+
+            // Pull JSON off the page into a (possibly huge) string
+            string programIndexJson = DownloadSocrataUrlToString(AddMaxLimitTagToUrl(ProgramIndexJsonSocrataUrl), SocrataDataMartRawJsonImportTableType.ProgramIndex);
+            Logger.Info($"ProgramIndex JSON length: {programIndexJson.Length}");
+            // Push that string into a raw JSON string in the raw staging table
+            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProgramIndex, programIndexJson);
+            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+            // Use the JSON to refresh the Vendor table
+            ProgramIndexImportJson(socrataDataMartRawJsonImportID);
+
+            Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
+        }
+
 
         /// <summary>
         /// Download the contents of the given URL to a temp file
@@ -115,6 +139,23 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             Logger.Info($"Ending '{JobName}' VendorImportJson");
         }
+
+        private void ProgramIndexImportJson(int socrataDataMartRawJsonImportID)
+        {
+            Logger.Info($"Starting '{JobName}' ProgramIndexImportJson");
+            string vendorImportProc = "pProgramIndexImportJson";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending '{JobName}' ProgramIndexImportJson");
+        }
+
 
         /// <summary>
         /// Execute a block of ad-hoc SQL.

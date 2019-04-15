@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
             ProgramIndexID = treatmentActivity.ProgramIndexID;
-            ProgramIndexSearchCriteria = treatmentActivity.ProgramIndex?.ProgramIndexAbbrev;
+            ProgramIndexSearchCriteria = treatmentActivity.ProgramIndex?.ProgramIndexCode;
             ProjectCodeID = treatmentActivity.ProjectCodeID;
             ProjectCodeSearchCriteria = treatmentActivity.ProjectCode?.ProjectCodeAbbrev;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
