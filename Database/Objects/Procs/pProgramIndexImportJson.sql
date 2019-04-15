@@ -17,6 +17,8 @@ JSON format:
 
 */
 
+    -- Create temp table from the bulk JSON field
+    ---------------------------------------------
 
     SELECT programIndexTemp.*
     into #programIndexSocrataTemp
@@ -42,8 +44,8 @@ where ProgramIndexID in
 (
     select dbpi.ProgramIndexID
     from dbo.ProgramIndex as dbpi
-    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
-    where (tpi.program_index_code is null)
+    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
+    where (tpi.program_index_code is null and tpi.biennium is null)
 )
 
 
@@ -51,18 +53,31 @@ where ProgramIndexID in
 --select * from dbo.ProgramIndex
 --select * from #programIndexSocrataTemp
 
-
-
 -- UPDATE (2nd attempt)
 -- Update values for keys found in both sides
 update dbpi
 set 
     Activity = tpi.activity,
-    Biennium = tpi.biennium,
+    --Biennium = tpi.biennium,
     Program = tpi.program,
     Subactivity = tpi.subactivity,
     Subprogram = tpi.subprogram,
     ProgramIndexTitle = tpi.title
+from 
+    dbo.ProgramIndex as dbpi
+    join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
+    where 
+    (
+        isnull(dbpi.Activity, '') != isnull(tpi.activity, '') or
+        --isnull(dbpi.Biennium, '') != isnull(tpi.biennium, '') or
+        isnull(dbpi.Program, '') != isnull(tpi.program, '') or
+        isnull(dbpi.Subactivity, '') != isnull(tpi.subactivity, '') or
+        isnull(dbpi.Subprogram, '') != isnull(tpi.subprogram, '') or
+        isnull(dbpi.ProgramIndexTitle, '') != isnull(tpi.title, '')
+    )
+
+/*
+select * 
 from 
     dbo.ProgramIndex as dbpi
     join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
@@ -75,8 +90,11 @@ from
         isnull(dbpi.Subprogram, '') != isnull(tpi.subprogram, '') or
         isnull(dbpi.ProgramIndexTitle, '') != isnull(tpi.title, '')
     )
+*/
+
 
 /*
+
 -- INSERT (2nd attempt)
 -- Insert values not already found in our table
 insert into dbo.Vendor (VendorName,
