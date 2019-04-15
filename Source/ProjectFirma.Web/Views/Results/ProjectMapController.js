@@ -6,9 +6,6 @@ angular.module("ProjectFirmaApp")
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
             $scope.selectedLocationLeafletID = null;
         
-            $scope.IconStyleDefault = new L.icon({
-                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+0000ff.png'
-            });
             $scope.IconStyleSelected = new L.icon({
                 iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+fff200.png'
             });
@@ -55,7 +52,12 @@ angular.module("ProjectFirmaApp")
                     }
                 } else {
                     if (layer._icon) {
-                        layer.setIcon($scope.IconStyleDefault);
+                        var iconColor = layer.feature.properties.ProjectStageColor.replace('#', '');
+                        var iconUrlString = 'https://api.tiles.mapbox.com/v3/marker/pin-s-marker+' + iconColor + '.png';
+                        var icon = new L.icon({
+                            iconUrl: iconUrlString
+                        });
+                        layer.setIcon(icon);
                     } else {
                         layer.setStyle({
                             color: '#02ffff',
