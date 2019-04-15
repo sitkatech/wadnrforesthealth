@@ -35,6 +35,32 @@ JSON format:
     )
     AS programIndexTemp
 
+    -- Clean leading zeros from 
+
+
+
+-- Just show rows we would like to delete
+
+-- Inner bits
+select *
+from dbo.ProgramIndex as dbpi
+full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
+--where (tpi.program_index_code is null)
+
+
+
+select * from dbo.ProgramIndex as pin
+where pin.ProgramIndexID in 
+(
+    select dbpi.ProgramIndexID
+    from dbo.ProgramIndex as dbpi
+    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode
+    where (tpi.program_index_code is null)
+)
+
+
+/*
+
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
 delete from dbo.ProgramIndex 
@@ -47,7 +73,7 @@ where ProgramIndexID in
 )
 
 
-
+*/
 
 
 
@@ -169,7 +195,7 @@ select * from dbo.SocrataDataMartRawJsonImport
 
 set statistics time on
 
-exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 2
+exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 1
 
 set statistics time off
 

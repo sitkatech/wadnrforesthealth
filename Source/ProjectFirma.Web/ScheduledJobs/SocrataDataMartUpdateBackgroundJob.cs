@@ -10,8 +10,8 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
-        private static string VendorJsonSocrataUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
-        private static string ProgramIndexJsonSocrataUrl = "https://data.wa.gov/resource/quhu-28uh.json";
+        private static string VendorJsonSocrataBaseUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
+        private static string ProgramIndexJsonSocrataBaseUrl = "https://data.wa.gov/resource/quhu-28uh.json";
 
         private const int SqlCommandTimeoutInSeconds = 600;
 
@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         private string AddMaxLimitTagToUrl(string baseSocrataJsonApiUrl)
         {
-            return $"{baseSocrataJsonApiUrl}?$limit = 9999999";
+            return $"{baseSocrataJsonApiUrl}?$limit=9999999";
         }
 
 
@@ -54,7 +54,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
 
             // Pull JSON off the page into a (possibly huge) string
-            string vendorTempJson = DownloadSocrataUrlToString(AddMaxLimitTagToUrl(VendorJsonSocrataUrl), SocrataDataMartRawJsonImportTableType.Vendor);
+            var fullUrl = AddMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
+            string vendorTempJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.Vendor);
             Logger.Info($"Vendor JSON length: {vendorTempJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID  = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, vendorTempJson);
@@ -70,7 +71,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
 
             // Pull JSON off the page into a (possibly huge) string
-            string programIndexJson = DownloadSocrataUrlToString(AddMaxLimitTagToUrl(ProgramIndexJsonSocrataUrl), SocrataDataMartRawJsonImportTableType.ProgramIndex);
+            var fullUrl = AddMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);
+            string programIndexJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProgramIndex);
             Logger.Info($"ProgramIndex JSON length: {programIndexJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProgramIndex, programIndexJson);
