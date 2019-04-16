@@ -756,5 +756,9 @@ namespace ProjectFirma.Web.Models
         {
             return CompletionDate?.Year;
         }
+
+        // read-only Helper accessors
+        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.Select(aga => aga.GrantAllocation.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.ProjectCodes).Where(pc => pc != null).ToList();
     }
 }
