@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProject.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,14 +19,25 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.HtmlHelperExtensions;
+using ProjectFirma.Web.Common;
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Views.Shared.TextControls;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public abstract class EditGrantAllocationLineItems : TypedWebPartialViewPage<EditGrantAllocationLineItemsViewData, EditGrantAllocationLineItemsViewModel>
+    public class EditGrantAllocationBudgetLineItemViewData : FirmaUserControlViewData
     {
+        public List<SelectListItem> CostTypes { get; }
+
+        public EditGrantAllocationBudgetLineItemViewData(List<CostType> costTypes)
+        {
+            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription).ToList();
+        }
+
     }
 }

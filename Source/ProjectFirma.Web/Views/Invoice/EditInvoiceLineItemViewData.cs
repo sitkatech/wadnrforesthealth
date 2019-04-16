@@ -27,8 +27,8 @@ namespace ProjectFirma.Web.Views.Invoice
 {
     public class EditInvoiceLineItemViewData : FirmaUserControlViewData
     {
-        public readonly IEnumerable<SelectListItem> GrantAllocations;
-        public readonly IEnumerable<SelectListItem> CostTypes;
+        public IEnumerable<SelectListItem> GrantAllocations { get; }
+        public IEnumerable<SelectListItem> CostTypes { get; }
 
         public EditInvoiceLineItemViewData(List<Models.GrantAllocation> grantAllocations, List<CostType> costTypes)
         {

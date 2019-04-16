@@ -23,8 +23,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditGrantAllocationBudgetLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()}")), 30, DhtmlxGridColumnFilterType.None);
 
-                var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationBudgetLineItem(grantAllocation.PrimaryKey));
-                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new {Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()}");
+                var createNewGrantAllocationBudgetLineItemUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationBudgetLineItem(grantAllocation.PrimaryKey));
+                CreateEntityModalDialogForm = new ModalDialogForm(createNewGrantAllocationBudgetLineItemUrl, $"Create a new {Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()}");
             }
 
             var userHasDeletePermissions = new GrantAllocationBudgetLineItemDeleteAsAdminFeature().HasPermissionByPerson(currentPerson);
@@ -34,9 +34,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             }
 
             Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.Text);
-            Add("Grant Allocation", x => x.GrantAllocation.GrantAllocationName, 125, DhtmlxGridColumnFilterType.Text);
-            Add("Amount", x => x.GrantAllocationBudgetLineItemAmount, 70, DhtmlxGridColumnFormatType.Currency);
-            Add("Note", x => x.GrantAllocationBudgetLineItemNote, 250, DhtmlxGridColumnFilterType.Text);
+            Add("Amount", x => x.GrantAllocationBudgetLineItemAmount, 125, DhtmlxGridColumnFormatType.Currency);
+            Add("Note", x => x.GrantAllocationBudgetLineItemNote, 650, DhtmlxGridColumnFilterType.Text);
            
         }
     }

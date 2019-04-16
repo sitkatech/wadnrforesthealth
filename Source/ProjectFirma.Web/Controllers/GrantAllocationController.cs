@@ -221,55 +221,63 @@ namespace ProjectFirma.Web.Controllers
 
         #region "Grant Allocation Budget Line Item"
         [HttpGet]
-        [GrantAllocationEditAsAdminFeature]
-        public PartialViewResult EditLineItems(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        [GrantAllocationBudgetLineItemEditAsAdminFeature]
+        public PartialViewResult EditGrantAllocationBudgetLineItem(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey)
         {
-            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
-            var viewModel = new EditGrantAllocationLineItemsViewModel(grantAllocation);
-            return GrantAllocationLineItemsViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation);
+            var grantAllocationBudgetLineItem = grantAllocationBudgetLineItemPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationBudgetLineItemViewModel(grantAllocationBudgetLineItem);
+            return ViewEditGrantAllocationBudgetLineItem(viewModel);
         }
 
         [HttpPost]
-        [GrantAllocationEditAsAdminFeature]
+        [GrantAllocationBudgetLineItemEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditLineItems(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationLineItemsViewModel viewModel)
+        public ActionResult EditGrantAllocationBudgetLineItem(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey, EditGrantAllocationBudgetLineItemViewModel viewModel)
         {
-            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationBudgetLineItem = grantAllocationBudgetLineItemPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return GrantAllocationLineItemsViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation);
+                return ViewEditGrantAllocationBudgetLineItem(viewModel);
             }
-            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            viewModel.UpdateModel(grantAllocationBudgetLineItem);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult GrantAllocationLineItemsViewEdit(EditGrantAllocationLineItemsViewModel viewModel, EditGrantAllocationType editGrantAllocationType, GrantAllocation grantAllocationBeingEdited)
+        private PartialViewResult ViewEditGrantAllocationBudgetLineItem(EditGrantAllocationBudgetLineItemViewModel viewModel)
         {
-            //var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            //var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
-            //var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            //var divisions = Division.All;
-            //var regions = HttpRequestStorage.DatabaseEntities.Regions;
-            //var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
-            //var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+            var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).ToList();
 
-            var viewData = new EditGrantAllocationLineItemsViewData(editGrantAllocationType, grantAllocationBeingEdited);
-            return RazorPartialView<EditGrantAllocationLineItems, EditGrantAllocationLineItemsViewData, EditGrantAllocationLineItemsViewModel>(viewData, viewModel);
+            var viewData = new EditGrantAllocationBudgetLineItemViewData(costTypes);
+            return RazorPartialView<EditGrantAllocationBudgetLineItem, EditGrantAllocationBudgetLineItemViewData, EditGrantAllocationBudgetLineItemViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
         [GrantAllocationBudgetLineItemEditAsAdminFeature]
         public ActionResult NewGrantAllocationBudgetLineItem(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
-            throw new NotImplementedException();
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationBudgetLineItemViewModel(grantAllocation);
+            return ViewEditGrantAllocationBudgetLineItem(viewModel);
         }
 
 
         [HttpPost]
         [GrantAllocationBudgetLineItemEditAsAdminFeature]
-        public ActionResult NewGrantAllocationBudgetLineItem(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationLineItemsViewModel viewModel)
+        public ActionResult NewGrantAllocationBudgetLineItem(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationBudgetLineItemViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEditGrantAllocationBudgetLineItem(viewModel);
+            }
+
+            var grantAllocationBudgetLineItem = new GrantAllocationBudgetLineItem(viewModel.GrantAllocationID, viewModel.CostTypeID, viewModel.GrantAllocationBudgetLineItemAmount);
+            viewModel.UpdateModel(grantAllocationBudgetLineItem);
+            HttpRequestStorage.DatabaseEntities.GrantAllocationBudgetLineItems.Add(grantAllocationBudgetLineItem);
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            SetMessageForDisplay($"{FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()} successfully added to this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}.");
+
+            return new ModalDialogFormJsonResult();
 
         }
 
@@ -283,6 +291,41 @@ namespace ProjectFirma.Web.Controllers
 
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationBudgetLineItem>(grantAllocationBudgetLineItems, gridSpec);
             return gridJsonNetJObjectResult;
+        }
+
+
+        [HttpGet]
+        [GrantAllocationBudgetLineItemDeleteAsAdminFeature]
+        public PartialViewResult DeleteGrantAllocationBudgetLineItem(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationBudgetLineItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantAllocationBudgetLineItem(grantAllocationBudgetLineItemPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantAllocationBudgetLineItem(GrantAllocationBudgetLineItem grantAllocationBudgetLineItem, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to remove this {FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()} from this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationBudgetLineItemDeleteAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantAllocationBudgetLineItem(GrantAllocationBudgetLineItemPrimaryKey grantAllocationBudgetLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationBudgetLineItem = grantAllocationBudgetLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantAllocationBudgetLineItem(grantAllocationBudgetLineItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()} successfully removed from this {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}.";
+
+            grantAllocationBudgetLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
         }
 
 
