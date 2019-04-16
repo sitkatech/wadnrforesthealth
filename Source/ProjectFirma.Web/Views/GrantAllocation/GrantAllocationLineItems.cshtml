@@ -1,0 +1,56 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="EditProject.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.Models
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Views.ProgramIndex
+@using ProjectFirma.Web.Views.ProjectCode
+@inherits ProjectFirma.Web.Views.GrantAllocation.GrantAllocationLineItems
+
+@Html.Raw(ViewDataTyped.EditGrantAllocationType.IntroductoryText)
+
+@Html.ValidationSummary()
+
+<script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+<script type="text/javascript">
+    // <![CDATA[
+
+    jQuery(document).ready(function () {
+
+    });
+    // ]]>
+</script>
+
+@using (Html.BeginForm())
+{
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-xs-3 control-label">
+            @Html.LabelWithSugarFor(m => m.GrantAllocationID)
+        </div>
+        <div class="col-xs-6">
+            TODO
+        </div>
+    </div>
+</div>
+    @Html.HiddenFor(m => m.GrantAllocationID)
+}

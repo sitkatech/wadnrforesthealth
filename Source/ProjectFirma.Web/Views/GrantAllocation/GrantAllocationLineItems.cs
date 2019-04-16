@@ -22,11 +22,15 @@ Source code is available upon request via <support@sitkatech.com>.
 using System.Web.Mvc;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Views.Shared.TextControls;
+using ProjectFirma.Web.Views.GrantAllocation;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public abstract class EditGrantAllocationLineItems : TypedWebPartialViewPage<EditGrantAllocationLineItemsViewData, EditGrantAllocationLineItemsViewModel>
+    public abstract class GrantAllocationLineItems : TypedWebPartialViewPage<GrantAllocationLineItemsViewData, GrantAllocationLineItemsViewModel>
     {
+        public static void RenderPartialView(HtmlHelper html, GrantAllocationLineItemsViewData viewData, GrantAllocationLineItemsViewModel viewModel)
+        {
+            html.RenderRazorSitkaPartial<GrantAllocationLineItems, GrantAllocationLineItemsViewData, GrantAllocationLineItemsViewModel>(viewData, viewModel);
+        }
     }
 }
