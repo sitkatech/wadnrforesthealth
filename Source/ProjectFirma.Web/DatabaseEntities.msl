@@ -278,7 +278,6 @@
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
-          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
@@ -286,6 +285,17 @@
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
           <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationBudgetLineItem">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem">
+        <MappingFragment StoreEntitySet="GrantAllocationBudgetLineItem">
+          <ScalarProperty Name="GrantAllocationBudgetLineItemID" ColumnName="GrantAllocationBudgetLineItemID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="GrantAllocationBudgetLineItemAmount" ColumnName="GrantAllocationBudgetLineItemAmount" />
+          <ScalarProperty Name="GrantAllocationBudgetLineItemNote" ColumnName="GrantAllocationBudgetLineItemNote" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

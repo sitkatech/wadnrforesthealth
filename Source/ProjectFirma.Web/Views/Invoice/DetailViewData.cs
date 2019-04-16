@@ -36,11 +36,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public string InvoiceLineItemGridDataUrl { get; }
         public InvoiceLineItemGridSpec InvoiceLineItemGridSpec { get; }
 
-
-        
-
-        public DetailViewData(Person currentPerson, Models.Invoice invoice
-            , InvoiceBasicsViewData invoiceBasicsViewData)
+        public DetailViewData(Person currentPerson, Models.Invoice invoice, InvoiceBasicsViewData invoiceBasicsViewData)
             : base(currentPerson, invoice)
         {
             PageTitle = invoice.InvoiceIdentifyingName.ToEllipsifiedStringClean(110);

@@ -164,4 +164,5 @@ VALUES
 (341, N'Division', 'Division', N'<p>Placeholder definition for Division description.</p>'),
 (342, N'GrantManager', 'Grant Manager', N'<p>Placeholder definition for Grant Manager description.</p>'),
 (343, N'Job', 'Job', N'<p>A foreground or background system job.</p>'),
-(344, N'JobImportTableType', 'Job Import Table Type', N'<p>Type of the Job Import table imported.</p>')
+(344, N'JobImportTableType', 'Job Import Table Type', N'<p>Type of the Job Import table imported.</p>'),
+(345, N'GrantAllocationBudgetLineItem', 'Grant Allocation Budget Line Item', '<p>Grant Allocation budget broken across line items</p>')

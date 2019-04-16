@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditAgreementPersonViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,22 +18,26 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
+using ProjectFirma.Web.Common;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Invoice
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class EditInvoiceLineItemViewData : FirmaUserControlViewData
+    public class EditGrantAllocationBudgetLineItemViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> GrantAllocations { get; }
-        public IEnumerable<SelectListItem> CostTypes { get; }
+        public List<SelectListItem> CostTypes { get; }
 
-        public EditInvoiceLineItemViewData(List<Models.GrantAllocation> grantAllocations, List<CostType> costTypes)
+        public EditGrantAllocationBudgetLineItemViewData(List<CostType> costTypes)
         {
-            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription);
-            GrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.GrantNumberAndGrantAllocationDisplayName);
+            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription).ToList();
         }
+
     }
 }

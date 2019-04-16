@@ -51,6 +51,7 @@ namespace ProjectFirma.Web.Models
             return EditUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
         }
 
+
         public static readonly UrlTemplate<int> NewNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationNote(UrlTemplate.Parameter1Int)));
         public static string GetNewNoteUrl(this GrantAllocation grantAllocation)
         {

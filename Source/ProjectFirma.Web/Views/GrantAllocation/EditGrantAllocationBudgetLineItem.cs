@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditAgreementPersonViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProject.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,22 +18,12 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-using System.Collections.Generic;
-using System.Web.Mvc;
+
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Invoice
+namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class EditInvoiceLineItemViewData : FirmaUserControlViewData
+    public abstract class EditGrantAllocationBudgetLineItem : TypedWebPartialViewPage<EditGrantAllocationBudgetLineItemViewData, EditGrantAllocationBudgetLineItemViewModel>
     {
-        public IEnumerable<SelectListItem> GrantAllocations { get; }
-        public IEnumerable<SelectListItem> CostTypes { get; }
-
-        public EditInvoiceLineItemViewData(List<Models.GrantAllocation> grantAllocations, List<CostType> costTypes)
-        {
-            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription);
-            GrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.GrantNumberAndGrantAllocationDisplayName);
-        }
     }
 }
