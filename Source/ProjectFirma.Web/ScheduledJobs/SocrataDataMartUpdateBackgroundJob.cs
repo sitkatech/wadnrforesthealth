@@ -12,7 +12,6 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         private static string VendorJsonSocrataBaseUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
         private static string ProgramIndexJsonSocrataBaseUrl = "https://data.wa.gov/resource/quhu-28uh.json";
-
         private static string ProjectCodeJsonSocrataBaseUrl = "https://data.wa.gov/resource/6grp-8ghq.json";
 
         private const int SqlCommandTimeoutInSeconds = 600;
@@ -85,8 +84,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
         }
 
-        // ProjectCodeJsonSocrataBaseUrl
-
         public void DownloadSocrataProjectCodeTable()
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataProjectCodeTable");
@@ -103,8 +100,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
         }
-
-
 
 
 

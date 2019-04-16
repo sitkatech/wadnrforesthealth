@@ -25,14 +25,14 @@
 @using ProjectFirma.Web.Controllers
 @inherits ProjectFirma.Web.Views.Job.JobIndex
 
-@functions 
+@functions
 {
-    private string RunVendorButtonHtml()
-    {
-        // RunVendorImportJob
-        string linkHtml = SitkaRoute<JobController>.BuildLinkFromExpression(c => c.RunVendorImportJob(), "Import Vendors from Socrata");
-        return linkHtml;
-    }
+    //private string RunVendorButtonHtml()
+    //{
+    //    // RunVendorImportJob
+    //    string linkHtml = SitkaRoute<JobController>.BuildLinkFromExpression(c => c.RunVendorImportJob(), "Import Vendors from Socrata");
+    //    return linkHtml;
+    //}
 
     private string RunVendorUrl()
     {
@@ -41,6 +41,19 @@
         return urlHtml;
     }
 
+    private string RunProgramIndexUrl()
+    {
+        // RunProgramIndexUrl
+        string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunProgramIndexImportJob());
+        return urlHtml;
+    }
+
+    private string RunProjectCodeUrl()
+    {
+        // RunProjectCodeUrl
+        string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunProjectCodeImportJob());
+        return urlHtml;
+    }
 }
 
 @section JavascriptAndStylesContent
@@ -56,11 +69,23 @@
     @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
 </div>
 
-<br/>
-<br/>
+<br />
+<br />
 
 <form action="@Html.Raw(RunVendorUrl())">
     <button type="submit" class="btn btn-primary">Run Vendor Import Job</button>
+</form>
+
+<br />
+
+<form action="@Html.Raw(RunProgramIndexUrl())">
+    <button type="submit" class="btn btn-primary">Run Program Index Import Job</button>
+</form>
+
+<br />
+
+<form action="@Html.Raw(RunProjectCodeUrl())">
+    <button type="submit" class="btn btn-primary">Run Project Code Import Job</button>
 </form>
 
 
