@@ -1,23 +1,30 @@
 ﻿using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.ModalDialog;
 using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Invoice;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class GrantAllocationBudgetLineItemGridSpec : GridSpec<Models.GrantAllocationBudgetLineItem>
     {
-        public GrantAllocationBudgetLineItemGridSpec(Models.Person currentPerson)
+        public GrantAllocationBudgetLineItemGridSpec(Models.Person currentPerson, Models.GrantAllocation grantAllocation)
         {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabelPluralized()}";
+            SaveFiltersInCookie = true;
 
 
             var userHasEditPermissions = new GrantAllocationBudgetLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditGrantAllocationBudgetLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()}")), 30, DhtmlxGridColumnFilterType.None);
+
+                var contentUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(t => t.NewGrantAllocationBudgetLineItem(grantAllocation.PrimaryKey));
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new {Models.FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabel()}");
             }
 
             var userHasDeletePermissions = new GrantAllocationBudgetLineItemDeleteAsAdminFeature().HasPermissionByPerson(currentPerson);

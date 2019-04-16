@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
             ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsGridJsonData(grantAllocation));
 
-            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(grantAllocation);
+            GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation);
         }
     }
 }

@@ -27,19 +27,25 @@ using ProjectFirma.Web.Common;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class GrantAllocationBudgetLineItemsViewData : FirmaUserControlViewData
     {
 
-        public string GrantAllocationLineItemGridDataUrl { get; }
+        public string GrantAllocationBudgetLineItemGridDataUrl { get; }
         public GrantAllocationBudgetLineItemGridSpec GrantAllocationBudgetLineItemGridSpec { get; }
 
+        public readonly string GrantAllocationBudgetLineItemGridName = "grantAllocationBudgetLineItemGrid";
 
-        public GrantAllocationBudgetLineItemsViewData(Models.GrantAllocation grantAllocationBeingEdited)
+
+        public GrantAllocationBudgetLineItemsViewData(Person currentPerson, Models.GrantAllocation grantAllocationBeingEdited)
         {
 
+            GrantAllocationBudgetLineItemGridSpec = new GrantAllocationBudgetLineItemGridSpec(currentPerson, grantAllocationBeingEdited);
+            GrantAllocationBudgetLineItemGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationBudgetLineItemGridJsonData(grantAllocationBeingEdited));
+            
         }
 
     }
