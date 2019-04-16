@@ -297,6 +297,45 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult EditLineItems(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationLineItemsViewModel(grantAllocation);
+            return GrantAllocationLineItemsViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditLineItems(GrantAllocationPrimaryKey grantAllocationPrimaryKey, EditGrantAllocationLineItemsViewModel viewModel)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationLineItemsViewEdit(viewModel, EditGrantAllocationType.ExistingGrantAllocation, grantAllocation);
+            }
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult GrantAllocationLineItemsViewEdit(EditGrantAllocationLineItemsViewModel viewModel, EditGrantAllocationType editGrantAllocationType, GrantAllocation grantAllocationBeingEdited)
+        {
+            //var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            //var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
+            //var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            //var divisions = Division.All;
+            //var regions = HttpRequestStorage.DatabaseEntities.Regions;
+            //var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
+            //var people = HttpRequestStorage.DatabaseEntities.People.ToList();
+
+            var viewData = new EditGrantAllocationLineItemsViewData(editGrantAllocationType,
+                                                            grantAllocationBeingEdited
+            );
+            return RazorPartialView<EditGrantAllocationLineItems, EditGrantAllocationLineItemsViewData, EditGrantAllocationLineItemsViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
         [GrantAllocationCreateFeature]
         public PartialViewResult New()
         {

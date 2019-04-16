@@ -104,6 +104,22 @@
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationLineItemUrl, string.Format("Edit {0} Budget Line Items", ViewDataTyped.GrantAllocation.GrantAllocationName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
+                        @FieldDefinition.GrantAllocationBudgetLineItem.GetFieldDefinitionLabelPluralized()
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    TODO
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
                     @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
                 </div>
                 <div class="panel-body">
