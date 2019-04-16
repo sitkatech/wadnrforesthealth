@@ -18,11 +18,19 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public abstract class EditGrantAllocationLineItems : TypedWebPartialViewPage<EditGrantAllocationLineItemsViewData, EditGrantAllocationLineItemsViewModel>
     {
+        public static void RenderPartialView(HtmlHelper html, EntityNotesViewData viewData)
+        {
+            html.RenderRazorSitkaPartial<EntityNotes, EntityNotesViewData>(viewData);
+        }
     }
 }
