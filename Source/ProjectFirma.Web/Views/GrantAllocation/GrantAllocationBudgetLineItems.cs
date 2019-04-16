@@ -26,11 +26,11 @@ using ProjectFirma.Web.Views.GrantAllocation;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public abstract class GrantAllocationLineItems : TypedWebPartialViewPage<GrantAllocationLineItemsViewData, GrantAllocationLineItemsViewModel>
+    public abstract class GrantAllocationBudgetLineItems : TypedWebPartialViewPage<GrantAllocationBudgetLineItemsViewData>
     {
-        public static void RenderPartialView(HtmlHelper html, GrantAllocationLineItemsViewData viewData, GrantAllocationLineItemsViewModel viewModel)
+        public static void RenderPartialView(HtmlHelper html, GrantAllocationBudgetLineItemsViewData viewData)
         {
-            html.RenderRazorSitkaPartial<GrantAllocationLineItems, GrantAllocationLineItemsViewData, GrantAllocationLineItemsViewModel>(viewData, viewModel);
+            html.RenderRazorSitkaPartial<GrantAllocationBudgetLineItems, GrantAllocationBudgetLineItemsViewData>(viewData);
         }
     }
 }

@@ -30,15 +30,16 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class GrantAllocationLineItemsViewData : FirmaUserControlViewData
+    public class GrantAllocationBudgetLineItemsViewData : FirmaUserControlViewData
     {
-        public EditGrantAllocationType EditGrantAllocationType { get; set; }
+
+        public string GrantAllocationLineItemGridDataUrl { get; }
+        public GrantAllocationBudgetLineItemGridSpec GrantAllocationBudgetLineItemGridSpec { get; }
 
 
-        public GrantAllocationLineItemsViewData(EditGrantAllocationType editGrantAllocationType,
-                                        Models.GrantAllocation grantAllocationBeingEdited)
+        public GrantAllocationBudgetLineItemsViewData(Models.GrantAllocation grantAllocationBeingEdited)
         {
-            EditGrantAllocationType = editGrantAllocationType;
+
         }
 
     }

@@ -504,6 +504,7 @@
     <Compile Include="Controllers\ProjectCodeController.cs" />
     <Compile Include="Controllers\InteractionEventController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Models\GrantAllocationBudgetLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
     <Compile Include="Models\InteractionEventContact.cs" />
     <Compile Include="Models\InteractionEventProject.cs" />
@@ -586,6 +587,8 @@
     <Compile Include="Security\AgreementsViewFeature.cs" />
     <Compile Include="Security\AgreementsViewFullListFeature.cs" />
     <Compile Include="Security\CostSharePDFFilledInFeature.cs" />
+    <Compile Include="Security\GrantAllocationBudgetLineItemDeleteAsAdminFeature.cs" />
+    <Compile Include="Security\GrantAllocationBudgetLineItemEditAsAdminFeature.cs" />
     <Compile Include="Security\InteractionEventManageFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationCreateFeature.cs" />
@@ -643,9 +646,8 @@
     <Compile Include="Models\ProjectAgreementByGrantAllocation.cs" />
     <Compile Include="Views\GrantAllocation\Detail.cs" />
     <Compile Include="Views\GrantAllocation\DetailViewData.cs" />
-    <Compile Include="Views\GrantAllocation\GrantAllocationLineItemsViewModel.cs" />
-    <Compile Include="Views\GrantAllocation\GrantAllocationLineItemsViewData.cs" />
-    <Compile Include="Views\GrantAllocation\GrantAllocationLineItems.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemsViewData.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItems.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationLineItems.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocation.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteInternal.cs" />
@@ -659,6 +661,7 @@
     <Compile Include="Views\GrantAllocation\EditGrantAllocationNote.cs" />
     <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\Grant\Detail.cs" />
     <Compile Include="Views\Grant\DetailViewData.cs" />
     <Compile Include="Views\Grant\EditGrantNote.cs" />
@@ -1337,7 +1340,7 @@
     <Content Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cshtml" />
     <Content Include="Views\Job\JobIndex.cshtml" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationLineItems.cshtml" />
-    <Content Include="Views\GrantAllocation\GrantAllocationLineItems.cshtml" />
+    <Content Include="Views\GrantAllocation\GrantAllocationBudgetLineItems.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

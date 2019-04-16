@@ -1176,7 +1176,7 @@
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
-    <Property Name="GrantALlocationBudgetLineItemNote" Type="nvarchar(max)" />
+    <Property Name="GrantAllocationBudgetLineItemNote" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>

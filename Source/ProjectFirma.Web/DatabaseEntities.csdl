@@ -1263,7 +1263,7 @@
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="CostTypeID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="GrantALlocationBudgetLineItemNote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="GrantAllocationBudgetLineItemNote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationBudgetLineItems" ToRole="GrantAllocation" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">

@@ -23,11 +23,10 @@
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProgramIndex
 @using ProjectFirma.Web.Views.ProjectCode
-@inherits ProjectFirma.Web.Views.GrantAllocation.GrantAllocationLineItems
+@inherits ProjectFirma.Web.Views.GrantAllocation.GrantAllocationBudgetLineItems
 
-@Html.Raw(ViewDataTyped.EditGrantAllocationType.IntroductoryText)
 
-@Html.ValidationSummary()
+
 
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
@@ -40,17 +39,19 @@
     // ]]>
 </script>
 
+@Html.ValidationSummary()
+
 @using (Html.BeginForm())
 {
-<div class="form-horizontal">
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantAllocationID)
-        </div>
-        <div class="col-xs-6">
-            TODO
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantAllocationID)
+            </div>
+            <div class="col-xs-6">
+                TODO
+            </div>
         </div>
     </div>
-</div>
     @Html.HiddenFor(m => m.GrantAllocationID)
 }

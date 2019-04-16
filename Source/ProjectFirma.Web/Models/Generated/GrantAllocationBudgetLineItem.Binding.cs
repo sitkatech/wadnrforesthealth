@@ -30,13 +30,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationBudgetLineItem(int grantAllocationBudgetLineItemID, int grantAllocationID, int costTypeID, decimal grantAllocationBudgetLineItemAmount, string grantALlocationBudgetLineItemNote) : this()
+        public GrantAllocationBudgetLineItem(int grantAllocationBudgetLineItemID, int grantAllocationID, int costTypeID, decimal grantAllocationBudgetLineItemAmount, string grantAllocationBudgetLineItemNote) : this()
         {
             this.GrantAllocationBudgetLineItemID = grantAllocationBudgetLineItemID;
             this.GrantAllocationID = grantAllocationID;
             this.CostTypeID = costTypeID;
             this.GrantAllocationBudgetLineItemAmount = grantAllocationBudgetLineItemAmount;
-            this.GrantALlocationBudgetLineItemNote = grantALlocationBudgetLineItemNote;
+            this.GrantAllocationBudgetLineItemNote = grantAllocationBudgetLineItemNote;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace ProjectFirma.Web.Models
         public int GrantAllocationID { get; set; }
         public int CostTypeID { get; set; }
         public decimal GrantAllocationBudgetLineItemAmount { get; set; }
-        public string GrantALlocationBudgetLineItemNote { get; set; }
+        public string GrantAllocationBudgetLineItemNote { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationBudgetLineItemID; } set { GrantAllocationBudgetLineItemID = value; } }
 

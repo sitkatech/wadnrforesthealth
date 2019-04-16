@@ -7,7 +7,7 @@ CREATE TABLE [dbo].[GrantAllocationBudgetLineItem](
 	[GrantAllocationID] [int] NOT NULL,
 	[CostTypeID] [int] NOT NULL,
 	[GrantAllocationBudgetLineItemAmount] [money] NOT NULL,
-	[GrantALlocationBudgetLineItemNote] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[GrantAllocationBudgetLineItemNote] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_GrantAllocationBudgetLineItem_GrantAllocationBudgetLineItemID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationBudgetLineItemID] ASC

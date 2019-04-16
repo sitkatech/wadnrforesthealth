@@ -13,7 +13,7 @@ create table dbo.GrantAllocationBudgetLineItem
 	GrantAllocationID int not null,
 	CostTypeID int not null,
 	GrantAllocationBudgetLineItemAmount money not null,
-	GrantALlocationBudgetLineItemNote nvarchar(max),
+	GrantAllocationBudgetLineItemNote nvarchar(max),
   constraint PK_GrantAllocationBudgetLineItem_GrantAllocationBudgetLineItemID primary key clustered
   (
 	GrantAllocationBudgetLineItemID ASC

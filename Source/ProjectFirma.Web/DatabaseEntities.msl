@@ -295,7 +295,7 @@
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="GrantAllocationBudgetLineItemAmount" ColumnName="GrantAllocationBudgetLineItemAmount" />
-          <ScalarProperty Name="GrantALlocationBudgetLineItemNote" ColumnName="GrantALlocationBudgetLineItemNote" />
+          <ScalarProperty Name="GrantAllocationBudgetLineItemNote" ColumnName="GrantAllocationBudgetLineItemNote" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
