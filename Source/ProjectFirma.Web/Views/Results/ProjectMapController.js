@@ -5,32 +5,9 @@ angular.module("ProjectFirmaApp")
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
             $scope.selectedLocationLeafletID = null;
-        
-            $scope.IconStyleDefault = new L.icon({
-                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+0000ff.png'
-            });
-            $scope.IconStyleSelected = new L.icon({
-                iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+fff200.png'
-            });
 
+            $scope.IconStyleSelected = new L.MakiMarkers.icon({ icon: "marker", color: "#fff200", size: "s" });
 
-            $scope.selectedStyle = {
-                fillColor: "#FFFF00",
-                fill: true,
-                fillOpacity: 0.2,
-                color: "#FFFF00",
-                weight: 5,
-                stroke: true
-            };
-
-            $scope.unselectedStyle = {
-                fillColor: "#405d74",
-                fill: true,
-                fillOpacity: 0.2,
-                color: "#405d74",
-                weight: 1,
-                stroke: true
-        };
 
         $scope.isSelectedProjectMapLocation = function (projectLocation) {
             if ($scope.selectedLocationLeafletID) {
@@ -49,13 +26,15 @@ angular.module("ProjectFirmaApp")
                         layer.setStyle({
                             color: '#fff200',
                             fillColor: '#fff200',
-                            weight: 6,
+                            weight: 3,
                             opacity: 0.6
                         });
                     }
                 } else {
                     if (layer._icon) {
-                        layer.setIcon($scope.IconStyleDefault);
+                        var iconColor = layer.feature.properties.ProjectStageColor;
+                        var icon = new L.MakiMarkers.icon({ icon: "marker", color: iconColor, size: "s" });
+                        layer.setIcon(icon);
                     } else {
                         layer.setStyle({
                             color: '#02ffff',
@@ -120,6 +99,25 @@ angular.module("ProjectFirmaApp")
         jQuery(document).ready(function() {
             initializeMap();
         });
+
+        jQuery(document).on('change', '.leaflet-control-layers-selector',
+            function () {
+                // This hardcoding is not great, but TK and SLG both can't see a better way.
+                // This check at least will ensure that the control we looking for actually exists.
+                if (jQuery(this).parents("div.leaflet-control-layers-overlays").find("span:contains('Mapped Projects')").length > 0) {
+                    if (jQuery(this).siblings("span:contains(' Mapped Projects')").length > 0) {
+                        var checkbox = jQuery(this);
+                        if (checkbox.is(':checked')) {
+                            jQuery('.mapGridContainer').show();
+                        } else {
+                            jQuery('.mapGridContainer').hide();
+                        }
+                    }
+                } else {
+                    alert("No 'Mapped Projects' layer found. Please contact an admin.");
+                }
+      
+            });
 
     });
 

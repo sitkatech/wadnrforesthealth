@@ -65,15 +65,8 @@ GO
 
 
 
-/*
-delete from ProgramIndex where ProgramIndexTitle is null and Biennium is null
-
-select * from ProgramIndex where ProgramIndexTitle is null
-
-
-
-
-*/
+--select * from ProgramIndex
+--where ProgramIndexTitle is null
 
 /*
 select * from ProgramIndex where ProgramIndexCode in ('00216', '0021B','0025N')

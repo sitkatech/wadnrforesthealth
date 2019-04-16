@@ -12,6 +12,7 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         private static string VendorJsonSocrataBaseUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
         private static string ProgramIndexJsonSocrataBaseUrl = "https://data.wa.gov/resource/quhu-28uh.json";
+        private static string ProjectCodeJsonSocrataBaseUrl = "https://data.wa.gov/resource/6grp-8ghq.json";
 
         private const int SqlCommandTimeoutInSeconds = 600;
 
@@ -82,6 +83,24 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
         }
+
+        public void DownloadSocrataProjectCodeTable()
+        {
+            Logger.Info($"Starting '{JobName}' DownloadSocrataProjectCodeTable");
+
+            // Pull JSON off the page into a (possibly huge) string
+            var fullUrl = AddMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
+            string projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);
+            Logger.Info($"ProjectCode JSON length: {projectCodeJson.Length}");
+            // Push that string into a raw JSON string in the raw staging table
+            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProjectCode, projectCodeJson);
+            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+            // Use the JSON to refresh the Vendor table
+            ProjectCodeImportJson(socrataDataMartRawJsonImportID);
+
+            Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
+        }
+
 
 
         /// <summary>
@@ -156,6 +175,22 @@ namespace ProjectFirma.Web.ScheduledJobs
                 }
             }
             Logger.Info($"Ending '{JobName}' ProgramIndexImportJson");
+        }
+
+        private void ProjectCodeImportJson(int socrataDataMartRawJsonImportID)
+        {
+            Logger.Info($"Starting '{JobName}' ProjectCodeImportJson");
+            string vendorImportProc = "pProjectCodeImportJson";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending '{JobName}' ProjectCodeImportJson");
         }
 
 

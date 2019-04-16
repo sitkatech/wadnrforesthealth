@@ -23,5 +23,13 @@ namespace ProjectFirma.Web.ScheduledJobs
             socrataJob.DownloadSocrataProgramIndexTable();
         }
 
+        [Test]
+        [Ignore("The test is valid, but we want to avoid pounding on the web service when we don't have to, as we could get throttled.")]
+        public void DownloadSocrataProjectCodeTable()
+     {
+            var socrataJob = new SocrataDataMartUpdateBackgroundJob("ProjectCodeTestJob");
+            socrataJob.DownloadSocrataProjectCodeTable();
+        }
+
     }
 }

@@ -58,6 +58,23 @@ namespace ProjectFirma.Web.Controllers
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
+        [JobManageFeature]
+        public ActionResult RunProgramIndexImportJob()
+        {
+            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Program Index Import (Button activated)");
+            socrataJob.DownloadSocrataProgramIndexTable();
+            return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
+        }
+
+        [JobManageFeature]
+        public ActionResult RunProjectCodeImportJob()
+        {
+            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Project Code Import (Button activated)");
+            socrataJob.DownloadSocrataProjectCodeTable();
+            return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
+        }
+
+
         /*
         [HttpGet]
         [FirmaAdminFeature]

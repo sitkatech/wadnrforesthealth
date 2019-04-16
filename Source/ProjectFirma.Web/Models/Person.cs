@@ -76,6 +76,19 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public string OrganizationOrBlankString
+        {
+            get
+            {
+                if (Organization != null)
+                {
+                    return $"{Organization.OrganizationShortNameIfAvailable}";
+                }
+
+                return string.Empty;
+            }
+        }
+
         public string FullNameLastFirst => $"{LastName}, {FirstName}";
 
         /// <summary>

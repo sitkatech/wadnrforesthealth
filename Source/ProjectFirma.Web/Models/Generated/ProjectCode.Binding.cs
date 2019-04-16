@@ -31,22 +31,25 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(int projectCodeID, string projectCodeAbbrev, string projectCodeTitle) : this()
+        public ProjectCode(int projectCodeID, string projectCodeName, string projectCodeTitle, DateTime? createDate, DateTime? projectStartDate, DateTime? projectEndDate) : this()
         {
             this.ProjectCodeID = projectCodeID;
-            this.ProjectCodeAbbrev = projectCodeAbbrev;
+            this.ProjectCodeName = projectCodeName;
             this.ProjectCodeTitle = projectCodeTitle;
+            this.CreateDate = createDate;
+            this.ProjectStartDate = projectStartDate;
+            this.ProjectEndDate = projectEndDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectCode(string projectCodeAbbrev) : this()
+        public ProjectCode(string projectCodeName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.ProjectCodeAbbrev = projectCodeAbbrev;
+            this.ProjectCodeName = projectCodeName;
         }
 
 
@@ -108,8 +111,11 @@ namespace ProjectFirma.Web.Models
 
         [Key]
         public int ProjectCodeID { get; set; }
-        public string ProjectCodeAbbrev { get; set; }
+        public string ProjectCodeName { get; set; }
         public string ProjectCodeTitle { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? ProjectStartDate { get; set; }
+        public DateTime? ProjectEndDate { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
 
@@ -118,7 +124,7 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-            public const int ProjectCodeAbbrev = 100;
+            public const int ProjectCodeName = 100;
             public const int ProjectCodeTitle = 255;
         }
     }

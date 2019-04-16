@@ -421,6 +421,11 @@ namespace ProjectFirma.Web.Models
             feature.Properties.Add("TaxonomyTrunkID",
                 ProjectType.TaxonomyBranch.TaxonomyTrunkID.ToString(CultureInfo.InvariantCulture));
             feature.Properties.Add("ProjectStageID", ProjectStageID.ToString(CultureInfo.InvariantCulture));
+            if (ProjectStage != null)
+            {
+                feature.Properties.Add("ProjectStageColor", ProjectStage.ProjectStageColor);
+            }
+
             feature.Properties.Add("Info", DisplayName);
             if (addProjectProperties)
             {
@@ -751,5 +756,9 @@ namespace ProjectFirma.Web.Models
         {
             return CompletionDate?.Year;
         }
+
+        // read-only Helper accessors
+        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.Select(aga => aga.GrantAllocation.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.ProjectCodes).Where(pc => pc != null).ToList();
     }
 }
