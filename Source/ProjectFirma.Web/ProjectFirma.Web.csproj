@@ -500,6 +500,7 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\CurrentBiennium.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Common\WADNRFileExtensionsAttribute.cs" />
     <Compile Include="Models\FirmaPageTypeTest.cs" />

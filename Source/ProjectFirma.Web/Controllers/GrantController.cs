@@ -67,7 +67,174 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
+        
 
+        [HttpGet]
+        [GrantEditAsAdminFeature]
+        public PartialViewResult Edit(GrantPrimaryKey grantPrimaryKey)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            var viewModel = new EditGrantViewModel(grant);
+            return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
+        }
+
+        [HttpPost]
+        [GrantEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Edit(GrantPrimaryKey grantPrimaryKey, EditGrantViewModel viewModel)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
+            }
+            viewModel.UpdateModel(grant, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewEdit(EditGrantViewModel viewModel, EditGrantType editGrantType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
+            
+            var viewData = new EditGrantViewData(editGrantType,
+                organizations, 
+                grantStatuses,
+                grantTypes
+            );
+            return RazorPartialView<EditGrant, EditGrantViewData, EditGrantViewModel>(viewData, viewModel);
+        }
+
+
+        [HttpGet]
+        [GrantCreateFeature]
+        public PartialViewResult New()
+        {
+            
+            var viewModel = new EditGrantViewModel();
+            return ViewEdit(viewModel,EditGrantType.NewGrant);
+        }
+
+        [HttpPost]
+        [GrantCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditGrantViewModel viewModel)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return ViewEdit(viewModel, EditGrantType.NewGrant);
+            }
+            var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(g => g.GrantStatusID == viewModel.GrantStatusID);
+            var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
+            var grant = Grant.CreateNewBlank(grantStatus, grantOrganization);
+            viewModel.UpdateModel(grant, CurrentPerson);
+            return new ModalDialogFormJsonResult();
+        }
+       
+        [GrantsViewFeature]
+        public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
+        {
+            var grant = grantPrimaryKey.EntityObject;
+            var userHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
+            var grantNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNotes)),
+                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNote(grantPrimaryKey)),
+                grant.GrantName,
+                userHasEditGrantPermissions);
+
+            var internalGrantNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNoteInternals)),
+                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNoteInternal(grantPrimaryKey)),
+                grant.GrantName,
+                userHasEditGrantPermissions);
+            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
+            return RazorView<Detail, DetailViewData>(viewData);
+        }
+
+        [GrantsViewFullListFeature]
+        public ViewResult Index()
+        {
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullGrantList);
+            var viewData = new GrantIndexViewData(CurrentPerson, firmaPage);
+            return RazorView<GrantIndex, GrantIndexViewData>(viewData);
+        }
+
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
+        {
+            var gridSpec = new GrantGridSpec(CurrentPerson);
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Grant>(grants, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
+        {
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
+        {
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            var grant = grantPrimaryKey.EntityObject;
+            var grantAllocations = grant.GrantAllocations.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        /// <summary>
+        /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.
+        /// Trying to make clear to user which grants don't have associated grantAllocations yet.
+        /// </summary>
+        /// <returns>An empty dataset for grid population</returns>
+        [GrantsViewFullListFeature]
+        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
+        {
+            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.Grant.GrantNumber == "").ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [GrantsViewFullListFeature]
+        public ExcelResult GrantsExcelDownload()
+        {
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var workbookTitle = FieldDefinition.Grant.GetFieldDefinitionLabelPluralized();
+            return GrantsExcelDownloadImpl(grants, grantAllocations, workbookTitle);
+        }
+
+        private ExcelResult GrantsExcelDownloadImpl(List<Grant> grants, List<GrantAllocation> grantAllocations, string workbookTitle)
+        {
+            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
+
+            // Grants
+            var grantSpec = new GrantExcelSpec();
+            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}", grantSpec, grants);
+            workSheets.Add(wsGrants);
+
+            // Grant Allocations
+            var grantAllocationsSpec = new GrantAllocationExcelSpec();
+            var wsGrantAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", grantAllocationsSpec, grantAllocations);
+            workSheets.Add(wsGrantAllocations);
+
+            // Overall excel file
+            var wbm = new ExcelWorkbookMaker(workSheets);
+            var excelWorkbook = wbm.ToXLWorkbook();
+
+            return new ExcelResult(excelWorkbook, workbookTitle);
+        }
+
+
+        #region "Grant Note including internal"
         [HttpGet]
         [GrantEditAsAdminFeature]
         public PartialViewResult NewGrantNote(GrantPrimaryKey grantPrimaryKey)
@@ -229,7 +396,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
-       
+
 
         [HttpPost]
         [GrantNoteEditAsAdminFeature]
@@ -247,162 +414,7 @@ namespace ProjectFirma.Web.Controllers
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
         }
-
-
-
-        [HttpGet]
-        [GrantEditAsAdminFeature]
-        public PartialViewResult Edit(GrantPrimaryKey grantPrimaryKey)
-        {
-            var grant = grantPrimaryKey.EntityObject;
-            var viewModel = new EditGrantViewModel(grant);
-            return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
-        }
-
-        [HttpPost]
-        [GrantEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Edit(GrantPrimaryKey grantPrimaryKey, EditGrantViewModel viewModel)
-        {
-            var grant = grantPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewEdit(viewModel,  EditGrantType.ExistingGrant);
-            }
-            viewModel.UpdateModel(grant, CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult ViewEdit(EditGrantViewModel viewModel, EditGrantType editGrantType)
-        {
-            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
-            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
-            var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
-            
-            var viewData = new EditGrantViewData(editGrantType,
-                organizations, 
-                grantStatuses,
-                grantTypes
-            );
-            return RazorPartialView<EditGrant, EditGrantViewData, EditGrantViewModel>(viewData, viewModel);
-        }
-
-
-        [HttpGet]
-        [GrantCreateFeature]
-        public PartialViewResult New()
-        {
-            
-            var viewModel = new EditGrantViewModel();
-            return ViewEdit(viewModel,EditGrantType.NewGrant);
-        }
-
-        [HttpPost]
-        [GrantCreateFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditGrantViewModel viewModel)
-        {
-            
-            if (!ModelState.IsValid)
-            {
-                return ViewEdit(viewModel, EditGrantType.NewGrant);
-            }
-            var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(g => g.GrantStatusID == viewModel.GrantStatusID);
-            var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
-            var grant = Grant.CreateNewBlank(grantStatus, grantOrganization);
-            viewModel.UpdateModel(grant, CurrentPerson);
-            return new ModalDialogFormJsonResult();
-        }
-       
-        [GrantsViewFeature]
-        public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
-        {
-            var grant = grantPrimaryKey.EntityObject;
-            var userHasEditGrantPermissions = new GrantEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
-            var grantNotesViewData = new EntityNotesViewData(
-                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNotes)),
-                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNote(grantPrimaryKey)),
-                grant.GrantName,
-                userHasEditGrantPermissions);
-
-            var internalGrantNotesViewData = new EntityNotesViewData(
-                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grant.GrantNoteInternals)),
-                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantNoteInternal(grantPrimaryKey)),
-                grant.GrantName,
-                userHasEditGrantPermissions);
-            var viewData = new Views.Grant.DetailViewData(CurrentPerson, grant, grantNotesViewData, internalGrantNotesViewData);
-            return RazorView<Detail, DetailViewData>(viewData);
-        }
-
-        [GrantsViewFullListFeature]
-        public ViewResult Index()
-        {
-            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.FullGrantList);
-            var viewData = new GrantIndexViewData(CurrentPerson, firmaPage);
-            return RazorView<GrantIndex, GrantIndexViewData>(viewData);
-        }
-
-        [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
-        {
-            var gridSpec = new GrantGridSpec(CurrentPerson);
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Grant>(grants, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
-        [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridJsonData()
-        {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-        /// <summary>
-        /// Used to display an empty grantAllocation grid with "no results" when a row in the grant grid containing no current relationship to grantAllocations is selected.
-        /// Trying to make clear to user which grants don't have associated grantAllocations yet.
-        /// </summary>
-        /// <returns>An empty dataset for grid population</returns>
-        [GrantsViewFullListFeature]
-        public GridJsonNetJObjectResult<GrantAllocation> GrantAllocationGridWithoutAnyJsonData()
-        {
-            var gridSpec = new GrantAllocationGridSpec(CurrentPerson);
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(ga => ga.Grant.GrantNumber == "").ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocation>(grantAllocations, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
-        [GrantsViewFullListFeature]
-        public ExcelResult GrantsExcelDownload()
-        {
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var workbookTitle = FieldDefinition.Grant.GetFieldDefinitionLabelPluralized();
-            return GrantsExcelDownloadImpl(grants, grantAllocations, workbookTitle);
-        }
-
-        private ExcelResult GrantsExcelDownloadImpl(List<Grant> grants, List<GrantAllocation> grantAllocations, string workbookTitle)
-        {
-            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
-
-            // Grants
-            var grantSpec = new GrantExcelSpec();
-            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}", grantSpec, grants);
-            workSheets.Add(wsGrants);
-
-            // Grant Allocations
-            var grantAllocationsSpec = new GrantAllocationExcelSpec();
-            var wsGrantAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", grantAllocationsSpec, grantAllocations);
-            workSheets.Add(wsGrantAllocations);
-
-            // Overall excel file
-            var wbm = new ExcelWorkbookMaker(workSheets);
-            var excelWorkbook = wbm.ToXLWorkbook();
-
-            return new ExcelResult(excelWorkbook, workbookTitle);
-        }
-
+        #endregion
 
 
 

@@ -1851,7 +1851,7 @@
     <Property Name="ProgramIndexID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProgramIndexCode" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="ProgramIndexTitle" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="Biennium" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Biennium" Type="Int32" Nullable="false" />
     <Property Name="Activity" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Program" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Subprogram" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />

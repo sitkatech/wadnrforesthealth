@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(int programIndexID, string programIndexCode, string programIndexTitle, string biennium, string activity, string program, string subprogram, string subactivity) : this()
+        public ProgramIndex(int programIndexID, string programIndexCode, string programIndexTitle, int biennium, string activity, string program, string subprogram, string subactivity) : this()
         {
             this.ProgramIndexID = programIndexID;
             this.ProgramIndexCode = programIndexCode;
@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProgramIndex(string programIndexCode, string programIndexTitle, string biennium) : this()
+        public ProgramIndex(string programIndexCode, string programIndexTitle, int biennium) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProgramIndexID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static ProgramIndex CreateNewBlank()
         {
-            return new ProgramIndex(default(string), default(string), default(string));
+            return new ProgramIndex(default(string), default(string), default(int));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace ProjectFirma.Web.Models
         public int ProgramIndexID { get; set; }
         public string ProgramIndexCode { get; set; }
         public string ProgramIndexTitle { get; set; }
-        public string Biennium { get; set; }
+        public int Biennium { get; set; }
         public string Activity { get; set; }
         public string Program { get; set; }
         public string Subprogram { get; set; }
@@ -132,7 +132,6 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProgramIndexCode = 255;
             public const int ProgramIndexTitle = 255;
-            public const int Biennium = 255;
             public const int Activity = 200;
             public const int Program = 200;
             public const int Subprogram = 200;

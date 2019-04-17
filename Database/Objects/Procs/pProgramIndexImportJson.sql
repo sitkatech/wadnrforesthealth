@@ -38,16 +38,10 @@ JSON format:
     AS programIndexTemp
 
 
------ HACK BLOCK
+-- Remove leading zeros from incoming ProgramIndexCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
+update #programIndexSocrataTemp
+set program_index_code = dbo.fRemoveLeadingZeroes(program_index_code)
 
---    select *
---    from dbo.ProgramIndex as dbpi
---    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
---    where (tpi.program_index_code is null and tpi.biennium is null)
-
-
-
------ HACK BLOCK
 
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
@@ -112,10 +106,11 @@ go
 
 /*
 select * from dbo.SocrataDataMartRawJsonImport
+select * from dbo.ProgramIndex
 
 set statistics time on
 
-exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 1
+exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 2
 
 set statistics time off
 
