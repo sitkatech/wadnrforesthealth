@@ -1581,7 +1581,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramIndexID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProgramIndexCode" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="ProgramIndexTitle" Type="varchar" Nullable="false" MaxLength="255" />
-    <Property Name="Biennium" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Biennium" Type="int" Nullable="false" />
     <Property Name="Activity" Type="varchar" MaxLength="200" />
     <Property Name="Program" Type="varchar" MaxLength="200" />
     <Property Name="Subprogram" Type="varchar" MaxLength="200" />

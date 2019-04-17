@@ -37,18 +37,6 @@ JSON format:
     )
     AS programIndexTemp
 
-
------ HACK BLOCK
-
---    select *
---    from dbo.ProgramIndex as dbpi
---    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
---    where (tpi.program_index_code is null and tpi.biennium is null)
-
-
-
------ HACK BLOCK
-
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
 delete from dbo.ProgramIndex 
@@ -112,10 +100,11 @@ go
 
 /*
 select * from dbo.SocrataDataMartRawJsonImport
+select * from dbo.ProgramIndex
 
 set statistics time on
 
-exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 1
+exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 2
 
 set statistics time off
 

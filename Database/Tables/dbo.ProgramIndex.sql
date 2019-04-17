@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[ProgramIndex](
 	[ProgramIndexID] [int] IDENTITY(1,1) NOT NULL,
 	[ProgramIndexCode] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ProgramIndexTitle] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[Biennium] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[Biennium] [int] NOT NULL,
 	[Activity] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Program] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[Subprogram] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
