@@ -1,0 +1,35 @@
+﻿using LtInfo.Common;
+using ProjectFirma.Web.Common;
+
+namespace ProjectFirma.Web.Models
+{
+    public static class GrantModificationModelExtensions
+    {
+
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.DeleteGrantModification(UrlTemplate.Parameter1Int)));
+        public static string GetDeleteUrl(this GrantModification grantModification)
+        {
+            return DeleteUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        }
+
+
+        public static readonly UrlTemplate<int> DetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.GrantModificationDetail(UrlTemplate.Parameter1Int)));
+        public static string GetDetailUrl(this GrantModification grantModification)
+        {
+            return DetailUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        }
+
+        public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.EditGrantModification(UrlTemplate.Parameter1Int)));
+        public static string GetEditUrl(this GrantModification grantModification)
+        {
+            return EditUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        }
+
+        public static readonly UrlTemplate<int> NewGrantModificationInternalNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModificationInternalNote(UrlTemplate.Parameter1Int)));
+        public static string GetNewGrantModificationInternalNoteUrl(this GrantModification grantModification)
+        {
+            return NewGrantModificationInternalNoteUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        }
+
+    }
+}
