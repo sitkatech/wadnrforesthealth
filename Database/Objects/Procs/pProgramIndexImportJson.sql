@@ -37,6 +37,12 @@ JSON format:
     )
     AS programIndexTemp
 
+
+-- Remove leading zeros from incoming ProgramIndexCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
+update #programIndexSocrataTemp
+set program_index_code = dbo.fRemoveLeadingZeroes(program_index_code)
+
+
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
 delete from dbo.ProgramIndex 
