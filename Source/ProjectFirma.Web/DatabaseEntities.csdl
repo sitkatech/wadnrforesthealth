@@ -31,6 +31,8 @@
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantAllocationNoteInternal" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramManager" />
     <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.GrantAllocationProjectCode" />
+    <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.GrantModification" />
+    <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.GrantModificationStatus" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.GrantNote" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.GrantNoteInternal" />
     <EntitySet Name="GrantStatus" EntityType="ProjectFirma.Web.Models.GrantStatus" />
@@ -225,6 +227,10 @@
       <End Role="GrantAllocationFileResource" EntitySet="FileResource" />
       <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" EntitySet="GrantAllocation" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
+      <End Role="GrantModificationFileResource" EntitySet="FileResource" />
+      <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" EntitySet="GrantModification" />
+    </AssociationSet>
     <AssociationSet Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
       <End Role="InvoiceFileResource" EntitySet="FileResource" />
       <End Role="InvoicesWhereYouAreTheInvoiceFileResource" EntitySet="Invoice" />
@@ -292,6 +298,10 @@
     <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModification_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantModifications" EntitySet="GrantModification" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantNote_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantNote_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -380,6 +390,10 @@
     <AssociationSet Name="FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID">
       <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="GrantAllocationProjectCodes" EntitySet="GrantAllocationProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" Association="ProjectFirma.Web.Models.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
+      <End Role="GrantModificationStatus" EntitySet="GrantModificationStatus" />
+      <End Role="GrantModifications" EntitySet="GrantModification" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantNote_Person_CreatedByPersonID_PersonID">
       <End Role="CreatedByPerson" EntitySet="Person" />
@@ -1122,6 +1136,7 @@
     <NavigationProperty Name="FirmaPageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaPageImages" />
     <NavigationProperty Name="GrantsWhereYouAreTheGrantFileResource" Relationship="ProjectFirma.Web.Models.FK_Grant_FileResource_GrantFileResourceID_FileResourceID" FromRole="GrantFileResource" ToRole="GrantsWhereYouAreTheGrantFileResource" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" FromRole="GrantAllocationFileResource" ToRole="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" />
+    <NavigationProperty Name="GrantModificationsWhereYouAreTheGrantModificationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" FromRole="GrantModificationFileResource" ToRole="GrantModificationsWhereYouAreTheGrantModificationFileResource" />
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
     <NavigationProperty Name="ProjectDocuments" Relationship="ProjectFirma.Web.Models.FK_ProjectDocument_FileResource_FileResourceID" FromRole="FileResource" ToRole="ProjectDocuments" />
@@ -1216,6 +1231,7 @@
     <NavigationProperty Name="GrantType" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="Grants" ToRole="GrantType" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Grants" ToRole="Organization" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
+    <NavigationProperty Name="GrantModifications" Relationship="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID" FromRole="Grant" ToRole="GrantModifications" />
     <NavigationProperty Name="GrantNotes" Relationship="ProjectFirma.Web.Models.FK_GrantNote_Grant_GrantID" FromRole="Grant" ToRole="GrantNotes" />
     <NavigationProperty Name="GrantNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Grant_GrantID" FromRole="Grant" ToRole="GrantNoteInternals" />
   </EntityType>
@@ -1315,6 +1331,35 @@
     <Property Name="ProjectCodeID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProjectCodes" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" FromRole="GrantAllocationProjectCodes" ToRole="ProjectCode" />
+  </EntityType>
+  <EntityType Name="GrantModification">
+    <Key>
+      <PropertyRef Name="GrantModificationID" />
+    </Key>
+    <Property Name="GrantModificationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantModificationName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="GrantModificationStartDate" Type="DateTime" Nullable="false" />
+    <Property Name="GrantModificationEndDate" Type="DateTime" Nullable="false" />
+    <Property Name="GrantModificationStatusID" Type="Int32" Nullable="false" />
+    <Property Name="IsPerformancePeriodChange" Type="Boolean" Nullable="false" />
+    <Property Name="IsAdministrativeChange" Type="Boolean" Nullable="false" />
+    <Property Name="IsFundingChange" Type="Boolean" Nullable="false" />
+    <Property Name="IsOtherChange" Type="Boolean" Nullable="false" />
+    <Property Name="GrantModificationAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="GrantModificationDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="GrantModificationFileResourceID" Type="Int32" />
+    <NavigationProperty Name="GrantModificationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" FromRole="GrantModificationsWhereYouAreTheGrantModificationFileResource" ToRole="GrantModificationFileResource" />
+    <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID" FromRole="GrantModifications" ToRole="Grant" />
+    <NavigationProperty Name="GrantModificationStatus" Relationship="ProjectFirma.Web.Models.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" FromRole="GrantModifications" ToRole="GrantModificationStatus" />
+  </EntityType>
+  <EntityType Name="GrantModificationStatus">
+    <Key>
+      <PropertyRef Name="GrantModificationStatusID" />
+    </Key>
+    <Property Name="GrantModificationStatusID" Type="Int32" Nullable="false" />
+    <Property Name="GrantModificationStatusName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="GrantModifications" Relationship="ProjectFirma.Web.Models.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" FromRole="GrantModificationStatus" ToRole="GrantModifications" />
   </EntityType>
   <EntityType Name="GrantNote">
     <Key>
@@ -2964,6 +3009,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
+    <End Role="GrantModificationFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
+    <End Role="GrantModificationsWhereYouAreTheGrantModificationFileResource" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModificationFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantModificationsWhereYouAreTheGrantModificationFileResource">
+        <PropertyRef Name="GrantModificationFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID">
     <End Role="InvoiceFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
     <End Role="InvoicesWhereYouAreTheInvoiceFileResource" Type="ProjectFirma.Web.Models.Invoice" Multiplicity="*" />
@@ -3164,6 +3221,18 @@
         <PropertyRef Name="GrantID" />
       </Principal>
       <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModification_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="1" />
+    <End Role="GrantModifications" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantModifications">
         <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
@@ -3429,6 +3498,18 @@
       </Principal>
       <Dependent Role="GrantAllocationProjectCodes">
         <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
+    <End Role="GrantModificationStatus" Type="ProjectFirma.Web.Models.GrantModificationStatus" Multiplicity="1" />
+    <End Role="GrantModifications" Type="ProjectFirma.Web.Models.GrantModification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModificationStatus">
+        <PropertyRef Name="GrantModificationStatusID" />
+      </Principal>
+      <Dependent Role="GrantModifications">
+        <PropertyRef Name="GrantModificationStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

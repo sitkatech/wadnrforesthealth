@@ -343,6 +343,33 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantModification">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModification">
+        <MappingFragment StoreEntitySet="GrantModification">
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="GrantModificationName" ColumnName="GrantModificationName" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantModificationStartDate" ColumnName="GrantModificationStartDate" />
+          <ScalarProperty Name="GrantModificationEndDate" ColumnName="GrantModificationEndDate" />
+          <ScalarProperty Name="GrantModificationStatusID" ColumnName="GrantModificationStatusID" />
+          <ScalarProperty Name="IsPerformancePeriodChange" ColumnName="IsPerformancePeriodChange" />
+          <ScalarProperty Name="IsAdministrativeChange" ColumnName="IsAdministrativeChange" />
+          <ScalarProperty Name="IsFundingChange" ColumnName="IsFundingChange" />
+          <ScalarProperty Name="IsOtherChange" ColumnName="IsOtherChange" />
+          <ScalarProperty Name="GrantModificationAmount" ColumnName="GrantModificationAmount" />
+          <ScalarProperty Name="GrantModificationDescription" ColumnName="GrantModificationDescription" />
+          <ScalarProperty Name="GrantModificationFileResourceID" ColumnName="GrantModificationFileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationStatus">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationStatus">
+        <MappingFragment StoreEntitySet="GrantModificationStatus">
+          <ScalarProperty Name="GrantModificationStatusID" ColumnName="GrantModificationStatusID" />
+          <ScalarProperty Name="GrantModificationStatusName" ColumnName="GrantModificationStatusName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantNote">
         <MappingFragment StoreEntitySet="GrantNote">
