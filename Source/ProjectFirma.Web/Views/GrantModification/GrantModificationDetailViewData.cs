@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Views.GrantModification
             GrantModification = grantModification;
             PageTitle = grantModification.GrantModificationName;
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} Detail";
-            NewGrantModificationNoteUrl = grantModification.GetNewGrantModificationInternalNoteUrl();
+            //NewGrantModificationNoteUrl = grantModification.GetNewGrantModificationInternalNoteUrl();
             InternalGrantModificationNotesViewData = internalGrantModificationNotesViewData;
             // Used for creating file download link, if file available
             ShowDownload = grantModification.GrantModificationFileResource != null;

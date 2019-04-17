@@ -1,5 +1,6 @@
 ﻿using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -25,11 +26,11 @@ namespace ProjectFirma.Web.Models
             return EditUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
         }
 
-        public static readonly UrlTemplate<int> NewGrantModificationInternalNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModificationInternalNote(UrlTemplate.Parameter1Int)));
-        public static string GetNewGrantModificationInternalNoteUrl(this GrantModification grantModification)
-        {
-            return NewGrantModificationInternalNoteUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
-        }
+        //public static readonly UrlTemplate<int> NewGrantModificationInternalNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModificationInternalNote(UrlTemplate.Parameter1Int)));
+        //public static string GetNewGrantModificationInternalNoteUrl(this GrantModification grantModification)
+        //{
+        //    return NewGrantModificationInternalNoteUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        //}
 
     }
 }
