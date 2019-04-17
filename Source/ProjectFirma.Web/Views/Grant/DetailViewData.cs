@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -31,6 +33,10 @@ namespace ProjectFirma.Web.Views.Grant
         public EntityNotesViewData InternalGrantNotesViewData { get; set; }
         public bool ShowDownload { get; set; }
 
+        public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
+        public string GrantAllocationGridName { get; }
+        public string GrantAllocationGridDataUrl { get; }
+
         public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
         {
@@ -41,6 +47,11 @@ namespace ProjectFirma.Web.Views.Grant
             InternalGrantNotesViewData = internalNotesViewData;
             // Used for creating file download link, if file available
             ShowDownload = grant.GrantFileResource != null;
+
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
+            GrantAllocationGridName = "grantAllocationsGridName";
+            GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrant(grant.PrimaryKey));
+
         }
     }
 }
