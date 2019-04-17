@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             }
 
             Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.Text);
-            Add("Amount", x => x.GrantAllocationBudgetLineItemAmount, 125, DhtmlxGridColumnFormatType.Currency);
+            Add("Amount", x => x.GrantAllocationBudgetLineItemAmount, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add("Note", x => x.GrantAllocationBudgetLineItemNote, 650, DhtmlxGridColumnFilterType.Text);
            
         }

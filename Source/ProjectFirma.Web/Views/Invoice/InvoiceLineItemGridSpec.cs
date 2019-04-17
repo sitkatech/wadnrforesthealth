@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.Invoice
             }
             Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.Text);
             Add("Grant Allocation", x => x.GrantAllocation.GrantAllocationName, 125, DhtmlxGridColumnFilterType.Text);
-            Add("Amount", x => x.InvoiceLineItemAmount, 70, DhtmlxGridColumnFormatType.Currency);
+            Add("Amount", x => x.InvoiceLineItemAmount, 70, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
             Add("Note", x => x.InvoiceLineItemNote, 250, DhtmlxGridColumnFilterType.Text);
            
         }
