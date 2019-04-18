@@ -40,7 +40,7 @@
 
 
 <div>
-    <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.GrantModificationsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToGrantModificationsText</a>
+    <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.ParentGrantUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToParentGrantUrlText</a>
 </div>
 
 
@@ -69,7 +69,7 @@
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantModificationPurpose)
                             </div>
                             <div class="col-sm-9">
-                                @ViewDataTyped.GrantModification.SelectedModificationPurposesForDisplayCommaDelimited
+                                @ViewDataTyped.GrantModification.GrantModificationPurposeNamesAsCommaDelimitedString
                             </div>
                         </div>
                         <div class="row">
@@ -136,7 +136,7 @@
             </div>
         </div>
     </div>
-    @if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+    @*@if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
     {
         <div class="row">
             <div class="col-sm-12"">
@@ -155,5 +155,5 @@
                 </div>
             </div>
         </div>
-    }
+    }*@
 </div>

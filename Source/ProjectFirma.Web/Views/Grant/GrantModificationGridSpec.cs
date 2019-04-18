@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Views.Grant
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
-            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GrantModificationName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);

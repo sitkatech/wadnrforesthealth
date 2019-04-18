@@ -1,4 +1,5 @@
-﻿using LtInfo.Common;
+﻿using System.Web;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 
@@ -24,6 +25,11 @@ namespace ProjectFirma.Web.Models
         public static string GetEditUrl(this GrantModification grantModification)
         {
             return EditUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
+        }
+
+        public static HtmlString GetGrantModificationNameAsUrl(this GrantModification grantModification)
+        {
+            return grantModification != null ? UrlTemplate.MakeHrefString(grantModification.GetDetailUrl(), grantModification.GrantModificationName) : new HtmlString(null);
         }
 
         //public static readonly UrlTemplate<int> NewGrantModificationInternalNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModificationInternalNote(UrlTemplate.Parameter1Int)));

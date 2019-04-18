@@ -89,6 +89,8 @@ namespace ProjectFirma.Web.Views.GrantModification
             GrantModificationStatusID = grantModification.GrantModificationStatusID;
             GrantModificationStartDate = grantModification.GrantModificationStartDate;
             GrantModificationEndDate = grantModification.GrantModificationEndDate;
+            GrantModificationDescription = grantModification.GrantModificationDescription;
+            GrantModificationAmount = grantModification.GrantModificationAmount;
             GrantID = grantModification.GrantID;
             GrantModificationPurposeIDs = grantModification.GrantModificationGrantModificationPurposes.Select(x => x.GrantModificationPurposeID).ToList();
 
@@ -100,6 +102,7 @@ namespace ProjectFirma.Web.Views.GrantModification
             grantModification.GrantModificationStatusID = GrantModificationStatusID;
             grantModification.GrantModificationStartDate = GrantModificationStartDate;
             grantModification.GrantModificationEndDate = GrantModificationEndDate;
+            grantModification.GrantModificationDescription = GrantModificationDescription;
             grantModification.GrantID = GrantID;
             grantModification.GrantModificationAmount = GrantModificationAmount;
 

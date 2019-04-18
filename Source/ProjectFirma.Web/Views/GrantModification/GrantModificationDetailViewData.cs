@@ -19,7 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.GrantModification
@@ -32,8 +35,8 @@ namespace ProjectFirma.Web.Views.GrantModification
         public EntityNotesViewData InternalGrantModificationNotesViewData { get; }
         public bool ShowDownload { get; }
         public bool UserHasEditGrantModificationPermissions { get; }
-        public string GrantModificationsListUrl { get; }
-        public string BackToGrantModificationsText { get; }
+        public string ParentGrantUrl { get; }
+        public string BackToParentGrantUrlText { get; }
 
         public GrantModificationDetailViewData(Person currentPerson, Models.GrantModification grantModification, EntityNotesViewData internalGrantModificationNotesViewData) : base(currentPerson)
         {
@@ -42,6 +45,10 @@ namespace ProjectFirma.Web.Views.GrantModification
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} Detail";
             //NewGrantModificationNoteUrl = grantModification.GetNewGrantModificationInternalNoteUrl();
             InternalGrantModificationNotesViewData = internalGrantModificationNotesViewData;
+            ParentGrantUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(gc => gc.GrantDetail(grantModification.GrantID));
+            BackToParentGrantUrlText = $"Back to {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}: {grantModification.Grant.GrantName}";
+            EditGrantModificationBasicsUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.EditGrantModification(grantModification.PrimaryKey));
+            UserHasEditGrantModificationPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             // Used for creating file download link, if file available
             ShowDownload = grantModification.GrantModificationFileResource != null;
         }
