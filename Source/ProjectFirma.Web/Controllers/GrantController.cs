@@ -161,6 +161,40 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<GrantIndex, GrantIndexViewData>(viewData);
         }
 
+        
+
+        [GrantsViewFullListFeature]
+        public ExcelResult GrantsExcelDownload()
+        {
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var workbookTitle = FieldDefinition.Grant.GetFieldDefinitionLabelPluralized();
+            return GrantsExcelDownloadImpl(grants, grantAllocations, workbookTitle);
+        }
+
+        private ExcelResult GrantsExcelDownloadImpl(List<Grant> grants, List<GrantAllocation> grantAllocations, string workbookTitle)
+        {
+            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
+
+            // Grants
+            var grantSpec = new GrantExcelSpec();
+            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}", grantSpec, grants);
+            workSheets.Add(wsGrants);
+
+            // Grant Allocations
+            var grantAllocationsSpec = new GrantAllocationExcelSpec();
+            var wsGrantAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", grantAllocationsSpec, grantAllocations);
+            workSheets.Add(wsGrantAllocations);
+
+            // Overall excel file
+            var wbm = new ExcelWorkbookMaker(workSheets);
+            var excelWorkbook = wbm.ToXLWorkbook();
+
+            return new ExcelResult(excelWorkbook, workbookTitle);
+        }
+
+
+        #region "Grid Json Object Functions"
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<Grant> GrantGridJsonData()
         {
@@ -203,35 +237,17 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+
         [GrantsViewFullListFeature]
-        public ExcelResult GrantsExcelDownload()
+        public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
-            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
-            var workbookTitle = FieldDefinition.Grant.GetFieldDefinitionLabelPluralized();
-            return GrantsExcelDownloadImpl(grants, grantAllocations, workbookTitle);
+            var gridSpec = new GrantModificationGridSpec(CurrentPerson);
+            var grant = grantPrimaryKey.EntityObject;
+            var grantModifications = grant.GrantModifications.ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantModification>(grantModifications, gridSpec);
+            return gridJsonNetJObjectResult;
         }
-
-        private ExcelResult GrantsExcelDownloadImpl(List<Grant> grants, List<GrantAllocation> grantAllocations, string workbookTitle)
-        {
-            var workSheets = new List<IExcelWorkbookSheetDescriptor>();
-
-            // Grants
-            var grantSpec = new GrantExcelSpec();
-            var wsGrants = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.Grant.GetFieldDefinitionLabelPluralized()}", grantSpec, grants);
-            workSheets.Add(wsGrants);
-
-            // Grant Allocations
-            var grantAllocationsSpec = new GrantAllocationExcelSpec();
-            var wsGrantAllocations = ExcelWorkbookSheetDescriptorFactory.MakeWorksheet($"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", grantAllocationsSpec, grantAllocations);
-            workSheets.Add(wsGrantAllocations);
-
-            // Overall excel file
-            var wbm = new ExcelWorkbookMaker(workSheets);
-            var excelWorkbook = wbm.ToXLWorkbook();
-
-            return new ExcelResult(excelWorkbook, workbookTitle);
-        }
+        #endregion
 
 
         #region "Grant Note including internal"

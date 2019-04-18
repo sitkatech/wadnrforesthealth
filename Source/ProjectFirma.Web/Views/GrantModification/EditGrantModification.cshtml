@@ -38,27 +38,17 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.ValidationMessageFor(m => m.GrantModificationName)
             </div>
         </div>
-        @* INSERT BOOL CHECKBOXES HERE *@
+
         <div class="form-group">
             <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.GrantModificationPurposeIDs)
             </div>
             <div class="col-xs-8">
-                @Html.CheckBoxListFor(m => m.GrantModificationPurposeIDs, ViewDataTyped.AllGrantModificationPurposes, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols))
+                @Html.CheckBoxListFor(m => m.GrantModificationPurposeIDs, ViewDataTyped.AllGrantModificationPurposes, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols)
                 @Html.ValidationMessageFor(m => m.GrantModificationPurposeIDs)
             </div>
         </div>
-        
 
-        <div class="form-group">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantModificationName)
-            </div>
-            <div class="col-xs-8">
-                @Html.TextBoxFor(m => m.GrantModificationName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.GrantModificationName)
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-xs-4 control-label">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -523,6 +523,7 @@
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
     <Compile Include="Models\GrantModification.cs" />
     <Compile Include="Models\GrantModificationModelExtensions.cs" />
+    <Compile Include="Models\GrantModificationStatusModelExtensions.cs" />
     <Compile Include="Models\InteractionEventContact.cs" />
     <Compile Include="Models\InteractionEventProject.cs" />
     <Compile Include="Models\InteractionEventType.cs" />
@@ -699,6 +700,7 @@
     <Compile Include="Views\Grant\EditGrantNoteViewModel.cs" />
     <Compile Include="Views\Grant\EditGrantViewModel.cs" />
     <Compile Include="Views\Grant\EditGrant.cs" />
+    <Compile Include="Views\Grant\GrantModificationGridSpec.cs" />
     <Compile Include="Views\Grant\GrantGridSpec.cs" />
     <Compile Include="Views\Grant\GrantAllocationGridSpec.cs" />
     <Compile Include="Views\Grant\GrantIndexViewData.cs" />

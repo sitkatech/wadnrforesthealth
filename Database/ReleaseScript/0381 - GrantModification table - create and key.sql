@@ -30,7 +30,14 @@ create table dbo.GrantModificationPurpose(
 	GrantModificationPurposeID int not null constraint PK_GrantModificationPurpose_GrantModificationPurposeID primary key clustered,
 	GrantModificationPurposeName nvarchar(100) not null
 )
-go	
+go
+
+insert into dbo.GrantModificationPurpose values
+	(1, 'Change in Performance Period'),
+	(2, 'Administrative Changes'),	
+	(3, 'Change in Funding'),	
+	(4, 'Other')
+go		
 
 create table dbo.GrantModificationGrantModificationPurpose
 (

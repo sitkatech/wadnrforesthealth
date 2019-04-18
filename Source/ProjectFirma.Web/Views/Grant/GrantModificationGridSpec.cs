@@ -1,0 +1,65 @@
+﻿/*-----------------------------------------------------------------------
+<copyright file="IndexGridSpec.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+<author>Sitka Technology Group</author>
+</copyright>
+
+<license>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+Source code is available upon request via <support@sitkatech.com>.
+</license>
+-----------------------------------------------------------------------*/
+
+using LtInfo.Common;
+using LtInfo.Common.DhtmlWrappers;
+using LtInfo.Common.HtmlHelperExtensions;
+using LtInfo.Common.ModalDialog;
+using LtInfo.Common.Views;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+
+namespace ProjectFirma.Web.Views.Grant
+{
+
+    public class GrantModificationGridSpec : GridSpec<Models.GrantModification>
+    {
+        public GrantModificationGridSpec(Person currentPerson)
+        {
+            ObjectNameSingular = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}";
+            ObjectNamePlural = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabelPluralized()}"; ;
+            SaveFiltersInCookie = true;
+
+            var userHasCreatePermissions = new GrantModificationCreateFeature().HasPermissionByPerson(currentPerson);
+            if (userHasCreatePermissions)
+            {
+                var contentUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModification());
+                CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}");
+            }
+
+            var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
+            if (userHasDeletePermissions)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+            }
+            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GrantModificationName, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationPurpose.ToGridHeaderString(), x => x.GrantModificationPurposeNamesAsCommaDelimitedString, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationAmount.ToGridHeaderString(), x => x.GrantModificationAmount, 90, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+
+        }
+
+    }
+}
