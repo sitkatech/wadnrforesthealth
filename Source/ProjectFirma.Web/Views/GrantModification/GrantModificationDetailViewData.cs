@@ -30,7 +30,6 @@ namespace ProjectFirma.Web.Views.GrantModification
     public class GrantModificationDetailViewData : FirmaViewData
     {
         public Models.GrantModification GrantModification { get; }
-        public string NewGrantModificationNoteUrl { get;  }
         public string EditGrantModificationBasicsUrl { get; }
         public EntityNotesViewData InternalGrantModificationNotesViewData { get; }
         public bool ShowDownload { get; }
@@ -43,7 +42,6 @@ namespace ProjectFirma.Web.Views.GrantModification
             GrantModification = grantModification;
             PageTitle = grantModification.GrantModificationName;
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()} Detail";
-            //NewGrantModificationNoteUrl = grantModification.GetNewGrantModificationInternalNoteUrl();
             InternalGrantModificationNotesViewData = internalGrantModificationNotesViewData;
             ParentGrantUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(gc => gc.GrantDetail(grantModification.GrantID));
             BackToParentGrantUrlText = $"Back to {Models.FieldDefinition.Grant.GetFieldDefinitionLabel()}: {grantModification.Grant.GrantName}";
