@@ -34,16 +34,28 @@ namespace ProjectFirma.Web.Views.Grant
 
     public class GrantModificationGridSpec : GridSpec<Models.GrantModification>
     {
+
         public GrantModificationGridSpec(Person currentPerson)
         {
+            GrantModificationGridSpecConstructorImpl(currentPerson, null);
+        }
+
+        public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate)
+        {
+            GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate);
+        }
+
+
+        private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate)
+        {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}";
-            ObjectNamePlural = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabelPluralized()}"; ;
+            ObjectNamePlural = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
 
             var userHasCreatePermissions = new GrantModificationCreateFeature().HasPermissionByPerson(currentPerson);
-            if (userHasCreatePermissions)
+            if (userHasCreatePermissions && grantToAssociate != null)
             {
-                var contentUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModification());
+                var contentUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.NewGrantModificationForAGrant(grantToAssociate.PrimaryKey));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}");
             }
 

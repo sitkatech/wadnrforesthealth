@@ -114,6 +114,14 @@ namespace ProjectFirma.Web.Controllers
             return ViewEditGrantModification(viewModel);
         }
 
+        [HttpGet]
+        [GrantModificationCreateFeature]
+        public PartialViewResult NewGrantModificationForAGrant(GrantPrimaryKey grantPrimaryKey)
+        {
+            var viewModel = new EditGrantModificationViewModel(grantPrimaryKey.EntityObject);
+            return ViewEditGrantModification(viewModel);
+        }
+
         [HttpPost]
         [GrantModificationCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
@@ -131,7 +139,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
             return new ModalDialogFormJsonResult();
         }
-       
+
         [GrantModificationViewFeature]
         public ViewResult GrantModificationDetail(GrantModificationPrimaryKey grantModificationPrimaryKey)
         {

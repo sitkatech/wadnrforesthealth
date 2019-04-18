@@ -241,8 +241,8 @@ namespace ProjectFirma.Web.Controllers
         [GrantsViewFullListFeature]
         public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
-            var gridSpec = new GrantModificationGridSpec(CurrentPerson);
             var grant = grantPrimaryKey.EntityObject;
+            var gridSpec = new GrantModificationGridSpec(CurrentPerson, grant);
             var grantModifications = grant.GrantModifications.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantModification>(grantModifications, gridSpec);
             return gridJsonNetJObjectResult;

@@ -76,6 +76,11 @@ namespace ProjectFirma.Web.Views.GrantModification
         {
         }
 
+        public EditGrantModificationViewModel(Models.Grant grantToAssociate)
+        {
+            GrantID = grantToAssociate.GrantID;
+        }
+
         public EditGrantModificationViewModel(Models.GrantModification grantModification)
         {
             GrantModificationName = grantModification.GrantModificationName;
