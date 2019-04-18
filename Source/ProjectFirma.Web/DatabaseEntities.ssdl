@@ -32,6 +32,8 @@
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.Store.GrantModificationStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantNoteInternal" store:Type="Tables" Schema="dbo" />
@@ -322,6 +324,14 @@
     <AssociationSet Name="FK_GrantModification_GrantModificationStatus_GrantModificationStatusID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_GrantModificationStatus_GrantModificationStatusID">
       <End Role="GrantModificationStatus" EntitySet="GrantModificationStatus" />
       <End Role="GrantModifications" EntitySet="GrantModification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
+      <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
+      <End Role="GrantModificationPurpose" EntitySet="GrantModificationPurpose" />
+      <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantNote_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -1242,13 +1252,24 @@
     <Property Name="GrantModificationStartDate" Type="datetime" Nullable="false" />
     <Property Name="GrantModificationEndDate" Type="datetime" Nullable="false" />
     <Property Name="GrantModificationStatusID" Type="int" Nullable="false" />
-    <Property Name="IsPerformancePeriodChange" Type="bit" Nullable="false" />
-    <Property Name="IsAdministrativeChange" Type="bit" Nullable="false" />
-    <Property Name="IsFundingChange" Type="bit" Nullable="false" />
-    <Property Name="IsOtherChange" Type="bit" Nullable="false" />
     <Property Name="GrantModificationAmount" Type="money" Nullable="false" />
     <Property Name="GrantModificationDescription" Type="nvarchar(max)" />
     <Property Name="GrantModificationFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantModificationGrantModificationPurpose">
+    <Key>
+      <PropertyRef Name="GrantModificationGrantModificationPurposeID" />
+    </Key>
+    <Property Name="GrantModificationGrantModificationPurposeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantModificationID" Type="int" Nullable="false" />
+    <Property Name="GrantModificationPurposeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GrantModificationPurpose">
+    <Key>
+      <PropertyRef Name="GrantModificationPurposeID" />
+    </Key>
+    <Property Name="GrantModificationPurposeID" Type="int" Nullable="false" />
+    <Property Name="GrantModificationPurposeName" Type="nvarchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <EntityType Name="GrantModificationStatus">
     <Key>
@@ -2916,6 +2937,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantModifications">
         <PropertyRef Name="GrantModificationStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
+    <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
+      </Principal>
+      <Dependent Role="GrantModificationGrantModificationPurposes">
+        <PropertyRef Name="GrantModificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
+    <End Role="GrantModificationPurpose" Type="ProjectFirma.Web.Models.Store.GrantModificationPurpose" Multiplicity="1" />
+    <End Role="GrantModificationGrantModificationPurposes" Type="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModificationPurpose">
+        <PropertyRef Name="GrantModificationPurposeID" />
+      </Principal>
+      <Dependent Role="GrantModificationGrantModificationPurposes">
+        <PropertyRef Name="GrantModificationPurposeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

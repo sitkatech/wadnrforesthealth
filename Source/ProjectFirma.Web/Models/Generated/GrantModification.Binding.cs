@@ -24,13 +24,13 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantModification()
         {
-
+            this.GrantModificationGrantModificationPurposes = new HashSet<GrantModificationGrantModificationPurpose>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantModification(int grantModificationID, string grantModificationName, int grantID, DateTime grantModificationStartDate, DateTime grantModificationEndDate, int grantModificationStatusID, bool isPerformancePeriodChange, bool isAdministrativeChange, bool isFundingChange, bool isOtherChange, decimal grantModificationAmount, string grantModificationDescription, int? grantModificationFileResourceID) : this()
+        public GrantModification(int grantModificationID, string grantModificationName, int grantID, DateTime grantModificationStartDate, DateTime grantModificationEndDate, int grantModificationStatusID, decimal grantModificationAmount, string grantModificationDescription, int? grantModificationFileResourceID) : this()
         {
             this.GrantModificationID = grantModificationID;
             this.GrantModificationName = grantModificationName;
@@ -38,10 +38,6 @@ namespace ProjectFirma.Web.Models
             this.GrantModificationStartDate = grantModificationStartDate;
             this.GrantModificationEndDate = grantModificationEndDate;
             this.GrantModificationStatusID = grantModificationStatusID;
-            this.IsPerformancePeriodChange = isPerformancePeriodChange;
-            this.IsAdministrativeChange = isAdministrativeChange;
-            this.IsFundingChange = isFundingChange;
-            this.IsOtherChange = isOtherChange;
             this.GrantModificationAmount = grantModificationAmount;
             this.GrantModificationDescription = grantModificationDescription;
             this.GrantModificationFileResourceID = grantModificationFileResourceID;
@@ -50,7 +46,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantModification(string grantModificationName, int grantID, DateTime grantModificationStartDate, DateTime grantModificationEndDate, int grantModificationStatusID, bool isPerformancePeriodChange, bool isAdministrativeChange, bool isFundingChange, bool isOtherChange, decimal grantModificationAmount) : this()
+        public GrantModification(string grantModificationName, int grantID, DateTime grantModificationStartDate, DateTime grantModificationEndDate, int grantModificationStatusID, decimal grantModificationAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantModificationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -60,17 +56,13 @@ namespace ProjectFirma.Web.Models
             this.GrantModificationStartDate = grantModificationStartDate;
             this.GrantModificationEndDate = grantModificationEndDate;
             this.GrantModificationStatusID = grantModificationStatusID;
-            this.IsPerformancePeriodChange = isPerformancePeriodChange;
-            this.IsAdministrativeChange = isAdministrativeChange;
-            this.IsFundingChange = isFundingChange;
-            this.IsOtherChange = isOtherChange;
             this.GrantModificationAmount = grantModificationAmount;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantModification(string grantModificationName, Grant grant, DateTime grantModificationStartDate, DateTime grantModificationEndDate, GrantModificationStatus grantModificationStatus, bool isPerformancePeriodChange, bool isAdministrativeChange, bool isFundingChange, bool isOtherChange, decimal grantModificationAmount) : this()
+        public GrantModification(string grantModificationName, Grant grant, DateTime grantModificationStartDate, DateTime grantModificationEndDate, GrantModificationStatus grantModificationStatus, decimal grantModificationAmount) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantModificationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -83,10 +75,6 @@ namespace ProjectFirma.Web.Models
             this.GrantModificationStatusID = grantModificationStatus.GrantModificationStatusID;
             this.GrantModificationStatus = grantModificationStatus;
             grantModificationStatus.GrantModifications.Add(this);
-            this.IsPerformancePeriodChange = isPerformancePeriodChange;
-            this.IsAdministrativeChange = isAdministrativeChange;
-            this.IsFundingChange = isFundingChange;
-            this.IsOtherChange = isOtherChange;
             this.GrantModificationAmount = grantModificationAmount;
         }
 
@@ -95,7 +83,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantModification CreateNewBlank(Grant grant, GrantModificationStatus grantModificationStatus)
         {
-            return new GrantModification(default(string), grant, default(DateTime), default(DateTime), grantModificationStatus, default(bool), default(bool), default(bool), default(bool), default(decimal));
+            return new GrantModification(default(string), grant, default(DateTime), default(DateTime), grantModificationStatus, default(decimal));
         }
 
         /// <summary>
@@ -104,13 +92,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantModificationGrantModificationPurposes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantModificationGrantModificationPurpose).Name};
 
 
         /// <summary>
@@ -126,8 +114,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantModificationGrantModificationPurposes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -137,16 +136,13 @@ namespace ProjectFirma.Web.Models
         public DateTime GrantModificationStartDate { get; set; }
         public DateTime GrantModificationEndDate { get; set; }
         public int GrantModificationStatusID { get; set; }
-        public bool IsPerformancePeriodChange { get; set; }
-        public bool IsAdministrativeChange { get; set; }
-        public bool IsFundingChange { get; set; }
-        public bool IsOtherChange { get; set; }
         public decimal GrantModificationAmount { get; set; }
         public string GrantModificationDescription { get; set; }
         public int? GrantModificationFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantModificationID; } set { GrantModificationID = value; } }
 
+        public virtual ICollection<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual GrantModificationStatus GrantModificationStatus { get; set; }
         public virtual FileResource GrantModificationFileResource { get; set; }

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using LtInfo.Common;
 using LtInfo.Common.Models;
@@ -62,6 +63,10 @@ namespace ProjectFirma.Web.Views.GrantModification
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
         public HttpPostedFileBase GrantModificationFileResourceData { get; set; }
 
+        [Required]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationPurpose)]
+        public List<int> GrantModificationPurposeIDs { get; set; }
+
 
 
         /// <summary>
@@ -78,10 +83,11 @@ namespace ProjectFirma.Web.Views.GrantModification
             GrantModificationStartDate = grantModification.GrantModificationStartDate;
             GrantModificationEndDate = grantModification.GrantModificationEndDate;
             GrantID = grantModification.GrantID;
+            GrantModificationPurposeIDs = grantModification.GrantModificationGrantModificationPurposes.Select(x => x.GrantModificationPurposeID).ToList();
 
         }
 
-        public void UpdateModel(Models.GrantModification grantModification, Person currentPerson)
+        public void UpdateModel(Models.GrantModification grantModification, Person currentPerson, List<GrantModificationGrantModificationPurpose> allGrantModificationGrantModificationPurposes)
         {
             grantModification.GrantModificationName = GrantModificationName;
             grantModification.GrantModificationStatusID = GrantModificationStatusID;
@@ -100,6 +106,13 @@ namespace ProjectFirma.Web.Views.GrantModification
                 }
                 grantModification.GrantModificationFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantModificationFileResourceData, currentPerson);
             }
+
+            var grantModificationPurposesUpdated = GrantModificationPurposeIDs.Select(x => new GrantModificationGrantModificationPurpose(grantModification.GrantModificationID, x)).ToList();
+
+            grantModification.GrantModificationGrantModificationPurposes.Merge(grantModificationPurposesUpdated,
+                                                                               allGrantModificationGrantModificationPurposes,
+                                                                               (x, y) => x.GrantModificationID == y.GrantModificationID && x.GrantModificationPurposeID == y.GrantModificationPurposeID);
+
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

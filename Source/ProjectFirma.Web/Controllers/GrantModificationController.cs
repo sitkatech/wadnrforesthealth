@@ -89,15 +89,18 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEditGrantModification(viewModel);
             }
-            viewModel.UpdateModel(grantModification, CurrentPerson);
+
+            var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
+            viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
             return new ModalDialogFormJsonResult();
         }
 
         private PartialViewResult ViewEditGrantModification(EditGrantModificationViewModel viewModel)
         {
             var grantModificationStatuses = HttpRequestStorage.DatabaseEntities.GrantModificationStatuses;
+            var grantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationPurposes;
             
-            var viewData = new EditGrantModificationViewData(grantModificationStatuses);
+            var viewData = new EditGrantModificationViewData(grantModificationStatuses, grantModificationPurposes);
             return RazorPartialView<EditGrantModification, EditGrantModificationViewData, EditGrantModificationViewModel>(viewData, viewModel);
         }
 
@@ -124,7 +127,8 @@ namespace ProjectFirma.Web.Controllers
             var grantModificationStatus = HttpRequestStorage.DatabaseEntities.GrantModificationStatuses.Single(g => g.GrantModificationStatusID == viewModel.GrantModificationStatusID);
             var grant = HttpRequestStorage.DatabaseEntities.Grants.FirstOrDefault(x => x.GrantID == viewModel.GrantID);
             var grantModification = GrantModification.CreateNewBlank(grant, grantModificationStatus);
-            viewModel.UpdateModel(grantModification, CurrentPerson);
+            var allGrantModificationGrantModificationPurposes = HttpRequestStorage.DatabaseEntities.GrantModificationGrantModificationPurposes.ToList();
+            viewModel.UpdateModel(grantModification, CurrentPerson, allGrantModificationGrantModificationPurposes);
             return new ModalDialogFormJsonResult();
         }
        
