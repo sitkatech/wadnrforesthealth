@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.Views.GrantModification
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
         [Required]
+        [ValidateMoneyInRangeForSqlServer]
         public Money GrantModificationAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationDescription)]
