@@ -136,10 +136,10 @@
             </div>
         </div>
     </div>
-    @*@if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
+    @if (new GrantNoteInternalViewFeature().HasPermissionByPerson(ViewDataTyped.CurrentPerson))
     {
         <div class="row">
-            <div class="col-sm-12"">
+            <div class="col-sm-12">
                 <div class="panel panelFirma">
                     <div class="panel-heading panelTitle">
                         <h3>
@@ -148,12 +148,14 @@
                     </div>
                     <div class="panel-body">
                         <div class="basicsLayout">
-                            @EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantModificationNotesViewData);
+                            @{
+                                EntityNotes.RenderPartialView(Html, ViewDataTyped.InternalGrantModificationNotesViewData);
+                            }
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    }*@
+    }
 </div>

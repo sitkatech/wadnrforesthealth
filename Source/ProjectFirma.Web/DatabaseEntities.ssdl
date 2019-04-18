@@ -33,6 +33,7 @@
     <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationStatus" EntityType="ProjectFirma.Web.Models.Store.GrantModificationStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantNote" EntityType="ProjectFirma.Web.Models.Store.GrantNote" store:Type="Tables" Schema="dbo" />
@@ -332,6 +333,18 @@
     <AssociationSet Name="FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationGrantModificationPurpose_GrantModificationPurpose_GrantModificationPurposeID">
       <End Role="GrantModificationPurpose" EntitySet="GrantModificationPurpose" />
       <End Role="GrantModificationGrantModificationPurposes" EntitySet="GrantModificationGrantModificationPurpose" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
+      <End Role="GrantModification" EntitySet="GrantModification" />
+      <End Role="GrantModificationNoteInternals" EntitySet="GrantModificationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
+      <End Role="CreatedByPerson" EntitySet="Person" />
+      <End Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" EntitySet="GrantModificationNoteInternal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+      <End Role="LastUpdatedByPerson" EntitySet="Person" />
+      <End Role="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantModificationNoteInternal" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantNote_Grant_GrantID" Association="ProjectFirma.Web.Models.Store.FK_GrantNote_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -1263,6 +1276,18 @@
     <Property Name="GrantModificationGrantModificationPurposeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantModificationID" Type="int" Nullable="false" />
     <Property Name="GrantModificationPurposeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GrantModificationNoteInternal">
+    <Key>
+      <PropertyRef Name="GrantModificationNoteInternalID" />
+    </Key>
+    <Property Name="GrantModificationNoteInternalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantModificationID" Type="int" Nullable="false" />
+    <Property Name="GrantModificationNoteInternalText" Type="varchar(max)" />
+    <Property Name="CreatedByPersonID" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedByPersonID" Type="int" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="GrantModificationPurpose">
     <Key>
@@ -2961,6 +2986,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantModificationGrantModificationPurposes">
         <PropertyRef Name="GrantModificationPurposeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationNoteInternal_GrantModification_GrantModificationID">
+    <End Role="GrantModification" Type="ProjectFirma.Web.Models.Store.GrantModification" Multiplicity="1" />
+    <End Role="GrantModificationNoteInternals" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantModification">
+        <PropertyRef Name="GrantModificationID" />
+      </Principal>
+      <Dependent Role="GrantModificationNoteInternals">
+        <PropertyRef Name="GrantModificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationNoteInternal_Person_CreatedByPersonID_PersonID">
+    <End Role="CreatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CreatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson">
+        <PropertyRef Name="CreatedByPersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantModificationNoteInternal_Person_LastUpdatedByPersonID_PersonID">
+    <End Role="LastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson" Type="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LastUpdatedByPerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson">
+        <PropertyRef Name="LastUpdatedByPersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

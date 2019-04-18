@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected GrantModification()
         {
             this.GrantModificationGrantModificationPurposes = new HashSet<GrantModificationGrantModificationPurpose>();
+            this.GrantModificationNoteInternals = new HashSet<GrantModificationNoteInternal>();
         }
 
         /// <summary>
@@ -92,13 +93,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantModificationGrantModificationPurposes.Any();
+            return GrantModificationGrantModificationPurposes.Any() || GrantModificationNoteInternals.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantModificationGrantModificationPurpose).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantModification).Name, typeof(GrantModificationGrantModificationPurpose).Name, typeof(GrantModificationNoteInternal).Name};
 
 
         /// <summary>
@@ -127,6 +128,11 @@ namespace ProjectFirma.Web.Models
             {
                 x.DeleteFull(dbContext);
             }
+
+            foreach(var x in GrantModificationNoteInternals.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -143,6 +149,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantModificationID; } set { GrantModificationID = value; } }
 
         public virtual ICollection<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
+        public virtual ICollection<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual Grant Grant { get; set; }
         public virtual GrantModificationStatus GrantModificationStatus { get; set; }
         public virtual FileResource GrantModificationFileResource { get; set; }

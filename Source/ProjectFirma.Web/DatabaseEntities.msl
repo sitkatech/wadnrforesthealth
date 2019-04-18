@@ -367,6 +367,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationNoteInternal">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationNoteInternal">
+        <MappingFragment StoreEntitySet="GrantModificationNoteInternal">
+          <ScalarProperty Name="GrantModificationNoteInternalID" ColumnName="GrantModificationNoteInternalID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="GrantModificationNoteInternalText" ColumnName="GrantModificationNoteInternalText" />
+          <ScalarProperty Name="CreatedByPersonID" ColumnName="CreatedByPersonID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantModificationPurpose">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationPurpose">
         <MappingFragment StoreEntitySet="GrantModificationPurpose">

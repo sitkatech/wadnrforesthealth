@@ -137,12 +137,11 @@ namespace ProjectFirma.Web.Controllers
             var userHasEditGrantModificationPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(CurrentPerson);
 
 
-            //var internalGrantModificationNotesViewData = new EntityNotesViewData(
-            //    EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantModification.GrantModificationNoteInternals)),
-            //    SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x => x.NewGrantModificationNoteInternal(grantModificationPrimaryKey)),
-            //    grantModification.GrantModificationName,
-            //    userHasEditGrantModificationPermissions);
-            var internalGrantModificationNotesViewData = new EntityNotesViewData(null, String.Empty, String.Empty, false);
+            var internalGrantModificationNotesViewData = new EntityNotesViewData(
+                EntityNote.CreateFromEntityNote(new List<IEntityNote>(grantModification.GrantModificationNoteInternals)),
+                SitkaRoute<GrantModificationController>.BuildUrlFromExpression(x => x.NewGrantModificationNoteInternal(grantModificationPrimaryKey)),
+                grantModification.GrantModificationName,
+                userHasEditGrantModificationPermissions);
 
             var viewData = new GrantModificationDetailViewData(CurrentPerson, grantModification, internalGrantModificationNotesViewData);
             return RazorView<GrantModificationDetail, GrantModificationDetailViewData>(viewData);
@@ -152,100 +151,100 @@ namespace ProjectFirma.Web.Controllers
 
 
 
-        //#region "GrantModification Modification Note Internal"
+        #region "GrantModification Modification Note Internal"
 
 
-        //[HttpGet]
-        //[GrantModificationEditAsAdminFeature]
-        //public PartialViewResult NewGrantModificationNoteInternal(GrantModificationPrimaryKey grantModificationPrimaryKey)
-        //{
-        //    var viewModel = new EditGrantModificationNoteInternalViewModel();
-        //    return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.NewNote);
-        //}
+        [HttpGet]
+        [GrantModificationEditAsAdminFeature]
+        public PartialViewResult NewGrantModificationNoteInternal(GrantModificationPrimaryKey grantModificationPrimaryKey)
+        {
+            var viewModel = new EditGrantModificationNoteInternalViewModel();
+            return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.NewNote);
+        }
 
-        //[HttpPost]
-        //[GrantModificationEditAsAdminFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult NewGrantModificationNoteInternal(GrantModificationPrimaryKey grantModificationPrimaryKey, EditGrantModificationNoteInternalViewModel viewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.NewNote);
-        //    }
-        //    var grantModification = grantModificationPrimaryKey.EntityObject;
-        //    var grantModificationNoteInternal = GrantModificationNoteInternal.CreateNewBlank(grantModification, CurrentPerson);
-        //    viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteType.NewNote);
-        //    HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.Add(grantModificationNoteInternal);
-        //    return new ModalDialogFormJsonResult();
-        //}
+        [HttpPost]
+        [GrantModificationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantModificationNoteInternal(GrantModificationPrimaryKey grantModificationPrimaryKey, EditGrantModificationNoteInternalViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.NewNote);
+            }
+            var grantModification = grantModificationPrimaryKey.EntityObject;
+            var grantModificationNoteInternal = GrantModificationNoteInternal.CreateNewBlank(grantModification, CurrentPerson);
+            viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteInternalType.NewNote);
+            HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.Add(grantModificationNoteInternal);
+            return new ModalDialogFormJsonResult();
+        }
 
-        //private PartialViewResult ViewEditNoteInternal(EditGrantModificationNoteInternalViewModel viewModel, EditGrantModificationNoteInternalType editGrantModificationNoteInternalType)
-        //{
-        //    var viewData = new EditGrantModificationNoteInternalViewData(editGrantModificationNoteInternalType);
-        //    return RazorPartialView<EditGrantModificationNoteInternal, EditGrantModificationNoteInternalViewData, EditGrantModificationNoteInternalViewModel>(viewData, viewModel);
-        //}
-
-
-        //[HttpGet]
-        //[GrantModificationNoteInternalEditAsAdminFeature]
-        //public PartialViewResult EditGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey)
-        //{
-        //    var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
-        //    var viewModel = new EditGrantModificationNoteInternalViewModel(grantModificationNoteInternal);
-        //    return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.ExistingNote);
-        //}
-
-        //[HttpPost]
-        //[GrantModificationNoteInternalEditAsAdminFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult EditGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey, EditGrantModificationNoteInternalViewModel viewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.ExistingNote);
-        //    }
-
-        //    var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
-        //    viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteType.ExistingNote);
-        //    HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.AddOrUpdate(grantModificationNoteInternal);
-        //    return new ModalDialogFormJsonResult();
-        //}
+        private PartialViewResult ViewEditNoteInternal(EditGrantModificationNoteInternalViewModel viewModel, EditGrantModificationNoteInternalType editGrantModificationNoteInternalType)
+        {
+            var viewData = new EditGrantModificationNoteInternalViewData(editGrantModificationNoteInternalType);
+            return RazorPartialView<EditGrantModificationNoteInternal, EditGrantModificationNoteInternalViewData, EditGrantModificationNoteInternalViewModel>(viewData, viewModel);
+        }
 
 
+        [HttpGet]
+        [GrantModificationNoteInternalEditAsAdminFeature]
+        public PartialViewResult EditGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey)
+        {
+            var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
+            var viewModel = new EditGrantModificationNoteInternalViewModel(grantModificationNoteInternal);
+            return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.ExistingGrantModificationNoteInternal);
+        }
 
-        //[HttpGet]
-        //[GrantModificationNoteInternalEditAsAdminFeature]
-        //public PartialViewResult DeleteGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey)
-        //{
-        //    var viewModel = new ConfirmDialogFormViewModel(grantModificationNoteInternalPrimaryKey.PrimaryKeyValue);
-        //    return ViewDeleteGrantModificationNoteInternal(grantModificationNoteInternalPrimaryKey.EntityObject, viewModel);
-        //}
+        [HttpPost]
+        [GrantModificationNoteInternalEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey, EditGrantModificationNoteInternalViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ViewEditNoteInternal(viewModel, EditGrantModificationNoteInternalType.ExistingGrantModificationNoteInternal);
+            }
 
-        //private PartialViewResult ViewDeleteGrantModificationNoteInternal(GrantModificationNoteInternal grantModificationNoteInternal, ConfirmDialogFormViewModel viewModel)
-        //{
-        //    var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} created on '{grantModificationNoteInternal.CreatedDate}' by '{grantModificationNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
-        //    var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-        //    return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        //}
+            var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
+            viewModel.UpdateModel(grantModificationNoteInternal, CurrentPerson, EditGrantModificationNoteInternalType.ExistingGrantModificationNoteInternal);
+            HttpRequestStorage.DatabaseEntities.GrantModificationNoteInternals.AddOrUpdate(grantModificationNoteInternal);
+            return new ModalDialogFormJsonResult();
+        }
 
-        //[HttpPost]
-        //[GrantModificationNoteInternalEditAsAdminFeature]
-        //[AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        //public ActionResult DeleteGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        //{
-        //    var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ViewDeleteGrantModificationNoteInternal(grantModificationNoteInternal, viewModel);
-        //    }
 
-        //    var message = $"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} created on '{grantModificationNoteInternal.CreatedDate}' by '{grantModificationNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
-        //    grantModificationNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
-        //    SetMessageForDisplay(message);
-        //    return new ModalDialogFormJsonResult();
-        //}
 
-        //#endregion
+        [HttpGet]
+        [GrantModificationNoteInternalEditAsAdminFeature]
+        public PartialViewResult DeleteGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantModificationNoteInternalPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantModificationNoteInternal(grantModificationNoteInternalPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantModificationNoteInternal(GrantModificationNoteInternal grantModificationNoteInternal, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} created on '{grantModificationNoteInternal.CreatedDate}' by '{grantModificationNoteInternal.CreatedByPerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantModificationNoteInternalEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantModificationNoteInternal(GrantModificationNoteInternalPrimaryKey grantModificationNoteInternalPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantModificationNoteInternal = grantModificationNoteInternalPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantModificationNoteInternal(grantModificationNoteInternal, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantModificationNoteInternal.GetFieldDefinitionLabel()} created on '{grantModificationNoteInternal.CreatedDate}' by '{grantModificationNoteInternal.CreatedByPerson.FullNameFirstLast}' successfully deleted.";
+            grantModificationNoteInternal.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        #endregion
 
 
 
