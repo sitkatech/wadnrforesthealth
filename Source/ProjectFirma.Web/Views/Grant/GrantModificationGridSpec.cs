@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.ModalDialog;
@@ -35,11 +36,6 @@ namespace ProjectFirma.Web.Views.Grant
     public class GrantModificationGridSpec : GridSpec<Models.GrantModification>
     {
 
-        public GrantModificationGridSpec(Person currentPerson)
-        {
-            GrantModificationGridSpecConstructorImpl(currentPerson, null);
-        }
-
         public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate)
         {
             GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate);
@@ -48,6 +44,8 @@ namespace ProjectFirma.Web.Views.Grant
 
         private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate)
         {
+            Check.Ensure(grantToAssociate != null, "Grant is null. Creating a New Grant Modification without a current Grant is currently not supported.");
+
             ObjectNameSingular = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantModification.GetFieldDefinitionLabelPluralized()}";
             SaveFiltersInCookie = true;
@@ -58,18 +56,25 @@ namespace ProjectFirma.Web.Views.Grant
                 var contentUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.NewGrantModificationForAGrant(grantToAssociate.PrimaryKey));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}");
             }
+            var userHasEditPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            if (userHasEditPermissions)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(
+                                                                    new ModalDialogForm(x.GetEditUrl(), $"Edit {ObjectNameSingular} - {x.GrantModificationName}"),
+                                                                    userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
+            }
 
             var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
             if (userHasDeletePermissions)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
-            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GrantModificationName, 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantModificationPurpose.ToGridHeaderString(), x => x.GrantModificationPurposeNamesAsCommaDelimitedString, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantModificationAmount.ToGridHeaderString(), x => x.GrantModificationAmount, 90, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GrantModificationName, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationPurpose.ToGridHeaderString(), x => x.GrantModificationPurposeNamesAsCommaDelimitedString, 200, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantModificationAmount.ToGridHeaderString(), x => x.GrantModificationAmount, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
 
         }
 

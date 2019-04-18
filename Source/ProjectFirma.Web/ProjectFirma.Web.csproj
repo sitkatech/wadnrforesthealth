@@ -522,7 +522,10 @@
     <Compile Include="Models\GrantAllocationBudgetLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
     <Compile Include="Models\GrantModification.cs" />
+    <Compile Include="Models\GrantModificationGrantModificationPurpose.cs" />
     <Compile Include="Models\GrantModificationModelExtensions.cs" />
+    <Compile Include="Models\GrantModificationPurpose.cs" />
+    <Compile Include="Models\GrantModificationStatus.cs" />
     <Compile Include="Models\GrantModificationStatusModelExtensions.cs" />
     <Compile Include="Models\InteractionEventContact.cs" />
     <Compile Include="Models\InteractionEventProject.cs" />

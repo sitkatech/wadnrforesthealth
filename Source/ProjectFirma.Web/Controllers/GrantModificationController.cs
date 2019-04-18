@@ -107,15 +107,6 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [GrantModificationCreateFeature]
-        public PartialViewResult NewGrantModification()
-        {
-            
-            var viewModel = new EditGrantModificationViewModel();
-            return ViewEditGrantModification(viewModel);
-        }
-
-        [HttpGet]
-        [GrantModificationCreateFeature]
         public PartialViewResult NewGrantModificationForAGrant(GrantPrimaryKey grantPrimaryKey)
         {
             var viewModel = new EditGrantModificationViewModel(grantPrimaryKey.EntityObject);
@@ -125,9 +116,8 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [GrantModificationCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewGrantModification(EditGrantModificationViewModel viewModel)
+        public ActionResult NewGrantModificationForAGrant(GrantPrimaryKey grantPrimaryKey, EditGrantModificationViewModel viewModel)
         {
-            
             if (!ModelState.IsValid)
             {
                 return ViewEditGrantModification(viewModel);

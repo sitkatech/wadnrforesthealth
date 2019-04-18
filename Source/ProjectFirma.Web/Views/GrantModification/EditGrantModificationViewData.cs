@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Grant;
 
@@ -39,6 +41,7 @@ namespace ProjectFirma.Web.Views.GrantModification
         {
             GrantModificationStatuses = grantModificationStatuses.ToSelectListWithEmptyFirstRow(k => k.GrantModificationStatusID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationStatusName);
             AllGrantModificationPurposes = grantModificationPurposes.ToSelectList(k => k.GrantModificationPurposeID.ToString(CultureInfo.InvariantCulture), v => v.GrantModificationPurposeName);
+
         }
     }
 }

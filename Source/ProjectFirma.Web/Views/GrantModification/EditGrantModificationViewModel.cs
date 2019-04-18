@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Views.GrantModification
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationAmount)]
         [Required]
-        public Money? GrantModificationAmount { get; set; }
+        public Money GrantModificationAmount { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantModificationDescription)]
         public string GrantModificationDescription { get; set; }
@@ -79,6 +79,8 @@ namespace ProjectFirma.Web.Views.GrantModification
         public EditGrantModificationViewModel(Models.Grant grantToAssociate)
         {
             GrantID = grantToAssociate.GrantID;
+            GrantModificationStartDate = grantToAssociate.StartDate ?? DateTime.Now;
+            GrantModificationEndDate = grantToAssociate.EndDate ?? DateTime.Now;
         }
 
         public EditGrantModificationViewModel(Models.GrantModification grantModification)
@@ -98,6 +100,8 @@ namespace ProjectFirma.Web.Views.GrantModification
             grantModification.GrantModificationStatusID = GrantModificationStatusID;
             grantModification.GrantModificationStartDate = GrantModificationStartDate;
             grantModification.GrantModificationEndDate = GrantModificationEndDate;
+            grantModification.GrantID = GrantID;
+            grantModification.GrantModificationAmount = GrantModificationAmount;
 
             if (GrantModificationFileResourceData != null)
             {
@@ -113,7 +117,6 @@ namespace ProjectFirma.Web.Views.GrantModification
             }
 
             var grantModificationPurposesUpdated = GrantModificationPurposeIDs.Select(x => new GrantModificationGrantModificationPurpose(grantModification.GrantModificationID, x)).ToList();
-
             grantModification.GrantModificationGrantModificationPurposes.Merge(grantModificationPurposesUpdated,
                                                                                allGrantModificationGrantModificationPurposes,
                                                                                (x, y) => x.GrantModificationID == y.GrantModificationID && x.GrantModificationPurposeID == y.GrantModificationPurposeID);

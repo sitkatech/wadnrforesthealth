@@ -34,7 +34,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.GrantModificationName)
             </div>
             <div class="col-xs-8">
-                @Html.TextBoxFor(m => m.GrantModificationName, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.GrantModificationName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.GrantModificationName)
             </div>
         </div>
@@ -55,7 +55,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.GrantModificationStatusID)
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.GrantModificationStatusID, ViewDataTyped.GrantModificationStatuses, new {style = "width: auto;", @class = "form-control"})
+                @Html.DropDownListFor(m => m.GrantModificationStatusID, ViewDataTyped.GrantModificationStatuses, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.GrantModificationStatusID)
             </div>
         </div>
@@ -69,13 +69,13 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.ValidationMessageFor(m => m.GrantModificationAmount)
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-xs-4 control-label">
                 @Html.LabelWithSugarFor(m => m.GrantModificationDescription)
             </div>
             <div class="col-xs-8">
-                @Html.TextAreaFor(m => m.GrantModificationDescription, new {@class = "form-control"})
+                @Html.TextAreaFor(m => m.GrantModificationDescription, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.GrantModificationDescription)
             </div>
         </div>
@@ -84,7 +84,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.GrantModificationStartDate)
             </div>
             <div class="col-xs-8">
-                @Html.EditorFor(m => m.GrantModificationStartDate, new {style = "width: auto;", @class = "form-control"})
+                @Html.EditorFor(m => m.GrantModificationStartDate, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.GrantModificationStartDate)
             </div>
         </div>
@@ -93,7 +93,7 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.LabelWithSugarFor(m => m.GrantModificationEndDate)
             </div>
             <div class="col-xs-8">
-                @Html.EditorFor(m => m.GrantModificationEndDate, new {style = "width: auto;", @class = "form-control"})
+                @Html.EditorFor(m => m.GrantModificationEndDate, new { style = "width: auto;", @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.GrantModificationEndDate)
             </div>
         </div>
@@ -104,11 +104,12 @@ Source code is available upon request via <support@sitkatech.com>.
             <div class="col-xs-7">
                 @Html.EditorFor(m => m.GrantModificationFileResourceData)
                 @*<span class="smallExplanationText">
-                    Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
-                </span>*@
+                        Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                    </span>*@
                 @Html.ValidationMessageFor(m => m.GrantModificationFileResourceData)
             </div>
         </div>
     </div>
     @Html.HiddenFor(m => m.GrantModificationID)
+    @Html.HiddenFor(m => m.GrantID)
 }
