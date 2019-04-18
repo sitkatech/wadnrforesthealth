@@ -165,4 +165,13 @@ VALUES
 (342, N'GrantManager', 'Grant Manager', N'<p>Placeholder definition for Grant Manager description.</p>'),
 (343, N'Job', 'Job', N'<p>A foreground or background system job.</p>'),
 (344, N'JobImportTableType', 'Job Import Table Type', N'<p>Type of the Job Import table imported.</p>'),
-(345, N'GrantAllocationBudgetLineItem', 'Grant Allocation Budget Line Item', '<p>Grant Allocation budget broken across line items</p>')
+(345, N'GrantAllocationBudgetLineItem', 'Grant Allocation Budget Line Item', '<p>Grant Allocation budget broken across line items</p>'),
+(347, N'GrantModificationPurpose', 'Grant Modification Purpose', '<p>Placeholder definition for Grant Modification Purpose</p>'),
+(348, N'GrantModificationStatus', 'Grant Modification Status', '<p>Placeholder definition for Grant Modification Status</p>'),
+(349, N'GrantModificationAmount', 'Grant Modification Amount', '<p>Placeholder definition for Grant Modification Amount</p>'),
+(350, N'GrantModificationDescription', 'Grant Modification Description', '<p>Placeholder definition for Grant Modification Description</p>'),
+(351, N'GrantModificationStartDate', 'Grant Modification Start Date', '<p>Placeholder definition for Grant Modification Start Date</p>'),
+(352, N'GrantModificationEndDate', 'Grant Modification End Date', '<p>Placeholder definition for Grant Modification End Date</p>'),
+(353, N'GrantModificationName', 'Grant Modification Name', '<p>Placeholder definition for Grant Modification Name</p>'),
+(354, N'GrantModification', 'Grant Modification', '<p>Placeholder definition for Grant Modification</p>'),
+(355, N'GrantModificationNoteInternal', 'Internal Grant Modification Note', N'<p>Any additional important information about the grant modification. These notes are only visible to internal users </p>')

@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected Grant()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantModifications = new HashSet<GrantModification>();
             this.GrantNotes = new HashSet<GrantNote>();
             this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
         }
@@ -93,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
+            return GrantAllocations.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
 
 
         /// <summary>
@@ -125,6 +126,11 @@ namespace ProjectFirma.Web.Models
         {
 
             foreach(var x in GrantAllocations.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantModifications.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -159,6 +165,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<GrantModification> GrantModifications { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual GrantType GrantType { get; set; }
