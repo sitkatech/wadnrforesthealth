@@ -32,11 +32,16 @@ namespace ProjectFirma.Web.Models
             return grantModification != null ? UrlTemplate.MakeHrefString(grantModification.GetDetailUrl(), grantModification.GrantModificationName) : new HtmlString(null);
         }
 
-        //public static readonly UrlTemplate<int> NewGrantModificationInternalNoteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantModificationController>.BuildUrlFromExpression(t => t.NewGrantModificationInternalNote(UrlTemplate.Parameter1Int)));
-        //public static string GetNewGrantModificationInternalNoteUrl(this GrantModification grantModification)
-        //{
-        //    return NewGrantModificationInternalNoteUrlTemplate.ParameterReplace(grantModification.GrantModificationID);
-        //}
+        public static string GetFileDownloadUrl(this GrantModification grantModification)
+        {
+            if (grantModification.GrantModificationFileResource != null)
+            {
+                var url = FileResource.FileResourceByGuidUrlTemplate;
+                return url.ParameterReplace(grantModification.GrantModificationFileResource.FileResourceGUIDAsString);
+            }
+
+            return string.Empty;
+        }
 
     }
 }

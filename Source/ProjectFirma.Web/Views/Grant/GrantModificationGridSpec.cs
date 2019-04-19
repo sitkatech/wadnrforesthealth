@@ -36,13 +36,13 @@ namespace ProjectFirma.Web.Views.Grant
     public class GrantModificationGridSpec : GridSpec<Models.GrantModification>
     {
 
-        public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate)
+        public GrantModificationGridSpec(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
         {
-            GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate);
+            GrantModificationGridSpecConstructorImpl(currentPerson, grantToAssociate, grantModificationFileExistsOnAtLeastOne);
         }
 
 
-        private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate)
+        private void GrantModificationGridSpecConstructorImpl(Person currentPerson, Models.Grant grantToAssociate, bool grantModificationFileExistsOnAtLeastOne)
         {
             Check.Ensure(grantToAssociate != null, "Grant is null. Creating a New Grant Modification without a current Grant is currently not supported.");
 
@@ -56,6 +56,13 @@ namespace ProjectFirma.Web.Views.Grant
                 var contentUrl = SitkaRoute<GrantModificationController>.BuildUrlFromExpression(gmc => gmc.NewGrantModificationForAGrant(grantToAssociate.PrimaryKey));
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {Models.FieldDefinition.GrantModification.GetFieldDefinitionLabel()}");
             }
+
+            var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
+            if (userHasDeletePermissions)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+            }
+
             var userHasEditPermissions = new GrantModificationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
@@ -64,10 +71,11 @@ namespace ProjectFirma.Web.Views.Grant
                                                                     userHasEditPermissions), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            var userHasDeletePermissions = new GrantModificationDeleteFeature().HasPermissionByPerson(currentPerson);
-            if (userHasDeletePermissions)
+            if (grantModificationFileExistsOnAtLeastOne)
             {
-                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeFileDownloadIconAsHyperlinkBootstrap(x.GetFileDownloadUrl(), 
+                                                                                                   $"Download file for {ObjectNameSingular} -  {x.GrantModificationName}"), 
+                                                                                                       30, DhtmlxGridColumnFilterType.None);
             }
             Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);

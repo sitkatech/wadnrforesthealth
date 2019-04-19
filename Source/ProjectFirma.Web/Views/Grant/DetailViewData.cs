@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -56,7 +58,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantAllocationGridName = "grantAllocationsGridName";
             GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrant(grant.PrimaryKey));
 
-            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant);
+            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant, grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue));
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 

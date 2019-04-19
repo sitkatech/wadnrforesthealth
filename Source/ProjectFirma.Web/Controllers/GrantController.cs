@@ -242,7 +242,7 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<GrantModification> GrantModificationGridJsonDataByGrant(GrantPrimaryKey grantPrimaryKey)
         {
             var grant = grantPrimaryKey.EntityObject;
-            var gridSpec = new GrantModificationGridSpec(CurrentPerson, grant);
+            var gridSpec = new GrantModificationGridSpec(CurrentPerson, grant, grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue));
             var grantModifications = grant.GrantModifications.ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantModification>(grantModifications, gridSpec);
             return gridJsonNetJObjectResult;
