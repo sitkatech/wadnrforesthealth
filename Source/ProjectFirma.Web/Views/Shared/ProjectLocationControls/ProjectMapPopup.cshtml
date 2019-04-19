@@ -58,7 +58,7 @@
         }
     </style>
     <div style="width:@(ViewDataTyped.KeyPhoto != null ? "425px": "300px")">
-        <div style="font-weight: bold; border-bottom: 1px solid lightgray; margin-bottom: 10px">@ViewDataTyped.DisplayName</div>
+        <div style="font-weight: bold; border-bottom: 1px solid lightgray; margin-bottom: 10px">@ViewDataTyped.DisplayNameAsUrl</div>
         <div class="row">
             @if (ViewDataTyped.KeyPhoto != null)
             {
@@ -110,7 +110,7 @@ else
 {
     <div style="max-width: 200px">
         <div class="text-center">
-            <a href="@ViewDataTyped.FactSheetUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabel() Fact Sheet"><strong>@ViewDataTyped.DisplayName</strong></a>
+            <a href="@ViewDataTyped.FactSheetUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabel() Fact Sheet"><strong>@ViewDataTyped.DisplayNameAsUrl</strong></a>
         </div>
     </div>
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Web;
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.GeoJson;
@@ -30,6 +32,17 @@ namespace ProjectFirma.Web.Models
             return EditUrlTemplate.ParameterReplace(interactionEvent.InteractionEventID);
         }
 
+        public static readonly UrlTemplate<int> MapPopupUrlTemplate = new UrlTemplate<int>(SitkaRoute<InteractionEventController>.BuildUrlFromExpression(t => t.InteractionEventMapPopup(UrlTemplate.Parameter1Int)));
+        public static string GetMapPopupUrl(this InteractionEvent interactionEvent)
+        {
+            return MapPopupUrlTemplate.ParameterReplace(interactionEvent.InteractionEventID);
+        }
+
+        public static HtmlString GetInteractionEventTitleAsUrl(this InteractionEvent interactionEvent)
+        {
+            return interactionEvent != null ? UrlTemplate.MakeHrefString(interactionEvent.GetDetailUrl(), interactionEvent.InteractionEventTitle) : new HtmlString(null);
+        }
+
         public static LayerGeoJson GetInteractionEventsLayerGeoJson(this IEnumerable<InteractionEvent> interactionEvents)
         {
             var interactionEventFeatureCollection = interactionEvents.ToGeoJsonFeatureCollection();
@@ -43,12 +56,20 @@ namespace ProjectFirma.Web.Models
         {
             var featureCollection = new FeatureCollection();
 
-            foreach (var interactionEvent in interactionEvents)
+            foreach (var interactionEvent in interactionEvents.Where(ie => ie.HasLocationSet))
             {
-                if (interactionEvent.InteractionEventLocationSimple != null)
-                {
-                    featureCollection.Features.Add(DbGeometryToGeoJsonHelper.FromDbGeometry(interactionEvent.InteractionEventLocationSimple));
-                }
+                var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(interactionEvent.InteractionEventLocationSimple);
+
+
+                feature.Properties.Add("Title", interactionEvent.InteractionEventTitle);
+
+                feature.Properties.Add("InteractionEventID", interactionEvent.InteractionEventID.ToString(CultureInfo.InvariantCulture));
+                feature.Properties.Add("InteractionEventTypeID", interactionEvent.InteractionEventType.InteractionEventTypeID);
+                feature.Properties.Add("Date", interactionEvent.InteractionEventDate.Date.ToString(CultureInfo.InvariantCulture));
+
+                feature.Properties.Add("PopupUrl", interactionEvent.GetMapPopupUrl());
+
+                featureCollection.Features.Add(feature);
             }
 
             return featureCollection;

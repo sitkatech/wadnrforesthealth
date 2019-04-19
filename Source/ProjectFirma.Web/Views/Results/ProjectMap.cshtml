@@ -222,9 +222,8 @@
                     <table class="table table-bordered table-projectMapLocations">
                         <thead>
                             <tr>
-                                <th style="min-width: 400px">Feature Name</th>
-                                <th style="max-width: 150px;">Feature</th>
-                                <th>Notes</th>
+                                <th style="min-width: 400px">Mapped Project Name</th>
+                                <th>Project Location Notes</th>
                             </tr>
                         </thead>
                         <tr data-ng-repeat="projectMapLocation in AngularViewData.ProjectMapLocationJsons" class="clickable-row"
@@ -236,13 +235,6 @@
                                 <span data-ng-bind="projectMapLocation.ProjectMapLocationName"></span>
                                
                             </td>
-                            @* feature (line, point, poly) *@
-                            <td>
-                                <span data-ng-bind="projectMapLocation.ProjectMapLocationFeatureType"></span>
-                                <input type="hidden" name="ProjectMapLocationJsons[{{$index}}].ProjectMapLocationGeometryWellKnownText"
-                                       value="{{projectMapLocation.ProjectMapLocationGeometryWellKnownText}}" />
-                            </td>
-
                             @* notes/annotation *@
                             <td>
                                 <span data-ng-bind="projectMapLocation.ProjectMapLocationNotes"></span>

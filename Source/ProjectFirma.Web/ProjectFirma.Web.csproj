@@ -747,6 +747,8 @@
     <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimple.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimpleViewData.cs" />
     <Compile Include="Views\InteractionEvent\EditInteractionEventLocationSimpleViewModel.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventMapPopup.cs" />
+    <Compile Include="Views\InteractionEvent\InteractionEventMapPopupViewData.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItem.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItemViewData.cs" />
     <Compile Include="Views\Invoice\EditInvoiceLineItemViewModel.cs" />
@@ -1383,6 +1385,7 @@
     <Content Include="Views\GrantModification\GrantModificationDetail.cshtml" />
     <Content Include="Views\GrantModification\EditGrantModification.cshtml" />
     <Content Include="Views\GrantModification\EditGrantModificationNoteInternal.cshtml" />
+    <Content Include="Views\InteractionEvent\InteractionEventMapPopup.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

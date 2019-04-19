@@ -10,5 +10,7 @@ namespace ProjectFirma.Web.Models
         public string DateDisplay => InteractionEventDate.ToShortDateString();
 
         public string AuditDescriptionString => InteractionEventTitle;
+
+        public bool HasLocationSet => InteractionEventLocationSimple != null;
     }
 }
