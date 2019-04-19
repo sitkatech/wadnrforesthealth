@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using ApprovalUtilities.Utilities;
 using LtInfo.Common;
 using MoreLinq;
@@ -38,7 +39,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string ProjectTypeDisplayName { get; private set; }
         public string ClassificationDisplayNamePluralized { get; private set; }
 
-        public string DisplayName { get; set; }
+        public HtmlString DisplayNameAsUrl { get; set; }
         public Models.ProjectImage KeyPhoto { get; set; }
         public string Duration { get; set; }
         public ProjectStage ProjectStage { get; set; }
@@ -53,7 +54,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public ProjectMapPopupViewData(Models.Project project, bool showDetailedInformation)
         {
             //Project = project;
-            DisplayName = project.DisplayName;
+            DisplayNameAsUrl = project.DisplayNameAsUrl;
             KeyPhoto = project.KeyPhoto;
             Duration = project.Duration;
             ProjectStage = project.ProjectStage;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using GeoJSON.Net.Feature;
 using LtInfo.Common;
 using LtInfo.Common.GeoJson;
@@ -35,6 +36,11 @@ namespace ProjectFirma.Web.Models
         public static string GetMapPopupUrl(this InteractionEvent interactionEvent)
         {
             return MapPopupUrlTemplate.ParameterReplace(interactionEvent.InteractionEventID);
+        }
+
+        public static HtmlString GetInteractionEventTitleAsUrl(this InteractionEvent interactionEvent)
+        {
+            return interactionEvent != null ? UrlTemplate.MakeHrefString(interactionEvent.GetDetailUrl(), interactionEvent.InteractionEventTitle) : new HtmlString(null);
         }
 
         public static LayerGeoJson GetInteractionEventsLayerGeoJson(this IEnumerable<InteractionEvent> interactionEvents)

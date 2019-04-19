@@ -19,11 +19,13 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using LtInfo.Common;
-using MoreLinq;
-using ProjectFirma.Web.Common;
+using System.Text;
+using System.Web;
+using System.Web.UI;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.InteractionEvent
@@ -31,17 +33,46 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     public class InteractionEventMapPopupViewData : FirmaUserControlViewData
     {
         public Models.InteractionEvent InteractionEvent { get; }
-        public string InteractionEventContactsAsCommaDelimitedString { get; }
-        public string InteractionEventProjectsAsCommaDelimitedString { get; }
+        public HtmlString InteractionEventContactsWithLinksAsCommaDelimitedHtmlString { get; }
+        public HtmlString InteractionEventProjectsWithLinksAsCommaDelimitedHtmlString { get; }
 
         
 
         public InteractionEventMapPopupViewData(Models.InteractionEvent interactionEvent)
         {
             InteractionEvent = interactionEvent;
-            InteractionEventContactsAsCommaDelimitedString = string.Join(", ", interactionEvent.InteractionEventContacts.Select(iec => iec.Person.FullNameFirstLastAndOrgShortName));
-            InteractionEventProjectsAsCommaDelimitedString = string.Join(", ", interactionEvent.InteractionEventProjects.Select(iep => iep.Project.DisplayName));
+            InteractionEventContactsWithLinksAsCommaDelimitedHtmlString = BuildHtmlStringOfCommaDelimitedObjects(
+                                                                        interactionEvent.InteractionEventContacts.Select(iec =>
+                                                                        iec.Person.GetFullNameFirstLastAndOrgShortNameAsUrl()));
+
+            InteractionEventProjectsWithLinksAsCommaDelimitedHtmlString =  BuildHtmlStringOfCommaDelimitedObjects(interactionEvent.InteractionEventProjects.Select(iep => iep.Project.DisplayNameAsUrl));
         }
+
+
+        private HtmlString BuildHtmlStringOfCommaDelimitedObjects(IEnumerable<HtmlString> htmlStringObjects)
+        {
+
+            var stringBuilder = new StringBuilder();
+            var counter = 0;
+            foreach (var htmlString in htmlStringObjects)
+            {
+                if (counter == 0)
+                {
+                    //first item added to our stringBuilder
+                    stringBuilder.Append(htmlString);
+                }
+                else
+                {
+                    stringBuilder.Append(", " + htmlString);
+                }
+
+                counter++;
+            }
+
+            return new HtmlString(stringBuilder.ToString());
+        }
+
+
 
     }
 }

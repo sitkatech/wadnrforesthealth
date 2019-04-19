@@ -52,23 +52,32 @@
 
 
     <div style="width:300px">
-        <div style="font-weight: bold; border-bottom: 1px solid lightgray; margin-bottom: 10px">@ViewDataTyped.InteractionEvent.InteractionEventTitle</div>
+        <div style="font-weight: bold; border-bottom: 1px solid lightgray; margin-bottom: 10px">@ViewDataTyped.InteractionEvent.GetInteractionEventTitleAsUrl()</div>
         <div class="row">
 
             <div class="col-xs-12">
                 <dl class="inline">
-                    <dt><strong>Description:</strong></dt>
-                    <dd>@ViewDataTyped.InteractionEvent.InteractionEventDescription</dd>
+                    @if (!string.IsNullOrEmpty(ViewDataTyped.InteractionEvent.InteractionEventDescription))
+                    {
+                        <dt><strong>Description:</strong></dt>
+                        <dd>@ViewDataTyped.InteractionEvent.InteractionEventDescription</dd>
+                    }
                     <dt><strong>Date:</strong></dt>
                     <dd>@ViewDataTyped.InteractionEvent.DateDisplay</dd>
                     <dt><strong>Type:</strong></dt>
                     <dd>@ViewDataTyped.InteractionEvent.InteractionEventType.InteractionEventTypeDisplayName</dd>
                     <dt><strong>@FieldDefinition.DNRStaffPerson.GetFieldDefinitionLabel():</strong></dt>
-                    <dd>@ViewDataTyped.InteractionEvent.StaffPerson.FullNameFirstLast</dd>
-                    <dt><strong>@FieldDefinition.InteractionEventContact.GetFieldDefinitionLabel():</strong></dt>
-                    <dd>@ViewDataTyped.InteractionEventContactsAsCommaDelimitedString</dd>
-                    <dt><strong>@FieldDefinition.InteractionEventProject.GetFieldDefinitionLabel():</strong></dt>
-                    <dd>@ViewDataTyped.InteractionEventProjectsAsCommaDelimitedString</dd>
+                    <dd>@ViewDataTyped.InteractionEvent.StaffPerson.GetFullNameFirstLastAsUrl()</dd>
+                    @if (!string.IsNullOrEmpty(ViewDataTyped.InteractionEventContactsWithLinksAsCommaDelimitedHtmlString.ToString()))
+                    {
+                        <dt><strong>@FieldDefinition.InteractionEventContact.GetFieldDefinitionLabel():</strong></dt>
+                        <dd>@ViewDataTyped.InteractionEventContactsWithLinksAsCommaDelimitedHtmlString</dd>
+                    }
+                    @if (!string.IsNullOrEmpty(ViewDataTyped.InteractionEventProjectsWithLinksAsCommaDelimitedHtmlString.ToString()))
+                    {
+                        <dt><strong>@FieldDefinition.InteractionEventProject.GetFieldDefinitionLabel():</strong></dt>
+                        <dd>@ViewDataTyped.InteractionEventProjectsWithLinksAsCommaDelimitedHtmlString</dd>
+                    }
                 </dl>
             </div>
         </div>
