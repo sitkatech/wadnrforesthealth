@@ -100,7 +100,7 @@ angular.module("ProjectFirmaApp")
             initializeMap();
         });
 
-        jQuery(document).on('change', '.leaflet-control-layers-selector',
+        jQuery(document).on('change', ':checkbox.leaflet-control-layers-selector',
             function () {
                 // This hardcoding is not great, but TK and SLG both can't see a better way.
                 // This check at least will ensure that the control we looking for actually exists.
