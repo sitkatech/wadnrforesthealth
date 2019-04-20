@@ -50,6 +50,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public GrantAllocationBudgetLineItemsViewData GrantAllocationBudgetLineItemsViewData { get; }
 
+        public GrantAllocationBudgetVsActualsViewData GrantAllocationBudgetVsActualsViewData { get; }
+
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
             , EntityNotesViewData grantAllocationNotesViewData
@@ -87,6 +89,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsGridJsonData(grantAllocation));
 
             GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation);
+            GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
         }
     }
 }
