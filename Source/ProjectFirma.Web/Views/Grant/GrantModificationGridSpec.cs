@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Views.Grant
                                                                                                    $"Download file for {ObjectNameSingular} -  {x.GrantModificationName}"), 
                                                                                                        30, DhtmlxGridColumnFilterType.None);
             }
-            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantModificationName.ToGridHeaderString(), x => x.GetGrantModificationNameAsUrl(), 125, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.GrantModificationStartDate.ToGridHeaderString(), x => x.StartDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantModificationEndDate.ToGridHeaderString(), x => x.EndDateDisplay, 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantModificationStatus.ToGridHeaderString(), x => x.GrantModificationStatus.GetDisplayName(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
