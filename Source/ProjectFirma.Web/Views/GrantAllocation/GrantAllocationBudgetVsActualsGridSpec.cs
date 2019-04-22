@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
             ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} Budget Vs Actuals";
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} Budget Vs Actuals";
-            ShowFilterBar = false;
+            ShowFilterBar = true;
 
             Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.None);
             Add("Budget", x => x.Budget, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
