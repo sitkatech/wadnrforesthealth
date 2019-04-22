@@ -218,6 +218,20 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        #region "Grant Allocation Budget Vs Actuals"
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<BudgetVsActualLineItem> GrantAllocationBudgetVsActualsGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var gridSpec = new GrantAllocationBudgetVsActualsGridSpec();
+
+            var grantAllocationBudgetVsActualLineItems = grantAllocation.GetAllBudgetVsActualLineItems();
+
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<BudgetVsActualLineItem>(grantAllocationBudgetVsActualLineItems, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+        #endregion
+
 
         #region "Grant Allocation Budget Line Item"
         [HttpGet]
