@@ -27,6 +27,7 @@ using LtInfo.Common;
 using LtInfo.Common.Models;
 using Microsoft.Ajax.Utilities;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Views.GrantAllocation;
 
 namespace ProjectFirma.Web.Models
 {
@@ -56,6 +57,26 @@ namespace ProjectFirma.Web.Models
         public static string GetNewNoteUrl(this GrantAllocation grantAllocation)
         {
             return NewNoteUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
+        }
+
+        public static List<BudgetVsActualLineItem> GetAllBudgetVsActualLineItems(this GrantAllocation grantAllocation)
+        {
+            var budgetVsActualsLineItemList = new List<BudgetVsActualLineItem>();
+
+            foreach (var costType in CostType.All.Where(ct => ct.IsValidInvoiceLineItemCostType))
+            {
+                var budget = grantAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
+                //TODO: get expenditures from datamart for this grant allocation of this cost type
+                var expendituresFromDatamart = 0m;
+
+                var invoicedToDate = grantAllocation.InvoiceLineItems.Where(ili => ili.CostTypeID == costType.CostTypeID).Select(ili => ili.InvoiceLineItemAmount).Sum();
+                
+
+                var budgetVsActualLineItem = new BudgetVsActualLineItem(costType, budget, expendituresFromDatamart, invoicedToDate);
+                budgetVsActualsLineItemList.Add(budgetVsActualLineItem);
+            }
+
+            return budgetVsActualsLineItemList;
         }
 
     }

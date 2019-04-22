@@ -674,6 +674,9 @@
     <Compile Include="Views\Agreement\EditAgreement.cs" />
     <Compile Include="Views\Agreement\EditAgreementViewData.cs" />
     <Compile Include="Models\ProjectAgreementByGrantAllocation.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsGridSpec.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsViewData.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActuals.cs" />
     <Compile Include="Views\GrantAllocation\Detail.cs" />
     <Compile Include="Views\GrantAllocation\DetailViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemsViewData.cs" />
@@ -1386,6 +1389,7 @@
     <Content Include="Views\GrantModification\EditGrantModification.cshtml" />
     <Content Include="Views\GrantModification\EditGrantModificationNoteInternal.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventMapPopup.cshtml" />
+    <Content Include="Views\GrantAllocation\GrantAllocationBudgetVsActuals.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
