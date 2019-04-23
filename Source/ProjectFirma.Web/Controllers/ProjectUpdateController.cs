@@ -2793,7 +2793,7 @@ namespace ProjectFirma.Web.Controllers
             var editPersonsViewData =
                 new EditPeopleViewData(allPeople, ProjectPersonRelationshipType.All, CurrentPerson);
 
-            var projectPersonsDetailViewData = new ProjectPeopleDetailViewData(projectUpdateBatch.ProjectPersonUpdates.Select(x => new ProjectPersonRelationship(x.ProjectUpdateBatch.Project, x.Person, x.ProjectPersonRelationshipType)).ToList(), projectUpdateBatch.ProjectUpdate.GetPrimaryContact());
+            var projectPersonsDetailViewData = new ProjectPeopleDetailViewData(projectUpdateBatch.ProjectPersonUpdates.Select(x => new ProjectPersonRelationship(x.ProjectUpdateBatch.Project, x.Person, x.ProjectPersonRelationshipType)).ToList(), CurrentPerson);
             var viewData = new ContactsViewData(CurrentPerson, projectUpdateBatch, updateStatus, editPersonsViewData, organizationsValidationResult,projectPersonsDetailViewData);
 
             return RazorView<Contacts, ContactsViewData, ContactsViewModel>(viewData, viewModel);
@@ -3141,7 +3141,7 @@ namespace ProjectFirma.Web.Controllers
 
         private string GeneratePartialViewForPeopleAsString(IEnumerable<ProjectPerson> projectPeople, Person primaryContactPerson)
         {
-            var viewData = new ProjectPeopleDetailViewData(projectPeople.Select(x => new ProjectPersonRelationship(x.Project, x.Person, x.ProjectPersonRelationshipType, x.DisplayCssClass)).ToList(), primaryContactPerson);
+            var viewData = new ProjectPeopleDetailViewData(projectPeople.Select(x => new ProjectPersonRelationship(x.Project, x.Person, x.ProjectPersonRelationshipType, x.DisplayCssClass)).ToList(), CurrentPerson);
             var partialViewAsString = RenderPartialViewToString(ProjectPeoplePartialViewPath, viewData);
             return partialViewAsString;
         }
