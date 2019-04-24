@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -36,8 +35,8 @@ namespace ProjectFirma.Web.Views.InteractionEvent
     public class EditInteractionEventViewData : FirmaUserControlViewData
     {
         public EditInteractionEventEditType EditInteractionEventEditType { get; }
-        public IEnumerable<SelectListItem> InteractionEventTypesSelectListItems { get; }
-        public IEnumerable<SelectListItem> StaffPeopleSelectListItems { get; }
+        public IEnumerable<SelectListItem> InteractionEventTypes { get; }
+        public IEnumerable<SelectListItem> StaffPeople { get; }
 
         public EditInteractionEventAngularViewData AngularViewData { get; set; }
         public bool UserCanManageContacts { get; set; }
@@ -62,18 +61,18 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         }
 
 
-        public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, List<Models.Person> allPeople, int interactionEventID, IEnumerable<Models.Project> allProjects)
+        public EditInteractionEventViewData(Person currentPerson, EditInteractionEventEditType editInteractionEventEditType, IEnumerable<Models.InteractionEventType> interactionEventTypes, IEnumerable<Models.Person> allPeople, int interactionEventID, IEnumerable<Models.Project> allProjects)
         {
-            Check.Ensure(allPeople.All(p => p != null), "One or more Person records in allPeople is NULL");
-            InteractionEventTypesSelectListItems = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
+            InteractionEventTypes = interactionEventTypes.ToSelectListWithEmptyFirstRow(x => x.InteractionEventTypeID.ToString(CultureInfo.InvariantCulture), y => y.InteractionEventTypeDisplayName);//sorted in the controller
 
             // Sorted and filtered on controller
-            var allPeopleInWadnrOrganization = allPeople.Where(p => p?.Organization != null && p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToList();
-            StaffPeopleSelectListItems = allPeopleInWadnrOrganization.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLast);
+            StaffPeople =
+                allPeople.Where(p => p.Organization != null && p.Organization.OrganizationName == Models.Organization.OrganizationWADNR).ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture),
+                    y => y.FullNameFirstLast);
 
             EditInteractionEventEditType = editInteractionEventEditType;
 
-            var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();
+            var allProjectSimples = allProjects.OrderBy(x => x.DisplayName).Select(x => new ProjectSimple(x)).ToList();      
 
             UserCanManageContacts = new ContactManageFeature().HasPermissionByPerson(currentPerson);
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());

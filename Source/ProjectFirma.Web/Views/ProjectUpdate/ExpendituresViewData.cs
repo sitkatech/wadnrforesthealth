@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public readonly string RefreshUrl;
         public readonly string DiffUrl;
         public readonly ProjectExpendituresDetailViewData ProjectExpendituresDetailViewData;
-        public readonly string RequestFundingSourceUrl;
+        public readonly string RequestGrantAllocationUrl;
         public readonly ViewDataForAngularClass ViewDataForAngular;
         public readonly SectionCommentsViewData SectionCommentsViewData;
 
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpenditures(projectUpdateBatch.Project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffExpenditures(projectUpdateBatch.Project));
-            RequestFundingSourceUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
+            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
             ProjectExpendituresDetailViewData = projectExpendituresDetailViewData;
             SectionCommentsViewData = new SectionCommentsViewData(projectUpdateBatch.ExpendituresComment, projectUpdateBatch.IsReturned);
         }
@@ -49,19 +49,19 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public class ViewDataForAngularClass
         {
             public readonly List<int> CalendarYearRange;
-            public readonly List<FundingSourceSimple> AllFundingSources;
+            public readonly List<GrantAllocationSimple> AllGrantAllocations;
             public readonly int ProjectID;
             public readonly int MaxYear;
             public readonly bool UseFiscalYears;
             public readonly bool ShowNoExpendituresExplanation;
 
             public ViewDataForAngularClass(Models.Project project,
-                List<FundingSourceSimple> allFundingSources,
+                List<GrantAllocationSimple> allGrantAllocations,
                 List<int> calendarYearRange, bool showNoExpendituresExplanation)
             {
                 CalendarYearRange = calendarYearRange;
                 ShowNoExpendituresExplanation = showNoExpendituresExplanation;
-                AllFundingSources = allFundingSources;
+                AllGrantAllocations = allGrantAllocations;
                 ProjectID = project.ProjectID;
                 
                 MaxYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();

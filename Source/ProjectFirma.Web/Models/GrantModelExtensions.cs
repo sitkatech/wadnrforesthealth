@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Web;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
@@ -51,6 +52,11 @@ namespace ProjectFirma.Web.Models
         public static string GetNewNoteUrl(this Grant grant)
         {
             return NewNoteUrlTemplate.ParameterReplace(grant.GrantID);
+        }
+
+        public static HtmlString GetGrantNumberAsUrl(this Grant grant)
+        {
+            return grant != null ? UrlTemplate.MakeHrefString(grant.GetDetailUrl(), grant.GrantNumber) : new HtmlString(null);
         }
     }
 }

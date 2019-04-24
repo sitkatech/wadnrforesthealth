@@ -1,0 +1,115 @@
+﻿@*-----------------------------------------------------------------------
+<copyright file="EditGrantModification.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+<author>Sitka Technology Group</author>
+</copyright>
+
+<license>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+Source code is available upon request via <support@sitkatech.com>.
+</license>
+-----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Models
+@inherits ProjectFirma.Web.Views.GrantModification.EditGrantModification
+
+
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationName)
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(m => m.GrantModificationName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationPurposeIDs)
+            </div>
+            <div class="col-xs-8">
+                @Html.CheckBoxListFor(m => m.GrantModificationPurposeIDs, ViewDataTyped.AllGrantModificationPurposes, new { style = "display:block" }, CheckboxExtensions.ColNumber.twoCols)
+                @Html.ValidationMessageFor(m => m.GrantModificationPurposeIDs)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationStatusID)
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.GrantModificationStatusID, ViewDataTyped.GrantModificationStatuses, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationStatusID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationAmount)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.GrantModificationAmount)
+                @Html.ValidationMessageFor(m => m.GrantModificationAmount)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationDescription)
+            </div>
+            <div class="col-xs-8">
+                @Html.TextAreaFor(m => m.GrantModificationDescription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationDescription)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationStartDate)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.GrantModificationStartDate, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationStartDate)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationEndDate)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(m => m.GrantModificationEndDate, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantModificationEndDate)
+            </div>
+        </div>
+        <div class="form-group form-group-tight">
+            <div class="col-xs-4 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantModificationFileResourceData)
+            </div>
+            <div class="col-xs-7">
+                @Html.EditorFor(m => m.GrantModificationFileResourceData)
+                @*<span class="smallExplanationText">
+                        Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                    </span>*@
+                @Html.ValidationMessageFor(m => m.GrantModificationFileResourceData)
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.GrantModificationID)
+    @Html.HiddenFor(m => m.GrantID)
+}

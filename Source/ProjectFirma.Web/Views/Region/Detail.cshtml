@@ -88,7 +88,7 @@
     <div class="col-lg-7">
         <div class="panel panelFirma">
             <div class="panel-heading panelTitle">
-                <h2>Expenditures by @FieldDefinition.FundingSource.GetFieldDefinitionLabel() and @FieldDefinition.OrganizationType.GetFieldDefinitionLabel()</h2>
+                <h2>Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() and @FieldDefinition.OrganizationType.GetFieldDefinitionLabel()</h2>
             </div>
             <div class="panel-body">
                 @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
@@ -96,7 +96,7 @@
                     <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
                         @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
                     </div>
-                    <p>Since some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() span multiple ViewDataTyped.RegionTypeNamePluralized, the @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() above may be over-reported for this Region.</p>
+                    <p>Since some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() span multiple Regions, the @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() above may be over-reported for this Region.</p>
                 }
                 else
                 {

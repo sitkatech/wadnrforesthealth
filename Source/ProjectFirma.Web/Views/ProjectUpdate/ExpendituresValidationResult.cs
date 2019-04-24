@@ -28,14 +28,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 {
     public class ExpendituresValidationResult
     {
-        public static List<string> Validate(List<ProjectFundingSourceExpenditureBulk> projectFundingSourceExpenditureBulks, List<ProjectExemptReportingYearSimple> projectExemptReportingYearSimples, string explanation, List<int> expectedYears)
+        public static List<string> Validate(List<ProjectGrantAllocationExpenditureBulk> projectGrantAllocationExpenditureBulks, List<ProjectExemptReportingYearSimple> projectExemptReportingYearSimples, string explanation, List<int> expectedYears)
         {
             var errors = new List<string>();
-            var emptyRows = projectFundingSourceExpenditureBulks?.Where(x => x.CalendarYearExpenditures.All(y => !y.MonetaryAmount.HasValue));
+            var emptyRows = projectGrantAllocationExpenditureBulks?.Where(x => x.CalendarYearExpenditures.All(y => !y.MonetaryAmount.HasValue));
 
-            if (projectFundingSourceExpenditureBulks == null)
+            if (projectGrantAllocationExpenditureBulks == null)
             {
-                projectFundingSourceExpenditureBulks = new List<ProjectFundingSourceExpenditureBulk>();
+                projectGrantAllocationExpenditureBulks = new List<ProjectGrantAllocationExpenditureBulk>();
             }
 
             if (projectExemptReportingYearSimples == null)
@@ -45,22 +45,25 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             if (emptyRows?.Any() ?? false)
             {
-                errors.Add($"The {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} could not be saved because there are blank rows. Enter a value in all fields or delete funding sources for which there is no expenditure data to report.");
+                errors.Add($"The {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} could not be saved because there are blank rows. Enter a value in all fields or delete grant allocations for which there is no expenditure data to report.");
             }
 
-            // get distinct Funding Sources
-            var projectFundingSourceExpenditures = projectFundingSourceExpenditureBulks.SelectMany(x => x.ToProjectFundingSourceExpenditures()).ToList();
-            errors.AddRange(ValidateImpl(projectExemptReportingYearSimples, explanation, expectedYears, new List<IFundingSourceExpenditure>(projectFundingSourceExpenditures)));
+            // get distinct Grant Allocations
+            var projectGrantAllocationExpenditures = projectGrantAllocationExpenditureBulks.SelectMany(x => x.ToProjectGrantAllocationExpenditures()).ToList();
+            var projectGrantAllocationExpendituresList = new List<IGrantAllocationExpenditure>(projectGrantAllocationExpenditures);
+            errors.AddRange(ValidateImpl(projectExemptReportingYearSimples, explanation, expectedYears, projectGrantAllocationExpendituresList));
             return errors;
         }
 
-        public static List<string> ValidateImpl(List<ProjectExemptReportingYearSimple> projectExemptReportingYearSimples, string explanation, List<int> expectedYears,
-            List<IFundingSourceExpenditure> projectFundingSourceExpenditures)
+        public static List<string> ValidateImpl(List<ProjectExemptReportingYearSimple> projectExemptReportingYearSimples, 
+                                                string explanation, 
+                                                List<int> expectedYears,
+                                                List<IGrantAllocationExpenditure> projectGrantAllocationExpenditures)
         {
             var errors = new List<string>();
-            var fundingSourcesIDs = projectFundingSourceExpenditures.Select(x => x.FundingSourceID).Distinct().ToList();
-            var fundingSources =
-                HttpRequestStorage.DatabaseEntities.FundingSources.Where(x => fundingSourcesIDs.Contains(x.FundingSourceID));
+
+            var grantAllocationsIDs = projectGrantAllocationExpenditures.Select(x => x.GrantAllocationID).Distinct().ToList();
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.Where(x => grantAllocationsIDs.Contains(x.GrantAllocationID));
 
             // validation 1: ensure that we have expenditure values from ProjectUpdate start year to min(endyear, currentyear)
             if (projectExemptReportingYearSimples.Any(x => x.IsExempt) && string.IsNullOrWhiteSpace(explanation))
@@ -79,15 +82,14 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
             if (!everyYearIsExempt)
             {
-                if (fundingSources.Any())
+                if (grantAllocations.Any())
                 {
-                    var missingFundingSourceYears = new Dictionary<Models.FundingSource, IEnumerable<int>>();
-                    foreach (var fundingSource in fundingSources)
+                    var missingGrantAllocationYears = new Dictionary<Models.GrantAllocation, IEnumerable<int>>();
+                    foreach (var currentGrantAllocation in grantAllocations)
                     {
-                        var currentFundingSource = fundingSource;
                         //Added check for 0 to prevent a user from submitting a 0 value with no comment
-                        var yearsWithValues = projectFundingSourceExpenditures
-                            .Where(x => x.FundingSourceID == currentFundingSource.FundingSourceID &&
+                        var yearsWithValues = projectGrantAllocationExpenditures
+                            .Where(x => x.GrantAllocationID == currentGrantAllocation.GrantAllocationID &&
                                         x.ExpenditureAmount > 0)
                             .Select(x => x.CalendarYear);
                         var missingYears =
@@ -98,31 +100,31 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
                         if (missingYears.Any())
                         {
-                            missingFundingSourceYears.Add(currentFundingSource, missingYears);
+                            missingGrantAllocationYears.Add(currentGrantAllocation, missingYears);
                         }
                     }
 
-                    foreach (var fundingSource in missingFundingSourceYears)
+                    foreach (var grantAllocation in missingGrantAllocationYears)
                     {
-                        var yearsForErrorDisplay = string.Join(", ", FirmaHelpers.CalculateYearRanges(fundingSource.Value));
-                        errors.Add($"Missing Expenditures for {Models.FieldDefinition.FundingSource.GetFieldDefinitionLabel()} '{fundingSource.Key.DisplayName}' for the following years: {string.Join(", ", yearsForErrorDisplay)}");
+                        var yearsForErrorDisplay = string.Join(", ", FirmaHelpers.CalculateYearRanges(grantAllocation.Value));
+                        errors.Add($"Missing Expenditures for {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} '{grantAllocation.Key.DisplayName}' for the following years: {string.Join(", ", yearsForErrorDisplay)}");
                     }
                 }
             }
 
 
             // reported expenditures in exempt years - Added check for 0 to prevent a user from submitting a 0 value with no comment
-            var yearsWithExpenditures = projectFundingSourceExpenditures.Where(x => x.ExpenditureAmount > 0).GroupBy(x => x.FundingSourceID);
-            foreach (var fundingSource in yearsWithExpenditures)
+            var yearsWithExpenditures = projectGrantAllocationExpenditures.Where(x => x.ExpenditureAmount > 0).GroupBy(x => x.GrantAllocationID);
+            foreach (var grantAllocation in yearsWithExpenditures)
             {
-                var exemptYearsWithReportedValues = fundingSource
+                var exemptYearsWithReportedValues = grantAllocation
                     .Where(x => exemptReportingYears.Contains(x.CalendarYear)).Select(x => x.CalendarYear)
                     .ToList();
                 if (exemptYearsWithReportedValues.Any())
                 {
-                    var fundingSourceName = fundingSources.SingleOrDefault(x => x.FundingSourceID == fundingSource.Key)?.FundingSourceName;
+                    var grantAllocationName = grantAllocations.SingleOrDefault(x => x.GrantAllocationID == grantAllocation.Key)?.GrantAllocationName;
                     var yearsForErrorDisplay = string.Join(", ", FirmaHelpers.CalculateYearRanges(exemptYearsWithReportedValues));
-                    errors.Add($"Funding source {fundingSourceName} has reported values for the exempt years: {yearsForErrorDisplay}");
+                    errors.Add($"Grant Allocation {grantAllocationName} has reported values for the exempt years: {yearsForErrorDisplay}");
                 }
             }
 

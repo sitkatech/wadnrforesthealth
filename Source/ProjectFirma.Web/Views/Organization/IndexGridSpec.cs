@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.Organization
             {
                 Add($"# of {Models.FieldDefinition.Application.GetFieldDefinitionLabelPluralized()} associated with this {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", a => a.GetProposalsVisibleToUser(currentPerson).Count, 90);
             }
-            Add($"# of {Models.FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized()}", a => a.FundingSources.Count, 90);
+            Add($"# of {Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}", a => a.GrantAllocations.Count, 90);
             Add("# of Users", a => a.People.Count, 90);
             Add("Is Active", a => a.IsActive.ToYesNo(), 80, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Has Spatial Boundary", x => (x.OrganizationBoundary != null).ToCheckboxImageOrEmpty(), 70);

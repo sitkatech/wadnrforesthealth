@@ -25,6 +25,7 @@ namespace ProjectFirma.Web.Models
         protected Grant()
         {
             this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantModifications = new HashSet<GrantModification>();
             this.GrantNotes = new HashSet<GrantNote>();
             this.GrantNoteInternals = new HashSet<GrantNoteInternal>();
         }
@@ -32,7 +33,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID) : this()
+        public Grant(int grantID, string grantNumber, DateTime? startDate, DateTime? endDate, string conditionsAndRequirements, string complianceNotes, decimal? awardedFunds, string cFDANumber, string grantName, int? grantTypeID, string shortName, int grantStatusID, int organizationID, int? grantFileResourceID) : this()
         {
             this.GrantID = grantID;
             this.GrantNumber = grantNumber;
@@ -47,6 +48,7 @@ namespace ProjectFirma.Web.Models
             this.ShortName = shortName;
             this.GrantStatusID = grantStatusID;
             this.OrganizationID = organizationID;
+            this.GrantFileResourceID = grantFileResourceID;
         }
 
         /// <summary>
@@ -92,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
+            return GrantAllocations.Any() || GrantModifications.Any() || GrantNotes.Any() || GrantNoteInternals.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};
 
 
         /// <summary>
@@ -128,6 +130,11 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
+            foreach(var x in GrantModifications.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
             foreach(var x in GrantNotes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -153,15 +160,18 @@ namespace ProjectFirma.Web.Models
         public string ShortName { get; set; }
         public int GrantStatusID { get; set; }
         public int OrganizationID { get; set; }
+        public int? GrantFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantID; } set { GrantID = value; } }
 
         public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<GrantModification> GrantModifications { get; set; }
         public virtual ICollection<GrantNote> GrantNotes { get; set; }
         public virtual ICollection<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual GrantType GrantType { get; set; }
         public virtual GrantStatus GrantStatus { get; set; }
         public virtual Organization Organization { get; set; }
+        public virtual FileResource GrantFileResource { get; set; }
 
         public static class FieldLengths
         {

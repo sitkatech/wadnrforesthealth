@@ -33,8 +33,8 @@ namespace ProjectFirma.Web.Models
             this.ProjectDocuments = new HashSet<ProjectDocument>();
             this.ProjectExemptReportingYears = new HashSet<ProjectExemptReportingYear>();
             this.ProjectExternalLinks = new HashSet<ProjectExternalLink>();
-            this.ProjectFundingSourceExpenditures = new HashSet<ProjectFundingSourceExpenditure>();
-            this.ProjectFundingSourceRequests = new HashSet<ProjectFundingSourceRequest>();
+            this.ProjectGrantAllocationExpenditures = new HashSet<ProjectGrantAllocationExpenditure>();
+            this.ProjectGrantAllocationRequests = new HashSet<ProjectGrantAllocationRequest>();
             this.ProjectImages = new HashSet<ProjectImage>();
             this.ProjectInternalNotes = new HashSet<ProjectInternalNote>();
             this.ProjectLocations = new HashSet<ProjectLocation>();
@@ -52,7 +52,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation, DateTime? expirationDate, decimal? estimatedIndirectCost, decimal? estimatedPersonnelAndBenefitsCost, decimal? estimatedSuppliesCost, decimal? estimatedTravelCost) : this()
+        public Project(int projectID, int projectTypeID, int projectStageID, string projectName, string projectDescription, DateTime? completionDate, decimal? estimatedTotalCost, DbGeometry projectLocationPoint, string performanceMeasureActualYearsExemptionExplanation, bool isFeatured, string projectLocationNotes, DateTime? plannedDate, int projectLocationSimpleTypeID, int? primaryContactPersonID, int projectApprovalStatusID, int? proposingPersonID, DateTime? proposingDate, string performanceMeasureNotes, DateTime? submissionDate, DateTime? approvalDate, int? reviewedByPersonID, DbGeometry defaultBoundingBox, string noExpendituresToReportExplanation, int? focusAreaID, string noRegionsExplanation, string noPriorityAreasExplanation, DateTime? expirationDate) : this()
         {
             this.ProjectID = projectID;
             this.ProjectTypeID = projectTypeID;
@@ -81,10 +81,6 @@ namespace ProjectFirma.Web.Models
             this.NoRegionsExplanation = noRegionsExplanation;
             this.NoPriorityAreasExplanation = noPriorityAreasExplanation;
             this.ExpirationDate = expirationDate;
-            this.EstimatedIndirectCost = estimatedIndirectCost;
-            this.EstimatedPersonnelAndBenefitsCost = estimatedPersonnelAndBenefitsCost;
-            this.EstimatedSuppliesCost = estimatedSuppliesCost;
-            this.EstimatedTravelCost = estimatedTravelCost;
         }
 
         /// <summary>
@@ -136,13 +132,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectFundingSourceExpenditures.Any() || ProjectFundingSourceRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityAreas.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || TreatmentActivities.Any();
+            return InteractionEventProjects.Any() || NotificationProjects.Any() || PerformanceMeasureActuals.Any() || PerformanceMeasureExpecteds.Any() || ProjectClassifications.Any() || ProjectCustomAttributes.Any() || ProjectDocuments.Any() || ProjectExemptReportingYears.Any() || ProjectExternalLinks.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationRequests.Any() || ProjectImages.Any() || ProjectInternalNotes.Any() || ProjectLocations.Any() || ProjectLocationStagings.Any() || ProjectNotes.Any() || ProjectOrganizations.Any() || ProjectPeople.Any() || ProjectPriorityAreas.Any() || ProjectRegions.Any() || ProjectTags.Any() || ProjectUpdateBatches.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectFundingSourceExpenditure).Name, typeof(ProjectFundingSourceRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityArea).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityArea).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -212,12 +208,12 @@ namespace ProjectFirma.Web.Models
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectFundingSourceExpenditures.ToList())
+            foreach(var x in ProjectGrantAllocationExpenditures.ToList())
             {
                 x.DeleteFull(dbContext);
             }
 
-            foreach(var x in ProjectFundingSourceRequests.ToList())
+            foreach(var x in ProjectGrantAllocationRequests.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -311,10 +307,6 @@ namespace ProjectFirma.Web.Models
         public string NoRegionsExplanation { get; set; }
         public string NoPriorityAreasExplanation { get; set; }
         public DateTime? ExpirationDate { get; set; }
-        public decimal? EstimatedIndirectCost { get; set; }
-        public decimal? EstimatedPersonnelAndBenefitsCost { get; set; }
-        public decimal? EstimatedSuppliesCost { get; set; }
-        public decimal? EstimatedTravelCost { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectID; } set { ProjectID = value; } }
 
@@ -327,8 +319,8 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
         public virtual ICollection<ProjectExemptReportingYear> ProjectExemptReportingYears { get; set; }
         public virtual ICollection<ProjectExternalLink> ProjectExternalLinks { get; set; }
-        public virtual ICollection<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
-        public virtual ICollection<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
+        public virtual ICollection<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
+        public virtual ICollection<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual ICollection<ProjectImage> ProjectImages { get; set; }
         public virtual ICollection<ProjectInternalNote> ProjectInternalNotes { get; set; }
         public virtual ICollection<ProjectLocation> ProjectLocations { get; set; }

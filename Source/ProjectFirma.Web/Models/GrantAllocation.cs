@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using JetBrains.Annotations;
+using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Models
 {
@@ -12,13 +15,28 @@ namespace ProjectFirma.Web.Models
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
-        public string ProgramIndexDisplay => ProgramIndexID.HasValue ? ProgramIndex.ProgramIndexAbbrev : string.Empty;
+        public string ProgramIndexDisplay => ProgramIndexID.HasValue ? ProgramIndex.ProgramIndexCode : string.Empty;
 
-        public string GrantNumberAndGrantAllocationNameForDisplay => $"{Grant.GrantNumber} {GrantAllocationName}";
+        public string GrantNumberAndGrantAllocationDisplayName => $"{Grant.GrantNumber} {GrantAllocationName}";
+
+        public string AllocationAmountCurrencyDisplay => $"{AllocationAmount.ToStringCurrency()}";
+
+        public string GrantNumberAndGrantAllocationWithAllocationAmountDisplay => $"{GrantNumberAndGrantAllocationDisplayName} ({AllocationAmountCurrencyDisplay})";
+
+        public HtmlString GrantNumberAndGrantAllocationDisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, GrantNumberAndGrantAllocationDisplayName);
+
         // ReSharper disable once InconsistentNaming
         public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID: -1;
         public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
         public string DivisionNameDisplay => Division != null ? Division.DivisionDisplayName : string.Empty;
+
+        public string DisplayName => this.GrantAllocationName;
+        public HtmlString DisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, DisplayName);
+
+        public string SummaryUrl
+        {
+            get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.GrantAllocationDetail(GrantAllocationID)); }
+        }
 
         [NotNull]
         public List<ProjectCode> ProjectCodes
@@ -55,6 +73,24 @@ namespace ProjectFirma.Web.Models
         public string GetAllProgramManagerPersonNamesAsString()
         {
             return string.Join(", ", this.ProgramManagerPersons.Select(pmp => pmp.FullNameFirstLast));
+        }
+
+        public HtmlString GetAllProgramManagerPersonNamesAsUrls()
+        {
+            var programManagerUrlsList = this.ProgramManagerPersons.Select(pmp => pmp.GetFullNameFirstLastAsUrl()).ToList();
+            var programManagerUrlsStringBuilder = new StringBuilder();
+            foreach (var programManagerUrl in programManagerUrlsList)
+            {
+                if (programManagerUrlsStringBuilder.Length < 1)
+                {
+                    programManagerUrlsStringBuilder.Append(programManagerUrl);
+                }
+                else
+                {
+                    programManagerUrlsStringBuilder.Append(", " + programManagerUrl);
+                }
+            }
+            return new HtmlString(programManagerUrlsStringBuilder.ToString());
         }
 
         public List<ProjectCode> ConvertIntsToProjectCodes(List<int> desiredProjectCodeIDs)
@@ -107,6 +143,49 @@ namespace ProjectFirma.Web.Models
             // No grant year prefix
             return null;
         }
+
+        /// <summary>
+        /// This is a bit speculative, and may not be what we really need. -- SLG
+        /// </summary>
+        public Organization BottommostOrganization
+        {
+            get
+            {
+                if (this.Organization != null)
+                {
+                    return this.Organization;
+                }
+
+                return this.Grant.Organization;
+            }
+        }
+
+        public int? ProjectsWhereYouAreTheGrantAllocationMinCalendarYear
+        {
+            get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Min(x => x.CalendarYear) : (int?)null; }
+        }
+
+        public int? ProjectsWhereYouAreTheGrantAllocationMaxCalendarYear
+        {
+            get { return ProjectGrantAllocationExpenditures.Any() ? ProjectGrantAllocationExpenditures.Max(x => x.CalendarYear) : (int?)null; }
+        }
+
+        /// <summary>
+        /// Stand-in for what used to be GrantAllocation.FixedLengthDisplayName
+        /// </summary>
+        public string FixedLengthDisplayName
+        {
+            get
+            {
+                if (BottommostOrganization.IsUnknown)
+                {
+                    return BottommostOrganization.OrganizationShortNameIfAvailable;
+                }
+                var organizationShortNameIfAvailable = $"({BottommostOrganization.OrganizationShortNameIfAvailable})";
+                return organizationShortNameIfAvailable.Length < 45 ? $"{GrantAllocationName.ToEllipsifiedString(45 - organizationShortNameIfAvailable.Length)} {organizationShortNameIfAvailable}" : $"{GrantAllocationName} {organizationShortNameIfAvailable}";
+            }
+        }
+
 
     }
 }

@@ -50,10 +50,6 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class SupportRequestTypeQuestionAboutPolicies
-    {
-    }
-
     public partial class SupportRequestTypeReportBug
     {
     }
@@ -70,17 +66,10 @@ namespace ProjectFirma.Web.Models
     {
     }
 
-    public partial class SupportRequestTypeNewOrganizationOrFundingSource
-    {
-    }
-
     public partial class SupportRequestTypeOther
     {
     }
 
-    public partial class SupportRequestTypeRequestToBeAddedToFtipList
-    {
-    }
 
     public partial class SupportRequestTypeProvideFeedback
     {

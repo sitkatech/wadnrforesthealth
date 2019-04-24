@@ -34,12 +34,10 @@ namespace ProjectFirma.Web.Models
         public int EntityID => ProjectUpdateID;
         public string DisplayName => ProjectUpdateBatch.Project.DisplayName;
 
-        public decimal? UnfundedNeed => EstimatedTotalCost - GetSecuredFunding();
-
-        public decimal GetSecuredFunding()
+        public decimal GetTotalAmount()
         {
-            return ProjectUpdateBatch.ProjectFundingSourceRequestUpdates.Any()
-                ? ProjectUpdateBatch.ProjectFundingSourceRequestUpdates.Sum(x => x.SecuredAmount.GetValueOrDefault())
+            return ProjectUpdateBatch.ProjectGrantAllocationRequestUpdates.Any()
+                ? ProjectUpdateBatch.ProjectGrantAllocationRequestUpdates.Sum(x => x.TotalAmount.GetValueOrDefault())
                 : 0;
         }
 

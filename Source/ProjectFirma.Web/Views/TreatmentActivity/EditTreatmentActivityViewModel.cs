@@ -119,9 +119,9 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
             ProgramIndexID = treatmentActivity.ProgramIndexID;
-            ProgramIndexSearchCriteria = treatmentActivity.ProgramIndex?.ProgramIndexAbbrev;
+            ProgramIndexSearchCriteria = treatmentActivity.ProgramIndex?.ProgramIndexCode;
             ProjectCodeID = treatmentActivity.ProjectCodeID;
-            ProjectCodeSearchCriteria = treatmentActivity.ProjectCode?.ProjectCodeAbbrev;
+            ProjectCodeSearchCriteria = treatmentActivity.ProjectCode?.ProjectCodeName;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
             TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
             TreatmentActivityFootprintAcres = treatmentActivity.TreatmentActivityFootprintAcres;
@@ -138,7 +138,6 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityHandPileBurnAcres = treatmentActivity.TreatmentActivityHandPileBurnAcres;
             TreatmentActivityMachinePileBurnAcres = treatmentActivity.TreatmentActivityMachinePileBurnAcres;
             TreatmentActivityOtherTreatmentAcres = treatmentActivity.TreatmentActivityOtherTreatmentAcres;
-
         }
 
 

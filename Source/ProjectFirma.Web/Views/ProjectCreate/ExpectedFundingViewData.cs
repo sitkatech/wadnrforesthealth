@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ExpectedFundingViewData : ProjectCreateViewData
     {
-        public readonly string RequestFundingSourceUrl;
+        public readonly string RequestGrantAllocationUrl;
         public readonly ViewDataForAngularClass ViewDataForAngular;
 
         public ExpectedFundingViewData(Person currentPerson,
@@ -36,31 +36,24 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             ViewDataForAngularClass viewDataForAngularClass) : base(currentPerson, project, ProjectCreateSection.ExpectedFunding.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             ViewDataForAngular = viewDataForAngularClass;
-            RequestFundingSourceUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingFundingSource());
+            RequestGrantAllocationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingGrantAllocation());
         }
 
         public class ViewDataForAngularClass
         {
-            public readonly List<FundingSourceSimple> AllFundingSources;
+            public readonly List<GrantAllocationSimple> AllGrantAllocations;
             // Actually a ProjectID
             public readonly int ProjectID;
             public readonly decimal EstimatedTotalCost;
-            public readonly decimal EstimatedIndirectCost;
-            public readonly decimal EstimatedPersonnelAndBenefitsCost;
-            public readonly decimal EstimatedSuppliesCost;
-            public readonly decimal EstimatedTravelCost;
+
 
             public ViewDataForAngularClass(Models.Project projectProposedBatch,
-                List<FundingSourceSimple> allFundingSources,
-                decimal estimatedTotalCost, decimal estimatedIndirectCost, decimal estimatedPersonnelAndBenefitsCost, decimal estimatedSuppliesCost, decimal estimatedTravelCost)
+                                           List<GrantAllocationSimple> allGrantAllocations,
+                                           decimal estimatedTotalCost)
             {
-                AllFundingSources = allFundingSources;
+                AllGrantAllocations = allGrantAllocations;
                 ProjectID = projectProposedBatch.ProjectID;
                 EstimatedTotalCost = estimatedTotalCost;
-                EstimatedIndirectCost = estimatedIndirectCost;
-                EstimatedPersonnelAndBenefitsCost = estimatedPersonnelAndBenefitsCost;
-                EstimatedSuppliesCost = estimatedSuppliesCost;
-                EstimatedTravelCost = estimatedTravelCost;
             }
         }
     }

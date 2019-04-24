@@ -46,7 +46,7 @@ namespace LtInfo.Common
                 // the keyfile in the .config file is relative to where the assembly is executing
                 var thisAssemblyDirectory = GeneralUtility.GetExecutingAssemblyDirectory();
                 var keyFileInfo = new FileInfo(Path.Combine(thisAssemblyDirectory.FullName, keyfile));
-                Check.RequireFileExists(keyFileInfo, string.Format("Could keyfile=\"{0}\" not found (looked in path {1}) as specified in configuration element {2}. Check config file and filesystem.", keyfile, keyFileInfo.FullName, GetType().Name));
+                Check.RequireFileExists(keyFileInfo, $"Could keyfile=\"{keyfile}\" not found (looked in path {keyFileInfo.FullName}) as specified in configuration element {GetType().Name}. Check config file and filesystem.");
                 var crypto = Encryptor.Instance(keyFileInfo);
                 clearTextConnection = crypto.Decrypt(connect);
             }

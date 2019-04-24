@@ -39,26 +39,26 @@ namespace ProjectFirma.Web.Models
             get { return _organizationType.LegendColor; }
         }
         public readonly decimal CalendarYearExpenditureAmount;
-        public readonly int FundingSourceCount;
-        public readonly int FundingOrganizationCount;
+        public readonly int GrantAllocationCount;
+        public readonly int GrantAllocationOrganizationCount;
         public readonly int? CalendarYear;
 
-        public OrganizationTypeExpenditure(OrganizationType organizationType, decimal calendarYearExpenditureAmount, int fundingSourceCount, int fundingOrganizationCount, int? calendarYear)
+        public OrganizationTypeExpenditure(OrganizationType organizationType, decimal calendarYearExpenditureAmount, int grantAllocationCount, int grantAllocationOrganizationCount, int? calendarYear)
         {
             _organizationType = new OrganizationTypeSimple(organizationType);
             CalendarYear = calendarYear;
             CalendarYearExpenditureAmount = calendarYearExpenditureAmount;
-            FundingSourceCount = fundingSourceCount;
-            FundingOrganizationCount = fundingOrganizationCount;
+            GrantAllocationCount = grantAllocationCount;
+            GrantAllocationOrganizationCount = grantAllocationOrganizationCount;
         }
 
-        public OrganizationTypeExpenditure(OrganizationType organizationType, List<ProjectFundingSourceExpenditure> projectFundingSourceExpendituresForThisOrganizationTypeAndCalendarYear, int? calendarYear)
+        public OrganizationTypeExpenditure(OrganizationType organizationType, List<ProjectGrantAllocationExpenditure> projectGrantAllocationExpendituresForThisOrganizationTypeAndCalendarYear, int? calendarYear)
         {
             _organizationType = new OrganizationTypeSimple(organizationType);
             CalendarYear = calendarYear;
-            CalendarYearExpenditureAmount = projectFundingSourceExpendituresForThisOrganizationTypeAndCalendarYear.Sum(x => x.ExpenditureAmount);
-            FundingSourceCount = projectFundingSourceExpendituresForThisOrganizationTypeAndCalendarYear.Select(x => x.FundingSourceID).Distinct().Count();
-            FundingOrganizationCount = projectFundingSourceExpendituresForThisOrganizationTypeAndCalendarYear.Select(x => x.FundingSource.OrganizationID).Distinct().Count();
+            CalendarYearExpenditureAmount = projectGrantAllocationExpendituresForThisOrganizationTypeAndCalendarYear.Sum(x => x.ExpenditureAmount);
+            GrantAllocationCount = projectGrantAllocationExpendituresForThisOrganizationTypeAndCalendarYear.Select(x => x.GrantAllocationID).Distinct().Count();
+            GrantAllocationOrganizationCount = projectGrantAllocationExpendituresForThisOrganizationTypeAndCalendarYear.Select(x => x.GrantAllocation.BottommostOrganization.OrganizationID).Distinct().Count();
         }
     }
 }

@@ -30,11 +30,14 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public Models.GrantAllocation GrantAllocation { get; }
         public string EditGrantAllocationUrl { get; set; }
+
         public bool UserHasEditGrantAllocationPermissions { get; set; }
 
         public string BackToGrantAllocationsText { get; set; }
 
         public string GrantAllocationsListUrl { get; set; }
+        
+        
 
         protected GrantAllocationViewData(Person currentPerson, Models.GrantAllocation grantAllocation) : base(currentPerson, null)
         {
@@ -42,6 +45,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             HtmlPageTitle = grantAllocation.GrantAllocationName;
             EntityName = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()}";
             EditGrantAllocationUrl = grantAllocation.GetEditUrl();
+
             UserHasEditGrantAllocationPermissions = new GrantAllocationEditAsAdminFeature().HasPermissionByPerson(currentPerson);
             BackToGrantAllocationsText = "Back to all Grant Allocations";
             GrantAllocationsListUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());

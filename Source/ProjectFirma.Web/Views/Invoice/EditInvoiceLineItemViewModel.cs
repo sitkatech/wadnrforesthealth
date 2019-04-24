@@ -23,6 +23,7 @@ using System;
 using LtInfo.Common.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using LtInfo.Common;
 
 namespace ProjectFirma.Web.Views.Invoice
 {
@@ -37,6 +38,7 @@ namespace ProjectFirma.Web.Views.Invoice
 
         [Required]
         [DisplayName("Line Item Amount")]
+        [ValidateMoneyInRangeForSqlServer]
         public Money InvoiceLineItemAmount { get; set; }
 
         [Required]

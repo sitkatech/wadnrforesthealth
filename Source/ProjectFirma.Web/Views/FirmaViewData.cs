@@ -169,7 +169,6 @@ namespace ProjectFirma.Web.Views
                 programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<ProjectStewardOrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.ProjectStewardOrganizationDisplayName.GetFieldDefinitionLabelPluralized()}", "Group3"));
             }
             programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}", "Group3"));
-            programInfoMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<FundingSourceController>(c => c.Index()), currentPerson, $"{Models.FieldDefinition.FundingSource.GetFieldDefinitionLabelPluralized()}", "Group3"));
 
             return programInfoMenu;
         }
@@ -213,8 +212,12 @@ namespace ProjectFirma.Web.Views
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.InternalSetupNotes()), currentPerson, "Internal Setup Notes", "Group4"));
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<HomeController>(c => c.StyleGuide()), currentPerson, "Style Guide", "Group4"));
             
+            // Group 5 - Organizations
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<OrganizationAndRelationshipTypeController>(c => c.Index()), currentPerson, Models.FieldDefinition.OrganizationType.GetFieldDefinitionLabelPluralized(), "Group5"));
-           
+
+            // Group 6 - Jobs
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JobController>(c => c.JobIndex()), currentPerson, Models.FieldDefinition.Job.GetFieldDefinitionLabelPluralized(), "Group6"));
+
             return manageMenu;
         }
 

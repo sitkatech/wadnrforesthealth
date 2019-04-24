@@ -102,9 +102,9 @@ namespace ProjectFirma.Web.Views.Project
                 return null;
             }
 
-            var projectFundingSourceExpenditures = Project.ProjectFundingSourceExpenditures.Where(x => FirmaDateUtilities.DateIsInReportingRange(x.CalendarYear)).ToList();
+            var projectGrantAllocationExpenditures = Project.ProjectGrantAllocationExpenditures.Where(x => FirmaDateUtilities.DateIsInReportingRange(x.CalendarYear)).ToList();
             var weight = TotalReportedValue / reportedValuesForAllSubcategories;
-            return projectFundingSourceExpenditures.Sum(x => x.ExpenditureAmount) * Convert.ToDecimal(weight);
+            return projectGrantAllocationExpenditures.Sum(x => x.ExpenditureAmount) * Convert.ToDecimal(weight);
         }
 
         public decimal? CalculateWeightedTotalExpenditurePerPerformanceMeasure()

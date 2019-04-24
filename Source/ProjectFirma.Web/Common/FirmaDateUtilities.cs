@@ -51,14 +51,19 @@ namespace ProjectFirma.Web.Common
         }
         public static List<int> ReportingYearsForUserInputAsIntegers()
         {
-            return GetRangeOfYears(MultiTenantHelpers.GetMinimumYear(),
-                CalculateCurrentYearToUseForUpToAllowableInputInReporting());
+            return GetRangeOfYears(MultiTenantHelpers.GetMinimumYear(), CalculateCurrentYearToUseForUpToAllowableInputInReporting());
         }
 
         public static List<int> GetRangeOfYears(int startYear, int endYear)
         {
-            startYear = Math.Min(endYear, startYear); // if the start year is greater than the end year, just use the end year
-            return Enumerable.Range(startYear, (endYear - startYear) + 1).ToList();
+            // We used to tolerate this and do something weird/unexpected, but I think it's better to trap the condition and repair the caller. -- SLG 4/11/2019
+            if (startYear > endYear)
+            {
+                throw new ArgumentOutOfRangeException($"startYear {startYear} must be less than or equal to endYear {endYear}");
+            }
+            List<int> rangeOfYears = Enumerable.Range(startYear, (endYear - startYear) + 1).ToList();
+            Check.Ensure(rangeOfYears.Count == rangeOfYears.Distinct().Count(), $"Generated repeated years in GetRangeOfYears: {string.Join(", ", rangeOfYears)}. This is a bug.");
+            return rangeOfYears;
         }
 
         public static DateTime LastReportingPeriodStartDate()

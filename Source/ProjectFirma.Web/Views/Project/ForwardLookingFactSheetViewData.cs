@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.Project
     public class ForwardLookingFactSheetViewData : ProjectViewData
     {
         public List<IGrouping<Models.PerformanceMeasure, PerformanceMeasureExpected>> PerformanceMeasureExpectedValues { get; }
-        public List<GooglePieChartSlice> FundingSourceRequestAmountGooglePieChartSlices { get; }
+        public List<GooglePieChartSlice> GrantAllocationRequestAmountGooglePieChartSlices { get; }
         public Models.ProjectImage KeyPhoto { get; }
         public List<IGrouping<ProjectImageTiming, Models.ProjectImage>> ProjectImagesExceptKeyPhotoGroupedByTiming { get; }
         public int ProjectImagesPerTimingGroup { get; }
@@ -46,11 +46,10 @@ namespace ProjectFirma.Web.Views.Project
         public GoogleChartJson GoogleChartJson { get; }
         public string EstimatedTotalCost { get; }
 
-        public string NoFundingSourceIdentified { get; }
-        public string SecuredFunding { get; }
-        public string UnsecuredFunding { get; }
+        public string NoGrantAllocationIdentified { get; }
+        public string TotalFunding { get; }
 
-        public string FundingRequest { get; }
+        public string GrandAllocation { get; }
         public int CalculatedChartHeight { get; }
         public string FactSheetPdfUrl { get; }
 
@@ -61,12 +60,11 @@ namespace ProjectFirma.Web.Views.Project
 
         public ViewPageContentViewData CustomFactSheetTextViewData { get; }
 
-
         public ForwardLookingFactSheetViewData(Person currentPerson,
             Models.Project project,
             ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson,
             GoogleChartJson googleChartJson,
-            List<GooglePieChartSlice> fundingSourceRequestAmountGooglePieChartSlices, Models.FirmaPage firmaPageFactSheetCustomText) : base(currentPerson, project)
+            List<GooglePieChartSlice> grantAllocationRequestAmountGooglePieChartSlices, Models.FirmaPage firmaPageFactSheetCustomText) : base(currentPerson, project)
         {
             PageTitle = project.DisplayName;
             BreadCrumbTitle = "Fact Sheet";
@@ -82,12 +80,12 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
             GoogleChartJson = googleChartJson;
-            FundingSourceRequestAmountGooglePieChartSlices = fundingSourceRequestAmountGooglePieChartSlices;
+            GrantAllocationRequestAmountGooglePieChartSlices = grantAllocationRequestAmountGooglePieChartSlices;
 
             //Dynamically resize chart based on how much space the legend requires
-            CalculatedChartHeight = 350 - (FundingSourceRequestAmountGooglePieChartSlices.Count <= 2
-                                        ? FundingSourceRequestAmountGooglePieChartSlices.Count * 24
-                                        : FundingSourceRequestAmountGooglePieChartSlices.Count * 20);
+            CalculatedChartHeight = 350 - (GrantAllocationRequestAmountGooglePieChartSlices.Count <= 2
+                                        ? GrantAllocationRequestAmountGooglePieChartSlices.Count * 24
+                                        : GrantAllocationRequestAmountGooglePieChartSlices.Count * 20);
             FactSheetPdfUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.FactSheetPdf(project));
 
             if (project.ProjectType == null)
@@ -114,12 +112,9 @@ namespace ProjectFirma.Web.Views.Project
             TaxonomyBranchName = project.ProjectType == null ? $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Taxonomy Not Set" : project.ProjectType.TaxonomyBranch.DisplayName;
             ProjectTypeDisplayName = Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel();
             EstimatedTotalCost = Project.EstimatedTotalCost.HasValue ? Project.EstimatedTotalCost.ToStringCurrency() : "";
-            NoFundingSourceIdentified = project.GetNoFundingSourceIdentifiedAmount() != null ? Project.GetNoFundingSourceIdentifiedAmount().ToStringCurrency() : "";
-            SecuredFunding = Project.GetSecuredFunding() != null ? Project.GetSecuredFunding().ToStringCurrency() : "";
-            UnsecuredFunding = Project.GetUnsecuredFunding() != null ? Project.GetUnsecuredFunding().ToStringCurrency() : "";
+            NoGrantAllocationIdentified = project.GetNoGrantAllocationIdentifiedAmount() != null ? Project.GetNoGrantAllocationIdentifiedAmount().ToStringCurrency() : "";
 
-
-            FundingRequest = project.ProjectFundingSourceRequests.Any() ? project.ProjectFundingSourceRequests.Sum(x => x.UnsecuredAmount).ToStringCurrency() : ViewUtilities.Unknown;
+            GrandAllocation = project.ProjectGrantAllocationRequests.Any() ? project.ProjectGrantAllocationRequests.Sum(x => x.TotalAmount).ToStringCurrency() : ViewUtilities.Unknown;
             CustomFactSheetTextViewData = new ViewPageContentViewData(firmaPageFactSheetCustomText, false);
         }
 
@@ -128,7 +123,7 @@ namespace ProjectFirma.Web.Views.Project
             get
             {
                 var legendHtml = "<div>";
-                foreach (var googlePieChartSlice in FundingSourceRequestAmountGooglePieChartSlices.OrderBy(x => x.SortOrder))
+                foreach (var googlePieChartSlice in GrantAllocationRequestAmountGooglePieChartSlices.OrderBy(x => x.SortOrder))
                 {
                     legendHtml += "<div class='chartLegendColorBox' style='display:inline-block; border: solid 6px " + googlePieChartSlice.Color + "'></div> ";
                     legendHtml += "<div style='display:inline-block' >" + googlePieChartSlice.Label + "</div>";

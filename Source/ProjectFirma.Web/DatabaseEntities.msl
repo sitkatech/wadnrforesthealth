@@ -190,6 +190,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FileResourceMimeTypeFileExtension">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FileResourceMimeTypeFileExtension">
+        <MappingFragment StoreEntitySet="FileResourceMimeTypeFileExtension">
+          <ScalarProperty Name="FileResourceMimeTypeFileExtensionID" ColumnName="FileResourceMimeTypeFileExtensionID" />
+          <ScalarProperty Name="FileResourceMimeTypeID" ColumnName="FileResourceMimeTypeID" />
+          <ScalarProperty Name="FileResourceMimeTypeFileExtensionText" ColumnName="FileResourceMimeTypeFileExtensionText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FirmaHomePageImage">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FirmaHomePageImage">
         <MappingFragment StoreEntitySet="FirmaHomePageImage">
@@ -240,18 +249,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="FundingSource">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FundingSource">
-        <MappingFragment StoreEntitySet="FundingSource">
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="FundingSourceName" ColumnName="FundingSourceName" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="FundingSourceDescription" ColumnName="FundingSourceDescription" />
-          <ScalarProperty Name="FundingSourceAmount" ColumnName="FundingSourceAmount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Grant">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Grant">
         <MappingFragment StoreEntitySet="Grant">
@@ -268,6 +265,7 @@
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -280,13 +278,24 @@
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
-          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
+          <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationBudgetLineItem">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem">
+        <MappingFragment StoreEntitySet="GrantAllocationBudgetLineItem">
+          <ScalarProperty Name="GrantAllocationBudgetLineItemID" ColumnName="GrantAllocationBudgetLineItemID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="GrantAllocationBudgetLineItemAmount" ColumnName="GrantAllocationBudgetLineItemAmount" />
+          <ScalarProperty Name="GrantAllocationBudgetLineItemNote" ColumnName="GrantAllocationBudgetLineItemNote" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -331,6 +340,59 @@
           <ScalarProperty Name="GrantAllocationProjectCodeID" ColumnName="GrantAllocationProjectCodeID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModification">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModification">
+        <MappingFragment StoreEntitySet="GrantModification">
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="GrantModificationName" ColumnName="GrantModificationName" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="GrantModificationStartDate" ColumnName="GrantModificationStartDate" />
+          <ScalarProperty Name="GrantModificationEndDate" ColumnName="GrantModificationEndDate" />
+          <ScalarProperty Name="GrantModificationStatusID" ColumnName="GrantModificationStatusID" />
+          <ScalarProperty Name="GrantModificationAmount" ColumnName="GrantModificationAmount" />
+          <ScalarProperty Name="GrantModificationDescription" ColumnName="GrantModificationDescription" />
+          <ScalarProperty Name="GrantModificationFileResourceID" ColumnName="GrantModificationFileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationGrantModificationPurpose">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose">
+        <MappingFragment StoreEntitySet="GrantModificationGrantModificationPurpose">
+          <ScalarProperty Name="GrantModificationGrantModificationPurposeID" ColumnName="GrantModificationGrantModificationPurposeID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="GrantModificationPurposeID" ColumnName="GrantModificationPurposeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationNoteInternal">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationNoteInternal">
+        <MappingFragment StoreEntitySet="GrantModificationNoteInternal">
+          <ScalarProperty Name="GrantModificationNoteInternalID" ColumnName="GrantModificationNoteInternalID" />
+          <ScalarProperty Name="GrantModificationID" ColumnName="GrantModificationID" />
+          <ScalarProperty Name="GrantModificationNoteInternalText" ColumnName="GrantModificationNoteInternalText" />
+          <ScalarProperty Name="CreatedByPersonID" ColumnName="CreatedByPersonID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedByPersonID" ColumnName="LastUpdatedByPersonID" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationPurpose">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationPurpose">
+        <MappingFragment StoreEntitySet="GrantModificationPurpose">
+          <ScalarProperty Name="GrantModificationPurposeID" ColumnName="GrantModificationPurposeID" />
+          <ScalarProperty Name="GrantModificationPurposeName" ColumnName="GrantModificationPurposeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantModificationStatus">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModificationStatus">
+        <MappingFragment StoreEntitySet="GrantModificationStatus">
+          <ScalarProperty Name="GrantModificationStatusID" ColumnName="GrantModificationStatusID" />
+          <ScalarProperty Name="GrantModificationStatusName" ColumnName="GrantModificationStatusName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -658,6 +720,7 @@
           <ScalarProperty Name="PersonAddress" ColumnName="PersonAddress" />
           <ScalarProperty Name="AddedByPersonID" ColumnName="AddedByPersonID" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="IsProgramManager" ColumnName="IsProgramManager" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -710,9 +773,13 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProgramIndex">
         <MappingFragment StoreEntitySet="ProgramIndex">
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
-          <ScalarProperty Name="ProgramIndexAbbrev" ColumnName="ProgramIndexAbbrev" />
+          <ScalarProperty Name="ProgramIndexCode" ColumnName="ProgramIndexCode" />
           <ScalarProperty Name="ProgramIndexTitle" ColumnName="ProgramIndexTitle" />
-          <ScalarProperty Name="IsHistoric" ColumnName="IsHistoric" />
+          <ScalarProperty Name="Biennium" ColumnName="Biennium" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="Program" ColumnName="Program" />
+          <ScalarProperty Name="Subprogram" ColumnName="Subprogram" />
+          <ScalarProperty Name="Subactivity" ColumnName="Subactivity" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -746,10 +813,6 @@
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-          <ScalarProperty Name="EstimatedIndirectCost" ColumnName="EstimatedIndirectCost" />
-          <ScalarProperty Name="EstimatedPersonnelAndBenefitsCost" ColumnName="EstimatedPersonnelAndBenefitsCost" />
-          <ScalarProperty Name="EstimatedSuppliesCost" ColumnName="EstimatedSuppliesCost" />
-          <ScalarProperty Name="EstimatedTravelCost" ColumnName="EstimatedTravelCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -767,8 +830,11 @@
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectCode">
         <MappingFragment StoreEntitySet="ProjectCode">
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-          <ScalarProperty Name="ProjectCodeAbbrev" ColumnName="ProjectCodeAbbrev" />
+          <ScalarProperty Name="ProjectCodeName" ColumnName="ProjectCodeName" />
           <ScalarProperty Name="ProjectCodeTitle" ColumnName="ProjectCodeTitle" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ProjectStartDate" ColumnName="ProjectStartDate" />
+          <ScalarProperty Name="ProjectEndDate" ColumnName="ProjectEndDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -884,47 +950,45 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectFundingSourceExpenditure">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceExpenditure">
-        <MappingFragment StoreEntitySet="ProjectFundingSourceExpenditure">
-          <ScalarProperty Name="ProjectFundingSourceExpenditureID" ColumnName="ProjectFundingSourceExpenditureID" />
+    <EntitySetMapping Name="ProjectGrantAllocationExpenditure">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditure">
+        <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditure">
+          <ScalarProperty Name="ProjectGrantAllocationExpenditureID" ColumnName="ProjectGrantAllocationExpenditureID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
           <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectFundingSourceExpenditureUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceExpenditureUpdate">
-        <MappingFragment StoreEntitySet="ProjectFundingSourceExpenditureUpdate">
-          <ScalarProperty Name="ProjectFundingSourceExpenditureUpdateID" ColumnName="ProjectFundingSourceExpenditureUpdateID" />
+    <EntitySetMapping Name="ProjectGrantAllocationExpenditureUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationExpenditureUpdate">
+        <MappingFragment StoreEntitySet="ProjectGrantAllocationExpenditureUpdate">
+          <ScalarProperty Name="ProjectGrantAllocationExpenditureUpdateID" ColumnName="ProjectGrantAllocationExpenditureUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
           <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
           <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectFundingSourceRequest">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceRequest">
-        <MappingFragment StoreEntitySet="ProjectFundingSourceRequest">
-          <ScalarProperty Name="ProjectFundingSourceRequestID" ColumnName="ProjectFundingSourceRequestID" />
+    <EntitySetMapping Name="ProjectGrantAllocationRequest">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationRequest">
+        <MappingFragment StoreEntitySet="ProjectGrantAllocationRequest">
+          <ScalarProperty Name="ProjectGrantAllocationRequestID" ColumnName="ProjectGrantAllocationRequestID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-          <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
-          <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectFundingSourceRequestUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectFundingSourceRequestUpdate">
-        <MappingFragment StoreEntitySet="ProjectFundingSourceRequestUpdate">
-          <ScalarProperty Name="ProjectFundingSourceRequestUpdateID" ColumnName="ProjectFundingSourceRequestUpdateID" />
+    <EntitySetMapping Name="ProjectGrantAllocationRequestUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectGrantAllocationRequestUpdate">
+        <MappingFragment StoreEntitySet="ProjectGrantAllocationRequestUpdate">
+          <ScalarProperty Name="ProjectGrantAllocationRequestUpdateID" ColumnName="ProjectGrantAllocationRequestUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="FundingSourceID" ColumnName="FundingSourceID" />
-          <ScalarProperty Name="SecuredAmount" ColumnName="SecuredAmount" />
-          <ScalarProperty Name="UnsecuredAmount" ColumnName="UnsecuredAmount" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1179,10 +1243,6 @@
           <ScalarProperty Name="PrimaryContactPersonID" ColumnName="PrimaryContactPersonID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-          <ScalarProperty Name="EstimatedIndirectCost" ColumnName="EstimatedIndirectCost" />
-          <ScalarProperty Name="EstimatedPersonnelAndBenefitsCost" ColumnName="EstimatedPersonnelAndBenefitsCost" />
-          <ScalarProperty Name="EstimatedSuppliesCost" ColumnName="EstimatedSuppliesCost" />
-          <ScalarProperty Name="EstimatedTravelCost" ColumnName="EstimatedTravelCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1273,6 +1333,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SocrataDataMartRawJsonImport">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport">
+        <MappingFragment StoreEntitySet="SocrataDataMartRawJsonImport">
+          <ScalarProperty Name="SocrataDataMartRawJsonImportID" ColumnName="SocrataDataMartRawJsonImportID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="SocrataDataMartRawJsonImportTableTypeID" ColumnName="SocrataDataMartRawJsonImportTableTypeID" />
+          <ScalarProperty Name="RawJsonString" ColumnName="RawJsonString" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="StateProvince">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.StateProvince">
         <MappingFragment StoreEntitySet="StateProvince">
@@ -1317,6 +1387,7 @@
           <ScalarProperty Name="ShowLeadImplementerLogoOnFactSheet" ColumnName="ShowLeadImplementerLogoOnFactSheet" />
           <ScalarProperty Name="EnableAccomplishmentsDashboard" ColumnName="EnableAccomplishmentsDashboard" />
           <ScalarProperty Name="ProjectStewardshipAreaTypeID" ColumnName="ProjectStewardshipAreaTypeID" />
+          <ScalarProperty Name="SocrataAppToken" ColumnName="SocrataAppToken" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

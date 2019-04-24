@@ -129,7 +129,7 @@ Source code is available upon request via <support@sitkatech.com>.
             @Html.LabelWithSugarFor(FieldDefinition.PreparedByPerson)
         </div>
         <div class="col-sm-9">
-            <span>@ViewDataTyped.Invoice.PreparedByPerson.FullNameFirstLast</span>
+            <span>@ViewDataTyped.Invoice.PreparedByPerson.GetFullNameFirstLastAsUrl()</span>
         </div>
     </div>
     <div class="row">

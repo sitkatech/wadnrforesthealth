@@ -153,12 +153,8 @@ namespace ProjectFirma.Web.Common
                 {
                     // something can go wrong when we are doing our save of EF; since this happens after the action has executed, we need to clear any messages that assumed the happy path
                     ClearMessageForDisplay();
-                    var errorDetails = string.Format("DbEntityValidationException occurred, below are details from the 'EntityValidationErrors' property.\r\n{0}",
-                        String.Join("\r\n",
-                            ex.EntityValidationErrors.Select(
-                                x =>
-                                    "Entry.Entity: " + x.Entry.Entity.GetType().Name + "\r\n" +
-                                    String.Join("\r\n", x.ValidationErrors.Select(y => String.Format("   PropertyName: {0}, ErrorMessage: {1}", y.PropertyName, y.ErrorMessage))))));
+                    var errorDetails =
+                        $"DbEntityValidationException occurred, below are details from the 'EntityValidationErrors' property.\r\n{String.Join("\r\n", ex.EntityValidationErrors.Select(x => "Entry.Entity: " + x.Entry.Entity.GetType().Name + "\r\n" + String.Join("\r\n", x.ValidationErrors.Select(y => $"   PropertyName: {y.PropertyName}, ErrorMessage: {y.ErrorMessage}"))))}";
                     throw new ApplicationException(errorDetails, ex);
                 }
                 catch

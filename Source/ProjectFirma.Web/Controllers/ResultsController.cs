@@ -97,7 +97,12 @@ namespace ProjectFirma.Web.Controllers
             var interactionEventLayer = HttpRequestStorage.DatabaseEntities.InteractionEvents.GetInteractionEventsLayerGeoJson();
             projectLocationsMapInitJson.Layers.Add(interactionEventLayer);
 
-            var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID, colorByValue.DisplayName, MultiTenantHelpers.GetTopLevelTaxonomyTiers(), currentPersonCanViewProposals);
+            
+
+            var projectLocationsMapViewData = new ProjectLocationsMapViewData(projectLocationsMapInitJson.MapDivID, 
+                                                                              colorByValue.DisplayName, 
+                                                                              MultiTenantHelpers.GetTopLevelTaxonomyTiers(), 
+                                                                              currentPersonCanViewProposals);
 
             
             var projectLocationFilterTypesAndValues = CreateProjectLocationFilterTypesAndValuesDictionary(currentPersonCanViewProposals);
@@ -106,12 +111,18 @@ namespace ProjectFirma.Web.Controllers
             var filteredProjectsWithLocationAreasUrl =
                 SitkaRoute<ResultsController>.BuildUrlFromExpression(x => x.FilteredProjectsWithLocationAreas(null));
 
+            var projectMapLocationJsons = new List<ProjectMapLocationJson>();
+            var filteredProjectList = projectsToShow.Where(x1 => x1.HasProjectLocationPoint).Where(x => x.ProjectStage.ShouldShowOnMap()).ToList();
+            projectMapLocationJsons = filteredProjectList.ToList().Select(p => new ProjectMapLocationJson(p)).ToList();
+
             var viewData = new ProjectMapViewData(CurrentPerson,
-                firmaPage,
-                projectLocationsMapInitJson,
-                projectLocationsMapViewData,
-                projectLocationFilterTypesAndValues,
-                projectLocationsUrl, filteredProjectsWithLocationAreasUrl);
+                                                  firmaPage,
+                                                  projectLocationsMapInitJson,
+                                                  projectLocationsMapViewData,
+                                                  projectLocationFilterTypesAndValues,
+                                                  projectLocationsUrl, 
+                                                  filteredProjectsWithLocationAreasUrl, 
+                                                  projectMapLocationJsons);
             return RazorView<ProjectMap, ProjectMapViewData>(viewData);
         }
 

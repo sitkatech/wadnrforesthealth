@@ -62,6 +62,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             InteractionEventProjects = interactionEvent.InteractionEventProjects.ToList();
             LocationMapFormID = locationMapFormID;
             InteractionEventLocationSummaryMapInitJson = interactionEventLocationSummaryMapInitJson;
+            PageTitle = interactionEvent.InteractionEventTitle;
 
 
         }

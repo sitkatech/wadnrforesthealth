@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using GeoJSON.Net.Feature;
+using LtInfo.Common;
 using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -228,6 +229,14 @@ namespace ProjectFirma.Web.Controllers
            
             var viewData = new EditInteractionEventLocationSimpleViewData(CurrentPerson, mapInitJson, wmsLayerNames, null, mapPostUrl,mapFormID, mapServiceUrl);
             return RazorPartialView<EditInteractionEventLocationSimple, EditInteractionEventLocationSimpleViewData, EditInteractionEventLocationSimpleViewModel>(viewData, viewModel);
+        }
+
+        [CrossAreaRoute]
+        [InteractionEventViewFeature]
+        public PartialViewResult InteractionEventMapPopup(InteractionEventPrimaryKey interactionEventPrimaryKey)
+        {
+            var interactionEvent = interactionEventPrimaryKey.EntityObject;
+            return RazorPartialView<InteractionEventMapPopup, InteractionEventMapPopupViewData>(new InteractionEventMapPopupViewData(interactionEvent));
         }
     }
 }

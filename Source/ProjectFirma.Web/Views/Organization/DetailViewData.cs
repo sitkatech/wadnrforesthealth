@@ -57,19 +57,19 @@ namespace ProjectFirma.Web.Views.Organization
 
         public readonly ViewGoogleChartViewData ExpendituresDirectlyFromOrganizationViewGoogleChartViewData;
         public readonly ViewGoogleChartViewData ExpendituresReceivedFromOtherOrganizationsViewGoogleChartViewData;
-        public readonly ProjectFundingSourceExpendituresForOrganizationGridSpec ProjectFundingSourceExpendituresForOrganizationGridSpec;
-        public readonly string ProjectFundingSourceExpendituresForOrganizationGridName;
-        public readonly string ProjectFundingSourceExpendituresForOrganizationGridDataUrl;
+        public readonly ProjectGrantAllocationExpendituresForOrganizationGridSpec ProjectGrantAllocationExpendituresForOrganizationGridSpec;
+        public readonly string ProjectGrantAllocationExpendituresForOrganizationGridName;
+        public readonly string ProjectGrantAllocationExpendituresForOrganizationGridDataUrl;
 
-        public readonly string ManageFundingSourcesUrl;
+        public readonly string ManageGrantAllocationsUrl;
         public readonly string IndexUrl;
 
         public readonly MapInitJson MapInitJson;
         public readonly bool HasSpatialData;
 
         public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
-        public readonly string NewFundingSourceUrl;
-        public readonly bool CanCreateNewFundingSource;
+        public readonly string NewGrantAllocationUrl;
+        public readonly bool CanCreateNewGrantAllocation;
 
         public readonly string ProjectStewardOrLeadImplementorFieldDefinitionName;
 
@@ -129,20 +129,21 @@ namespace ProjectFirma.Web.Views.Organization
                 ? Models.FieldDefinition.ProjectsStewardOrganizationRelationshipToProject.GetFieldDefinitionLabel()
                 : "Lead Implementer";
 
-            ProjectFundingSourceExpendituresForOrganizationGridSpec =
-                new ProjectFundingSourceExpendituresForOrganizationGridSpec(organization)
+            ProjectGrantAllocationExpendituresForOrganizationGridSpec =
+                new ProjectGrantAllocationExpendituresForOrganizationGridSpec(organization)
                 {
                     ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel()}",
                     ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {Models.FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()}",
                     SaveFiltersInCookie = true
                 };
 
-            ProjectFundingSourceExpendituresForOrganizationGridName = "projectCalendarYearExpendituresForOrganizationGrid";
-            ProjectFundingSourceExpendituresForOrganizationGridDataUrl =
+            ProjectGrantAllocationExpendituresForOrganizationGridName = "projectCalendarYearExpendituresForOrganizationGrid";
+            ProjectGrantAllocationExpendituresForOrganizationGridDataUrl =
                 SitkaRoute<OrganizationController>.BuildUrlFromExpression(
-                    tc => tc.ProjectFundingSourceExpendituresForOrganizationGridJsonData(organization));
+                    tc => tc.ProjectGrantAllocationExpendituresForOrganizationGridJsonData(organization));
 
-            ManageFundingSourcesUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.Index());
+            // Might be too weak; do we want to make this more specific?
+            ManageGrantAllocationsUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
             IndexUrl = SitkaRoute<OrganizationController>.BuildUrlFromExpression(c => c.Index());
 
             MapInitJson = mapInitJson;
@@ -152,9 +153,9 @@ namespace ProjectFirma.Web.Views.Organization
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x => organization.GetPerformanceMeasureChartViewData(x, currentPerson)).ToList();
 
-            NewFundingSourceUrl = SitkaRoute<FundingSourceController>.BuildUrlFromExpression(c => c.New());
-            CanCreateNewFundingSource = new FundingSourceCreateFeature().HasPermissionByPerson(CurrentPerson) &&
-                                        (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create funding sources for their organization
+            NewGrantAllocationUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(c => c.New());
+            CanCreateNewGrantAllocation = new GrantAllocationCreateFeature().HasPermissionByPerson(CurrentPerson) &&
+                                        (CurrentPerson.RoleID != Models.Role.ProjectSteward.RoleID || // If person is project steward, they can only create grant allocations for their organization
                                          CurrentPerson.OrganizationID == organization.OrganizationID);
             ShowProposals = currentPerson.CanViewProposals;
             ProposalsPanelHeader = MultiTenantHelpers.ShowApplicationsToThePublic()

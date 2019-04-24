@@ -9,13 +9,13 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[StartDate] [datetime] NULL,
 	[EndDate] [datetime] NULL,
 	[AllocationAmount] [money] NULL,
-	[CostTypeID] [int] NULL,
 	[ProgramIndexID] [int] NULL,
 	[FederalFundCodeID] [int] NULL,
 	[OrganizationID] [int] NULL,
 	[RegionID] [int] NULL,
 	[DivisionID] [int] NULL,
 	[GrantManagerID] [int] NULL,
+	[GrantAllocationFileResourceID] [int] NULL,
  CONSTRAINT [PK_GrantAllocation_GrantAllocationID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationID] ASC
@@ -28,11 +28,6 @@ CREATE TABLE [dbo].[GrantAllocation](
 ) ON [PRIMARY]
 
 GO
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_CostType_CostTypeID] FOREIGN KEY([CostTypeID])
-REFERENCES [dbo].[CostType] ([CostTypeID])
-GO
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_CostType_CostTypeID]
-GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Division_DivisionID] FOREIGN KEY([DivisionID])
 REFERENCES [dbo].[Division] ([DivisionID])
 GO
@@ -42,6 +37,11 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[FederalFundCode] ([FederalFundCodeID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_FederalFundCode_FederalFundCodeID]
+GO
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID] FOREIGN KEY([GrantAllocationFileResourceID])
+REFERENCES [dbo].[FileResource] ([FileResourceID])
+GO
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID]
 GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Grant_GrantID] FOREIGN KEY([GrantID])
 REFERENCES [dbo].[Grant] ([GrantID])

@@ -44,18 +44,24 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
         public virtual DbSet<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
+        public virtual DbSet<FileResourceMimeTypeFileExtension> FileResourceMimeTypeFileExtensions { get; set; }
         public virtual DbSet<FileResource> FileResources { get; set; }
         public virtual DbSet<FirmaHomePageImage> FirmaHomePageImages { get; set; }
         public virtual DbSet<FirmaPageImage> FirmaPageImages { get; set; }
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
-        public virtual DbSet<FundingSource> FundingSources { get; set; }
+        public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
+        public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
+        public virtual DbSet<GrantModificationPurpose> GrantModificationPurposes { get; set; }
+        public virtual DbSet<GrantModification> GrantModifications { get; set; }
+        public virtual DbSet<GrantModificationStatus> GrantModificationStatuses { get; set; }
         public virtual DbSet<GrantNoteInternal> GrantNoteInternals { get; set; }
         public virtual DbSet<GrantNote> GrantNotes { get; set; }
         public virtual DbSet<Grant> Grants { get; set; }
@@ -103,10 +109,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectExemptReportingYearUpdate> ProjectExemptReportingYearUpdates { get; set; }
         public virtual DbSet<ProjectExternalLink> ProjectExternalLinks { get; set; }
         public virtual DbSet<ProjectExternalLinkUpdate> ProjectExternalLinkUpdates { get; set; }
-        public virtual DbSet<ProjectFundingSourceExpenditure> ProjectFundingSourceExpenditures { get; set; }
-        public virtual DbSet<ProjectFundingSourceExpenditureUpdate> ProjectFundingSourceExpenditureUpdates { get; set; }
-        public virtual DbSet<ProjectFundingSourceRequest> ProjectFundingSourceRequests { get; set; }
-        public virtual DbSet<ProjectFundingSourceRequestUpdate> ProjectFundingSourceRequestUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationExpenditure> ProjectGrantAllocationExpenditures { get; set; }
+        public virtual DbSet<ProjectGrantAllocationExpenditureUpdate> ProjectGrantAllocationExpenditureUpdates { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
+        public virtual DbSet<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual DbSet<ProjectInternalNote> ProjectInternalNotes { get; set; }
@@ -135,6 +141,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
+        public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<SupportRequestLog> SupportRequestLogs { get; set; }
         public virtual DbSet<SystemAttribute> SystemAttributes { get; set; }
@@ -239,6 +246,9 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(fieldDefinition, "FieldDefinition", primaryKey);
                     return fieldDefinition;
 
+                case "FileResourceMimeTypeFileExtension":
+                    return FileResourceMimeTypeFileExtensions.GetFileResourceMimeTypeFileExtension(primaryKey);
+
                 case "FileResourceMimeType":
                     var fileResourceMimeType = FileResourceMimeType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(fileResourceMimeType, "FileResourceMimeType", primaryKey);
@@ -277,13 +287,13 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
 
-                case "FundingSource":
-                    return FundingSources.GetFundingSource(primaryKey);
-
                 case "GoogleChartType":
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
+
+                case "GrantAllocationBudgetLineItem":
+                    return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);
 
                 case "GrantAllocationNoteInternal":
                     return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
@@ -299,6 +309,21 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);
+
+                case "GrantModificationGrantModificationPurpose":
+                    return GrantModificationGrantModificationPurposes.GetGrantModificationGrantModificationPurpose(primaryKey);
+
+                case "GrantModificationNoteInternal":
+                    return GrantModificationNoteInternals.GetGrantModificationNoteInternal(primaryKey);
+
+                case "GrantModificationPurpose":
+                    return GrantModificationPurposes.GetGrantModificationPurpose(primaryKey);
+
+                case "GrantModification":
+                    return GrantModifications.GetGrantModification(primaryKey);
+
+                case "GrantModificationStatus":
+                    return GrantModificationStatuses.GetGrantModificationStatus(primaryKey);
 
                 case "GrantNoteInternal":
                     return GrantNoteInternals.GetGrantNoteInternal(primaryKey);
@@ -511,17 +536,17 @@ namespace ProjectFirma.Web.Models
                 case "ProjectExternalLinkUpdate":
                     return ProjectExternalLinkUpdates.GetProjectExternalLinkUpdate(primaryKey);
 
-                case "ProjectFundingSourceExpenditure":
-                    return ProjectFundingSourceExpenditures.GetProjectFundingSourceExpenditure(primaryKey);
+                case "ProjectGrantAllocationExpenditure":
+                    return ProjectGrantAllocationExpenditures.GetProjectGrantAllocationExpenditure(primaryKey);
 
-                case "ProjectFundingSourceExpenditureUpdate":
-                    return ProjectFundingSourceExpenditureUpdates.GetProjectFundingSourceExpenditureUpdate(primaryKey);
+                case "ProjectGrantAllocationExpenditureUpdate":
+                    return ProjectGrantAllocationExpenditureUpdates.GetProjectGrantAllocationExpenditureUpdate(primaryKey);
 
-                case "ProjectFundingSourceRequest":
-                    return ProjectFundingSourceRequests.GetProjectFundingSourceRequest(primaryKey);
+                case "ProjectGrantAllocationRequest":
+                    return ProjectGrantAllocationRequests.GetProjectGrantAllocationRequest(primaryKey);
 
-                case "ProjectFundingSourceRequestUpdate":
-                    return ProjectFundingSourceRequestUpdates.GetProjectFundingSourceRequestUpdate(primaryKey);
+                case "ProjectGrantAllocationRequestUpdate":
+                    return ProjectGrantAllocationRequestUpdates.GetProjectGrantAllocationRequestUpdate(primaryKey);
 
                 case "ProjectImage":
                     return ProjectImages.GetProjectImage(primaryKey);
@@ -661,6 +686,14 @@ namespace ProjectFirma.Web.Models
                     var role = Role.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(role, "Role", primaryKey);
                     return role;
+
+                case "SocrataDataMartRawJsonImport":
+                    return SocrataDataMartRawJsonImports.GetSocrataDataMartRawJsonImport(primaryKey);
+
+                case "SocrataDataMartRawJsonImportTableType":
+                    var socrataDataMartRawJsonImportTableType = SocrataDataMartRawJsonImportTableType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(socrataDataMartRawJsonImportTableType, "SocrataDataMartRawJsonImportTableType", primaryKey);
+                    return socrataDataMartRawJsonImportTableType;
 
                 case "StateProvince":
                     return StateProvinces.GetStateProvince(primaryKey);

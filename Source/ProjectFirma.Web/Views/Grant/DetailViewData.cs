@@ -18,7 +18,11 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System.Linq;
 using LtInfo.Common;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
@@ -29,6 +33,15 @@ namespace ProjectFirma.Web.Views.Grant
         public string NewGrantNoteUrl { get; set; }
         public EntityNotesViewData GrantNotesViewData { get; set; }
         public EntityNotesViewData InternalGrantNotesViewData { get; set; }
+        public bool ShowDownload { get; set; }
+
+        public GrantAllocationGridSpec GrantAllocationGridSpec { get; }
+        public string GrantAllocationGridName { get; }
+        public string GrantAllocationGridDataUrl { get; }
+
+        public GrantModificationGridSpec GrantModificationGridSpec { get; }
+        public string GrantModificationGridName { get; }
+        public string GrantModificationGridDataUrl { get; }
 
         public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
@@ -38,6 +51,18 @@ namespace ProjectFirma.Web.Views.Grant
             NewGrantNoteUrl = grant.GetNewNoteUrl();
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
+            // Used for creating file download link, if file available
+            ShowDownload = grant.GrantFileResource != null;
+
+            GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
+            GrantAllocationGridName = "grantAllocationsGridName";
+            GrantAllocationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantAllocationGridJsonDataByGrant(grant.PrimaryKey));
+
+            GrantModificationGridSpec = new GrantModificationGridSpec(currentPerson, grant, grant.GrantModifications.Any(x => x.GrantModificationFileResourceID.HasValue));
+            GrantModificationGridName = "grantModificationsGridName";
+            GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
+
+
         }
     }
 }

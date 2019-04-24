@@ -43,8 +43,6 @@
         jQuery("#overviewTab").on("shown.bs.tab", function () {
             var gridName1 = @(ViewDataTyped.ProjectFocusAreaGridName.ToJS().ToHTMLFormattedString());
             Sitka[gridName1].resizeGridWidths();
-            var gridName2 = @(ViewDataTyped.ProjectFundingSourceExpendituresForFocusAreaGridName.ToJS().ToHTMLFormattedString());
-            Sitka[gridName2].resizeGridWidths();
             _.forOwn(window.GoogleCharts.chartWrappers,
                 function (chartWrapper) {
                     if (jQuery('#' + chartWrapper.getContainerId()).is(':visible')) {
@@ -85,7 +83,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-3 fieldLabel">@Html.Label("Region")</div>
-                                            <div class="col-xs-6">@(ViewDataTyped.FocusArea.Region != null ? ViewDataTyped.FocusArea.Region.RegionName : string.Empty)</div>
+                                            <div class="col-xs-6">@ViewDataTyped.FocusArea.Region.GetDisplayNameAsUrl()</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-3 fieldLabel">@Html.Label("Planned Footprint Acres")</div>

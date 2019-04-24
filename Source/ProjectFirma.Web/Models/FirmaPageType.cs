@@ -75,11 +75,6 @@ namespace ProjectFirma.Web.Models
         public override string GetViewUrl() => SitkaRoute<TaxonomyTrunkController>.BuildUrlFromExpression(x => x.Index());
     }
 
-    public partial class FirmaPageTypeFundingSourcesList
-    {
-        public override string GetViewUrl() => SitkaRoute<FundingSourceController>.BuildUrlFromExpression(x => x.Index());
-    }
-
     public partial class FirmaPageTypeOrganizationsList
     {
         public override string GetViewUrl() => SitkaRoute<OrganizationController>.BuildUrlFromExpression(x => x.Index());

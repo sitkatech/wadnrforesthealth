@@ -27,19 +27,14 @@ namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
     {
         public Models.GrantAllocation GrantAllocation { get; }
         public bool UserHasGrantAllocationManagePermissions { get; }
-        public string OrganizationDisplayName { get; }
-        public string GrantManagerDisplayName { get; }
-        //public GrantAllocationTaxonomyViewData GrantAllocationTaxonomyViewData { get; }
+        public bool ShowDownload { get; set; }
 
         public GrantAllocationBasicsViewData(Models.GrantAllocation grantAllocation, bool userHasGrantAllocationManagePermissions, TaxonomyLevel taxonomyLevel)
         {
             GrantAllocation = grantAllocation;
             UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
-            OrganizationDisplayName = grantAllocation.Organization != null ? grantAllocation.Organization.DisplayName : string.Empty;
-            GrantManagerDisplayName = grantAllocation.GrantManager != null
-                ? grantAllocation.GrantManager.FullNameFirstLastAndOrgShortName
-                : string.Empty;
-            //GrantAllocationTaxonomyViewData = new GrantAllocationTaxonomyViewData(grantAllocation, taxonomyLevel);
+            // Used for creating file download link, if file available
+            ShowDownload = grantAllocation.GrantAllocationFileResource != null;
         }        
     }
 }

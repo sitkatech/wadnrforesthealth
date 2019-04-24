@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[Person](
 	[PersonAddress] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AddedByPersonID] [int] NULL,
 	[VendorID] [int] NULL,
+	[IsProgramManager] [bit] NULL,
  CONSTRAINT [PK_Person_PersonID] PRIMARY KEY CLUSTERED 
 (
 	[PersonID] ASC

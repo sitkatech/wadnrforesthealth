@@ -20,12 +20,16 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
+using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Views.ProgramIndex;
 using ProjectFirma.Web.Views.ProjectCode;
 
@@ -78,21 +82,27 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantManager)]
         public int? GrantManagerID { get; set; }
 
+        [DisplayName("Grant Allocation File Upload")]
+        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
+        public HttpPostedFileBase GrantAllocationFileResourceData { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
         public EditGrantAllocationViewModel()
         {
+            
         }
 
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
         {
+            GrantAllocationID = grantAllocation.GrantAllocationID;
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
             ProgramIndexID = grantAllocation.ProgramIndexID;
             ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
-            ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeAbbrev).Aggregate((x, y) => x + ", " + y) : string.Empty;
+            ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeName).Aggregate((x, y) => x + ", " + y) : string.Empty;
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             DivisionID = grantAllocation.DivisionID;
             RegionID = grantAllocation.RegionIDDisplay;
@@ -163,8 +173,38 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.EndDate = EndDate;
             grantAllocation.GrantManagerID = GrantManagerID;
 
+            // Who is actually allowed to be a Program Manager for this Grant Allocation?
+            List<Person> personsAllowedToBeProgramManager = new List<Person>();
+            // Anyone who CURRENTLY has the role can keep it, even if their Person record has lost the permission in the meantime
+            personsAllowedToBeProgramManager.AddRange(grantAllocation.GrantAllocationProgramManagers.Select(pm => pm.Person).ToList());
+            // Also, anyone who has the right in the database is allowed
+            personsAllowedToBeProgramManager.AddRange(HttpRequestStorage.DatabaseEntities.People.ToList().Where(p => p.IsProgramManager == true).ToList());
+            personsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Distinct().ToList();
+
+            var personIDsAllowedToBeProgramManager = personsAllowedToBeProgramManager.Select(papm => papm.PersonID).ToList();
+            var personIDsNotAllowed = new List<int>();
+            if (this.ProgramManagerPersonIDs != null)
+            {
+                personIDsNotAllowed = this.ProgramManagerPersonIDs.Except(personIDsAllowedToBeProgramManager).ToList();
+            }
+            Check.Ensure(!personIDsNotAllowed.Any(), $"Found {personIDsNotAllowed.Count} PersonIDs not allowed to be Program Managers attempting to be saved: {string.Join(", ", personIDsNotAllowed)}");
+
+            // Deleting existing records
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
+
+            if (GrantAllocationFileResourceData != null)
+            {
+                var currentGrantAllocationFileResource = grantAllocation.GrantAllocationFileResource;
+                grantAllocation.GrantAllocationFileResource = null;
+                // Delete old grantAllocation file, if present
+                if (currentGrantAllocationFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentGrantAllocationFileResource);
+                }
+                grantAllocation.GrantAllocationFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantAllocationFileResourceData, currentPerson);
+            }
         }
     }
 }

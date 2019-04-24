@@ -56,14 +56,14 @@ namespace ProjectFirma.Web.Controllers
             var layers = PriorityArea.GetPriorityAreaAndAssociatedProjectLayers(priorityArea, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(priorityArea.PriorityAreaLocation));
 
-            var projectFundingSourceExpenditures = associatedProjects.SelectMany(x => x.ProjectFundingSourceExpenditures);
+            var projectGrantAllocationExpenditures = associatedProjects.SelectMany(x => x.ProjectGrantAllocationExpenditures);
             var organizationTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypes.ToList();
 
             const string chartTitle = "Reported Expenditures By Organization Type";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var googleChart = projectFundingSourceExpenditures.ToGoogleChart(x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
+            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
                 organizationTypes.Select(x => x.OrganizationTypeName).ToList(),
-                x => x.FundingSource.Organization.OrganizationType.OrganizationTypeName,
+                x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
                 chartContainerID,
                 chartTitle);
 

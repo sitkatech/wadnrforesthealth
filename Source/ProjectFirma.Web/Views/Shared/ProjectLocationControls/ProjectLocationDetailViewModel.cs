@@ -103,12 +103,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         }
 
         public string ProjectLocationGeometryWellKnownText { get; set; }
-
         public int ProjectLocationID { get; set; }
         public string ProjectLocationFeatureType { get; set; }
-
         public int ProjectLocationTypeID { get; set; }
-
         public string ProjectLocationName { get; set; }
         public string ProjectLocationTypeName { get; set; }
         public string ProjectLocationNotes { get; set; }

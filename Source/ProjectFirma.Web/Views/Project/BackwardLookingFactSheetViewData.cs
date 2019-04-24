@@ -27,8 +27,6 @@ using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.Shared.SortOrder;
 using LtInfo.Common;
-using LtInfo.Common.Views;
-using ProjectFirma.Web.Security;
 
 
 namespace ProjectFirma.Web.Views.Project
@@ -36,8 +34,8 @@ namespace ProjectFirma.Web.Views.Project
     public class BackwardLookingFactSheetViewData : ProjectViewData
     {
         public string EstimatedTotalCost { get; }
-        public string NoFundingSourceIdentified { get; }
-        public string SecuredFunding { get; }
+        public string NoGrantAllocationIdentified { get; }
+        public string TotalFunding { get; }
         public string UnsecuredFunding { get; }
         public ImageGalleryViewData ImageGalleryViewData { get; }
         public List<IGrouping<Models.PerformanceMeasure, PerformanceMeasureReportedValue>> PerformanceMeasureReportedValues { get; }
@@ -71,9 +69,8 @@ namespace ProjectFirma.Web.Views.Project
             BreadCrumbTitle = "Fact Sheet";
 
             EstimatedTotalCost = Project.EstimatedTotalCost.HasValue ? Project.EstimatedTotalCost.ToStringCurrency() : "";
-            NoFundingSourceIdentified = project.GetNoFundingSourceIdentifiedAmount() != null ? Project.GetNoFundingSourceIdentifiedAmount().ToStringCurrency() : "";
-            SecuredFunding = Project.GetSecuredFunding() != null ? Project.GetSecuredFunding().ToStringCurrency() : "";
-            UnsecuredFunding = Project.GetUnsecuredFunding() != null ? Project.GetUnsecuredFunding().ToStringCurrency() : "";
+            NoGrantAllocationIdentified = project.GetNoGrantAllocationIdentifiedAmount() != null ? Project.GetNoGrantAllocationIdentifiedAmount().ToStringCurrency() : "";
+            TotalFunding = Project.GetTotalFunding() != null ? Project.GetTotalFunding().ToStringCurrency() : "";
 
             const bool userCanAddPhotosToThisProject = false;
             var newPhotoForProjectUrl = string.Empty;
