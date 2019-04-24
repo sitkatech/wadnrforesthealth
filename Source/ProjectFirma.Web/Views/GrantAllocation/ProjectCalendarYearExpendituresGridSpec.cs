@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             foreach (var year in calendarYearsForProjectExpenditures)
             {
                 var calendarYear = year;
-                Add(calendarYear.ToString(CultureInfo.InvariantCulture), a => a.CalendarYearExpenditure[calendarYear], 100, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+                Add(calendarYear.ToString(CultureInfo.InvariantCulture), a => a.CalendarYearExpenditure[calendarYear], 100, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             }
         }
     }

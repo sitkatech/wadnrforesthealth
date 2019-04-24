@@ -31,7 +31,7 @@ namespace LtInfo.Common.DhtmlWrappers
 
         public static readonly DhtmlxGridColumnFormatType Decimal = new DhtmlxGridColumnFormatType("decimalSitka");
         public static readonly DhtmlxGridColumnFormatType Integer = new DhtmlxGridColumnFormatType("integerSitka");
-        public static readonly DhtmlxGridColumnFormatType Currency = new DhtmlxGridColumnFormatType("currencySitka");
+        public static readonly DhtmlxGridColumnFormatType CurrencyWithCents = new DhtmlxGridColumnFormatType("currencyWithCentsSitka");
         public static readonly DhtmlxGridColumnFormatType Percent = new DhtmlxGridColumnFormatType("percentSitka");
         public static readonly DhtmlxGridColumnFormatType None = new DhtmlxGridColumnFormatType("noneSitka");
         public static readonly DhtmlxGridColumnFormatType DateTime = new DhtmlxGridColumnFormatType("dateTimeSitka");
