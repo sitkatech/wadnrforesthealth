@@ -6,8 +6,7 @@ create view dbo.vGeoServerProjectLocationDetailed
 as
 select
 	p.ProjectID,
-	p.ProjectID as PrimaryKey,
-	pl.ProjectLocationID,
+	pl.ProjectLocationID as PrimaryKey,
 	p.ProjectName,
 	pl.ProjectLocationGeometry
 from
