@@ -13,4 +13,8 @@ List	Id
 Server	Id					
 Set	Id					
 State	Id					
+tmp2015-19_grant_payments_singlesheet	PERSON_DOP_ID					
 tmpAgreementContact	AgreementContactID					
+tmpTreatmentsFromArcGis	GlobalID					
+tmpTreatmentsFromArcGis	TRT_LOCAL_ID					
+tmpTreatmentsFromArcGis	UNIT_ID					
