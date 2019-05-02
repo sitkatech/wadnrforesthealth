@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProgramIndexProjectCode()
         {
-
+            this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
         }
 
         /// <summary>
@@ -78,13 +78,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantAllocationProgramIndexProjectCodes.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndexProjectCode).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndexProjectCode).Name, typeof(GrantAllocationProgramIndexProjectCode).Name};
 
 
         /// <summary>
@@ -100,8 +100,19 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantAllocationProgramIndexProjectCodes.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -111,6 +122,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexProjectCodeID; } set { ProgramIndexProjectCodeID = value; } }
 
+        public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual ProjectCode ProjectCode { get; set; }
 
