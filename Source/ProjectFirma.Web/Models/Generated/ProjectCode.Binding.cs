@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectCode()
         {
-            this.GrantAllocationProjectCodes = new HashSet<GrantAllocationProjectCode>();
             this.ProgramIndexProjectCodes = new HashSet<ProgramIndexProjectCode>();
             this.TreatmentActivities = new HashSet<TreatmentActivity>();
         }
@@ -68,13 +67,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationProjectCodes.Any() || ProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
+            return ProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(GrantAllocationProjectCode).Name, typeof(ProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(ProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -99,11 +98,6 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocationProjectCodes.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProgramIndexProjectCodes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -125,7 +119,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
 
-        public virtual ICollection<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual ICollection<ProgramIndexProjectCode> ProgramIndexProjectCodes { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
 

@@ -88,6 +88,7 @@ GO
 -----------------
 
 -- Build PI/PC table entries
+-----
 
 insert into dbo.ProgramIndexProjectCode
 select distinct
@@ -102,6 +103,7 @@ order by pri.ProgramIndexID, pc.ProjectCodeID
 GO
 
 -- Build GrantAllocationProgramIndexProjectCode entries
+-----
 
 insert into dbo.GrantAllocationProgramIndexProjectCode
 select 
@@ -114,6 +116,8 @@ join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAll
 join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
 join dbo.ProgramIndexProjectCode as pipc on pipc.ProgramIndexID = pri.ProgramIndexID and pipc.ProjectCodeID = pc.ProjectCodeID
 order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
+
+
 
 
 /*

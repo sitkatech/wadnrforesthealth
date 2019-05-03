@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -41,17 +42,24 @@ namespace ProjectFirma.Web.Models
         [NotNull]
         public List<ProjectCode> ProjectCodes
         {
+            // TODO -- INCOMPLETE
+            // This just gets us running again, but we need to use display ProgramIndex/ProjectCodes, not just ProjectCodes. This is hack to get us stumbling around again..
             get
             {
-                return this.GrantAllocationProjectCodes.Select(x => x.ProjectCode).Distinct().ToList();
+               // return this.GrantAllocationProjectCodes.Select(x => x.ProjectCode).Distinct().ToList();
+                return this.GrantAllocationProgramIndexProjectCodes.Select(x => x.ProgramIndexProjectCode.ProjectCode).Distinct().ToList();
             }
 
             set
             {
+
+                throw new NotImplementedException("Need to save ProgramIndexProjectCode records here, not just ProjectCodes. This needs to go away.");
+                // Used to be this way:
+
                 // Cleanup old records
-                this.GrantAllocationProjectCodes.ToList().ForEach(gapc => gapc.DeleteFull(HttpRequestStorage.DatabaseEntities));
+                //this.GrantAllocationProjectCodes.ToList().ForEach(gapc => gapc.DeleteFull(HttpRequestStorage.DatabaseEntities));
                 // Create entirely new records
-                this.GrantAllocationProjectCodes = value.Select(pc => new GrantAllocationProjectCode(this, pc)).ToList();
+                //this.GrantAllocationProjectCodes = value.Select(pc => new GrantAllocationProjectCode(this, pc)).ToList();
             }
         }
 

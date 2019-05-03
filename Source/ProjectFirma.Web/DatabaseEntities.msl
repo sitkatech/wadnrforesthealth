@@ -343,15 +343,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationProjectCode">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProjectCode">
-        <MappingFragment StoreEntitySet="GrantAllocationProjectCode">
-          <ScalarProperty Name="GrantAllocationProjectCodeID" ColumnName="GrantAllocationProjectCodeID" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GrantModification">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantModification">
         <MappingFragment StoreEntitySet="GrantModification">
