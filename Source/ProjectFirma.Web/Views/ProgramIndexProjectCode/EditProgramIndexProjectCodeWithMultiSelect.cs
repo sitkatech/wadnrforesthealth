@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectCodeSearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectCode.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,21 +19,20 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
-using ProjectFirma.Web.Models;
+using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
 
-namespace ProjectFirma.Web.Views.ProjectCode
+namespace ProjectFirma.Web.Views.ProgramIndexProjectCode
 {
-    public class ProjectCodeSearchResultsViewData : FirmaViewData
+    public abstract class EditProgramIndexProjectCodeWithMultiSelect : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProgramIndexProjectCodeWithMultiSelectViewData, IEditProgramIndexProjectCodeWithMultiselectViewModel>
     {
-        public readonly List<Models.ProjectCode> EntitySearchResults;
-        public readonly string SearchCriteria;
-
-        public ProjectCodeSearchResultsViewData(Person currentPerson, List<Models.ProjectCode> entitySearchResults, string searchCriteria) : base(currentPerson)
+        public static void RenderPartialView(HtmlHelper html, IEditProgramIndexProjectCodeWithMultiselectViewModel viewModel)
         {
-            EntitySearchResults = entitySearchResults;
-            SearchCriteria = searchCriteria;
-            PageTitle = $"{Models.FieldDefinition.ProjectCode.GetFieldDefinitionLabel()} Search";
+            html.RenderRazorSitkaPartial<EditProgramIndexProjectCodeWithMultiSelect, EditProgramIndexProjectCodeWithMultiSelectViewData, IEditProgramIndexProjectCodeWithMultiselectViewModel>(new EditProgramIndexProjectCodeWithMultiSelectViewData(), viewModel);
         }
     }
+    public class EditProgramIndexProjectCodeWithMultiSelectViewData
+    {
+    }
+
 }

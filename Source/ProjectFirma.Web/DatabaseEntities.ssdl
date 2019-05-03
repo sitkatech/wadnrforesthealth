@@ -4968,46 +4968,5 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpProjectCode' does not h
   <Property Name="cash_cntrl_type_ind" Type="varchar" MaxLength="200" />
   <Property Name="gl_project_level" Type="varchar" MaxLength="200" />
   <Property Name="create_date" Type="varchar" MaxLength="200" />
-</EntityType>
-Errors Found During Generation:
-warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-
-<EntityType Name="tmpTreatmentsFromArcGis">
-  <Property Name="OBJECTID" Type="int" />
-  <Property Name="PROJECT_NM" Type="varchar" MaxLength="50" />
-  <Property Name="GRANT_FUND_INFO" Type="varchar" MaxLength="100" />
-  <Property Name="TRT_LOCAL_ID" Type="varchar" MaxLength="50" />
-  <Property Name="UNIT_ID" Type="varchar" MaxLength="50" />
-  <Property Name="TRT_STATUS" Type="varchar" MaxLength="50" />
-  <Property Name="COLLECT_DATE" Type="datetime2" />
-  <Property Name="COLLECT_METH" Type="varchar" MaxLength="50" />
-  <Property Name="OWNER_NM" Type="varchar" MaxLength="50" />
-  <Property Name="FY" Type="varchar" MaxLength="8" />
-  <Property Name="COMMENTS" Type="varchar" MaxLength="300" />
-  <Property Name="GIS_ACRES" Type="float" />
-  <Property Name="CHIPPING" Type="float" />
-  <Property Name="PRUNING" Type="float" />
-  <Property Name="THINNING" Type="float" />
-  <Property Name="MAST_MOW" Type="float" />
-  <Property Name="GRAZING" Type="float" />
-  <Property Name="LOP_SCATTER" Type="float" />
-  <Property Name="BIOMASS_REM" Type="float" />
-  <Property Name="HAND_PLE" Type="float" />
-  <Property Name="BRN_BRD_CST" Type="float" />
-  <Property Name="BRN_HAND_PLE" Type="float" />
-  <Property Name="BRN_MACH_PLE" Type="float" />
-  <Property Name="OTHER" Type="float" />
-  <Property Name="ACT_CMP_DT" Type="datetime2" />
-  <Property Name="CONTRACTOR" Type="varchar" MaxLength="50" />
-  <Property Name="CONTRACT_NUM" Type="varchar" MaxLength="50" />
-  <Property Name="TRT_SUM" Type="varchar" MaxLength="200" />
-  <Property Name="created_user" Type="varchar" MaxLength="255" />
-  <Property Name="created_date" Type="datetime2" />
-  <Property Name="last_edited_user" Type="varchar" MaxLength="255" />
-  <Property Name="last_edited_date" Type="datetime2" />
-  <Property Name="GlobalID" Type="varchar" MaxLength="38" />
-  <Property Name="SHAPE_Length" Type="float" />
-  <Property Name="SHAPE_Area" Type="float" />
-  <Property Name="GEOM" Type="geometry" />
 </EntityType>-->
 </Schema>

@@ -155,8 +155,8 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
                 // failed, we don't have a valid ProjectCode.
                 if (ProjectCodeID == null)
                 {
-                    yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
-                        FirmaValidationMessages.ProjectCodeInvalid, m => m.ProjectCodesString);
+                    yield return new SitkaValidationResult<EditTreatmentActivityViewModel, int?>(
+                        FirmaValidationMessages.ProjectCodeInvalid, m => m.ProjectCodeID);
                 }
             }
         }
