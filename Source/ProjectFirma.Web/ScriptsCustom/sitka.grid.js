@@ -597,7 +597,7 @@ Sitka.Grid.Class.Grid.prototype.buildWithArguments = function (hideHeader, group
     var columnFormatTypes = this._columns.pluck("formatType");
     this.setColumnNumberFormats(columnFormatTypes, "integerSitka", "0,000");
     this.setColumnNumberFormats(columnFormatTypes, "percentSitka", "0.00%");
-    this.setColumnNumberFormats(columnFormatTypes, "currencySitka", "$0,000");
+    this.setColumnNumberFormats(columnFormatTypes, "currencyWithCentsSitka", "$0,000.00");
     this.setColumnNumberFormats(columnFormatTypes, "decimalSitka", "0,000.00");
     this.setColumnNumberFormats(columnFormatTypes, "latLongSitka", "000.000");
 

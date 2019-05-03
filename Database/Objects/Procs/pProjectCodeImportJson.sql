@@ -36,6 +36,10 @@ JSON format:
     AS ProjectCodeTemp
 
 
+-- Remove leading zeros from incoming ProjectCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
+update #ProjectCodeSocrataTemp
+set project_code = dbo.fRemoveLeadingZeroes(project_code)
+
 -- DELETE
 -- Delete ProjectCodes in our table not found in incoming temp table
 delete from dbo.ProjectCode 

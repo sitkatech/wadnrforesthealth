@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.Organization
             Add($"Provided by {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", x => (x.GrantAllocation.BottommostOrganization == organization).ToYesOrEmpty(), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add($"Received from other {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()}", x => (x.GrantAllocation.BottommostOrganization != organization).ToYesOrEmpty(), 100, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.ReportingYear.ToGridHeaderString(), x => x.CalendarYear, 80, DhtmlxGridColumnFormatType.Date, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("Amount", x => x.ExpenditureAmount, 80, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+            Add("Amount", x => x.ExpenditureAmount, 80, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
         }
     }
 }

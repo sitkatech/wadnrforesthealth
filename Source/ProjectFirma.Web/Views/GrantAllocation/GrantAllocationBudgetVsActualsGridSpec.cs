@@ -18,11 +18,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ShowFilterBar = true;
 
             Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.None);
-            Add("Budget", x => x.Budget, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            Add("Expenditures From Datamart", x => x.ExpendituresFromDatamart, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            Add("Budget Minus Expenditures", x => x.BudgetMinusExpendituresFromDatamart, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            Add("Invoiced To Date", x => x.InvoicedToDate, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
-            Add("Budget Minus Invoiced", x => x.BudgetMinusInvoicedToDate, 125, DhtmlxGridColumnFormatType.Currency, DhtmlxGridColumnAggregationType.Total);
+            Add("Budget", x => x.Budget, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Expenditures From Datamart", x => x.ExpendituresFromDatamart, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Budget Minus Expenditures", x => x.BudgetMinusExpendituresFromDatamart, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Invoiced To Date", x => x.InvoicedToDate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Budget Minus Invoiced", x => x.BudgetMinusInvoicedToDate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
 
         }
     }

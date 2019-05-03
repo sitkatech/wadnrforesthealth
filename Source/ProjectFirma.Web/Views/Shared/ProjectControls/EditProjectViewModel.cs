@@ -151,7 +151,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
             }
 
             var isCompletedOrPostImplementation = ProjectStageID == ProjectStage.Completed.ProjectStageID || ProjectStageID == ProjectStage.PostImplementation.ProjectStageID;
-            if (isCompletedOrPostImplementation && CompletionDate > DateTime.Now)
+            if (isCompletedOrPostImplementation && (CompletionDate > DateTime.Now || CompletionDate == null))
             {
                 var errorMessage = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Completed or Post-Implementation stage: " +
                                    $"the {Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel()} must be less than or equal to the current year";

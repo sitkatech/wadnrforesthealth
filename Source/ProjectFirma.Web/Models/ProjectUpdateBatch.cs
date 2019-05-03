@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Models
 
         public ProjectUpdateHistory LatestProjectUpdateHistoryReturned => ProjectUpdateHistories.GetLatestProjectUpdateHistory(ProjectUpdateState.Returned);
 
-        public bool IsReadyToSubmit => InEditableState && IsPassingAllValidationRules();
+        public bool IsReadyToSubmit => InEditableState && IsPassingAllValidationRules() && ModelObjectHelpers.IsRealPrimaryKeyValue(ProjectUpdateBatchID);
 
         public bool IsReadyToApprove => IsPassingAllValidationRules();
 

@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProjectCode, projectCodeJson);
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
-            // Use the JSON to refresh the Vendor table
+            // Use the JSON to refresh the Project Code table
             ProjectCodeImportJson(socrataDataMartRawJsonImportID);
 
             Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
