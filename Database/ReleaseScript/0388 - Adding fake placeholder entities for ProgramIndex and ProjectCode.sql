@@ -118,6 +118,10 @@ join dbo.ProgramIndexProjectCode as pipc on pipc.ProgramIndexID = pri.ProgramInd
 order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
 
 
+-- Remove ProgramIndex from GrantAllocation table
+ALTER TABLE [dbo].[GrantAllocation] DROP CONSTRAINT [FK_GrantAllocation_ProgramIndex_ProgramIndexID];
+ALTER TABLE dbo.GrantAllocation DROP COLUMN ProgramIndexID;
+go
 
 
 /*

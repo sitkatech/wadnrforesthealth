@@ -76,8 +76,7 @@ namespace ProjectFirma.Web.Views.Project
             }
 
             Add("# of Photos", x => x.ProjectImages.Count, 60);
-            Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndices.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCodes.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.ProgramIndexProjectCodes.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.Text);
 
         }
     }

@@ -114,15 +114,9 @@
     </div>
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramIndexID)
-        </div>
-        <div class="col-xs-3">
-            @{ EditProgramIndex.RenderPartialView(Html, Model); }
-        </div>
-        <div class="col-xs-2 control-label">
             @Html.LabelWithSugarFor(m => m.ProgramIndexProjectCodesString)
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-6">
             @{ EditProgramIndexProjectCodeWithMultiSelect.RenderPartialView(Html, Model); }
         </div>
     </div>

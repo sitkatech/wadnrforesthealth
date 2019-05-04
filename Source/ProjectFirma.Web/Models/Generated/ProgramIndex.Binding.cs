@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProgramIndex()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
             this.ProgramIndexProjectCodes = new HashSet<ProgramIndexProjectCode>();
             this.TreatmentActivities = new HashSet<TreatmentActivity>();
         }
@@ -72,13 +71,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || ProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
+            return ProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(GrantAllocation).Name, typeof(ProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(ProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -103,11 +102,6 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocations.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-
             foreach(var x in ProgramIndexProjectCodes.ToList())
             {
                 x.DeleteFull(dbContext);
@@ -131,7 +125,6 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
         public virtual ICollection<ProgramIndexProjectCode> ProgramIndexProjectCodes { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
 

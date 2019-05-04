@@ -34,7 +34,7 @@ using ProjectFirma.Web.Views.ProgramIndexProjectCode;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
-    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProgramIndexProjectCodeWithMultiselectViewModel, IEditProgramIndexViewModel
+    public class EditGrantAllocationViewModel : FormViewModel, IValidatableObject, IEditProgramIndexProjectCodeWithMultiselectViewModel
     {
         public int GrantAllocationID { get; set; }
 
@@ -48,9 +48,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantNumber)]
         public int GrantID { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
-        public int? ProgramIndexID { get; set; }
 
         public string ProgramIndexSearchCriteria { get; set; }
 
@@ -99,9 +96,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
-            ProgramIndexID = grantAllocation.ProgramIndexID;
-            ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
-            ProgramIndexProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeName).Aggregate((x, y) => x + ", " + y) : string.Empty;
+            ProgramIndexProjectCodesString = grantAllocation.GrantAllocationProgramIndexProjectCodes.Any() ? grantAllocation.GrantAllocationProgramIndexProjectCodes.Select(gapipc => gapipc.ProgramIndexProjectCode).Select(x => x.ProgramIndexProjectCodeDisplayString).Aggregate((x, y) => x + ", " + y) : string.Empty;
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             DivisionID = grantAllocation.DivisionID;
             RegionID = grantAllocation.RegionIDDisplay;
@@ -127,18 +122,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     FirmaValidationMessages.OrganizationNameUnique, m => m.GrantAllocationName);
             }
 
-            // If there is something entered by the user in the Program Index text field..
-            if (!GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(ProgramIndexSearchCriteria))
-            {
-                // .. Then ProgramIndex must have been looked up successfully. If this
-                // failed, we don't have a valid ProgramIndex.
-                if (ProgramIndexID == null)
-                {
-                    yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
-                        FirmaValidationMessages.ProgramIndexInvalid, m => m.ProgramIndexSearchCriteria);
-                }
-            }
-
             if (!GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(ProgramIndexProjectCodesString))
             {
                 // Count whitespace in original string. We do expect comma delimited input, but the user can type anything and they
@@ -162,8 +145,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.GrantID = GrantID;
-            grantAllocation.ProgramIndexID = ProgramIndexID;
-            grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProgramIndexProjectCodesString);
+            //TODO: need to save the ProgramIndex/ProjectCode combination
+            //grantAllocation.GrantAllocationProgramIndexProjectCodes = 
+            //grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProgramIndexProjectCodesString);
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
             grantAllocation.RegionID = RegionID;

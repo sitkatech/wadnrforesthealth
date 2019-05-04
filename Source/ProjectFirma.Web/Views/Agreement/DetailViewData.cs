@@ -38,17 +38,13 @@ namespace ProjectFirma.Web.Views.Agreement
         public bool ShowDownload { get; }
         public string EditAgreementGrantAllocationRelationshipsUrl { get; }
         [NotNull]
-        public List<Models.ProjectCode> ProjectCodes { get; }
-        [NotNull]
-        public List<Models.ProgramIndex> ProgramIndices { get; }
+        public List<Models.ProgramIndexProjectCode> ProgramIndexProjectCodes { get; }
         public Models.Agreement Agreement { get; }
         public string EditAgreementUrl { get; set; }
         public string BackToAgreementsText { get; set; }
         public string AgreementsListUrl { get; set; }
         public List<AgreementGrantAllocation> CurrentAgreementGrantAllocationsInSortedOrder { get; }
         public List<ProjectAgreementByGrantAllocation> AgreementProjectsByGrantAllocations { get; }
-
-
 
         public DetailViewData(Person currentPerson, Models.Agreement agreement, bool userHasEditAgreementPermissions)
             : base(currentPerson, null)
@@ -66,8 +62,7 @@ namespace ProjectFirma.Web.Views.Agreement
             // Used for creating file download link, if file available
             ShowDownload = agreement.AgreementFileResource != null;
 
-            ProgramIndices = agreement.ProgramIndices;
-            ProjectCodes = agreement.ProjectCodes;
+            ProgramIndexProjectCodes = agreement.ProgramIndexProjectCodes;
 
             AgreementPersonGridSpec = new AgreementPersonGridSpec(currentPerson) { ObjectNameSingular = "Agreement Contact", ObjectNamePlural = "Agreement Contacts", SaveFiltersInCookie = true };
 
