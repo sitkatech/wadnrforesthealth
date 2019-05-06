@@ -22,7 +22,7 @@
 @using LtInfo.Common.Models
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProgramIndex
-@using ProjectFirma.Web.Views.ProgramIndexProjectCode
+@using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.EditGrantAllocation
 
 @Html.Raw(ViewDataTyped.EditGrantAllocationType.IntroductoryText)
@@ -120,10 +120,10 @@
             @{ EditProgramIndex.RenderPartialView(Html, Model); }
         </div>
         <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramIndexProjectCodesString)
+            @Html.LabelWithSugarFor(m => m.ProjectCodesString)
         </div>
         <div class="col-xs-3">
-            @{ EditProgramIndexProjectCodeWithMultiSelect.RenderPartialView(Html, Model); }
+            @{ EditProjectCodeWithMultiSelect.RenderPartialView(Html, Model); }
         </div>
     </div>
     <div class="form-group">

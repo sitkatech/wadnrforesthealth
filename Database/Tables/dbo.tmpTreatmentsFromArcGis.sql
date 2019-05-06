@@ -38,10 +38,5 @@ CREATE TABLE [dbo].[tmpTreatmentsFromArcGis](
 	[GlobalID] [varchar](38) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[SHAPE_Length] [float] NULL,
 	[SHAPE_Area] [float] NULL,
-	[GEOM] [geometry] NULL,
-	[tmpTreatmentsFromArcGisID] [int] IDENTITY(1,1) NOT NULL,
- CONSTRAINT [PK_tmpTreatmentsFromArcGis_tmpTreatmentsFromArcGisID] PRIMARY KEY CLUSTERED 
-(
-	[tmpTreatmentsFromArcGisID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	[GEOM] [geometry] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

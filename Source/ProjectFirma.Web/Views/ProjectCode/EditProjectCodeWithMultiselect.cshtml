@@ -21,15 +21,15 @@
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
-@using ProjectFirma.Web.Views.ProgramIndexProjectCode
-@inherits ProjectFirma.Web.Views.ProgramIndexProjectCode.EditProgramIndexProjectCodeWithMultiSelect
+@using ProjectFirma.Web.Views.ProjectCode
+@inherits ProjectFirma.Web.Views.ProjectCode.EditProjectCodeWithMultiSelect
 
-<input id="@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID" type="text" class="form-control"
-       name="@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfProjectCodeMultiSelect(this)"
+<input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return checkForDeleteOfProjectCodeMultiSelect(this)"
        placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
-       style="margin-right: -5px; margin-left: auto;" value="@Model.ProgramIndexProjectCodesString" />
-@Html.HiddenFor(x => x.ProgramIndexProjectCodesString)
-@Html.ValidationMessageFor(m => m.ProgramIndexProjectCodesString)
+       style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodesString" />
+@Html.HiddenFor(x => x.ProjectCodesString)
+@Html.ValidationMessageFor(m => m.ProjectCodesString)
 
 
 <script type="text/javascript">
@@ -38,12 +38,12 @@
     {
         if (!myField.value)
         {
-            jQuery("#@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID").val("");
-            jQuery("#@Html.IdFor(x => x.ProgramIndexProjectCodesString)").val("");
+            jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
+            jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val("");
             return true;
         } else
         {
-            jQuery("#@Html.IdFor(x => x.ProgramIndexProjectCodesString)").val(myField.value);
+            jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val(myField.value);
         }
         return false;
     }
@@ -60,7 +60,7 @@
             return split(term).pop();
         }
 
-        jQuery("#@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID")
+        jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
             // don't navigate away from the field on tab when selecting an item
             .on( "keydown", function( event ) {
                 if ( event.keyCode === $.ui.keyCode.TAB &&
@@ -70,7 +70,7 @@
             })
             .autocomplete({
                 source: function( request, response ) {
-                    $.getJSON( "@Html.Raw(SitkaRoute<ProgramIndexProjectCodeController>.BuildUrlFromExpression(x => x.FindProgramIndexProjectCode(string.Empty)))", {
+                    $.getJSON( "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))", {
                         term: extractLast( request.term )
                     }, response );
                 },
@@ -96,7 +96,7 @@
                     // add placeholder to get the comma-and-space at the end
                     terms.push("");
                     this.value = terms.join(", ");
-                    jQuery("#@Html.IdFor(x => x.ProgramIndexProjectCodesString)").val(terms.join(","));
+                    jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val(terms.join(","));
                     return false;
                 }
             });

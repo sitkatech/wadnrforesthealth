@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectCodeSearchResultsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="ProjectCodeSearchResults.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -18,22 +18,10 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
-
-using System.Collections.Generic;
-using ProjectFirma.Web.Models;
-
-namespace ProjectFirma.Web.Views.ProgramIndexProjectCode
+namespace ProjectFirma.Web.Views.ProjectCode
 {
-    public class ProgramIndexProjectCodeSearchResultsViewData : FirmaViewData
+    public abstract class ProjectCodeSearchResults : LtInfo.Common.Mvc.TypedWebViewPage<ProjectCodeSearchResultsViewData>
     {
-        public readonly List<Models.ProgramIndexProjectCode> EntitySearchResults;
-        public readonly string SearchCriteria;
-
-        public ProgramIndexProjectCodeSearchResultsViewData(Person currentPerson, List<Models.ProgramIndexProjectCode> entitySearchResults, string searchCriteria) : base(currentPerson)
-        {
-            EntitySearchResults = entitySearchResults;
-            SearchCriteria = searchCriteria;
-            PageTitle = $"{Models.FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()} Search";
-        }
+        public const string ProjectCodeSearchInputTextboxID = "ProjectCodeSearchCriteria";
     }
 }

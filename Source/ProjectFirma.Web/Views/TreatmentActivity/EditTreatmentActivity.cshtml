@@ -23,7 +23,7 @@
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProgramIndex
-@using ProjectFirma.Web.Views.ProgramIndexProjectCode
+@using ProjectFirma.Web.Views.ProjectCode
 
 @inherits ProjectFirma.Web.Views.TreatmentActivity.EditTreatmentActivity
 
@@ -87,8 +87,8 @@
                 @Html.LabelWithSugarFor(m => m.ProjectCodeID)
             </div>
             <div class="col-sm-3">
-                <input id="@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                       name="@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID" onblur="return validateManualTypedUserInputForProjectCode(this)"
+                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return validateManualTypedUserInputForProjectCode(this)"
                        placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
                        style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodeSearchCriteria" />
                 @Html.HiddenFor(x => x.ProjectCodeID)
@@ -292,7 +292,7 @@
 
         jQuery.ajax({
                 method: "POST",
-                url: "@Html.Raw(SitkaRoute<ProgramIndexProjectCodeController>.BuildUrlFromExpression(x => x.FindProgramIndexProjectCode(string.Empty)))",
+                url: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
                 data: { term: myField.value }
             })
             .done(function (msg) {
@@ -311,14 +311,14 @@
 
     jQuery(document).ready(function ()
     {
-        jQuery("#@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID")
+        jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
             .autocomplete({
-                source: "@Html.Raw(SitkaRoute<ProgramIndexProjectCodeController>.BuildUrlFromExpression(x => x.FindProgramIndexProjectCode(string.Empty)))",
+                source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
                 minLength: 1,
                 position: { my: "right top", at: "right bottom" },
                 select: function (event, ui) {
                     //set ProjectCodeID value and display text in input
-                    jQuery("#@ProgramIndexProjectCodeSearchResults.ProgramIndexProjectCodeSearchInputTextboxID").val(ui.item.label);
+                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
                     jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);
                     event.preventDefault();
                 },

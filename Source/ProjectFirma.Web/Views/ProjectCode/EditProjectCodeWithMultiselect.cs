@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="ProjectCodeSearchResults.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditProjectCode.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,10 +19,20 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-namespace ProjectFirma.Web.Views.ProgramIndexProjectCode
+using System.Web.Mvc;
+using LtInfo.Common.HtmlHelperExtensions;
+
+namespace ProjectFirma.Web.Views.ProjectCode
 {
-    public abstract class ProgramIndexProjectCodeSearchResults : LtInfo.Common.Mvc.TypedWebViewPage<ProgramIndexProjectCodeSearchResultsViewData>
+    public abstract class EditProjectCodeWithMultiSelect : LtInfo.Common.Mvc.TypedWebPartialViewPage<EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>
     {
-        public const string ProgramIndexProjectCodeSearchInputTextboxID = "ProgramIndexProjectCodeSearchCriteria";
+        public static void RenderPartialView(HtmlHelper html, IEditProjectCodeWithMultiselectViewModel viewModel)
+        {
+            html.RenderRazorSitkaPartial<EditProjectCodeWithMultiSelect, EditProjectCodeWithMultiSelectViewData, IEditProjectCodeWithMultiselectViewModel>(new EditProjectCodeWithMultiSelectViewData(), viewModel);
+        }
     }
+    public class EditProjectCodeWithMultiSelectViewData
+    {
+    }
+
 }
