@@ -20,6 +20,8 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Models
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProgramIndex
 @using ProjectFirma.Web.Views.ProjectCode
@@ -114,17 +116,71 @@
     </div>
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramIndexID)
+            @Html.LabelWithSugarFor(m => m.ProgramIndexIDProjectCodeIDPairs)
         </div>
         <div class="col-xs-3">
-            @{ EditProgramIndex.RenderPartialView(Html, Model); }
-        </div>
-        <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectCodesString)
+            <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
+                   name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" 
+                   placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
+                   style="margin-right: -5px; margin-left: auto;" />
         </div>
         <div class="col-xs-3">
-            @{ EditProjectCodeWithMultiSelect.RenderPartialView(Html, Model); }
+            <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                   name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
+                   placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
+                   style="margin-right: -5px; margin-left: auto;" />
+            @Html.HiddenFor(x => x.ProgramIndexIDProjectCodeIDPairs)
+            @Html.ValidationMessageFor(m => m.ProgramIndexIDProjectCodeIDPairs)
         </div>
+        <script type="text/javascript">
+            // <![CDATA[
+            @*function checkForDeleteOfProjectCodeMultiSelect(myField)
+            {
+                if (!myField.value)
+                {
+                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
+                    jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val("");
+                    return true;
+                } else
+                {
+                    jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val(myField.value);
+                }
+                return false;
+            }*@
+
+            jQuery(document).ready(function ()
+            {
+                jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
+                    .autocomplete({
+                        source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
+                        minLength: 1,
+                        position: { my: "right top", at: "right bottom" },
+                        select: function (event, ui) {
+                            //set ProjectCodeID value and display text in input
+                            jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
+                            @*jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);*@
+                            event.preventDefault();
+                        },
+                        html: true
+                    });
+
+                jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID")
+                    .autocomplete({
+                        source: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
+                        minLength: 1,
+                        position: { my: "right top", at: "right bottom" },
+                        select: function (event, ui) {
+                            //set ProgramIndexID value and display text in input
+                            jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
+                            @*jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(ui.item.actualValue);*@
+                            //console.log('ui.item.actualValue: ' + ui.item.actualValue);
+                            event.preventDefault();
+                        },
+                        html: true
+                    });
+            });
+            // ]]>
+        </script>
     </div>
     <div class="form-group">
         <div class="col-xs-3 control-label">
