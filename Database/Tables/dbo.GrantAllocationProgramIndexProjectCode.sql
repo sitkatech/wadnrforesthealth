@@ -5,15 +5,17 @@ GO
 CREATE TABLE [dbo].[GrantAllocationProgramIndexProjectCode](
 	[GrantAllocationProgramIndexProjectCodeID] [int] IDENTITY(1,1) NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
-	[ProgramIndexProjectCodeID] [int] NOT NULL,
+	[ProgramIndexID] [int] NOT NULL,
+	[ProjectCodeID] [int] NOT NULL,
  CONSTRAINT [PK_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationProgramIndexProjectCodeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_GrantAllocationProjectCode_GrantAllocationID_ProgramIndexProjectCodeID] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_GrantAllocationProjectCode_GrantAllocationID_ProgramIndexID_ProjectCodeID] UNIQUE NONCLUSTERED 
 (
 	[GrantAllocationID] ASC,
-	[ProgramIndexProjectCodeID] ASC
+	[ProgramIndexID] ASC,
+	[ProjectCodeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -23,7 +25,12 @@ REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
 ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID]
 GO
-ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProgramIndexProjectCode_ProgramIndexProjectCodeID] FOREIGN KEY([ProgramIndexProjectCodeID])
-REFERENCES [dbo].[ProgramIndexProjectCode] ([ProgramIndexProjectCodeID])
+ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
+REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
 GO
-ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProgramIndexProjectCode_ProgramIndexProjectCodeID]
+ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID]
+GO
+ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID] FOREIGN KEY([ProjectCodeID])
+REFERENCES [dbo].[ProjectCode] ([ProjectCodeID])
+GO
+ALTER TABLE [dbo].[GrantAllocationProgramIndexProjectCode] CHECK CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID]

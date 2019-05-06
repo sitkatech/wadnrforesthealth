@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProjectCode()
         {
-            this.ProgramIndexProjectCodes = new HashSet<ProgramIndexProjectCode>();
+            this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
             this.TreatmentActivities = new HashSet<TreatmentActivity>();
         }
 
@@ -67,13 +67,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return ProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
+            return GrantAllocationProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(ProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectCode).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in ProgramIndexProjectCodes.ToList())
+            foreach(var x in GrantAllocationProgramIndexProjectCodes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProjectCodeID; } set { ProjectCodeID = value; } }
 
-        public virtual ICollection<ProgramIndexProjectCode> ProgramIndexProjectCodes { get; set; }
+        public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
 
         public static class FieldLengths

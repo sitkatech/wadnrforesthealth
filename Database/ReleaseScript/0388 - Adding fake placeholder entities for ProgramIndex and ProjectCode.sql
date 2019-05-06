@@ -61,15 +61,18 @@ CREATE TABLE dbo.GrantAllocationProgramIndexProjectCode
 (
     GrantAllocationProgramIndexProjectCodeID [int] IDENTITY(1,1) NOT NULL,
     GrantAllocationID [int] NOT NULL,
-    ProgramIndexProjectCodeID [int] NOT NULL,
+--    ProgramIndexProjectCodeID [int] NOT NULL,
+	ProgramIndexID int not null,
+	ProjectCodeID int not null
  CONSTRAINT [PK_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID] PRIMARY KEY CLUSTERED 
 (
     GrantAllocationProgramIndexProjectCodeID ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [AK_GrantAllocationProjectCode_GrantAllocationID_ProgramIndexProjectCodeID] UNIQUE NONCLUSTERED 
+ CONSTRAINT [AK_GrantAllocationProjectCode_GrantAllocationID_ProgramIndexID_ProjectCodeID] UNIQUE NONCLUSTERED 
 (
     GrantAllocationID ASC,
-    ProgramIndexProjectCodeID ASC
+    ProgramIndexID ASC,
+	ProjectCodeID ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -79,9 +82,14 @@ ALTER TABLE [dbo].GrantAllocationProgramIndexProjectCode  WITH CHECK ADD  CONSTR
 REFERENCES [dbo].[GrantAllocation] ([GrantAllocationID])
 GO
 
--- FK ProgramIndexProjectCode
-ALTER TABLE [dbo].GrantAllocationProgramIndexProjectCode  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProgramIndexProjectCode_ProgramIndexProjectCodeID] FOREIGN KEY([ProgramIndexProjectCodeID])
-REFERENCES [dbo].[ProgramIndexProjectCode] ([ProgramIndexProjectCodeID])
+-- FK ProgramIndex
+ALTER TABLE [dbo].GrantAllocationProgramIndexProjectCode  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID] FOREIGN KEY([ProgramIndexID])
+REFERENCES [dbo].[ProgramIndex] ([ProgramIndexID])
+GO
+
+-- FK ProjectCode
+ALTER TABLE [dbo].GrantAllocationProgramIndexProjectCode  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID] FOREIGN KEY([ProjectCodeID])
+REFERENCES [dbo].[ProjectCode] ([ProjectCodeID])
 GO
 
 -- Fill things in
@@ -90,14 +98,15 @@ GO
 -- Build PI/PC table entries
 -----
 
-insert into dbo.ProgramIndexProjectCode
+insert into dbo.GrantAllocationProgramIndexProjectCode
 select distinct
-pri.ProgramIndexID, pc.ProjectCodeID --   ga.GrantAllocationID,   g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName, * 
+ga.GrantAllocationID, pri.ProgramIndexID, pc.ProjectCodeID --,   g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName, * 
 from dbo.GrantAllocation as ga
 join dbo.[Grant] g on ga.GrantID = g.GrantID
 join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
 join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
 join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
+where pri.ProgramIndexCode != '000' and pc.ProjectCodeName != 'FAKE'
 --order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
 order by pri.ProgramIndexID, pc.ProjectCodeID
 GO
@@ -105,17 +114,17 @@ GO
 -- Build GrantAllocationProgramIndexProjectCode entries
 -----
 
-insert into dbo.GrantAllocationProgramIndexProjectCode
-select 
-    ga.GrantAllocationID,
-    pipc.ProgramIndexProjectCodeID
-from dbo.GrantAllocation as ga
-join dbo.[Grant] g on ga.GrantID = g.GrantID
-join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
-join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
-join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
-join dbo.ProgramIndexProjectCode as pipc on pipc.ProgramIndexID = pri.ProgramIndexID and pipc.ProjectCodeID = pc.ProjectCodeID
-order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
+--insert into dbo.GrantAllocationProgramIndexProjectCode
+--select 
+--    ga.GrantAllocationID,
+--    pipc.ProgramIndexProjectCodeID
+--from dbo.GrantAllocation as ga
+--join dbo.[Grant] g on ga.GrantID = g.GrantID
+--join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
+--join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
+--join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
+--join dbo.ProgramIndexProjectCode as pipc on pipc.ProgramIndexID = pri.ProgramIndexID and pipc.ProjectCodeID = pc.ProjectCodeID
+--order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
 
 
 

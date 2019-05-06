@@ -95,7 +95,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
         public virtual DbSet<PriorityArea> PriorityAreas { get; set; }
-        public virtual DbSet<ProgramIndexProjectCode> ProgramIndexProjectCodes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
@@ -464,9 +463,6 @@ namespace ProjectFirma.Web.Models
 
                 case "PriorityArea":
                     return PriorityAreas.GetPriorityArea(primaryKey);
-
-                case "ProgramIndexProjectCode":
-                    return ProgramIndexProjectCodes.GetProgramIndexProjectCode(primaryKey);
 
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);

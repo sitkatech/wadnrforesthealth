@@ -30,46 +30,51 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationProgramIndexProjectCode(int grantAllocationProgramIndexProjectCodeID, int grantAllocationID, int programIndexProjectCodeID) : this()
+        public GrantAllocationProgramIndexProjectCode(int grantAllocationProgramIndexProjectCodeID, int grantAllocationID, int programIndexID, int projectCodeID) : this()
         {
             this.GrantAllocationProgramIndexProjectCodeID = grantAllocationProgramIndexProjectCodeID;
             this.GrantAllocationID = grantAllocationID;
-            this.ProgramIndexProjectCodeID = programIndexProjectCodeID;
+            this.ProgramIndexID = programIndexID;
+            this.ProjectCodeID = projectCodeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationProgramIndexProjectCode(int grantAllocationID, int programIndexProjectCodeID) : this()
+        public GrantAllocationProgramIndexProjectCode(int grantAllocationID, int programIndexID, int projectCodeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationProgramIndexProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantAllocationID = grantAllocationID;
-            this.ProgramIndexProjectCodeID = programIndexProjectCodeID;
+            this.ProgramIndexID = programIndexID;
+            this.ProjectCodeID = projectCodeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationProgramIndexProjectCode(GrantAllocation grantAllocation, ProgramIndexProjectCode programIndexProjectCode) : this()
+        public GrantAllocationProgramIndexProjectCode(GrantAllocation grantAllocation, ProgramIndex programIndex, ProjectCode projectCode) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationProgramIndexProjectCodeID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GrantAllocationID = grantAllocation.GrantAllocationID;
             this.GrantAllocation = grantAllocation;
             grantAllocation.GrantAllocationProgramIndexProjectCodes.Add(this);
-            this.ProgramIndexProjectCodeID = programIndexProjectCode.ProgramIndexProjectCodeID;
-            this.ProgramIndexProjectCode = programIndexProjectCode;
-            programIndexProjectCode.GrantAllocationProgramIndexProjectCodes.Add(this);
+            this.ProgramIndexID = programIndex.ProgramIndexID;
+            this.ProgramIndex = programIndex;
+            programIndex.GrantAllocationProgramIndexProjectCodes.Add(this);
+            this.ProjectCodeID = projectCode.ProjectCodeID;
+            this.ProjectCode = projectCode;
+            projectCode.GrantAllocationProgramIndexProjectCodes.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static GrantAllocationProgramIndexProjectCode CreateNewBlank(GrantAllocation grantAllocation, ProgramIndexProjectCode programIndexProjectCode)
+        public static GrantAllocationProgramIndexProjectCode CreateNewBlank(GrantAllocation grantAllocation, ProgramIndex programIndex, ProjectCode projectCode)
         {
-            return new GrantAllocationProgramIndexProjectCode(grantAllocation, programIndexProjectCode);
+            return new GrantAllocationProgramIndexProjectCode(grantAllocation, programIndex, projectCode);
         }
 
         /// <summary>
@@ -107,12 +112,14 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int GrantAllocationProgramIndexProjectCodeID { get; set; }
         public int GrantAllocationID { get; set; }
-        public int ProgramIndexProjectCodeID { get; set; }
+        public int ProgramIndexID { get; set; }
+        public int ProjectCodeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationProgramIndexProjectCodeID; } set { GrantAllocationProgramIndexProjectCodeID = value; } }
 
         public virtual GrantAllocation GrantAllocation { get; set; }
-        public virtual ProgramIndexProjectCode ProgramIndexProjectCode { get; set; }
+        public virtual ProgramIndex ProgramIndex { get; set; }
+        public virtual ProjectCode ProjectCode { get; set; }
 
         public static class FieldLengths
         {
