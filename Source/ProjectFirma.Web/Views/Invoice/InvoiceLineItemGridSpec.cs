@@ -18,7 +18,7 @@ namespace ProjectFirma.Web.Views.Invoice
             ObjectNamePlural = $"{Models.FieldDefinition.Agreement.GetFieldDefinitionLabelPluralized()}";
 
 
-            var userHasEditPermissions = new InvoiceLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            var userHasEditPermissions = new InvoiceLineItemEditFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditPermissions)
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditUrl(), "Edit this Invoice Line Item")), 30, DhtmlxGridColumnFilterType.None);
