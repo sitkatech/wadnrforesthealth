@@ -24,14 +24,6 @@ namespace ProjectFirma.Web.Common
         }
 
         /// <summary>
-        /// List of ProgramIndexProjectCodes as a comma delimited string
-        /// </summary>
-        public static string ToDistinctOrderedCsvList(this ICollection<ProgramIndexProjectCode> programIndexProjectCodes)
-        {
-            return MakeDistinctCaseInsensitiveStringListFromObjectList(programIndexProjectCodes, x => x.ProgramIndexProjectCodeDisplayString);
-        }
-
-        /// <summary>
         /// List of Grants as a comma delimited string ("234, 25B" for example) 
         /// </summary>
         public static string ToDistinctOrderedCsvListOfGrantNumber(this ICollection<AgreementGrantAllocation> agreementGrantAllocations)

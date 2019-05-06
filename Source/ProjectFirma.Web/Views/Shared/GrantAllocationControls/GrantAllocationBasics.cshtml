@@ -103,10 +103,18 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-5 text-right">
-            @Html.LabelWithSugarFor(FieldDefinition.ProgramIndexProjectCode)
+            @Html.LabelWithSugarFor(FieldDefinition.ProgramIndex)
         </div>
         <div class="col-sm-7">
-            <span>@ViewDataTyped.GrantAllocation.GrantAllocationProgramIndexProjectCodes.Select(x => x.ProgramIndexProjectCode).ToList().ToDistinctOrderedCsvList()</span>
+            <span>@ViewDataTyped.GrantAllocation.ProgramIndexDisplay</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 text-right">
+            @Html.LabelWithSugarFor(FieldDefinition.ProjectCode)
+        </div>
+        <div class="col-sm-7">
+            <span>@ViewDataTyped.GrantAllocation.ProjectCodes.ToDistinctOrderedCsvList()</span>
         </div>
     </div>
     <div class="row">
