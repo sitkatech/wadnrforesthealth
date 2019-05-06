@@ -758,7 +758,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // read-only Helper accessors
-        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.Select(aga => aga.GrantAllocation.ProgramIndex).Where(pi => pi != null).ToList();
-        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.ProjectCodes).Where(pc => pc != null).ToList();
+        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
     }
 }

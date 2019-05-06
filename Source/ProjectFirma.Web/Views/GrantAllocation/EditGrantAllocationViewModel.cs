@@ -100,9 +100,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
-            ProgramIndexID = grantAllocation.ProgramIndexID;
-            ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
-            ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeName).Aggregate((x, y) => x + ", " + y) : string.Empty;
+            //TODO: update the GrantAllocationProgramIndexProjectCode table
+            //ProgramIndexID = grantAllocation.ProgramIndexID;
+            //ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
+            //ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeName).Aggregate((x, y) => x + ", " + y) : string.Empty;
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             DivisionID = grantAllocation.DivisionID;
             RegionID = grantAllocation.RegionIDDisplay;
@@ -163,8 +164,9 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.GrantID = GrantID;
-            grantAllocation.ProgramIndexID = ProgramIndexID;
-            grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProjectCodesString);
+            //TODO pull Program Index and Project Code from GrantAllocationProgramIndexProjectCode table
+            //grantAllocation.ProgramIndexID = ProgramIndexID;
+            //grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProjectCodesString);
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
             grantAllocation.RegionID = RegionID;

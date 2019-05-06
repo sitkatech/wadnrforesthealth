@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -524,6 +524,7 @@
     <Compile Include="Models\GrantAllocationBudgetLineItem.cs" />
     <Compile Include="Models\GrantAllocationBudgetLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
+    <Compile Include="Models\GrantAllocationProgramIndexProjectCode.cs" />
     <Compile Include="Models\GrantModification.cs" />
     <Compile Include="Models\GrantModificationGrantModificationPurpose.cs" />
     <Compile Include="Models\GrantModificationModelExtensions.cs" />
@@ -566,7 +567,6 @@
     <Compile Include="Models\PriorityArea.cs" />
     <Compile Include="Models\PriorityAreaModelExtensions.cs" />
     <Compile Include="Models\ProgramIndex.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\ProgramIndexProjectCode.cs" />
     <Compile Include="Models\ProjectCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\ProgramIndex.cs" />
     <Compile Include="Models\ProjectCode.cs" />
@@ -575,7 +575,6 @@
     <Compile Include="Models\ProjectPriorityAreaUpdate.cs" />
     <Compile Include="Models\ProjectRegion.cs" />
     <Compile Include="Models\GrantAllocationNote.cs" />
-    <Compile Include="Models\GrantAllocationProjectCode.cs" />
     <Compile Include="Models\GrantNote.cs" />
     <Compile Include="Models\ProjectRegionUpdate.cs" />
     <Compile Include="Models\ProjectTypeJson.cs" />

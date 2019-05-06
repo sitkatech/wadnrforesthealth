@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? programIndexID, int? federalFundCodeID, int? organizationID, int? regionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? regionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -48,7 +48,6 @@ namespace ProjectFirma.Web.Models
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.AllocationAmount = allocationAmount;
-            this.ProgramIndexID = programIndexID;
             this.FederalFundCodeID = federalFundCodeID;
             this.OrganizationID = organizationID;
             this.RegionID = regionID;
@@ -188,7 +187,6 @@ namespace ProjectFirma.Web.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
-        public int? ProgramIndexID { get; set; }
         public int? FederalFundCodeID { get; set; }
         public int? OrganizationID { get; set; }
         public int? RegionID { get; set; }
@@ -210,7 +208,6 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectGrantAllocationRequest> ProjectGrantAllocationRequests { get; set; }
         public virtual ICollection<ProjectGrantAllocationRequestUpdate> ProjectGrantAllocationRequestUpdates { get; set; }
         public virtual Grant Grant { get; set; }
-        public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual Region Region { get; set; }

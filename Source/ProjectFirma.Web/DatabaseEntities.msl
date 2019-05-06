@@ -278,7 +278,6 @@
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
-          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
