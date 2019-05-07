@@ -887,6 +887,7 @@
     <Content Include="Content\img\SAW-logo.jpg" />
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
+    <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\FocusArea\Index.cshtml" />

@@ -30,6 +30,7 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.ProgramIndex;
 using ProjectFirma.Web.Views.ProjectCode;
 
@@ -52,6 +53,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndexProjectCode)]
         public List<Tuple<int, int>> ProgramIndexIDProjectCodeIDPairs { get; set; }
+
+        public List<GrantAllocationProgramIndexProjectCodeJson> GrantAllocationProgramIndexProjectCodeJsons { get;
+            set;
+        }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.FederalFundCode)]
         public int? FederalFundCodeID { get; set; }
@@ -86,7 +91,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         /// </summary>
         public EditGrantAllocationViewModel()
         {
-            
+            GrantAllocationProgramIndexProjectCodeJsons = new List<GrantAllocationProgramIndexProjectCodeJson>();
         }
 
         public EditGrantAllocationViewModel(Models.GrantAllocation grantAllocation)
@@ -95,10 +100,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantAllocationName = grantAllocation.GrantAllocationName;
             OrganizationID = grantAllocation.OrganizationID;
             GrantID = grantAllocation.GrantID;
-            //TODO: update the GrantAllocationProgramIndexProjectCode table
-            //ProgramIndexID = grantAllocation.ProgramIndexID;
-            //ProgramIndexSearchCriteria = grantAllocation.ProgramIndexDisplay;
-            //ProjectCodesString = grantAllocation.ProjectCodes.Any() ? grantAllocation.ProjectCodes.Select(pc => pc.ProjectCodeName).Aggregate((x, y) => x + ", " + y) : string.Empty;
+            GrantAllocationProgramIndexProjectCodeJsons = GrantAllocationProgramIndexProjectCodeJson.MakeGrantAllocationProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(grantAllocation.GrantAllocationProgramIndexProjectCodes.ToList());
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             DivisionID = grantAllocation.DivisionID;
             RegionID = grantAllocation.RegionIDDisplay;
@@ -159,9 +161,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationName = GrantAllocationName;
             grantAllocation.OrganizationID = OrganizationID;
             grantAllocation.GrantID = GrantID;
-            //TODO pull Program Index and Project Code from GrantAllocationProgramIndexProjectCode table
-            //grantAllocation.ProgramIndexID = ProgramIndexID;
-            //grantAllocation.ProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProjectCodesString);
+            grantAllocation.GrantAllocationProgramIndexProjectCodes =
+                GrantAllocationProgramIndexProjectCodeJsons.Select(gapipc =>
+                    new GrantAllocationProgramIndexProjectCode(gapipc.GrantAllocationID, gapipc.ProgramIndexID,
+                        gapipc.ProjectCodeID)).ToList();
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
             grantAllocation.RegionID = RegionID;
@@ -203,5 +206,44 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 grantAllocation.GrantAllocationFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantAllocationFileResourceData, currentPerson);
             }
         }
+    }
+
+    public class GrantAllocationProgramIndexProjectCodeJson
+    {
+        public int GrantAllocationID { get; set; }
+        public string GrantAllocationName { get; set; }
+        public string GrantNumber { get; set; }
+
+        public int ProgramIndexID { get; set; }
+        public string ProgramIndexName { get; set; }
+
+        public int ProjectCodeID { get; set; }
+        public string ProjectCodeName { get; set; }
+
+        // For use by model binder
+        public GrantAllocationProgramIndexProjectCodeJson()
+        {
+        }
+
+        public GrantAllocationProgramIndexProjectCodeJson(Models.GrantAllocation grantAllocation, Models.ProgramIndex programIndex, Models.ProjectCode projectCode)
+        {
+            this.GrantAllocationID = grantAllocation.GrantAllocationID;
+            this.GrantNumber = grantAllocation.Grant.GrantNumber;
+            this.GrantAllocationName = grantAllocation.GrantAllocationName;
+
+            this.ProgramIndexID = programIndex.ProgramIndexID;
+            this.ProgramIndexName = programIndex.ProgramIndexCode;
+
+            this.ProjectCodeID = projectCode.ProjectCodeID;
+            this.ProjectCodeName = projectCode.ProjectCodeName;
+
+        }
+
+        public static List<GrantAllocationProgramIndexProjectCodeJson> MakeGrantAllocationProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(List<Models.GrantAllocationProgramIndexProjectCode> grantAllocationProgramIndexProjectCodes)
+        {
+            return grantAllocationProgramIndexProjectCodes.Select(gapipc => new GrantAllocationProgramIndexProjectCodeJson(gapipc.GrantAllocation, gapipc.ProgramIndex, gapipc.ProjectCode)).ToList();
+        }
+
+
     }
 }

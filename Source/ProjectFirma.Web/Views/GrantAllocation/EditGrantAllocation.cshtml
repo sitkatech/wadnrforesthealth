@@ -20,6 +20,7 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Models
+@using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
@@ -67,183 +68,190 @@
 
 @using (Html.BeginForm())
 {
-<div class="form-horizontal">
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantID)
+    <div class="form-horizontal" id="EditGrantAllocationAngularApp" ng-controller="EditGrantAllocationController">
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantID)
+            </div>
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.GrantID, ViewDataTyped.GrantNumbers, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantID)
+            </div>
         </div>
-        <div class="col-xs-6">
-            @Html.DropDownListFor(m => m.GrantID, ViewDataTyped.GrantNumbers, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.GrantID)
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantAllocationName)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantAllocationName)
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(m => m.GrantAllocationName, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantAllocationName)
+            </div>
         </div>
-        <div class="col-xs-4">
-            @Html.TextBoxFor(m => m.GrantAllocationName, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.GrantAllocationName)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.OrganizationID)
+            </div>
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.OrganizationID, ViewDataTyped.Organizations, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OrganizationID)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.OrganizationID)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantManagerID)
+            </div>
+            <div class="col-xs-6">
+                @Html.SearchableDropDownListFor(m => m.GrantManagerID, ViewDataTyped.GrantManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(m => m.GrantManagerID)
+            </div>
         </div>
-        <div class="col-xs-6">
-            @Html.DropDownListFor(m => m.OrganizationID, ViewDataTyped.Organizations, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.OrganizationID)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProgramManagerPersonIDs)
+            </div>
+            <div class="col-xs-6">
+                @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerPersonIDs, ViewDataTyped.ProgramManagersSelectList, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(m => m.ProgramManagerPersonIDs)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantManagerID)
-        </div>
-        <div class="col-xs-6">
-            @Html.SearchableDropDownListFor(m => m.GrantManagerID, ViewDataTyped.GrantManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
-            @Html.ValidationMessageFor(m => m.GrantManagerID)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramManagerPersonIDs)
-        </div>
-        <div class="col-xs-6">
-            @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerPersonIDs, ViewDataTyped.ProgramManagersSelectList, new { style = "width: auto;", @class = "form-control selectpicker" })
-            @Html.ValidationMessageFor(m => m.ProgramManagerPersonIDs)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramIndexIDProjectCodeIDPairs)
-        </div>
-        <div class="col-xs-3">
-            <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
-                   name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" 
-                   placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
-                   style="margin-right: -5px; margin-left: auto;" />
-        </div>
-        <div class="col-xs-3">
-            <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                   name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
-                   placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
-                   style="margin-right: -5px; margin-left: auto;" />
-            @Html.HiddenFor(x => x.ProgramIndexIDProjectCodeIDPairs)
-            @Html.ValidationMessageFor(m => m.ProgramIndexIDProjectCodeIDPairs)
-        </div>
-        <script type="text/javascript">
-            // <![CDATA[
-            @*function checkForDeleteOfProjectCodeMultiSelect(myField)
-            {
-                if (!myField.value)
-                {
-                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val("");
-                    jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val("");
-                    return true;
-                } else
-                {
-                    jQuery("#@Html.IdFor(x => x.ProjectCodesString)").val(myField.value);
-                }
-                return false;
-            }*@
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProgramIndexIDProjectCodeIDPairs)
+            </div>
+            <div class="col-xs-3">
+                <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID"
+                       placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;" />
+            </div>
+            <div class="col-xs-3">
+                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
+                       placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;" />
+                @Html.HiddenFor(x => x.ProgramIndexIDProjectCodeIDPairs)
+                @Html.ValidationMessageFor(m => m.ProgramIndexIDProjectCodeIDPairs)
+            </div>
 
-            jQuery(document).ready(function ()
-            {
-                jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
-                    .autocomplete({
-                        source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
-                        minLength: 1,
-                        position: { my: "right top", at: "right bottom" },
-                        select: function (event, ui) {
-                            //set ProjectCodeID value and display text in input
-                            jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
-                            @*jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);*@
-                            event.preventDefault();
-                        },
-                        html: true
-                    });
-
-                jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID")
-                    .autocomplete({
-                        source: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
-                        minLength: 1,
-                        position: { my: "right top", at: "right bottom" },
-                        select: function (event, ui) {
-                            //set ProgramIndexID value and display text in input
-                            jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
-                            @*jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(ui.item.actualValue);*@
-                            //console.log('ui.item.actualValue: ' + ui.item.actualValue);
-                            event.preventDefault();
-                        },
-                        html: true
-                    });
-            });
-            // ]]>
-        </script>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.FederalFundCodeID)
         </div>
-        <div class="col-xs-6">
-            @Html.DropDownListFor(m => m.FederalFundCodeID, ViewDataTyped.FederalFundCodes, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FederalFundCodeID)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.FederalFundCodeID)
+            </div>
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.FederalFundCodeID, ViewDataTyped.FederalFundCodes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FederalFundCodeID)
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.RegionID)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.RegionID)
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegionID)
+            </div>
+            <div class="col-xs-2 control-label">
+                @Html.LabelWithSugarFor(m => m.DivisionID)
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.DivisionID, ViewDataTyped.Divisions, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DivisionID)
+            </div>
         </div>
-        <div class="col-xs-3">
-            @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.RegionID)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.AllocationAmount)
+            </div>
+            <div class="col-xs-3">
+                @Html.EditorFor(m => m.AllocationAmount, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AllocationAmount)
+            </div>
         </div>
-        <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.DivisionID)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.StartDate)
+            </div>
+            <div class="col-xs-3">
+                @Html.EditorFor(m => m.StartDate, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.StartDate)
+            </div>
+            <div class="col-xs-2 control-label">
+                @Html.LabelWithSugarFor(m => m.EndDate)
+            </div>
+            <div class="col-xs-3">
+                @Html.EditorFor(m => m.EndDate, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.EndDate)
+            </div>
         </div>
-        <div class="col-xs-3">
-            @Html.DropDownListFor(m => m.DivisionID, ViewDataTyped.Divisions, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.DivisionID)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.AllocationAmount)
-        </div>
-        <div class="col-xs-3">
-            @Html.EditorFor(m => m.AllocationAmount, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.AllocationAmount)
+        <div class="form-group form-group-tight">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(x => x.GrantAllocationFileResourceData)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(x => x.GrantAllocationFileResourceData)
+                @*<span class="smallExplanationText">
+                        Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                    </span>*@
+                @Html.ValidationMessageFor(x => x.GrantAllocationFileResourceData)
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.StartDate)
-        </div>
-        <div class="col-xs-3">
-            @Html.EditorFor(m => m.StartDate, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.StartDate)
-        </div>
-        <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.EndDate)
-        </div>
-        <div class="col-xs-3">
-            @Html.EditorFor(m => m.EndDate, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.EndDate)
-        </div>
-    </div>
-    <div class="form-group form-group-tight">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(x => x.GrantAllocationFileResourceData)
-        </div>
-        <div class="col-xs-8">
-            @Html.EditorFor(x => x.GrantAllocationFileResourceData)
-            @*<span class="smallExplanationText">
-                            Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
-                        </span>*@
-            @Html.ValidationMessageFor(x => x.GrantAllocationFileResourceData)
-        </div>
-    </div>
-</div>
     @Html.HiddenFor(m => m.GrantAllocationID)
 }
+
+
+
+<script type="text/javascript">
+    angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
+    {
+        return {
+            AngularModel: @Html.Raw(JObject.FromObject(Model)),
+            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.AngularViewData))
+        };
+    });
+    jQuery(document).ready(function ()
+    {
+        angular.bootstrap(jQuery("#EditGrantAllocationAngularApp"), ["ProjectFirmaApp"]);
+
+        jQuery(".selectpicker").selectpicker("refresh");
+        jQuery(".modal").on("hidden.bs.modal",
+            function () {
+                jQuery(".bootstrap-select.open").removeClass("open");
+            });
+
+        jQuery(".modal").css({ "overflow": "visible" });
+        jQuery(".modal-body").css({ "overflow-y": "visible" });
+
+        jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function (event, ui) {
+                    //set ProjectCodeID value and display text in input
+                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
+                    @*jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);*@
+                    event.preventDefault();
+                },
+                html: true
+            });
+
+        jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function (event, ui) {
+                    //set ProgramIndexID value and display text in input
+                    jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
+                    @*jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(ui.item.actualValue);*@
+                    //console.log('ui.item.actualValue: ' + ui.item.actualValue);
+                    event.preventDefault();
+                },
+                html: true
+            });
+    });
+    // ]]>
+</script>
