@@ -1,7 +1,15 @@
-﻿namespace ProjectFirma.Web.Security
+﻿using System.Collections.Generic;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+
+namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Manage Treatment Activity")]
-    public class TreatmentActivityManageFeature : FirmaAdminFeature
+    public class TreatmentActivityManageFeature : FirmaFeature
     {
+        public TreatmentActivityManageFeature()
+            : base(new List<Role> {Role.SitkaAdmin, Role.Admin, Role.ProjectSteward})
+        {
+        }
     }
 }

@@ -637,9 +637,9 @@
     <Compile Include="Security\GrantsViewFeature.cs" />
     <Compile Include="Security\InteractionEventViewFeature.cs" />
     <Compile Include="Security\InvoiceCreateFeature.cs" />
-    <Compile Include="Security\InvoiceEditAsAdminFeature.cs" />
+    <Compile Include="Security\InvoiceEditFeature.cs" />
     <Compile Include="Security\InvoiceLineItemDeleteFeature.cs" />
-    <Compile Include="Security\InvoiceLineItemEditAsAdminFeature.cs" />
+    <Compile Include="Security\InvoiceLineItemEditFeature.cs" />
     <Compile Include="Security\InvoicesViewFullListFeature.cs" />
     <Compile Include="Security\GrantsViewFullListFeature.cs" />
     <Compile Include="SawSamlResponse.cs" />

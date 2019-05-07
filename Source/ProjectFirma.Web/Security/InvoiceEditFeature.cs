@@ -4,11 +4,11 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Edit Invoice")]
-    public class InvoiceEditAsAdminFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<Invoice>
+    public class InvoiceEditFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<Invoice>
     {
         private readonly FirmaFeatureWithContextImpl<Invoice> _firmaFeatureWithContextImpl;
 
-        public InvoiceEditAsAdminFeature()
+        public InvoiceEditFeature()
             : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward})
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<Invoice>(this);
