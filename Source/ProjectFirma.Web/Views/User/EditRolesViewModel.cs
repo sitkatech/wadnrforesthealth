@@ -61,7 +61,8 @@ namespace ProjectFirma.Web.Views.User
                                          RoleID != Models.Role.ProjectSteward.RoleID &&
                                          RoleID != Models.Role.Admin.RoleID && RoleID != Models.Role.SitkaAdmin.RoleID;
             
-            person.RoleID = RoleID ?? ModelObjectHelpers.NotYetAssignedID;
+            // RoleID is required so this should not really happen, but map to unassigned as a safety
+            person.RoleID = RoleID ?? Models.Role.Unassigned.RoleID;
             person.ReceiveSupportEmails = ShouldReceiveSupportEmails;
 
             if (ModelObjectHelpers.IsRealPrimaryKeyValue(person.PersonID))
