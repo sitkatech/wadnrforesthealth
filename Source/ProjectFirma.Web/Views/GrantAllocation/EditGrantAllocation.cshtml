@@ -32,6 +32,7 @@
 
 @Html.ValidationSummary()
 
+<script type="text/javascript" src="~/Views/GrantAllocation/EditGrantAllocationController.js"></script>
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 <script type="text/javascript">
@@ -41,20 +42,20 @@
         jQuery("#@Html.IdFor(m => m.DivisionID)").on("change", function () {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.RegionID)").prop("disabled", true);
-                console.log("divisionID is greater than 0:" + jQuery(this).val());
+                //console.log("divisionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.RegionID)").prop("disabled", false);
-                console.log("divisionID is NOT greater than 0:" + jQuery(this).val());
+                //console.log("divisionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
         jQuery("#@Html.IdFor(m => m.RegionID)").on("change", function() {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", true);
-                console.log("regionID is greater than 0:" + jQuery(this).val());
+                //console.log("regionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", false);
-                console.log("regionID is NOT greater than 0:" + jQuery(this).val());
+                //console.log("regionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
@@ -116,24 +117,46 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-3 control-label">
-                @Html.LabelWithSugarFor(m => m.ProgramIndexIDProjectCodeIDPairs)
+            <div class="row">
+                <div class="col-xs-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.ProgramIndexProjectCodeJsons)
+                </div>
+                <div class="col-xs-3">
+                    <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
+                           name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID"
+                           placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
+                           style="margin-right: -5px; margin-left: auto;"
+                           ng-model="selectedProgramIndexName" />
+                    <input id="SelectedProgramIndexID" name="SelectedProgramIndexID" type="hidden" ng-model="selectedProgramIndexID" />
+                </div>
+                <div class="col-xs-3">
+                    <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                           name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
+                           placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
+                           style="margin-right: -5px; margin-left: auto;"
+                           ng-model="selectedProjectCodeName" />
+                    <input id="SelectedProjectCodeID" name="SelectedProjectCodeID" type="hidden" ng-model="selectedProjectCodeID" />
+                    @Html.ValidationMessageFor(m => m.ProgramIndexProjectCodeJsons)
+                    
+                </div>
+                <div class="col-xs-3">
+                    <button type="button" class="btn btn-sm btn-firma" ng-click="addProgramIndexProjectCodePair(selectedProgramIndexID, selectedProgramIndexName, selectedProjectCodeID, selectedProjectCodeName)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add
+                    </button>
+                </div>
             </div>
-            <div class="col-xs-3">
-                <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
-                       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID"
-                       placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
-                       style="margin-right: -5px; margin-left: auto;" />
+            <div class="row" ng-repeat="currentProgramIndexProjectCodeJson in AngularModel.ProgramIndexProjectCodeJsons" style="margin-top: 5px;">
+                @*Selections*@
+                <div class="col-xs-9 col-xs-offset-3">
+                    <span>
+                        <a href="#" ng-click="removeSelectedProgramIndexProjectCodePair(currentProgramIndexProjectCodeJson.ProgramIndexID, currentProgramIndexProjectCodeJson.ProjectCodeID); $event.preventDefault();">
+                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()"></i>
+                        </a>
+                    </span>
+                    <span ng-bind="(currentProgramIndexProjectCodeJson.ProgramIndexName) + ' ' + (currentProgramIndexProjectCodeJson.ProjectCodeName)"></span>
+                </div>
             </div>
-            <div class="col-xs-3">
-                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
-                       placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
-                       style="margin-right: -5px; margin-left: auto;" />
-                @Html.HiddenFor(x => x.ProgramIndexIDProjectCodeIDPairs)
-                @Html.ValidationMessageFor(m => m.ProgramIndexIDProjectCodeIDPairs)
-            </div>
-
         </div>
         <div class="form-group">
             <div class="col-xs-3 control-label">
@@ -199,6 +222,12 @@
         </div>
     </div>
     @Html.HiddenFor(m => m.GrantAllocationID)
+    <div ng-repeat="piPcJson in AngularModel.ProgramIndexProjectCodeJsons">
+        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexID}}" />
+        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexName}}" />
+        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeID}}" />
+        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeName}}" />
+    </div>
 }
 
 
@@ -208,21 +237,21 @@
     {
         return {
             AngularModel: @Html.Raw(JObject.FromObject(Model)),
-            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped.AngularViewData))
+            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
         };
     });
     jQuery(document).ready(function ()
     {
         angular.bootstrap(jQuery("#EditGrantAllocationAngularApp"), ["ProjectFirmaApp"]);
 
-        jQuery(".selectpicker").selectpicker("refresh");
-        jQuery(".modal").on("hidden.bs.modal",
-            function () {
-                jQuery(".bootstrap-select.open").removeClass("open");
-            });
+        //jQuery(".selectpicker").selectpicker("refresh");
+        //jQuery(".modal").on("hidden.bs.modal",
+        //    function () {
+        //        jQuery(".bootstrap-select.open").removeClass("open");
+        //    });
 
-        jQuery(".modal").css({ "overflow": "visible" });
-        jQuery(".modal-body").css({ "overflow-y": "visible" });
+        //jQuery(".modal").css({ "overflow": "visible" });
+        //jQuery(".modal-body").css({ "overflow-y": "visible" });
 
         jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
             .autocomplete({
@@ -232,7 +261,8 @@
                 select: function (event, ui) {
                     //set ProjectCodeID value and display text in input
                     jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
-                    @*jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);*@
+                    jQuery("#SelectedProjectCodeID").val(ui.item.actualValue);
+                    console.log('ui.item.actualValue-ProjectCode: ' + ui.item.actualValue);
                     event.preventDefault();
                 },
                 html: true
@@ -246,8 +276,8 @@
                 select: function (event, ui) {
                     //set ProgramIndexID value and display text in input
                     jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
-                    @*jQuery("#@Html.IdFor(x => x.ProgramIndexID)").val(ui.item.actualValue);*@
-                    //console.log('ui.item.actualValue: ' + ui.item.actualValue);
+                    jQuery("#SelectedProgramIndexID").val(ui.item.actualValue);
+                    console.log('ui.item.actualValue-ProgramIndex: ' + ui.item.actualValue);
                     event.preventDefault();
                 },
                 html: true

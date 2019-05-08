@@ -46,48 +46,61 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
     //    return filteredGrantAllocationSelectList;
     //};
 
-    $scope.addProgramIndexProjectCode = function (programIndexId, programIndexName, projectCodeId, projectCodeName) {
+    $scope.addProgramIndexProjectCodePair = function (programIndexID, programIndexName, projectCodeID, projectCodeName) {
 
-        var grantAllocationJson = allRelevantGrantAllocationJsons[0];
+        console.log("programIndexID: " + programIndexID);
+        console.log("programIndexName: " + programIndexName);
+        console.log("projectCodeID: " + projectCodeID);
+        console.log("projectCodeName: " + projectCodeName);
 
-        if (grantAllocationJson !== undefined)
-        {
-            $scope.AngularModel.GrantAllocationJsons.push({
-                GrantAllocationID: Number(grantAllocationJson.GrantAllocationID),
-                GrantNumber: grantAllocationJson.GrantNumber,
-                GrantAllocationName: grantAllocationJson.GrantAllocationName
-            });
-        }
-        $scope.resetSelectedGrantAllocationID();
+        console.log("programIndexID-Selected: " + $scope.selectedProgramIndexID);
+        console.log("programIndexName-Selected: " + $scope.selectedProgramIndexName);
+        console.log("projectCodeID-Selected: " + $scope.selectedProjectCodeID);
+        console.log("projectCodeName-Selected: " + $scope.selectedProjectCodeName);
+
+        $scope.AngularModel.ProgramIndexProjectCodeJsons.push({
+            ProgramIndexID: Number(programIndexID),
+            ProgramIndexName: programIndexName,
+            ProjectCodeID: projectCodeID,
+            ProjectCodeName: projectCodeName
+        });
+        $scope.resetSelectedIDsAndNames();
+
+        console.log("after selected fields have been wiped:")
+        console.log("programIndexID-Selected: " + $scope.selectedProgramIndexID);
+        console.log("programIndexName-Selected: " + $scope.selectedProgramIndexName);
+        console.log("projectCodeID-Selected: " + $scope.selectedProjectCodeID);
+        console.log("projectCodeName-Selected: " + $scope.selectedProjectCodeName);
+
+        console.log("programIndexProjectCodeJsons: " + JSON.stringify($scope.AngularModel.ProgramIndexProjectCodeJsons));
+
     };
 
-    $scope.removeSelectedGrantAllocation = function(grantAllocationID) {
-        _.remove($scope.AngularModel.GrantAllocationJsons,
+    $scope.removeSelectedProgramIndexProjectCodePair = function(programIndexID, projectCodeID) {
+        _.remove($scope.AngularModel.ProgramIndexProjectCodeJsons,
             function(pos) {
-                return pos.GrantAllocationID == grantAllocationID;
+                return pos.ProgramIndexID == programIndexID && pos.ProjectCodeID == projectCodeID;
             });
     };
 
-    $scope.resetSelectedGrantAllocationID = function() {
-        $scope.selectedGrantAllocationID = "";
-    };
+    $scope.resetSelectedIDsAndNames = function() {
+        $scope.selectedProgramIndexID = "";
+        $scope.selectedProgramIndexName = "";
+        $scope.selectedProjectCodeID = "";
+        $scope.selectedProjectCodeName = "";
 
-    $scope.isOptionSelected = function (grantAllocation)
-    {
-        return false;
-    };
-
-    $scope.dropdownDefaultOption = function ()
-    {
-        // TODO; can we use type here?
-        return "Add a " + 'Grant Allocation';
     };
 
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
-    console.log('EditAgreementGrantAllocationsController -- Angular view data:');
-    console.log($scope.AngularViewData);
+    console.log('EditGrantAllocationController -- Angular view model:');
+    console.log($scope.AngularViewModel);
 
-    $scope.selectedGrantAllocationID = null;
+    $scope.selectedProgramIndexID = null;
+    $scope.selectedProgramIndexName = null;
+    $scope.selectedProjectCodeID = null;
+    $scope.selectedProjectCodeName = null;
+
+
 });
