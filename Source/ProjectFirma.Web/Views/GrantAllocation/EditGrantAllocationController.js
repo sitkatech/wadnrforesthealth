@@ -91,6 +91,22 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
 
     };
 
+    $scope.postBackProjectCodeHandler = function(id, name) {
+        //set ProjectCodeID value and display text in input
+        //jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
+        //jQuery("#SelectedProjectCodeID").val(ui.item.actualValue);
+        $scope.selectedProjectCodeName = name;
+        $scope.selectedProjectCodeID = id;
+    };
+
+    $scope.postBackProgramIndexHandler = function(id, name) {
+        //set ProgramIndexID value and display text in input 
+        //jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
+        //jQuery("#SelectedProgramIndexID").val(ui.item.actualValue);
+        $scope.selectedProgramIndexName = name;
+        $scope.selectedProgramIndexID = id;      
+    };
+
     $scope.AngularModel = angularModelAndViewData.AngularModel;
     $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
@@ -101,6 +117,8 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
     $scope.selectedProgramIndexName = null;
     $scope.selectedProjectCodeID = null;
     $scope.selectedProjectCodeName = null;
+
+
 
 
 });

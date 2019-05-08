@@ -220,14 +220,15 @@
                 @Html.ValidationMessageFor(x => x.GrantAllocationFileResourceData)
             </div>
         </div>
+        <div ng-repeat="piPcJson in AngularModel.ProgramIndexProjectCodeJsons">
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexName}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeName}}" />
+        </div>
     </div>
     @Html.HiddenFor(m => m.GrantAllocationID)
-    <div ng-repeat="piPcJson in AngularModel.ProgramIndexProjectCodeJsons">
-        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexID}}" />
-        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexName}}" />
-        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeID}}" />
-        <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeName}}" />
-    </div>
+    
 }
 
 
@@ -244,24 +245,18 @@
     {
         angular.bootstrap(jQuery("#EditGrantAllocationAngularApp"), ["ProjectFirmaApp"]);
 
-        //jQuery(".selectpicker").selectpicker("refresh");
-        //jQuery(".modal").on("hidden.bs.modal",
-        //    function () {
-        //        jQuery(".bootstrap-select.open").removeClass("open");
-        //    });
-
-        //jQuery(".modal").css({ "overflow": "visible" });
-        //jQuery(".modal-body").css({ "overflow-y": "visible" });
+        var scope = angular.element(jQuery("#EditGrantAllocationAngularApp")).scope();
 
         jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
             .autocomplete({
                 source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
                 minLength: 1,
                 position: { my: "right top", at: "right bottom" },
-                select: function (event, ui) {
-                    //set ProjectCodeID value and display text in input
+                select: function(event, ui) {
+                    //force textbox to display selected value, because angular wont update it until onBlur of input
                     jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
-                    jQuery("#SelectedProjectCodeID").val(ui.item.actualValue);
+                    //set angular variables so data gets posted back
+                    scope.postBackProjectCodeHandler(ui.item.actualValue, ui.item.label);
                     console.log('ui.item.actualValue-ProjectCode: ' + ui.item.actualValue);
                     event.preventDefault();
                 },
@@ -273,10 +268,11 @@
                 source: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
                 minLength: 1,
                 position: { my: "right top", at: "right bottom" },
-                select: function (event, ui) {
-                    //set ProgramIndexID value and display text in input
+                select: function(event, ui) {
+                    //force textbox to display selected value, because angular wont update it until onBlur of input
                     jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
-                    jQuery("#SelectedProgramIndexID").val(ui.item.actualValue);
+                    //set angular variables so data gets posted back
+                    scope.postBackProgramIndexHandler(ui.item.actualValue, ui.item.label);
                     console.log('ui.item.actualValue-ProgramIndex: ' + ui.item.actualValue);
                     event.preventDefault();
                 },

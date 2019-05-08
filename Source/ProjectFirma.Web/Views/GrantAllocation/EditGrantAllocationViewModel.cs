@@ -130,34 +130,52 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     FirmaValidationMessages.OrganizationNameUnique, m => m.GrantAllocationName);
             }
 
-            // If there is something entered by the user in the Program Index text field..
-            //if (!GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(ProgramIndexSearchCriteria))
-            //{
-            //    // .. Then ProgramIndex must have been looked up successfully. If this
-            //    // failed, we don't have a valid ProgramIndex.
-            //    if (ProgramIndexID == null)
-            //    {
-            //        yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
-            //            FirmaValidationMessages.ProgramIndexInvalid, m => m.ProgramIndexSearchCriteria);
-            //    }
-            //}
 
-            //if (!GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(ProjectCodesString))
-            //{
-            //    // Count whitespace in original string. We do expect comma delimited input, but the user can type anything and they
-            //    // may not play by the rules.
-            //    int wordCountFromOriginalString = CountWordsSeparatedByWhitespaceOrCommaInString(ProjectCodesString);
-            //    var parsedProjectCodes = Models.ProjectCode.GetListProjectCodesFromCommaDelimitedString(ProjectCodesString).ToList();
+            //validate programIndex and projectCodes, need to check for user entered values to confirm they are valid.
+            if (ProgramIndexProjectCodeJsons != null)
+            {
+                foreach (var programIndexProjectCodePair in ProgramIndexProjectCodeJsons)
+                {
+                    if ((programIndexProjectCodePair.ProgramIndexID == null || programIndexProjectCodePair.ProgramIndexID < 1) &&
+                        string.IsNullOrEmpty(programIndexProjectCodePair.ProgramIndexName))
+                    {
+                        yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()} cannot be blank.",
+                            m => m.ProgramIndexProjectCodeJsons);
+                    }else if (programIndexProjectCodePair.ProgramIndexID < 1 && !string.IsNullOrEmpty(programIndexProjectCodePair.ProgramIndexName))
+                    {
+                        //check user entered PI is valid and set programIndexID
+                        var foundProgramIndex = HttpRequestStorage.DatabaseEntities.ProgramIndices.First(pi => pi.ProgramIndexCode.ToUpper() == programIndexProjectCodePair.ProgramIndexName.ToUpper());
+                        if (foundProgramIndex == null)
+                        {
+                            yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProgramIndexName}) is invalid.",
+                                m => m.ProgramIndexProjectCodeJsons);
+                        }
+                        else
+                        {
+                            programIndexProjectCodePair.ProgramIndexID = foundProgramIndex.ProgramIndexID;
+                            programIndexProjectCodePair.ProgramIndexName = foundProgramIndex.ProgramIndexCode;
+                        }
+                    }
 
-            //    bool noParsedProjectCodes = !parsedProjectCodes.Any();
-            //    bool wordCountDoesNotMatch = wordCountFromOriginalString != parsedProjectCodes.Count;
+                    if ((programIndexProjectCodePair.ProjectCodeID == null || programIndexProjectCodePair.ProjectCodeID < 1) && !string.IsNullOrEmpty(programIndexProjectCodePair.ProjectCodeName))
+                    {
+                        //check user entered PC is valid and set projectCodeID if it is
+                        var foundProjectCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.First(pc => pc.ProjectCodeName.ToUpper() == programIndexProjectCodePair.ProjectCodeName.ToUpper());
+                        if (foundProjectCode == null)
+                        {
+                            yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProjectCode.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProjectCodeName}) is invalid.", m => m.ProgramIndexProjectCodeJsons);
+                        }
+                        else
+                        {
+                            programIndexProjectCodePair.ProjectCodeID = foundProjectCode.ProjectCodeID;
+                            programIndexProjectCodePair.ProjectCodeName = foundProjectCode.ProjectCodeName;
+                        }
 
-            //    if (noParsedProjectCodes || wordCountDoesNotMatch)
-            //    {
-            //        yield return new SitkaValidationResult<EditGrantAllocationViewModel, string>(
-            //            FirmaValidationMessages.ProjectCodeInvalid, m => m.ProjectCodesString);
-            //    }
-            //}
+                    }
+                }
+
+            }
+
         }
 
         public void UpdateModel(Models.GrantAllocation grantAllocation, Person currentPerson)
@@ -211,17 +229,17 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationProgramIndexProjectCodes.ToList().ForEach(gapipc => gapipc.DeleteFull(HttpRequestStorage.DatabaseEntities));
             //create new rows of GrantAllocationProgramIndexProjectCode
             grantAllocation.GrantAllocationProgramIndexProjectCodes =
-                ProgramIndexProjectCodeJsons.Select(gapipc =>
-                    new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
+                ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null && gapipc.ProjectCodeID != null).Select(gapipc =>
+                    new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, (int)gapipc.ProjectCodeID)).ToList();
         }
     }
 
     public class ProgramIndexProjectCodeJson
     {
-        public int ProgramIndexID { get; set; }
+        public int? ProgramIndexID { get; set; }
         public string ProgramIndexName { get; set; }
 
-        public int ProjectCodeID { get; set; }
+        public int? ProjectCodeID { get; set; }
         public string ProjectCodeName { get; set; }
 
         // For use by model binder
