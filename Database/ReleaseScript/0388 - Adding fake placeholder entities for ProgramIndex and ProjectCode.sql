@@ -63,7 +63,7 @@ CREATE TABLE dbo.GrantAllocationProgramIndexProjectCode
     GrantAllocationID [int] NOT NULL,
 --    ProgramIndexProjectCodeID [int] NOT NULL,
 	ProgramIndexID int not null,
-	ProjectCodeID int not null
+	ProjectCodeID int null
  CONSTRAINT [PK_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID] PRIMARY KEY CLUSTERED 
 (
     GrantAllocationProgramIndexProjectCodeID ASC

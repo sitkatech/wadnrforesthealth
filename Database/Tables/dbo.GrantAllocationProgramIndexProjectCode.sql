@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[GrantAllocationProgramIndexProjectCode](
 	[GrantAllocationProgramIndexProjectCodeID] [int] IDENTITY(1,1) NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[ProgramIndexID] [int] NOT NULL,
-	[ProjectCodeID] [int] NOT NULL,
+	[ProjectCodeID] [int] NULL,
  CONSTRAINT [PK_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationProgramIndexProjectCodeID] ASC

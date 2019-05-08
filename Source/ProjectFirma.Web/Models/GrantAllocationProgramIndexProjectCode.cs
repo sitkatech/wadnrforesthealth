@@ -5,6 +5,14 @@ namespace ProjectFirma.Web.Models
 {
     public partial class GrantAllocationProgramIndexProjectCode : IAuditableEntity
     {
+
+        public GrantAllocationProgramIndexProjectCode(int grantAllocationID, int programIndexID, int? projectCodeID) : this()
+        {
+            this.GrantAllocationID = grantAllocationID;
+            this.ProgramIndexID = programIndexID;
+            this.ProjectCodeID = projectCodeID;
+        }
+
         public string ProgramIndexProjectCodeDisplayString
         {
             get

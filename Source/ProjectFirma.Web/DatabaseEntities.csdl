@@ -1340,7 +1340,7 @@
     <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="ProgramIndexID" Type="Int32" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="Int32" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="Int32" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="ProgramIndex" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="ProjectCode" />
@@ -3534,7 +3534,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.ProjectCode" Multiplicity="1" />
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.ProjectCode" Multiplicity="0..1" />
     <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProjectCode">

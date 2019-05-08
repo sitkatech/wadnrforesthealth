@@ -1245,7 +1245,7 @@
     <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="ProgramIndexID" Type="int" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="int" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationProgramManager">
     <Key>
@@ -2894,7 +2894,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="1" />
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
     <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProjectCode">

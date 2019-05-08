@@ -144,7 +144,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     }else if (programIndexProjectCodePair.ProgramIndexID < 1 && !string.IsNullOrEmpty(programIndexProjectCodePair.ProgramIndexName))
                     {
                         //check user entered PI is valid and set programIndexID
-                        var foundProgramIndex = HttpRequestStorage.DatabaseEntities.ProgramIndices.First(pi => pi.ProgramIndexCode.ToUpper() == programIndexProjectCodePair.ProgramIndexName.ToUpper());
+                        var foundProgramIndex = HttpRequestStorage.DatabaseEntities.ProgramIndices.FirstOrDefault(pi => pi.ProgramIndexCode.ToUpper() == programIndexProjectCodePair.ProgramIndexName.ToUpper());
                         if (foundProgramIndex == null)
                         {
                             yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProgramIndexName}) is invalid.",
@@ -160,7 +160,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     if ((programIndexProjectCodePair.ProjectCodeID == null || programIndexProjectCodePair.ProjectCodeID < 1) && !string.IsNullOrEmpty(programIndexProjectCodePair.ProjectCodeName))
                     {
                         //check user entered PC is valid and set projectCodeID if it is
-                        var foundProjectCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.First(pc => pc.ProjectCodeName.ToUpper() == programIndexProjectCodePair.ProjectCodeName.ToUpper());
+                        var foundProjectCode = HttpRequestStorage.DatabaseEntities.ProjectCodes.FirstOrDefault(pc => pc.ProjectCodeName.ToUpper() == programIndexProjectCodePair.ProjectCodeName.ToUpper());
                         if (foundProjectCode == null)
                         {
                             yield return new SitkaValidationResult<EditGrantAllocationViewModel, List<ProgramIndexProjectCodeJson>>($"{Models.FieldDefinition.ProjectCode.GetFieldDefinitionLabel()}({programIndexProjectCodePair.ProjectCodeName}) is invalid.", m => m.ProgramIndexProjectCodeJsons);
@@ -229,8 +229,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationProgramIndexProjectCodes.ToList().ForEach(gapipc => gapipc.DeleteFull(HttpRequestStorage.DatabaseEntities));
             //create new rows of GrantAllocationProgramIndexProjectCode
             grantAllocation.GrantAllocationProgramIndexProjectCodes =
-                ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null && gapipc.ProjectCodeID != null).Select(gapipc =>
-                    new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, (int)gapipc.ProjectCodeID)).ToList();
+                ProgramIndexProjectCodeJsons.Where(gapipc => gapipc.ProgramIndexID != null).Select(gapipc =>
+                    new GrantAllocationProgramIndexProjectCode(grantAllocation.GrantAllocationID, (int)gapipc.ProgramIndexID, gapipc.ProjectCodeID)).ToList();
         }
     }
 
@@ -247,6 +247,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         {
         }
 
+        public ProgramIndexProjectCodeJson(Models.ProgramIndex programIndex)
+        {
+            this.ProgramIndexID = programIndex.ProgramIndexID;
+            this.ProgramIndexName = programIndex.ProgramIndexCode;
+        }
+
         public ProgramIndexProjectCodeJson(Models.ProgramIndex programIndex, Models.ProjectCode projectCode)
         {
             this.ProgramIndexID = programIndex.ProgramIndexID;
@@ -259,7 +265,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public static List<ProgramIndexProjectCodeJson> MakeProgramIndexProjectCodeJsonsFromGrantAllocationProgramIndexProjectCodes(List<Models.GrantAllocationProgramIndexProjectCode> grantAllocationProgramIndexProjectCodes)
         {
-            return grantAllocationProgramIndexProjectCodes.Select(gapipc => new ProgramIndexProjectCodeJson(gapipc.ProgramIndex, gapipc.ProjectCode)).ToList();
+            return grantAllocationProgramIndexProjectCodes.Select(gapipc => gapipc.ProjectCode == null ? new ProgramIndexProjectCodeJson(gapipc.ProgramIndex) : new ProgramIndexProjectCodeJson(gapipc.ProgramIndex, gapipc.ProjectCode)).ToList();
         }
 
 
