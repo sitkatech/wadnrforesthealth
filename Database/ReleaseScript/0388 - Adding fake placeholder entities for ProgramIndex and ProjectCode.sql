@@ -1,14 +1,17 @@
 
+
+
+---- Fake placeholder ProjectCode
+--insert into ProjectCode (ProjectCodeName, ProjectCodeTitle, CreateDate, ProjectStartDate, ProjectEndDate)
+--values
+--('FAKE', 'FAKE Sitka placeholder ProjectCode', null, null, null)
+--GO
+
+
 -- Fake placeholder ProgramIndex
 insert into ProgramIndex (ProgramIndexCode, ProgramIndexTitle, Biennium, Activity, Program, Subprogram, Subactivity)
 values
 ('000', '000-FAKE Sitka placeholder ProgramIndex - replace with real one', 2017, null, null, null, null)
-GO
-
--- Fake placeholder ProjectCode
-insert into ProjectCode (ProjectCodeName, ProjectCodeTitle, CreateDate, ProjectStartDate, ProjectEndDate)
-values
-('FAKE', 'FAKE Sitka placeholder ProjectCode', null, null, null)
 GO
 
 -- Temp variables for easy access
@@ -16,11 +19,11 @@ declare @fakeProgramIndexID int
 set @fakeProgramIndexID = (select ProgramIndexID from dbo.ProgramIndex where ProgramIndexCode = '000')
 --select @fakeProgramIndexID
 
-declare @fakeProjectCodeID int
-set @fakeProjectCodeID = (select projectCodeID from dbo.projectCode where ProjectCodeName = 'FAKE')
---select @fakeProjectCodeID
+--declare @fakeProjectCodeID int
+--set @fakeProjectCodeID = (select projectCodeID from dbo.projectCode where ProjectCodeName = 'FAKE')
+----select @fakeProjectCodeID
 
-
+/*
 -- Set all the null holes to use the Fake ProgramIndex.
 update dbo.GrantAllocation
 set ProgramIndexID = @fakeProgramIndexID
@@ -30,27 +33,56 @@ where GrantAllocationID in
          --ga.ProgramIndexID
     from dbo.GrantAllocation as ga
     join dbo.[Grant] g on ga.GrantID = g.GrantID
-    left join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
-    left join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
-    left join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
-    where (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is not null)
-    or (gapc.GrantAllocationProjectCodeID is not null and ga.ProgramIndexID is null)
-    or (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is null)
+    --left join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
+    --left join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
+    --left join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
+    --where (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is not null)
+    --or (gapc.GrantAllocationProjectCodeID is not null and ga.ProgramIndexID is null)
+    --or (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is null)
+    where ga.ProgramIndexID is null
     --order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
 )
+*/
 
--- Insert fake pairs for all the missing GrantAllocation ProjectCodes
-insert into dbo.GrantAllocationProjectCode
-select ga.GrantAllocationID, @fakeProjectCodeID
-from dbo.GrantAllocation ga
-join dbo.[Grant] g on ga.GrantID = g.GrantID
-left join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
-left join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
-left join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
-where (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is not null)
-or (gapc.GrantAllocationProjectCodeID is not null and ga.ProgramIndexID is null)
-or (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is null)
-order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
+-- This is going away shortly anyhow
+--alter table dbo.ProgramIndex AK_ProgramIndex_ProgramIndexCode_Biennium
+
+
+-- Set all the null holes to use the Fake ProgramIndex.
+update dbo.GrantAllocation
+set ProgramIndexID = @fakeProgramIndexID
+where ProgramIndexID is null
+
+
+
+select * from dbo.GrantAllocation as ga
+where ga.ProgramIndexID is null
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---- Insert fake pairs for all the missing GrantAllocation ProjectCodes
+--insert into dbo.GrantAllocationProjectCode
+--select ga.GrantAllocationID, @fakeProjectCodeID
+--from dbo.GrantAllocation ga
+--join dbo.[Grant] g on ga.GrantID = g.GrantID
+--left join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
+--left join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
+--left join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
+--where (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is not null)
+--or (gapc.GrantAllocationProjectCodeID is not null and ga.ProgramIndexID is null)
+--or (gapc.GrantAllocationProjectCodeID is null and ga.ProgramIndexID is null)
+--order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
 
 --select * from dbo.ProgramIndexProjectCode
 
@@ -62,8 +94,8 @@ CREATE TABLE dbo.GrantAllocationProgramIndexProjectCode
     GrantAllocationProgramIndexProjectCodeID [int] IDENTITY(1,1) NOT NULL,
     GrantAllocationID [int] NOT NULL,
 --    ProgramIndexProjectCodeID [int] NOT NULL,
-	ProgramIndexID int not null,
-	ProjectCodeID int null
+    ProgramIndexID int not null,
+    ProjectCodeID int null
  CONSTRAINT [PK_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID] PRIMARY KEY CLUSTERED 
 (
     GrantAllocationProgramIndexProjectCodeID ASC
@@ -72,7 +104,7 @@ CREATE TABLE dbo.GrantAllocationProgramIndexProjectCode
 (
     GrantAllocationID ASC,
     ProgramIndexID ASC,
-	ProjectCodeID ASC
+    ProjectCodeID ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -106,7 +138,7 @@ join dbo.[Grant] g on ga.GrantID = g.GrantID
 join dbo.ProgramIndex pri on pri.ProgramIndexID = ga.ProgramIndexID
 join dbo.GrantAllocationProjectCode gapc on ga.GrantAllocationID = gapc.GrantAllocationID
 join dbo.ProjectCode pc on pc.ProjectCodeID = gapc.ProjectCodeID
-where pri.ProgramIndexCode != '000' and pc.ProjectCodeName != 'FAKE'
+where pri.ProgramIndexCode != '000' --and pc.ProjectCodeName != 'FAKE'
 --order by  g.GrantNumber, ga.GrantAllocationName, pri.ProgramIndexCode, pc.ProjectCodeName
 order by pri.ProgramIndexID, pc.ProjectCodeID
 GO
