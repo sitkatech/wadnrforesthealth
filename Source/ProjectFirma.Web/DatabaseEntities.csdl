@@ -390,6 +390,10 @@
       <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
     </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
+      <End Role="GrantAllocationProgramIndexProjectCode" EntitySet="GrantAllocationProgramIndexProjectCode" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
@@ -1344,6 +1348,7 @@
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="ProgramIndex" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="ProjectCode" />
+    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" FromRole="GrantAllocationProgramIndexProjectCode" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="GrantAllocationProgramManager">
     <Key>
@@ -2721,6 +2726,8 @@
     <Property Name="ProgramIndexID" Type="Int32" />
     <Property Name="ProjectCodeID" Type="Int32" />
     <Property Name="TreatmentActivitySlashAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="Int32" />
+    <NavigationProperty Name="GrantAllocationProgramIndexProjectCode" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" FromRole="TreatmentActivities" ToRole="GrantAllocationProgramIndexProjectCode" />
     <NavigationProperty Name="TreatmentActivityContact" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" FromRole="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" ToRole="TreatmentActivityContact" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="TreatmentActivities" ToRole="ProgramIndex" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
@@ -3542,6 +3549,18 @@
       </Principal>
       <Dependent Role="GrantAllocationProgramIndexProjectCodes">
         <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
+    <End Role="GrantAllocationProgramIndexProjectCode" Type="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode" Multiplicity="0..1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationProgramIndexProjectCode">
+        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
+        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -926,6 +926,10 @@
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
+      <End Role="GrantAllocationProgramIndexProjectCode" EntitySet="GrantAllocationProgramIndexProjectCode" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
       <End Role="TreatmentActivityContact" EntitySet="Person" />
       <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
@@ -2327,6 +2331,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="ProjectCodeID" Type="int" />
     <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="int" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -4762,6 +4767,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="TaxonomyBranches">
         <PropertyRef Name="TaxonomyTrunkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
+    <End Role="GrantAllocationProgramIndexProjectCode" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="0..1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationProgramIndexProjectCode">
+        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
+        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

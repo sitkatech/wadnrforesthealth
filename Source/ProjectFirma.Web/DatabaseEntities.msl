@@ -1492,6 +1492,7 @@
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
           <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
+          <ScalarProperty Name="GrantAllocationProgramIndexProjectCodeID" ColumnName="GrantAllocationProgramIndexProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

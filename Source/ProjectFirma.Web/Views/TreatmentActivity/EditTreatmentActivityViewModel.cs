@@ -26,12 +26,13 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.ProgramIndex;
 
 namespace ProjectFirma.Web.Views.TreatmentActivity
 {
-    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject, IEditProgramIndexViewModel
+    public class EditTreatmentActivityViewModel : FormViewModel, IValidatableObject
     {
  
         public int ProjectID { get; set; }
@@ -46,13 +47,6 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
         [DisplayName("End Date")]
         public DateTime? TreatmentActivityEndDate { get; set; }
-
-        [DisplayName("Program Index")]
-        public int? ProgramIndexID { get; set; }
-        public string ProgramIndexSearchCriteria { get; set; }
-
-        [DisplayName("Project Code")]
-        public int? ProjectCodeID { get; set; }
 
         [Required]
         [DisplayName("Status")]
@@ -105,6 +99,9 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
 
         public string ProjectCodeSearchCriteria { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndexProjectCode)]
+        public int? GrantAllocationProgramIndexProjectCodeID { get; set; }
+
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -118,9 +115,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             TreatmentActivityContactID = treatmentActivity.TreatmentActivityContactID;
             TreatmentActivityStartDate = treatmentActivity.TreatmentActivityStartDate;
             TreatmentActivityEndDate = treatmentActivity.TreatmentActivityEndDate;
-            ProgramIndexID = treatmentActivity.ProgramIndexID;
-            ProgramIndexSearchCriteria = treatmentActivity.ProgramIndex?.ProgramIndexCode;
-            ProjectCodeID = treatmentActivity.ProjectCodeID;
+            GrantAllocationProgramIndexProjectCodeID = treatmentActivity.GrantAllocationProgramIndexProjectCodeID;
             ProjectCodeSearchCriteria = treatmentActivity.ProjectCode?.ProjectCodeName;
             TreatmentActivityStatusID = treatmentActivity.TreatmentActivityStatusID;
             TreatmentActivityNotes = treatmentActivity.TreatmentActivityNotes;
@@ -149,16 +144,6 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
                 yield return new ValidationResult("End Date cannot be before Start Date");
             }
 
-            if (!GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(ProjectCodeSearchCriteria))
-            {
-                // .. Then ProjectCode must have been looked up successfully. If this
-                // failed, we don't have a valid ProjectCode.
-                if (ProjectCodeID == null)
-                {
-                    yield return new SitkaValidationResult<EditTreatmentActivityViewModel, string>(
-                        FirmaValidationMessages.ProjectCodeInvalid, m => m.ProjectCodeSearchCriteria);
-                }
-            }
         }
 
         public void UpdateModel(Models.TreatmentActivity treatmentActivity, Models.Project project)
@@ -168,8 +153,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
             treatmentActivity.TreatmentActivityContactID = TreatmentActivityContactID;
             treatmentActivity.TreatmentActivityStartDate = TreatmentActivityStartDate;
             treatmentActivity.TreatmentActivityEndDate = TreatmentActivityEndDate;
-            treatmentActivity.ProgramIndexID = ProgramIndexID;
-            treatmentActivity.ProjectCodeID = ProjectCodeID;
+            treatmentActivity.GrantAllocationProgramIndexProjectCodeID = GrantAllocationProgramIndexProjectCodeID;
             treatmentActivity.TreatmentActivityStatusID = TreatmentActivityStatusID;
             treatmentActivity.TreatmentActivityNotes = TreatmentActivityNotes;
             treatmentActivity.TreatmentActivityFootprintAcres = TreatmentActivityFootprintAcres;

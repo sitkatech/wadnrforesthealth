@@ -78,21 +78,11 @@
         </div>
         <div class="form-group no-margin-top">
             <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.ProgramIndexID)
+                @Html.LabelWithSugarFor(m => m.GrantAllocationProgramIndexProjectCodeID)
             </div>
             <div class="col-sm-3">
-                @{ EditProgramIndex.RenderPartialView(Html, Model); }
-            </div>
-            <div class="col-sm-2 control-label">
-                @Html.LabelWithSugarFor(m => m.ProjectCodeID)
-            </div>
-            <div class="col-sm-3">
-                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" onblur="return validateManualTypedUserInputForProjectCode(this)"
-                       placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
-                       style="margin-right: -5px; margin-left: auto;" value="@Model.ProjectCodeSearchCriteria" />
-                @Html.HiddenFor(x => x.ProjectCodeID)
-                @Html.ValidationMessageFor(m => m.ProjectCodeID)
+                @Html.DropDownListFor(m => m.GrantAllocationProgramIndexProjectCodeID, ViewDataTyped.ProgramIndexProjectCodePairs, new Dictionary<string, object> { { "class", "form-control selectpicker" }, { "style", "width:100%" }, { "data-width", "100%" }, { "data-live-search", "true" }, { "data-size", "8" } })
+                @Html.ValidationMessageFor(m => m.GrantAllocationProgramIndexProjectCodeID)
             </div>
         </div>
         <div class="form-group no-margin-top">
@@ -280,50 +270,3 @@
     </div>
     @Html.HiddenFor(m => m.TreatmentActivityID)
 }
-
-
-<script type="text/javascript">
-    // <![CDATA[
-    function validateManualTypedUserInputForProjectCode(myField) {
-        if (!myField.value) {
-            jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val("");
-            return true;
-        }
-
-        jQuery.ajax({
-                method: "POST",
-                url: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
-                data: { term: myField.value }
-            })
-            .done(function (msg) {
-                console.log("ajax is done.");
-                if (msg.length == 1)
-                {
-                    jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(msg[0].actualValue);
-                } else
-                {
-                    jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val("");
-                }
-                
-            });
-        return false;
-    }
-
-    jQuery(document).ready(function ()
-    {
-        jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
-            .autocomplete({
-                source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
-                minLength: 1,
-                position: { my: "right top", at: "right bottom" },
-                select: function (event, ui) {
-                    //set ProjectCodeID value and display text in input
-                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
-                    jQuery("#@Html.IdFor(x => x.ProjectCodeID)").val(ui.item.actualValue);
-                    event.preventDefault();
-                },
-                html: true
-            });
-    });
-    // ]]>
-</script>
