@@ -28,7 +28,7 @@
 @using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.EditGrantAllocation
 
-@Html.Raw(ViewDataTyped.EditGrantAllocationType.IntroductoryText)
+
 
 @Html.ValidationSummary()
 
@@ -117,45 +117,43 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="row">
-                <div class="col-xs-3 control-label">
-                    @Html.LabelWithSugarFor(m => m.ProgramIndexProjectCodeJsons)
-                </div>
-                <div class="col-xs-3">
-                    <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
-                           name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID"
-                           placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
-                           style="margin-right: -5px; margin-left: auto;"
-                           ng-model="selectedProgramIndexName" />
-                    <input id="SelectedProgramIndexID" name="SelectedProgramIndexID" type="hidden" ng-model="selectedProgramIndexID" />
-                </div>
-                <div class="col-xs-3">
-                    <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
-                           name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
-                           placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
-                           style="margin-right: -5px; margin-left: auto;"
-                           ng-model="selectedProjectCodeName" />
-                    <input id="SelectedProjectCodeID" name="SelectedProjectCodeID" type="hidden" ng-model="selectedProjectCodeID" />
-                    @Html.ValidationMessageFor(m => m.ProgramIndexProjectCodeJsons)
-                    
-                </div>
-                <div class="col-xs-3">
-                    <button type="button" class="btn btn-sm btn-firma" ng-click="addProgramIndexProjectCodePair(selectedProgramIndexID, selectedProgramIndexName, selectedProjectCodeID, selectedProjectCodeName)">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        Add
-                    </button>
-                </div>
+
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProgramIndexProjectCodeJsons)
             </div>
-            <div class="row" ng-repeat="currentProgramIndexProjectCodeJson in AngularModel.ProgramIndexProjectCodeJsons" style="margin-top: 5px;">
-                @*Selections*@
-                <div class="col-xs-9 col-xs-offset-3">
-                    <span>
-                        <a href="#" ng-click="removeSelectedProgramIndexProjectCodePair(currentProgramIndexProjectCodeJson.ProgramIndexID, currentProgramIndexProjectCodeJson.ProjectCodeID); $event.preventDefault();">
-                            <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()"></i>
-                        </a>
-                    </span>
-                    <span ng-bind="(currentProgramIndexProjectCodeJson.ProgramIndexName) + ' ' + (currentProgramIndexProjectCodeJson.ProjectCodeName)"></span>
-                </div>
+            <div class="col-xs-3">
+                <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID"
+                       placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;"
+                       ng-model="selectedProgramIndexName" />
+                <input id="SelectedProgramIndexID" name="SelectedProgramIndexID" type="hidden" ng-model="selectedProgramIndexID" />
+            </div>
+            <div class="col-xs-3">
+                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
+                       placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;"
+                       ng-model="selectedProjectCodeName" />
+                <input id="SelectedProjectCodeID" name="SelectedProjectCodeID" type="hidden" ng-model="selectedProjectCodeID" />
+                @Html.ValidationMessageFor(m => m.ProgramIndexProjectCodeJsons)
+                
+            </div>
+            <div class="col-xs-3">
+                <button type="button" class="btn btn-sm btn-firma" ng-click="addProgramIndexProjectCodePair(selectedProgramIndexID, selectedProgramIndexName, selectedProjectCodeID, selectedProjectCodeName)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add
+                </button>
+            </div>
+
+            @*Selections*@
+            <div class="col-xs-9 col-xs-offset-3" ng-repeat="currentProgramIndexProjectCodeJson in AngularModel.ProgramIndexProjectCodeJsons" style="margin-top: 5px;">
+                <span>
+                    <a href="#" ng-click="removeSelectedProgramIndexProjectCodePair(currentProgramIndexProjectCodeJson.ProgramIndexID, currentProgramIndexProjectCodeJson.ProjectCodeID); $event.preventDefault();">
+                        <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()"></i>
+                    </a>
+                </span>
+                <span ng-bind="(currentProgramIndexProjectCodeJson.ProgramIndexName) + ' ' + (currentProgramIndexProjectCodeJson.ProjectCodeName)"></span>
             </div>
         </div>
         <div class="form-group">

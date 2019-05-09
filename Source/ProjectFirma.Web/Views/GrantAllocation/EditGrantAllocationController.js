@@ -23,40 +23,17 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
 
     console.log('start of EditGrantAllocationController');
 
-    //$scope.$watch(function() {
-    //    jQuery(".selectpicker").selectpicker("refresh");
-
-    //    // so that unsavedChanges.js knows to check if the form has changed.
-    //    jQuery("form").trigger("input");
-    //});
-
-    //$scope.getAvailableGrantAllocationsForAgreement = function() {
-    //    var allPossibleGrantAllocationJsons = $scope.AngularViewData.AllPossibleGrantAllocationJsons;
-    //    var usedGrantAllocations = $scope.AngularModel.GrantAllocationJsons;
-    //    var usedGrantAllocationIds = _.map(usedGrantAllocations,
-    //        function(f) {
-    //            return f.GrantAllocationID;
-    //        });
-
-    //    var filteredGrantAllocationSelectList = _.filter(allPossibleGrantAllocationJsons,
-    //        function(f) {
-    //            return !_.includes(usedGrantAllocationIds, f.GrantAllocationID)
-    //        });
-
-    //    return filteredGrantAllocationSelectList;
-    //};
-
     $scope.addProgramIndexProjectCodePair = function (programIndexID, programIndexName, projectCodeID, projectCodeName) {
 
-        console.log("programIndexID: " + programIndexID);
-        console.log("programIndexName: " + programIndexName);
-        console.log("projectCodeID: " + projectCodeID);
-        console.log("projectCodeName: " + projectCodeName);
+        //console.log("programIndexID: " + programIndexID);
+        //console.log("programIndexName: " + programIndexName);
+        //console.log("projectCodeID: " + projectCodeID);
+        //console.log("projectCodeName: " + projectCodeName);
 
-        console.log("programIndexID-Selected: " + $scope.selectedProgramIndexID);
-        console.log("programIndexName-Selected: " + $scope.selectedProgramIndexName);
-        console.log("projectCodeID-Selected: " + $scope.selectedProjectCodeID);
-        console.log("projectCodeName-Selected: " + $scope.selectedProjectCodeName);
+        //console.log("programIndexID-Selected: " + $scope.selectedProgramIndexID);
+        //console.log("programIndexName-Selected: " + $scope.selectedProgramIndexName);
+        //console.log("projectCodeID-Selected: " + $scope.selectedProjectCodeID);
+        //console.log("projectCodeName-Selected: " + $scope.selectedProjectCodeName);
 
         $scope.AngularModel.ProgramIndexProjectCodeJsons.push({
             ProgramIndexID: Number(programIndexID),
@@ -66,13 +43,7 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
         });
         $scope.resetSelectedIDsAndNames();
 
-        console.log("after selected fields have been wiped:")
-        console.log("programIndexID-Selected: " + $scope.selectedProgramIndexID);
-        console.log("programIndexName-Selected: " + $scope.selectedProgramIndexName);
-        console.log("projectCodeID-Selected: " + $scope.selectedProjectCodeID);
-        console.log("projectCodeName-Selected: " + $scope.selectedProjectCodeName);
-
-        console.log("programIndexProjectCodeJsons: " + JSON.stringify($scope.AngularModel.ProgramIndexProjectCodeJsons));
+        //console.log("programIndexProjectCodeJsons: " + JSON.stringify($scope.AngularModel.ProgramIndexProjectCodeJsons));
 
     };
 
@@ -92,17 +63,11 @@ angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", fu
     };
 
     $scope.postBackProjectCodeHandler = function(id, name) {
-        //set ProjectCodeID value and display text in input
-        //jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
-        //jQuery("#SelectedProjectCodeID").val(ui.item.actualValue);
         $scope.selectedProjectCodeName = name;
         $scope.selectedProjectCodeID = id;
     };
 
     $scope.postBackProgramIndexHandler = function(id, name) {
-        //set ProgramIndexID value and display text in input 
-        //jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
-        //jQuery("#SelectedProgramIndexID").val(ui.item.actualValue);
         $scope.selectedProgramIndexName = name;
         $scope.selectedProgramIndexID = id;      
     };
