@@ -298,6 +298,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationExpenditure">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationExpenditure">
+        <MappingFragment StoreEntitySet="GrantAllocationExpenditure">
+          <ScalarProperty Name="GrantAllocationExpenditureID" ColumnName="GrantAllocationExpenditureID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="Biennium" ColumnName="Biennium" />
+          <ScalarProperty Name="FiscalMonth" ColumnName="FiscalMonth" />
+          <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
+          <ScalarProperty Name="CalendarMonth" ColumnName="CalendarMonth" />
+          <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNote">
         <MappingFragment StoreEntitySet="GrantAllocationNote">

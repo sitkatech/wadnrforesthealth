@@ -191,7 +191,9 @@ namespace ProjectFirma.Web.Controllers
                 SaveFiltersInCookie = true
             };
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec);
+            var grantAllocationExpendituresGridSpec = new GrantAllocationExpendituresGridSpec();
+
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
@@ -531,5 +533,13 @@ namespace ProjectFirma.Web.Controllers
 
         #endregion
 
+        public GridJsonNetJObjectResult<GrantAllocationExpenditure> GrantAllocationExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationExpenditures = grantAllocation.GrantAllocationExpenditures.ToList();
+            var gridSpec = new GrantAllocationExpendituresGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationExpenditure>(grantAllocationExpenditures, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
     }
 }

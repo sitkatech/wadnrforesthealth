@@ -26,6 +26,7 @@ namespace ProjectFirma.Web.Models
         {
             this.AgreementGrantAllocations = new HashSet<AgreementGrantAllocation>();
             this.GrantAllocationBudgetLineItems = new HashSet<GrantAllocationBudgetLineItem>();
+            this.GrantAllocationExpenditures = new HashSet<GrantAllocationExpenditure>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
@@ -93,13 +94,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationExpenditures.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -130,6 +131,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in GrantAllocationBudgetLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationExpenditures.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -198,6 +204,7 @@ namespace ProjectFirma.Web.Models
 
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
+        public virtual ICollection<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }

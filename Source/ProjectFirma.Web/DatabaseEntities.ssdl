@@ -27,6 +27,7 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" store:Type="Tables" Schema="dbo" />
@@ -269,6 +270,10 @@
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationExpenditures" EntitySet="GrantAllocationExpenditure" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1217,6 +1222,19 @@
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemNote" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="GrantAllocationExpenditure">
+    <Key>
+      <PropertyRef Name="GrantAllocationExpenditureID" />
+    </Key>
+    <Property Name="GrantAllocationExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="CostTypeID" Type="int" />
+    <Property Name="Biennium" Type="int" Nullable="false" />
+    <Property Name="FiscalMonth" Type="int" Nullable="false" />
+    <Property Name="CalendarYear" Type="int" Nullable="false" />
+    <Property Name="CalendarMonth" Type="int" Nullable="false" />
+    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -2798,6 +2816,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
         <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="GrantAllocationBudgetLineItems">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationExpenditures">
         <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
@@ -4831,6 +4861,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Function Name="fCurrentFiscalYearBiennium" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="string" Type="nvarchar(max)" Mode="In" />

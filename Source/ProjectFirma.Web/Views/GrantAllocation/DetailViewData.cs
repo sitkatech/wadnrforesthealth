@@ -52,12 +52,17 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public GrantAllocationBudgetVsActualsViewData GrantAllocationBudgetVsActualsViewData { get; }
 
+        public GrantAllocationExpendituresGridSpec GrantAllocationExpendituresGridSpec { get; }
+        public string GrantAllocationExpendituresGridName { get; }
+        public string GrantAllocationExpendituresGridDataUrl { get; }
+
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
             , EntityNotesViewData grantAllocationNotesViewData
             , EntityNotesViewData grantAllocationNoteInternalsViewData
             , ViewGoogleChartViewData viewGoogleChartViewData
-            , GridSpec<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequestsGridSpec)
+            , GridSpec<Models.ProjectGrantAllocationRequest> projectGrantAllocationRequestsGridSpec
+            , GrantAllocationExpendituresGridSpec grantAllocationExpendituresGridSpec)
             : base(currentPerson, grantAllocation)
         {
             PageTitle = grantAllocation.GrantAllocationName.ToEllipsifiedStringClean(110);
@@ -87,6 +92,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ProjectGrantAllocationRequestsGridSpec = projectGrantAllocationRequestsGridSpec;
             ProjectGrantAllocationRequestsGridName = "projectsGrantAllocationRequestsFromGrantAllocationGrid";
             ProjectGrantAllocationRequestsGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(tc => tc.ProjectGrantAllocationRequestsGridJsonData(grantAllocation));
+
+            GrantAllocationExpendituresGridSpec = grantAllocationExpendituresGridSpec;
+            GrantAllocationExpendituresGridName = "grantAllocationExpendituresGrid";
+            GrantAllocationExpendituresGridDataUrl = SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(gac => gac.GrantAllocationExpendituresGridJsonData(grantAllocation));
 
             GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation);
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);

@@ -52,6 +52,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
+        public virtual DbSet<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
@@ -294,6 +295,9 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantAllocationBudgetLineItem":
                     return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);
+
+                case "GrantAllocationExpenditure":
+                    return GrantAllocationExpenditures.GetGrantAllocationExpenditure(primaryKey);
 
                 case "GrantAllocationNoteInternal":
                     return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);

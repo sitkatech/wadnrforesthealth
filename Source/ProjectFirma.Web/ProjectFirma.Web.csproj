@@ -150,6 +150,9 @@
     <Compile Include="Models\Generated\GrantAllocationBudgetLineItem.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationBudgetLineItem.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationBudgetLineItemPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationExpenditure.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationExpenditure.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationExpenditurePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNote.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNote.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationNoteInternal.Binding.cs" />
@@ -695,6 +698,7 @@
     <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternal.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewData.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewModel.cs" />
