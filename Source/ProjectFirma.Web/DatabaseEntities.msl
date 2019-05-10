@@ -813,6 +813,7 @@
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="FhtProjectNumber" ColumnName="FhtProjectNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

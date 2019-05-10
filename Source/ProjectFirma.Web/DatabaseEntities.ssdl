@@ -1703,6 +1703,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="FhtProjectNumber" Type="varchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>

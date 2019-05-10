@@ -174,4 +174,5 @@ VALUES
 (352, N'GrantModificationEndDate', 'Grant Modification End Date', '<p>Placeholder definition for Grant Modification End Date</p>'),
 (353, N'GrantModificationName', 'Grant Modification Name', '<p>Placeholder definition for Grant Modification Name</p>'),
 (354, N'GrantModification', 'Grant Modification', '<p>Placeholder definition for Grant Modification</p>'),
-(355, N'GrantModificationNoteInternal', 'Internal Grant Modification Note', N'<p>Any additional important information about the grant modification. These notes are only visible to internal users </p>')
+(355, N'GrantModificationNoteInternal', 'Internal Grant Modification Note', N'<p>Any additional important information about the grant modification. These notes are only visible to internal users </p>'),
+(356, N'FhtProjectNumber', 'FHT Project Number', N'<p>Placeholder definition for FHT Project Number description.</p>')
