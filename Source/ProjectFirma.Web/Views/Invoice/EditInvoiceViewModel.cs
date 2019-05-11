@@ -41,6 +41,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public string InvoiceIdentifyingName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.RequestorName)]
+        [Required]
         public string RequestorName { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.InvoiceDate)]

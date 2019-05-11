@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         public PartialViewResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey)
         {
             var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceLineItemViewModel viewModel)
         {
@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [InvoiceLineItemEditAsAdminFeature]
+        [InvoiceLineItemEditFeature]
         public PartialViewResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
         {
             var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
@@ -116,7 +116,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [InvoiceLineItemEditAsAdminFeature]
+        [InvoiceLineItemEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, EditInvoiceLineItemViewModel viewModel)
         {
@@ -152,7 +152,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [AgreementCreateFeature]
+        [InvoiceCreateFeature]
         public PartialViewResult New()
         {
             var viewModel = new EditInvoiceViewModel();
@@ -160,7 +160,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [AgreementCreateFeature]
+        [InvoiceCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult New(EditInvoiceViewModel viewModel)
         {
@@ -188,7 +188,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         public PartialViewResult Edit(InvoicePrimaryKey invoicePrimaryKey)
         {
             var invoice = invoicePrimaryKey.EntityObject;
@@ -197,7 +197,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult Edit(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceViewModel viewModel)
         {

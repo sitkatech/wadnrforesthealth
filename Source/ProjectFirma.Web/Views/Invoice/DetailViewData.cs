@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.Invoice
             InvoiceBasicsViewData = invoiceBasicsViewData;
             InvoiceLineItemGridSpec = new InvoiceLineItemGridSpec(currentPerson) { ObjectNameSingular = "Invoice Line Item", ObjectNamePlural = "Invoice Line Items", SaveFiltersInCookie = true };
             InvoiceLineItemGridDataUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(ac => ac.InvoiceLineItemGridJsonData(invoice.InvoiceID));
-            var userHasEditInvoicePermissions = new InvoiceLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            var userHasEditInvoicePermissions = new InvoiceLineItemEditFeature().HasPermissionByPerson(currentPerson);
             if (userHasEditInvoicePermissions)
             {
                 var contentUrl = SitkaRoute<InvoiceController>.BuildUrlFromExpression(t => t.NewInvoiceLineItem(invoice.InvoiceID));

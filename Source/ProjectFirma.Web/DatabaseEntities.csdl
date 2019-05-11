@@ -1971,6 +1971,7 @@
     <Property Name="NoRegionsExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="NoPriorityAreasExplanation" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
     <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="FhtProjectNumber" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="Projects" ToRole="FocusArea" />
     <NavigationProperty Name="InteractionEventProjects" Relationship="ProjectFirma.Web.Models.FK_InteractionEventProject_Project_ProjectID" FromRole="Project" ToRole="InteractionEventProjects" />
     <NavigationProperty Name="NotificationProjects" Relationship="ProjectFirma.Web.Models.FK_NotificationProject_Project_ProjectID" FromRole="Project" ToRole="NotificationProjects" />
