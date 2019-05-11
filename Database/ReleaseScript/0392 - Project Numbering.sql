@@ -13,3 +13,9 @@ FROM (
       FROM dbo.Project AS p
       ) x
 where x.ProjectID = dbo.Project.ProjectID
+
+
+ALTER TABLE dbo.Project ALTER COLUMN FhtProjectNumber varchar(20) NOT NULL
+
+ALTER TABLE dbo.Project ADD CONSTRAINT AK_Project_FhtProjectNumber UNIQUE (FhtProjectNumber);   
+	

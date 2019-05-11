@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Project(int projectTypeID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID) : this()
+        public Project(int projectTypeID, int projectStageID, string projectName, string projectDescription, bool isFeatured, int projectLocationSimpleTypeID, int projectApprovalStatusID, string fhtProjectNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -99,12 +99,13 @@ namespace ProjectFirma.Web.Models
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatusID;
+            this.FhtProjectNumber = fhtProjectNumber;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus) : this()
+        public Project(ProjectType projectType, ProjectStage projectStage, string projectName, string projectDescription, bool isFeatured, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus, string fhtProjectNumber) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -117,6 +118,7 @@ namespace ProjectFirma.Web.Models
             this.IsFeatured = isFeatured;
             this.ProjectLocationSimpleTypeID = projectLocationSimpleType.ProjectLocationSimpleTypeID;
             this.ProjectApprovalStatusID = projectApprovalStatus.ProjectApprovalStatusID;
+            this.FhtProjectNumber = fhtProjectNumber;
         }
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Project CreateNewBlank(ProjectType projectType, ProjectStage projectStage, ProjectLocationSimpleType projectLocationSimpleType, ProjectApprovalStatus projectApprovalStatus)
         {
-            return new Project(projectType, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus);
+            return new Project(projectType, projectStage, default(string), default(string), default(bool), projectLocationSimpleType, projectApprovalStatus, default(string));
         }
 
         /// <summary>
