@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\ApiJson\ProjectApiJson.cs" />
     <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
@@ -653,6 +654,7 @@
     <Compile Include="Security\JobManageFeature.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityAreaManageFeature.cs" />
+    <Compile Include="Security\ProjectsViewJsonApiFeature.cs" />
     <Compile Include="Security\RegionManageFeature.cs" />
     <Compile Include="Security\PriorityAreaViewFeature.cs" />
     <Compile Include="Security\RegionViewFeature.cs" />

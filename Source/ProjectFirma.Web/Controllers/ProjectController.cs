@@ -42,6 +42,7 @@ using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
@@ -920,5 +921,18 @@ Continue with a new {FieldDefinition.Project.GetFieldDefinitionLabel()} update?
                 return File(content, "application/pdf", fileName);
             }
         }
+
+        #region Project JSON API
+
+        [ProjectsViewJsonApiFeature]
+        public JsonNetJArrayResult ProjectJsonApi()
+        {
+            var projects = HttpRequestStorage.DatabaseEntities.Projects.ToList();
+            var jsonApiProjects = ProjectApiJson.MakeProjectApiJsonsFromProjects(projects, false);
+            return new JsonNetJArrayResult(jsonApiProjects);
+        }
+
+        #endregion
+
     }
 }
