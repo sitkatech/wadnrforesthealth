@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
@@ -30,6 +31,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
+using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
@@ -161,8 +163,6 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<GrantIndex, GrantIndexViewData>(viewData);
         }
 
-        
-
         [GrantsViewFullListFeature]
         public ExcelResult GrantsExcelDownload()
         {
@@ -247,6 +247,24 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantModification>(grantModifications, gridSpec);
             return gridJsonNetJObjectResult;
         }
+        #endregion
+
+
+        #region WADNR Grant JSON API
+
+
+        [GrantsViewJsonApiFeature]
+        public JsonNetJArrayResult GrantJsonApi()
+        {
+            var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
+            var jsonApiGrants = GrantApiJson.MakeGrantApiJsonsFromGrants(grants, false);
+            return new JsonNetJArrayResult(jsonApiGrants);
+        }
+
+
+
+        //GrantAllocationJson
+
         #endregion
 
 

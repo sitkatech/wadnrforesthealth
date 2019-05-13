@@ -28,6 +28,8 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
@@ -37,7 +39,7 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class GrantAllocationController : FirmaBaseController
+    public partial class GrantAllocationController : FirmaBaseController
     {
         [HttpGet]
         [GrantAllocationDeleteFeature]
@@ -528,6 +530,18 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+
+        #endregion
+
+        #region Grant Allocation JSON API
+
+        [GrantsViewJsonApiFeature]
+        public JsonNetJArrayResult GrantAllocationJsonApi()
+        {
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var jsonApiGrantAllocations = GrantAllocationApiJson.MakeGrantAllocationApiJsonsFromGrantAllocations(grantAllocations, false);
+            return new JsonNetJArrayResult(jsonApiGrantAllocations);
+        }
 
         #endregion
 
