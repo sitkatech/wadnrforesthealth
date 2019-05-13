@@ -7,6 +7,7 @@ using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.Shared;
@@ -355,5 +356,19 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(agreement, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
+
+
+        #region WADNR Grant JSON API
+
+        [GrantsViewJsonApiFeature]
+        public JsonNetJArrayResult AgreementJsonApi()
+        {
+            var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList(); 
+            var jsonApiAgreements = AgreementApiJson.MakeAgreementApiJsonsFromAgreements(agreements, false);
+            return new JsonNetJArrayResult(jsonApiAgreements);
+        }
+
+        #endregion
+
     }
 }

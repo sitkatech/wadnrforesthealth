@@ -252,7 +252,6 @@ namespace ProjectFirma.Web.Controllers
 
         #region WADNR Grant JSON API
 
-
         [GrantsViewJsonApiFeature]
         public JsonNetJArrayResult GrantJsonApi()
         {
@@ -260,10 +259,6 @@ namespace ProjectFirma.Web.Controllers
             var jsonApiGrants = GrantApiJson.MakeGrantApiJsonsFromGrants(grants, false);
             return new JsonNetJArrayResult(jsonApiGrants);
         }
-
-
-
-        //GrantAllocationJson
 
         #endregion
 
