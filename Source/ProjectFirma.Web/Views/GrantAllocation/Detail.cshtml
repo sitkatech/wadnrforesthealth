@@ -119,8 +119,10 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
+    
+    @* Reported Expenditures from Project -  5/14/2019 TK - not currently needed but may add back in Phase 2 *@
+    @*
+        <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
@@ -131,13 +133,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() (New)
+                    @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
                 </div>
                 <div class="panel-body">
                     @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
