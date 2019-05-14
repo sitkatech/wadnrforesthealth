@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,6 +47,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GrantAllocationProgramIndexProjectCodeController.cs" />
+    <Compile Include="Models\ApiJson\GrantAllocationProgramIndexProjectCodeApiJson.cs" />
+    <Compile Include="Models\ApiJson\ProjectCodeApiJson.cs" />
+    <Compile Include="Models\ApiJson\ProgramIndexApiJson.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Agreement.Binding.cs" />
@@ -663,6 +667,8 @@
     <Compile Include="Security\JobManageFeature.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityAreaManageFeature.cs" />
+    <Compile Include="Security\ProgramIndexViewJsonApiFeature.cs" />
+    <Compile Include="Security\ProjectCodeViewJsonApiFeature.cs" />
     <Compile Include="Security\ProjectsViewJsonApiFeature.cs" />
     <Compile Include="Security\RegionManageFeature.cs" />
     <Compile Include="Security\PriorityAreaViewFeature.cs" />

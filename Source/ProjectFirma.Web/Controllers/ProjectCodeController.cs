@@ -1,10 +1,12 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Controllers
@@ -20,5 +22,17 @@ namespace ProjectFirma.Web.Controllers
             // use JSON structure for jquerys autocomplete functionality
             return Json(projectCodesFoundAsAnonymousJsonStructure, JsonRequestBehavior.AllowGet);
         }
+
+        #region WADNR Grant JSON API
+
+        [ProjectCodeViewJsonApiFeature]
+        public JsonNetJArrayResult ProjectCodeJsonApi()
+        {
+            var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes.ToList();
+            var jsonProjectCodes = ProjectCodeApiJson.MakeProjectCodeApiJsonsFromProjectCodes(projectCodes, false);
+            return new JsonNetJArrayResult(jsonProjectCodes);
+        }
+
+        #endregion
     }
 }
