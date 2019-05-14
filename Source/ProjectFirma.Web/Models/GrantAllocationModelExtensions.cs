@@ -66,8 +66,9 @@ namespace ProjectFirma.Web.Models
             foreach (var costType in CostType.All.Where(ct => ct.IsValidInvoiceLineItemCostType))
             {
                 var budget = grantAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
-                //TODO: get expenditures from datamart for this grant allocation of this cost type
-                var expendituresFromDatamart = 0m;
+
+                var expendituresFromDatamart = grantAllocation.GrantAllocationExpenditures
+                    .Where(gae => gae.CostTypeID == costType.CostTypeID).Select(gae => gae.ExpenditureAmount).Sum();
 
                 var invoicedToDate = grantAllocation.InvoiceLineItems.Where(ili => ili.CostTypeID == costType.CostTypeID).Select(ili => ili.InvoiceLineItemAmount).Sum();
                 

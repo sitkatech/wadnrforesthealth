@@ -38,18 +38,18 @@ inner join [dbo].[tmp2015-19_grant_payments_singlesheet] as tgp
 inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.OBJECT_CODE
 */
 
-/*
+
+
 --too many results
+insert into [GrantAllocationExpenditure] ( GrantAllocationID, CostTypeID, Biennium, FiscalMonth, CalendarYear, CalendarMonth, ExpenditureAmount)
 select
 	gapc.GrantAllocationID,
-	null as CostTypeID, -- CostTypeID	 
+	ctdm.CostTypeID as CostTypeID, -- CostTypeID	 
 	tgp.BIENNIUM,
 	tgp.FM_NO,
 	replace(tgp.CAL_YEAR, ',', '') as CalendarYear,
     (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.[MONTH])) as CalendarMonth,
-	tgp.EXPEND_ACCRUED,
-	tgp.OBJECT_CODE,
-	ctdm.CostTypeID
+	tgp.EXPEND_ACCRUED
 from GrantAllocationProgramIndexProjectCode as gapc
 inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
 inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
@@ -59,14 +59,8 @@ inner join [dbo].[tmp2015-19_grant_payments_singlesheet] as tgp
 		and 
 		dbo.fRemoveLeadingZeroes(tgp.PROGRAM_INDEX_CODE) = pin.ProgramIndexCode
 inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.OBJECT_CODE
-inner join dbo.GrantAllocationExpenditure as gae 
-		on
-		gae.Biennium = tgp.BIENNIUM
-		and
-		gae.FiscalMonth = tgp.FM_NO
-		and
-		gae.ExpenditureAmount = tgp.EXPEND_ACCRUED
-*/
+
+
 
 
 
