@@ -23,18 +23,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Agreement;
-using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Invoice;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.InvoiceControls;
-using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -247,5 +243,28 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Invoice>(invoices, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+
+        #region WADNR Grant JSON API
+
+        [InvoicesViewJsonApiFeature]
+        public JsonNetJArrayResult InvoiceJsonApi()
+        {
+            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
+            var jsonApiInvoices = InvoiceApiJson.MakeInvoiceApiJsonsFromAgreements(invoices, false);
+            return new JsonNetJArrayResult(jsonApiInvoices);
+        }
+
+        [InvoicesViewJsonApiFeature]
+        public JsonNetJArrayResult InvoiceLineItemJsonApi()
+        {
+            var invoiceLineItems = HttpRequestStorage.DatabaseEntities.InvoiceLineItems.ToList();
+            var jsonApiInvoiceLineItems = InvoiceLineItemApiJson.MakeInvoiceLineItemApiJsonsFromAgreements(invoiceLineItems);
+            return new JsonNetJArrayResult(jsonApiInvoiceLineItems);
+        }
+
+        #endregion
+
+
     }
 }
