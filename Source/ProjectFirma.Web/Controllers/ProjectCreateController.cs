@@ -184,8 +184,8 @@ namespace ProjectFirma.Web.Controllers
                                       viewModel.ProjectDescription,
                                       false,
                                       ProjectLocationSimpleType.None.ProjectLocationSimpleTypeID,
-                                      ProjectApprovalStatus.Draft.ProjectApprovalStatusID
-                                       
+                                      ProjectApprovalStatus.Draft.ProjectApprovalStatusID,
+                                      Project.CreateNewFhtProjectNumber()
                                     )
             {
                 ProposingPerson = CurrentPerson,

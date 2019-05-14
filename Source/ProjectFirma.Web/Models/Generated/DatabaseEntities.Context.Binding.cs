@@ -52,10 +52,11 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
+        public virtual DbSet<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
+        public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
@@ -295,17 +296,20 @@ namespace ProjectFirma.Web.Models
                 case "GrantAllocationBudgetLineItem":
                     return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);
 
+                case "GrantAllocationExpenditure":
+                    return GrantAllocationExpenditures.GetGrantAllocationExpenditure(primaryKey);
+
                 case "GrantAllocationNoteInternal":
                     return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
 
                 case "GrantAllocationNote":
                     return GrantAllocationNotes.GetGrantAllocationNote(primaryKey);
 
+                case "GrantAllocationProgramIndexProjectCode":
+                    return GrantAllocationProgramIndexProjectCodes.GetGrantAllocationProgramIndexProjectCode(primaryKey);
+
                 case "GrantAllocationProgramManager":
                     return GrantAllocationProgramManagers.GetGrantAllocationProgramManager(primaryKey);
-
-                case "GrantAllocationProjectCode":
-                    return GrantAllocationProjectCodes.GetGrantAllocationProjectCode(primaryKey);
 
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);

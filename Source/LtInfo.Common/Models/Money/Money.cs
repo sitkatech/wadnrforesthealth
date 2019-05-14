@@ -774,7 +774,19 @@ namespace System
 
         public Object ToType(Type conversionType, IFormatProvider provider)
         {
-            throw new NotSupportedException();
+            if (conversionType == typeof(string))
+            {
+                return ToString(provider);
+            }
+            if (conversionType == typeof(double))
+            {
+                return ToDouble(provider);
+            }
+            if (conversionType == typeof(float))
+            {
+                return ToSingle(provider);
+            }
+            throw new NotSupportedException($"Can't convert {this.GetType().FullName} to {conversionType.FullName}. If this conversion is desired, add code here to convert as appropriate.");
         }
 
         #endregion

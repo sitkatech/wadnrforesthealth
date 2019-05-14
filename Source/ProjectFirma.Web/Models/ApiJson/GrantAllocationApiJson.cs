@@ -20,8 +20,6 @@ namespace ProjectFirma.Web.Models.ApiJson
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public decimal? AllocationAmount { get; set; }
-        public int? ProgramIndexID { get; set; }
-        public string ProgramIndexName { get; set; }
         public int? FederalFundCodeID { get; set; }
         public string FederalFundCodeName { get; set; }
         public int? OrganizationID { get; set; }
@@ -47,8 +45,6 @@ namespace ProjectFirma.Web.Models.ApiJson
             StartDate = grantAllocation.StartDate;
             EndDate = grantAllocation.EndDate;
             AllocationAmount = grantAllocation.AllocationAmount;
-            ProgramIndexID = grantAllocation.ProgramIndexID;
-            ProgramIndexName = grantAllocation.ProgramIndexDisplay;
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             FederalFundCodeName = grantAllocation.FederalFundCodeDisplay;
             OrganizationID = grantAllocation.OrganizationID;

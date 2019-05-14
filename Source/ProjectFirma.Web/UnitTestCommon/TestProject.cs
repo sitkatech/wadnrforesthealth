@@ -54,7 +54,8 @@ namespace ProjectFirma.Web.UnitTestCommon
                     false,
                     ProjectLocationSimpleType.None,
                     // TODO: Verify that this is correct or use the correct value
-                    ProjectApprovalStatus.Approved
+                    ProjectApprovalStatus.Approved,
+                    Project.CreateNewFhtProjectNumber()
                     );
                 project.FocusArea = focusArea;
                 dbContext.Projects.Add(project);
@@ -68,7 +69,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 var focusArea = TestFocusArea.Create();
 
                 // TODO: Verify that "Approved" is the correct project state or use the correct value
-                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved)
+                var project = new Project(projectType, projectStage, projectName, "Some description",  false, ProjectLocationSimpleType.None, ProjectApprovalStatus.Approved, Project.CreateNewFhtProjectNumber())
                 {
                     ProjectID = projectID
                 };

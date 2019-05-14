@@ -32,7 +32,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 {
     public class EditGrantAllocationViewData : FirmaUserControlViewData
     {
-        private readonly IEnumerable<Models.Organization> _organizations;
         public IEnumerable<SelectListItem> Organizations { get; }
 
         public EditGrantAllocationType EditGrantAllocationType { get; set; }
@@ -44,6 +43,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public IEnumerable<SelectListItem> ProgramManagersSelectList { get; }
         public IEnumerable<SelectListItem> GrantManagers { get; }
         public string AddContactUrl { get; }
+
+        public EditGrantAllocationAngularViewData AngularViewData { get; }
 
 
 
@@ -57,7 +58,6 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                                         IEnumerable<FederalFundCode> federalFundCodes,
                                         List<Person> allPeople)
         {
-            _organizations = organizations;
             Organizations = organizations.ToSelectListWithEmptyFirstRow(x => x.OrganizationID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);//sorted in the controller
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
             GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
@@ -86,6 +86,11 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             EditGrantAllocationType = editGrantAllocationType;
             AddContactUrl = SitkaRoute<UserController>.BuildUrlFromExpression(x => x.Index());
         }
+
+    }
+
+    public class EditGrantAllocationAngularViewData
+    {
 
     }
 }

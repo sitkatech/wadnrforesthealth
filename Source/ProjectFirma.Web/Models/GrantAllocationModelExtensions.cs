@@ -79,5 +79,17 @@ namespace ProjectFirma.Web.Models
             return budgetVsActualsLineItemList;
         }
 
+        public static string GetAssociatedProgramIndexProjectCodePairsCommaDelimited(this GrantAllocation grantAllocation)
+        {
+            List<string> programIndexProjectCodePairs = new List<string>();
+
+            foreach (var pair in grantAllocation.GrantAllocationProgramIndexProjectCodes)
+            {
+                programIndexProjectCodePairs.Add(pair.ProgramIndexProjectCodeDisplayString);
+            }
+
+            return string.Join(", ", programIndexProjectCodePairs);
+        }
+
     }
 }

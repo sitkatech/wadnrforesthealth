@@ -372,6 +372,22 @@ namespace ProjectFirma.Web.Models
             return featureCollection;
         }
 
+        public static string CreateNewFhtProjectNumber()
+        {
+            var currentCounter = 1;
+            var lastProjectCreatedThisYear = HttpRequestStorage.DatabaseEntities.Projects.Where(p => p.FhtProjectNumber.Contains(DateTime.Now.Year.ToString())).OrderByDescending(p => p.FhtProjectNumber).ToList().FirstOrDefault(p => p.FhtProjectNumber.StartsWith($"FHT-{DateTime.Now.Year}"));
+            if (lastProjectCreatedThisYear != null)
+            {
+                var splitFhtProjectNumber = lastProjectCreatedThisYear.FhtProjectNumber.Split('-');
+                Int32.TryParse(splitFhtProjectNumber[2], out currentCounter);
+                currentCounter++;
+
+            }
+
+            return $"FHT-{DateTime.Now.Year}-{currentCounter:000}";
+
+        }
+
         public IEnumerable<IProjectLocation> GetProjectLocationDetails()
         {
             return ProjectLocations.ToList();
@@ -758,7 +774,7 @@ namespace ProjectFirma.Web.Models
         }
 
         // read-only Helper accessors
-        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.Select(aga => aga.GrantAllocation.ProgramIndex).Where(pi => pi != null).ToList();
-        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.ProjectCodes).Where(pc => pc != null).ToList();
+        public List<ProgramIndex> ProgramIndices => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.ProjectGrantAllocationRequests.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
     }
 }

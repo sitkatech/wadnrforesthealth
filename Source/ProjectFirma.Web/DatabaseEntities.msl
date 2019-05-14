@@ -278,7 +278,6 @@
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
-          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
@@ -296,6 +295,20 @@
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="GrantAllocationBudgetLineItemAmount" ColumnName="GrantAllocationBudgetLineItemAmount" />
           <ScalarProperty Name="GrantAllocationBudgetLineItemNote" ColumnName="GrantAllocationBudgetLineItemNote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationExpenditure">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationExpenditure">
+        <MappingFragment StoreEntitySet="GrantAllocationExpenditure">
+          <ScalarProperty Name="GrantAllocationExpenditureID" ColumnName="GrantAllocationExpenditureID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="Biennium" ColumnName="Biennium" />
+          <ScalarProperty Name="FiscalMonth" ColumnName="FiscalMonth" />
+          <ScalarProperty Name="CalendarYear" ColumnName="CalendarYear" />
+          <ScalarProperty Name="CalendarMonth" ColumnName="CalendarMonth" />
+          <ScalarProperty Name="ExpenditureAmount" ColumnName="ExpenditureAmount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -325,21 +338,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationProgramIndexProjectCode">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode">
+        <MappingFragment StoreEntitySet="GrantAllocationProgramIndexProjectCode">
+          <ScalarProperty Name="GrantAllocationProgramIndexProjectCodeID" ColumnName="GrantAllocationProgramIndexProjectCodeID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
+          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationProgramManager">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProgramManager">
         <MappingFragment StoreEntitySet="GrantAllocationProgramManager">
           <ScalarProperty Name="GrantAllocationProgramManagerID" ColumnName="GrantAllocationProgramManagerID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationProjectCode">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationProjectCode">
-        <MappingFragment StoreEntitySet="GrantAllocationProjectCode">
-          <ScalarProperty Name="GrantAllocationProjectCodeID" ColumnName="GrantAllocationProjectCodeID" />
-          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
-          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -813,6 +827,7 @@
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
           <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="FhtProjectNumber" ColumnName="FhtProjectNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1492,6 +1507,7 @@
           <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
           <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
           <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
+          <ScalarProperty Name="GrantAllocationProgramIndexProjectCodeID" ColumnName="GrantAllocationProgramIndexProjectCodeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

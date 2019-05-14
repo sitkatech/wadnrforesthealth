@@ -57,7 +57,10 @@ namespace ProjectFirma.Web.Controllers
                 treatmentActivity.Project.ProjectPeople.Select(x => x.Person).Distinct(new HavePrimaryKeyComparer<Person>()).OrderBy(x => x.LastName).ToSelectListWithEmptyFirstRow(v => v.PersonID.ToString(),
                     d => d.FullNameFirstLastAndOrg);
 
-            var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems,  CurrentPerson);
+            var programIndexProjectCodePairs = HttpRequestStorage.DatabaseEntities.GrantAllocationProgramIndexProjectCodes.ToList().ToSelectListWithEmptyFirstRow(v => v.GrantAllocationProgramIndexProjectCodeID.ToString(),k => k.ProgramIndexProjectCodeDisplayString);
+            
+
+            var viewData = new EditTreatmentActivityViewData(treatmentActivityStatusAsSelectListItems, contactsAsSelectListItems, programIndexProjectCodePairs, CurrentPerson);
             return RazorPartialView<EditTreatmentActivity, EditTreatmentActivityViewData, EditTreatmentActivityViewModel>(viewData, viewModel);
         }
 

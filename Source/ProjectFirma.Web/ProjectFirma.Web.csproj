@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,15 +47,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\ApiJson\InteractionEvent.cs" />
-    <Compile Include="Models\ApiJson\InvoiceLineItemApiJson.cs" />
-    <Compile Include="Models\ApiJson\InvoiceApiJson.cs" />
-    <Compile Include="Models\ApiJson\ProjectApiJson.cs" />
-    <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
-    <Compile Include="Models\ApiJson\GrantApiJson.cs" />
-    <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
-    <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
-    <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
     <Compile Include="Models\Generated\ActivityTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\Agreement.Binding.cs" />
@@ -159,6 +150,9 @@
     <Compile Include="Models\Generated\GrantAllocationBudgetLineItem.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationBudgetLineItem.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationBudgetLineItemPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationExpenditure.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationExpenditure.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationExpenditurePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNote.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNote.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationNoteInternal.Binding.cs" />
@@ -166,12 +160,12 @@
     <Compile Include="Models\Generated\GrantAllocationNoteInternalPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationNotePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProgramIndexProjectCode.Binding.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProgramIndexProjectCode.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\GrantAllocationProgramIndexProjectCodePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationProgramManager.Binding.cs" />
     <Compile Include="Models\Generated\GrantAllocationProgramManager.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantAllocationProgramManagerPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\GrantAllocationProjectCode.Binding.cs" />
-    <Compile Include="Models\Generated\GrantAllocationProjectCode.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\GrantAllocationProjectCodePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GrantModification.Binding.cs" />
     <Compile Include="Models\Generated\GrantModification.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GrantModificationGrantModificationPurpose.Binding.cs" />
@@ -518,6 +512,15 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\ApiJson\InteractionEvent.cs" />
+    <Compile Include="Models\ApiJson\InvoiceLineItemApiJson.cs" />
+    <Compile Include="Models\ApiJson\InvoiceApiJson.cs" />
+    <Compile Include="Models\ApiJson\ProjectApiJson.cs" />
+    <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
+    <Compile Include="Models\ApiJson\GrantApiJson.cs" />
+    <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
+    <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
+    <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />
     <Compile Include="Models\CurrentBiennium.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -533,6 +536,7 @@
     <Compile Include="Models\GrantAllocationBudgetLineItem.cs" />
     <Compile Include="Models\GrantAllocationBudgetLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationNoteInternal.cs" />
+    <Compile Include="Models\GrantAllocationProgramIndexProjectCode.cs" />
     <Compile Include="Models\GrantModification.cs" />
     <Compile Include="Models\GrantModificationGrantModificationPurpose.cs" />
     <Compile Include="Models\GrantModificationModelExtensions.cs" />
@@ -583,7 +587,6 @@
     <Compile Include="Models\ProjectPriorityAreaUpdate.cs" />
     <Compile Include="Models\ProjectRegion.cs" />
     <Compile Include="Models\GrantAllocationNote.cs" />
-    <Compile Include="Models\GrantAllocationProjectCode.cs" />
     <Compile Include="Models\GrantNote.cs" />
     <Compile Include="Models\ProjectRegionUpdate.cs" />
     <Compile Include="Models\ProjectTypeJson.cs" />
@@ -707,6 +710,7 @@
     <Compile Include="Views\GrantAllocation\EditGrantAllocationNoteViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
+    <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternal.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewData.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewModel.cs" />
@@ -899,6 +903,7 @@
     <Content Include="Content\img\SAW-logo.jpg" />
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
+    <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
     <Content Include="Views\Grant\GrantIndex.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\FocusArea\Index.cshtml" />

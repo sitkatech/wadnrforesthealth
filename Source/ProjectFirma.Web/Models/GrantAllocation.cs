@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,7 +16,6 @@ namespace ProjectFirma.Web.Models
         public string StartDateDisplay => StartDate.HasValue ? StartDate.Value.ToShortDateString() : string.Empty;
         public string EndDateDisplay => EndDate.HasValue ? EndDate.Value.ToShortDateString() : string.Empty;
         public string FederalFundCodeDisplay => FederalFundCodeID.HasValue ? FederalFundCode.FederalFundCodeAbbrev : string.Empty;
-        public string ProgramIndexDisplay => ProgramIndexID.HasValue ? ProgramIndex.ProgramIndexCode : string.Empty;
 
         public string GrantNumberAndGrantAllocationDisplayName => $"{Grant.GrantNumber} {GrantAllocationName}";
 
@@ -38,22 +38,6 @@ namespace ProjectFirma.Web.Models
             get { return SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.GrantAllocationDetail(GrantAllocationID)); }
         }
 
-        [NotNull]
-        public List<ProjectCode> ProjectCodes
-        {
-            get
-            {
-                return this.GrantAllocationProjectCodes.Select(x => x.ProjectCode).Distinct().ToList();
-            }
-
-            set
-            {
-                // Cleanup old records
-                this.GrantAllocationProjectCodes.ToList().ForEach(gapc => gapc.DeleteFull(HttpRequestStorage.DatabaseEntities));
-                // Create entirely new records
-                this.GrantAllocationProjectCodes = value.Select(pc => new GrantAllocationProjectCode(this, pc)).ToList();
-            }
-        }
 
         public string AuditDescriptionString
         {

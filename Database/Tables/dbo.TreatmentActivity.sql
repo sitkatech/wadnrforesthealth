@@ -26,12 +26,18 @@ CREATE TABLE [dbo].[TreatmentActivity](
 	[ProgramIndexID] [int] NULL,
 	[ProjectCodeID] [int] NULL,
 	[TreatmentActivitySlashAcres] [decimal](18, 0) NOT NULL,
+	[GrantAllocationProgramIndexProjectCodeID] [int] NULL,
  CONSTRAINT [PK_TreatmentActivity_TreatmentActivityID] PRIMARY KEY CLUSTERED 
 (
 	[TreatmentActivityID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID] FOREIGN KEY([GrantAllocationProgramIndexProjectCodeID])
+REFERENCES [dbo].[GrantAllocationProgramIndexProjectCode] ([GrantAllocationProgramIndexProjectCodeID])
+GO
+ALTER TABLE [dbo].[TreatmentActivity] CHECK CONSTRAINT [FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID]
 GO
 ALTER TABLE [dbo].[TreatmentActivity]  WITH CHECK ADD  CONSTRAINT [FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID] FOREIGN KEY([TreatmentActivityContactID])
 REFERENCES [dbo].[Person] ([PersonID])

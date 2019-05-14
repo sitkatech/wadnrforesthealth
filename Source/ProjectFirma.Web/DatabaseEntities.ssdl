@@ -27,10 +27,11 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNoteInternal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GrantAllocationProjectCode" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.Store.GrantModification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.Store.GrantModificationGrantModificationPurpose" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.Store.GrantModificationNoteInternal" store:Type="Tables" Schema="dbo" />
@@ -262,10 +263,6 @@
       <End Role="GrantManager" EntitySet="Person" />
       <End Role="GrantAllocationsWhereYouAreTheGrantManager" EntitySet="GrantAllocation" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_ProgramIndex_ProgramIndexID">
-      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
@@ -273,6 +270,10 @@
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationExpenditures" EntitySet="GrantAllocationExpenditure" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -298,6 +299,18 @@
       <End Role="LastUpdatedByPerson" EntitySet="Person" />
       <End Role="GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson" EntitySet="GrantAllocationNoteInternal" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID">
+      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
+      <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
+      <End Role="ProjectCode" EntitySet="ProjectCode" />
+      <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
@@ -305,14 +318,6 @@
     <AssociationSet Name="FK_GrantAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProgramManager_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
-      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
-      <End Role="GrantAllocationProjectCodes" EntitySet="GrantAllocationProjectCode" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="GrantAllocationProjectCodes" EntitySet="GrantAllocationProjectCode" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
       <End Role="GrantModificationFileResource" EntitySet="FileResource" />
@@ -926,6 +931,10 @@
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
+      <End Role="GrantAllocationProgramIndexProjectCode" EntitySet="GrantAllocationProgramIndexProjectCode" />
+      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
+    </AssociationSet>
     <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
       <End Role="TreatmentActivityContact" EntitySet="Person" />
       <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
@@ -1197,7 +1206,6 @@
     <Property Name="StartDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
     <Property Name="AllocationAmount" Type="money" />
-    <Property Name="ProgramIndexID" Type="int" />
     <Property Name="FederalFundCodeID" Type="int" />
     <Property Name="OrganizationID" Type="int" />
     <Property Name="RegionID" Type="int" />
@@ -1214,6 +1222,19 @@
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemNote" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="GrantAllocationExpenditure">
+    <Key>
+      <PropertyRef Name="GrantAllocationExpenditureID" />
+    </Key>
+    <Property Name="GrantAllocationExpenditureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="CostTypeID" Type="int" />
+    <Property Name="Biennium" Type="int" Nullable="false" />
+    <Property Name="FiscalMonth" Type="int" Nullable="false" />
+    <Property Name="CalendarYear" Type="int" Nullable="false" />
+    <Property Name="CalendarMonth" Type="int" Nullable="false" />
+    <Property Name="ExpenditureAmount" Type="money" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
@@ -1239,6 +1260,15 @@
     <Property Name="LastUpdatedByPersonID" Type="int" />
     <Property Name="LastUpdatedDate" Type="datetime" />
   </EntityType>
+  <EntityType Name="GrantAllocationProgramIndexProjectCode">
+    <Key>
+      <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
+    </Key>
+    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="ProgramIndexID" Type="int" Nullable="false" />
+    <Property Name="ProjectCodeID" Type="int" />
+  </EntityType>
   <EntityType Name="GrantAllocationProgramManager">
     <Key>
       <PropertyRef Name="GrantAllocationProgramManagerID" />
@@ -1246,14 +1276,6 @@
     <Property Name="GrantAllocationProgramManagerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="PersonID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GrantAllocationProjectCode">
-    <Key>
-      <PropertyRef Name="GrantAllocationProjectCodeID" />
-    </Key>
-    <Property Name="GrantAllocationProjectCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
-    <Property Name="ProjectCodeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantModification">
     <Key>
@@ -1703,6 +1725,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ExpirationDate" Type="datetime" />
+    <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -2262,9 +2285,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="TaxonomyTrunkCode" Type="varchar" MaxLength="10" />
     <Property Name="TaxonomyTrunkSortOrder" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmp2015-19_grant_payments_singlesheet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
   <EntityType Name="tmpAgreementContact">
     <Key>
       <PropertyRef Name="AgreementContactID" />
@@ -2330,6 +2350,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.tmp2015-19_grant_payments_
     <Property Name="ProgramIndexID" Type="int" />
     <Property Name="ProjectCodeID" Type="int" />
     <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="int" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -2776,18 +2797,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocation_ProgramIndex_ProgramIndexID">
-    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramIndex">
-        <PropertyRef Name="ProgramIndexID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="ProgramIndexID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocation_Region_RegionID">
     <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="0..1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
@@ -2808,6 +2817,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
         <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="GrantAllocationBudgetLineItems">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationExpenditures" Type="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationExpenditures">
         <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
@@ -2884,6 +2905,42 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProgramIndexProjectCodes">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID">
+    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="1" />
+    <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProgramIndex">
+        <PropertyRef Name="ProgramIndexID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProgramIndexProjectCodes">
+        <PropertyRef Name="ProgramIndexID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID">
+    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
+    <End Role="GrantAllocationProgramIndexProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectCode">
+        <PropertyRef Name="ProjectCodeID" />
+      </Principal>
+      <Dependent Role="GrantAllocationProgramIndexProjectCodes">
+        <PropertyRef Name="ProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
     <End Role="GrantAllocationProgramManagers" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramManager" Multiplicity="*" />
@@ -2905,30 +2962,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantAllocationProgramManagers">
         <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProjectCode_GrantAllocation_GrantAllocationID">
-    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
-    <End Role="GrantAllocationProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocation">
-        <PropertyRef Name="GrantAllocationID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProjectCodes">
-        <PropertyRef Name="GrantAllocationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationProjectCode_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="1" />
-    <End Role="GrantAllocationProjectCodes" Type="ProjectFirma.Web.Models.Store.GrantAllocationProjectCode" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="GrantAllocationProjectCodes">
-        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4768,6 +4801,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
+    <End Role="GrantAllocationProgramIndexProjectCode" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="0..1" />
+    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationProgramIndexProjectCode">
+        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
+      </Principal>
+      <Dependent Role="TreatmentActivities">
+        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
     <End Role="TreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
     <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
@@ -4817,6 +4862,9 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
     </ReferentialConstraint>
   </Association>
   <Function Name="fCurrentFiscalYearBiennium" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="fGetCalendarMonthIndexFromMonthString" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="monthString" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="fnSplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="string" Type="nvarchar(max)" Mode="In" />

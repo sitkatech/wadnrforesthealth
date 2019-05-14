@@ -96,12 +96,12 @@ namespace ProjectFirma.Web.Models
 
         public static string GetProgramIndexName(this Models.TreatmentActivity treatmentActivity)
         {
-            return treatmentActivity.ProgramIndex == null ? "" : treatmentActivity.ProgramIndex.ProgramIndexCode;
+            return treatmentActivity.GrantAllocationProgramIndexProjectCode == null ? "" : treatmentActivity.GrantAllocationProgramIndexProjectCode.ProgramIndex?.ProgramIndexCode;
         }
 
         public static string GetProjectCodeName(this Models.TreatmentActivity treatmentActivity)
         {
-            return treatmentActivity.ProjectCode == null ? "" : treatmentActivity.ProjectCode.ProjectCodeName;
+            return treatmentActivity.GrantAllocationProgramIndexProjectCode == null ? "" : treatmentActivity.GrantAllocationProgramIndexProjectCode.ProjectCode?.ProjectCodeName;
         }
 
         public static string GetProjectTypeName(this Models.TreatmentActivity treatmentActivity)

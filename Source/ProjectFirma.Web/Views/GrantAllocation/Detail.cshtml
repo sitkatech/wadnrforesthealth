@@ -104,7 +104,7 @@
 
     @{ GrantAllocationBudgetLineItems.RenderPartialView(Html, ViewDataTyped.GrantAllocationBudgetLineItemsViewData); }
 
-    
+
     @{ GrantAllocationBudgetVsActuals.RenderPartialView(Html, ViewDataTyped.GrantAllocationBudgetVsActualsViewData); }
 
     <div class="row">
@@ -128,6 +128,19 @@
                 </div>
                 <div class="panel-body">
                     @Html.DhtmlxGrid(ViewDataTyped.ProjectCalendarYearExpendituresGridSpec, ViewDataTyped.ProjectCalendarYearExpendituresGridName, ViewDataTyped.ProjectCalendarYearExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() (New)
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
             </div>
         </div>
