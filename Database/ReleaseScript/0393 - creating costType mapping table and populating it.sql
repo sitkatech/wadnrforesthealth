@@ -1,4 +1,7 @@
 
+--rename CostTypeDescription to the more appropraite CostTypeDisplayName
+EXEC sp_rename 'dbo.CostType.CostTypeDescription', 'CostTypeDisplayName', 'COLUMN';
+
 CREATE TABLE [dbo].[CostTypeDatamartMapping](
 	[CostTypeDatamartMappingID] [int] NOT NULL,
 	CostTypeID int not null constraint FK_CostTypeDatamartMapping_CostType_CostTypeID references dbo.CostType(CostTypeID),

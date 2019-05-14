@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public GrantAllocationExpendituresGridSpec()
         {
-            Add(Models.FieldDefinition.CostType.ToGridHeaderString(), gae => gae.CostType?.CostTypeName, 100, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.CostType.ToGridHeaderString(), gae => gae.CostType?.CostTypeDisplayName, 100, DhtmlxGridColumnFilterType.Text);
             Add( "Biennium", gae => gae.Biennium.ToString() , 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Fiscal Month", gae => gae.FiscalMonth.ToString(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("Calendar Year", gae => gae.CalendarYear.ToString(), 100, DhtmlxGridColumnFilterType.SelectFilterStrict);

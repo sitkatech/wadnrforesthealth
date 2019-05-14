@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         public EditGrantAllocationBudgetLineItemViewData(List<CostType> costTypes)
         {
-            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription).ToList();
+            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDisplayName).ToList();
         }
 
     }

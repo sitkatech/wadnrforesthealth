@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} Budget Vs Actuals";
             ShowFilterBar = true;
 
-            Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.None);
+            Add("Cost Type", x => x.CostType.CostTypeDisplayName, 125, DhtmlxGridColumnFilterType.None);
             Add("Budget", x => x.Budget, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Expenditures From Datamart", x => x.ExpendituresFromDatamart, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Budget Minus Expenditures", x => x.BudgetMinusExpendituresFromDatamart, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);

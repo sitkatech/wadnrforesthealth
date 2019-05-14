@@ -83,6 +83,9 @@
     <Compile Include="Models\Generated\ClassificationSystem.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ClassificationSystemPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CostType.Binding.cs" />
+    <Compile Include="Models\Generated\CostTypeDatamartMapping.Binding.cs" />
+    <Compile Include="Models\Generated\CostTypeDatamartMapping.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\CostTypeDatamartMappingPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CostTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\County.Binding.cs" />
     <Compile Include="Models\Generated\County.DatabaseContextExtensions.cs" />

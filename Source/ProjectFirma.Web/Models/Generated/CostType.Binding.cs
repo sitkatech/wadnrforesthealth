@@ -42,17 +42,17 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected CostType(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType)
+        protected CostType(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType)
         {
             CostTypeID = costTypeID;
-            CostTypeDescription = costTypeDescription;
+            CostTypeDisplayName = costTypeDisplayName;
             CostTypeName = costTypeName;
             IsValidInvoiceLineItemCostType = isValidInvoiceLineItemCostType;
         }
 
         [Key]
         public int CostTypeID { get; private set; }
-        public string CostTypeDescription { get; private set; }
+        public string CostTypeDisplayName { get; private set; }
         public string CostTypeName { get; private set; }
         public bool IsValidInvoiceLineItemCostType { get; private set; }
         [NotMapped]
@@ -143,49 +143,49 @@ namespace ProjectFirma.Web.Models
 
     public partial class CostTypeIndirectCosts : CostType
     {
-        private CostTypeIndirectCosts(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeIndirectCosts(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeIndirectCosts Instance = new CostTypeIndirectCosts(1, @"Indirect Costs", @"IndirectCosts", true);
     }
 
     public partial class CostTypeSupplies : CostType
     {
-        private CostTypeSupplies(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeSupplies(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeSupplies Instance = new CostTypeSupplies(2, @"Supplies", @"Supplies", true);
     }
 
     public partial class CostTypePersonnelAndBenefits : CostType
     {
-        private CostTypePersonnelAndBenefits(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypePersonnelAndBenefits(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypePersonnelAndBenefits Instance = new CostTypePersonnelAndBenefits(3, @"Personnel and Benefits", @"PersonnelAndBenefits", true);
     }
 
     public partial class CostTypeTravel : CostType
     {
-        private CostTypeTravel(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeTravel(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeTravel Instance = new CostTypeTravel(4, @"Travel", @"Travel", true);
     }
 
     public partial class CostTypeContractual : CostType
     {
-        private CostTypeContractual(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeContractual(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeContractual Instance = new CostTypeContractual(5, @"Contractual", @"Contractual", true);
     }
 
     public partial class CostTypeAgreements : CostType
     {
-        private CostTypeAgreements(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeAgreements(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeAgreements Instance = new CostTypeAgreements(6, @"Agreements", @"Agreements", false);
     }
 
     public partial class CostTypeEquipment : CostType
     {
-        private CostTypeEquipment(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeEquipment(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeEquipment Instance = new CostTypeEquipment(7, @"Equipment", @"Equipment", true);
     }
 
     public partial class CostTypeOther : CostType
     {
-        private CostTypeOther(int costTypeID, string costTypeDescription, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDescription, costTypeName, isValidInvoiceLineItemCostType) {}
+        private CostTypeOther(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
         public static readonly CostTypeOther Instance = new CostTypeOther(8, @"Other", @"Other", true);
     }
 }

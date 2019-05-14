@@ -2,6 +2,6 @@
 {
     public partial class CostType : IAuditableEntity
     {
-        public string AuditDescriptionString => $"{CostTypeDescription}";
+        public string AuditDescriptionString => $"{CostTypeDisplayName}";
     }
 }
