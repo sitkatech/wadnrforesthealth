@@ -535,6 +535,7 @@ namespace ProjectFirma.Web.Controllers
 
         #endregion
 
+        [GrantAllocationsViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationExpenditure> GrantAllocationExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
         {
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
@@ -543,6 +544,7 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationExpenditure>(grantAllocationExpenditures, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
         #region Grant Allocation JSON API
 
         [GrantsViewJsonApiFeature]
