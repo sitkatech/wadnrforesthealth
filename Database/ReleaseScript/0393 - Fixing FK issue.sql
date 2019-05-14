@@ -1,0 +1,1 @@
+exec sp_rename 'AK_GrantAllocationProjectCode_GrantAllocationID_ProgramIndexID_ProjectCodeID', 'AK_GrantAllocationProgramIndexProjectCode_GrantAllocationID_ProgramIndexID_ProjectCodeID', 'OBJECT'
