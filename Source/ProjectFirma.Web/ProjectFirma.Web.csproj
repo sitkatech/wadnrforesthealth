@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -512,6 +512,15 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\ApiJson\InteractionEvent.cs" />
+    <Compile Include="Models\ApiJson\InvoiceLineItemApiJson.cs" />
+    <Compile Include="Models\ApiJson\InvoiceApiJson.cs" />
+    <Compile Include="Models\ApiJson\ProjectApiJson.cs" />
+    <Compile Include="Models\ApiJson\AgreementApiJson.cs" />
+    <Compile Include="Models\ApiJson\GrantApiJson.cs" />
+    <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
+    <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
+    <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />
     <Compile Include="Models\CurrentBiennium.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -622,6 +631,7 @@
     <Compile Include="Security\GrantModificationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantModificationNoteInternalEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantModificationViewFeature.cs" />
+    <Compile Include="Security\InteractionEventJsonApiFeature.cs" />
     <Compile Include="Security\InteractionEventManageFeature.cs" />
     <Compile Include="Security\GrantAllocationEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationCreateFeature.cs" />
@@ -648,10 +658,12 @@
     <Compile Include="SawSamlResponse.cs" />
     <Compile Include="Security\FocusAreaViewFeature.cs" />
     <Compile Include="Security\FocusAreaManageFeature.cs" />
+    <Compile Include="Security\InvoicesViewJsonApiFeature.cs" />
     <Compile Include="Security\InvoiceViewFeature.cs" />
     <Compile Include="Security\JobManageFeature.cs" />
     <Compile Include="Security\PersonDeleteFeature.cs" />
     <Compile Include="Security\PriorityAreaManageFeature.cs" />
+    <Compile Include="Security\ProjectsViewJsonApiFeature.cs" />
     <Compile Include="Security\RegionManageFeature.cs" />
     <Compile Include="Security\PriorityAreaViewFeature.cs" />
     <Compile Include="Security\RegionViewFeature.cs" />
