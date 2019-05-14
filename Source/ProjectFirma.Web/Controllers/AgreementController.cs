@@ -360,7 +360,7 @@ namespace ProjectFirma.Web.Controllers
 
         #region WADNR Grant JSON API
 
-        [GrantsViewJsonApiFeature]
+        [AgreementsViewJsonApiFeature]
         public JsonNetJArrayResult AgreementJsonApi()
         {
             var agreements = HttpRequestStorage.DatabaseEntities.Agreements.ToList(); 

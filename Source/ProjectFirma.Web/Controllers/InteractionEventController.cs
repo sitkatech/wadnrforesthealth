@@ -9,6 +9,7 @@ using LtInfo.Common.GeoJson;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.Shared;
@@ -238,5 +239,20 @@ namespace ProjectFirma.Web.Controllers
             var interactionEvent = interactionEventPrimaryKey.EntityObject;
             return RazorPartialView<InteractionEventMapPopup, InteractionEventMapPopupViewData>(new InteractionEventMapPopupViewData(interactionEvent));
         }
+
+
+        #region WADNR Grant JSON API
+
+        [InteractionEventJsonApiFeature]
+        public JsonNetJArrayResult InteractionEventJsonApi()
+        {
+            var interactionEvents = HttpRequestStorage.DatabaseEntities.InteractionEvents.ToList();
+            var jsonApiInteractionEvents = InteractionEventApiJson.MakeInteractionEventApiJsonsFromInteractionEvents(interactionEvents);
+            return new JsonNetJArrayResult(jsonApiInteractionEvents);
+        }
+
+        #endregion
+
+
     }
 }
