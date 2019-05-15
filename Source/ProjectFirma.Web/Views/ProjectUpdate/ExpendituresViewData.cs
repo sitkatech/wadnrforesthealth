@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         public readonly SectionCommentsViewData SectionCommentsViewData;
 
         public ExpendituresViewData(Person currentPerson, ProjectUpdateBatch projectUpdateBatch, ViewDataForAngularClass viewDataForAngularClass, ProjectExpendituresDetailViewData projectExpendituresDetailViewData, UpdateStatus updateStatus, List<string> expendituresValidationErrors)
-            : base(currentPerson, projectUpdateBatch, updateStatus, expendituresValidationErrors, ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName)
+            : base(currentPerson, projectUpdateBatch, updateStatus, expendituresValidationErrors, "THIS IS BROKEN!" /* 5/15/2019 TK- ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName*/)
         {
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpenditures(projectUpdateBatch.Project));

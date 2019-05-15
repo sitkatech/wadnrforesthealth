@@ -84,16 +84,17 @@ namespace ProjectFirma.Web.Models
     {
         public override List<ProjectSectionSimple> GetProjectCreateSections(Project project, bool ignoreStatus)
         {
-            var projectCreateSections = ProjectCreateSections.Except(new List<ProjectCreateSection> { ProjectCreateSection.ExpectedFunding, ProjectCreateSection.ReportedExpenditures }).ToList();
+            // 5/15/2019 TK - WADNR may need this in phase 2. Removed this from the except because entry is removed from DB ", ProjectCreateSection.ReportedExpenditures"
+            var projectCreateSections = ProjectCreateSections.Except(new List<ProjectCreateSection> { ProjectCreateSection.ExpectedFunding }).ToList();
             if (project != null && project.IsExpectedFundingRelevant())
             {
                 projectCreateSections.Add(ProjectCreateSection.ExpectedFunding);
             }
 
-            if (project != null && project.AreReportedExpendituresRelevant())
-            {
-                projectCreateSections.Add(ProjectCreateSection.ReportedExpenditures);
-            }
+            //if (project != null && project.AreReportedExpendituresRelevant())
+            //{
+            //    projectCreateSections.Add(ProjectCreateSection.ReportedExpenditures);
+            //}
             return GetProjectCreateSectionsImpl(project, projectCreateSections, ignoreStatus);
         }
 

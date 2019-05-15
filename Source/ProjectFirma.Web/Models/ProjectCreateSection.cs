@@ -228,27 +228,28 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectCreateSectionReportedExpenditures
-    {
-        public override bool IsComplete(Project project)
-        {
-            if (project == null)
-            {
-                return false;
-            }
-            var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
-            var validationResults = new ExpendituresViewModel(projectGrantAllocationExpenditures,
-                    projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
-                    project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList()) {ProjectID = project.ProjectID}
-                .GetValidationResults();
-            return !validationResults.Any();
-        }
+    // 5/15/2019 TK - commenting this out because the section is removed from the DB. WADNR may need this section in phase 2
+    //public partial class ProjectCreateSectionReportedExpenditures
+    //{
+    //    public override bool IsComplete(Project project)
+    //    {
+    //        if (project == null)
+    //        {
+    //            return false;
+    //        }
+    //        var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
+    //        var validationResults = new ExpendituresViewModel(projectGrantAllocationExpenditures,
+    //                projectGrantAllocationExpenditures.CalculateCalendarYearRangeForExpenditures(project), project,
+    //                project.GetExpendituresExemptReportingYears().Select(x => new ProjectExemptReportingYearSimple(x)).ToList()) {ProjectID = project.ProjectID}
+    //            .GetValidationResults();
+    //        return !validationResults.Any();
+    //    }
 
-        public override string GetSectionUrl(Project project)
-        {
-            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Expenditures(project.ProjectID)) : null;
-        }
-    }
+    //    public override string GetSectionUrl(Project project)
+    //    {
+    //        return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Expenditures(project.ProjectID)) : null;
+    //    }
+    //}
 
     public partial class ProjectCreateSectionOrganizations
     {

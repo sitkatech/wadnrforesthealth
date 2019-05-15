@@ -8,7 +8,7 @@ values
 (6, 'ExpectedPerformanceMeasures', 'Expected Performance Measures', 60, 1, 3),
 (7, 'ReportedPerformanceMeasures', 'Reported Performance Measures', 70, 1, 3),
 (8, 'ExpectedFunding', 'Expected Funding', 80, 0, 4),
-(9, 'ReportedExpenditures', 'Reported Expenditures', 90, 1, 4),
+--(9, 'ReportedExpenditures', 'Reported Expenditures', 90, 1, 4),
 (11, 'Classifications', 'Classifications', 110, 1, 5),
 (13, 'Photos', 'Photos', 130, 0, 5),
 (14, 'NotesAndDocuments', 'Documents and Notes', 140, 0, 5),
