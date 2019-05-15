@@ -559,8 +559,8 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.ExpendituresComment = viewModel.Comments;
             }
 
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
-                ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName);
+            // 5/15/2019 TK - WADNR no longer uses "ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName". but may need to in phase 2
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.Photos.ProjectUpdateSectionDisplayName);
         }
 
         private ViewResult ViewExpenditures(ProjectUpdateBatch projectUpdateBatch, List<int> calendarYearRange, ExpendituresViewModel viewModel)

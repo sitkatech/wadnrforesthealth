@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.Invoice
             {
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
-            Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.Text);
+            Add("Cost Type", x => x.CostType.CostTypeDisplayName, 125, DhtmlxGridColumnFilterType.Text);
             Add("Grant Allocation", x => x.GrantAllocation.GrantAllocationName, 125, DhtmlxGridColumnFilterType.Text);
             Add("Amount", x => x.InvoiceLineItemAmount, 70, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Note", x => x.InvoiceLineItemNote, 250, DhtmlxGridColumnFilterType.Text);

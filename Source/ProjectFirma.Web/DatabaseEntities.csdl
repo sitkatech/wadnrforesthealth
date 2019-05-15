@@ -10,6 +10,7 @@
     <EntitySet Name="Classification" EntityType="ProjectFirma.Web.Models.Classification" />
     <EntitySet Name="ClassificationPerformanceMeasure" EntityType="ProjectFirma.Web.Models.ClassificationPerformanceMeasure" />
     <EntitySet Name="ClassificationSystem" EntityType="ProjectFirma.Web.Models.ClassificationSystem" />
+    <EntitySet Name="CostTypeDatamartMapping" EntityType="ProjectFirma.Web.Models.CostTypeDatamartMapping" />
     <EntitySet Name="County" EntityType="ProjectFirma.Web.Models.County" />
     <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.CurrentBiennium" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
@@ -1079,6 +1080,15 @@
     <Property Name="ClassificationSystemDefinition" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ClassificationSystemListPageContent" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Classifications" Relationship="ProjectFirma.Web.Models.FK_Classification_ClassificationSystem_ClassificationSystemID" FromRole="ClassificationSystem" ToRole="Classifications" />
+  </EntityType>
+  <EntityType Name="CostTypeDatamartMapping">
+    <Key>
+      <PropertyRef Name="CostTypeDatamartMappingID" />
+    </Key>
+    <Property Name="CostTypeDatamartMappingID" Type="Int32" Nullable="false" />
+    <Property Name="CostTypeID" Type="Int32" Nullable="false" />
+    <Property Name="DatamartObjectCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="DatamartObjectName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="County">
     <Key>

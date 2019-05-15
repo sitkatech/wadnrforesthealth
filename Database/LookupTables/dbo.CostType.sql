@@ -4,7 +4,7 @@ SET IDENTITY_INSERT dbo.CostType ON;
 --CK_InvoiceLineItem_CostTypeValues
 delete from dbo.CostType
 
-Insert into dbo.CostType (CostTypeID, CostTypeDescription, CostTypeName, IsValidInvoiceLineItemCostType)
+Insert into dbo.CostType (CostTypeID, CostTypeDisplayName, CostTypeName, IsValidInvoiceLineItemCostType)
 values
 (1, 'Indirect Costs', 'IndirectCosts', 1),
 (2, 'Supplies', 'Supplies', 1),

@@ -79,31 +79,31 @@
                 <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 320px; margin: 5px 0 5px 0">
                 </div>
                 <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
-
                 <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple Priority Areas, but are mapped in a single location. Therefore some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside of the Priority Area boundary.</p>
             </div>
         </div>
     </div>
-    <div class="col-lg-7">
+    @* 5/15/2019 TK - commenting this out for now because we do not have Project level expenditures for WADNR. May be needed in phase 2 *@
+    @*<div class="col-lg-7">
         <div class="panel panelFirma">
-            <div class="panel-heading panelTitle">
-                <h2>Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() and @FieldDefinition.OrganizationType.GetFieldDefinitionLabel()</h2>
+                <div class="panel-heading panelTitle">
+                    <h2>Expenditures by @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() and @FieldDefinition.OrganizationType.GetFieldDefinitionLabel()</h2>
+                </div>
+                <div class="panel-body">
+                    @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
+                    {
+                        <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
+                            @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
+                        </div>
+                        <p>Since some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() span multiple Priority Areas, the @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() above may be over-reported for this Priority Area.</p>
+                    }
+                    else
+                    {
+                        <p class="systemText">No @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel() data yet provided for this Priority Area.</p>
+                    }
+                </div>
             </div>
-            <div class="panel-body">
-                @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
-                {
-                    <div style="border-radius: 8px; background-color: white; margin-right: auto; margin-left: auto;">
-                        @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
-                    </div>
-                    <p>Since some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() span multiple Priority Areas, the @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized() above may be over-reported for this Priority Area.</p>
-                }
-                else
-                {
-                    <p class="systemText">No @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabel() data yet provided for this Priority Area.</p>
-                }
-            </div>
-        </div>
-    </div>
+        </div>*@
 </div>
 <div class="row">
     <div class="col-md-12">

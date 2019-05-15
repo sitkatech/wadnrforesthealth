@@ -154,24 +154,25 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectUpdateSectionExpenditures
-    {
-        public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
-        {
-            return projectUpdateBatch.AreExpendituresValid();
-        }
+    // 5/15/2019 TK - WADNR may need this section in phase 2. Entry removed from DB for now 
+    //public partial class ProjectUpdateSectionExpenditures
+    //{
+    //    public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
+    //    {
+    //        return projectUpdateBatch.AreExpendituresValid();
+    //    }
 
-        public override string GetSectionUrl(Project project)
-        {
-            var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Expenditures(project)) : null;
-        }
+    //    public override string GetSectionUrl(Project project)
+    //    {
+    //        var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
+    //        return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Expenditures(project)) : null;
+    //    }
 
-        public override bool SectionIsUpdated(UpdateStatus updateStatus)
-        {
-            return updateStatus.IsExpendituresUpdated;
-        }
-    }
+    //    public override bool SectionIsUpdated(UpdateStatus updateStatus)
+    //    {
+    //        return updateStatus.IsExpendituresUpdated;
+    //    }
+    //}
 
     public partial class ProjectUpdateSectionPhotos
     {

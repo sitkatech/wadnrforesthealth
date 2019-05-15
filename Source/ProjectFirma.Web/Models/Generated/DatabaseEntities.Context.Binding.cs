@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
+        public virtual DbSet<CostTypeDatamartMapping> CostTypeDatamartMappings { get; set; }
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<CurrentBiennium> CurrentBiennia { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
@@ -205,6 +206,9 @@ namespace ProjectFirma.Web.Models
 
                 case "ClassificationSystem":
                     return ClassificationSystems.GetClassificationSystem(primaryKey);
+
+                case "CostTypeDatamartMapping":
+                    return CostTypeDatamartMappings.GetCostTypeDatamartMapping(primaryKey);
 
                 case "CostType":
                     var costType = CostType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
