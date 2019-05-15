@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Diagnostics;
 using System.Linq;
 
@@ -21,7 +22,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public string ProjectDescription { get; set; }
         public DateTime? CompletionDate { get; set; }
         public decimal? EstimatedTotalCost { get; set; }
-        // ProjectLocationPoint
+        public DbGeometry ProjectLocationPoint { get; set; }
         public string PerformanceMeasureActualYearsExemptionExplanation { get; set; }
         public bool IsFeatured { get; set; }
         public string ProjectLocationNotes { get; set; }
@@ -62,7 +63,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             ProjectDescription = project.ProjectDescription;
             CompletionDate = project.CompletionDate;
             EstimatedTotalCost = project.EstimatedTotalCost;
-            // ProjectLocationPoint
+            ProjectLocationPoint = project.ProjectLocationPoint;
             PerformanceMeasureActualYearsExemptionExplanation  = project.PerformanceMeasureActualYearsExemptionExplanation;
             IsFeatured = project.IsFeatured;
             ProjectLocationNotes = project.ProjectLocationNotes;
@@ -70,7 +71,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             ProjectLocationSimpleTypeID = project.ProjectLocationSimpleTypeID;
             ProjectLocationSimpleTypeName = project.ProjectLocationSimpleType.ProjectLocationSimpleTypeName;
             PrimaryContactPersonID = project.PrimaryContactPersonID;
-            PrimaryContactPersonName = project.PrimaryContactPerson.FullNameFirstLastAndOrgShortName;
+            PrimaryContactPersonName = project.PrimaryContactPerson?.FullNameFirstLastAndOrgShortName;
             ProjectApprovalStatusID = project.ProjectApprovalStatusID;
             ProjectApprovalStatusName = project.ProjectApprovalStatus.ProjectApprovalStatusName;
             ProposingPersonID = project.ProposingPersonID;
