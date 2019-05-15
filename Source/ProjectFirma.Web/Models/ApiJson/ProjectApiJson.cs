@@ -71,7 +71,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             ProjectLocationSimpleTypeID = project.ProjectLocationSimpleTypeID;
             ProjectLocationSimpleTypeName = project.ProjectLocationSimpleType.ProjectLocationSimpleTypeName;
             PrimaryContactPersonID = project.PrimaryContactPersonID;
-            PrimaryContactPersonName = project.PrimaryContactPerson.FullNameFirstLastAndOrgShortName;
+            PrimaryContactPersonName = project.PrimaryContactPerson?.FullNameFirstLastAndOrgShortName;
             ProjectApprovalStatusID = project.ProjectApprovalStatusID;
             ProjectApprovalStatusName = project.ProjectApprovalStatus.ProjectApprovalStatusName;
             ProposingPersonID = project.ProposingPersonID;

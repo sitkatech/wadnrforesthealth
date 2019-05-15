@@ -11,7 +11,7 @@ namespace ProjectFirma.Web.Controllers
         #region WADNR Grant JSON API
 
         [ProjectCodeViewJsonApiFeature]
-        public JsonNetJArrayResult GrantAllocationProgramIndexProjectCodesJsonApi()
+        public JsonNetJArrayResult GrantAllocationProgramIndexProjectCodeJsonApi()
         {
             var grantAllocationProgramIndexProjectCodes = HttpRequestStorage.DatabaseEntities.GrantAllocationProgramIndexProjectCodes.ToList();
             var jsonProjectCodes = GrantAllocationProgramIndexProjectCodeApiJson.MakeGrantAllocationProgramIndexProjectCodeApiJsonsFromGrantAllocationProgramIndexProjectCodes(grantAllocationProgramIndexProjectCodes, false);
