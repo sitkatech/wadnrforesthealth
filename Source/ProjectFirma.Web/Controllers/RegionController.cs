@@ -29,6 +29,8 @@ using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Region;
 using LtInfo.Common.MvcResults;
+using MoreLinq;
+using NUnit.Framework;
 using Detail = ProjectFirma.Web.Views.Region.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Region.DetailViewData;
 using Index = ProjectFirma.Web.Views.Region.Index;
@@ -73,14 +75,15 @@ namespace ProjectFirma.Web.Controllers
             var layers = Region.GetRegionAndAssociatedProjectLayers(region, associatedProjects);
             var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(region.RegionLocation));
 
-            var projectGrantAllocationExpenditures = associatedProjects.SelectMany(x => x.ProjectGrantAllocationExpenditures);
-            var organizationTypes = HttpRequestStorage.DatabaseEntities.OrganizationTypes.ToList();
+            var grantAllocationExpenditures = new List<GrantAllocationExpenditure>();
+            region.GrantAllocations.ForEach(x => grantAllocationExpenditures.AddRange(x.GrantAllocationExpenditures));
+            var costTypes = CostType.GetLineItemCostTypes();
 
-            const string chartTitle = "Reported Expenditures By Organization Type";
+            const string chartTitle = "Grant Allocation Expenditures By Cost Type";
             var chartContainerID = chartTitle.Replace(" ", "");
-            var googleChart = projectGrantAllocationExpenditures.ToGoogleChart(x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
-                organizationTypes.Select(x => x.OrganizationTypeName).ToList(),
-                x => x.GrantAllocation.BottommostOrganization.OrganizationType.OrganizationTypeName,
+            var googleChart = grantAllocationExpenditures.ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
+                costTypes.Select(ct => ct.CostTypeDisplayName).ToList(),
+                x => x.CostType?.CostTypeDisplayName,
                 chartContainerID,
                 chartTitle);
 

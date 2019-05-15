@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Models
         {
             var budgetVsActualsLineItemList = new List<BudgetVsActualLineItem>();
 
-            foreach (var costType in CostType.All.Where(ct => ct.IsValidInvoiceLineItemCostType))
+            foreach (var costType in CostType.GetLineItemCostTypes())
             {
                 var budget = grantAllocation.GrantAllocationBudgetLineItems.Where(bli => bli.CostTypeID == costType.CostTypeID).Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
 
