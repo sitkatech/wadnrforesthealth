@@ -100,7 +100,13 @@
                     @* feature name *@
                     <td style="width: 200px">
                         <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
-                               data-ng-model="projectLocation.ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" ng-readonly="projectLocation.IsGeometryFromArcGis" style="width: 100%" required maxlength="200" />
+                               data-ng-if="!projectLocation.IsGeometryFromArcGis"
+                               data-ng-model="projectLocation.ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
+
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
+                            {{projectLocation.ProjectLocationName}}
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" />
+                        </span>
 
                         <span ng-if="projectLocation.projectLocationID != null">
                             <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
@@ -116,7 +122,7 @@
                     <td>
                         <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
                                 ng-model="projectLocation.ProjectLocationTypeID"
-                                ng-disabled="projectLocation.IsGeometryFromArcGis"
+                                data-ng-if="!projectLocation.IsGeometryFromArcGis"
                                 required>
                             <option value="">-- Select type --</option>
                             <option ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
@@ -124,6 +130,11 @@
                                 {{projectLocationType.ProjectLocationTypeDisplayName}}
                             </option>
                         </select>
+
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
+                            {{projectLocation.ProjectLocationTypeName}}
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID" value="{{projectLocation.ProjectLocationTypeID}}" />
+                        </span>
 
                     </td>
                     @* notes/annotation *@
