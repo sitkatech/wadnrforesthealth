@@ -89,6 +89,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
+            IsGeometryFromArcGis = x.ArcGisObjectID.HasValue;
+            ArcGisObjectID = x.ArcGisObjectID;
+            ArcGisGlobalID = x.ArcGisGlobalID;
         }
 
         public ProjectLocationJson(Models.ProjectLocationUpdate x)
@@ -100,6 +103,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationFeatureType = x.ProjectLocationUpdateGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationUpdateID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationUpdateGeometry.AsText();
+            IsGeometryFromArcGis = false;
         }
 
         public string ProjectLocationGeometryWellKnownText { get; set; }
@@ -109,5 +113,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string ProjectLocationName { get; set; }
         public string ProjectLocationTypeName { get; set; }
         public string ProjectLocationNotes { get; set; }
+        public int? ArcGisObjectID { get; set; }
+        public string ArcGisGlobalID { get; set; }
+        public bool IsGeometryFromArcGis { get; set; }
     }
 }

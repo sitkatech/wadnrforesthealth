@@ -7,6 +7,8 @@ angular.module("ProjectFirmaApp")
             $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.length > 0;
             $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
             $scope.selectedLocationLeafletID = null;
+
+            console.log(JSON.stringify($scope.AngularModel));
         
             $scope.IconStyleDefault = new L.icon({
                 iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+0000ff.png'

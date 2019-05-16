@@ -232,6 +232,8 @@ namespace ProjectFirma.Web.Controllers
                 {
                     var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
                     var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName, projectLocationGeometry, projectLocationJson.ProjectLocationTypeID, projectLocationJson.ProjectLocationNotes);
+                    projectLocation.ArcGisGlobalID = projectLocationJson.ArcGisGlobalID;
+                    projectLocation.ArcGisObjectID = projectLocationJson.ArcGisObjectID;
                     project.ProjectLocations.Add(projectLocation);
                 }
             }
