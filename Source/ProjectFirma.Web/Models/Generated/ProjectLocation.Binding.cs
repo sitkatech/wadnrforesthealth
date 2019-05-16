@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName) : this()
+        public ProjectLocation(int projectLocationID, int projectID, DbGeometry projectLocationGeometry, string projectLocationNotes, int projectLocationTypeID, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID) : this()
         {
             this.ProjectLocationID = projectLocationID;
             this.ProjectID = projectID;
@@ -38,6 +38,8 @@ namespace ProjectFirma.Web.Models
             this.ProjectLocationNotes = projectLocationNotes;
             this.ProjectLocationTypeID = projectLocationTypeID;
             this.ProjectLocationName = projectLocationName;
+            this.ArcGisObjectID = arcGisObjectID;
+            this.ArcGisGlobalID = arcGisGlobalID;
         }
 
         /// <summary>
@@ -116,6 +118,8 @@ namespace ProjectFirma.Web.Models
         public string ProjectLocationNotes { get; set; }
         public int ProjectLocationTypeID { get; set; }
         public string ProjectLocationName { get; set; }
+        public int? ArcGisObjectID { get; set; }
+        public string ArcGisGlobalID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectLocationID; } set { ProjectLocationID = value; } }
 
@@ -126,6 +130,7 @@ namespace ProjectFirma.Web.Models
         {
             public const int ProjectLocationNotes = 255;
             public const int ProjectLocationName = 100;
+            public const int ArcGisGlobalID = 50;
         }
     }
 }

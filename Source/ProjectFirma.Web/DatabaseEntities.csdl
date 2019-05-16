@@ -2259,6 +2259,8 @@
     <Property Name="ProjectLocationNotes" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="ProjectLocationTypeID" Type="Int32" Nullable="false" />
     <Property Name="ProjectLocationName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ArcGisObjectID" Type="Int32" />
+    <Property Name="ArcGisGlobalID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectLocation_Project_ProjectID" FromRole="ProjectLocations" ToRole="Project" />
   </EntityType>
   <EntityType Name="ProjectLocationStaging">
