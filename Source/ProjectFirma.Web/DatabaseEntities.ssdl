@@ -5025,6 +5025,7 @@ warning 6013: The table/view 'WADNRForestHealthDB.dbo.tmpTreatmentsFromArcGis' d
   <Property Name="created_date" Type="datetime2" />
   <Property Name="last_edited_user" Type="varchar" MaxLength="255" />
   <Property Name="last_edited_date" Type="datetime2" />
+  <Property Name="FHT_Project_Number" Type="varchar" MaxLength="50" />
   <Property Name="GlobalID" Type="varchar" MaxLength="38" />
   <Property Name="SHAPE_Length" Type="float" />
   <Property Name="SHAPE_Area" Type="float" />
