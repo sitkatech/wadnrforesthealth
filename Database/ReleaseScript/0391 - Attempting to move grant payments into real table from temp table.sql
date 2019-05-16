@@ -70,23 +70,23 @@ GO
 --from [dbo].[tmp2015-19_grant_payments_singlesheet] as tgp 
 
 
-insert into [GrantAllocationExpenditure] ( GrantAllocationID, CostTypeID, Biennium, FiscalMonth, CalendarYear, CalendarMonth, ExpenditureAmount)
-select
-	gapc.GrantAllocationID,
-	null as CostTypeID, -- CostTypeID	 
-	tgp.BIENNIUM,
-	tgp.FM_NO,
-	replace(tgp.CAL_YEAR, ',', '') as CalendarYear,
-    (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.[MONTH])) as CalendarMonth,
-	tgp.EXPEND_ACCRUED
-from GrantAllocationProgramIndexProjectCode as gapc
-inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
-inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
-inner join [dbo].[tmp2015-19_grant_payments_singlesheet] as tgp 
-		on 
-		dbo.fRemoveLeadingZeroes(tgp.PROJECT_CODE) = pc.ProjectCodeName 
-		and 
-		dbo.fRemoveLeadingZeroes(tgp.PROGRAM_INDEX_CODE) = pin.ProgramIndexCode 
+--insert into [GrantAllocationExpenditure] ( GrantAllocationID, CostTypeID, Biennium, FiscalMonth, CalendarYear, CalendarMonth, ExpenditureAmount)
+--select
+--	gapc.GrantAllocationID,
+--	null as CostTypeID, -- CostTypeID	 
+--	tgp.BIENNIUM,
+--	tgp.FM_NO,
+--	replace(tgp.CAL_YEAR, ',', '') as CalendarYear,
+--    (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.[MONTH])) as CalendarMonth,
+--	tgp.EXPEND_ACCRUED
+--from GrantAllocationProgramIndexProjectCode as gapc
+--inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
+--inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
+--inner join [dbo].[tmp2015-19_grant_payments_singlesheet] as tgp 
+--		on 
+--		dbo.fRemoveLeadingZeroes(tgp.PROJECT_CODE) = pc.ProjectCodeName 
+--		and 
+--		dbo.fRemoveLeadingZeroes(tgp.PROGRAM_INDEX_CODE) = pin.ProgramIndexCode 
 
 
 /*

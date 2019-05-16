@@ -542,7 +542,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectGrantAllocationExpenditures = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationExpenditures.Local;
             viewModel.UpdateModel(project, projectGrantAllocationExpenditureUpdates, allProjectGrantAllocationExpenditures);            
 
-            return GoToNextSection(viewModel, project, ProjectCreateSection.ReportedExpenditures.ProjectCreateSectionDisplayName);
+            // 5/15/2019 TK - Used to be "Reported Expenditures". Updated because WADNR does not currently need project reported expenditures
+            return GoToNextSection(viewModel, project, ProjectCreateSection.Classifications.ProjectCreateSectionDisplayName);
         }
 
         private ViewResult ViewExpenditures(Project project, List<int> calendarYearRange, ExpendituresViewModel viewModel)

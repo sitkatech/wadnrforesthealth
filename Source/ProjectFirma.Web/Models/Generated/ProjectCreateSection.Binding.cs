@@ -24,7 +24,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionExpectedPerformanceMeasures ExpectedPerformanceMeasures = ProjectCreateSectionExpectedPerformanceMeasures.Instance;
         public static readonly ProjectCreateSectionReportedPerformanceMeasures ReportedPerformanceMeasures = ProjectCreateSectionReportedPerformanceMeasures.Instance;
         public static readonly ProjectCreateSectionExpectedFunding ExpectedFunding = ProjectCreateSectionExpectedFunding.Instance;
-        public static readonly ProjectCreateSectionReportedExpenditures ReportedExpenditures = ProjectCreateSectionReportedExpenditures.Instance;
         public static readonly ProjectCreateSectionClassifications Classifications = ProjectCreateSectionClassifications.Instance;
         public static readonly ProjectCreateSectionPhotos Photos = ProjectCreateSectionPhotos.Instance;
         public static readonly ProjectCreateSectionNotesAndDocuments NotesAndDocuments = ProjectCreateSectionNotesAndDocuments.Instance;
@@ -42,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, ReportedExpenditures, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -144,8 +143,6 @@ namespace ProjectFirma.Web.Models
                     return ProjectAttributes;
                 case ProjectCreateSectionEnum.Regions:
                     return Regions;
-                case ProjectCreateSectionEnum.ReportedExpenditures:
-                    return ReportedExpenditures;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
                     return ReportedPerformanceMeasures;
                 default:
@@ -162,7 +159,6 @@ namespace ProjectFirma.Web.Models
         ExpectedPerformanceMeasures = 6,
         ReportedPerformanceMeasures = 7,
         ExpectedFunding = 8,
-        ReportedExpenditures = 9,
         Classifications = 11,
         Photos = 13,
         NotesAndDocuments = 14,
@@ -207,12 +203,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectCreateSectionExpectedFunding(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectCreateSectionExpectedFunding Instance = new ProjectCreateSectionExpectedFunding(8, @"ExpectedFunding", @"Expected Funding", 80, false, 4);
-    }
-
-    public partial class ProjectCreateSectionReportedExpenditures : ProjectCreateSection
-    {
-        private ProjectCreateSectionReportedExpenditures(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionReportedExpenditures Instance = new ProjectCreateSectionReportedExpenditures(9, @"ReportedExpenditures", @"Reported Expenditures", 90, true, 4);
     }
 
     public partial class ProjectCreateSectionClassifications : ProjectCreateSection

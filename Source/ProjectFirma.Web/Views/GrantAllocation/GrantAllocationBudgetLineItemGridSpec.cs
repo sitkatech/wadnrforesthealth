@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteGrantAllocationBudgetLineItemUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add("Cost Type", x => x.CostType.CostTypeDescription, 125, DhtmlxGridColumnFilterType.Text);
+            Add("Cost Type", x => x.CostType.CostTypeDisplayName, 125, DhtmlxGridColumnFilterType.Text);
             Add("Amount", x => x.GrantAllocationBudgetLineItemAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Note", x => x.GrantAllocationBudgetLineItemNote, 650, DhtmlxGridColumnFilterType.Text);
            

@@ -38,9 +38,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     case Models.ProjectUpdateSectionEnum.Basics:
                         projectUpdateBatch.BasicsComment = SectionComments;
                         break;
-                    case Models.ProjectUpdateSectionEnum.Expenditures:
-                        projectUpdateBatch.ExpendituresComment = SectionComments;
-                        break;
+                    // 5/15/2019 TK - WADNR currently does not have a use. But may need expenditures in phase 2
+                    //case Models.ProjectUpdateSectionEnum.Expenditures:
+                    //    projectUpdateBatch.ExpendituresComment = SectionComments;
+                    //    break;
                     case Models.ProjectUpdateSectionEnum.PerformanceMeasures:
                         projectUpdateBatch.PerformanceMeasuresComment = SectionComments;
                         break;

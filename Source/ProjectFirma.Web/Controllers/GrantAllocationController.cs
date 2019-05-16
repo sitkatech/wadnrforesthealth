@@ -169,21 +169,21 @@ namespace ProjectFirma.Web.Controllers
                 grantAllocation.GrantAllocationName,
                 userHasEditGrantAllocationPermissions);
 
-            var taxonomyTrunks = HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.ToList().SortByOrderThenName().ToList();
+            var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).OrderBy(x => x.CostTypeDisplayName).ToList();
 
-            const string chartTitle = "Reported Expenditures";
+            const string chartTitle = "Grant Allocation Expenditures";
             var chartContainerID = chartTitle.Replace(" ", "");
 
             // If ProjectGrantAllocationExpenditures is empty, ToGoogleChart returns null...
-            var googleChart = grantAllocation.ProjectGrantAllocationExpenditures
-                .ToGoogleChart(x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
-                    taxonomyTrunks.Select(x => x.DisplayName).ToList(),
-                    x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
+            var googleChart = grantAllocation.GrantAllocationExpenditures
+                .ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
+                    costTypes.Select(x => x.CostTypeDisplayName).ToList(),
+                    x => x.CostType?.CostTypeDisplayName,
                     chartContainerID,
                     grantAllocation.DisplayName);
 
             // Which makes this guy bork (bork bork bork)
-            googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.None);
+            googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.Top);
             var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 350, false);
 
             var projectGrantAllocationRequestsGridSpec = new ProjectGrantAllocationRequestsGridSpec()

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+
     <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="Models\ApiJson\ApiJsonTest.cs" />
     <Compile Include="Models\Generated\ActivityType.Binding.cs" />
@@ -85,6 +86,9 @@
     <Compile Include="Models\Generated\ClassificationSystem.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\ClassificationSystemPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CostType.Binding.cs" />
+    <Compile Include="Models\Generated\CostTypeDatamartMapping.Binding.cs" />
+    <Compile Include="Models\Generated\CostTypeDatamartMapping.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\CostTypeDatamartMappingPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\CostTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\County.Binding.cs" />
     <Compile Include="Models\Generated\County.DatabaseContextExtensions.cs" />
@@ -514,6 +518,7 @@
     <Compile Include="Models\Generated\Vendor.Binding.cs" />
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
+    <Compile Include="Models\GrantAllocationExpenditure.DatabaseContextExtensions.cs" />
     <Compile Include="Controllers\GrantAllocationProgramIndexProjectCodeController.cs" />
     <Compile Include="Models\ApiJson\GrantAllocationProgramIndexProjectCodeApiJson.cs" />
     <Compile Include="Models\ApiJson\ProjectCodeApiJson.cs" />

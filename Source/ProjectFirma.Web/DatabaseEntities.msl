@@ -110,6 +110,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CostTypeDatamartMapping">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.CostTypeDatamartMapping">
+        <MappingFragment StoreEntitySet="CostTypeDatamartMapping">
+          <ScalarProperty Name="CostTypeDatamartMappingID" ColumnName="CostTypeDatamartMappingID" />
+          <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
+          <ScalarProperty Name="DatamartObjectCode" ColumnName="DatamartObjectCode" />
+          <ScalarProperty Name="DatamartObjectName" ColumnName="DatamartObjectName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="County">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.County">
         <MappingFragment StoreEntitySet="County">

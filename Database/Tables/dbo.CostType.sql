@@ -4,7 +4,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[CostType](
 	[CostTypeID] [int] IDENTITY(1,1) NOT NULL,
-	[CostTypeDescription] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[CostTypeDisplayName] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[CostTypeName] [varchar](31) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[IsValidInvoiceLineItemCostType] [bit] NOT NULL,
  CONSTRAINT [PK_CostType_CostTypeID] PRIMARY KEY CLUSTERED 

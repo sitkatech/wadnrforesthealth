@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new InvoiceLineItemGridSpec(CurrentPerson);
             var invoice = HttpRequestStorage.DatabaseEntities.Invoices.FirstOrDefault(x => x.InvoiceID == invoiceID);
             var invoiceLineItems = invoice != null
-                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDescription).ToList()
+                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDisplayName).ToList()
                 : new List<InvoiceLineItem>();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InvoiceLineItem>(invoiceLineItems, gridSpec);
             return gridJsonNetJObjectResult;
