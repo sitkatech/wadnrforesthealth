@@ -1,0 +1,111 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="Index.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using ProjectFirma.Web.Views.Shared
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
+@inherits ProjectFirma.Web.Views.JsonApiManagement.JsonApiLandingPage
+
+@functions
+{
+
+    private string ProjectJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<ProjectController>.BuildLinkFromExpression(c => c.ProjectJsonApi(), "Project JSON");
+        return linkHtml;
+    }
+
+    private string ProjectCodeJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<ProjectCodeController>.BuildLinkFromExpression(c => c.ProjectCodeJsonApi(), "Project Code JSON");
+        return linkHtml;
+    }
+
+    private string ProgramIndexJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<ProgramIndexController>.BuildLinkFromExpression(c => c.ProgramIndexJsonApi(), "Program Index JSON");
+        return linkHtml;
+    }
+
+    private string AgreementJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<AgreementController>.BuildLinkFromExpression(c => c.AgreementJsonApi(), "Agreement JSON");
+        return linkHtml;
+    }
+
+    private string GrantAllocationJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<GrantAllocationController>.BuildLinkFromExpression(c => c.GrantAllocationJsonApi(), "Grant Allocation JSON");
+        return linkHtml;
+    }
+
+    private string GrantAllocationProgramIndexProjectCodeJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<GrantAllocationProgramIndexProjectCodeController>.BuildLinkFromExpression(c => c.GrantAllocationProgramIndexProjectCodeJsonApi(), "Grant Allocation - Program Index - Project Code JSON");
+        return linkHtml;
+    }
+
+    private string GrantJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<GrantController>.BuildLinkFromExpression(c => c.GrantJsonApi(), "Grant JSON");
+        return linkHtml;
+    }
+
+    private string InteractionEventJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<InteractionEventController>.BuildLinkFromExpression(c => c.InteractionEventJsonApi(), "Interaction Event JSON");
+        return linkHtml;
+    }
+
+    private string InvoiceJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<InvoiceController>.BuildLinkFromExpression(c => c.InvoiceJsonApi(), "Invoice JSON");
+        return linkHtml;
+    }
+
+    private string InvoiceLineItemJsonApiLink()
+    {
+        string linkHtml = SitkaRoute<InvoiceController>.BuildLinkFromExpression(c => c.InvoiceLineItemJsonApi(), "Invoice Line Item JSON");
+        return linkHtml;
+    }
+
+}
+
+<div>
+    @{ ViewPageContent.RenderPartialView(Html, ViewDataTyped.ViewPageContentViewData); }
+</div>
+
+<br />
+
+<h3>@Html.Raw(ProjectJsonApiLink())</h3>
+<h3>@Html.Raw(ProjectCodeJsonApiLink())</h3>
+<h3>@Html.Raw(ProgramIndexJsonApiLink())</h3>
+<h3>@Html.Raw(AgreementJsonApiLink())</h3>
+<h3>@Html.Raw(GrantAllocationJsonApiLink())</h3>
+<h3>@Html.Raw(GrantAllocationProgramIndexProjectCodeJsonApiLink())</h3>
+<h3>@Html.Raw(GrantJsonApiLink())</h3>
+<h3>@Html.Raw(InteractionEventJsonApiLink())</h3>
+<h3>@Html.Raw(InvoiceJsonApiLink())</h3>
+<h3>@Html.Raw(InvoiceLineItemJsonApiLink())</h3>
+
+<div>
+Some of these result sets may be empty until populated in the system
+</div>
+
