@@ -108,8 +108,8 @@
                             <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" />
                         </span>
 
-                        <span ng-if="projectLocation.projectLocationID != null">
-                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
+                        <span ng-if="projectLocation.ProjectLocationID != null">
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocation.ProjectLocationID}}" />
                         </span>
                     </td>
                     @* feature (line, point, poly) *@
@@ -157,9 +157,7 @@
                             <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocationArc.ProjectLocationName}}" />
                         </span>
 
-                        <span ng-if="projectLocationArc.projectLocationID != null">
-                            <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocationArc.projectLocationID}}" />
-                        </span>
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocationArc.ProjectLocationID}}" />
                     </td>
                     @* feature (line, point, poly) *@
                     <td>

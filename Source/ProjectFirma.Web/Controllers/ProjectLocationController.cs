@@ -229,10 +229,10 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveProjectDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
+            //update the editable ProjectLocations
             if (viewModel.ProjectLocationJsons != null)
             {
-                foreach (var projectLocationJson in viewModel.ProjectLocationJsons.Where(
-                    x => !x.ArcGisObjectID.HasValue))
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons.Where(x => !x.ArcGisObjectID.HasValue))
                 {
                     var projectLocationGeometry =
                         DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText,
@@ -242,13 +242,14 @@ namespace ProjectFirma.Web.Controllers
                         projectLocationJson.ProjectLocationNotes);
                     project.ProjectLocations.Add(projectLocation);
                 }
+            }
 
-                foreach (var matched in viewModel.ProjectLocationJsons.Where(x => x.ArcGisObjectID.HasValue)
-                    .Join(project.ProjectLocations, plj => plj.ProjectLocationID, pl => pl.ProjectLocationID,
-                        (lhs, rhs) => new {ProjectLocationJson = lhs, ProjectLocation = rhs}))
-                {
-                    matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
-                }
+            //update arcGIS ProjectLocations for the notes
+            foreach (var matched in viewModel.ArcGisProjectLocationJsons.Where(x => x.ArcGisObjectID.HasValue)
+                .Join(project.ProjectLocations, plj => plj.ProjectLocationID, pl => pl.ProjectLocationID,
+                    (lhs, rhs) => new { ProjectLocationJson = lhs, ProjectLocation = rhs }))
+            {
+                matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
         }
 
