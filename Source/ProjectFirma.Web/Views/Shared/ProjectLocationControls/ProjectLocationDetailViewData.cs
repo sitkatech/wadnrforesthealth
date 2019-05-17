@@ -32,7 +32,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public int ProjectId { get; }
         public bool HasProjectLocationPoint { get; }
         public MapInitJson InitJson { get; }
-        public LayerGeoJson EditableLayerGeoJson { get; }
         public string UploadGisFileUrl { get; }
         public string MapFormId { get; }
         public string SaveFeatureCollectionUrl { get; }
@@ -41,17 +40,16 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public ProjectLocationDetailViewDataForAngular ViewDataForAngular { get; }
         
         
-        public ProjectLocationDetailViewData(int projectID, MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, string uploadGisFileUrl, string mapFormID, string saveFeatureCollectionUrl, int annotationMaxLength, bool hasProjectLocationPoint)
+        public ProjectLocationDetailViewData(int projectID, MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, LayerGeoJson arcGisLayerGeoJson, string uploadGisFileUrl, string mapFormID, string saveFeatureCollectionUrl, int annotationMaxLength, bool hasProjectLocationPoint)
         {
             ProjectId = projectID;
             InitJson = mapInitJson;
-            EditableLayerGeoJson = editableLayerGeoJson;
             UploadGisFileUrl = uploadGisFileUrl;
             MapFormId = mapFormID;
             SaveFeatureCollectionUrl = saveFeatureCollectionUrl;
             AnnotationMaxLength = annotationMaxLength;
             HasProjectLocationPoint = hasProjectLocationPoint;
-            ViewDataForAngular = new ProjectLocationDetailViewDataForAngular(mapInitJson, editableLayerGeoJson, annotationMaxLength);
+            ViewDataForAngular = new ProjectLocationDetailViewDataForAngular(mapInitJson, editableLayerGeoJson, arcGisLayerGeoJson, annotationMaxLength);
             SimplePointMarkerImg = "https://api.tiles.mapbox.com/v3/marker/pin-s-marker+838383.png";
         }
     }
@@ -60,14 +58,16 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
     {
         public MapInitJson MapInitJson { get; }
         public LayerGeoJson EditableLayerGeoJson { get; }
+        public LayerGeoJson ArcGisLayerGeoJson { get; }
         public List<string> GeospatialAreaMapServiceLayerNames { get; }
         public int AnnotationMaxLength { get; }
         public List<ProjectLocationTypeJson> ProjectLocationTypeJsons { get; }
 
-        public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, int annotationMaxLength)
+        public ProjectLocationDetailViewDataForAngular(MapInitJson mapInitJson, LayerGeoJson editableLayerGeoJson, LayerGeoJson arcGisLayerGeoJson, int annotationMaxLength)
         {
             MapInitJson = mapInitJson;
             EditableLayerGeoJson = editableLayerGeoJson;
+            ArcGisLayerGeoJson = arcGisLayerGeoJson;
             AnnotationMaxLength = annotationMaxLength;
             GeospatialAreaMapServiceLayerNames = FirmaWebConfiguration.GetWmsLayerNames();
             ProjectLocationTypeJsons = ProjectLocationType.GetAllProjectLocationTypeJsons();

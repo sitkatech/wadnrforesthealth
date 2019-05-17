@@ -910,6 +910,9 @@ namespace ProjectFirma.Web.Controllers
             var detailedLocationGeoJsonFeatureCollection = projectUpdate.AllDetailedLocationsToGeoJsonFeatureCollection();
             var editableLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
+            // 5/16/2019 TK - create empty arcLayerGeoJson for now
+            var arcGisLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", null, "red", 1, LayerInitialVisibility.Show);
+
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleMapLayer(projectUpdate));
@@ -923,6 +926,7 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationDetailViewData = new ProjectLocationDetailViewData(projectUpdateBatch.ProjectID,
                 mapInitJson,
                 editableLayerGeoJson,
+                arcGisLayerGeoJson,
                 uploadGisFileUrl,
                 mapFormID,
                 saveFeatureCollectionUrl,

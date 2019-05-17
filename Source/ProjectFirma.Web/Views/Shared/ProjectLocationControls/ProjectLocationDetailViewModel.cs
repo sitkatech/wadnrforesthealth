@@ -32,6 +32,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
     {
 
         public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
+        public List<ProjectLocationJson> ArcGisProjectLocationJsons { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -43,7 +44,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocation> projectLocations)
         {
-            ProjectLocationJsons = projectLocations.Select(x => new ProjectLocationJson(x)).ToList();
+            ProjectLocationJsons = projectLocations.Where(x => !x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
+            ArcGisProjectLocationJsons = projectLocations.Where(x => x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
         }
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocationUpdate> projectLocationUpdates)

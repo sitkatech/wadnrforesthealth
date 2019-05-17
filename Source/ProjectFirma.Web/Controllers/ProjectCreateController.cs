@@ -690,6 +690,9 @@ namespace ProjectFirma.Web.Controllers
             var detailedLocationGeoJsonFeatureCollection = project.AllDetailedLocationsToGeoJsonFeatureCollection();
             var editableLayerGeoJson = new LayerGeoJson($"Proposed {FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()}- Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
+            // 5/16/2019 TK - create empty arcLayerGeoJson for now
+            var arcGisLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", null, "red", 1, LayerInitialVisibility.Show);
+
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleMapLayer(project));
@@ -702,7 +705,15 @@ namespace ProjectFirma.Web.Controllers
             var hasSimpleLocationPoint = project.ProjectLocationPoint != null;
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            var projectLocationDetailViewData = new ProjectLocationDetailViewData(project.ProjectID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.ProjectLocationNotes, hasSimpleLocationPoint);
+            var projectLocationDetailViewData = new ProjectLocationDetailViewData(project.ProjectID, 
+                                                                                  mapInitJson, 
+                                                                                  editableLayerGeoJson, 
+                                                                                  arcGisLayerGeoJson,
+                                                                                  uploadGisFileUrl, 
+                                                                                  mapFormID, 
+                                                                                  saveFeatureCollectionUrl, 
+                                                                                  ProjectLocation.FieldLengths.ProjectLocationNotes, 
+                                                                                  hasSimpleLocationPoint);
             var viewData = new LocationDetailedViewData(CurrentPerson, project, proposalSectionsStatus, projectLocationDetailViewData);
             return RazorView<LocationDetailed, LocationDetailedViewData, LocationDetailedViewModel>(viewData, viewModel);
         }
