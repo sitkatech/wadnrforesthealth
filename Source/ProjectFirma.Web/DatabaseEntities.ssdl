@@ -1982,6 +1982,8 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectLocationUpdateNotes" Type="varchar" MaxLength="255" />
     <Property Name="ProjectLocationTypeID" Type="int" Nullable="false" />
     <Property Name="ProjectLocationUpdateName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ArcGisObjectID" Type="int" />
+    <Property Name="ArcGisGlobalID" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="ProjectNote">
     <Key>
