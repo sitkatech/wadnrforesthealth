@@ -2301,6 +2301,8 @@
     <Property Name="ProjectLocationUpdateNotes" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="ProjectLocationTypeID" Type="Int32" Nullable="false" />
     <Property Name="ProjectLocationUpdateName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ArcGisObjectID" Type="Int32" />
+    <Property Name="ArcGisGlobalID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectLocationUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectLocationUpdates" ToRole="ProjectUpdateBatch" />
   </EntityType>
   <EntityType Name="ProjectNote">

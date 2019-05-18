@@ -28,9 +28,11 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectLocationUpdate : IAuditableEntity, IProjectLocation, IHaveSqlGeometry
     {
-        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, string projectLocationNotes) : this(projectUpdateBatch, projectLocationGeometry, ProjectLocationType.Other, string.Empty)//todo: tomk fix this ProjectLocationType and Name to actuals
+        public ProjectLocationUpdate(ProjectUpdateBatch projectUpdateBatch, DbGeometry projectLocationGeometry, string projectLocationNotes, ProjectLocationType projectLocationType, string projectLocationName, int? arcGisObjectID, string arcGisGlobalID) : this(projectUpdateBatch, projectLocationGeometry, projectLocationType, projectLocationName)
         {
             ProjectLocationUpdateNotes = projectLocationNotes;
+            ArcGisObjectID = arcGisObjectID;
+            ArcGisGlobalID = arcGisGlobalID;
         }
 
         public string AuditDescriptionString
@@ -67,9 +69,14 @@ namespace ProjectFirma.Web.Models
         public static void CreateFromProject(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            projectUpdateBatch.ProjectLocationUpdates =
-                project.ProjectLocations.Select(
-                    projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, projectLocationToClone.ProjectLocationGeometry, projectLocationToClone.ProjectLocationNotes)).ToList();
+            projectUpdateBatch.ProjectLocationUpdates = project.ProjectLocations.Select(
+                                                                      projectLocationToClone => new ProjectLocationUpdate(projectUpdateBatch, 
+                                                                                                    projectLocationToClone.ProjectLocationGeometry, 
+                                                                                                    projectLocationToClone.ProjectLocationNotes, 
+                                                                                                    projectLocationToClone.ProjectLocationType, 
+                                                                                                    projectLocationToClone.ProjectLocationName, 
+                                                                                                    projectLocationToClone.ArcGisObjectID, 
+                                                                                                    projectLocationToClone.ArcGisGlobalID)).ToList();
         }
 
         public static void CommitChangesToProject(ProjectUpdateBatch projectUpdateBatch, IList<ProjectLocation> allProjectLocations)

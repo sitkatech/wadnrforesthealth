@@ -20,6 +20,10 @@ alter table dbo.ProjectLocation
 add ArcGisObjectID int null,  ArcGisGlobalID varchar(50) null;
 go
 
+alter table dbo.ProjectLocationUpdate
+add ArcGisObjectID int null,  ArcGisGlobalID varchar(50) null;
+go
+
 
 insert into dbo.ProjectLocation (ProjectID, ProjectLocationGeometry, ProjectLocationTypeID, ProjectLocationName, ArcGisObjectID, ArcGisGlobalID)
 select 

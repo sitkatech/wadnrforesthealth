@@ -687,8 +687,11 @@ namespace ProjectFirma.Web.Controllers
         private ViewResult ViewEditLocationDetailed(Project project, LocationDetailedViewModel viewModel)
         {
             var mapDivID = $"project_{project.EntityID}_EditDetailedMap";
-            var detailedLocationGeoJsonFeatureCollection = project.AllDetailedLocationsToGeoJsonFeatureCollection();
+            var detailedLocationGeoJsonFeatureCollection = project.ProjectLocations.Where(pl => !pl.ArcGisObjectID.HasValue).ToGeoJsonFeatureCollection();
             var editableLayerGeoJson = new LayerGeoJson($"Proposed {FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()}- Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
+
+            var arcGisLocationGeoJsonFeatureCollection = project.ProjectLocations.Where(pl => pl.ArcGisObjectID.HasValue).ToGeoJsonFeatureCollection();
+            var arcGisLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", arcGisLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
@@ -702,7 +705,15 @@ namespace ProjectFirma.Web.Controllers
             var hasSimpleLocationPoint = project.ProjectLocationPoint != null;
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            var projectLocationDetailViewData = new ProjectLocationDetailViewData(project.ProjectID, mapInitJson, editableLayerGeoJson, uploadGisFileUrl, mapFormID, saveFeatureCollectionUrl, ProjectLocation.FieldLengths.ProjectLocationNotes, hasSimpleLocationPoint);
+            var projectLocationDetailViewData = new ProjectLocationDetailViewData(project.ProjectID, 
+                                                                                  mapInitJson, 
+                                                                                  editableLayerGeoJson, 
+                                                                                  arcGisLayerGeoJson,
+                                                                                  uploadGisFileUrl, 
+                                                                                  mapFormID, 
+                                                                                  saveFeatureCollectionUrl, 
+                                                                                  ProjectLocation.FieldLengths.ProjectLocationNotes, 
+                                                                                  hasSimpleLocationPoint);
             var viewData = new LocationDetailedViewData(CurrentPerson, project, proposalSectionsStatus, projectLocationDetailViewData);
             return RazorView<LocationDetailed, LocationDetailedViewData, LocationDetailedViewModel>(viewData, viewModel);
         }
@@ -815,20 +826,33 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveDetailedLocations(ProjectLocationDetailViewModel viewModel, Project project)
         {
-            var projectLocations = project.ProjectLocations.ToList();
-            foreach (var projectLocation in projectLocations)
+            var currentProjectLocationsThatAreEditable = project.ProjectLocations.Where(x => !x.ArcGisObjectID.HasValue).ToList();
+            foreach (var currentProjectLocation in currentProjectLocationsThatAreEditable)
             {
-                projectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                currentProjectLocation.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                project.ProjectLocations.Remove(currentProjectLocation);
             }
-            project.ProjectLocations.Clear();
+            //update the editable ProjectLocations
             if (viewModel.ProjectLocationJsons != null)
             {
-                foreach (var projectLocationJson in viewModel.ProjectLocationJsons)
+                foreach (var projectLocationJson in viewModel.ProjectLocationJsons.Where(x => !x.ArcGisObjectID.HasValue))
                 {
-                    var projectLocationGeometry = DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText, FirmaWebConfiguration.GeoSpatialReferenceID);
-                    var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName, projectLocationGeometry, projectLocationJson.ProjectLocationTypeID, projectLocationJson.ProjectLocationNotes);
+                    var projectLocationGeometry =
+                        DbGeometry.FromText(projectLocationJson.ProjectLocationGeometryWellKnownText,
+                            FirmaWebConfiguration.GeoSpatialReferenceID);
+                    var projectLocation = new ProjectLocation(project, projectLocationJson.ProjectLocationName,
+                        projectLocationGeometry, projectLocationJson.ProjectLocationTypeID,
+                        projectLocationJson.ProjectLocationNotes);
                     project.ProjectLocations.Add(projectLocation);
                 }
+            }
+
+            //update arcGIS ProjectLocations for the notes
+            foreach (var matched in viewModel.ArcGisProjectLocationJsons.Where(x => x.ArcGisObjectID.HasValue)
+                .Join(project.ProjectLocations, plj => plj.ProjectLocationID, pl => pl.ProjectLocationID,
+                    (lhs, rhs) => new { ProjectLocationJson = lhs, ProjectLocation = rhs }))
+            {
+                matched.ProjectLocation.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
         }
 

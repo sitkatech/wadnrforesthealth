@@ -1108,6 +1108,8 @@
           <ScalarProperty Name="ProjectLocationUpdateNotes" ColumnName="ProjectLocationUpdateNotes" />
           <ScalarProperty Name="ProjectLocationTypeID" ColumnName="ProjectLocationTypeID" />
           <ScalarProperty Name="ProjectLocationUpdateName" ColumnName="ProjectLocationUpdateName" />
+          <ScalarProperty Name="ArcGisObjectID" ColumnName="ArcGisObjectID" />
+          <ScalarProperty Name="ArcGisGlobalID" ColumnName="ArcGisGlobalID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

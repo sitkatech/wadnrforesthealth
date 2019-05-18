@@ -89,7 +89,7 @@
                 </thead>
                 <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
                     data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-                    data-ng-click="toggleProjectLocationDetails(projectLocation.ProjectLocationLeafletID)">
+                    data-ng-click="toggleProjectLocationDetails(projectFirmaMap.editableFeatureGroup, projectLocation.ProjectLocationLeafletID)">
                     @* trash icon for deleting *@
                     <td>
                         <a data-ng-if="!projectLocation.IsGeometryFromArcGis" href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
@@ -108,8 +108,8 @@
                             <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" />
                         </span>
 
-                        <span ng-if="projectLocation.projectLocationID != null">
-                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
+                        <span ng-if="projectLocation.ProjectLocationID != null">
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocation.ProjectLocationID}}" />
                         </span>
                     </td>
                     @* feature (line, point, poly) *@
@@ -144,9 +144,45 @@
                         <input type="hidden" name="ProjectLocationJsons[{{$index}}].ArcGisGlobalID" value="{{projectLocation.ArcGisGlobalID}}" />
                     </td>
                 </tr>
+                <tr data-ng-repeat="projectLocationArc in AngularModel.ArcGisProjectLocationJsons" class="clickable-row"
+                    data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocationArc)}"
+                    data-ng-click="toggleProjectLocationDetails(projectFirmaMap.arcFeatureGroup, projectLocationArc.ProjectLocationLeafletID)">
+                    <td>
+                        <span data-ng-if="projectLocationArc.IsGeometryFromArcGis">**</span>
+                    </td>
+                    @* feature name *@
+                    <td style="width: 200px">
+                        <span data-ng-if="projectLocationArc.IsGeometryFromArcGis">
+                            {{projectLocationArc.ProjectLocationName}}
+                            <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocationArc.ProjectLocationName}}" />
+                        </span>
+
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocationArc.ProjectLocationID}}" />
+                    </td>
+                    @* feature (line, point, poly) *@
+                    <td>
+                        <span data-ng-bind="projectLocationArc.ProjectLocationFeatureType"></span>
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationGeometryWellKnownText"
+                               value="{{projectLocationArc.ProjectLocationGeometryWellKnownText}}" />
+                    </td>
+                    @* location type (ProjectLocationType table) *@
+                    <td>
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
+                            {{projectLocationArc.ProjectLocationTypeName}}
+                            <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationTypeID" value="{{projectLocationArc.ProjectLocationTypeID}}" />
+                        </span>
+
+                    </td>
+                    @* notes/annotation *@
+                    <td style="width: 250px">
+                        <input type="text" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocationArc.ProjectLocationNotes" style="width: 100%" maxlength="500" />
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ArcGisObjectID" value="{{projectLocationArc.ArcGisObjectID}}" />
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ArcGisGlobalID" value="{{projectLocationArc.ArcGisGlobalID}}" />
+                    </td>
+                </tr>
             </table>
             <p class="systemText">
-                ** Geometries from ArcGIS are not editable.
+                ** Geometries from ArcGIS are not editable, but you may add or edit the notes field.
             </p>
         </div>
     </form>
@@ -207,7 +243,6 @@
         return options;
     };
 
-    var projectFirmaMap;
     jQuery(document).ready(function()
     {
         var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
