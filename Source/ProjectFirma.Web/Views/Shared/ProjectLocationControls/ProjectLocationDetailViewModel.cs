@@ -40,6 +40,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public ProjectLocationDetailViewModel()
         {
             ProjectLocationJsons = new List<ProjectLocationJson>();
+            ArcGisProjectLocationJsons = new List<ProjectLocationJson>();
         }
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocation> projectLocations)
@@ -50,7 +51,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocationUpdate> projectLocationUpdates)
         {
-            ProjectLocationJsons = projectLocationUpdates.Select(x => new ProjectLocationJson(x)).ToList();
+            ProjectLocationJsons = projectLocationUpdates.Where(x => !x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
+            ArcGisProjectLocationJsons = projectLocationUpdates.Where(x => x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -105,7 +107,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationFeatureType = x.ProjectLocationUpdateGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationUpdateID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationUpdateGeometry.AsText();
-            IsGeometryFromArcGis = false;
+            IsGeometryFromArcGis = x.ArcGisObjectID.HasValue;
+            ArcGisObjectID = x.ArcGisObjectID;
+            ArcGisGlobalID = x.ArcGisGlobalID;
         }
 
         public string ProjectLocationGeometryWellKnownText { get; set; }
