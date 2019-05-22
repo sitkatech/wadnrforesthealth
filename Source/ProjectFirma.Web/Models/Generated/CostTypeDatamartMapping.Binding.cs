@@ -30,18 +30,20 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public CostTypeDatamartMapping(int costTypeDatamartMappingID, int costTypeID, string datamartObjectCode, string datamartObjectName) : this()
+        public CostTypeDatamartMapping(int costTypeDatamartMappingID, int costTypeID, string datamartObjectCode, string datamartObjectName, string datamartSubObjectCode, string datamartSubObjectName) : this()
         {
             this.CostTypeDatamartMappingID = costTypeDatamartMappingID;
             this.CostTypeID = costTypeID;
             this.DatamartObjectCode = datamartObjectCode;
             this.DatamartObjectName = datamartObjectName;
+            this.DatamartSubObjectCode = datamartSubObjectCode;
+            this.DatamartSubObjectName = datamartSubObjectName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public CostTypeDatamartMapping(int costTypeID, string datamartObjectCode, string datamartObjectName) : this()
+        public CostTypeDatamartMapping(int costTypeID, string datamartObjectCode, string datamartObjectName, string datamartSubObjectCode, string datamartSubObjectName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.CostTypeDatamartMappingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -49,18 +51,22 @@ namespace ProjectFirma.Web.Models
             this.CostTypeID = costTypeID;
             this.DatamartObjectCode = datamartObjectCode;
             this.DatamartObjectName = datamartObjectName;
+            this.DatamartSubObjectCode = datamartSubObjectCode;
+            this.DatamartSubObjectName = datamartSubObjectName;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public CostTypeDatamartMapping(CostType costType, string datamartObjectCode, string datamartObjectName) : this()
+        public CostTypeDatamartMapping(CostType costType, string datamartObjectCode, string datamartObjectName, string datamartSubObjectCode, string datamartSubObjectName) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.CostTypeDatamartMappingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.CostTypeID = costType.CostTypeID;
             this.DatamartObjectCode = datamartObjectCode;
             this.DatamartObjectName = datamartObjectName;
+            this.DatamartSubObjectCode = datamartSubObjectCode;
+            this.DatamartSubObjectName = datamartSubObjectName;
         }
 
         /// <summary>
@@ -68,7 +74,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static CostTypeDatamartMapping CreateNewBlank(CostType costType)
         {
-            return new CostTypeDatamartMapping(costType, default(string), default(string));
+            return new CostTypeDatamartMapping(costType, default(string), default(string), default(string), default(string));
         }
 
         /// <summary>
@@ -108,6 +114,8 @@ namespace ProjectFirma.Web.Models
         public int CostTypeID { get; set; }
         public string DatamartObjectCode { get; set; }
         public string DatamartObjectName { get; set; }
+        public string DatamartSubObjectCode { get; set; }
+        public string DatamartSubObjectName { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return CostTypeDatamartMappingID; } set { CostTypeDatamartMappingID = value; } }
 
@@ -117,6 +125,8 @@ namespace ProjectFirma.Web.Models
         {
             public const int DatamartObjectCode = 10;
             public const int DatamartObjectName = 100;
+            public const int DatamartSubObjectCode = 10;
+            public const int DatamartSubObjectName = 250;
         }
     }
 }

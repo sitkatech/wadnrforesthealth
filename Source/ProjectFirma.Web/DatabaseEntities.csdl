@@ -1085,10 +1085,12 @@
     <Key>
       <PropertyRef Name="CostTypeDatamartMappingID" />
     </Key>
-    <Property Name="CostTypeDatamartMappingID" Type="Int32" Nullable="false" />
+    <Property Name="CostTypeDatamartMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CostTypeID" Type="Int32" Nullable="false" />
     <Property Name="DatamartObjectCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
     <Property Name="DatamartObjectName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DatamartSubObjectCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="DatamartSubObjectName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityType Name="County">
     <Key>

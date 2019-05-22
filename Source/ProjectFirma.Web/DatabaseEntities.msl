@@ -117,6 +117,8 @@
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="DatamartObjectCode" ColumnName="DatamartObjectCode" />
           <ScalarProperty Name="DatamartObjectName" ColumnName="DatamartObjectName" />
+          <ScalarProperty Name="DatamartSubObjectCode" ColumnName="DatamartSubObjectCode" />
+          <ScalarProperty Name="DatamartSubObjectName" ColumnName="DatamartSubObjectName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

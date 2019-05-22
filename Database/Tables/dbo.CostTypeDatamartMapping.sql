@@ -3,10 +3,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[CostTypeDatamartMapping](
-	[CostTypeDatamartMappingID] [int] NOT NULL,
+	[CostTypeDatamartMappingID] [int] IDENTITY(1,1) NOT NULL,
 	[CostTypeID] [int] NOT NULL,
 	[DatamartObjectCode] [varchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[DatamartObjectName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[DatamartSubObjectCode] [varchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[DatamartSubObjectName] [varchar](250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
  CONSTRAINT [PK_CostTypeDatamartMapping_CostTypeDatamartMappingID] PRIMARY KEY CLUSTERED 
 (
 	[CostTypeDatamartMappingID] ASC

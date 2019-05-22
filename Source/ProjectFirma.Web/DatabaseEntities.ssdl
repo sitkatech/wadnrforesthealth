@@ -1057,10 +1057,12 @@
     <Key>
       <PropertyRef Name="CostTypeDatamartMappingID" />
     </Key>
-    <Property Name="CostTypeDatamartMappingID" Type="int" Nullable="false" />
+    <Property Name="CostTypeDatamartMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="DatamartObjectCode" Type="varchar" Nullable="false" MaxLength="10" />
     <Property Name="DatamartObjectName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="DatamartSubObjectCode" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="DatamartSubObjectName" Type="varchar" Nullable="false" MaxLength="250" />
   </EntityType>
   <EntityType Name="County">
     <Key>
