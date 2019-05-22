@@ -25,6 +25,9 @@ namespace ProjectFirma.Web.Controllers
 
         #region WADNR Grant JSON API
 
+        // Tammy doesn't want to see these, finds them confusing/redundant. Commenting them out, but can be resurrected if desired.
+
+        /*
         [ProjectCodeViewJsonApiFeature]
         public JsonNetJArrayResult ProjectCodeJsonApi()
         {
@@ -32,7 +35,7 @@ namespace ProjectFirma.Web.Controllers
             var jsonProjectCodes = ProjectCodeApiJson.MakeProjectCodeApiJsonsFromProjectCodes(projectCodes, false);
             return new JsonNetJArrayResult(jsonProjectCodes);
         }
-
+        */
         #endregion
     }
 }

@@ -44,25 +44,27 @@ namespace ProjectFirma.Web.Models.ApiJson
             Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {projectJsonUrl}");
         }
 
-        [Test]
-        public void TestProjectCodeJsonApi()
-        {
-            var projectCodeJsonUrl = SitkaRoute<ProjectCodeController>.BuildAbsoluteUrlFromExpression(c => c.ProjectCodeJsonApi());
-            var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(projectCodeJsonUrl);
+        // Tammy doesn't want to see these, commented out for now.
+        
+        //[Test]
+        //public void TestProjectCodeJsonApi()
+        //{
+        //    var projectCodeJsonUrl = SitkaRoute<ProjectCodeController>.BuildAbsoluteUrlFromExpression(c => c.ProjectCodeJsonApi());
+        //    var webClient = new WebClient();
+        //    var jsonContent = webClient.DownloadString(projectCodeJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {projectCodeJsonUrl}");
-        }
+        //    Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {projectCodeJsonUrl}");
+        //}
 
-        [Test]
-        public void TestProgramIndexJsonApi()
-        {
-            var programIndexJsonUrl = SitkaRoute<ProgramIndexController>.BuildAbsoluteUrlFromExpression(c => c.ProgramIndexJsonApi());
-            var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(programIndexJsonUrl);
+        //[Test]
+        //public void TestProgramIndexJsonApi()
+        //{
+        //    var programIndexJsonUrl = SitkaRoute<ProgramIndexController>.BuildAbsoluteUrlFromExpression(c => c.ProgramIndexJsonApi());
+        //    var webClient = new WebClient();
+        //    var jsonContent = webClient.DownloadString(programIndexJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {programIndexJsonUrl}");
-        }
+        //    Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {programIndexJsonUrl}");
+        //}
 
         [Test]
         public void TestInteractionEventJsonApi()

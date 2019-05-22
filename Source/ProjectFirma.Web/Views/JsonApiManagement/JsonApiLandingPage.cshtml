@@ -32,17 +32,17 @@
         return linkHtml;
     }
 
-    private string ProjectCodeJsonApiLink()
-    {
-        string linkHtml = SitkaRoute<ProjectCodeController>.BuildLinkFromExpression(c => c.ProjectCodeJsonApi(), "Project Code JSON");
-        return linkHtml;
-    }
+    //private string ProjectCodeJsonApiLink()
+    //{
+    //    string linkHtml = SitkaRoute<ProjectCodeController>.BuildLinkFromExpression(c => c.ProjectCodeJsonApi(), "Project Code JSON");
+    //    return linkHtml;
+    //}
 
-    private string ProgramIndexJsonApiLink()
-    {
-        string linkHtml = SitkaRoute<ProgramIndexController>.BuildLinkFromExpression(c => c.ProgramIndexJsonApi(), "Program Index JSON");
-        return linkHtml;
-    }
+    //private string ProgramIndexJsonApiLink()
+    //{
+    //    string linkHtml = SitkaRoute<ProgramIndexController>.BuildLinkFromExpression(c => c.ProgramIndexJsonApi(), "Program Index JSON");
+    //    return linkHtml;
+    //}
 
     private string AgreementJsonApiLink()
     {
@@ -95,8 +95,9 @@
 <br />
 
 <h3>@Html.Raw(ProjectJsonApiLink())</h3>
-<h3>@Html.Raw(ProjectCodeJsonApiLink())</h3>
-<h3>@Html.Raw(ProgramIndexJsonApiLink())</h3>
+@*Tammy doesn't want to see these, finds them confusing/redundant. Commenting them out, but can be resurrected if desired.*@
+@*<h3>@Html.Raw(ProjectCodeJsonApiLink())</h3>
+<h3>@Html.Raw(ProgramIndexJsonApiLink())</h3>*@
 <h3>@Html.Raw(AgreementJsonApiLink())</h3>
 <h3>@Html.Raw(GrantAllocationJsonApiLink())</h3>
 <h3>@Html.Raw(GrantAllocationProgramIndexProjectCodeJsonApiLink())</h3>

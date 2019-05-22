@@ -26,6 +26,9 @@ namespace ProjectFirma.Web.Controllers
 
         #region WADNR Grant JSON API
 
+        // Tammy doesn't want to see these, finds them confusing/redundant. Commenting them out, but can be resurrected if desired.
+
+        /*
         [ProgramIndexViewJsonApiFeature]
         public JsonNetJArrayResult ProgramIndexJsonApi()
         {
@@ -33,6 +36,7 @@ namespace ProjectFirma.Web.Controllers
             var jsonApiAgreements = ProgramIndexApiJson.MakeProgramIndexApiJsonsFromProgramIndexes(programIndexes, false);
             return new JsonNetJArrayResult(jsonApiAgreements);
         }
+        */
 
         #endregion
 
