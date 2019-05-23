@@ -109,8 +109,14 @@ angular.module("ProjectFirmaApp")
                         var checkbox = jQuery(this);
                         if (checkbox.is(':checked')) {
                             jQuery('.mapGridContainer').show();
+                            jQuery('.mapCustomizations').show();
+                            jQuery('.clusterLocationsContainer').show();
+                            jQuery('.mapLegendContainer').show();
                         } else {
                             jQuery('.mapGridContainer').hide();
+                            jQuery('.mapCustomizations').hide();
+                            jQuery('.clusterLocationsContainer').hide();
+                            jQuery('.mapLegendContainer').hide();
                         }
                     }
                 } else {
