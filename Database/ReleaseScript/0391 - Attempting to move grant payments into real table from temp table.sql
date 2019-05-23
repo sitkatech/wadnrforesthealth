@@ -40,17 +40,17 @@ go
 -- We need our own version of Expenditure that isn't tied to Project, for one, and has CostType as well.
 CREATE TABLE [dbo].[GrantAllocationExpenditure]
 (
-	[GrantAllocationExpenditureID] [int] IDENTITY(1,1) NOT NULL,
-	[GrantAllocationID] [int] NOT NULL,
-	[CostTypeID] int null, -- Probably needs to be non-null, but starting here.
-	[Biennium] int not null,
-	[FiscalMonth] int not null,
-	[CalendarYear] [int] NOT NULL,
-	[CalendarMonth] int not null,
-	[ExpenditureAmount] [money] NOT NULL
+    [GrantAllocationExpenditureID] [int] IDENTITY(1,1) NOT NULL,
+    [GrantAllocationID] [int] NOT NULL,
+    [CostTypeID] int null, -- Probably needs to be non-null, but starting here.
+    [Biennium] int not null,
+    [FiscalMonth] int not null,
+    [CalendarYear] [int] NOT NULL,
+    [CalendarMonth] int not null,
+    [ExpenditureAmount] [money] NOT NULL
  CONSTRAINT [PK_GrantAllocationExpenditure_GrantAllocationExpenditureID] PRIMARY KEY CLUSTERED 
 (
-	[GrantAllocationExpenditureID] ASC
+    [GrantAllocationExpenditureID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
 ) ON [PRIMARY]
 GO

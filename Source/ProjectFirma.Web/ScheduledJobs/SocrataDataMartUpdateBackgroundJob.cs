@@ -3,16 +3,29 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Text.RegularExpressions;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
+    // RunGrantExpendituresImportJob
+
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
         private static string VendorJsonSocrataBaseUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
         private static string ProgramIndexJsonSocrataBaseUrl = "https://data.wa.gov/resource/quhu-28uh.json";
         private static string ProjectCodeJsonSocrataBaseUrl = "https://data.wa.gov/resource/6grp-8ghq.json";
+
+        /// <summary>
+        /// WARNING: This URL may turn out only to be temporary, or vary for Production. Hard coded for now, but
+        /// may well need to vary by environment.
+        ///
+        /// By Biennium: https://test-fortress.wa.gov/dnr/admindev/DFC/ApiProxy/?a=get&q=GrantExpenditures/2019 
+        /// By Fiscal month: https://test-fortress.wa.gov/dnr/admindev/DFC/ApiProxy/?a=get&q=GrantExpenditures/2019/22
+        ///
+        /// </summary>
+        private static string GrantExpendituresTempBaseUrl = "https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/";
 
         private const int SqlCommandTimeoutInSeconds = 600;
 
@@ -101,7 +114,53 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
         }
 
+        // RunGrantExpendituresImportJob
 
+        public void DownloadGrantExpendituresTable()
+        {
+            Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTable");
+
+            int currentBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear();
+
+            // Pull JSON off the page into a (possibly huge) string
+
+            // HACK - Just pulling in current biennium to start with. This needs some more thought to work long term! 
+            // Should we pull a full range of bienniums in turn? Loop through and import each in batches? Unsure. -- SLG 5/22/2019
+            var fullUrl = GetGrantExpendituresTempUrlWithAllParameters(currentBienniumFiscalYear);
+            string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
+            // The JSON coming off this particular function is wonky and pre-escaped. I may suggest Tammy fix it, but for the moment we'll work with it, and 
+            // clean it up ourselves.
+
+            grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.IndexOf('"'), 1);
+            grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.LastIndexOf('"'), 1);
+            grantExpenditureJson = Regex.Unescape(grantExpenditureJson);
+            Logger.Info($"GrantExpenditure JSON length: {grantExpenditureJson.Length}");
+            // Push that string into a raw JSON string in the raw staging table
+            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, grantExpenditureJson);
+            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+
+            // Use the JSON to refresh the Grant Expenditure table
+            GrantExpenditureImportJson(socrataDataMartRawJsonImportID, true);
+
+            Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTable");
+        }
+
+        /// <summary>
+        /// Get the fully qualified URL for JSON GrantExpenditures
+        /// </summary>
+        /// <param name="biennium">Biennium is required</param>
+        /// <param name="fiscalMonth">Fiscal Month is optional</param>
+        /// <returns></returns>
+        private string GetGrantExpendituresTempUrlWithAllParameters(int biennium, int? fiscalMonth = null)
+        {
+            // No fiscal month supplied
+            if (fiscalMonth == null)
+            {
+                return AddMaxLimitTagToUrl($"{GrantExpendituresTempBaseUrl}{biennium.ToString()}");
+            }
+            // Fiscal month supplied
+            return AddMaxLimitTagToUrl($"{GrantExpendituresTempBaseUrl}{biennium.ToString()}/{fiscalMonth.ToString()}");
+        }
 
         /// <summary>
         /// Download the contents of the given URL to a temp file
@@ -192,6 +251,30 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             Logger.Info($"Ending '{JobName}' ProjectCodeImportJson");
         }
+
+        private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, bool clearTableBeforeLoad)
+        {
+            Logger.Info($"Starting '{JobName}' GrantExpenditureImportJson");
+            string vendorImportProc = "pGrantExpenditureImportJson";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@clearTableBeforeLoad", clearTableBeforeLoad);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending '{JobName}' GrantExpenditureImportJson");
+        }
+
+
+
+
+
+
+        //SocrataDataMartRawJsonImportTableType.GrantExpenditure
 
 
         /// <summary>

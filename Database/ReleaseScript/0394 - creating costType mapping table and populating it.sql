@@ -46,13 +46,13 @@ inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.
 --too many results
 insert into [GrantAllocationExpenditure] ( GrantAllocationID, CostTypeID, Biennium, FiscalMonth, CalendarYear, CalendarMonth, ExpenditureAmount)
 select
-	gapc.GrantAllocationID,
-	ctdm.CostTypeID as CostTypeID, -- CostTypeID	 
-	tgp.BIENNIUM,
-	tgp.FM_NO,
-	replace(tgp.CAL_YEAR, ',', '') as CalendarYear,
+    gapc.GrantAllocationID,
+    ctdm.CostTypeID as CostTypeID, -- CostTypeID 
+    tgp.BIENNIUM,
+    tgp.FM_NO,
+    replace(tgp.CAL_YEAR, ',', '') as CalendarYear,
     (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.[MONTH])) as CalendarMonth,
-	tgp.EXPEND_ACCRUED
+    tgp.EXPEND_ACCRUED
 from GrantAllocationProgramIndexProjectCode as gapc
 inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
 inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID

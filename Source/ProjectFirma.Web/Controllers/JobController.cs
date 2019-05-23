@@ -75,6 +75,15 @@ namespace ProjectFirma.Web.Controllers
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
+        [JobManageFeature]
+        public ActionResult RunGrantExpendituresImportJob()
+        {
+            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Grant Expenditures Import (Button activated)");
+            socrataJob.DownloadGrantExpendituresTable();
+            return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
+        }
+
+
         /// <summary>
         /// Maybe this deserves its own controller, but it's here for now.
         /// Move if you feel the urge.
