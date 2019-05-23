@@ -93,6 +93,20 @@ angular.module("ProjectFirmaApp")
                 }
             });
 
+            //debugger;
+
+            projectFirmaMap.map.on('overlayremove', function (event) {
+
+                //alert("made it into overlayremove");
+                if (event.name.includes("Mapped Projects")) {
+                    $scope.selectedLocationLeafletID = null;
+                    jQuery(".mapGridContainer").find("tr.selectedRow").removeClass("selectedRow");
+                    projectFirmaMap.map.closePopup();
+                }
+                
+            });
+
+
         };
 
 
