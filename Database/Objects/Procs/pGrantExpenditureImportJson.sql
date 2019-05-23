@@ -150,7 +150,6 @@ insert into [GrantAllocationExpenditure]
         ExpenditureAmount
     )
 select
-    distinct
     gapc.GrantAllocationID,
     ctdm.CostTypeID as CostTypeID, -- CostTypeID 
     tgp.Biennium,
@@ -168,10 +167,18 @@ inner join #GrantExpenditureSocrataTemp as tgp
         and 
         dbo.fRemoveLeadingZeroes(tgp.ProgIdxCd) = pin.ProgramIndexCode
 inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.ObjCd
+                                                  and
+                                                  ctdm.DatamartSubObjectCode = tgp.SubObjCd
+                                                  and
+                                                  ctdm.DatamartObjectName = tgp.ObjName
+                                                  and 
+                                                  ctdm.DatamartSubObjectName = tgp.SubObjName
 order by CalendarYear, CalendarMonth, CostTypeID
 
+--select * from #GrantExpenditureSocrataTemp as tgp where tgp.ExpendAccrued = 32.57
 
---select * from #GrantExpenditureSocrataTemp as tgp 
+
+--select * from #GrantExpenditureSocrataTemp as tgp where tgp.ExpendAccrued = 1225.00
 
 --select * from dbo.CostTypeDatamartMapping
 
