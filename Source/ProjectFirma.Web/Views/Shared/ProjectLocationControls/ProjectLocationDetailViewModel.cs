@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using System.Linq;
@@ -63,12 +64,19 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             {
                 if (LtInfo.Common.GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(plj.ProjectLocationName))
                 {
-                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Project Location Name must not be blank.", x => x.ProjectLocationName));
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Feature Name must not be blank.", x => x.ProjectLocationName));
+                }
+
+                //check for duplicate names
+                var duplicateName = ProjectLocationJsons.Find(pl => pl != plj && pl.ProjectLocationName == plj.ProjectLocationName);
+                if (duplicateName != null)
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Feature Name must be unique.", x => x.ProjectLocationName));
                 }
 
                 if (plj.ProjectLocationTypeID == -1)
                 {
-                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Project Location Type must be selected.", x => x.ProjectLocationTypeID));
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Location Type must be selected.", x => x.ProjectLocationTypeID));
                 }
             }
 

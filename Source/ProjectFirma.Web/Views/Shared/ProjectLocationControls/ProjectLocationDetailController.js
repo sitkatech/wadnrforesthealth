@@ -121,11 +121,29 @@ angular.module("ProjectFirmaApp")
             });
         };
 
+
+        $scope.checkLocationDupeFunction = function (locationName)
+        {
+            //console.log('checkLocationDupeFunction[locationName]: ' + locationName);
+            if ($scope.AngularModel.ProjectLocationJsons.length < 2) {
+                return true;//1 or 0 items in list so no need to check for duplicates
+            }
+            
+            var duplicates = _.filter($scope.AngularModel.ProjectLocationJsons, function (plj) { return plj.ProjectLocationName == locationName; });
+            var hasDuplicates = duplicates.length > 1;
+
+            // disable/enable save buttons on parent control / page / etc.
+            enableOrDisableSaveButtonsForLocationDetailControl(hasDuplicates);
+
+            return hasDuplicates;
+        };
+
         var getUserFriendlyGeometryType = function(geometry) {
             return geometry.type.replace("LineString", "Line");
         };
 
-        var bindProjectLocationSelectClickEvent = function (featureGroup, layer) {
+        var bindProjectLocationSelectClickEvent = function (featureGroup, layer)
+        {
             var leafletID = layer._leaflet_id;
             layer.on('click', function (f) {
                 if (layer.editing.enabled()) {
@@ -202,7 +220,7 @@ angular.module("ProjectFirmaApp")
                     var layer = e.layer;
                     $scope.projectFirmaMap.editableFeatureGroup.addLayer(layer);
                     var leafletId = layer._leaflet_id;
-                    console.log('draw:created called: ' + leafletId);
+                    //console.log('draw:created called: ' + leafletId);
 
                     $scope.projectFirmaMap.editableFeatureGroup._layers[leafletId].feature = new Object();
                     $scope.projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.properties = new Object();
