@@ -30,9 +30,9 @@ Source code is available upon request via <support@sitkatech.com>.
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
     <script type="text/javascript">
         // <![CDATA[
-        function enableOrDisableSaveButtonsForLocationDetailControl(hasDuplicates)
+        window.enableOrDisableSaveButtonsForLocationDetailControl = function (hasDuplicates)
         {
-            //console.log('enableOrDisableSaveButtonsForLocationDetailControl');
+            //console.log('enableOrDisableSaveButtonsForLocationDetailControl in ProjectCreate\LocationDetailed.cshtml');
             Sitka.Methods.enableOrDisableByID('LocationDetailedSaveButtonID', !hasDuplicates);        
             Sitka.Methods.enableOrDisableByID('LocationDetailedSaveAndContinueButtonID', !hasDuplicates);    
         }
