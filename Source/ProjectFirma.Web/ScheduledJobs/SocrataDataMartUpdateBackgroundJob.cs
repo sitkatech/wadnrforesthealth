@@ -21,8 +21,8 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// WARNING: This URL may turn out only to be temporary, or vary for Production. Hard coded for now, but
         /// may well need to vary by environment.
         ///
-        /// By Biennium: https://test-fortress.wa.gov/dnr/admindev/DFC/ApiProxy/?a=get&q=GrantExpenditures/2019 
-        /// By Fiscal month: https://test-fortress.wa.gov/dnr/admindev/DFC/ApiProxy/?a=get&q=GrantExpenditures/2019/22
+        /// By Biennium: https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/2019 
+        /// By Fiscal month: https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/2019/22
         ///
         /// </summary>
         private static string GrantExpendituresTempBaseUrl = "https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/";

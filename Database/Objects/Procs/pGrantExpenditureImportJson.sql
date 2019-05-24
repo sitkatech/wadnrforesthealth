@@ -5,16 +5,23 @@ GO
 CREATE PROCEDURE dbo.pGrantExpenditureImportJson
 (
     @SocrataDataMartRawJsonImportID int null,
+    -- Calendar year of the data we are importing
+    -- (Currently the JSON url we pull from is limited to year-by-year input)
+    @CalendarYearToImport int null,
     @ClearTableBeforeLoad bit null
 )
 AS
 begin
 
 
+-- Caller can opt to completely wipe out the table, if desired.
+-- Not year restricted (at least, not yet)
 if (@ClearTableBeforeLoad = 1)
 begin
     delete from GrantAllocationExpenditure
 end
+
+-- But after this optional clear, everything is treated as a merge to existing dataa
 
 
 /*
@@ -74,8 +81,8 @@ JSON format:
     SELECT GrantExpenditureTemp.*
     into #GrantExpenditureSocrataTemp
     --FROM OPENROWSET (BULK '{pathToVendorJsonFile}', SINGLE_CLOB) as j
-    from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = @SocrataDataMartRawJsonImportID) as j 
-    --from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = 4) as j 
+    --from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = @SocrataDataMartRawJsonImportID) as j 
+    from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = 4) as j 
     CROSS APPLY OPENJSON(RawJsonString)
     WITH
     (
@@ -123,23 +130,115 @@ JSON format:
         ExpendAccrued money
     )
     AS GrantExpenditureTemp
+    -- Enforce the year limit from here on in the sproc
+    where GrantExpenditureTemp.CalYr = @CalendarYearToImport or @CalendarYearToImport is null
+
 
     -- select * from  #GrantExpenditureSocrataTemp where CalYr = 2017
 
----- Remove leading zeros from incoming ProjectCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
---update #GrantExpenditureSocrataTemp
---set ProjectCd = dbo.fRemoveLeadingZeroes(ProjectCd)
 
 
--- HACK 
--- Start with clearing the table initially, just to get the brute force load done.
--- After this works, we can think about incremental updates.
--- SLG 5/23/2019 - 10:30 AM
---delete from GrantAllocationExpenditure
+
+-- select * from dbo.GrantAllocationExpenditure as gae
+
+--select * from #GrantExpenditureSocrataTemp
+-- Just lets us deal with a partial set of incoming data
+--delete from #GrantExpenditureSocrataTemp where SourceSystem = 'LRS'
 
 
--- Insert GrantExpenditures into 
-insert into [GrantAllocationExpenditure] 
+
+-- DELETE local GrantAllocationExpenditures that no longer appear in
+-- incoming import data
+-- ==================================================================
+delete from dbo.GrantAllocationExpenditure
+where GrantAllocationExpenditureID in 
+(
+    select
+       gae.GrantAllocationExpenditureID
+       --,gae.*
+       --,ij.*
+    from dbo.GrantAllocationExpenditure as gae
+    full outer join 
+    (
+            select
+            gapc.GrantAllocationID,
+            ctdm.CostTypeID as CostTypeID,
+            tgp.Biennium,
+            tgp.FiscalMo,
+            tgp.CalYr as CalendarYear,
+            (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
+            tgp.ExpendAccrued
+        from dbo.GrantAllocationProgramIndexProjectCode as gapc
+        inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
+        inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
+        inner join #GrantExpenditureSocrataTemp as tgp
+                on 
+                dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
+                and 
+                dbo.fRemoveLeadingZeroes(tgp.ProgIdxCd) = pin.ProgramIndexCode
+        inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.ObjCd
+                                                          and
+                                                          ctdm.DatamartSubObjectCode = tgp.SubObjCd
+                                                          and
+                                                          ctdm.DatamartObjectName = tgp.ObjName
+                                                          and 
+                                                          ctdm.DatamartSubObjectName = tgp.SubObjName
+        --order by CalendarYear, CalendarMonth, CostTypeID
+    )
+    as ij on ij.GrantAllocationID = gae.GrantAllocationID
+             and 
+             ij.CostTypeID = gae.CostTypeID
+             and
+             ij.ExpendAccrued = gae.ExpenditureAmount
+             and
+             ij.CalendarYear = gae.CalendarYear
+             and
+             ij.CalendarMonth = gae.CalendarMonth
+             and
+             (ij.CalendarYear = @CalendarYearToImport or @CalendarYearToImport is null)
+    where ij.GrantAllocationID is null
+)
+
+
+
+
+
+
+
+
+    select
+        gapc.GrantAllocationID,
+        ctdm.CostTypeID as CostTypeID,
+        tgp.Biennium,
+        tgp.FiscalMo,
+        tgp.CalYr as CalendarYear,
+        (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
+        tgp.ExpendAccrued
+    from dbo.GrantAllocationProgramIndexProjectCode as gapc
+    inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
+    inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
+    inner join #GrantExpenditureSocrataTemp as tgp
+            on 
+            dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
+            and 
+            dbo.fRemoveLeadingZeroes(tgp.ProgIdxCd) = pin.ProgramIndexCode
+    inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.ObjCd
+                                                      and
+                                                      ctdm.DatamartSubObjectCode = tgp.SubObjCd
+                                                      and
+                                                      ctdm.DatamartObjectName = tgp.ObjName
+                                                      and 
+                                                      ctdm.DatamartSubObjectName = tgp.SubObjName
+    order by CalendarYear, CalendarMonth, CostTypeID
+
+
+
+
+
+
+
+-- Insert incoming GrantExpenditures into GrantAllocationExpenditure
+insert into dbo.GrantAllocationExpenditure
     (
         GrantAllocationID,
         CostTypeID,
@@ -151,16 +250,15 @@ insert into [GrantAllocationExpenditure]
     )
 select
     gapc.GrantAllocationID,
-    ctdm.CostTypeID as CostTypeID, -- CostTypeID 
+    ctdm.CostTypeID as CostTypeID,
     tgp.Biennium,
     tgp.FiscalMo,
     tgp.CalYr as CalendarYear,
     (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
     tgp.ExpendAccrued
-from GrantAllocationProgramIndexProjectCode as gapc
+from dbo.GrantAllocationProgramIndexProjectCode as gapc
 inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
 inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
---inner join [dbo].[tmp2015-19_grant_payments_singlesheet] as tgp 
 inner join #GrantExpenditureSocrataTemp as tgp
         on 
         dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
