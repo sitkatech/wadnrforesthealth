@@ -28,6 +28,16 @@ Source code is available upon request via <support@sitkatech.com>.
     @{ MapJavascriptIncludes.RenderPartialView(Html); }
     <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
     <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
+    <script type="text/javascript">
+        // <![CDATA[
+        function enableOrDisableSaveButtonsForLocationDetailControl(hasDuplicates)
+        {
+            //console.log('enableOrDisableSaveButtonsForLocationDetailControl');
+            Sitka.Methods.enableOrDisableByID('LocationDetailedSaveButtonID', !hasDuplicates);        
+            Sitka.Methods.enableOrDisableByID('LocationDetailedSaveAndContinueButtonID', !hasDuplicates);    
+        }
+        // ]]>
+    </script>
 }
 
 @{ ProjectLocationDetail.RenderPartialView(Html, ViewDataTyped.ProjectLocationDetailViewData, Model);}
@@ -37,8 +47,8 @@ Source code is available upon request via <support@sitkatech.com>.
 
 <hr />
 <div class="pull-right">
-    <button type="button" class="btn btn-xs btn-firma" onclick="saveForm(false)">Save</button>
-    <button type="button" class="btn btn-xs btn-firma" onclick="saveForm(true)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
+    <button id="LocationDetailedSaveButtonID" type="button" class="btn btn-xs btn-firma" onclick="saveForm(false)">Save</button>
+    <button id="LocationDetailedSaveAndContinueButtonID" type="button" class="btn btn-xs btn-firma" onclick="saveForm(true)">Save &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
 </div>
 
 @*This is intentionally down here because the document ready needs to be after the EditProjectLocation document ready*@
@@ -58,5 +68,7 @@ Source code is available upon request via <support@sitkatech.com>.
         jQuery("<input type='hidden' name='@Html.NameFor(x => x.AutoAdvance)' value=" + autoAdvance + " />").appendTo(form);
         form.submit();
     }
+
+    
     // ]]>
 </script>

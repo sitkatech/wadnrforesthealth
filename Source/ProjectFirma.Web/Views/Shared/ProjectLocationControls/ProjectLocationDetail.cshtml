@@ -73,7 +73,7 @@
 }
 
 
-    <form method="POST" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl">
+    <form method="POST" name="locationdetailform" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl">
         <div>
             @Html.ValidationSummary()
             <table class="table table-bordered table-projectLocations">
@@ -100,13 +100,10 @@
                     @* feature name *@
                     <td style="width: 200px">
                         <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
-                               data-ng-if="!projectLocation.IsGeometryFromArcGis"
-                               data-ng-model="projectLocation.ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
+                               data-ng-model="projectLocation.ProjectLocationName"
+                               value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
 
-                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
-                            {{projectLocation.ProjectLocationName}}
-                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" />
-                        </span>
+                        <label for="ProjectLocationJsons[{{$index}}].ProjectLocationName" ng-show="checkLocationDupeFunction(projectLocation.ProjectLocationName)">Feature Name must be unique.</label>
 
                         <span ng-if="projectLocation.ProjectLocationID != null">
                             <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocation.ProjectLocationID}}" />
@@ -256,7 +253,7 @@
         {
             modalTitle.html("@(string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()))");
         }
-
+        
     });
 
     ProjectFirmaMaps.Map.prototype.getTextAreaId = function(featureId) { return "textareaFor" + featureId; };
@@ -267,14 +264,15 @@
 <script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationDetailController.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+     var app = angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
         function() {
             return {
                 "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
                 "AngularViewData":
-                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None)),
+                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
             };
         });
+
     angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationDetailController\"]"), ["ProjectFirmaApp"]);
     // ]]>
 </script>
