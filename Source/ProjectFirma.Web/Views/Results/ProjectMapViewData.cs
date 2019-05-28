@@ -74,12 +74,14 @@ namespace ProjectFirma.Web.Views.Results
             ProjectMapLocationNotes = x.ProjectLocationNotes;
             ProjectMapLocationFeatureType = x.ProjectLocationPoint.SpatialTypeName;
             ProjectMapLocationGeometryWellKnownText = x.ProjectLocationPoint.AsText();
+            ProjectMapProjectID = x.ProjectID;
         }
 
         public string ProjectMapLocationGeometryWellKnownText { get; set; }
         public string ProjectMapLocationFeatureType { get; set; }
         public string ProjectMapLocationName { get; set; }
         public string ProjectMapLocationNotes { get; set; }
+        public int ProjectMapProjectID { get; set; }
     }
 
 }
