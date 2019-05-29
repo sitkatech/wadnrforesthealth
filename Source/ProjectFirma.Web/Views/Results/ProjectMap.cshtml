@@ -223,18 +223,24 @@
                         <thead>
                             <tr>
                                 <th style="min-width: 400px">Mapped Project Name</th>
+                                <th>Project Stage</th>
                                 <th>Project Location Notes</th>
                             </tr>
                         </thead>
                         <tr data-ng-repeat="projectMapLocation in AngularViewData.ProjectMapLocationJsons" class="clickable-row"
                             data-ng-class="{'selectedRow': isSelectedProjectMapLocation(projectMapLocation)}"
-                            data-ng-click="toggleProjectMapLocationDetails(projectMapLocation.ProjectMapProjectID)">
+                            data-ng-click="toggleProjectMapLocationDetails(projectMapLocation.ProjectMapProjectID)"
+                            data-ng-show="isShownLocation(projectMapLocation)">
 
                             @* feature name *@
                             <td>
                                 <span data-ng-bind="projectMapLocation.ProjectMapLocationName"></span>
                                
                             </td>
+                            <td>
+                                <span data-ng-bind="projectMapLocation.ProjectMapStageName"></span>
+                            </td>
+
                             @* notes/annotation *@
                             <td>
                                 <span data-ng-bind="projectMapLocation.ProjectMapLocationNotes"></span>

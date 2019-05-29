@@ -16,6 +16,14 @@ angular.module("ProjectFirmaApp")
             return false;
         };
 
+
+        $scope.isShownLocation = function (projectLocation) {
+            if (projectLocation.IsHidden == true) {
+                return false;
+            }
+            return true;
+        };
+
         var setLayerIconColors = function () {
             projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
                 var currentLocationProjectID = layer.feature.properties.ProjectID;
@@ -66,18 +74,26 @@ angular.module("ProjectFirmaApp")
         };
 
 
-        var bindProjectLocationSelectClickEvent = function (feature, layer) {
-            var leafletID = layer.feature.properties.ProjectID;
+        var bindProjectLocationSelectClickEvent = function(feature, layer) {
+            var projectID = layer.feature.properties.ProjectID;
+            $scope.AngularViewData.ProjectMapLocationJsons.forEach(function(item) {
+                if (item.ProjectMapProjectID == projectID) {
+                    item.IsHidden = false;
+                }
+                //console.log("item(" + projectID +")" + JSON.stringify(item));
+            });
+
             layer.on('click', function (f) {
                 if (layer.editing.enabled()) {
                     return;
                 }
 
                 $scope.$apply(function () {
-                    $scope.selectedLocationProjectID = leafletID;
+                    $scope.selectedLocationProjectID = projectID;
                 });
                 setLayerIconColors();
             });
+            
         };
 
 
@@ -92,11 +108,9 @@ angular.module("ProjectFirmaApp")
                 }
             });
 
-            //debugger;
-
             projectFirmaMap.map.on('overlayremove', function (event) {
+                //console.log("made it into overlayremove");
 
-                //alert("made it into overlayremove");
                 if ( event.name != null && event.name.includes("Mapped Projects")) {
                     $scope.selectedLocationProjectID = null;
                     jQuery(".mapGridContainer").find("tr.selectedRow").removeClass("selectedRow");
@@ -107,12 +121,29 @@ angular.module("ProjectFirmaApp")
 
 
             projectFirmaMap.map.on('layeradd', function (event) {
-                //console.log("made it into layeradd event");
+               //console.log("made it into layeradd event");
 
                 if (event.layer.feature != null && event.layer.feature.properties.ProjectID != null) {
                     bindProjectLocationSelectClickEvent(event.layer.feature, event.layer);
                 }
+                $scope.$apply();
+            });
 
+
+            projectFirmaMap.map.on('layerremove', function (event) {
+                //console.log("made it into layerremove event");
+
+                if (event.layer.feature != null && event.layer.feature.properties.ProjectID != null) {
+                    var projectID = event.layer.feature.properties.ProjectID;
+                    $scope.AngularViewData.ProjectMapLocationJsons.forEach(function (item) {
+                        if (item.ProjectMapProjectID == projectID) {
+                            item.IsHidden = true;
+                        }
+                        //console.log("item in layerremove(" + projectID + ")" + JSON.stringify(item));
+                    });
+                    projectFirmaMap.map.closePopup();
+                }
+                $scope.$apply();
             });
 
 

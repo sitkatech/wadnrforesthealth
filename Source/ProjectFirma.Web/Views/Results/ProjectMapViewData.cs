@@ -75,6 +75,7 @@ namespace ProjectFirma.Web.Views.Results
             ProjectMapLocationFeatureType = x.ProjectLocationPoint.SpatialTypeName;
             ProjectMapLocationGeometryWellKnownText = x.ProjectLocationPoint.AsText();
             ProjectMapProjectID = x.ProjectID;
+            ProjectMapStageName = x.ProjectStage?.ProjectStageName;
         }
 
         public string ProjectMapLocationGeometryWellKnownText { get; set; }
@@ -82,6 +83,7 @@ namespace ProjectFirma.Web.Views.Results
         public string ProjectMapLocationName { get; set; }
         public string ProjectMapLocationNotes { get; set; }
         public int ProjectMapProjectID { get; set; }
+        public string ProjectMapStageName { get; set; }
     }
 
 }
