@@ -136,7 +136,9 @@ JSON format:
 
     -- select * from  #GrantExpenditureSocrataTemp where CalYr = 2017
 
-
+/*
+select * from  #GrantExpenditureSocrataTemp
+*/
 
 
 -- select * from dbo.GrantAllocationExpenditure as gae
@@ -200,44 +202,8 @@ where GrantAllocationExpenditureID in
 )
 
 
-
-
-
-
-
-
-    select
-        gapc.GrantAllocationID,
-        ctdm.CostTypeID as CostTypeID,
-        tgp.Biennium,
-        tgp.FiscalMo,
-        tgp.CalYr as CalendarYear,
-        (select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
-        tgp.ExpendAccrued
-    from dbo.GrantAllocationProgramIndexProjectCode as gapc
-    inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
-    inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
-    inner join #GrantExpenditureSocrataTemp as tgp
-            on 
-            dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
-            and 
-            dbo.fRemoveLeadingZeroes(tgp.ProgIdxCd) = pin.ProgramIndexCode
-    inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.ObjCd
-                                                      and
-                                                      ctdm.DatamartSubObjectCode = tgp.SubObjCd
-                                                      and
-                                                      ctdm.DatamartObjectName = tgp.ObjName
-                                                      and 
-                                                      ctdm.DatamartSubObjectName = tgp.SubObjName
-    order by CalendarYear, CalendarMonth, CostTypeID
-
-
-
-
-
-
-
 -- Insert incoming GrantExpenditures into GrantAllocationExpenditure
+-- ==================================================================
 insert into dbo.GrantAllocationExpenditure
     (
         GrantAllocationID,
