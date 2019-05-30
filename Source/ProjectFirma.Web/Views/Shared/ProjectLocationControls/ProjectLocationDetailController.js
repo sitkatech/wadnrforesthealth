@@ -122,15 +122,18 @@ angular.module("ProjectFirmaApp")
         };
 
 
-        $scope.checkLocationDupeFunction = function (locationName)
+        $scope.checkLocationNameForDuplicates = function (locationName)
         {
             //console.log('checkLocationDupeFunction[locationName]: ' + locationName);
-            if ($scope.AngularModel.ProjectLocationJsons.length < 2) {
-                return true;//1 or 0 items in list so no need to check for duplicates
+            var totalLocations = $scope.AngularModel.ProjectLocationJsons.length + $scope.AngularModel.ArcGisProjectLocationJsons.length;
+            if (totalLocations < 2) {
+                return false;//1 or 0 items in list so no need to check for duplicates
             }
             
             var duplicates = _.filter($scope.AngularModel.ProjectLocationJsons, function (plj) { return plj.ProjectLocationName == locationName; });
-            var hasDuplicates = duplicates.length > 1;
+            var arcGisDuplicates = _.filter($scope.AngularModel.ArcGisProjectLocationJsons, function (aplj) { return aplj.ProjectLocationName == locationName; });
+            var totalDuplicates = duplicates.length + arcGisDuplicates.length;
+            var hasDuplicates = totalDuplicates > 1;
 
             // disable/enable save buttons on parent control / page / etc.
             enableOrDisableSaveButtonsForLocationDetailControl(hasDuplicates);

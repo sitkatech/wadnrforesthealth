@@ -1,8 +1,32 @@
 --select * from CostTypeDatamartMapping
 --select * from GrantAllocationExpenditure
 
--- delete old table
+-- remove grant allocation expenditures
+delete from dbo.GrantAllocationExpenditure
+--remove old costTypeMappings
 drop table dbo.CostTypeDatamartMapping;
+
+--inserting new CostTypes so they can be used later in this script
+SET IDENTITY_INSERT dbo.CostType ON;
+
+--If you are adding a new CostType, make sure you update the following check constraints(if needed):
+--CK_InvoiceLineItem_CostTypeValues
+delete from dbo.CostType
+
+Insert into dbo.CostType (CostTypeID, CostTypeDisplayName, CostTypeName, IsValidInvoiceLineItemCostType)
+values
+(1, 'Indirect Costs', 'IndirectCosts', 1),
+(2, 'Supplies', 'Supplies', 1),
+(3, 'Personnel', 'Personnel', 1),
+(4, 'Benefits', 'Benefits', 1),
+(5, 'Travel', 'Travel', 1),
+(6, 'Contractual', 'Contractual', 1),
+(7, 'Agreements', 'Agreements', 0),
+(8, 'Equipment', 'Equipment', 1),
+(9, 'Other', 'Other', 1)
+
+SET IDENTITY_INSERT dbo.CostType OFF;
+
 
 -- recreate table with identity PK and subObject columns
 CREATE TABLE [dbo].[CostTypeDatamartMapping](
@@ -33,10 +57,6 @@ select	ct.CostTypeID,
 	join dbo.CostType as ct on ct.CostTypeDisplayName = tctm.CostTypeDescription
 
 
-
-
--- remove grant allocation expenditures
-delete from dbo.GrantAllocationExpenditure
 
 
 -- re-populate GrantAllocationExpenditures with correct mappings

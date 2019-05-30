@@ -103,7 +103,7 @@
                                data-ng-model="projectLocation.ProjectLocationName"
                                value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
 
-                        <label for="ProjectLocationJsons[{{$index}}].ProjectLocationName" ng-show="checkLocationDupeFunction(projectLocation.ProjectLocationName)">Feature Name must be unique.</label>
+                        <label for="ProjectLocationJsons[{{$index}}].ProjectLocationName" ng-show="checkLocationNameForDuplicates(projectLocation.ProjectLocationName)">Feature Name must be unique.</label>
 
                         <span ng-if="projectLocation.ProjectLocationID != null">
                             <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocation.ProjectLocationID}}" />
@@ -243,9 +243,17 @@
     jQuery(document).ready(function()
     {
         var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
-        if(!Sitka.Methods.isUndefinedNullOrEmpty(saveButton))
-        {
+        if (!Sitka.Methods.isUndefinedNullOrEmpty(saveButton)) {
             saveButton.text("Save");
+            if (typeof enableOrDisableSaveButtonsForLocationDetailControl != 'function') {
+
+                window.enableOrDisableSaveButtonsForLocationDetailControl = function (hasDuplicates)
+                {
+                    //console.log('enableOrDisableSaveButtonsForLocationDetailControl in ProjectLocationDetail.cshtml');
+                    Sitka.Methods.enableOrDisableByID('@ModalDialogFormHelper.SaveButtonID', !hasDuplicates);  
+                }
+            }
+
         }
 
         var modalTitle = jQuery(".modal-title");

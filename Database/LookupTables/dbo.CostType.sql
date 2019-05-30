@@ -8,11 +8,12 @@ Insert into dbo.CostType (CostTypeID, CostTypeDisplayName, CostTypeName, IsValid
 values
 (1, 'Indirect Costs', 'IndirectCosts', 1),
 (2, 'Supplies', 'Supplies', 1),
-(3, 'Personnel and Benefits', 'PersonnelAndBenefits', 1),
+(3, 'Personnel', 'Personnel', 1),
 (4, 'Travel', 'Travel', 1),
 (5, 'Contractual', 'Contractual', 1),
 (6, 'Agreements', 'Agreements', 0),
 (7, 'Equipment', 'Equipment', 1),
-(8, 'Other', 'Other', 1)
+(8, 'Other', 'Other', 1),
+(9, 'Benefits', 'Benefits', 1)
 
 SET IDENTITY_INSERT dbo.CostType OFF;
