@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using ProjectFirma.Web.Common;
@@ -114,8 +116,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
         }
 
-        // RunGrantExpendituresImportJob
-
         public void DownloadGrantExpendituresTable()
         {
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTable");
@@ -162,10 +162,12 @@ namespace ProjectFirma.Web.ScheduledJobs
         private void ClearGrantExpenditureTable()
         {
             // Should delete all GrantAllocationExpenditures
-            foreach (var gae in HttpRequestStorage.DatabaseEntities.GrantAllocationExpenditures)
+            foreach (var gae in HttpRequestStorage.DatabaseEntities.GrantAllocationExpenditures.ToList())
             {
                 gae.Delete(HttpRequestStorage.DatabaseEntities);
             }
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         /// <summary>

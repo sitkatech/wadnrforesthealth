@@ -60,15 +60,13 @@ JSON format:
 
 */
 
--- select * from dbo.SocrataDataMartRawJsonImport
--- drop #GrantExpenditureSocrataTemp
-
     -- Create temp table from the bulk JSON field
     ---------------------------------------------
 
     SELECT GrantExpenditureTemp.*
     into #GrantExpenditureSocrataTemp
     from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = @SocrataDataMartRawJsonImportID) as j 
+    --from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = 9) as j 
     CROSS APPLY OPENJSON(RawJsonString)
     WITH
     (
@@ -120,7 +118,7 @@ JSON format:
     where GrantExpenditureTemp.Biennium = @BienniumToImport or @BienniumToImport is null
 
 
-    -- select * from  #GrantExpenditureSocrataTemp where CalYr = 2017
+select * from  #GrantExpenditureSocrataTemp
 
 -- Insert incoming GrantExpenditures into GrantAllocationExpenditure
 -- ==================================================================
@@ -160,6 +158,67 @@ inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.
 order by CalendarYear, CalendarMonth, CostTypeID
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+--select
+--    *,
+--    gapc.GrantAllocationID
+--    --ctdm.CostTypeID as CostTypeID,
+--    --tgp.Biennium,
+--    --tgp.FiscalMo,
+--    --tgp.CalYr as CalendarYear,
+--    --(select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
+--    --tgp.ExpendAccrued
+--from dbo.GrantAllocationProgramIndexProjectCode as gapc
+--inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
+--inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
+--inner join #GrantExpenditureSocrataTemp as tgp
+--        on 
+--        dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
+--        and 
+--        dbo.fRemoveLeadingZeroes(tgp.ProgIdxCd) = pin.ProgramIndexCode
+----inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.ObjCd
+----                                                  and
+----                                                  ctdm.DatamartSubObjectCode = tgp.SubObjCd
+----                                                  and
+----                                                  ctdm.DatamartObjectName = tgp.ObjName
+----                                                  and 
+----                                                  ctdm.DatamartSubObjectName = tgp.SubObjName
+----order by CalendarYear, CalendarMonth, CostTypeID
+
+
+--select tgp.ProjectCD,
+--       tgp.ProgIdxCd
+--from #GrantExpenditureSocrataTemp as tgp
+
+
+--select *
+--from #GrantExpenditureSocrataTemp as tgp
+
+
+
+
+
+
+
+
+
+
+
+
+--select * from dbo.GrantAllocationExpenditure
+
 end
 go
 
@@ -169,7 +228,7 @@ go
 select * from dbo.SocrataDataMartRawJsonImport
 
 set statistics time on
-exec pGrantExpenditureImportJson @SocrataDataMartRawJsonImportID = 5, @clearTableBeforeLoad = 1
+exec pGrantExpenditureImportJson @SocrataDataMartRawJsonImportID = 9, @BienniumToImport = 2009
 set statistics time off
 
 */
