@@ -126,10 +126,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             int currentBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear();
 
             // Always clear the data before doing the import, at least for now
-            ClearGrantExpenditureTable();
+            ClearGrantAllocationExpenditureTables();
 
             // Step through all the desired Bienniums
-            for (int bienniumFiscalYear = startingBienniumFiscalYear; bienniumFiscalYear < currentBienniumFiscalYear; bienniumFiscalYear += 2)
+            for (int bienniumFiscalYear = startingBienniumFiscalYear; bienniumFiscalYear <= currentBienniumFiscalYear; bienniumFiscalYear += 2)
             {
                 ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear);
             }
@@ -157,17 +157,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // Import the given Biennium
             GrantExpenditureImportJson(socrataDataMartRawJsonImportID, bienniumFiscalYear);
-        }
-
-        private void ClearGrantExpenditureTable()
-        {
-            // Should delete all GrantAllocationExpenditures
-            foreach (var gae in HttpRequestStorage.DatabaseEntities.GrantAllocationExpenditures.ToList())
-            {
-                gae.Delete(HttpRequestStorage.DatabaseEntities);
-            }
-
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
         }
 
         /// <summary>
@@ -293,6 +282,24 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             Logger.Info($"Ending '{JobName}' GrantExpenditureImportJson");
         }
+
+        private void ClearGrantAllocationExpenditureTables()
+        {
+            Logger.Info($"Starting '{JobName}' ClearGrantAllocationExpenditureTables");
+            string vendorImportProc = "pClearGrantAllocationExpenditureTables";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending '{JobName}' ClearGrantAllocationExpenditureTables");
+        }
+
+
+
 
         /// <summary>
         /// Execute a block of ad-hoc SQL.

@@ -324,6 +324,52 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationExpenditureJsonStage">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationExpenditureJsonStage">
+        <MappingFragment StoreEntitySet="GrantAllocationExpenditureJsonStage">
+          <ScalarProperty Name="GrantAllocationExpenditureJsonStageID" ColumnName="GrantAllocationExpenditureJsonStageID" />
+          <ScalarProperty Name="Biennium" ColumnName="Biennium" />
+          <ScalarProperty Name="FiscalMo" ColumnName="FiscalMo" />
+          <ScalarProperty Name="FiscalAdjMo" ColumnName="FiscalAdjMo" />
+          <ScalarProperty Name="CalYr" ColumnName="CalYr" />
+          <ScalarProperty Name="MoString" ColumnName="MoString" />
+          <ScalarProperty Name="SourceSystem" ColumnName="SourceSystem" />
+          <ScalarProperty Name="DocNo" ColumnName="DocNo" />
+          <ScalarProperty Name="DocSuffix" ColumnName="DocSuffix" />
+          <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+          <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="GlAcctNo" ColumnName="GlAcctNo" />
+          <ScalarProperty Name="ObjCd" ColumnName="ObjCd" />
+          <ScalarProperty Name="ObjName" ColumnName="ObjName" />
+          <ScalarProperty Name="SubObjCd" ColumnName="SubObjCd" />
+          <ScalarProperty Name="SubObjName" ColumnName="SubObjName" />
+          <ScalarProperty Name="SubSubObjCd" ColumnName="SubSubObjCd" />
+          <ScalarProperty Name="SubSubObjName" ColumnName="SubSubObjName" />
+          <ScalarProperty Name="ApprnCd" ColumnName="ApprnCd" />
+          <ScalarProperty Name="ApprnName" ColumnName="ApprnName" />
+          <ScalarProperty Name="FundCd" ColumnName="FundCd" />
+          <ScalarProperty Name="FundName" ColumnName="FundName" />
+          <ScalarProperty Name="OrgCd" ColumnName="OrgCd" />
+          <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+          <ScalarProperty Name="ProgIdxCd" ColumnName="ProgIdxCd" />
+          <ScalarProperty Name="ProgIdxName" ColumnName="ProgIdxName" />
+          <ScalarProperty Name="ProgCd" ColumnName="ProgCd" />
+          <ScalarProperty Name="ProgName" ColumnName="ProgName" />
+          <ScalarProperty Name="SubProgCd" ColumnName="SubProgCd" />
+          <ScalarProperty Name="SubProgName" ColumnName="SubProgName" />
+          <ScalarProperty Name="ActivityCd" ColumnName="ActivityCd" />
+          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+          <ScalarProperty Name="SubActivityCd" ColumnName="SubActivityCd" />
+          <ScalarProperty Name="SubActivityName" ColumnName="SubActivityName" />
+          <ScalarProperty Name="ProjectCd" ColumnName="ProjectCd" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="VendorNo" ColumnName="VendorNo" />
+          <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+          <ScalarProperty Name="ExpendAccrued" ColumnName="ExpendAccrued" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNote">
         <MappingFragment StoreEntitySet="GrantAllocationNote">

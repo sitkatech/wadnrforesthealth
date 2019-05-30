@@ -63,10 +63,10 @@ JSON format:
     -- Create temp table from the bulk JSON field
     ---------------------------------------------
 
-    SELECT GrantExpenditureTemp.*
-    into #GrantExpenditureSocrataTemp
+    insert into dbo.GrantAllocationExpenditureJsonStage
+    ( Biennium, FiscalMo, FiscalAdjMo, CalYr, MoString, SourceSystem, DocNo, DocSuffix, DocDate, InvoiceDesc, InvoiceDate, GlAcctNo, ObjCd, ObjName, SubObjCd, SubObjName, SubSubObjCd, SubSubObjName, ApprnCd, ApprnName, FundCd, FundName, OrgCd, OrgName, ProgIdxCd, ProgIdxName, ProgCd, ProgName, SubProgCd, SubProgName, ActivityCd, ActivityName, SubActivityCd, SubActivityName, ProjectCd, ProjectName, VendorNo, VendorName, ExpendAccrued)
+    SELECT  Biennium, FiscalMo, FiscalAdjMo, CalYr, MoString, SourceSystem, DocNo, DocSuffix, DocDate, InvoiceDesc, InvoiceDate, GlAcctNo, ObjCd, ObjName, SubObjCd, SubObjName, SubSubObjCd, SubSubObjName, ApprnCd, ApprnName, FundCd, FundName, OrgCd, OrgName, ProgIdxCd, ProgIdxName, ProgCd, ProgName, SubProgCd, SubProgName, ActivityCd, ActivityName, SubActivityCd, SubActivityName, ProjectCd, ProjectName, VendorNo, VendorName, ExpendAccrued
     from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = @SocrataDataMartRawJsonImportID) as j 
-    --from (select rji.RawJsonString from dbo.SocrataDataMartRawJsonImport as rji where rji.SocrataDataMartRawJsonImportID = 9) as j 
     CROSS APPLY OPENJSON(RawJsonString)
     WITH
     (
@@ -118,8 +118,6 @@ JSON format:
     where GrantExpenditureTemp.Biennium = @BienniumToImport or @BienniumToImport is null
 
 
-select * from  #GrantExpenditureSocrataTemp
-
 -- Insert incoming GrantExpenditures into GrantAllocationExpenditure
 -- ==================================================================
 insert into dbo.GrantAllocationExpenditure
@@ -143,7 +141,7 @@ select
 from dbo.GrantAllocationProgramIndexProjectCode as gapc
 inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
 inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
-inner join #GrantExpenditureSocrataTemp as tgp
+inner join dbo.GrantAllocationExpenditureJsonStage as tgp
         on 
         dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
         and 
@@ -155,69 +153,8 @@ inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.
                                                   ctdm.DatamartObjectName = tgp.ObjName
                                                   and 
                                                   ctdm.DatamartSubObjectName = tgp.SubObjName
-order by CalendarYear, CalendarMonth, CostTypeID
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---select
---    *,
---    gapc.GrantAllocationID
---    --ctdm.CostTypeID as CostTypeID,
---    --tgp.Biennium,
---    --tgp.FiscalMo,
---    --tgp.CalYr as CalendarYear,
---    --(select dbo.fGetCalendarMonthIndexFromMonthString(tgp.MoString)) as CalendarMonth,
---    --tgp.ExpendAccrued
---from dbo.GrantAllocationProgramIndexProjectCode as gapc
---inner join ProgramIndex as pin on gapc.ProgramIndexID = pin.ProgramIndexID
---inner join ProjectCode as pc on gapc.ProjectCodeID = pc.ProjectCodeID
---inner join #GrantExpenditureSocrataTemp as tgp
---        on 
---        dbo.fRemoveLeadingZeroes(tgp.ProjectCd) = pc.ProjectCodeName 
---        and 
---        dbo.fRemoveLeadingZeroes(tgp.ProgIdxCd) = pin.ProgramIndexCode
-----inner join dbo.CostTypeDatamartMapping as ctdm on ctdm.DatamartObjectCode = tgp.ObjCd
-----                                                  and
-----                                                  ctdm.DatamartSubObjectCode = tgp.SubObjCd
-----                                                  and
-----                                                  ctdm.DatamartObjectName = tgp.ObjName
-----                                                  and 
-----                                                  ctdm.DatamartSubObjectName = tgp.SubObjName
-----order by CalendarYear, CalendarMonth, CostTypeID
-
-
---select tgp.ProjectCD,
---       tgp.ProgIdxCd
---from #GrantExpenditureSocrataTemp as tgp
-
-
---select *
---from #GrantExpenditureSocrataTemp as tgp
-
-
-
-
-
-
-
-
-
-
-
-
---select * from dbo.GrantAllocationExpenditure
+where tgp.Biennium = @BienniumToImport or @BienniumToImport is null
+order by CalendarYear, CalendarMonth, CostTypeID, Biennium, FiscalMo, FiscalAdjMo, MoString, SourceSystem, DocNo, DocSuffix, DocDate, InvoiceDesc, InvoiceDate, GlAcctNo, ObjCd, ObjName, SubObjCd, SubObjName, SubSubObjCd, SubSubObjName, ApprnCd, ApprnName, FundCd, FundName, OrgCd, OrgName, ProgIdxCd, ProgIdxName, ProgCd, ProgName, SubProgCd, SubProgName, ActivityCd, ActivityName, SubActivityCd, SubActivityName, ProjectCd, ProjectName, VendorNo, VendorName, ExpendAccrued
 
 end
 go

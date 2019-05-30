@@ -29,6 +29,7 @@
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditure" />
+    <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditureJsonStage" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantAllocationNoteInternal" />
     <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode" />
@@ -1338,6 +1339,51 @@
     <Property Name="CalendarMonth" Type="Int32" Nullable="false" />
     <Property Name="ExpenditureAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationExpenditures" ToRole="GrantAllocation" />
+  </EntityType>
+  <EntityType Name="GrantAllocationExpenditureJsonStage">
+    <Key>
+      <PropertyRef Name="GrantAllocationExpenditureJsonStageID" />
+    </Key>
+    <Property Name="GrantAllocationExpenditureJsonStageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Biennium" Type="Int32" />
+    <Property Name="FiscalMo" Type="Int32" />
+    <Property Name="FiscalAdjMo" Type="Int32" />
+    <Property Name="CalYr" Type="Int32" />
+    <Property Name="MoString" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="SourceSystem" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DocNo" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="DocSuffix" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="DocDate" Type="DateTime" />
+    <Property Name="InvoiceDesc" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="InvoiceDate" Type="DateTime" />
+    <Property Name="GlAcctNo" Type="Int32" />
+    <Property Name="ObjCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ObjName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="SubObjCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="SubObjName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="SubSubObjCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="SubSubObjName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ApprnCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ApprnName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="FundCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="FundName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="OrgCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="OrgName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ProgIdxCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ProgIdxName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ProgCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ProgName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="SubProgCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="SubProgName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ActivityCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ActivityName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="SubActivityCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="SubActivityName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectCd" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="ProjectName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="VendorNo" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="VendorName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="ExpendAccrued" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
