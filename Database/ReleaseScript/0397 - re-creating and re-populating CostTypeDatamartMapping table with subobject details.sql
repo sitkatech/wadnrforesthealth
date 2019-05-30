@@ -18,12 +18,12 @@ values
 (1, 'Indirect Costs', 'IndirectCosts', 1),
 (2, 'Supplies', 'Supplies', 1),
 (3, 'Personnel', 'Personnel', 1),
-(4, 'Travel', 'Travel', 1),
-(5, 'Contractual', 'Contractual', 1),
-(6, 'Agreements', 'Agreements', 0),
-(7, 'Equipment', 'Equipment', 1),
-(8, 'Other', 'Other', 1),
-(9, 'Benefits', 'Benefits', 1)
+(4, 'Benefits', 'Benefits', 1),
+(5, 'Travel', 'Travel', 1),
+(6, 'Contractual', 'Contractual', 1),
+(7, 'Agreements', 'Agreements', 0),
+(8, 'Equipment', 'Equipment', 1),
+(9, 'Other', 'Other', 1)
 
 SET IDENTITY_INSERT dbo.CostType OFF;
 
