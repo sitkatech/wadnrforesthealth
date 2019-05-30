@@ -20,10 +20,15 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace LtInfo.Common
 {
+    // - WA DNR fiscal year boundary is June 30th
+    // - WA DNR also uses Bienniums, sets of two years, indicated by the first of the two year pair.
+    //    For example, Biennium 2019 indicates the two year sequence [2019,2020].
+
     public static class DateUtilities
     {
         public const int MonthsInFiscalYear = 12;
@@ -68,44 +73,62 @@ namespace LtInfo.Common
             return new DateTime(dateInMonth.Year, dateInMonth.Month, DateTime.DaysInMonth(dateInMonth.Year, dateInMonth.Month));
         }
 
+        /// <summary>
+        /// WA DNR fiscal year boundary is June 30th.
+        /// </summary>
+        /// <param name="qtr"></param>
+        /// <param name="calendarYear"></param>
+        /// <returns></returns>
         public static DateTime GetFirstDateInFiscalQuarter(FiscalQuarter qtr, int calendarYear)
         {
-            if (qtr == FiscalQuarter.First) // 1st FiscalQuarter = October 1 to December 31
+            if (qtr == FiscalQuarter.First) 
             {
+                // 1st FiscalQuarter = July 1 to Sept 30
+                return new DateTime(calendarYear, 7, 1);
+            }
+            if (qtr == FiscalQuarter.Second) 
+            {
+                // 2nd FiscalQuarter = October 1 to December 31
                 return new DateTime(calendarYear, 10, 1);
             }
-            if (qtr == FiscalQuarter.Second) // 2nd FiscalQuarter = January 1 to  March 31
+            if (qtr == FiscalQuarter.Third) 
             {
+                // 3rd FiscalQuarter = January 1 to  March 31
                 return new DateTime(calendarYear, 1, 1);
             }
-            if (qtr == FiscalQuarter.Third) // 3rd FiscalQuarter = April 1 to June 30
+            if (qtr == FiscalQuarter.Fourth)
             {
+                // 4th FiscalQuarter = April 1 to June 30
                 return new DateTime(calendarYear, 4, 1);
             }
-            // 4th FiscalQuarter = July 1 to Sept 30
-            return new DateTime(calendarYear, 7, 1);
+
+            throw new InvalidDataException($"Unknown FiscalQuarter: {qtr.ToString()}");
         }
-
-
 
         public static DateTime GetLastDateInFiscalQuarter(FiscalQuarter qtr, int calendarYear)
         {
-            if (qtr == FiscalQuarter.First) // 1st FiscalQuarter = October 1 to December 31
+            if (qtr == FiscalQuarter.First)
             {
+                // 1st FiscalQuarter = July 1 to Sept 30
+                return new DateTime(calendarYear, 9, DateTime.DaysInMonth(calendarYear, 9));
+            }
+            if (qtr == FiscalQuarter.Second) 
+            {
+                // 2nd FiscalQuarter = October 1 to December 31
                 return new DateTime(calendarYear, 12, DateTime.DaysInMonth(calendarYear, 12));
             }
-            if (qtr == FiscalQuarter.Second) // 2nd FiscalQuarter = January 1 to  March 31
+            if (qtr == FiscalQuarter.Third) 
             {
+                // 3rd FiscalQuarter = January 1 to March 31
                 return new DateTime(calendarYear, 3, DateTime.DaysInMonth(calendarYear, 3));
             }
-            if (qtr == FiscalQuarter.Third) // 3rd FiscalQuarter = April 1 to June 30
+            if (qtr == FiscalQuarter.Fourth)
             {
+                // 4th FiscalQuarter = April 1 to June 30
                 return new DateTime(calendarYear, 6, DateTime.DaysInMonth(calendarYear, 6));
             }
-            // 4th FiscalQuarter = July 1 to Sept 30
-            return new DateTime(calendarYear, 9, DateTime.DaysInMonth(calendarYear, 9));
+            throw new InvalidDataException($"Unknown FiscalQuarter: {qtr.ToString()}");
         }
-
 
         public static DateTime GetFirstDateInFiscalQuarter(this DateTime dateInQuarter)
         {
@@ -113,8 +136,6 @@ namespace LtInfo.Common
 
             return GetFirstDateInFiscalQuarter(qtr, dateInQuarter.Year);
         }
-
-
 
         public static DateTime GetLastDateInFiscalQuarter(this DateTime dateInQuarter)
         {
@@ -127,18 +148,29 @@ namespace LtInfo.Common
         {
             if (month >= Month.October)
             {
-                return FiscalQuarter.First; // 1st Fiscal FiscalQuarter = October 1 to December 31
+                // 2nd FiscalQuarter = October 1 to December 31
+                return FiscalQuarter.Second; 
             }
+
             if (month <= Month.March)
             {
-                return FiscalQuarter.Second; // 2nd Fiscal FiscalQuarter = January 1 to  March 31
+                // 3rd FiscalQuarter = January 1 to March 31
+                return FiscalQuarter.Third; 
             }
+
             if (month >= Month.April && month <= Month.June)
             {
-                return FiscalQuarter.Third; // 3rd Fiscal FiscalQuarter = April 1 to June 30
+                // 4th FiscalQuarter = April 1 to June 30
+                return FiscalQuarter.Fourth; 
             }
-            //else if (month >= Month.July && month <= Month.September)
-            return FiscalQuarter.Fourth; // 4th Fiscal FiscalQuarter = July 1 to September 30
+
+            if (month >= Month.July && month <= Month.September)
+            {
+                // 1st FiscalQuarter = July 1 to Sept 30
+                return FiscalQuarter.First; 
+            }
+
+            throw new InvalidDataException($"Unknown FiscalQuarter Month: {month.ToString()}");
         }
 
         public static FiscalQuarter GetCurrentFiscalQuarter()
@@ -157,7 +189,7 @@ namespace LtInfo.Common
             FiscalQuarter currentQuarter = GetFiscalQuarter((Month)fromDate.Month);
             // What's the previous quarter?
             FiscalQuarter previousQuarter = GetFiscalQuarterPreviousToFiscalQuarter(currentQuarter);
-            // If we wrapped our FY  (i.e. went from quarter 2 => quarter 1), decrease the calendar year to the previous year.
+            // If we wrapped our FY, decrease the calendar year to the previous year.
             int calendarYear = fromDate.Year;
             if (previousQuarter == FiscalQuarter.First && currentQuarter == FiscalQuarter.Second)
             {
@@ -354,13 +386,28 @@ namespace LtInfo.Common
 
         public static int GetFiscalYear(this DateTime dateToCheck)
         {
-            if (((Month)dateToCheck.Month).GetFiscalQuarter() == FiscalQuarter.First)
+            var fiscalQuarter = ((Month)dateToCheck.Month).GetFiscalQuarter();
+            // June 30th boundary for WADNR fiscal year
+            if (fiscalQuarter == FiscalQuarter.First || fiscalQuarter == FiscalQuarter.Second)
+            {
                 return dateToCheck.Year + 1;
+            }
             return dateToCheck.Year;
+        }
+
+
+        
+        // This would need to be done to use the current biennium...
+        public static int GetBienniumFiscalMonth(this DateTime dateToCheck)
+        {
+            throw new Exception("If you need this in WADNR, implement GetBienniumFiscalMonth");
         }
 
         public static int GetFiscalMonth(this DateTime dateToCheck)
         {
+            throw new Exception("If you need this in WADNR, implement GetBienniumFiscalMonth");
+
+            /*
             var month = (Month) dateToCheck.Month;
             switch (month)
             {
@@ -391,6 +438,7 @@ namespace LtInfo.Common
                 default:
                     return 0;
             }
+            */
         }
 
         public static DateTime GetFirstDateInFiscalYear(this DateTime dateInFiscalYear)
@@ -493,5 +541,54 @@ namespace LtInfo.Common
         {
             return Enumerable.Range(startYear, (endYear - startYear) + 1).ToList();
         }
+
+
+
+        /// <summary>
+        /// Get the biennium for the given fiscal year
+        /// </summary>
+        /// <param name="fiscalYear"></param>
+        /// <returns></returns>
+        public static int GetBienniumForGivenFiscalYear(int fiscalYear)
+        {
+            // This is a known Biennium start date
+            const int referenceBienniumStart = 2019;
+
+            // Same date
+            if (fiscalYear == referenceBienniumStart)
+            {
+                return referenceBienniumStart;
+            }
+
+            // Earlier date
+            if (fiscalYear < referenceBienniumStart)
+            {
+                int yearDiff = referenceBienniumStart - fiscalYear;
+                int twoYearGroups = yearDiff / 2;
+                int remainderYearDiff = yearDiff % 2;
+                int bienniumForGivenFiscalYear = referenceBienniumStart - (twoYearGroups * 2) - (2 * remainderYearDiff);
+                return bienniumForGivenFiscalYear;
+            }
+
+            // Later date
+            if (fiscalYear > referenceBienniumStart)
+            {
+                int yearDiff = fiscalYear - referenceBienniumStart;
+                int twoYearGroups = yearDiff / 2;
+                int bienniumForGivenFiscalYear = referenceBienniumStart + (twoYearGroups * 2);
+                return bienniumForGivenFiscalYear;
+            }
+
+            throw new Exception("Not expecting to be here");
+        }
+
+        /*
+        public static int GetBienniumForGivenCalendarYear(int calendarYear)
+        {
+
+
+        }
+        */
+
     }
 }

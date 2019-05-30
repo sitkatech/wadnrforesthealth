@@ -120,29 +120,52 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTable");
 
+            // This is just a guess. Deserves vetting with WADNR staff.
+            const int startingBienniumFiscalYear = 2009;
+
             int currentBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear();
 
-            // Pull JSON off the page into a (possibly huge) string
+            // Always clear the data before doing the import, at least for now
+            ClearGrantExpenditureTable();
 
-            // HACK - Just pulling in current biennium to start with. This needs some more thought to work long term! 
-            // Should we pull a full range of bienniums in turn? Loop through and import each in batches? Unsure. -- SLG 5/22/2019
-            var fullUrl = GetGrantExpendituresTempUrlWithAllParameters(currentBienniumFiscalYear);
+            // Step through all the desired Bienniums
+            for (int bienniumFiscalYear = startingBienniumFiscalYear; bienniumFiscalYear < currentBienniumFiscalYear; bienniumFiscalYear += 2)
+            {
+                ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear);
+            }
+
+            Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTable");
+        }
+
+        private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear)
+        {
+            Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium Fiscal Year {bienniumFiscalYear}");
+
+            var fullUrl = GetGrantExpendituresTempUrlWithAllParameters(bienniumFiscalYear);
+            // Pull JSON off the page into a (possibly huge) string
             string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
             // The JSON coming off this particular function is wonky and pre-escaped. I may suggest Tammy fix it, but for the moment we'll work with it, and 
             // clean it up ourselves.
-
             grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.IndexOf('"'), 1);
             grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.LastIndexOf('"'), 1);
+            // Optional? Needed? 
             grantExpenditureJson = Regex.Unescape(grantExpenditureJson);
-            Logger.Info($"GrantExpenditure JSON length: {grantExpenditureJson.Length}");
+            Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, grantExpenditureJson);
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
 
-            // Use the JSON to refresh the Grant Expenditure table
-            GrantExpenditureImportJson(socrataDataMartRawJsonImportID, true);
+            // Import the given Biennium
+            GrantExpenditureImportJson(socrataDataMartRawJsonImportID, bienniumFiscalYear);
+        }
 
-            Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTable");
+        private void ClearGrantExpenditureTable()
+        {
+            // Should delete all GrantAllocationExpenditures
+            foreach (var gae in HttpRequestStorage.DatabaseEntities.GrantAllocationExpenditures)
+            {
+                gae.Delete(HttpRequestStorage.DatabaseEntities);
+            }
         }
 
         /// <summary>
@@ -252,7 +275,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' ProjectCodeImportJson");
         }
 
-        private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, bool clearTableBeforeLoad)
+        private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, int bienniumToImport)
         {
             Logger.Info($"Starting '{JobName}' GrantExpenditureImportJson");
             string vendorImportProc = "pGrantExpenditureImportJson";
@@ -262,20 +285,12 @@ namespace ProjectFirma.Web.ScheduledJobs
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
-                    cmd.Parameters.AddWithValue("@clearTableBeforeLoad", clearTableBeforeLoad);
+                    cmd.Parameters.AddWithValue("@BienniumToImport", bienniumToImport);
                     cmd.ExecuteNonQuery();
                 }
             }
             Logger.Info($"Ending '{JobName}' GrantExpenditureImportJson");
         }
-
-
-
-
-
-
-        //SocrataDataMartRawJsonImportTableType.GrantExpenditure
-
 
         /// <summary>
         /// Execute a block of ad-hoc SQL.

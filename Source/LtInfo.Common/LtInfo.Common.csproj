@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertCustom.cs" />
+    <Compile Include="BienniumTest.cs" />
     <Compile Include="BootstrapWrappers\BootstrapHtmlHelpers.cs" />
     <Compile Include="CommonUtility.cs" />
     <Compile Include="CommonUtilityTest.cs" />

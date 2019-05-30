@@ -25,7 +25,6 @@ namespace LtInfo.Common
             Assert.That(DateUtilities.GetBienniumForGivenFiscalYear(2022) == 2021);
             Assert.That(DateUtilities.GetBienniumForGivenFiscalYear(2023) == 2023);
             Assert.That(DateUtilities.GetBienniumForGivenFiscalYear(2024) == 2023);
-
         }
     }
 }
