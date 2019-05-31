@@ -51,6 +51,11 @@ namespace ProjectFirma.Web.Common
 
         public static readonly string WebMapServiceUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("WebMapServiceUrl");
 
+        public static readonly string ProjectCodeJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProjectCodeJsonSocrataBaseUrl");
+        public static readonly string ProgramIndexJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("ProgramIndexJsonSocrataBaseUrl");
+        public static readonly string VendorJsonSocrataBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("VendorJsonSocrataBaseUrl");
+        public static readonly string GrantExpendituresTempBaseUrl = SitkaConfiguration.GetRequiredAppSettingNotNullNotEmptyNotWhitespace("GrantExpendituresTempBaseUrl");
+
         public static readonly int GeoSpatialReferenceID = 4326;
 
         public static string GetCanonicalHost(string hostName, bool useApproximateMatch)
