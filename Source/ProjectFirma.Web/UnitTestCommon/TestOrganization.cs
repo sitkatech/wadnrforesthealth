@@ -71,4 +71,67 @@ namespace ProjectFirma.Web.UnitTestCommon
             }
         }
     }
+
+
+
+
+    public static partial class TestFramework
+    {
+        public static class TestJsonApi
+        {
+            public static Organization Create()
+            {
+                var organizationType = TestOrganizationType.Create();
+                var organization = Organization.CreateNewBlank(organizationType);
+                return organization;
+            }
+
+            public static Organization Create(string organizationName)
+            {
+                var organizationType = TestOrganizationType.Create();
+                var organization = new Organization(organizationName, true, organizationType);
+                return organization;
+            }
+
+            public static Organization Create(DatabaseEntities dbContext)
+            {
+                var testOrganizationName = MakeTestName("Org Name");
+                const int maxLengthOfOrganizationShortName = Organization.FieldLengths.OrganizationShortName - 1;
+                var testOrganizationShortName = MakeTestName(testOrganizationName, maxLengthOfOrganizationShortName);
+                // Since a person contains an Org, we get into a chicken & egg recursion issue. So we put in a stubby Person to start with
+                //Person testPersonPrimaryContact = TestPerson.Create();
+
+                var organizationType = TestOrganizationType.Create();
+                var testOrganization = new Organization(testOrganizationName, true, organizationType);
+                testOrganization.OrganizationShortName = testOrganizationShortName;
+                //testOrganization.PrimaryContactPerson = testPersonPrimaryContact;
+
+                // Now we sew up the Person with our org
+                //testPersonPrimaryContact.Organization = testOrganization;
+                //HttpRequestStorage.DatabaseEntities.People.Add(testPersonPrimaryContact);
+
+                dbContext.Organizations.Add(testOrganization);
+                return testOrganization;
+            }
+
+            public static Organization Insert(DatabaseEntities dbContext)
+            {
+                var organization = Create(dbContext);
+                HttpRequestStorage.DatabaseEntities.ChangeTracker.DetectChanges();
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+                return organization;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

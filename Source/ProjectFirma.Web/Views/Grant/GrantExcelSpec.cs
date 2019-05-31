@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using LtInfo.Common.ExcelWorkbookUtilities;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Grant
 {
@@ -37,8 +38,7 @@ namespace ProjectFirma.Web.Views.Grant
             AddColumn(Models.FieldDefinition.Region.FieldDefinitionDisplayName, x => x.Region?.RegionName ?? string.Empty);
             AddColumn(Models.FieldDefinition.FederalFundCode.FieldDefinitionDisplayName, x => x.FederalFundCodeDisplay);
             AddColumn(Models.FieldDefinition.AllocationAmount.FieldDefinitionDisplayName, x => x.AllocationAmount);
-            AddColumn(Models.FieldDefinition.ProgramIndex.FieldDefinitionDisplayName, x => x.ProgramIndexDisplay);
-            AddColumn(Models.FieldDefinition.ProjectCode.FieldDefinitionDisplayName, x => x.ProjectCodes.ToDistinctOrderedCsvList());
+            AddColumn(Models.FieldDefinition.ProgramIndexProjectCode.FieldDefinitionDisplayName, x => x.GetAssociatedProgramIndexProjectCodePairsCommaDelimited());
             AddColumn(Models.FieldDefinition.Organization.FieldDefinitionDisplayName, x => x.Organization?.OrganizationName ?? string.Empty);
         }
     }

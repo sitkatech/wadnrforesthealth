@@ -13,7 +13,8 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         public static readonly object ScheduledBackgroundJobLock = new object();
 
-        public const string JobName = "Project Update Reminders";
+        public readonly string JobName;
+
         protected ILog Logger { get; }
         protected DatabaseEntities DbContext;
 
@@ -22,8 +23,9 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         public abstract List<FirmaEnvironmentType> RunEnvironments { get; }
 
-        protected ScheduledBackgroundJobBase()
+        protected ScheduledBackgroundJobBase(string jobName)
         {
+            JobName = jobName;
             Logger = LogManager.GetLogger(GetType());
             var databaseEntities = new DatabaseEntities();
             databaseEntities.Configuration.AutoDetectChangesEnabled = false;

@@ -23,18 +23,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using LtInfo.Common.Mvc;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.Agreement;
-using ProjectFirma.Web.Views.Grant;
+using ProjectFirma.Web.Models.ApiJson;
 using ProjectFirma.Web.Views.Invoice;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.InvoiceControls;
-using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -76,7 +72,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         public PartialViewResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey)
         {
             var invoiceID = invoicePrimaryKey.EntityObject.InvoiceID;
@@ -85,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult NewInvoiceLineItem(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceLineItemViewModel viewModel)
         {
@@ -107,7 +103,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [InvoiceLineItemEditAsAdminFeature]
+        [InvoiceLineItemEditFeature]
         public PartialViewResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey)
         {
             var invoiceLineItem = invoiceLineItemPrimaryKey.EntityObject;
@@ -116,7 +112,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [InvoiceLineItemEditAsAdminFeature]
+        [InvoiceLineItemEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditInvoiceLineItem(InvoiceLineItemPrimaryKey invoiceLineItemPrimaryKey, EditInvoiceLineItemViewModel viewModel)
         {
@@ -144,7 +140,7 @@ namespace ProjectFirma.Web.Controllers
             var gridSpec = new InvoiceLineItemGridSpec(CurrentPerson);
             var invoice = HttpRequestStorage.DatabaseEntities.Invoices.FirstOrDefault(x => x.InvoiceID == invoiceID);
             var invoiceLineItems = invoice != null
-                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDescription).ToList()
+                ? invoice.InvoiceLineItems.OrderBy(i => i.CostType.CostTypeDisplayName).ToList()
                 : new List<InvoiceLineItem>();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<InvoiceLineItem>(invoiceLineItems, gridSpec);
             return gridJsonNetJObjectResult;
@@ -152,7 +148,7 @@ namespace ProjectFirma.Web.Controllers
 
 
         [HttpGet]
-        [AgreementCreateFeature]
+        [InvoiceCreateFeature]
         public PartialViewResult New()
         {
             var viewModel = new EditInvoiceViewModel();
@@ -160,7 +156,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [AgreementCreateFeature]
+        [InvoiceCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult New(EditInvoiceViewModel viewModel)
         {
@@ -188,7 +184,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         public PartialViewResult Edit(InvoicePrimaryKey invoicePrimaryKey)
         {
             var invoice = invoicePrimaryKey.EntityObject;
@@ -197,7 +193,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [InvoiceEditAsAdminFeature]
+        [InvoiceEditFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult Edit(InvoicePrimaryKey invoicePrimaryKey, EditInvoiceViewModel viewModel)
         {
@@ -247,5 +243,28 @@ namespace ProjectFirma.Web.Controllers
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Invoice>(invoices, gridSpec);
             return gridJsonNetJObjectResult;
         }
+
+
+        #region WADNR Grant JSON API
+
+        [InvoicesViewJsonApiFeature]
+        public JsonNetJArrayResult InvoiceJsonApi()
+        {
+            var invoices = HttpRequestStorage.DatabaseEntities.Invoices.ToList();
+            var jsonApiInvoices = InvoiceApiJson.MakeInvoiceApiJsonsFromAgreements(invoices, false);
+            return new JsonNetJArrayResult(jsonApiInvoices);
+        }
+
+        [InvoicesViewJsonApiFeature]
+        public JsonNetJArrayResult InvoiceLineItemJsonApi()
+        {
+            var invoiceLineItems = HttpRequestStorage.DatabaseEntities.InvoiceLineItems.ToList();
+            var jsonApiInvoiceLineItems = InvoiceLineItemApiJson.MakeInvoiceLineItemApiJsonsFromAgreements(invoiceLineItems);
+            return new JsonNetJArrayResult(jsonApiInvoiceLineItems);
+        }
+
+        #endregion
+
+
     }
 }

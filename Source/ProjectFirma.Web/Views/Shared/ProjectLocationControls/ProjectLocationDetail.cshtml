@@ -73,7 +73,7 @@
 }
 
 
-    <form method="POST" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl">
+    <form method="POST" name="locationdetailform" id="@ViewDataTyped.MapFormId" action="@ViewDataTyped.SaveFeatureCollectionUrl">
         <div>
             @Html.ValidationSummary()
             <table class="table table-bordered table-projectLocations">
@@ -89,23 +89,24 @@
                 </thead>
                 <tr data-ng-repeat="projectLocation in AngularModel.ProjectLocationJsons" class="clickable-row"
                     data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocation)}"
-                    data-ng-click="toggleProjectLocationDetails(projectLocation.ProjectLocationLeafletID)">
+                    data-ng-click="toggleProjectLocationDetails(projectFirmaMap.editableFeatureGroup, projectLocation.ProjectLocationLeafletID)">
                     @* trash icon for deleting *@
-                    <td @*data-ng-if="!AngularViewData.isInCompletedReview"*@>
-                        <a href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
+                    <td>
+                        <a data-ng-if="!projectLocation.IsGeometryFromArcGis" href="javascript:void(0)" data-ng-click="deleteProjectLocationRowAndRefreshMap(projectLocation.ProjectLocationLeafletID)">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">**</span>
                     </td>
                     @* feature name *@
                     <td style="width: 200px">
                         <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationName"
-                               data-ng-model="projectLocation.ProjectLocationName" value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
-                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationName')">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationName')"></span>
-                        </div>*@
-                        <span ng-if="projectLocation.projectLocationID != null">
-                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].projectLocationID" value="{{projectLocation.projectLocationID}}" />
+                               data-ng-model="projectLocation.ProjectLocationName"
+                               value="{{projectLocation.ProjectLocationName}}" style="width: 100%" required maxlength="200" />
+
+                        <label for="ProjectLocationJsons[{{$index}}].ProjectLocationName" ng-show="checkLocationNameForDuplicates(projectLocation.ProjectLocationName)">Feature Name must be unique.</label>
+
+                        <span ng-if="projectLocation.ProjectLocationID != null">
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocation.ProjectLocationID}}" />
                         </span>
                     </td>
                     @* feature (line, point, poly) *@
@@ -117,52 +118,71 @@
                     @* location type (ProjectLocationType table) *@
                     <td>
                         <select name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID"
-                                ng-model="projectLocation.ProjectLocationTypeID" required >
+                                ng-model="projectLocation.ProjectLocationTypeID"
+                                data-ng-if="!projectLocation.IsGeometryFromArcGis"
+                                required>
                             <option value="">-- Select type --</option>
                             <option ng-repeat="projectLocationType in AngularViewData.ProjectLocationTypeJsons"
                                     value="{{projectLocationType.ProjectLocationTypeID}}" ng-selected="projectLocationType.ProjectLocationTypeID === projectLocation.ProjectLocationTypeID">
                                 {{projectLocationType.ProjectLocationTypeDisplayName}}
                             </option>
                         </select>
-                        
 
-                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'projectLocationTypeID')">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'projectLocationTypeID')"></span>
-                        </div>*@
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
+                            {{projectLocation.ProjectLocationTypeName}}
+                            <input type="hidden" name="ProjectLocationJsons[{{$index}}].ProjectLocationTypeID" value="{{projectLocation.ProjectLocationTypeID}}" />
+                        </span>
+
                     </td>
                     @* notes/annotation *@
                     <td style="width: 250px">
                         <input type="text" name="ProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocation.ProjectLocationNotes" style="width: 100%" maxlength="500" />
-                        @*<div class="alert alert-danger field-validation-error" role="alert" data-ng-if="hasProjectLocationError($index, 'notes')">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <span data-ng-bind="getProjectLocationErrorMessage($index, 'notes')"></span>
-                        </div>*@
+                        <input type="hidden" name="ProjectLocationJsons[{{$index}}].ArcGisObjectID" value="{{projectLocation.ArcGisObjectID}}" />
+                        <input type="hidden" name="ProjectLocationJsons[{{$index}}].ArcGisGlobalID" value="{{projectLocation.ArcGisGlobalID}}" />
+                    </td>
+                </tr>
+                <tr data-ng-repeat="projectLocationArc in AngularModel.ArcGisProjectLocationJsons" class="clickable-row"
+                    data-ng-class="{'selectedRow': isSelectedProjectLocation(projectLocationArc)}"
+                    data-ng-click="toggleProjectLocationDetails(projectFirmaMap.arcFeatureGroup, projectLocationArc.ProjectLocationLeafletID)">
+                    <td>
+                        <span data-ng-if="projectLocationArc.IsGeometryFromArcGis">**</span>
+                    </td>
+                    @* feature name *@
+                    <td style="width: 200px">
+                        <span data-ng-if="projectLocationArc.IsGeometryFromArcGis">
+                            {{projectLocationArc.ProjectLocationName}}
+                            <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationName" value="{{projectLocationArc.ProjectLocationName}}" />
+                        </span>
+
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationID" value="{{projectLocationArc.ProjectLocationID}}" />
+                    </td>
+                    @* feature (line, point, poly) *@
+                    <td>
+                        <span data-ng-bind="projectLocationArc.ProjectLocationFeatureType"></span>
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationGeometryWellKnownText"
+                               value="{{projectLocationArc.ProjectLocationGeometryWellKnownText}}" />
+                    </td>
+                    @* location type (ProjectLocationType table) *@
+                    <td>
+                        <span data-ng-if="projectLocation.IsGeometryFromArcGis">
+                            {{projectLocationArc.ProjectLocationTypeName}}
+                            <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationTypeID" value="{{projectLocationArc.ProjectLocationTypeID}}" />
+                        </span>
+
+                    </td>
+                    @* notes/annotation *@
+                    <td style="width: 250px">
+                        <input type="text" name="ArcGisProjectLocationJsons[{{$index}}].ProjectLocationNotes" data-ng-model="projectLocationArc.ProjectLocationNotes" style="width: 100%" maxlength="500" />
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ArcGisObjectID" value="{{projectLocationArc.ArcGisObjectID}}" />
+                        <input type="hidden" name="ArcGisProjectLocationJsons[{{$index}}].ArcGisGlobalID" value="{{projectLocationArc.ArcGisGlobalID}}" />
                     </td>
                 </tr>
             </table>
             <p class="systemText">
-
+                ** Geometries from ArcGIS are not editable, but you may add or edit the notes field.
             </p>
         </div>
     </form>
-
-@*<div class="alert alert-danger" role="alert" data-ng-repeat="projectLocationJson in getProjectLocationsWithProjectLocationTypesNotAlignedWithGeometryType()">
-        For ProjectLocation "{{projectLocationJson.projectLocationName}}", you indicated you have a "{{getProjectLocationTypeName(projectLocationJson.projectLocationTypeID)}}" ProjectLocation Type, yet represented it using a {{projectLocationJson.projectLocationGeometryType}}. While this is allowed, please make sure this is what you want to do.
-    </div>*@
-
-@*<div th:if="@ViewDataTyped.inDueDiligence()" class="projectComment">
-        <hr>
-        <h4>Review Comments</h4>
-        <textarea class="form-control" th:field="*{comments}" maxlength="1000"></textarea>
-        <div class="alert alert-danger field-validation-error" role="alert"
-             th:if="${#fields.hasErrors('comments')}">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <span th:errors="*{comments}"></span>
-        </div>
-    </div>*@
 
 
 
@@ -220,13 +240,20 @@
         return options;
     };
 
-    var projectFirmaMap;
     jQuery(document).ready(function()
     {
         var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
-        if(!Sitka.Methods.isUndefinedNullOrEmpty(saveButton))
-        {
+        if (!Sitka.Methods.isUndefinedNullOrEmpty(saveButton)) {
             saveButton.text("Save");
+            if (typeof enableOrDisableSaveButtonsForLocationDetailControl != 'function') {
+
+                window.enableOrDisableSaveButtonsForLocationDetailControl = function (hasDuplicates)
+                {
+                    //console.log('enableOrDisableSaveButtonsForLocationDetailControl in ProjectLocationDetail.cshtml');
+                    Sitka.Methods.enableOrDisableByID('@ModalDialogFormHelper.SaveButtonID', !hasDuplicates);  
+                }
+            }
+
         }
 
         var modalTitle = jQuery(".modal-title");
@@ -234,7 +261,7 @@
         {
             modalTitle.html("@(string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()))");
         }
-
+        
     });
 
     ProjectFirmaMaps.Map.prototype.getTextAreaId = function(featureId) { return "textareaFor" + featureId; };
@@ -245,14 +272,15 @@
 <script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectLocationControls/ProjectLocationDetailController.js")"></script>
 <script type="text/javascript">
     // <![CDATA[
-    angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
+     var app = angular.module("ProjectFirmaApp").factory("angularModelAndViewData",
         function() {
             return {
                 "AngularModel": @Html.Raw(JObject.FromObject(Model).ToString(Formatting.None)),
                 "AngularViewData":
-                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None)),
+                    @Html.Raw(JObject.FromObject(ViewDataTyped.ViewDataForAngular).ToString(Formatting.None))
             };
         });
+
     angular.bootstrap(jQuery("[ng-controller=\"ProjectLocationDetailController\"]"), ["ProjectFirmaApp"]);
     // ]]>
 </script>

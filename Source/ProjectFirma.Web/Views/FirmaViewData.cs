@@ -218,6 +218,9 @@ namespace ProjectFirma.Web.Views
             // Group 6 - Jobs
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JobController>(c => c.JobIndex()), currentPerson, Models.FieldDefinition.Job.GetFieldDefinitionLabelPluralized(), "Group6"));
 
+            // Group 7 - JSON APIs
+            manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JsonApiManagementController>(c => c.JsonApiLandingPage()), currentPerson, "JSON APIs", "Group7"));
+
             return manageMenu;
         }
 

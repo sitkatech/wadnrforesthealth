@@ -3,6 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[tmp2015-19_grant_payments_singlesheet](
+	[tmp2015ID] [int] IDENTITY(1,1) NOT NULL,
 	[BIENNIUM] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FM_NO] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FM_ADJ_MO] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -70,5 +71,9 @@ CREATE TABLE [dbo].[tmp2015-19_grant_payments_singlesheet](
 	[RESOURCE_TYPE_CODE] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[RESOURCE_TYPE_NAME] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[UNIT_TYPE_CODE] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[UNIT_TYPE_NAME] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+	[UNIT_TYPE_NAME] [nvarchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+ CONSTRAINT [PK_tmp2015-19_grant_payments_singlesheet_tmp2015ID] PRIMARY KEY CLUSTERED 
+(
+	[tmp2015ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

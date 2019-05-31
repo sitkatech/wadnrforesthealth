@@ -36,6 +36,7 @@ namespace ProjectFirma.Web.Views.FocusArea
     {
         public ProjectsIncludingLeadImplementingGridSpec(Person currentPerson, bool showSubmittalStatus)
         {
+            Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.FhtProjectNumber), 100, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DisplayName), 350, DhtmlxGridColumnFilterType.Html);
 
             if (showSubmittalStatus)

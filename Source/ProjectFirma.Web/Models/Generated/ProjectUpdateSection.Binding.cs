@@ -23,7 +23,6 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionLocationDetailed LocationDetailed = ProjectUpdateSectionLocationDetailed.Instance;
         public static readonly ProjectUpdateSectionPerformanceMeasures PerformanceMeasures = ProjectUpdateSectionPerformanceMeasures.Instance;
         public static readonly ProjectUpdateSectionExpectedFunding ExpectedFunding = ProjectUpdateSectionExpectedFunding.Instance;
-        public static readonly ProjectUpdateSectionExpenditures Expenditures = ProjectUpdateSectionExpenditures.Instance;
         public static readonly ProjectUpdateSectionPhotos Photos = ProjectUpdateSectionPhotos.Instance;
         public static readonly ProjectUpdateSectionExternalLinks ExternalLinks = ProjectUpdateSectionExternalLinks.Instance;
         public static readonly ProjectUpdateSectionNotesAndDocuments NotesAndDocuments = ProjectUpdateSectionNotesAndDocuments.Instance;
@@ -41,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Expenditures, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -123,8 +122,6 @@ namespace ProjectFirma.Web.Models
                     return Contacts;
                 case ProjectUpdateSectionEnum.ExpectedFunding:
                     return ExpectedFunding;
-                case ProjectUpdateSectionEnum.Expenditures:
-                    return Expenditures;
                 case ProjectUpdateSectionEnum.ExternalLinks:
                     return ExternalLinks;
                 case ProjectUpdateSectionEnum.LocationDetailed:
@@ -158,7 +155,6 @@ namespace ProjectFirma.Web.Models
         LocationDetailed = 4,
         PerformanceMeasures = 6,
         ExpectedFunding = 7,
-        Expenditures = 8,
         Photos = 9,
         ExternalLinks = 10,
         NotesAndDocuments = 11,
@@ -197,12 +193,6 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectUpdateSectionExpectedFunding(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
         public static readonly ProjectUpdateSectionExpectedFunding Instance = new ProjectUpdateSectionExpectedFunding(7, @"ExpectedFunding", @"Expected Funding", 70, false, 4);
-    }
-
-    public partial class ProjectUpdateSectionExpenditures : ProjectUpdateSection
-    {
-        private ProjectUpdateSectionExpenditures(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionExpenditures Instance = new ProjectUpdateSectionExpenditures(8, @"Expenditures", @"Expenditures", 80, true, 4);
     }
 
     public partial class ProjectUpdateSectionPhotos : ProjectUpdateSection

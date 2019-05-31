@@ -7,6 +7,9 @@ angular.module("ProjectFirmaApp")
             $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.length > 0;
             $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
             $scope.selectedLocationLeafletID = null;
+            $scope.projectFirmaMap = null;
+
+            //console.log(JSON.stringify($scope.AngularModel));
         
             $scope.IconStyleDefault = new L.icon({
                 iconUrl: 'https://api.tiles.mapbox.com/v3/marker/pin-m-marker+0000ff.png'
@@ -50,14 +53,14 @@ angular.module("ProjectFirmaApp")
 
             var locationJson = createProjectLocationJson(newestGeoJson, -1, featureTypeName, '', '', newestLeafletID);
             $scope.AngularModel.ProjectLocationJsons.push(locationJson);
-            $scope.toggleProjectLocationDetails(newestLeafletID);
+            $scope.toggleProjectLocationDetails($scope.projectFirmaMap.editableFeatureGroup, newestLeafletID);
             $scope.$apply();
         };
 
         $scope.deleteProjectLocationRowAndRefreshMap = function (projectLocationLeafletID) {
             //console.log("inside deleteProjectLocationRowAndRefreshMap: " + projectLocationLeafletID);
-            var layer = projectFirmaMap.editableFeatureGroup.getLayer(projectLocationLeafletID);
-            projectFirmaMap.editableFeatureGroup.removeLayer(layer);//remove from map
+            var layer = $scope.projectFirmaMap.editableFeatureGroup.getLayer(projectLocationLeafletID);
+            $scope.projectFirmaMap.editableFeatureGroup.removeLayer(layer);//remove from map
 
             _.remove($scope.AngularModel.ProjectLocationJsons, function(n) {
                 return n.ProjectLocationLeafletID == projectLocationLeafletID;
@@ -69,10 +72,38 @@ angular.module("ProjectFirmaApp")
             return $scope.selectedLocationLeafletID == projectLocation.ProjectLocationLeafletID;
         };
 
-        $scope.toggleProjectLocationDetails = function (locationLeafletID) {
+        $scope.toggleProjectLocationDetails = function (featureGroup, locationLeafletID) {
             $scope.selectedLocationLeafletID = locationLeafletID;
             //console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
-            projectFirmaMap.editableFeatureGroup.eachLayer(function (layer) {
+
+            // turn all highlighting off
+            $scope.projectFirmaMap.editableFeatureGroup.eachLayer(function (layer) {
+                if (layer._icon) {
+                    layer.setIcon($scope.IconStyleDefault);
+                } else {
+                    layer.setStyle({
+                        color: '#02ffff',
+                        fillColor: '#02ffff',
+                        weight: 3,
+                        opacity: 0.6
+                    });
+                }
+            });
+            $scope.projectFirmaMap.arcFeatureGroup.eachLayer(function (layer) {
+                if (layer._icon) {
+                    layer.setIcon($scope.IconStyleDefault);
+                } else {
+                    layer.setStyle({
+                        color: '#02ffff',
+                        fillColor: '#02ffff',
+                        weight: 3,
+                        opacity: 0.6
+                    });
+                }
+            });
+
+            // turn the selected one on
+            featureGroup.eachLayer(function (layer) {
                 var currentLocationLeafletID = layer._leaflet_id;
                 if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
                     if (layer._icon) {
@@ -86,26 +117,36 @@ angular.module("ProjectFirmaApp")
                         });
                     }
                     
-                } else {
-                    if (layer._icon) {
-                        layer.setIcon($scope.IconStyleDefault);
-                    } else {
-                        layer.setStyle({
-                            color: '#02ffff',
-                            fillColor: '#02ffff',
-                            weight: 3,
-                            opacity: 0.6
-                        });
-                    }
                 }
             });
+        };
+
+
+        $scope.checkLocationNameForDuplicates = function (locationName)
+        {
+            //console.log('checkLocationDupeFunction[locationName]: ' + locationName);
+            var totalLocations = $scope.AngularModel.ProjectLocationJsons.length + $scope.AngularModel.ArcGisProjectLocationJsons.length;
+            if (totalLocations < 2) {
+                return false;//1 or 0 items in list so no need to check for duplicates
+            }
+            
+            var duplicates = _.filter($scope.AngularModel.ProjectLocationJsons, function (plj) { return plj.ProjectLocationName == locationName; });
+            var arcGisDuplicates = _.filter($scope.AngularModel.ArcGisProjectLocationJsons, function (aplj) { return aplj.ProjectLocationName == locationName; });
+            var totalDuplicates = duplicates.length + arcGisDuplicates.length;
+            var hasDuplicates = totalDuplicates > 1;
+
+            // disable/enable save buttons on parent control / page / etc.
+            enableOrDisableSaveButtonsForLocationDetailControl(hasDuplicates);
+
+            return hasDuplicates;
         };
 
         var getUserFriendlyGeometryType = function(geometry) {
             return geometry.type.replace("LineString", "Line");
         };
 
-        var bindProjectLocationSelectClickEvent = function (feature, layer) {
+        var bindProjectLocationSelectClickEvent = function (featureGroup, layer)
+        {
             var leafletID = layer._leaflet_id;
             layer.on('click', function (f) {
                 if (layer.editing.enabled()) {
@@ -115,7 +156,7 @@ angular.module("ProjectFirmaApp")
                 $scope.$apply(function () {
                     $scope.selectedLocationLeafletID = leafletID;
                 });
-                $scope.toggleProjectLocationDetails(leafletID);
+                $scope.toggleProjectLocationDetails(featureGroup, leafletID);
             });
         };
 
@@ -131,43 +172,64 @@ angular.module("ProjectFirmaApp")
                 //console.log('initializeMap');
                 var mapInitJson = $scope.AngularViewData.MapInitJson;
                 var editableFeatureJsonObject = $scope.AngularViewData.EditableLayerGeoJson;
-                projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
+                var arcGisFeatureJsonObject = $scope.AngularViewData.ArcGisLayerGeoJson;
+                $scope.projectFirmaMap = new ProjectFirmaMaps.Map(mapInitJson);
 
-                projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
-
+                $scope.projectFirmaMap.editableFeatureGroup = new L.FeatureGroup();
                 var x = 0;
                 var layerGroup = L.geoJson(editableFeatureJsonObject.GeoJsonFeatureCollection, {
                     onEachFeature: function (feature, layer) {
                         if (layer.getLayers) {
-                            layer.getLayers().forEach(function (l) { projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
+                            layer.getLayers().forEach(function (l) { $scope.projectFirmaMap.editableFeatureGroup.addLayer(l); });//might not be hit
                         }
                         else {
-                            projectFirmaMap.editableFeatureGroup.addLayer(layer);
+                            $scope.projectFirmaMap.editableFeatureGroup.addLayer(layer);
                             $scope.AngularModel.ProjectLocationJsons[x].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
-                            bindProjectLocationSelectClickEvent(feature, layer);
+                            bindProjectLocationSelectClickEvent($scope.projectFirmaMap.editableFeatureGroup, layer);
                             x++;
                         }
                        
                     }
                 });
 
-                var drawOptions = getDrawOptions(projectFirmaMap.editableFeatureGroup);
+                var drawOptions = getDrawOptions($scope.projectFirmaMap.editableFeatureGroup);
                 var drawControl = new L.Control.Draw(drawOptions);
-                projectFirmaMap.map.addControl(drawControl);
-                projectFirmaMap.map.addLayer(projectFirmaMap.editableFeatureGroup);
+                $scope.projectFirmaMap.map.addControl(drawControl);
+                $scope.projectFirmaMap.map.addLayer($scope.projectFirmaMap.editableFeatureGroup);
 
-                projectFirmaMap.map.on('draw:created', function (e) {
+
+                $scope.projectFirmaMap.arcFeatureGroup = new L.FeatureGroup();
+                var arcCounter = 0;
+                var arcLayerGroup = L.geoJson(arcGisFeatureJsonObject.GeoJsonFeatureCollection, {
+                    onEachFeature: function (feature, layer) {
+                        if (layer.getLayers) {
+                            layer.getLayers().forEach(function (l) { $scope.projectFirmaMap.arcFeatureGroup.addLayer(l); });//might not be hit
+                        }
+                        else {
+                            $scope.projectFirmaMap.arcFeatureGroup.addLayer(layer);
+                            $scope.AngularModel.ArcGisProjectLocationJsons[arcCounter].ProjectLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
+                            bindProjectLocationSelectClickEvent($scope.projectFirmaMap.arcFeatureGroup, layer);
+                            arcCounter++;
+                        }
+
+                    }
+                });
+                $scope.projectFirmaMap.map.addLayer($scope.projectFirmaMap.arcFeatureGroup);
+
+                
+
+                $scope.projectFirmaMap.map.on('draw:created', function (e) {
                     
                     var layer = e.layer;
-                    projectFirmaMap.editableFeatureGroup.addLayer(layer);
+                    $scope.projectFirmaMap.editableFeatureGroup.addLayer(layer);
                     var leafletId = layer._leaflet_id;
-                    console.log('draw:created called: ' + leafletId);
+                    //console.log('draw:created called: ' + leafletId);
 
-                    projectFirmaMap.editableFeatureGroup._layers[leafletId].feature = new Object();
-                    projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.properties = new Object();
-                    projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.type = "Feature";
+                    $scope.projectFirmaMap.editableFeatureGroup._layers[leafletId].feature = new Object();
+                    $scope.projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.properties = new Object();
+                    $scope.projectFirmaMap.editableFeatureGroup._layers[leafletId].feature.type = "Feature";
 
-                    var allGeoJson = projectFirmaMap.editableFeatureGroup.toGeoJSON();
+                    var allGeoJson = $scope.projectFirmaMap.editableFeatureGroup.toGeoJSON();
                     var tempFeature = allGeoJson.features[allGeoJson.features.length - 1];
                     var newestGeoJson = Terraformer.WKT.convert(tempFeature.geometry);
 
@@ -177,7 +239,7 @@ angular.module("ProjectFirmaApp")
 
                 });
 
-                projectFirmaMap.map.on('draw:edited', function (e) {
+                $scope.projectFirmaMap.map.on('draw:edited', function (e) {
                     //console.log('draw:edited called');
                     var layers = e.layers;
                     layers.eachLayer(function (layer) {
@@ -190,7 +252,7 @@ angular.module("ProjectFirmaApp")
                     $scope.$apply();
                 });
 
-                projectFirmaMap.map.on('draw:deleted',
+                $scope.projectFirmaMap.map.on('draw:deleted',
                     function(e) {
                         //console.log('draw:deleted called');
                         for (var layer in e.layers._layers) {

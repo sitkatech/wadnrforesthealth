@@ -35,6 +35,7 @@ CREATE TABLE [dbo].[tmpTreatmentsFromArcGis](
 	[created_date] [datetime2](7) NULL,
 	[last_edited_user] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[last_edited_date] [datetime2](7) NULL,
+	[FHT_Project_Number] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[GlobalID] [varchar](38) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[SHAPE_Length] [float] NULL,
 	[SHAPE_Area] [float] NULL,

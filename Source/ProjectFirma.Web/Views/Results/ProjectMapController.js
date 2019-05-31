@@ -4,22 +4,30 @@ angular.module("ProjectFirmaApp")
     function ($scope, angularModelAndViewData) {
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
-            $scope.selectedLocationLeafletID = null;
+            $scope.selectedLocationProjectID = null;
 
             $scope.IconStyleSelected = new L.MakiMarkers.icon({ icon: "marker", color: "#fff200", size: "s" });
 
 
         $scope.isSelectedProjectMapLocation = function (projectLocation) {
-            if ($scope.selectedLocationLeafletID) {
-                return $scope.selectedLocationLeafletID == projectLocation.ProjectMapLocationLeafletID;
+            if ($scope.selectedLocationProjectID) {
+                return $scope.selectedLocationProjectID == projectLocation.ProjectMapProjectID;
             }
             return false;
         };
 
+
+        $scope.isShownLocation = function (projectLocation) {
+            if (projectLocation.IsHidden == true) {
+                return false;
+            }
+            return true;
+        };
+
         var setLayerIconColors = function () {
             projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
-                var currentLocationLeafletID = layer._leaflet_id;
-                if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
+                var currentLocationProjectID = layer.feature.properties.ProjectID;
+                if ($scope.selectedLocationProjectID == currentLocationProjectID) {
                     if (layer._icon) {
                         layer.setIcon($scope.IconStyleSelected);
                     } else {
@@ -48,12 +56,12 @@ angular.module("ProjectFirmaApp")
 
         };
 
-        $scope.toggleProjectMapLocationDetails = function (locationLeafletID) {
-            $scope.selectedLocationLeafletID = locationLeafletID;
+        $scope.toggleProjectMapLocationDetails = function (locationProjectID) {
+            $scope.selectedLocationProjectID = locationProjectID;
             //console.log('toggleProjectLocationDetails passed in leafletID :' + locationLeafletID);
             projectFirmaMap.projectLocationsLayer.eachLayer(function (layer) {
-                var currentLocationLeafletID = layer._leaflet_id;
-                if ($scope.selectedLocationLeafletID == currentLocationLeafletID) {
+                var currentLocationProjectID = layer.feature.properties.ProjectID;
+                if ($scope.selectedLocationProjectID == currentLocationProjectID) {
                     if (!Sitka.Methods.isUndefinedNullOrEmpty(layer.feature.properties.PopupUrl)) {
                         jQuery.get(layer.feature.properties.PopupUrl).done(function (data) {
                             layer._map.setView(layer._latlng);
@@ -66,18 +74,26 @@ angular.module("ProjectFirmaApp")
         };
 
 
-        var bindProjectLocationSelectClickEvent = function (feature, layer) {
-            var leafletID = layer._leaflet_id;
+        var bindProjectLocationSelectClickEvent = function(feature, layer) {
+            var projectID = layer.feature.properties.ProjectID;
+            $scope.AngularViewData.ProjectMapLocationJsons.forEach(function(item) {
+                if (item.ProjectMapProjectID == projectID) {
+                    item.IsHidden = false;
+                }
+                //console.log("item(" + projectID +")" + JSON.stringify(item));
+            });
+
             layer.on('click', function (f) {
                 if (layer.editing.enabled()) {
                     return;
                 }
 
                 $scope.$apply(function () {
-                    $scope.selectedLocationLeafletID = leafletID;
+                    $scope.selectedLocationProjectID = projectID;
                 });
                 setLayerIconColors();
             });
+            
         };
 
 
@@ -87,11 +103,49 @@ angular.module("ProjectFirmaApp")
             var x = 0;
             jQuery.each(projectFirmaMap.projectLocationsLayer._layers, function(index, layer) {
                 if (!layer.getLayers) {
-                    $scope.AngularViewData.ProjectMapLocationJsons[x].ProjectMapLocationLeafletID = layer._leaflet_id;//hacky way to get leaflet_ids tied to locations on grid
                     bindProjectLocationSelectClickEvent(layer.feature, layer);
                     x++;
                 }
             });
+
+            projectFirmaMap.map.on('overlayremove', function (event) {
+                //console.log("made it into overlayremove");
+
+                if ( event.name != null && event.name.includes("Mapped Projects")) {
+                    $scope.selectedLocationProjectID = null;
+                    jQuery(".mapGridContainer").find("tr.selectedRow").removeClass("selectedRow");
+                    projectFirmaMap.map.closePopup();
+                }
+                
+            });
+
+
+            projectFirmaMap.map.on('layeradd', function (event) {
+               //console.log("made it into layeradd event");
+
+                if (event.layer.feature != null && event.layer.feature.properties.ProjectID != null) {
+                    bindProjectLocationSelectClickEvent(event.layer.feature, event.layer);
+                }
+                $scope.$apply();
+            });
+
+
+            projectFirmaMap.map.on('layerremove', function (event) {
+                //console.log("made it into layerremove event");
+
+                if (event.layer.feature != null && event.layer.feature.properties.ProjectID != null) {
+                    var projectID = event.layer.feature.properties.ProjectID;
+                    $scope.AngularViewData.ProjectMapLocationJsons.forEach(function (item) {
+                        if (item.ProjectMapProjectID == projectID) {
+                            item.IsHidden = true;
+                        }
+                        //console.log("item in layerremove(" + projectID + ")" + JSON.stringify(item));
+                    });
+                    projectFirmaMap.map.closePopup();
+                }
+                $scope.$apply();
+            });
+
 
         };
 
@@ -109,8 +163,14 @@ angular.module("ProjectFirmaApp")
                         var checkbox = jQuery(this);
                         if (checkbox.is(':checked')) {
                             jQuery('.mapGridContainer').show();
+                            jQuery('.mapCustomizations').show();
+                            jQuery('.clusterLocationsContainer').show();
+                            jQuery('.mapLegendContainer').show();
                         } else {
                             jQuery('.mapGridContainer').hide();
+                            jQuery('.mapCustomizations').hide();
+                            jQuery('.clusterLocationsContainer').hide();
+                            jQuery('.mapLegendContainer').hide();
                         }
                     }
                 } else {

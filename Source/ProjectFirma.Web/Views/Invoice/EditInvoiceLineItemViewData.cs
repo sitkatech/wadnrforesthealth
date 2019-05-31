@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Views.Invoice
 
         public EditInvoiceLineItemViewData(List<Models.GrantAllocation> grantAllocations, List<CostType> costTypes)
         {
-            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDescription);
+            CostTypes = costTypes.ToSelectListWithEmptyFirstRow(k => k.CostTypeID.ToString(), v => v.CostTypeDisplayName);
             GrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(k => k.GrantAllocationID.ToString(), v => v.GrantNumberAndGrantAllocationDisplayName);
         }
     }

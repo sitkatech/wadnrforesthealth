@@ -27,6 +27,7 @@ using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.ScheduledJobs;
 using ProjectFirma.Web.Views.Job;
+using ProjectFirma.Web.Views.JsonApiManagement;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -74,234 +75,27 @@ namespace ProjectFirma.Web.Controllers
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
-
-        /*
-        [HttpGet]
-        [FirmaAdminFeature]
-        public PartialViewResult New()
+        [JobManageFeature]
+        public ActionResult RunGrantExpendituresImportJob()
         {
-            var viewModel = new EditViewModel();
-            return ViewEdit(viewModel);
+            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Grant Expenditures Import (Button activated)");
+            socrataJob.DownloadGrantExpendituresTable();
+            return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
-        [HttpPost]
-        [FirmaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ViewEdit(viewModel);
-            }
-            var tag = new Tag(string.Empty);
-            viewModel.UpdateModel(tag, CurrentPerson);
-            HttpRequestStorage.DatabaseEntities.Tags.Add(tag);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Tag {tag.DisplayNameAsUrl} successfully created.");
-            return new ModalDialogFormJsonResult();
-        }
-
-        [HttpGet]
-        [FirmaAdminFeature]
-        public PartialViewResult Edit(TagPrimaryKey tagPrimaryKey)
-        {
-            var tag = tagPrimaryKey.EntityObject;
-            var viewModel = new EditViewModel(tag);
-            return ViewEdit(viewModel);
-        }
-
-        [HttpPost]
-        [FirmaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Edit(TagPrimaryKey tagPrimaryKey, EditViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return ViewEdit(viewModel);
-            }
-            var tag = tagPrimaryKey.EntityObject;
-            viewModel.UpdateModel(tag, CurrentPerson);
-            return new ModalDialogFormJsonResult(SitkaRoute<TagController>.BuildUrlFromExpression(x => x.Detail(tag.TagName)));
-        }
-
-        private PartialViewResult ViewEdit(EditViewModel viewModel)
-        {
-            var viewData = new EditViewData();
-            return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
-        }
-
-        [FirmaAdminFeature]
-        public ViewResult Detail(string tagName)
-        {
-            var tag = HttpRequestStorage.DatabaseEntities.Tags.GetTag(tagName);
-            Check.RequireNotNullThrowNotFound(tag, tagName);
-            var viewData = new DetailViewData(CurrentPerson, tag);
-            return RazorView<Detail, DetailViewData>(viewData);
-        }
-
-        [HttpGet]
-        [FirmaAdminFeature]
-        public PartialViewResult DeleteTag(TagPrimaryKey tagPrimaryKey)
-        {
-            var tag = tagPrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(tag.TagID);
-            return ViewDeleteTag(tag, viewModel);
-        }
-
-        private PartialViewResult ViewDeleteTag(Tag tag, ConfirmDialogFormViewModel viewModel)
-        {
-            var confirmMessage = $"Are you sure you want to delete this Tag '{tag.TagName}'?";
-            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
-            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
-        }
-
-        [HttpPost]
-        [FirmaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteTag(TagPrimaryKey tagPrimaryKey, ConfirmDialogFormViewModel viewModel)
-        {
-            var tag = tagPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return ViewDeleteTag(tag, viewModel);
-            }
-            tag.DeleteFull(HttpRequestStorage.DatabaseEntities);
-            return new ModalDialogFormJsonResult();
-        }
 
         /// <summary>
-        /// Dummy get signature so that it can find the post action
+        /// Maybe this deserves its own controller, but it's here for now.
+        /// Move if you feel the urge.
         /// </summary>
-        [HttpGet]
-        [FirmaAdminFeature]
-        public ContentResult RemoveTagsFromProject()
+        /// <returns></returns>
+        [ViewJsonApiLandingPageFeature]
+        public ViewResult JsonApiLandingPage()
         {
-            return new ContentResult();
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
+            var viewData = new Views.JsonApiManagement.JsonApiLandingPageViewData(CurrentPerson, firmaPage);
+            return RazorView<JsonApiLandingPage, JsonApiLandingPageViewData>(viewData);
         }
 
-        [HttpPost]
-        [FirmaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult RemoveTagsFromProject(BulkTagProjectsViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new JsonResult();
-            }
-            // find tag, remove it from this project
-            var existingTag = HttpRequestStorage.DatabaseEntities.Tags.GetTag(viewModel.TagName);
-            if (existingTag != null)
-            {
-                HttpRequestStorage.DatabaseEntities.ProjectTags.DeleteProjectTag(existingTag.ProjectTags.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList());
-            }
-            return new ModalDialogFormJsonResult();
-        }
-
-        /// <summary>
-        /// Dummy get signature so that it can find the post action
-        /// </summary>
-        [HttpGet]
-        [FirmaAdminFeature]
-        public ContentResult AddTagsToProject()
-        {
-            return new ContentResult();
-        }
-
-        [HttpPost]
-        [FirmaAdminFeature]
-        public ActionResult AddTagsToProject(BulkTagProjectsViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new JsonResult();
-            }
-            var existingTag = AddTagsToProjectImpl(viewModel);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
-            return Json(new BootstrapTag(existingTag));
-        }
-
-        /// <summary>
-        /// Dummy get signature so that it can find the post action
-        /// </summary>
-        [HttpGet]
-        [FirmaAdminFeature]
-        public ContentResult AddTagsToProjectModal()
-        {
-            return new ContentResult();
-        }
-
-        [HttpPost]
-        [FirmaAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult AddTagsToProjectModal(BulkTagProjectsViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return new ModalDialogFormJsonResult();
-            }
-            AddTagsToProjectImpl(viewModel);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private static Tag AddTagsToProjectImpl(BulkTagProjectsViewModel viewModel)
-        {
-            var existingTag = HttpRequestStorage.DatabaseEntities.Tags.GetTag(viewModel.TagName);
-            if (existingTag == null)
-            {
-                existingTag = new Tag(viewModel.TagName);
-                HttpRequestStorage.DatabaseEntities.Tags.Add(existingTag);
-            }
-
-            var newProjectTags =
-                viewModel.ProjectIDList.Select(projectID => new ProjectTag(projectID, existingTag.TagID))
-                    .ToList();
-
-            HttpRequestStorage.DatabaseEntities.ProjectTags.Load();
-            var allProjectTags = HttpRequestStorage.DatabaseEntities.ProjectTags.Local;
-            existingTag.ProjectTags.MergeNew(newProjectTags, (x, y) => x.ProjectID == y.ProjectID && x.TagID == y.TagID, allProjectTags);
-            return existingTag;
-        }
-
-        [FirmaAdminFeature]
-        public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(TagPrimaryKey tagPrimaryKey)
-        {
-            var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, true);
-            var projectGeospatialAreas = tagPrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectGeospatialAreas, gridSpec);
-            return gridJsonNetJObjectResult;
-        }
-
-        [FirmaAdminFeature]
-        public JsonResult Find(string q)
-        {
-            var searchTerm = q.Trim();
-            var projectFindResults = HttpRequestStorage.DatabaseEntities.Tags
-                .Where(x => searchTerm.Length < 3 ? x.TagName.StartsWith(searchTerm) : x.TagName.Contains(searchTerm)).ToList()
-                .Select(x => new BootstrapTag(x));
-            return Json(projectFindResults);
-        }
-
-        [HttpGet]
-        [FirmaAdminFeature]
-        public ContentResult BulkTagProjects()
-        {
-            return new ContentResult();
-        }
-
-        [HttpPost]
-        [FirmaAdminFeature]
-        public PartialViewResult BulkTagProjects(BulkTagProjectsViewModel viewModel)
-        {
-            var projectDisplayNames = new List<string>();
-
-            if (viewModel.ProjectIDList != null)
-            {
-                var projects = HttpRequestStorage.DatabaseEntities.Projects.Where(x => viewModel.ProjectIDList.Contains(x.ProjectID)).ToList();
-                projectDisplayNames = projects.Select(x => x.DisplayName).ToList();
-            }
-            var viewData = new BulkTagProjectsViewData(projectDisplayNames);
-            return RazorPartialView<BulkTagProjects, BulkTagProjectsViewData, BulkTagProjectsViewModel>(viewData, viewModel);
-        }
-        */
     }
 }

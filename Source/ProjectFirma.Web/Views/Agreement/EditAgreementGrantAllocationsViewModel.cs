@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using LtInfo.Common.Models;
 using System.Linq;
 using ProjectFirma.Web.Common;
@@ -28,6 +29,7 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Views.Agreement
 {
 
+    [DebuggerDisplay("GrantAllocationID: {GrantAllocationID} - GrantAllocationName: {GrantAllocationName}")]
     public class GrantAllocationJson
     {
         public int GrantAllocationID { get; set; }
@@ -46,10 +48,14 @@ namespace ProjectFirma.Web.Views.Agreement
             this.GrantAllocationName = grantAllocation.GrantAllocationName;
         }
 
-        public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.GrantAllocation> grantAllocations)
+        public static List<GrantAllocationJson> MakeGrantAllocationJsonsFromGrantAllocations(List<Models.GrantAllocation> grantAllocations, bool doAlphaSort = true)
         {
-            // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-            var outgoingGrantAllocations = Models.GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+            var outgoingGrantAllocations = grantAllocations;
+            if (doAlphaSort)
+            {
+                // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
+                outgoingGrantAllocations = Models.GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(grantAllocations);
+            }
             return outgoingGrantAllocations.Select(ga => new GrantAllocationJson(ga)).ToList();
         }
 

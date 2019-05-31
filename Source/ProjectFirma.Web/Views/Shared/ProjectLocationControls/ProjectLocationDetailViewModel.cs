@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
     {
 
         public List<ProjectLocationJson> ProjectLocationJsons { get; set; }
+        public List<ProjectLocationJson> ArcGisProjectLocationJsons { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -39,16 +41,19 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public ProjectLocationDetailViewModel()
         {
             ProjectLocationJsons = new List<ProjectLocationJson>();
+            ArcGisProjectLocationJsons = new List<ProjectLocationJson>();
         }
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocation> projectLocations)
         {
-            ProjectLocationJsons = projectLocations.Select(x => new ProjectLocationJson(x)).ToList();
+            ProjectLocationJsons = projectLocations.Where(x => !x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
+            ArcGisProjectLocationJsons = projectLocations.Where(x => x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
         }
 
         public ProjectLocationDetailViewModel(ICollection<Models.ProjectLocationUpdate> projectLocationUpdates)
         {
-            ProjectLocationJsons = projectLocationUpdates.Select(x => new ProjectLocationJson(x)).ToList();
+            ProjectLocationJsons = projectLocationUpdates.Where(x => !x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
+            ArcGisProjectLocationJsons = projectLocationUpdates.Where(x => x.ArcGisObjectID.HasValue).Select(x => new ProjectLocationJson(x)).ToList();
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -59,12 +64,19 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             {
                 if (LtInfo.Common.GeneralUtility.IsNullOrEmptyOrOnlyWhitespace(plj.ProjectLocationName))
                 {
-                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Project Location Name must not be blank.", x => x.ProjectLocationName));
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Feature Name must not be blank.", x => x.ProjectLocationName));
+                }
+
+                //check for duplicate names
+                var duplicateName = ProjectLocationJsons.Find(pl => pl != plj && pl.ProjectLocationName == plj.ProjectLocationName);
+                if (duplicateName != null)
+                {
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, string>("Feature Name must be unique.", x => x.ProjectLocationName));
                 }
 
                 if (plj.ProjectLocationTypeID == -1)
                 {
-                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Project Location Type must be selected.", x => x.ProjectLocationTypeID));
+                    results.Add(new SitkaValidationResult<ProjectLocationJson, int>("Location Type must be selected.", x => x.ProjectLocationTypeID));
                 }
             }
 
@@ -89,6 +101,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationFeatureType = x.ProjectLocationGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationGeometry.AsText();
+            IsGeometryFromArcGis = x.ArcGisObjectID.HasValue;
+            ArcGisObjectID = x.ArcGisObjectID;
+            ArcGisGlobalID = x.ArcGisGlobalID;
         }
 
         public ProjectLocationJson(Models.ProjectLocationUpdate x)
@@ -100,6 +115,9 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
             ProjectLocationFeatureType = x.ProjectLocationUpdateGeometry.SpatialTypeName.Replace("LineString", "Line");
             ProjectLocationID = x.ProjectLocationUpdateID;
             ProjectLocationGeometryWellKnownText = x.ProjectLocationUpdateGeometry.AsText();
+            IsGeometryFromArcGis = x.ArcGisObjectID.HasValue;
+            ArcGisObjectID = x.ArcGisObjectID;
+            ArcGisGlobalID = x.ArcGisGlobalID;
         }
 
         public string ProjectLocationGeometryWellKnownText { get; set; }
@@ -109,5 +127,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public string ProjectLocationName { get; set; }
         public string ProjectLocationTypeName { get; set; }
         public string ProjectLocationNotes { get; set; }
+        public int? ArcGisObjectID { get; set; }
+        public string ArcGisGlobalID { get; set; }
+        public bool IsGeometryFromArcGis { get; set; }
     }
 }

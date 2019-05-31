@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public TreatmentActivity(int treatmentActivityID, int projectID, DateTime? treatmentActivityStartDate, DateTime? treatmentActivityEndDate, int treatmentActivityStatusID, int? treatmentActivityContactID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, string treatmentActivityNotes, int? programIndexID, int? projectCodeID, decimal treatmentActivitySlashAcres) : this()
+        public TreatmentActivity(int treatmentActivityID, int projectID, DateTime? treatmentActivityStartDate, DateTime? treatmentActivityEndDate, int treatmentActivityStatusID, int? treatmentActivityContactID, decimal treatmentActivityFootprintAcres, decimal treatmentActivityChippingAcres, decimal treatmentActivityPruningAcres, decimal treatmentActivityThinningAcres, decimal treatmentActivityMasticationAcres, decimal treatmentActivityGrazingAcres, decimal treatmentActivityLopAndScatterAcres, decimal treatmentActivityBiomassRemovalAcres, decimal treatmentActivityHandPileAcres, decimal treatmentActivityBroadcastBurnAcres, decimal treatmentActivityHandPileBurnAcres, decimal treatmentActivityMachinePileBurnAcres, decimal treatmentActivityOtherTreatmentAcres, string treatmentActivityNotes, int? programIndexID, int? projectCodeID, decimal treatmentActivitySlashAcres, int? grantAllocationProgramIndexProjectCodeID) : this()
         {
             this.TreatmentActivityID = treatmentActivityID;
             this.ProjectID = projectID;
@@ -55,6 +55,7 @@ namespace ProjectFirma.Web.Models
             this.ProgramIndexID = programIndexID;
             this.ProjectCodeID = projectCodeID;
             this.TreatmentActivitySlashAcres = treatmentActivitySlashAcres;
+            this.GrantAllocationProgramIndexProjectCodeID = grantAllocationProgramIndexProjectCodeID;
         }
 
         /// <summary>
@@ -174,6 +175,7 @@ namespace ProjectFirma.Web.Models
         public int? ProgramIndexID { get; set; }
         public int? ProjectCodeID { get; set; }
         public decimal TreatmentActivitySlashAcres { get; set; }
+        public int? GrantAllocationProgramIndexProjectCodeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return TreatmentActivityID; } set { TreatmentActivityID = value; } }
 
@@ -182,6 +184,7 @@ namespace ProjectFirma.Web.Models
         public virtual Person TreatmentActivityContact { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual ProjectCode ProjectCode { get; set; }
+        public virtual GrantAllocationProgramIndexProjectCode GrantAllocationProgramIndexProjectCode { get; set; }
 
         public static class FieldLengths
         {

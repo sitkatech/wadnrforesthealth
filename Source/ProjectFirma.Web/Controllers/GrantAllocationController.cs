@@ -28,6 +28,8 @@ using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Views.Agreement;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
@@ -37,7 +39,7 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class GrantAllocationController : FirmaBaseController
+    public partial class GrantAllocationController : FirmaBaseController
     {
         [HttpGet]
         [GrantAllocationDeleteFeature]
@@ -167,21 +169,21 @@ namespace ProjectFirma.Web.Controllers
                 grantAllocation.GrantAllocationName,
                 userHasEditGrantAllocationPermissions);
 
-            var taxonomyTrunks = HttpRequestStorage.DatabaseEntities.TaxonomyTrunks.ToList().SortByOrderThenName().ToList();
+            var costTypes = CostType.All.Where(x => x.IsValidInvoiceLineItemCostType).OrderBy(x => x.CostTypeDisplayName).ToList();
 
-            const string chartTitle = "Reported Expenditures";
+            const string chartTitle = "Grant Allocation Expenditures";
             var chartContainerID = chartTitle.Replace(" ", "");
 
             // If ProjectGrantAllocationExpenditures is empty, ToGoogleChart returns null...
-            var googleChart = grantAllocation.ProjectGrantAllocationExpenditures
-                .ToGoogleChart(x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
-                    taxonomyTrunks.Select(x => x.DisplayName).ToList(),
-                    x => x.Project.ProjectType.TaxonomyBranch.TaxonomyTrunk.DisplayName,
+            var googleChart = grantAllocation.GrantAllocationExpenditures
+                .ToGoogleChart(x => x.CostType?.CostTypeDisplayName,
+                    costTypes.Select(x => x.CostTypeDisplayName).ToList(),
+                    x => x.CostType?.CostTypeDisplayName,
                     chartContainerID,
                     grantAllocation.DisplayName);
 
             // Which makes this guy bork (bork bork bork)
-            googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.None);
+            googleChart?.GoogleChartConfiguration.Legend.SetLegendPosition(GoogleChartLegendPosition.Top);
             var viewGoogleChartViewData = new ViewGoogleChartViewData(googleChart, chartTitle, 350, false);
 
             var projectGrantAllocationRequestsGridSpec = new ProjectGrantAllocationRequestsGridSpec()
@@ -191,7 +193,9 @@ namespace ProjectFirma.Web.Controllers
                 SaveFiltersInCookie = true
             };
 
-            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec);
+            var grantAllocationExpendituresGridSpec = new GrantAllocationExpendituresGridSpec();
+
+            var viewData = new Views.GrantAllocation.DetailViewData(CurrentPerson, grantAllocation, grantAllocationBasicsViewData, grantAllocationNotesViewData, grantAllocationNoteInternalsViewData, viewGoogleChartViewData, projectGrantAllocationRequestsGridSpec, grantAllocationExpendituresGridSpec);
             return RazorView<Views.GrantAllocation.Detail, Views.GrantAllocation.DetailViewData>(viewData);
         }
 
@@ -528,6 +532,28 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
+
+        #endregion
+
+        [GrantAllocationsViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationExpenditure> GrantAllocationExpendituresGridJsonData(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            var grantAllocationExpenditures = grantAllocation.GrantAllocationExpenditures.ToList();
+            var gridSpec = new GrantAllocationExpendituresGridSpec();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationExpenditure>(grantAllocationExpenditures, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        #region Grant Allocation JSON API
+
+        [GrantsViewJsonApiFeature]
+        public JsonNetJArrayResult GrantAllocationJsonApi()
+        {
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList();
+            var jsonApiGrantAllocations = GrantAllocationApiJson.MakeGrantAllocationApiJsonsFromGrantAllocations(grantAllocations, false);
+            return new JsonNetJArrayResult(jsonApiGrantAllocations);
+        }
 
         #endregion
 

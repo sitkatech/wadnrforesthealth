@@ -20,15 +20,19 @@
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Models
+@using Newtonsoft.Json.Linq
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.ProgramIndex
 @using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocation.EditGrantAllocation
 
-@Html.Raw(ViewDataTyped.EditGrantAllocationType.IntroductoryText)
+
 
 @Html.ValidationSummary()
 
+<script type="text/javascript" src="~/Views/GrantAllocation/EditGrantAllocationController.js"></script>
 <script type="text/javascript" src="/Content/Bootstrap-select/bootstrap-select.min.js"></script>
 <link rel="stylesheet" href="/Content/Bootstrap-select/bootstrap-select.min.css" type="text/css" />
 <script type="text/javascript">
@@ -38,20 +42,20 @@
         jQuery("#@Html.IdFor(m => m.DivisionID)").on("change", function () {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.RegionID)").prop("disabled", true);
-                console.log("divisionID is greater than 0:" + jQuery(this).val());
+                //console.log("divisionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.RegionID)").prop("disabled", false);
-                console.log("divisionID is NOT greater than 0:" + jQuery(this).val());
+                //console.log("divisionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
         jQuery("#@Html.IdFor(m => m.RegionID)").on("change", function() {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", true);
-                console.log("regionID is greater than 0:" + jQuery(this).val());
+                //console.log("regionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", false);
-                console.log("regionID is NOT greater than 0:" + jQuery(this).val());
+                //console.log("regionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
@@ -65,129 +69,213 @@
 
 @using (Html.BeginForm())
 {
-<div class="form-horizontal">
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantID)
+    <div class="form-horizontal" id="EditGrantAllocationAngularApp" ng-controller="EditGrantAllocationController">
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantID)
+            </div>
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.GrantID, ViewDataTyped.GrantNumbers, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantID)
+            </div>
         </div>
-        <div class="col-xs-6">
-            @Html.DropDownListFor(m => m.GrantID, ViewDataTyped.GrantNumbers, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.GrantID)
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantAllocationName)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantAllocationName)
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(m => m.GrantAllocationName, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GrantAllocationName)
+            </div>
         </div>
-        <div class="col-xs-4">
-            @Html.TextBoxFor(m => m.GrantAllocationName, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.GrantAllocationName)
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.OrganizationID)
+            </div>
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.OrganizationID, ViewDataTyped.Organizations, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OrganizationID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.GrantManagerID)
+            </div>
+            <div class="col-xs-6">
+                @Html.SearchableDropDownListFor(m => m.GrantManagerID, ViewDataTyped.GrantManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(m => m.GrantManagerID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProgramManagerPersonIDs)
+            </div>
+            <div class="col-xs-6">
+                @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerPersonIDs, ViewDataTyped.ProgramManagersSelectList, new { style = "width: auto;", @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(m => m.ProgramManagerPersonIDs)
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.ProgramIndexProjectCodeJsons)
+            </div>
+            <div class="col-xs-3">
+                <input id="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID"
+                       placeholder="Search @FieldDefinition.ProgramIndex.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;"
+                       ng-model="selectedProgramIndexName" />
+                <input id="SelectedProgramIndexID" name="SelectedProgramIndexID" type="hidden" ng-model="selectedProgramIndexID" />
+            </div>
+            <div class="col-xs-3">
+                <input id="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID" type="text" class="form-control"
+                       name="@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID"
+                       placeholder="Search @FieldDefinition.ProjectCode.GetFieldDefinitionLabel()"
+                       style="margin-right: -5px; margin-left: auto;"
+                       ng-model="selectedProjectCodeName" />
+                <input id="SelectedProjectCodeID" name="SelectedProjectCodeID" type="hidden" ng-model="selectedProjectCodeID" />
+                @Html.ValidationMessageFor(m => m.ProgramIndexProjectCodeJsons)
+                
+            </div>
+            <div class="col-xs-3">
+                <button type="button" class="btn btn-sm btn-firma" ng-click="addProgramIndexProjectCodePair(selectedProgramIndexID, selectedProgramIndexName, selectedProjectCodeID, selectedProjectCodeName)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add
+                </button>
+            </div>
+
+            @*Selections*@
+            <div class="col-xs-9 col-xs-offset-3" ng-repeat="currentProgramIndexProjectCodeJson in AngularModel.ProgramIndexProjectCodeJsons" style="margin-top: 5px;">
+                <span>
+                    <a href="#" ng-click="removeSelectedProgramIndexProjectCodePair(currentProgramIndexProjectCodeJson.ProgramIndexID, currentProgramIndexProjectCodeJson.ProjectCodeID); $event.preventDefault();">
+                        <i class="glyphicon glyphicon-trash" title="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()" alt="Remove @FieldDefinition.ProgramIndexProjectCode.GetFieldDefinitionLabel()"></i>
+                    </a>
+                </span>
+                <span ng-bind="(currentProgramIndexProjectCodeJson.ProgramIndexName) + ' ' + (currentProgramIndexProjectCodeJson.ProjectCodeName)"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.FederalFundCodeID)
+            </div>
+            <div class="col-xs-6">
+                @Html.DropDownListFor(m => m.FederalFundCodeID, ViewDataTyped.FederalFundCodes, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FederalFundCodeID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.RegionID)
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegionID)
+            </div>
+            <div class="col-xs-2 control-label">
+                @Html.LabelWithSugarFor(m => m.DivisionID)
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.DivisionID, ViewDataTyped.Divisions, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DivisionID)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.AllocationAmount)
+            </div>
+            <div class="col-xs-3">
+                @Html.EditorFor(m => m.AllocationAmount, new { style = "width: auto;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AllocationAmount)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(m => m.StartDate)
+            </div>
+            <div class="col-xs-3">
+                @Html.EditorFor(m => m.StartDate, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.StartDate)
+            </div>
+            <div class="col-xs-2 control-label">
+                @Html.LabelWithSugarFor(m => m.EndDate)
+            </div>
+            <div class="col-xs-3">
+                @Html.EditorFor(m => m.EndDate, new { style = "width: 100%;", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.EndDate)
+            </div>
+        </div>
+        <div class="form-group form-group-tight">
+            <div class="col-xs-3 control-label">
+                @Html.LabelWithSugarFor(x => x.GrantAllocationFileResourceData)
+            </div>
+            <div class="col-xs-8">
+                @Html.EditorFor(x => x.GrantAllocationFileResourceData)
+                @*<span class="smallExplanationText">
+                        Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
+                    </span>*@
+                @Html.ValidationMessageFor(x => x.GrantAllocationFileResourceData)
+            </div>
+        </div>
+        <div ng-repeat="piPcJson in AngularModel.ProgramIndexProjectCodeJsons">
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProgramIndexName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProgramIndexName}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeID).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeID}}" />
+            <input type="hidden" name="@Html.NameFor(x => x.ProgramIndexProjectCodeJsons[0].ProjectCodeName).ToString().Replace("0", "{{$index}}")" value="{{piPcJson.ProjectCodeName}}" />
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.OrganizationID)
-        </div>
-        <div class="col-xs-6">
-            @Html.DropDownListFor(m => m.OrganizationID, ViewDataTyped.Organizations, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.OrganizationID)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.GrantManagerID)
-        </div>
-        <div class="col-xs-6">
-            @Html.SearchableDropDownListFor(m => m.GrantManagerID, ViewDataTyped.GrantManagers, new { style = "width: auto;", @class = "form-control selectpicker" })
-            @Html.ValidationMessageFor(m => m.GrantManagerID)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramManagerPersonIDs)
-        </div>
-        <div class="col-xs-6">
-            @Html.SearchableMultiSelectDropDownListFor(m => m.ProgramManagerPersonIDs, ViewDataTyped.ProgramManagersSelectList, new { style = "width: auto;", @class = "form-control selectpicker" })
-            @Html.ValidationMessageFor(m => m.ProgramManagerPersonIDs)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.ProgramIndexID)
-        </div>
-        <div class="col-xs-3">
-            @{ EditProgramIndex.RenderPartialView(Html, Model); }
-        </div>
-        <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.ProjectCodesString)
-        </div>
-        <div class="col-xs-3">
-            @{ EditProjectCodeWithMultiSelect.RenderPartialView(Html, Model); }
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.FederalFundCodeID)
-        </div>
-        <div class="col-xs-6">
-            @Html.DropDownListFor(m => m.FederalFundCodeID, ViewDataTyped.FederalFundCodes, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FederalFundCodeID)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.RegionID)
-        </div>
-        <div class="col-xs-3">
-            @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.RegionID)
-        </div>
-        <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.DivisionID)
-        </div>
-        <div class="col-xs-3">
-            @Html.DropDownListFor(m => m.DivisionID, ViewDataTyped.Divisions, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.DivisionID)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.AllocationAmount)
-        </div>
-        <div class="col-xs-3">
-            @Html.EditorFor(m => m.AllocationAmount, new { style = "width: auto;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.AllocationAmount)
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.StartDate)
-        </div>
-        <div class="col-xs-3">
-            @Html.EditorFor(m => m.StartDate, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.StartDate)
-        </div>
-        <div class="col-xs-2 control-label">
-            @Html.LabelWithSugarFor(m => m.EndDate)
-        </div>
-        <div class="col-xs-3">
-            @Html.EditorFor(m => m.EndDate, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.EndDate)
-        </div>
-    </div>
-    <div class="form-group form-group-tight">
-        <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(x => x.GrantAllocationFileResourceData)
-        </div>
-        <div class="col-xs-8">
-            @Html.EditorFor(x => x.GrantAllocationFileResourceData)
-            @*<span class="smallExplanationText">
-                            Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
-                        </span>*@
-            @Html.ValidationMessageFor(x => x.GrantAllocationFileResourceData)
-        </div>
-    </div>
-</div>
     @Html.HiddenFor(m => m.GrantAllocationID)
+    
 }
+
+
+
+<script type="text/javascript">
+    angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
+    {
+        return {
+            AngularModel: @Html.Raw(JObject.FromObject(Model)),
+            AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
+        };
+    });
+    jQuery(document).ready(function ()
+    {
+        angular.bootstrap(jQuery("#EditGrantAllocationAngularApp"), ["ProjectFirmaApp"]);
+
+        var scope = angular.element(jQuery("#EditGrantAllocationAngularApp")).scope();
+
+        jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(SitkaRoute<ProjectCodeController>.BuildUrlFromExpression(x => x.FindProjectCode(string.Empty)))",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function(event, ui) {
+                    //force textbox to display selected value, because angular wont update it until onBlur of input
+                    jQuery("#@ProjectCodeSearchResults.ProjectCodeSearchInputTextboxID").val(ui.item.label);
+                    //set angular variables so data gets posted back
+                    scope.postBackProjectCodeHandler(ui.item.actualValue, ui.item.label);
+                    console.log('ui.item.actualValue-ProjectCode: ' + ui.item.actualValue);
+                    event.preventDefault();
+                },
+                html: true
+            });
+
+        jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID")
+            .autocomplete({
+                source: "@Html.Raw(SitkaRoute<ProgramIndexController>.BuildUrlFromExpression(x => x.FindProgramIndex(string.Empty)))",
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" },
+                select: function(event, ui) {
+                    //force textbox to display selected value, because angular wont update it until onBlur of input
+                    jQuery("#@ProgramIndexSearchResults.ProgramIndexSearchInputTextboxID").val(ui.item.label);
+                    //set angular variables so data gets posted back
+                    scope.postBackProgramIndexHandler(ui.item.actualValue, ui.item.label);
+                    console.log('ui.item.actualValue-ProgramIndex: ' + ui.item.actualValue);
+                    event.preventDefault();
+                },
+                html: true
+            });
+    });
+    // ]]>
+</script>

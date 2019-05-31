@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.TreatmentActivity
     {
         public TreatmentActivityProjectDetailGridSpec(Person currentPerson)
         {
-            bool userHasEditTreatmentPermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
+            bool userHasEditTreatmentPermissions = new TreatmentActivityManageFeature().HasPermissionByPerson(currentPerson);
             int buttonGridWidth = 30;
             Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteTreatmentActivityUrl(), userHasEditTreatmentPermissions, true, true), buttonGridWidth, DhtmlxGridColumnFilterType.None);
             Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTreatmentActivityUrl(), $"Edit Treatment Activity"), userHasEditTreatmentPermissions), buttonGridWidth, DhtmlxGridColumnFilterType.None);

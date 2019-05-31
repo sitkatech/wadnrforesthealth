@@ -37,6 +37,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ClassificationPerformanceMeasure> ClassificationPerformanceMeasures { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<ClassificationSystem> ClassificationSystems { get; set; }
+        public virtual DbSet<CostTypeDatamartMapping> CostTypeDatamartMappings { get; set; }
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<CurrentBiennium> CurrentBiennia { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
@@ -52,10 +53,12 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
+        public virtual DbSet<GrantAllocationExpenditureJsonStage> GrantAllocationExpenditureJsonStages { get; set; }
+        public virtual DbSet<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
+        public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
-        public virtual DbSet<GrantAllocationProjectCode> GrantAllocationProjectCodes { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
@@ -205,6 +208,9 @@ namespace ProjectFirma.Web.Models
                 case "ClassificationSystem":
                     return ClassificationSystems.GetClassificationSystem(primaryKey);
 
+                case "CostTypeDatamartMapping":
+                    return CostTypeDatamartMappings.GetCostTypeDatamartMapping(primaryKey);
+
                 case "CostType":
                     var costType = CostType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(costType, "CostType", primaryKey);
@@ -295,17 +301,23 @@ namespace ProjectFirma.Web.Models
                 case "GrantAllocationBudgetLineItem":
                     return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);
 
+                case "GrantAllocationExpenditureJsonStage":
+                    return GrantAllocationExpenditureJsonStages.GetGrantAllocationExpenditureJsonStage(primaryKey);
+
+                case "GrantAllocationExpenditure":
+                    return GrantAllocationExpenditures.GetGrantAllocationExpenditure(primaryKey);
+
                 case "GrantAllocationNoteInternal":
                     return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
 
                 case "GrantAllocationNote":
                     return GrantAllocationNotes.GetGrantAllocationNote(primaryKey);
 
+                case "GrantAllocationProgramIndexProjectCode":
+                    return GrantAllocationProgramIndexProjectCodes.GetGrantAllocationProgramIndexProjectCode(primaryKey);
+
                 case "GrantAllocationProgramManager":
                     return GrantAllocationProgramManagers.GetGrantAllocationProgramManager(primaryKey);
-
-                case "GrantAllocationProjectCode":
-                    return GrantAllocationProjectCodes.GetGrantAllocationProjectCode(primaryKey);
 
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);

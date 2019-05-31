@@ -559,8 +559,8 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdateBatch.ExpendituresComment = viewModel.Comments;
             }
 
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch,
-                ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName);
+            // 5/15/2019 TK - WADNR no longer uses "ProjectUpdateSection.Expenditures.ProjectUpdateSectionDisplayName". but may need to in phase 2
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.Photos.ProjectUpdateSectionDisplayName);
         }
 
         private ViewResult ViewExpenditures(ProjectUpdateBatch projectUpdateBatch, List<int> calendarYearRange, ExpendituresViewModel viewModel)
@@ -907,8 +907,11 @@ namespace ProjectFirma.Web.Controllers
             var project = projectUpdateBatch.Project;
 
             var mapDivID = $"project_{project.ProjectID}_EditDetailedMap";
-            var detailedLocationGeoJsonFeatureCollection = projectUpdate.AllDetailedLocationsToGeoJsonFeatureCollection();
+            var detailedLocationGeoJsonFeatureCollection = projectUpdateBatch.ProjectLocationUpdates.Where(pl => !pl.ArcGisObjectID.HasValue).ToGeoJsonFeatureCollection(); ;
             var editableLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", detailedLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
+
+            var arcGisLocationGeoJsonFeatureCollection = projectUpdateBatch.ProjectLocationUpdates.Where(pl => pl.ArcGisObjectID.HasValue).ToGeoJsonFeatureCollection();
+            var arcGisLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} Detail", arcGisLocationGeoJsonFeatureCollection, "red", 1, LayerInitialVisibility.Show);
 
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
             var layers = MapInitJson.GetAllGeospatialAreaMapLayers(LayerInitialVisibility.Show);
@@ -923,6 +926,7 @@ namespace ProjectFirma.Web.Controllers
             var projectLocationDetailViewData = new ProjectLocationDetailViewData(projectUpdateBatch.ProjectID,
                 mapInitJson,
                 editableLayerGeoJson,
+                arcGisLayerGeoJson,
                 uploadGisFileUrl,
                 mapFormID,
                 saveFeatureCollectionUrl,
@@ -1066,9 +1070,9 @@ namespace ProjectFirma.Web.Controllers
 
         private static void SaveProjectLocationUpdates(ProjectLocationDetailViewModel viewModel, ProjectUpdateBatch projectUpdateBatch)
         {
-            var projectLocationUpdatesToDelete = projectUpdateBatch.ProjectLocationUpdates.ToList();
+            var projectLocationUpdatesToDelete = projectUpdateBatch.ProjectLocationUpdates.Where(x => !x.ArcGisObjectID.HasValue).ToList();
             HttpRequestStorage.DatabaseEntities.ProjectLocationUpdates.DeleteProjectLocationUpdate(projectLocationUpdatesToDelete);
-            projectUpdateBatch.ProjectLocationUpdates.Clear();
+            projectLocationUpdatesToDelete.ForEach(plutd => projectUpdateBatch.ProjectLocationUpdates.Remove(plutd)); 
 
             if (viewModel.ProjectLocationJsons != null)
             {
@@ -1083,6 +1087,13 @@ namespace ProjectFirma.Web.Controllers
                     }
                     projectUpdateBatch.ProjectLocationUpdates.Add(projectLocationUpdate);
                 }
+            }
+
+            foreach (var matched in viewModel.ArcGisProjectLocationJsons.Where(x => x.ArcGisObjectID.HasValue)
+                .Join(projectUpdateBatch.ProjectLocationUpdates, plj => plj.ProjectLocationID, pl => pl.ProjectLocationUpdateID,
+                    (lhs, rhs) => new { ProjectLocationJson = lhs, ProjectLocationUpdate = rhs }))
+            {
+                matched.ProjectLocationUpdate.ProjectLocationNotes = matched.ProjectLocationJson.ProjectLocationNotes;
             }
         }
 

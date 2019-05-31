@@ -24,7 +24,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProgramIndex()
         {
-            this.GrantAllocations = new HashSet<GrantAllocation>();
+            this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
             this.TreatmentActivities = new HashSet<TreatmentActivity>();
         }
 
@@ -71,13 +71,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocations.Any() || TreatmentActivities.Any();
+            return GrantAllocationProgramIndexProjectCodes.Any() || TreatmentActivities.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(GrantAllocation).Name, typeof(TreatmentActivity).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(TreatmentActivity).Name};
 
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocations.ToList())
+            foreach(var x in GrantAllocationProgramIndexProjectCodes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -125,7 +125,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 
-        public virtual ICollection<GrantAllocation> GrantAllocations { get; set; }
+        public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual ICollection<TreatmentActivity> TreatmentActivities { get; set; }
 
         public static class FieldLengths

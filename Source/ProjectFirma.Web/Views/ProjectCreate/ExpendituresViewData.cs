@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public readonly ViewDataForAngularClass ViewDataForAngular;
         
         public ExpendituresViewData(Person currentPerson, Models.Project project, ViewDataForAngularClass viewDataForAngularClass, ProjectExpendituresDetailViewData projectExpendituresDetailViewData, ProposalSectionsStatus proposalSectionsStatus)
-            : base(currentPerson, project, ProjectCreateSection.ReportedExpenditures.ProjectCreateSectionDisplayName, proposalSectionsStatus)
+            : base(currentPerson, project, "THIS IS BROKEN!" /* 5/15/2019 TK-  ProjectCreateSection.ReportedExpenditures.ProjectCreateSectionDisplayName*/, proposalSectionsStatus)
         {
             ViewDataForAngular = viewDataForAngularClass;
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshExpenditures(project));

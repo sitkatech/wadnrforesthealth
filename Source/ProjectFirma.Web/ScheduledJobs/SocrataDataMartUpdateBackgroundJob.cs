@@ -3,20 +3,31 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Text.RegularExpressions;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
+    // RunGrantExpendituresImportJob
+
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
-        private static string VendorJsonSocrataBaseUrl = "https://data.wa.gov/resource/3j9d-77sr.json";
-        private static string ProgramIndexJsonSocrataBaseUrl = "https://data.wa.gov/resource/quhu-28uh.json";
-        private static string ProjectCodeJsonSocrataBaseUrl = "https://data.wa.gov/resource/6grp-8ghq.json";
+        private static readonly Uri VendorJsonSocrataBaseUrl = new Uri("https://data.wa.gov/resource/3j9d-77sr.json");
+        private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri("https://data.wa.gov/resource/quhu-28uh.json");
+        private static readonly Uri ProjectCodeJsonSocrataBaseUrl = new Uri("https://data.wa.gov/resource/6grp-8ghq.json");
 
-        private const int SqlCommandTimeoutInSeconds = 600;
+        /// <summary>
+        /// WARNING: This URL may turn out only to be temporary, or vary for Production. Hard coded for now, but
+        /// may well need to vary by environment.
+        /// 
+        /// By Biennium: <![CDATA[ https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/2019 ]]>  
+        /// By Fiscal month: <![CDATA[ https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/2019/22 ]]> 
+        ///
+        /// </summary>
+        private const string GrantExpendituresJsonApiBaseUrl = "https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures";
 
-        public SocrataDataMartUpdateBackgroundJob(string jobName) : base()
+        public SocrataDataMartUpdateBackgroundJob(string jobName) : base(jobName)
         {
         }
 
@@ -32,22 +43,17 @@ namespace ProjectFirma.Web.ScheduledJobs
             ProcessRemindersImpl();
         }
 
-        private string AddMaxLimitTagToUrl(string baseSocrataJsonApiUrl)
+        private Uri AddSocrataMaxLimitTagToUrl(Uri baseSocrataJsonApiUrl)
         {
-            return $"{baseSocrataJsonApiUrl}?$limit=9999999";
+            var uriBuilder = new UriBuilder(baseSocrataJsonApiUrl);
+            uriBuilder.Query += "$limit=9999999";
+            return uriBuilder.Uri;
         }
 
 
         protected virtual void ProcessRemindersImpl()
         {
             Logger.Info($"Starting '{JobName}' Socrata Data Mart updates");
-
-            //// we're "tenant-agnostic" right now
-            //var projectUpdateConfigurations = DbContext.ProjectUpdateConfigurations.ToList();
-            //var reminderSubject = "Time to update your Projects";
-
-            //    DbContext.Notifications.AddRange(notifications);
-            //    DbContext.SaveChanges();
         }
 
         public void DownloadSocrataVendorTable()
@@ -55,7 +61,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
 
             // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
+            var fullUrl = AddSocrataMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
             string vendorTempJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.Vendor);
             Logger.Info($"Vendor JSON length: {vendorTempJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
@@ -72,7 +78,7 @@ namespace ProjectFirma.Web.ScheduledJobs
            Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
 
             // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);
+            var fullUrl = AddSocrataMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);
             string programIndexJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProgramIndex);
             Logger.Info($"ProgramIndex JSON length: {programIndexJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
@@ -89,11 +95,11 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadSocrataProjectCodeTable");
 
             // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
-            string projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);
+            var fullUrl = AddSocrataMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
+            var projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);
             Logger.Info($"ProjectCode JSON length: {projectCodeJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProjectCode, projectCodeJson);
+            var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProjectCode, projectCodeJson);
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
             // Use the JSON to refresh the Project Code table
             ProjectCodeImportJson(socrataDataMartRawJsonImportID);
@@ -101,19 +107,74 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
         }
 
+        public void DownloadGrantExpendituresTable()
+        {
+            Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTable");
 
+            // Starting biennium is just a guess2001 is the first biennium for which API returned data but 2007 has bad dates in it so using 2009 for now
+            const int beginBienniumFiscalYear = 2009;
+
+            const int bienniumStep = 2;
+
+            // Go at least one biennium beyond the current one
+            var endBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear() + bienniumStep;
+            
+            // Always clear the expenditure data before doing the import, at least for now
+            ClearGrantAllocationExpenditureTables();
+
+            // Step through all the desired Bienniums
+            for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)
+            {
+                ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear);
+            }
+
+            Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTable");
+        }
+
+        private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear)
+        {
+            Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium Fiscal Year {bienniumFiscalYear}");
+
+            var fullUrl = GetGrantExpendituresJsonApiUrlWithAllParameters(bienniumFiscalYear);
+            // Pull JSON off the page into a (possibly huge) string
+            string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
+            // The JSON coming off this particular function is wonky and pre-escaped. I may suggest Tammy fix it, but for the moment we'll work with it, and 
+            // clean it up ourselves.
+            grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.IndexOf('"'), 1);
+            grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.LastIndexOf('"'), 1);
+            // Optional? Needed? 
+            grantExpenditureJson = Regex.Unescape(grantExpenditureJson);
+            Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
+            // Push that string into a raw JSON string in the raw staging table
+            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, grantExpenditureJson);
+            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
+
+            // Import the given Biennium
+            GrantExpenditureImportJson(socrataDataMartRawJsonImportID, bienniumFiscalYear);
+        }
+
+        /// <summary>
+        /// Get the fully qualified URL for JSON GrantExpenditures
+        /// </summary>
+        /// <param name="biennium">Biennium is required</param>
+        /// <returns></returns>
+        private static Uri GetGrantExpendituresJsonApiUrlWithAllParameters(int biennium)
+        {
+            var builder = new UriBuilder(GrantExpendituresJsonApiBaseUrl);
+            builder.Query += $"/{biennium}";
+            return builder.Uri;
+        }
 
         /// <summary>
         /// Download the contents of the given URL to a temp file
         /// </summary>
-        /// <param name="urlToDownload"></param>
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
-        private string DownloadSocrataUrlToString(string urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
+        private string DownloadSocrataUrlToString(Uri urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataUrlToString");
             try
             {
-                using (WebClient webClient = new WebClient())
+                using (var webClient = new WebClient())
                 {
                     // This isn't needed with public APIs, but may help to prevent throttling, and let's the other side know who we are in a polite way.
                     // See: http://xxxxx
@@ -148,7 +209,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         private void VendorImportJson(int socrataDataMartRawJsonImportID)
         {
             Logger.Info($"Starting '{JobName}' VendorImportJson");
-            string vendorImportProc = "pVendorImportJson";
+            string vendorImportProc = "dbo.pVendorImportJson";
             using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -164,7 +225,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         private void ProgramIndexImportJson(int socrataDataMartRawJsonImportID)
         {
             Logger.Info($"Starting '{JobName}' ProgramIndexImportJson");
-            string vendorImportProc = "pProgramIndexImportJson";
+            string vendorImportProc = "dbo.pProgramIndexImportJson";
             using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -180,7 +241,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         private void ProjectCodeImportJson(int socrataDataMartRawJsonImportID)
         {
             Logger.Info($"Starting '{JobName}' ProjectCodeImportJson");
-            string vendorImportProc = "pProjectCodeImportJson";
+            string vendorImportProc = "dbo.pProjectCodeImportJson";
             using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
@@ -193,40 +254,38 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' ProjectCodeImportJson");
         }
 
-
-        /// <summary>
-        /// Execute a block of ad-hoc SQL.
-        /// Connection only lives the life of this call, and is opened and closed for it.
-        /// </summary>
-        /// <param name="sqlStatements"></param>
-        /// <returns></returns>
-        protected string ExecRawAdHocSql(string sqlStatements)
+        private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, int bienniumToImport)
         {
-            string result;
-            using (var sqlConnection = CreateAndOpenSqlConnection())
+            Logger.Info($"Starting '{JobName}' GrantExpenditureImportJson");
+            string vendorImportProc = "dbo.pGrantExpenditureImportJson";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
-                result = ExecuteRawArbitrarySql(sqlStatements, sqlConnection);
-                sqlConnection.Close();
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@BienniumToImport", bienniumToImport);
+                    cmd.ExecuteNonQuery();
+                }
             }
-
-            return result;
+            Logger.Info($"Ending '{JobName}' GrantExpenditureImportJson");
         }
 
-        /// <summary>
-        /// Execute a raw, arbitrary block of SQL
-        /// </summary>
-        /// <param name="sqlStatements">Raw SQL to execute</param>
-        /// <param name="connection">SqlConnection. Must already be open.</param>
-        /// <returns></returns>
-        private string ExecuteRawArbitrarySql(string sqlStatements, SqlConnection connection)
+        private void ClearGrantAllocationExpenditureTables()
         {
-            using (SqlCommand cmd = new SqlCommand(sqlStatements, connection))
+            Logger.Info($"Starting '{JobName}' ClearGrantAllocationExpenditureTables");
+            string vendorImportProc = "pClearGrantAllocationExpenditureTables";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
-                var results = cmd.ExecuteNonQuery().ToString();
-                return results;
+                using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
             }
+            Logger.Info($"Ending '{JobName}' ClearGrantAllocationExpenditureTables");
         }
-
+        
         protected SqlConnection CreateAndOpenSqlConnection()
         {
             var db = new UnitTestCommon.ProjectFirmaSqlDatabase();
@@ -235,7 +294,4 @@ namespace ProjectFirma.Web.ScheduledJobs
             return sqlConnection;
         }
     }
-
-
-
 }
