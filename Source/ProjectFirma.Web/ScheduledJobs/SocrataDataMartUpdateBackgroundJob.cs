@@ -121,15 +121,18 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTable");
 
             // This is just a guess. Deserves vetting with WADNR staff.
-            const int startingBienniumFiscalYear = 2009;
+            const int beginBienniumFiscalYear = 2009;
 
-            int currentBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear();
+            var bienniumStep = 2;
 
-            // Always clear the data before doing the import, at least for now
+            // Go at least one biennium beyond the current one
+            var endBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear() + bienniumStep;
+            
+            // Always clear the expenditure data before doing the import, at least for now
             ClearGrantAllocationExpenditureTables();
 
             // Step through all the desired Bienniums
-            for (int bienniumFiscalYear = startingBienniumFiscalYear; bienniumFiscalYear <= currentBienniumFiscalYear; bienniumFiscalYear += 2)
+            for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)
             {
                 ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear);
             }
