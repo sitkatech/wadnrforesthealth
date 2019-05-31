@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.Home
         public TrainingVideoViewData(Person currentPerson, Models.FirmaPage firmaPage, List<Models.TrainingVideo> trainingVideos) : base(currentPerson, firmaPage)
         {
             PageTitle = "Training";
-            EntityName = "Stormwater Tools";
+            EntityName = "Washington DNR Forest Health Tracker";
             TrainingVideos = trainingVideos;
         }
     }

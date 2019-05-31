@@ -21,12 +21,12 @@ namespace ProjectFirma.Web.Models
         public static readonly CostTypeIndirectCosts IndirectCosts = CostTypeIndirectCosts.Instance;
         public static readonly CostTypeSupplies Supplies = CostTypeSupplies.Instance;
         public static readonly CostTypePersonnel Personnel = CostTypePersonnel.Instance;
+        public static readonly CostTypeBenefits Benefits = CostTypeBenefits.Instance;
         public static readonly CostTypeTravel Travel = CostTypeTravel.Instance;
         public static readonly CostTypeContractual Contractual = CostTypeContractual.Instance;
         public static readonly CostTypeAgreements Agreements = CostTypeAgreements.Instance;
         public static readonly CostTypeEquipment Equipment = CostTypeEquipment.Instance;
         public static readonly CostTypeOther Other = CostTypeOther.Instance;
-        public static readonly CostTypeBenefits Benefits = CostTypeBenefits.Instance;
 
         public static readonly List<CostType> All;
         public static readonly ReadOnlyDictionary<int, CostType> AllLookupDictionary;
@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static CostType()
         {
-            All = new List<CostType> { IndirectCosts, Supplies, Personnel, Travel, Contractual, Agreements, Equipment, Other, Benefits };
+            All = new List<CostType> { IndirectCosts, Supplies, Personnel, Benefits, Travel, Contractual, Agreements, Equipment, Other };
             AllLookupDictionary = new ReadOnlyDictionary<int, CostType>(All.ToDictionary(x => x.CostTypeID));
         }
 
@@ -137,12 +137,12 @@ namespace ProjectFirma.Web.Models
         IndirectCosts = 1,
         Supplies = 2,
         Personnel = 3,
-        Travel = 4,
-        Contractual = 5,
-        Agreements = 6,
-        Equipment = 7,
-        Other = 8,
-        Benefits = 9
+        Benefits = 4,
+        Travel = 5,
+        Contractual = 6,
+        Agreements = 7,
+        Equipment = 8,
+        Other = 9
     }
 
     public partial class CostTypeIndirectCosts : CostType
@@ -163,39 +163,39 @@ namespace ProjectFirma.Web.Models
         public static readonly CostTypePersonnel Instance = new CostTypePersonnel(3, @"Personnel", @"Personnel", true);
     }
 
+    public partial class CostTypeBenefits : CostType
+    {
+        private CostTypeBenefits(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
+        public static readonly CostTypeBenefits Instance = new CostTypeBenefits(4, @"Benefits", @"Benefits", true);
+    }
+
     public partial class CostTypeTravel : CostType
     {
         private CostTypeTravel(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
-        public static readonly CostTypeTravel Instance = new CostTypeTravel(4, @"Travel", @"Travel", true);
+        public static readonly CostTypeTravel Instance = new CostTypeTravel(5, @"Travel", @"Travel", true);
     }
 
     public partial class CostTypeContractual : CostType
     {
         private CostTypeContractual(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
-        public static readonly CostTypeContractual Instance = new CostTypeContractual(5, @"Contractual", @"Contractual", true);
+        public static readonly CostTypeContractual Instance = new CostTypeContractual(6, @"Contractual", @"Contractual", true);
     }
 
     public partial class CostTypeAgreements : CostType
     {
         private CostTypeAgreements(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
-        public static readonly CostTypeAgreements Instance = new CostTypeAgreements(6, @"Agreements", @"Agreements", false);
+        public static readonly CostTypeAgreements Instance = new CostTypeAgreements(7, @"Agreements", @"Agreements", false);
     }
 
     public partial class CostTypeEquipment : CostType
     {
         private CostTypeEquipment(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
-        public static readonly CostTypeEquipment Instance = new CostTypeEquipment(7, @"Equipment", @"Equipment", true);
+        public static readonly CostTypeEquipment Instance = new CostTypeEquipment(8, @"Equipment", @"Equipment", true);
     }
 
     public partial class CostTypeOther : CostType
     {
         private CostTypeOther(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
-        public static readonly CostTypeOther Instance = new CostTypeOther(8, @"Other", @"Other", true);
-    }
-
-    public partial class CostTypeBenefits : CostType
-    {
-        private CostTypeBenefits(int costTypeID, string costTypeDisplayName, string costTypeName, bool isValidInvoiceLineItemCostType) : base(costTypeID, costTypeDisplayName, costTypeName, isValidInvoiceLineItemCostType) {}
-        public static readonly CostTypeBenefits Instance = new CostTypeBenefits(9, @"Benefits", @"Benefits", true);
+        public static readonly CostTypeOther Instance = new CostTypeOther(9, @"Other", @"Other", true);
     }
 }

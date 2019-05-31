@@ -13,19 +13,11 @@ namespace ProjectFirma.Web.ScheduledJobs
 
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
-        private static readonly Uri VendorJsonSocrataBaseUrl = new Uri("https://data.wa.gov/resource/3j9d-77sr.json");
-        private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri("https://data.wa.gov/resource/quhu-28uh.json");
-        private static readonly Uri ProjectCodeJsonSocrataBaseUrl = new Uri("https://data.wa.gov/resource/6grp-8ghq.json");
+        private static readonly Uri VendorJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.VendorJsonSocrataBaseUrl);
+        private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonSocrataBaseUrl);
+        private static readonly Uri ProjectCodeJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProjectCodeJsonSocrataBaseUrl);
+        private static readonly Uri GrantExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.GrantExpendituresTempBaseUrl);
 
-        /// <summary>
-        /// WARNING: This URL may turn out only to be temporary, or vary for Production. Hard coded for now, but
-        /// may well need to vary by environment.
-        /// 
-        /// By Biennium: <![CDATA[ https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/2019 ]]>  
-        /// By Fiscal month: <![CDATA[ https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures/2019/22 ]]> 
-        ///
-        /// </summary>
-        private const string GrantExpendituresJsonApiBaseUrl = "https://test-fortress.wa.gov/dnr/admindev/FinanceAPI/ApiProxy/?a=get&q=GrantExpenditures";
 
         public SocrataDataMartUpdateBackgroundJob(string jobName) : base(jobName)
         {
