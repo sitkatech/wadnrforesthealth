@@ -8,7 +8,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 {
     public class ProjectUpdateReminderScheduledBackgroundJob : ScheduledBackgroundJobBase
     {
-        public ProjectUpdateReminderScheduledBackgroundJob(string jobName) : base()
+        public ProjectUpdateReminderScheduledBackgroundJob(string jobName) : base(jobName)
         {
         }
 
