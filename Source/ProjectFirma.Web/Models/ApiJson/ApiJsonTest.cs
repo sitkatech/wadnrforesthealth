@@ -33,6 +33,13 @@ namespace ProjectFirma.Web.Models.ApiJson
     [TestFixture]
     public class ApiJsonTest : FirmaTestWithContext
     {
+        [SetUp]
+        public void SetupToRestoreRouteTable()
+        {
+            // We want to put the RouteTable back to something sensible, in case a prior test (e.g. RouteTableBuilderTest) has trashed it
+            RouteTableBuilder.ClearRoutes();
+            RouteTableBuilder.Build(FirmaBaseController.AllControllerActionMethods, null, Global.AreasDictionary);
+        }
 
         [Test]
         public void TestProjectJsonApi()

@@ -25,17 +25,25 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Mvc;
-using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.RouteTableBuilderTestFolder.Areas.MyTestArea1.Controllers;
 using LtInfo.Common.RouteTableBuilderTestFolder.Controllers;
 using NUnit.Framework;
+using ProjectFirma.Web.Controllers;
 
 namespace ProjectFirma.Web.Common
 {
     [TestFixture]
     public class RouteTableBuilderTest
     {
+        [TearDown]
+        public void RunAfterTests()
+        {
+            // We want to put the RouteTable back to something sensible after we are done testing
+            RouteTableBuilder.ClearRoutes();
+            RouteTableBuilder.Build(FirmaBaseController.AllControllerActionMethods, null, Global.AreasDictionary);
+        }
+
         [Test]
         public void TestThatNullStringAsFirstParameterThrows()
         {
@@ -66,7 +74,7 @@ namespace ProjectFirma.Web.Common
         private static void TestRouteParameterOptionality(int expectedCountOfRoutes, Type type, bool shouldThrow)
         {
             List<MethodInfo> methods = SitkaController.FindControllerActions(type);
-            Assert.That(methods, Is.Not.Empty, string.Format("Test Precondition: the test type {0} should have a controller action on it", type));
+            Assert.That(methods, Is.Not.Empty, $"Test Precondition: the test type {type} should have a controller action on it");
 
             if (shouldThrow)
             {
@@ -153,7 +161,7 @@ namespace ProjectFirma.Web.Common
         public void CanFindActionsInheritedFromBaseClass()
         {
             var controllerActionMethods = SitkaController.FindControllerActions(typeof(MyTest1Controller));
-            var methodNames = controllerActionMethods.Select(x => String.Format("{0}.{1}", x.ReflectedType.Name, x.Name)).ToList();
+            var methodNames = controllerActionMethods.Select(x => $"{x.ReflectedType.Name}.{x.Name}").ToList();
             var expected = new[] { "MyTest1Controller.MyAction1", "MyTest1Controller.ActionWithNoParameters", "MyTest1Controller.ActionWithOneParameter", "MyTest1Controller.BaseAction" };
             Assert.That(methodNames, Is.EquivalentTo(expected), "Should find both base declared actions and derived actions");
 
