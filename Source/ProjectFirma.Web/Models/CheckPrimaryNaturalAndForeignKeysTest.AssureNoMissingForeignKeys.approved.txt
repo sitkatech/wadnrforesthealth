@@ -10,6 +10,8 @@ JobParameter	Id
 JobQueue	Id					
 JobQueue	JobId					
 List	Id					
+ProjectLocation	ArcGisGlobalID					
+ProjectLocationUpdate	ArcGisGlobalID					
 Server	Id					
 Set	Id					
 State	Id					
