@@ -260,6 +260,19 @@ namespace ProjectFirma.Web.Controllers
             return new JsonNetJArrayResult(jsonApiGrants);
         }
 
+        /// <summary>
+        /// This is probably excessive, but I'm trying to overcompensate for every need Tammy Osborn has. -- SLG
+        /// </summary>
+        /// <returns></returns>
+        [GrantsViewJsonApiFeature]
+        public JsonNetJArrayResult GrantStatusJsonApi()
+        {
+            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses.ToList();
+            var jsonApiGrantStatuses = GrantStatusApiJson.MakeGrantStatusApiJsonsFromGrantStatuses(grantStatuses);
+            return new JsonNetJArrayResult(jsonApiGrantStatuses);
+        }
+
+
         #endregion
 
 

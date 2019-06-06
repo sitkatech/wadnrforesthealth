@@ -124,6 +124,16 @@ namespace ProjectFirma.Web.Models.ApiJson
         }
 
         [Test]
+        public void TestGrantStatusJsonApi()
+        {
+            var grantStatusJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlFromExpression(c => c.GrantStatusJsonApi());
+            var webClient = new WebClient();
+            var jsonContent = webClient.DownloadString(grantStatusJsonUrl);
+
+            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {grantStatusJsonUrl}");
+        }
+
+        [Test]
         public void TestGrantAllocationJsonApi()
         {
             var grantAllocationJsonUrl = SitkaRoute<GrantAllocationController>.BuildAbsoluteUrlFromExpression(c => c.GrantAllocationJsonApi());

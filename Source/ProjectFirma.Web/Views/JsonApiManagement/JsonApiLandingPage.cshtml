@@ -68,6 +68,13 @@
         return linkHtml;
     }
 
+    private string GrantStatusJsonApiLink()
+    {
+        // GrantStatusJsonApi
+        string linkHtml = SitkaRoute<GrantController>.BuildLinkFromExpression(c => c.GrantStatusJsonApi(), "Grant Status JSON");
+        return linkHtml;
+    }
+
     private string InteractionEventJsonApiLink()
     {
         string linkHtml = SitkaRoute<InteractionEventController>.BuildLinkFromExpression(c => c.InteractionEventJsonApi(), "Interaction Event JSON");
@@ -102,6 +109,7 @@
 <h3>@Html.Raw(GrantAllocationJsonApiLink())</h3>
 <h3>@Html.Raw(GrantAllocationProgramIndexProjectCodeJsonApiLink())</h3>
 <h3>@Html.Raw(GrantJsonApiLink())</h3>
+<h3>@Html.Raw(GrantStatusJsonApiLink())</h3>
 <h3>@Html.Raw(InteractionEventJsonApiLink())</h3>
 <h3>@Html.Raw(InvoiceJsonApiLink())</h3>
 <h3>@Html.Raw(InvoiceLineItemJsonApiLink())</h3>
