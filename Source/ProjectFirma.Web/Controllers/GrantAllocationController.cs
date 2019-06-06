@@ -229,7 +229,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocation = grantAllocationPrimaryKey.EntityObject;
             var gridSpec = new GrantAllocationBudgetVsActualsGridSpec();
 
-            var grantAllocationBudgetVsActualLineItems = grantAllocation.GetAllBudgetVsActualLineItems();
+            var grantAllocationBudgetVsActualLineItems = grantAllocation.GetAllBudgetVsActualLineItemsByCostType();
 
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<BudgetVsActualLineItem>(grantAllocationBudgetVsActualLineItems, gridSpec);
             return gridJsonNetJObjectResult;

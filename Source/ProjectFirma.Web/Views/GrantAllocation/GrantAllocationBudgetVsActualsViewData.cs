@@ -59,5 +59,12 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             ExpendituresFromDatamart = expendituresFromDatamart;
             InvoicedToDate = invoicedToDate;
         }
+
+        public BudgetVsActualLineItem(Money budget, Money expendituresFromDatamart, Money invoicedToDate)
+        {
+            Budget = budget;
+            ExpendituresFromDatamart = expendituresFromDatamart;
+            InvoicedToDate = invoicedToDate;
+        }
     }
 }

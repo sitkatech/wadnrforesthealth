@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System;
+using System.Linq;
 using System.Web;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
@@ -57,6 +59,20 @@ namespace ProjectFirma.Web.Models
         public static HtmlString GetGrantNumberAsUrl(this Grant grant)
         {
             return grant != null ? UrlTemplate.MakeHrefString(grant.GetDetailUrl(), grant.GrantNumber) : new HtmlString(null);
+        }
+
+        public static Money GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures(this Grant grant)
+        {
+            var grantAllocations = grant.GrantAllocations.ToList();
+            var allBudgetLineItemVsActualItems = grantAllocations.Select(ga => ga.GetTotalBudgetVsActualLineItem());
+            var currentBalanceOfAllGrantAllocations = allBudgetLineItemVsActualItems.Select(blai => blai.BudgetMinusExpendituresFromDatamart).ToList();
+            Money total = 0;
+            foreach (var grantAllocationTotal in currentBalanceOfAllGrantAllocations)
+            {
+                total += grantAllocationTotal;
+            }
+
+            return total;
         }
     }
 }

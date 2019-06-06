@@ -143,6 +143,14 @@ Source code is available upon request via <support@sitkatech.com>.
     </div>
     <div class="row">
         <div class="col-sm-5 text-right">
+            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationCurrentBalance)
+        </div>
+        <div class="col-sm-7">
+            <span>@ViewDataTyped.GrantAllocation.GetTotalBudgetVsActualLineItem().BudgetMinusExpendituresFromDatamart.ToString("C") </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 text-right">
             @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
         </div>
         <div class="col-sm-7">
