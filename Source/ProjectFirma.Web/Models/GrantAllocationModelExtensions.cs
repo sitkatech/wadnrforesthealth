@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Models
             return NewNoteUrlTemplate.ParameterReplace(grantAllocation.GrantAllocationID);
         }
 
-        public static List<BudgetVsActualLineItem> GetAllBudgetVsActualLineItems(this GrantAllocation grantAllocation)
+        public static List<BudgetVsActualLineItem> GetAllBudgetVsActualLineItemsByCostType(this GrantAllocation grantAllocation)
         {
             var budgetVsActualsLineItemList = new List<BudgetVsActualLineItem>();
 
@@ -78,6 +78,16 @@ namespace ProjectFirma.Web.Models
             }
 
             return budgetVsActualsLineItemList;
+        }
+
+        public static BudgetVsActualLineItem GetTotalBudgetVsActualLineItem(this GrantAllocation grantAllocation)
+        {
+            var budget = grantAllocation.GrantAllocationBudgetLineItems.Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
+            var expendituresFromDatamart = grantAllocation.GrantAllocationExpenditures.Select(gae => gae.ExpenditureAmount).Sum();
+            var invoicedToDate = grantAllocation.InvoiceLineItems.Select(ili => ili.InvoiceLineItemAmount).Sum();
+
+            var budgetVsActualLineItem = new BudgetVsActualLineItem(budget, expendituresFromDatamart, invoicedToDate);
+            return budgetVsActualLineItem;
         }
 
         public static string GetAssociatedProgramIndexProjectCodePairsCommaDelimited(this GrantAllocation grantAllocation)

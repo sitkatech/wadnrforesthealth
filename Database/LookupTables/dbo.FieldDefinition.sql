@@ -176,4 +176,6 @@ VALUES
 (354, N'GrantModification', 'Grant Modification', '<p>Placeholder definition for Grant Modification</p>'),
 (355, N'GrantModificationNoteInternal', 'Internal Grant Modification Note', N'<p>Any additional important information about the grant modification. These notes are only visible to internal users </p>'),
 (356, N'ProgramIndexProjectCode', 'Program Index - Project Code', 'Placeholder definition for Program Index-Project Code.'),
-(357, N'FhtProjectNumber', 'FHT Project Number', N'<p>Placeholder definition for FHT Project Number description.</p>')
+(357, N'FhtProjectNumber', 'FHT Project Number', N'<p>Placeholder definition for FHT Project Number description.</p>'),
+(358, N'GrantCurrentBalance', 'Grant Current Balance', N'<p>Placeholder definition for Grant Current Balance description.</p>'),
+(359, N'GrantAllocationCurrentBalance', ' Grant Allocation Current Balance', N'<p>Placeholder definition for Grant Allocation Current Balance description.</p>')

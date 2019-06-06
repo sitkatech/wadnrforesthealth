@@ -143,6 +143,14 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
+                                @Html.LabelWithSugarFor(FieldDefinition.GrantCurrentBalance)
+                            </div>
+                            <div class="col-sm-9">
+                                <span>@ViewDataTyped.Grant.GetCurrentBalanceOfGrantBasedOnAllGrantAllocationExpenditures().ToString("C")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
                                 @Html.LabelWithSugarFor(FieldDefinition.GrantStartDate)
                             </div>
                             <div class="col-sm-9">
