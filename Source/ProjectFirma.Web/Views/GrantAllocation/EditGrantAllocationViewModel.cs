@@ -18,21 +18,17 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+using LtInfo.Common;
+using LtInfo.Common.DesignByContract;
+using LtInfo.Common.Models;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Models;
-using LtInfo.Common;
-using LtInfo.Common.DesignByContract;
-using LtInfo.Common.Models;
-using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Views.Agreement;
-using ProjectFirma.Web.Views.ProgramIndex;
-using ProjectFirma.Web.Views.ProjectCode;
 
 namespace ProjectFirma.Web.Views.GrantAllocation
 {
@@ -40,6 +36,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
     {
         public int GrantAllocationID { get; set; }
 
+        [StringLength(Models.GrantAllocation.FieldLengths.GrantAllocationName)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationName)]
         [Required]
         public string GrantAllocationName { get; set; }
@@ -66,6 +63,10 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
         public Money? AllocationAmount { get; set; }
+
+        [StringLength(Models.GrantAllocationChangeLog.FieldLengths.GrantAllocationAmountNote)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationChangeLogNote)]
+        public string GrantAllocationChangeLogNote { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantStartDate)]
         public DateTime? StartDate { get; set; }
@@ -196,6 +197,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                     );
                 newChange.GrantAllocationAmountOldValue = grantAllocation.AllocationAmount;
                 newChange.GrantAllocationAmountNewValue = AllocationAmount;
+                newChange.GrantAllocationAmountNote = GrantAllocationChangeLogNote;
             }
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;

@@ -178,4 +178,5 @@ VALUES
 (356, N'ProgramIndexProjectCode', 'Program Index - Project Code', 'Placeholder definition for Program Index-Project Code.'),
 (357, N'FhtProjectNumber', 'FHT Project Number', N'<p>Placeholder definition for FHT Project Number description.</p>'),
 (358, N'GrantCurrentBalance', 'Grant Current Balance', N'<p>Placeholder definition for Grant Current Balance description.</p>'),
-(359, N'GrantAllocationCurrentBalance', ' Grant Allocation Current Balance', N'<p>Placeholder definition for Grant Allocation Current Balance description.</p>')
+(359, N'GrantAllocationCurrentBalance', 'Grant Allocation Current Balance', N'<p>Placeholder definition for Grant Allocation Current Balance description.</p>'),
+(360, N'GrantAllocationChangeLogNote', 'Allocation Amount Change Log Note', N'<p>Placeholder definition for Allocation Amount Change Log Note description.</p>')
