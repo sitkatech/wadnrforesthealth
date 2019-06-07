@@ -310,6 +310,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationChangeLog">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationChangeLog">
+        <MappingFragment StoreEntitySet="GrantAllocationChangeLog">
+          <ScalarProperty Name="GrantAllocationChangeLogID" ColumnName="GrantAllocationChangeLogID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="GrantAllocationAmountOldValue" ColumnName="GrantAllocationAmountOldValue" />
+          <ScalarProperty Name="GrantAllocationAmountNewValue" ColumnName="GrantAllocationAmountNewValue" />
+          <ScalarProperty Name="GrantAllocationAmountNote" ColumnName="GrantAllocationAmountNote" />
+          <ScalarProperty Name="ChangePersonID" ColumnName="ChangePersonID" />
+          <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationExpenditure">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationExpenditure">
         <MappingFragment StoreEntitySet="GrantAllocationExpenditure">

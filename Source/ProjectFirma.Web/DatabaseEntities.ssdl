@@ -28,6 +28,7 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditureJsonStage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationNote" store:Type="Tables" Schema="dbo" />
@@ -272,6 +273,14 @@
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationChangeLogs" EntitySet="GrantAllocationChangeLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
+      <End Role="ChangePerson" EntitySet="Person" />
+      <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" EntitySet="GrantAllocationChangeLog" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1235,6 +1244,18 @@
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationBudgetLineItemNote" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="GrantAllocationChangeLog">
+    <Key>
+      <PropertyRef Name="GrantAllocationChangeLogID" />
+    </Key>
+    <Property Name="GrantAllocationChangeLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAmountOldValue" Type="money" />
+    <Property Name="GrantAllocationAmountNewValue" Type="money" />
+    <Property Name="GrantAllocationAmountNote" Type="nvarchar" MaxLength="2000" />
+    <Property Name="ChangePersonID" Type="int" Nullable="false" />
+    <Property Name="ChangeDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationExpenditure">
     <Key>
@@ -2880,6 +2901,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not
       </Principal>
       <Dependent Role="GrantAllocationBudgetLineItems">
         <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationChangeLogs" Type="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationChangeLogs">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
+    <End Role="ChangePerson" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
+    <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Type="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChangePerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson">
+        <PropertyRef Name="ChangePersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

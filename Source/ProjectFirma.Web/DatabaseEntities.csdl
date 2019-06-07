@@ -28,6 +28,7 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" />
+    <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.GrantAllocationChangeLog" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditure" />
     <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditureJsonStage" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
@@ -333,6 +334,10 @@
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationBudgetLineItems" EntitySet="GrantAllocationBudgetLineItem" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationChangeLogs" EntitySet="GrantAllocationChangeLog" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationExpenditures" EntitySet="GrantAllocationExpenditure" />
@@ -372,6 +377,10 @@
     <AssociationSet Name="FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_ProjectGrantAllocationRequestUpdate_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="ProjectGrantAllocationRequestUpdates" EntitySet="ProjectGrantAllocationRequestUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
+      <End Role="ChangePerson" EntitySet="Person" />
+      <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" EntitySet="GrantAllocationChangeLog" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID">
       <End Role="CreatedByPerson" EntitySet="Person" />
@@ -1304,6 +1313,7 @@
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
     <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID" FromRole="GrantAllocations" ToRole="Region" />
     <NavigationProperty Name="GrantAllocationBudgetLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationBudgetLineItems" />
+    <NavigationProperty Name="GrantAllocationChangeLogs" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationChangeLogs" />
     <NavigationProperty Name="GrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationExpenditures" />
     <NavigationProperty Name="GrantAllocationNotes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNotes" />
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
@@ -1325,6 +1335,20 @@
     <Property Name="GrantAllocationBudgetLineItemAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="GrantAllocationBudgetLineItemNote" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationBudgetLineItems" ToRole="GrantAllocation" />
+  </EntityType>
+  <EntityType Name="GrantAllocationChangeLog">
+    <Key>
+      <PropertyRef Name="GrantAllocationChangeLogID" />
+    </Key>
+    <Property Name="GrantAllocationChangeLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationAmountOldValue" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="GrantAllocationAmountNewValue" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="GrantAllocationAmountNote" Type="String" MaxLength="2000" Unicode="true" FixedLength="false" />
+    <Property Name="ChangePersonID" Type="Int32" Nullable="false" />
+    <Property Name="ChangeDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationChangeLogs" ToRole="GrantAllocation" />
+    <NavigationProperty Name="ChangePerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" FromRole="GrantAllocationChangeLogsWhereYouAreTheChangePerson" ToRole="ChangePerson" />
   </EntityType>
   <EntityType Name="GrantAllocationExpenditure">
     <Key>
@@ -1888,6 +1912,7 @@
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
+    <NavigationProperty Name="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" FromRole="ChangePerson" ToRole="GrantAllocationChangeLogsWhereYouAreTheChangePerson" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheCreatedByPerson" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" />
     <NavigationProperty Name="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson" />
@@ -3455,6 +3480,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationChangeLogs" Type="ProjectFirma.Web.Models.GrantAllocationChangeLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationChangeLogs">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
     <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
     <End Role="GrantAllocationExpenditures" Type="ProjectFirma.Web.Models.GrantAllocationExpenditure" Multiplicity="*" />
@@ -3572,6 +3609,18 @@
       </Principal>
       <Dependent Role="ProjectGrantAllocationRequestUpdates">
         <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
+    <End Role="ChangePerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Type="ProjectFirma.Web.Models.GrantAllocationChangeLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChangePerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson">
+        <PropertyRef Name="ChangePersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
