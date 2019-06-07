@@ -187,6 +187,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
             grantAllocation.RegionID = RegionID;
+            if (grantAllocation.AllocationAmount != AllocationAmount)
+            {
+                GrantAllocationChangeLog newChange = new GrantAllocationChangeLog(
+                         grantAllocation,
+                         currentPerson,
+                         DateTime.Now
+                    );
+                newChange.GrantAllocationAmountOldValue = grantAllocation.AllocationAmount;
+                newChange.GrantAllocationAmountNewValue = AllocationAmount;
+            }
             grantAllocation.AllocationAmount = AllocationAmount;
             grantAllocation.StartDate = StartDate;
             grantAllocation.EndDate = EndDate;
