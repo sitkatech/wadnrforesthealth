@@ -51,6 +51,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        [HttpPost]
         [JobManageFeature]
         public ActionResult ClearPriorDataMartRawJsonImports()
         {
@@ -68,35 +69,55 @@ namespace ProjectFirma.Web.Controllers
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
+        [HttpPost]
         [JobManageFeature]
         public ActionResult RunVendorImportJob()
         {
             var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Vendor Import (Button activated)");
             socrataJob.DownloadSocrataVendorTable();
+
+            var message = $"Socrata Vendors Imported";
+            SetMessageForDisplay(message);
+
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
+        [HttpPost]
         [JobManageFeature]
         public ActionResult RunProgramIndexImportJob()
         {
             var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Program Index Import (Button activated)");
             socrataJob.DownloadSocrataProgramIndexTable();
+
+            var message = $"Socrata Program Indices Imported";
+            SetMessageForDisplay(message);
+
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
+        [HttpPost]
         [JobManageFeature]
         public ActionResult RunProjectCodeImportJob()
         {
             var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Project Code Import (Button activated)");
             socrataJob.DownloadSocrataProjectCodeTable();
+
+            var message = $"Socrata Project Codes Imported";
+            SetMessageForDisplay(message);
+
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
+        [HttpPost]
         [JobManageFeature]
         public ActionResult RunGrantExpendituresImportJob()
         {
             var socrataJob = new SocrataDataMartUpdateBackgroundJob("Grant Expenditures Import (Button activated)");
             socrataJob.DownloadGrantExpendituresTable();
+
+            var message = $"Socrata Grant Expenditures Imported";
+            SetMessageForDisplay(message);
+
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
 
@@ -110,7 +131,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult JsonApiLandingPage()
         {
             var firmaPage = FirmaPage.GetFirmaPageByPageType(FirmaPageType.TagList);
-            var viewData = new Views.JsonApiManagement.JsonApiLandingPageViewData(CurrentPerson, firmaPage);
+            var viewData = new JsonApiLandingPageViewData(CurrentPerson, firmaPage);
             return RazorView<JsonApiLandingPage, JsonApiLandingPageViewData>(viewData);
         }
 
