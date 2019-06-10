@@ -26,7 +26,7 @@ using LtInfo.Common.Views;
 
 namespace ProjectFirma.Web.Views.Job
 {
-    public class JobIndexGridSpec : GridSpec<Models.SocrataDataMartRawJsonImport>
+    public class JobIndexGridSpec : GridSpec<Models.vSocrataDataMartRawJsonImportIndex>
     {
         public JobIndexGridSpec()
         {
@@ -44,8 +44,8 @@ namespace ProjectFirma.Web.Views.Job
             }
 
             Add("Create Date", a => a.CreateDate.ToString(CultureInfo.InvariantCulture), 200, DhtmlxGridColumnFilterType.FormattedNumeric);
-            Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.SocrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add("JSON Data Length", a => a.RawJsonString.Length, 100);
+            Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.SocrataDataMartRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("JSON Data Length", a => a.RawJsonStringLength.Value.ToString(), 100);
 
             // Would be great to also have metadata about how many records deleted/updated/inserted.
 

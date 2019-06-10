@@ -42,12 +42,12 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [JobManageFeature]
-        public GridJsonNetJObjectResult<SocrataDataMartRawJsonImport> JobIndexGridJsonData()
+        public GridJsonNetJObjectResult<vSocrataDataMartRawJsonImportIndex> JobIndexGridJsonData()
         {
             var hasJobDeletePermissions = new FirmaAdminFeature().HasPermissionByPerson(CurrentPerson);
             var gridSpec = new JobIndexGridSpec(hasJobDeletePermissions);
-            var priorJobs = HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.OrderBy(x => x.CreateDate).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<SocrataDataMartRawJsonImport>(priorJobs, gridSpec);
+            var priorJobs = HttpRequestStorage.DatabaseEntities.vSocrataDataMartRawJsonImportIndices.OrderBy(x => x.CreateDate).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<vSocrataDataMartRawJsonImportIndex>(priorJobs, gridSpec);
             return gridJsonNetJObjectResult;
         }
 

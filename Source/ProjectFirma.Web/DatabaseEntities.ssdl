@@ -130,6 +130,15 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
+      <DefiningQuery>SELECT 
+[vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportID] AS [SocrataDataMartRawJsonImportID], 
+[vSocrataDataMartRawJsonImportIndex].[CreateDate] AS [CreateDate], 
+[vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportTableTypeID] AS [SocrataDataMartRawJsonImportTableTypeID], 
+[vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportTableTypeName] AS [SocrataDataMartRawJsonImportTableTypeName], 
+[vSocrataDataMartRawJsonImportIndex].[RawJsonStringLength] AS [RawJsonStringLength]
+FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImportIndex]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -2472,6 +2481,22 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationS
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <EntityType Name="vSocrataDataMartRawJsonImportIndex">
+    <Key>
+      <PropertyRef Name="SocrataDataMartRawJsonImportID" />
+      <PropertyRef Name="CreateDate" />
+      <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeID" />
+      <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeName" />
+    </Key>
+    <Property Name="SocrataDataMartRawJsonImportID" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Nullable="false" />
+    <Property Name="SocrataDataMartRawJsonImportTableTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="RawJsonStringLength" Type="bigint" />
+  </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
     <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.Store.AgreementStatus" Multiplicity="0..1" />
     <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />

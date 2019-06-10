@@ -157,6 +157,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
 
         public object LoadType(Type type, int primaryKey)
         {

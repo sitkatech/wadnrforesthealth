@@ -1612,6 +1612,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vSocrataDataMartRawJsonImportIndex">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex">
+        <MappingFragment StoreEntitySet="vSocrataDataMartRawJsonImportIndex">
+          <ScalarProperty Name="SocrataDataMartRawJsonImportID" ColumnName="SocrataDataMartRawJsonImportID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="SocrataDataMartRawJsonImportTableTypeID" ColumnName="SocrataDataMartRawJsonImportTableTypeID" />
+          <ScalarProperty Name="SocrataDataMartRawJsonImportTableTypeName" ColumnName="SocrataDataMartRawJsonImportTableTypeName" />
+          <ScalarProperty Name="RawJsonStringLength" ColumnName="RawJsonStringLength" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionName="ProjectFirma.Web.Models.Store.fnSplitString" FunctionImportName="fnSplitString">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ProjectFirma.Web.Models.fnSplitString_Result">

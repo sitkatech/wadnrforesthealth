@@ -130,6 +130,7 @@
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
+    <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
       <End Role="AgreementStatus" EntitySet="AgreementStatus" />
       <End Role="Agreements" EntitySet="Agreement" />
@@ -2867,6 +2868,19 @@
     <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
+  </EntityType>
+  <EntityType Name="vSocrataDataMartRawJsonImportIndex">
+    <Key>
+      <PropertyRef Name="SocrataDataMartRawJsonImportID" />
+      <PropertyRef Name="CreateDate" />
+      <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeID" />
+      <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeName" />
+    </Key>
+    <Property Name="SocrataDataMartRawJsonImportID" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" />
+    <Property Name="SocrataDataMartRawJsonImportTableTypeID" Type="Int32" Nullable="false" />
+    <Property Name="SocrataDataMartRawJsonImportTableTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="RawJsonStringLength" Type="Int64" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
     <End Role="AgreementStatus" Type="ProjectFirma.Web.Models.AgreementStatus" Multiplicity="0..1" />
