@@ -52,6 +52,19 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [JobManageFeature]
+        public ActionResult ClearPriorDataMartRawJsonImports()
+        {
+            // This may be slow, we'll see.
+            foreach (var databaseEntitiesSocrataDataMartRawJsonImport in HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports)
+            {
+                databaseEntitiesSocrataDataMartRawJsonImport.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            }
+
+            HttpRequestStorage.DatabaseEntities.SaveChanges();
+            return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
+        }
+
+        [JobManageFeature]
         public ActionResult RunVendorImportJob()
         {
             var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Vendor Import (Button activated)");

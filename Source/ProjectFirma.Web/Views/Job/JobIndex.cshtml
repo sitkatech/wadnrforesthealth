@@ -27,37 +27,33 @@
 
 @functions
 {
-    //private string RunVendorButtonHtml()
-    //{
-    //    // RunVendorImportJob
-    //    string linkHtml = SitkaRoute<JobController>.BuildLinkFromExpression(c => c.RunVendorImportJob(), "Import Vendors from Socrata");
-    //    return linkHtml;
-    //}
+
+    private string ClearPriorDataMartRawJsonImportsUrl()
+    {
+        string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.ClearPriorDataMartRawJsonImports());
+        return urlHtml;
+    }
 
     private string RunVendorUrl()
     {
-        // RunVendorImportJob
         string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunVendorImportJob());
         return urlHtml;
     }
 
     private string RunProgramIndexUrl()
     {
-        // RunProgramIndexUrl
         string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunProgramIndexImportJob());
         return urlHtml;
     }
 
     private string RunProjectCodeUrl()
     {
-        // RunProjectCodeUrl
         string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunProjectCodeImportJob());
         return urlHtml;
     }
 
     private string RunGrantExpendituresImportUrl()
     {
-        // RunGrantExpendituresUrl
         string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunGrantExpendituresImportJob());
         return urlHtml;
 
@@ -77,6 +73,13 @@
 <div style="margin-top: 10px">
     @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
 </div>
+
+<br />
+<br />
+
+<form action="@Html.Raw(ClearPriorDataMartRawJsonImportsUrl())">
+    <button type="submit" class="btn btn-primary">Clear Prior Socrata Import Jobs</button>
+</form>
 
 <br />
 <br />
