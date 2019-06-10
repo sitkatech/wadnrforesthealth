@@ -37,8 +37,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 // This might be an issue when Hangfire does a change to its schema, but this should work for now.
                 PrepareSchemaIfNecessary = false
             };
-            GlobalConfiguration.Configuration.UseSqlServerStorage(FirmaWebConfiguration.DatabaseConnectionString,
-                sqlServerStorageOptions);
+            GlobalConfiguration.Configuration.UseSqlServerStorage(FirmaWebConfiguration.DatabaseConnectionString, sqlServerStorageOptions);
             app.UseHangfireServer(new BackgroundJobServerOptions
             {
                 WorkerCount = 1,

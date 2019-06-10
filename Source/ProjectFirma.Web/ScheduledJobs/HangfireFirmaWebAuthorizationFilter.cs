@@ -1,15 +1,20 @@
 ﻿using Hangfire.Dashboard;
-using ProjectFirma.Web.Common;
+using Microsoft.Owin;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
     public class HangfireFirmaWebAuthorizationFilter : IDashboardAuthorizationFilter
     {
-        public bool Authorize(DashboardContext context)
+        public bool Authorize(DashboardContext dashboardContext)
         {
-            var person = HttpRequestStorage.Person;
-            return person.IsAdministrator();
+            var owinEnvironment = dashboardContext.GetOwinEnvironment();
+            var owinContext = new OwinContext(owinEnvironment);
+
+            bool altIsAuthenticated = owinContext.Authentication.User.Identity.IsAuthenticated;
+
+            var currentPerson = ClaimsIdentityHelper.PersonFromClaimsIdentity(owinContext.Authentication);
+            return currentPerson.IsAdministrator();
         }
     }
 }
