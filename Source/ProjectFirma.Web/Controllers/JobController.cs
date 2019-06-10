@@ -55,10 +55,14 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult ClearPriorDataMartRawJsonImports()
         {
             // This may be slow, we'll see.
+            int priorJobCount = HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Count();
             foreach (var databaseEntitiesSocrataDataMartRawJsonImport in HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports)
             {
                 databaseEntitiesSocrataDataMartRawJsonImport.DeleteFull(HttpRequestStorage.DatabaseEntities);
             }
+
+            var message = $"{priorJobCount} Prior Socrata DataMart Json Imports cleared";
+            SetMessageForDisplay(message);
 
             HttpRequestStorage.DatabaseEntities.SaveChanges();
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
