@@ -27,6 +27,7 @@
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationAward" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAward" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
@@ -278,6 +279,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAward_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAward_FocusArea_FocusAreaID">
+      <End Role="FocusArea" EntitySet="FocusArea" />
+      <End Role="GrantAllocationAwards" EntitySet="GrantAllocationAward" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationAwards" EntitySet="GrantAllocationAward" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1243,6 +1252,17 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
     <Property Name="GrantAllocationFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantAllocationAward">
+    <Key>
+      <PropertyRef Name="GrantAllocationAwardID" />
+    </Key>
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="int" Nullable="false" />
+    <Property Name="FocusAreaID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardName" Type="varchar" MaxLength="250" />
+    <Property Name="GrantAllocationAwardAmount" Type="money" />
+    <Property Name="GrantAllocationAwardExpirationDate" Type="datetime" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -2914,6 +2934,30 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocations">
         <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAward_FocusArea_FocusAreaID">
+    <End Role="FocusArea" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="1" />
+    <End Role="GrantAllocationAwards" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FocusArea">
+        <PropertyRef Name="FocusAreaID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwards">
+        <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAward_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationAwards" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwards">
+        <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

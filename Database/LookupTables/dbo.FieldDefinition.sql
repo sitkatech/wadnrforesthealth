@@ -179,4 +179,8 @@ VALUES
 (357, N'FhtProjectNumber', 'FHT Project Number', N'<p>Placeholder definition for FHT Project Number description.</p>'),
 (358, N'GrantCurrentBalance', 'Grant Current Balance', N'<p>Placeholder definition for Grant Current Balance description.</p>'),
 (359, N'GrantAllocationCurrentBalance', 'Grant Allocation Current Balance', N'<p>Placeholder definition for Grant Allocation Current Balance description.</p>'),
-(360, N'GrantAllocationChangeLogNote', 'Allocation Amount Change Log Note', N'<p>Placeholder definition for Allocation Amount Change Log Note description.</p>')
+(360, N'GrantAllocationChangeLogNote', 'Allocation Amount Change Log Note', N'<p>Placeholder definition for Allocation Amount Change Log Note description.</p>'),
+(361, N'GrantAllocationAward', 'Grant Allocation Award', N'<p>Placeholder definition for Grant Allocation Award.</p>'),
+(362, N'GrantAllocationAwardName', 'Grant Allocation Award Name', N'<p>Placeholder definition for Grant Allocation Award Name.</p>'),
+(363, N'GrantAllocationAwardAmount', 'Award Amount', N'<p>Placeholder definition for Award Amount.</p>'),
+(364, N'GrantAllocationAwardExpirationDate', 'Grant Allocation Award Expiration Date', N'<p>Placeholder definition for Grant Allocation Award Expiration Date.</p>')
