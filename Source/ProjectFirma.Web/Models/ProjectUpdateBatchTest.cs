@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Models
             var preconditionException = Assert.Catch<PreconditionException>(() => projectUpdateBatch.SubmitToReviewer(person, DateTime.Now.AddDays(1)), "Should not be allowed to submit yet");
             Assert.That(preconditionException.Message, Is.StringContaining($"You cannot submit a {FieldDefinition.Project.GetFieldDefinitionLabel()} update that is not ready to be submitted"));
             TestFramework.TestPerformanceMeasureActualUpdate.Create(projectUpdateBatch, currentYear, 1000);
-            var organization1 = TestFramework.TestOrganization.Create("Org1");
+            var organization1 = TestFramework.TestOrganization.Create();
             var grant1 = TestFramework.TestGrant.Create(organization1, "grant 1");
             var grantAllocation1 = TestFramework.TestGrantAllocation.Create(grant1, "Grant Allocation 1");
 
@@ -484,7 +484,7 @@ namespace ProjectFirma.Web.Models
             // now add some expenditure update records
             projectUpdate.PlannedDate = new DateTime(currentYear - 1,1,1);
             projectUpdate.CompletionDate = new DateTime(currentYear + 2,1,1);
-            var organization1 = TestFramework.TestOrganization.Create("Org1");
+            var organization1 = TestFramework.TestOrganization.Create();
             var grant1 = TestFramework.TestGrant.Create(organization1, "Grant 1");
             var grantAllocation1 = TestFramework.TestGrantAllocation.Create(grant1, "Grant Allocation 1");
 

@@ -18,6 +18,8 @@ GNU Affero General Public License <http://www.gnu.org/licenses/> for more detail
 Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
+
+using System;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.UnitTestCommon
@@ -29,11 +31,11 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Person Create()
             {
                 var organization = TestOrganization.Create();
-                var person = Person.CreateNewBlank(Role.Normal);
-                person.Organization = organization;
-                person.Email = MakeTestEmail("email");
-                person.FirstName = MakeTestName("firstName", Person.FieldLengths.FirstName);
-                person.LastName = MakeTestName("lastName", Person.FieldLengths.LastName);
+                var person = new Person(MakeTestName("firstName", Person.FieldLengths.FirstName),
+                    MakeTestName("lastName", Person.FieldLengths.LastName), Role.Normal, DateTime.Now, true, false)
+                {
+                    Organization = organization, Email = MakeTestEmail("email")
+                };
 
                 return person;
             }
