@@ -11,8 +11,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             var owinEnvironment = dashboardContext.GetOwinEnvironment();
             var owinContext = new OwinContext(owinEnvironment);
 
-            bool altIsAuthenticated = owinContext.Authentication.User.Identity.IsAuthenticated;
-
             var currentPerson = ClaimsIdentityHelper.PersonFromClaimsIdentity(owinContext.Authentication);
             return currentPerson.IsAdministrator();
         }
