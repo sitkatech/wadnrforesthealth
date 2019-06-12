@@ -525,6 +525,7 @@
     <Compile Include="Models\Generated\Vendor.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\VendorPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\vSocrataDataMartRawJsonImportIndex.Binding.cs" />
+    <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
     <Compile Include="Models\ApiJson\ApiJsonTest.cs" />
@@ -698,6 +699,8 @@
     <Compile Include="Security\UserEditAsAdminFeature.cs" />
     <Compile Include="Security\ViewJsonApiLandingPageFeature.cs" />
     <Compile Include="UnitTestCommon\TestGrant.cs" />
+    <Compile Include="UnitTestCommon\TestInvoice.cs" />
+    <Compile Include="UnitTestCommon\TestInvoiceLineItem.cs" />
     <Compile Include="UnitTestCommon\TestGrantAllocation.cs" />
     <Compile Include="Views\Agreement\AgreementExcelSpec.cs" />
     <Compile Include="Views\Agreement\AgreementGridSpec.cs" />

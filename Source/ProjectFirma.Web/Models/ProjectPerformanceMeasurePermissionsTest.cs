@@ -37,8 +37,8 @@ namespace ProjectFirma.Web.Models
             var viewPerformanceMeasureFeature = new ProjectsInProposalStageViewListFeature();
 
             // Test organizations we'll use for membership checks
-            var testOrganizationForProject = TestFramework.TestOrganization.Create("The Test Organization for Project");
-            var testOrganizationJustForUser = TestFramework.TestOrganization.Create("The Test Organization for User");
+            var testOrganizationForProject = TestFramework.TestOrganization.Create();
+            var testOrganizationJustForUser = TestFramework.TestOrganization.Create();
 
             Person userAnonymous = Person.GetAnonymousSitkaUser();
 
@@ -240,8 +240,8 @@ namespace ProjectFirma.Web.Models
             var editPerformanceMeasureActualFeature = new PerformanceMeasureActualFromProjectManageFeature();
 
             // Test organizations we'll use for membership checks
-            var testOrganizationForProject = TestFramework.TestOrganization.Create("The Test Organization for Project");
-            var testOrganizationJustForUser = TestFramework.TestOrganization.Create("The Test Organization for User");
+            var testOrganizationForProject = TestFramework.TestOrganization.Create();
+            var testOrganizationJustForUser = TestFramework.TestOrganization.Create();
 
             Person userAnonymous = null;
 
@@ -282,8 +282,8 @@ namespace ProjectFirma.Web.Models
             var manageReportedExpendituresFeature = new ProjectEditAsAdminFeature();
 
             // Test organizations we'll use for membership checks
-            var testOrganizationForProject = TestFramework.TestOrganization.Create("The Test Organization for Project");
-            var testOrganizationJustForUser = TestFramework.TestOrganization.Create("The Test Organization for User");
+            var testOrganizationForProject = TestFramework.TestOrganization.Create();
+            var testOrganizationJustForUser = TestFramework.TestOrganization.Create();
 
             Person userAnonymous = null;
 

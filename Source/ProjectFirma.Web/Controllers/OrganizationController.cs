@@ -81,7 +81,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewEdit(viewModel, true, null);
             }
-            var organization = new Organization(String.Empty, true, ModelObjectHelpers.NotYetAssignedID);
+            var organization = new Organization(String.Empty, String.Empty, true, ModelObjectHelpers.NotYetAssignedID);
             viewModel.UpdateModel(organization, CurrentPerson);
             HttpRequestStorage.DatabaseEntities.Organizations.Add(organization);
             HttpRequestStorage.DatabaseEntities.SaveChanges();

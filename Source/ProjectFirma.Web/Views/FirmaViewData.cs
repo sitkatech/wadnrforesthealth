@@ -221,6 +221,13 @@ namespace ProjectFirma.Web.Views
             // Group 7 - JSON APIs
             manageMenu.AddMenuItem(LtInfoMenuItem.MakeItem(new SitkaRoute<JsonApiManagementController>(c => c.JsonApiLandingPage()), currentPerson, "JSON APIs", "Group7"));
 
+            // Group 8 - Hangfire menu
+            if (currentPerson.IsAdministrator())
+            {
+                LtInfoMenuItem hangfireMenuItem = new LtInfoMenuItem("/hangfire","Hangfire", true, false, "Group8");
+                manageMenu.AddMenuItem(hangfireMenuItem);
+            }
+
             return manageMenu;
         }
 

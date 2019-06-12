@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[Organization](
 	[OrganizationID] [int] IDENTITY(1,1) NOT NULL,
 	[OrganizationGuid] [uniqueidentifier] NULL,
 	[OrganizationName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[OrganizationShortName] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[OrganizationShortName] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[PrimaryContactPersonID] [int] NULL,
 	[IsActive] [bit] NOT NULL,
 	[OrganizationUrl] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,

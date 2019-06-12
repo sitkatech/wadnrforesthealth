@@ -25,8 +25,8 @@ namespace ProjectFirma.Web
         public void Configuration(IAppBuilder app)
         {
             ConfigureHttpsProtocolForOutboundWebClientConnections();
+            ConfigureApplicationAuthorization(app);
             ScheduledBackgroundJobBootstrapper.ConfigureHangfireAndScheduledBackgroundJobs(app);
-            ConfigureApplicatoinAuthorization(app);
         }
 
         private static void ConfigureHttpsProtocolForOutboundWebClientConnections()
@@ -37,7 +37,7 @@ namespace ProjectFirma.Web
             AppContext.SetSwitch("Switch.System.Net.DontEnableSchUseStrongCrypto", false);
         }
 
-        private static void ConfigureApplicatoinAuthorization(IAppBuilder app)
+        private static void ConfigureApplicationAuthorization(IAppBuilder app)
         {
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

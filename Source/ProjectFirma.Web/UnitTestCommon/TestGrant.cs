@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.UnitTestCommon
             {
                 var grantStatus = GetDefaultGrantStatus();
                 var organization = TestFramework.TestOrganization.Create();
-                var grant = Grant.CreateNewBlank(grantStatus, organization);
+                var grant = new Grant(TestFramework.MakeTestName("Grant", Grant.FieldLengths.GrantName), grantStatus, organization);
                 //Grant.IsActive = true;
                 return grant;
             }

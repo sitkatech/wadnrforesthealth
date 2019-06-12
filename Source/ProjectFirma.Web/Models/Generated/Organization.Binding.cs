@@ -55,12 +55,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Organization(string organizationName, bool isActive, int organizationTypeID) : this()
+        public Organization(string organizationName, string organizationShortName, bool isActive, int organizationTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.OrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.OrganizationName = organizationName;
+            this.OrganizationShortName = organizationShortName;
             this.IsActive = isActive;
             this.OrganizationTypeID = organizationTypeID;
         }
@@ -68,11 +69,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Organization(string organizationName, bool isActive, OrganizationType organizationType) : this()
+        public Organization(string organizationName, string organizationShortName, bool isActive, OrganizationType organizationType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.OrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.OrganizationName = organizationName;
+            this.OrganizationShortName = organizationShortName;
             this.IsActive = isActive;
             this.OrganizationTypeID = organizationType.OrganizationTypeID;
             this.OrganizationType = organizationType;
@@ -84,7 +86,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Organization CreateNewBlank(OrganizationType organizationType)
         {
-            return new Organization(default(string), default(bool), organizationType);
+            return new Organization(default(string), default(string), default(bool), organizationType);
         }
 
         /// <summary>

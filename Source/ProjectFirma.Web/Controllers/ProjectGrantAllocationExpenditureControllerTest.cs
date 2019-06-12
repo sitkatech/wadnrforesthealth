@@ -62,8 +62,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = TestFramework.TestProject.Create();
 
-            var organization = TestFramework.TestOrganization.Create("test organization 1");
-            var grant = TestFramework.TestGrant.Create(organization, "test grant 1");
+            var org1 = TestFramework.TestOrganization.Create();
+            var grant = TestFramework.TestGrant.Create(org1, "test grant 1");
             var grantAllocation = TestFramework.TestGrantAllocation.Create(grant, "test grant allocation 1");
 
             TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, 2010, 100.00m);
@@ -74,7 +74,7 @@ namespace ProjectFirma.Web.Controllers
             var projectGrantAllocationExpenditures = project.ProjectGrantAllocationExpenditures.ToList();
             var rangeOfYears = GetRangeOfYears(projectGrantAllocationExpenditures);
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> {"test organization 1"}, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
+                new List<string> {org1.DisplayName}, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
 
             Assert.That(fullOrganizationTypeAndYearDictionary.Sum(x => x.Value.Sum(y => y.Value)), Is.EqualTo(400.00m));
         }
@@ -83,11 +83,13 @@ namespace ProjectFirma.Web.Controllers
         [Test]
         public void MultipleProjectsSumCorrectly()
         {
-            var projectGrantAllocationExpenditures = BuildExpenditures("org 1", "grant allocation 1", new Dictionary<int, decimal> {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}});
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 2", "grant allocation 2", new Dictionary<int, decimal> {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}}));
+            var org1 = TestFramework.TestOrganization.Create();
+            var projectGrantAllocationExpenditures = BuildExpenditures(org1, "grant allocation 1", new Dictionary<int, decimal> {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}});
+            var org2 = TestFramework.TestOrganization.Create();
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(org2, "grant allocation 2", new Dictionary<int, decimal> {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}}));
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> {"org 1", "org 2"},
+                new List<string> { org1.DisplayName, org2.DisplayName },
                 x => x.GrantAllocation.BottommostOrganization.DisplayName,
                 GetRangeOfYears(projectGrantAllocationExpenditures));
 
@@ -97,39 +99,43 @@ namespace ProjectFirma.Web.Controllers
         [Test]
         public void DictionaryBuildsCorrectly()
         {
-            var projectGrantAllocationExpenditures = BuildExpenditures("org 1", "grant allocation 1", new Dictionary<int, decimal> 
-            {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}});
+            var org1 = TestFramework.TestOrganization.Create();
+            var projectGrantAllocationExpenditures = BuildExpenditures(org1, "grant allocation 1", new Dictionary<int, decimal> 
+                {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}});
 
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 2", "grant allocation 2", new Dictionary<int, decimal> 
-            {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}}));
+            var org2 = TestFramework.TestOrganization.Create();
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(org2, "grant allocation 2", new Dictionary<int, decimal> 
+                {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}}));
 
             var beginCalendarYear = projectGrantAllocationExpenditures.Min(x => x.CalendarYear);
             var endCalendarYear = projectGrantAllocationExpenditures.Max(x => x.CalendarYear);
             var rangeOfYears = FirmaDateUtilities.GetRangeOfYears(beginCalendarYear, endCalendarYear);
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                                                                                                                         new List<string> {"org 1", "org 2"}, 
+                                                                                                                         new List<string> {org1.DisplayName, org2.DisplayName }, 
                                                                                                                          x=> x.GrantAllocation.BottommostOrganization.DisplayName, 
                                                                                                                          rangeOfYears);
 
-            Assert.That(fullOrganizationTypeAndYearDictionary["org 1"][2012], Is.EqualTo(300.00m));
+            Assert.That(fullOrganizationTypeAndYearDictionary[org1.DisplayName][2012], Is.EqualTo(300.00m));
         }
 
         [Test]
         public void YearSumsCorrectly()
         {
-            var projectGrantAllocationExpenditures = BuildExpenditures("org 1", "grant allocation 1", new Dictionary<int, decimal> 
-            {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}});
+            var org1 = TestFramework.TestOrganization.Create();
+            var projectGrantAllocationExpenditures = BuildExpenditures(org1, "grant allocation 1", new Dictionary<int, decimal> 
+                {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}});
 
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 2", "grant allocation 2", new Dictionary<int, decimal> 
-            {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}}));
+            var org2 = TestFramework.TestOrganization.Create();
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(org2, "grant allocation 2", new Dictionary<int, decimal> 
+                {{2010, 100.0m}, {2011, 200.0m}, {2012, 300.0m}, {2013, 400.0m}}));
 
             var beginCalendarYear = projectGrantAllocationExpenditures.Min(x => x.CalendarYear);
             var endCalendarYear = projectGrantAllocationExpenditures.Max(x => x.CalendarYear);
             var rangeOfYears = FirmaDateUtilities.GetRangeOfYears(beginCalendarYear, endCalendarYear);
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> { "org 1", "org 2" }, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
+                new List<string> { org1.DisplayName, org2.DisplayName }, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
 
             Assert.That(fullOrganizationTypeAndYearDictionary.Sum(x => x.Value[2012]), Is.EqualTo(600.0m));
         }
@@ -137,26 +143,28 @@ namespace ProjectFirma.Web.Controllers
         [Test]
         public void GroupByOrgSumsCorrectly()
         {
-            var projectGrantAllocationExpenditures = BuildExpenditures("org 1", "grant allocation 1", new Dictionary<int, decimal> { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } });
+            var org1 = TestFramework.TestOrganization.Create();
+            var projectGrantAllocationExpenditures = BuildExpenditures(org1, "grant allocation 1", new Dictionary<int, decimal> { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } });
 
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 2", "grant allocation 2", new Dictionary<int, decimal> { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } }));
+            var org2 = TestFramework.TestOrganization.Create();
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(org2, "grant allocation 2", new Dictionary<int, decimal> { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } }));
 
             var beginCalendarYear = projectGrantAllocationExpenditures.Min(x => x.CalendarYear);
             var endCalendarYear = projectGrantAllocationExpenditures.Max(x => x.CalendarYear);
             var rangeOfYears = FirmaDateUtilities.GetRangeOfYears(beginCalendarYear, endCalendarYear);
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> { "org 1", "org 2" }, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
+                new List<string> { org1.DisplayName, org2.DisplayName }, x => x.GrantAllocation.BottommostOrganization.DisplayName, rangeOfYears);
 
-            Assert.That(fullOrganizationTypeAndYearDictionary["org 1"].Sum(x => x.Value), Is.EqualTo(1000.0m));
+            Assert.That(fullOrganizationTypeAndYearDictionary[org1.DisplayName].Sum(x => x.Value), Is.EqualTo(1000.0m));
         }
 
         [Test]
         public void GroupByGrantAllocationSumsCorrectly()
         {
-            var projectGrantAllocationExpenditures = BuildExpenditures("org 1", "grant allocation 1", new Dictionary<int, decimal> { { 2010, 100.0m }, { 2011, 100.0m } });
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 2", "grant allocation 2", new Dictionary<int, decimal> { { 2010, 200.0m }, { 2011, 200.0m } }));
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 3", "grant allocation 2", new Dictionary<int, decimal> { { 2010, 200.0m }, { 2011, 200.0m } }));
+            var projectGrantAllocationExpenditures = BuildExpenditures(TestFramework.TestOrganization.Create(), "grant allocation 1", new Dictionary<int, decimal> { { 2010, 100.0m }, { 2011, 100.0m } });
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(TestFramework.TestOrganization.Create(), "grant allocation 2", new Dictionary<int, decimal> { { 2010, 200.0m }, { 2011, 200.0m } }));
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(TestFramework.TestOrganization.Create(), "grant allocation 2", new Dictionary<int, decimal> { { 2010, 200.0m }, { 2011, 200.0m } }));
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.GrantAllocationName,
                 new List<string> { "grant allocation 1", "grant allocation 2" }, x => x.GrantAllocation.BottommostOrganization.DisplayName, GetRangeOfYears(projectGrantAllocationExpenditures));
@@ -168,23 +176,25 @@ namespace ProjectFirma.Web.Controllers
         [Test]
         public void ExcludedOrgSumsCorrectly()
         {
-            var projectGrantAllocationExpenditures = BuildExpenditures("org 1", "grant allocation 1", new Dictionary<int, decimal> 
-            { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } });
-            projectGrantAllocationExpenditures.AddAll(BuildExpenditures("org 2", "grant allocation 2", new Dictionary<int, decimal> 
-            { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } }));
+            var org1 = TestFramework.TestOrganization.Create();
+            var projectGrantAllocationExpenditures = BuildExpenditures(org1, "grant allocation 1", new Dictionary<int, decimal> 
+                { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } });
+            var org2 = TestFramework.TestOrganization.Create();
+            projectGrantAllocationExpenditures.AddAll(BuildExpenditures(org2, "grant allocation 2", new Dictionary<int, decimal> 
+                { { 2010, 100.0m }, { 2011, 200.0m }, { 2012, 300.0m }, { 2013, 400.0m } }));
 
             var fullOrganizationTypeAndYearDictionary = projectGrantAllocationExpenditures.GetFullCategoryYearDictionary(x => x.GrantAllocation.BottommostOrganization.DisplayName,
-                new List<string> { "org 1" }, x => x.GrantAllocation.BottommostOrganization.DisplayName, GetRangeOfYears(projectGrantAllocationExpenditures));
+                new List<string> { org1.DisplayName }, x => x.GrantAllocation.BottommostOrganization.DisplayName, GetRangeOfYears(projectGrantAllocationExpenditures));
 
-            Assert.That(fullOrganizationTypeAndYearDictionary.ContainsKey("org 2"), Is.False);
+            Assert.That(fullOrganizationTypeAndYearDictionary.ContainsKey(org2.DisplayName), Is.False);
             Assert.That(fullOrganizationTypeAndYearDictionary.Sum(x => x.Value.Sum(y => y.Value)), Is.EqualTo(1000.0m));
         }
 
 
-        private static List<ProjectGrantAllocationExpenditure> BuildExpenditures(string organizationName, string grantAllocationName, Dictionary<int, decimal> yearAndExpenditureDictionary)
+        private static List<ProjectGrantAllocationExpenditure> BuildExpenditures(Organization organization,
+            string grantAllocationName, Dictionary<int, decimal> yearAndExpenditureDictionary)
         {
             var project = TestFramework.TestProject.Create();
-            var organization = TestFramework.TestOrganization.Create(organizationName);
             var grantAllocation = TestFramework.TestGrantAllocation.CreateWithoutChangingName(grantAllocationName, organization);
 
             return yearAndExpenditureDictionary.Select(x => TestFramework.TestProjectGrantAllocationExpenditure.Create(project, grantAllocation, x.Key, x.Value)).ToList();

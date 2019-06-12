@@ -1561,7 +1561,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="OrganizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="OrganizationGuid" Type="uniqueidentifier" />
     <Property Name="OrganizationName" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="OrganizationShortName" Type="varchar" MaxLength="50" />
+    <Property Name="OrganizationShortName" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="PrimaryContactPersonID" Type="int" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="OrganizationUrl" Type="varchar" MaxLength="200" />
