@@ -67,6 +67,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
 
         public int? OldProjectStageID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FocusArea)]
         public int? FocusAreaID { get; set; }
 
 

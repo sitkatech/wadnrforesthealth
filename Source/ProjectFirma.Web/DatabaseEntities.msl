@@ -299,6 +299,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationAward">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAward">
+        <MappingFragment StoreEntitySet="GrantAllocationAward">
+          <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
+          <ScalarProperty Name="GrantAllocationAwardName" ColumnName="GrantAllocationAwardName" />
+          <ScalarProperty Name="GrantAllocationAwardAmount" ColumnName="GrantAllocationAwardAmount" />
+          <ScalarProperty Name="GrantAllocationAwardExpirationDate" ColumnName="GrantAllocationAwardExpirationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationBudgetLineItem">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem">
         <MappingFragment StoreEntitySet="GrantAllocationBudgetLineItem">
