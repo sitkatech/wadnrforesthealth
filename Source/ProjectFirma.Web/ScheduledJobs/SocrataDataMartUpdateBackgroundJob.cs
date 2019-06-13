@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Net;
 using System.Text.RegularExpressions;
+using Hangfire;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -15,11 +16,19 @@ namespace ProjectFirma.Web.ScheduledJobs
     {
         private static readonly Uri VendorJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.VendorJsonSocrataBaseUrl);
         private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonSocrataBaseUrl);
-        private static readonly Uri ProjectCodeJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProjectCodeJsonSocrataBaseUrl);
         private static readonly Uri GrantExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.GrantExpendituresTempBaseUrl);
 
+        /// <summary>
+        /// Default constructor. Assumes job can run with others; this is a short-term assumption to get compiling.
+        /// </summary>
+        /// <param name="jobName"></param>
+        public SocrataDataMartUpdateBackgroundJob(string jobName) : base(jobName, ConcurrencySetting.OkToRunWhileOtherJobsAreRunning)
+        {
+        }
 
-        public SocrataDataMartUpdateBackgroundJob(string jobName) : base(jobName)
+
+
+        public SocrataDataMartUpdateBackgroundJob(string jobName, ConcurrencySetting concurrencySetting) : base(jobName, concurrencySetting)
         {
         }
 
@@ -30,17 +39,11 @@ namespace ProjectFirma.Web.ScheduledJobs
             FirmaEnvironmentType.Qa
         };
 
-        protected override void RunJobImplementation()
+        protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            ProcessRemindersImpl();
+            throw new NotImplementedException();
         }
 
-        private Uri AddSocrataMaxLimitTagToUrl(Uri baseSocrataJsonApiUrl)
-        {
-            var uriBuilder = new UriBuilder(baseSocrataJsonApiUrl);
-            uriBuilder.Query += "$limit=9999999";
-            return uriBuilder.Uri;
-        }
 
 
         protected virtual void ProcessRemindersImpl()
@@ -82,22 +85,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
         }
 
-        public void DownloadSocrataProjectCodeTable()
-        {
-            Logger.Info($"Starting '{JobName}' DownloadSocrataProjectCodeTable");
 
-            // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddSocrataMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
-            var projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);
-            Logger.Info($"ProjectCode JSON length: {projectCodeJson.Length}");
-            // Push that string into a raw JSON string in the raw staging table
-            var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProjectCode, projectCodeJson);
-            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
-            // Use the JSON to refresh the Project Code table
-            ProjectCodeImportJson(socrataDataMartRawJsonImportID);
-
-            Logger.Info($"Ending '{JobName}' DownloadSocrataProjectCodeTable");
-        }
 
         public void DownloadGrantExpendituresTable()
         {
@@ -154,18 +142,27 @@ namespace ProjectFirma.Web.ScheduledJobs
         /// </summary>
         /// <param name="biennium">Biennium is required</param>
         /// <returns></returns>
-        private static Uri GetGrantExpendituresJsonApiUrlWithAllParameters(int biennium)
+        public static Uri GetGrantExpendituresJsonApiUrlWithAllParameters(int biennium)
         {
             var builder = new UriBuilder(GrantExpendituresJsonApiBaseUrl);
             builder.Query += $"/{biennium}";
             return builder.Uri;
         }
 
+
+
+        public Uri AddSocrataMaxLimitTagToUrl(Uri baseSocrataJsonApiUrl)
+        {
+            var uriBuilder = new UriBuilder(baseSocrataJsonApiUrl);
+            uriBuilder.Query += "$limit=9999999";
+            return uriBuilder.Uri;
+        }
+
         /// <summary>
         /// Download the contents of the given URL to a temp file
         /// </summary>
         /// <returns>Full path of the temp file created that contains the contents of the URL</returns>
-        private string DownloadSocrataUrlToString(Uri urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
+        public string DownloadSocrataUrlToString(Uri urlToDownload, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataUrlToString");
             try
@@ -189,7 +186,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
         }
 
-        private int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString)
+        public int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString)
         {
             Logger.Info($"Starting '{JobName}' ShoveRawJsonStringIntoTable");
             SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString);
@@ -234,21 +231,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' ProgramIndexImportJson");
         }
 
-        private void ProjectCodeImportJson(int socrataDataMartRawJsonImportID)
-        {
-            Logger.Info($"Starting '{JobName}' ProjectCodeImportJson");
-            string vendorImportProc = "dbo.pProjectCodeImportJson";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
-            {
-                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            Logger.Info($"Ending '{JobName}' ProjectCodeImportJson");
-        }
 
         private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, int bienniumToImport)
         {
@@ -289,5 +271,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             sqlConnection.Open();
             return sqlConnection;
         }
+
     }
 }

@@ -99,8 +99,8 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunProjectCodeImportJob()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Project Code Import (Button activated)");
-            socrataJob.DownloadSocrataProjectCodeTable();
+            var projectCodeJob = new ProjectCodeImportHangfireBackgroundJob();
+            projectCodeJob.DownloadSocrataProjectCodeTable();
 
             var message = $"Socrata Project Codes Imported";
             SetMessageForDisplay(message);
