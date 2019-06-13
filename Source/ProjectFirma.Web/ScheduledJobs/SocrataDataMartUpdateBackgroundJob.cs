@@ -192,7 +192,17 @@ namespace ProjectFirma.Web.ScheduledJobs
             SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString);
 
             HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Add(newRawJsonImport);
-            HttpRequestStorage.DatabaseEntities.SaveChanges();
+
+            // We use the System Person if none is available, because that indicates we are running from an automated context (Hangfire)
+            if (HttpRequestStorage.PersonIsSet())
+            {
+                HttpRequestStorage.DatabaseEntities.SaveChanges();
+            }
+            else
+            {
+                var systemUser = HttpRequestStorage.DatabaseEntities.People.GetSystemUser();
+                HttpRequestStorage.DatabaseEntities.SaveChanges(systemUser);
+            }
 
             // Normally we might return the object here, but this thing is potentially so huge we want to dump it just as soon as we no longer need it.
             Logger.Info($"Ending '{JobName}' ShoveRawJsonStringIntoTable");

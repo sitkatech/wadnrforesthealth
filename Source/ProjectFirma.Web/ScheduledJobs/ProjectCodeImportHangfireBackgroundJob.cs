@@ -13,7 +13,12 @@ namespace ProjectFirma.Web.ScheduledJobs
         private static readonly Uri ProjectCodeJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProjectCodeJsonSocrataBaseUrl);
 
         public static ProjectCodeImportHangfireBackgroundJob Instance;
-        public override List<FirmaEnvironmentType> RunEnvironments => throw new System.NotImplementedException();
+        public override List<FirmaEnvironmentType> RunEnvironments => new List<FirmaEnvironmentType>
+        {
+            FirmaEnvironmentType.Local,
+            FirmaEnvironmentType.Prod,
+            FirmaEnvironmentType.Qa
+        };
 
         static ProjectCodeImportHangfireBackgroundJob()
         {

@@ -17,7 +17,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         public static void RunProjectCodeImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
-            throw new System.NotImplementedException();
+            ProjectCodeImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
     }
 }

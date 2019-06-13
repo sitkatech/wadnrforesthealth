@@ -124,7 +124,9 @@ namespace ProjectFirma.Web.Models
             var notifications = Notifications.Where(x => x.NotificationType == NotificationType.ProjectUpdateReminder).ToList();
 
             if (notifications.Count == 0)
+            {
                 return null;
+            }
             return notifications.OrderByDescending(y => y.NotificationDate).First();
         }
 

@@ -26,13 +26,30 @@ using LtInfo.Common.DesignByContract;
 namespace ProjectFirma.Web.Models
 {
     public static partial class DatabaseContextExtensions
-    {
+    { 
+        private static string SystemUserFirstName = "System";
+        private static string SystemUserLastName = "User";
+
+
         public static Person GetPersonByEmail(this IQueryable<Person> people, string email)
         {
             var peopleWithDesiredEmail = people.Where(x => x.Email == email).ToList();
             Check.Require(peopleWithDesiredEmail.Count <= 1, "Found more than one Person with email \"{email}\", emails should be unique in database.");
             var person = peopleWithDesiredEmail.SingleOrDefault();
             return person;
+        }
+
+        /// <summary>
+        /// Get's the hard-coded System user called "System User". Used for automated jobs.
+        /// This may be a good candidate for a singleton or global in the system, just haven't done it yet..
+        /// </summary>
+        /// <param name="people"></param>
+        /// <returns></returns>
+        public static Person GetSystemUser(this IQueryable<Person> people)
+        {
+            var peopleWithSystemUserName = people.Where(x => x.FirstName  == SystemUserFirstName && x.LastName == SystemUserLastName).ToList();
+            var systemUserPerson = peopleWithSystemUserName.SingleOrDefault();
+            return systemUserPerson;
         }
 
         public static Person GetPersonByWebServiceAccessToken(this IQueryable<Person> people, Guid webServiceAccessToken)
