@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using LtInfo.Common.MvcResults;
+using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.FocusArea;
+using ProjectFirma.Web.Views.GrantAllocation;
+using ProjectFirma.Web.Views.GrantAllocationAward;
+using ProjectFirma.Web.Views.Shared;
+using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
+using ProjectFirma.Web.Views.Shared.TextControls;
+using DetailViewData = ProjectFirma.Web.Views.GrantAllocationAward.DetailViewData;
+
+namespace ProjectFirma.Web.Controllers
+{
+    public class GrantAllocationAwardController : FirmaBaseController
+    {
+
+        [HttpGet]
+        [GrantAllocationAwardCreateFeature]
+        public PartialViewResult New()
+        {
+            var viewModel = new EditGrantAllocationAwardViewModel();
+            // Null is likely wrong here!!!
+            return GrantAllocationAwardViewEdit(viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardCreateFeature]
+        public PartialViewResult NewForAFocusArea(FocusAreaPrimaryKey focusAreaPrimaryKey)
+        {
+            var focusArea = focusAreaPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardViewModel()
+            {
+                FocusAreaID = focusArea.FocusAreaID
+            };
+            return GrantAllocationAwardViewEdit(viewModel);
+    }
+
+        [HttpPost]
+        [GrantAllocationAwardCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult New(EditGrantAllocationAwardViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Null is likely wrong here!!!
+                return GrantAllocationAwardViewEdit(viewModel);
+            }
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == viewModel.GrantAllocationID);
+            var focusArea = HttpRequestStorage.DatabaseEntities.FocusAreas.Single(fa => fa.FocusAreaID == viewModel.FocusAreaID);
+            var grantAllocationAward = GrantAllocationAward.CreateNewBlank(grantAllocation, focusArea);
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult GrantAllocationAwardViewEdit(EditGrantAllocationAwardViewModel viewModel)
+        {
+            var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations;
+
+            var viewData = new EditGrantAllocationAwardViewData(grantAllocations);
+            return RazorPartialView<EditGrantAllocationAward, EditGrantAllocationAwardViewData, EditGrantAllocationAwardViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardViewFeature]
+        public ViewResult GrantAllocationAwardDetail(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (grantAllocationAward == null)
+            {
+                throw new Exception($"Could not find GrantAllocationAwardID # {grantAllocationAwardPrimaryKey.PrimaryKeyValue}; has it been deleted?");
+            }
+
+
+            //var grantAllocationAwardGridSpec = new GrantAllocationExpendituresGridSpec();
+
+            var viewData = new DetailViewData(CurrentPerson, grantAllocationAward);
+            return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
+        }
+
+        [GrantAllocationAwardViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAward> GrantAllocationAwardByFocusAreaGridJsonData(FocusAreaPrimaryKey focusAreaPrimaryKey)
+        {
+            var focusArea = focusAreaPrimaryKey.EntityObject;
+            var grantAllocationAwards = focusArea.GrantAllocationAwards.ToList();
+            var gridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, focusArea);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAward>(grantAllocationAwards, gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+    }
+}

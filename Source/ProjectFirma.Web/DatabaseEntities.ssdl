@@ -1260,9 +1260,9 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationAwardName" Type="varchar" MaxLength="250" />
-    <Property Name="GrantAllocationAwardAmount" Type="money" />
-    <Property Name="GrantAllocationAwardExpirationDate" Type="datetime" />
+    <Property Name="GrantAllocationAwardName" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="GrantAllocationAwardAmount" Type="money" Nullable="false" />
+    <Property Name="GrantAllocationAwardExpirationDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>

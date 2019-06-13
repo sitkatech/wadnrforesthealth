@@ -6,9 +6,9 @@ CREATE TABLE [dbo].[GrantAllocationAward](
 	[GrantAllocationAwardID] [int] IDENTITY(1,1) NOT NULL,
 	[GrantAllocationID] [int] NOT NULL,
 	[FocusAreaID] [int] NOT NULL,
-	[GrantAllocationAwardName] [varchar](250) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[GrantAllocationAwardAmount] [money] NULL,
-	[GrantAllocationAwardExpirationDate] [datetime] NULL,
+	[GrantAllocationAwardName] [varchar](250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[GrantAllocationAwardAmount] [money] NOT NULL,
+	[GrantAllocationAwardExpirationDate] [datetime] NOT NULL,
  CONSTRAINT [PK_GrantAllocationAward_GrantAllocationAwardID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationAwardID] ASC

@@ -39,7 +39,7 @@ using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public partial class GrantAllocationController : FirmaBaseController
+    public class GrantAllocationController : FirmaBaseController
     {
         [HttpGet]
         [GrantAllocationDeleteFeature]

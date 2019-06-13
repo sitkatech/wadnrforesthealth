@@ -1,0 +1,99 @@
+﻿@*-----------------------------------------------------------------------
+    <copyright file="Detail.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+    Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+    <author>Sitka Technology Group</author>
+    </copyright>
+
+    <license>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+    Source code is available upon request via <support@sitkatech.com>.
+    </license>
+    -----------------------------------------------------------------------*@
+@using LtInfo.Common
+@using ProjectFirma.Web.Views.Shared
+@using LtInfo.Common.BootstrapWrappers
+@using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.ModalDialog
+@using LtInfo.Common.Views
+@using ProjectFirma.Web.Models
+@using ProjectFirma.Web.Security
+@using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.GrantAllocation
+@using ProjectFirma.Web.Views.Shared.GrantAllocationControls
+@using ProjectFirma.Web.Views.Shared.TextControls
+
+@inherits ProjectFirma.Web.Views.GrantAllocationAward.Detail
+
+@section JavascriptAndStylesContent
+{
+    @{ DhtmlxGridIncludes.RenderPartialView(Html); }
+
+}
+
+
+
+<div>
+    @*<a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.GrantAllocationsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToGrantAllocationsText</a>*@
+</div>
+
+
+<div class="col-sm-12">
+    <h1>HELLO YOU ARE NOW VIEWING THE GRANT ALLOCATION AWARD DETAIL PAGE</h1>
+    @*<div class="row">
+        <div class="col-lg-5">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.GrantAllocationName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
+                        Basics
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    @{ GrantAllocationBasics.RenderPartialView(Html, ViewDataTyped.GrantAllocationBasicsViewData);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
+                </div>
+                <div class="panel-body">
+                    @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+</div>

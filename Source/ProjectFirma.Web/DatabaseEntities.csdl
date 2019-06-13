@@ -1344,9 +1344,9 @@
     <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardName" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardExpirationDate" Type="DateTime" />
+    <Property Name="GrantAllocationAwardName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="GrantAllocationAwardAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="GrantAllocationAwardExpirationDate" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID" FromRole="GrantAllocationAwards" ToRole="FocusArea" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationAwards" ToRole="GrantAllocation" />
   </EntityType>
