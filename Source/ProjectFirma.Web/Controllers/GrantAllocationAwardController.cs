@@ -76,10 +76,9 @@ namespace ProjectFirma.Web.Controllers
                 throw new Exception($"Could not find GrantAllocationAwardID # {grantAllocationAwardPrimaryKey.PrimaryKeyValue}; has it been deleted?");
             }
 
-
-            //var grantAllocationAwardGridSpec = new GrantAllocationExpendituresGridSpec();
-
-            var viewData = new DetailViewData(CurrentPerson, grantAllocationAward);
+            var backButtonUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(x => x.Detail(grantAllocationAward.FocusAreaID));
+            var backButtonText = $"Back to {FieldDefinition.FocusArea.GetFieldDefinitionLabel()}: {grantAllocationAward.FocusArea.FocusAreaName}";
+            var viewData = new DetailViewData(CurrentPerson, grantAllocationAward, backButtonUrl, backButtonText);
             return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
         }
 

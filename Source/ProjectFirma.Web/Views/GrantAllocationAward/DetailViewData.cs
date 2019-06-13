@@ -26,6 +26,7 @@ using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
@@ -35,12 +36,27 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class DetailViewData : FirmaViewData
     {
-        public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward) : base(currentPerson)
+        public string BackButtonUrl { get; private set; }
+        public string BackButtonText { get; set; }
+        public string EditGrantAllocationAwardUrl { get; set; }
+        public Models.GrantAllocationAward GrantAllocationAward { get; private set; }
+        public bool UserHasEditGrantAllocationAwardPermissions { get; private set; }
+
+
+        public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText) : base(currentPerson)
         {
             PageTitle = grantAllocationAward.GrantAllocationAwardName;
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} Detail";
 
+            BackButtonUrl = backButtonUrl;
+            BackButtonText = backButtonText;
+
+            GrantAllocationAward = grantAllocationAward;
+            UserHasEditGrantAllocationAwardPermissions = new GrantAllocationAwardEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+
 
         }
+
+        
     }
 }

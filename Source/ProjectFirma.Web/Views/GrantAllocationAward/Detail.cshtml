@@ -22,6 +22,7 @@
 @using ProjectFirma.Web.Views.Shared
 @using LtInfo.Common.BootstrapWrappers
 @using LtInfo.Common.DhtmlWrappers
+@using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
 @using LtInfo.Common.Views
 @using ProjectFirma.Web.Models
@@ -42,56 +43,111 @@
 
 
 <div>
-    @*<a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.GrantAllocationsListUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackToGrantAllocationsText</a>*@
+    <a class="btn backButton" style="padding-left: 0;" href="@ViewDataTyped.BackButtonUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") @ViewDataTyped.BackButtonText</a>
 </div>
 
 
 <div class="col-sm-12">
-    <h1>HELLO YOU ARE NOW VIEWING THE GRANT ALLOCATION AWARD DETAIL PAGE</h1>
-    @*<div class="row">
+
+    <div class="row">
         <div class="col-lg-5">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocation.GrantAllocationName), 950, ViewDataTyped.UserHasEditGrantAllocationPermissions)
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditGrantAllocationAwardUrl, string.Format("Edit {0}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
                         Basics
                     </h3>
                 </div>
                 <div class="panel-body">
-                    @{ GrantAllocationBasics.RenderPartialView(Html, ViewDataTyped.GrantAllocationBasicsViewData);}
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardName)
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, string.Format("Funding {0}", FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()))
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.LabelWithSugarFor(FieldDefinition.ProgramIndexProjectCode)
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardAmount)
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardAmount.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.Label("Spent Amount")
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.SpentAmount.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.Label("Remaining Amount")
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.RemainingAmount.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 text-right">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardExpirationDate)
+                        </div>
+                        <div class="col-sm-7">
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardExpirationDate.ToShortDateString()</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
-                </div>
-                <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
-                </div>
-                <div class="panel-body">
-                    @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+    @*
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        Expected Funding by @FieldDefinition.Project.GetFieldDefinitionLabel()
+                    </div>
+                    <div class="panel-body">
+                        @Html.DhtmlxGrid(ViewDataTyped.ProjectGrantAllocationRequestsGridSpec, ViewDataTyped.ProjectGrantAllocationRequestsGridName, ViewDataTyped.ProjectGrantAllocationRequestsGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    </div>
                 </div>
             </div>
         </div>
-    </div>*@
+
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panelFirma">
+                    <div class="panel-heading panelTitle">
+                        @FieldDefinition.ReportedExpenditure.GetFieldDefinitionLabelPluralized()
+                    </div>
+                    <div class="panel-body">
+                        @Html.DhtmlxGrid(ViewDataTyped.GrantAllocationExpendituresGridSpec, ViewDataTyped.GrantAllocationExpendituresGridName, ViewDataTyped.GrantAllocationExpendituresGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    </div>
+                </div>
+            </div>
+        </div>*@
 
 
 
