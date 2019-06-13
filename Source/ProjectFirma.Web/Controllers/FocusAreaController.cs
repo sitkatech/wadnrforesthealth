@@ -141,9 +141,10 @@ namespace ProjectFirma.Web.Controllers
 
             var mapInitJson = GetMapInitJsonWithProjects(focusArea, out var hasSpatialData, CurrentPerson);
 
+            var grantAllocationAwardGridSpec = new GrantAllocationAwardGridSpec(CurrentPerson, focusArea);
 
 
-            var viewData = new DetailViewData(CurrentPerson, focusArea, mapInitJson, hasSpatialData);
+            var viewData = new DetailViewData(CurrentPerson, focusArea, mapInitJson, hasSpatialData, grantAllocationAwardGridSpec);
             return RazorView<Detail, DetailViewData>(viewData);
         }
 
