@@ -50,7 +50,7 @@
 <div class="col-sm-12">
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
@@ -60,58 +60,58 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardName)
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, string.Format("Funding {0}", FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()))
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.LabelWithSugarFor(FieldDefinition.ProgramIndexProjectCode)
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited()</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardAmount)
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardAmount.ToStringCurrency()</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.Label("Spent Amount")
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.SpentAmount.ToStringCurrency()</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.Label("Remaining Amount")
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.RemainingAmount.ToStringCurrency()</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 text-right">
+                        <div class="col-sm-4">
                             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardExpirationDate)
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardExpirationDate.ToShortDateString()</span>
                         </div>
                     </div>

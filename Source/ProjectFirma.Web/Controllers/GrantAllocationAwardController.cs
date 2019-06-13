@@ -24,8 +24,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult New()
         {
             var viewModel = new EditGrantAllocationAwardViewModel();
-            // Null is likely wrong here!!!
-            return GrantAllocationAwardViewEdit(viewModel);
+            return GrantAllocationAwardViewEdit(viewModel, "New");
         }
 
         [HttpGet]
@@ -37,7 +36,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 FocusAreaID = focusArea.FocusAreaID
             };
-            return GrantAllocationAwardViewEdit(viewModel);
+            return GrantAllocationAwardViewEdit(viewModel, "New");
     }
 
         [HttpPost]
@@ -48,7 +47,7 @@ namespace ProjectFirma.Web.Controllers
             if (!ModelState.IsValid)
             {
                 // Null is likely wrong here!!!
-                return GrantAllocationAwardViewEdit(viewModel);
+                return GrantAllocationAwardViewEdit(viewModel, "New");
             }
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == viewModel.GrantAllocationID);
             var focusArea = HttpRequestStorage.DatabaseEntities.FocusAreas.Single(fa => fa.FocusAreaID == viewModel.FocusAreaID);
@@ -57,12 +56,35 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+        [HttpGet]
+        [GrantAllocationAwardEditAsAdminFeature]
+        public PartialViewResult Edit(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardViewModel(grantAllocationAward);
+            return GrantAllocationAwardViewEdit(viewModel, "Edit");
+        }
 
-        private PartialViewResult GrantAllocationAwardViewEdit(EditGrantAllocationAwardViewModel viewModel)
+        [HttpPost]
+        [GrantAllocationAwardEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult Edit(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditGrantAllocationAwardViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardViewEdit(viewModel, "Edit");
+            }
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult GrantAllocationAwardViewEdit(EditGrantAllocationAwardViewModel viewModel, string controllerAction)
         {
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations;
 
-            var viewData = new EditGrantAllocationAwardViewData(grantAllocations);
+            var viewData = new EditGrantAllocationAwardViewData(grantAllocations, controllerAction);
             return RazorPartialView<EditGrantAllocationAward, EditGrantAllocationAwardViewData, EditGrantAllocationAwardViewModel>(viewData, viewModel);
         }
 

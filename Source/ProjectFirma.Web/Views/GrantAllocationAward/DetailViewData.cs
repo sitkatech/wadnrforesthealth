@@ -54,6 +54,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             GrantAllocationAward = grantAllocationAward;
             UserHasEditGrantAllocationAwardPermissions = new GrantAllocationAwardEditAsAdminFeature().HasPermissionByPerson(currentPerson);
 
+            EditGrantAllocationAwardUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.Edit(grantAllocationAward.PrimaryKey));
+
 
         }
 

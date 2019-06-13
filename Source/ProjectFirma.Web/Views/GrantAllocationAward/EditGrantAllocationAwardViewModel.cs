@@ -55,8 +55,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         [Required]
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
 
-
-
         
 
         /// <summary>

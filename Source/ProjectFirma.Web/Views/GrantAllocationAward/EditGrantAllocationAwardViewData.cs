@@ -36,10 +36,14 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
         public IEnumerable<SelectListItem> AvailableGrantAllocations { get; set; }
 
+        public string ControllerAction { get; set; }
 
-        public EditGrantAllocationAwardViewData(IEnumerable<Models.GrantAllocation> grantAllocations)
+
+        public EditGrantAllocationAwardViewData(IEnumerable<Models.GrantAllocation> grantAllocations, string controllerAction)
         {
             AvailableGrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(v => v.GrantAllocationID.ToString(CultureInfo.InvariantCulture), k => k.GrantNumberAndGrantAllocationDisplayName);
+
+            ControllerAction = controllerAction;
         }
 
     }
