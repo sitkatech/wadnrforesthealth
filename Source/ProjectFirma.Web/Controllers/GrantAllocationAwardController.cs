@@ -149,6 +149,34 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Indirect Costs"
 
         #region "Supplies"
+        [HttpGet]
+        [GrantAllocationAwardEditAsAdminFeature]
+        public PartialViewResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditSuppliesViewModel(grantAllocationAward);
+            return SuppliesViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditSuppliesViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return SuppliesViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult SuppliesViewEdit(EditSuppliesViewModel viewModel)
+        {
+            var viewData = new EditSuppliesViewData();
+            return RazorPartialView<EditSupplies, EditSuppliesViewData, EditSuppliesViewModel>(viewData, viewModel);
+        }
         #endregion "Supplies"
 
         #region "Personnel & Benefits"
