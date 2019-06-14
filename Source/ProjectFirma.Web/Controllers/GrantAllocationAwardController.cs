@@ -211,6 +211,34 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Personnel & Benefits"
 
         #region "Travel"
+        [HttpGet]
+        [GrantAllocationAwardEditAsAdminFeature]
+        public PartialViewResult EditTravel(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditTravelViewModel(grantAllocationAward);
+            return TravelViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTravel(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditTravelViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return TravelViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult TravelViewEdit(EditTravelViewModel viewModel)
+        {
+            var viewData = new EditTravelViewData();
+            return RazorPartialView<EditTravel, EditTravelViewData, EditTravelViewModel>(viewData, viewModel);
+        }
         #endregion "Travel"
 
         #region "Landowner Cost Share"

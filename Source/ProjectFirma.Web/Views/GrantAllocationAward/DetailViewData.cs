@@ -63,6 +63,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             EditIndirectCostUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditIndirectCost(grantAllocationAward.PrimaryKey));
             EditSuppliesUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditSupplies(grantAllocationAward.PrimaryKey));
             EditPersonnelAndBenefitsUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditPersonnelAndBenefits(grantAllocationAward.PrimaryKey));
+            EditTravelUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditTravel(grantAllocationAward.PrimaryKey));
 
 
         }
