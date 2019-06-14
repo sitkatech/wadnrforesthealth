@@ -41,11 +41,15 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string EditGrantAllocationAwardUrl { get; set; }
         public Models.GrantAllocationAward GrantAllocationAward { get; private set; }
         public bool UserHasEditGrantAllocationAwardPermissions { get; private set; }
+        public string EditIndirectCostUrl { get; private set; }
+        public string EditSuppliesUrl { get; private set; }
+        public string EditPersonnelAndBenefitsUrl { get; private set; }
+        public string EditTravelUrl { get; private set; }
 
 
         public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText) : base(currentPerson)
         {
-            PageTitle = grantAllocationAward.GrantAllocationAwardName;
+            PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} Detail";
 
             BackButtonUrl = backButtonUrl;

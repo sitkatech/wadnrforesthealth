@@ -185,7 +185,7 @@ VALUES
 (363, N'GrantAllocationAwardAmount', 'Award Amount', N'<p>Placeholder definition for Award Amount.</p>'),
 (364, N'GrantAllocationAwardExpirationDate', 'Grant Allocation Award Expiration Date', N'<p>Placeholder definition for Grant Allocation Award Expiration Date.</p>'),
 (365, N'GrantAllocationAwardIndirectCost', 'Grant Allocation Award Indirect Cost', N'<p>Placeholder definition for Grant Allocation Award Indirect Cost.</p>'),
-(366, N'GrantAllocationAwardIndirectCostAllocationAmount', 'Grant Allocation Award Indirect Cost Allocation Amount', N'<p>Placeholder definition for Grant Allocation Award Indirect Cost Allocation Amount.</p>'),
+(366, N'GrantAllocationAwardIndirectCostAllocationTotal', 'Grant Allocation Award Indirect Cost Allocation Total', N'<p>Placeholder definition for Grant Allocation Award Indirect Cost Allocation Total.</p>'),
 (367, N'GrantAllocationAwardIndirectCostApplicableAmount', 'Grant Allocation Award Indirect Cost Applicable Amount', N'<p>Placeholder definition for Grant Allocation Award Indirect Cost Applicable Amount.</p>'),
 (368, N'GrantAllocationAwardIndirectTotal', 'Grant Allocation Award Indirect Total', N'<p>Placeholder definition for Grant Allocation Award Indirect Total.</p>'),
 (369, N'GrantAllocationAwardIndirectRemaining', 'Grant Allocation Award Indirect Remaining', N'<p>Placeholder definition for Grant Allocation Award Indirect Remaining.</p>'),
@@ -232,4 +232,5 @@ VALUES
 (410, N'GrantAllocationAwardContractorInvoiceAllocationRemaining', 'Grant Allocation Award Contractor Invoice Allocation Remaining', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Allocation Remaining.</p>'),
 (411, N'GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining', 'Grant Allocation Award Contractor Invoice Landowner Cost Share Remaining', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Landowner Cost Share Remaining.</p>'),
 (412, N'GrantAllocationAwardContractorInvoiceContractor', 'Grant Allocation Award Contractor Invoice Contractor', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Contractor.</p>'),
-(413, N'GrantAllocationAwardContractorInvoiceTargetTotalAcreage', 'Grant Allocation Award Contractor Invoice Target Total Acreage', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Target Total Acreage.</p>')
+(413, N'GrantAllocationAwardContractorInvoiceTargetTotalAcreage', 'Grant Allocation Award Contractor Invoice Target Total Acreage', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Target Total Acreage.</p>'),
+(414, N'GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining', 'Grant Allocation Award Personnel &amp; Benefits Allocation Remaining', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Allocation Remaining.</p>')

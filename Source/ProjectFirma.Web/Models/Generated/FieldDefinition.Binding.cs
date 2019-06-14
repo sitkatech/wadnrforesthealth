@@ -199,6 +199,56 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionGrantAllocationAwardName GrantAllocationAwardName = FieldDefinitionGrantAllocationAwardName.Instance;
         public static readonly FieldDefinitionGrantAllocationAwardAmount GrantAllocationAwardAmount = FieldDefinitionGrantAllocationAwardAmount.Instance;
         public static readonly FieldDefinitionGrantAllocationAwardExpirationDate GrantAllocationAwardExpirationDate = FieldDefinitionGrantAllocationAwardExpirationDate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectCost GrantAllocationAwardIndirectCost = FieldDefinitionGrantAllocationAwardIndirectCost.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectCostAllocationTotal GrantAllocationAwardIndirectCostAllocationTotal = FieldDefinitionGrantAllocationAwardIndirectCostAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectCostApplicableAmount GrantAllocationAwardIndirectCostApplicableAmount = FieldDefinitionGrantAllocationAwardIndirectCostApplicableAmount.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectTotal GrantAllocationAwardIndirectTotal = FieldDefinitionGrantAllocationAwardIndirectTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectRemaining GrantAllocationAwardIndirectRemaining = FieldDefinitionGrantAllocationAwardIndirectRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSupplies GrantAllocationAwardSupplies = FieldDefinitionGrantAllocationAwardSupplies.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesAllocationTotal GrantAllocationAwardSuppliesAllocationTotal = FieldDefinitionGrantAllocationAwardSuppliesAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesAllocationRemaining GrantAllocationAwardSuppliesAllocationRemaining = FieldDefinitionGrantAllocationAwardSuppliesAllocationRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesDescription GrantAllocationAwardSuppliesDescription = FieldDefinitionGrantAllocationAwardSuppliesDescription.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesTarOrMonth GrantAllocationAwardSuppliesTarOrMonth = FieldDefinitionGrantAllocationAwardSuppliesTarOrMonth.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesDate GrantAllocationAwardSuppliesDate = FieldDefinitionGrantAllocationAwardSuppliesDate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesAmount GrantAllocationAwardSuppliesAmount = FieldDefinitionGrantAllocationAwardSuppliesAmount.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesNotes GrantAllocationAwardSuppliesNotes = FieldDefinitionGrantAllocationAwardSuppliesNotes.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefits GrantAllocationAwardPersonnelAndBenefits = FieldDefinitionGrantAllocationAwardPersonnelAndBenefits.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationTotal GrantAllocationAwardPersonnelAndBenefitsAllocationTotal = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsForester GrantAllocationAwardPersonnelAndBenefitsForester = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsForester.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDescription GrantAllocationAwardPersonnelAndBenefitsDescription = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDescription.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarOrMonth GrantAllocationAwardPersonnelAndBenefitsTarOrMonth = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarOrMonth.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDate GrantAllocationAwardPersonnelAndBenefitsDate = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarHours GrantAllocationAwardPersonnelAndBenefitsTarHours = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarHours.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsHourlyRate GrantAllocationAwardPersonnelAndBenefitsHourlyRate = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsHourlyRate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsFringeRate GrantAllocationAwardPersonnelAndBenefitsFringeRate = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsFringeRate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsNotes GrantAllocationAwardPersonnelAndBenefitsNotes = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsNotes.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravel GrantAllocationAwardTravel = FieldDefinitionGrantAllocationAwardTravel.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelAllocationTotal GrantAllocationAwardTravelAllocationTotal = FieldDefinitionGrantAllocationAwardTravelAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelForester GrantAllocationAwardTravelForester = FieldDefinitionGrantAllocationAwardTravelForester.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelAllocationRemaining GrantAllocationAwardTravelAllocationRemaining = FieldDefinitionGrantAllocationAwardTravelAllocationRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelDescription GrantAllocationAwardTravelDescription = FieldDefinitionGrantAllocationAwardTravelDescription.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelTarOrMonth GrantAllocationAwardTravelTarOrMonth = FieldDefinitionGrantAllocationAwardTravelTarOrMonth.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelDate GrantAllocationAwardTravelDate = FieldDefinitionGrantAllocationAwardTravelDate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelType GrantAllocationAwardTravelType = FieldDefinitionGrantAllocationAwardTravelType.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelMiles GrantAllocationAwardTravelMiles = FieldDefinitionGrantAllocationAwardTravelMiles.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelMileageRate GrantAllocationAwardTravelMileageRate = FieldDefinitionGrantAllocationAwardTravelMileageRate.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelAmount GrantAllocationAwardTravelAmount = FieldDefinitionGrantAllocationAwardTravelAmount.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelNotes GrantAllocationAwardTravelNotes = FieldDefinitionGrantAllocationAwardTravelNotes.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShare GrantAllocationAwardLandownerCostShare = FieldDefinitionGrantAllocationAwardLandownerCostShare.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationTotal GrantAllocationAwardLandownerCostShareAllocationTotal = FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationRemaining GrantAllocationAwardLandownerCostShareAllocationRemaining = FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostSharePercentAllocated GrantAllocationAwardLandownerCostSharePercentAllocated = FieldDefinitionGrantAllocationAwardLandownerCostSharePercentAllocated.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareFundRemaining GrantAllocationAwardLandownerCostShareFundRemaining = FieldDefinitionGrantAllocationAwardLandownerCostShareFundRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareTargetFootprintAcreage GrantAllocationAwardLandownerCostShareTargetFootprintAcreage = FieldDefinitionGrantAllocationAwardLandownerCostShareTargetFootprintAcreage.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareTargetTotalAcreage GrantAllocationAwardLandownerCostShareTargetTotalAcreage = FieldDefinitionGrantAllocationAwardLandownerCostShareTargetTotalAcreage.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareForester GrantAllocationAwardLandownerCostShareForester = FieldDefinitionGrantAllocationAwardLandownerCostShareForester.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoice GrantAllocationAwardContractorInvoice = FieldDefinitionGrantAllocationAwardContractorInvoice.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationTotal GrantAllocationAwardContractorInvoiceAllocationTotal = FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationRemaining GrantAllocationAwardContractorInvoiceAllocationRemaining = FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceLandownerCostShareRemaining GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining = FieldDefinitionGrantAllocationAwardContractorInvoiceLandownerCostShareRemaining.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceContractor GrantAllocationAwardContractorInvoiceContractor = FieldDefinitionGrantAllocationAwardContractorInvoiceContractor.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceTargetTotalAcreage GrantAllocationAwardContractorInvoiceTargetTotalAcreage = FieldDefinitionGrantAllocationAwardContractorInvoiceTargetTotalAcreage.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationRemaining GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationRemaining.Instance;
 
         public static readonly List<FieldDefinition> All;
         public static readonly ReadOnlyDictionary<int, FieldDefinition> AllLookupDictionary;
@@ -208,7 +258,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, TotalRequestedInvoicePaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, TotalRequestedInvoicePaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectRemaining, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationRemaining, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsDescription, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationRemaining, GrantAllocationAwardTravelDescription, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationRemaining, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundRemaining, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationRemaining, GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -396,10 +446,110 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAward;
                 case FieldDefinitionEnum.GrantAllocationAwardAmount:
                     return GrantAllocationAwardAmount;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoice:
+                    return GrantAllocationAwardContractorInvoice;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceAllocationRemaining:
+                    return GrantAllocationAwardContractorInvoiceAllocationRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceAllocationTotal:
+                    return GrantAllocationAwardContractorInvoiceAllocationTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceContractor:
+                    return GrantAllocationAwardContractorInvoiceContractor;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining:
+                    return GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceTargetTotalAcreage:
+                    return GrantAllocationAwardContractorInvoiceTargetTotalAcreage;
                 case FieldDefinitionEnum.GrantAllocationAwardExpirationDate:
                     return GrantAllocationAwardExpirationDate;
+                case FieldDefinitionEnum.GrantAllocationAwardIndirectCost:
+                    return GrantAllocationAwardIndirectCost;
+                case FieldDefinitionEnum.GrantAllocationAwardIndirectCostAllocationTotal:
+                    return GrantAllocationAwardIndirectCostAllocationTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardIndirectCostApplicableAmount:
+                    return GrantAllocationAwardIndirectCostApplicableAmount;
+                case FieldDefinitionEnum.GrantAllocationAwardIndirectRemaining:
+                    return GrantAllocationAwardIndirectRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardIndirectTotal:
+                    return GrantAllocationAwardIndirectTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShare:
+                    return GrantAllocationAwardLandownerCostShare;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareAllocationRemaining:
+                    return GrantAllocationAwardLandownerCostShareAllocationRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareAllocationTotal:
+                    return GrantAllocationAwardLandownerCostShareAllocationTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareForester:
+                    return GrantAllocationAwardLandownerCostShareForester;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareFundRemaining:
+                    return GrantAllocationAwardLandownerCostShareFundRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostSharePercentAllocated:
+                    return GrantAllocationAwardLandownerCostSharePercentAllocated;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareTargetFootprintAcreage:
+                    return GrantAllocationAwardLandownerCostShareTargetFootprintAcreage;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareTargetTotalAcreage:
+                    return GrantAllocationAwardLandownerCostShareTargetTotalAcreage;
                 case FieldDefinitionEnum.GrantAllocationAwardName:
                     return GrantAllocationAwardName;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefits:
+                    return GrantAllocationAwardPersonnelAndBenefits;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining:
+                    return GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsAllocationTotal:
+                    return GrantAllocationAwardPersonnelAndBenefitsAllocationTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsDate:
+                    return GrantAllocationAwardPersonnelAndBenefitsDate;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsDescription:
+                    return GrantAllocationAwardPersonnelAndBenefitsDescription;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsForester:
+                    return GrantAllocationAwardPersonnelAndBenefitsForester;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsFringeRate:
+                    return GrantAllocationAwardPersonnelAndBenefitsFringeRate;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsHourlyRate:
+                    return GrantAllocationAwardPersonnelAndBenefitsHourlyRate;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsNotes:
+                    return GrantAllocationAwardPersonnelAndBenefitsNotes;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsTarHours:
+                    return GrantAllocationAwardPersonnelAndBenefitsTarHours;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth:
+                    return GrantAllocationAwardPersonnelAndBenefitsTarOrMonth;
+                case FieldDefinitionEnum.GrantAllocationAwardSupplies:
+                    return GrantAllocationAwardSupplies;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesAllocationRemaining:
+                    return GrantAllocationAwardSuppliesAllocationRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesAllocationTotal:
+                    return GrantAllocationAwardSuppliesAllocationTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesAmount:
+                    return GrantAllocationAwardSuppliesAmount;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesDate:
+                    return GrantAllocationAwardSuppliesDate;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesDescription:
+                    return GrantAllocationAwardSuppliesDescription;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesNotes:
+                    return GrantAllocationAwardSuppliesNotes;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesTarOrMonth:
+                    return GrantAllocationAwardSuppliesTarOrMonth;
+                case FieldDefinitionEnum.GrantAllocationAwardTravel:
+                    return GrantAllocationAwardTravel;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelAllocationRemaining:
+                    return GrantAllocationAwardTravelAllocationRemaining;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelAllocationTotal:
+                    return GrantAllocationAwardTravelAllocationTotal;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelAmount:
+                    return GrantAllocationAwardTravelAmount;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelDate:
+                    return GrantAllocationAwardTravelDate;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelDescription:
+                    return GrantAllocationAwardTravelDescription;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelForester:
+                    return GrantAllocationAwardTravelForester;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelMileageRate:
+                    return GrantAllocationAwardTravelMileageRate;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelMiles:
+                    return GrantAllocationAwardTravelMiles;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelNotes:
+                    return GrantAllocationAwardTravelNotes;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelTarOrMonth:
+                    return GrantAllocationAwardTravelTarOrMonth;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelType:
+                    return GrantAllocationAwardTravelType;
                 case FieldDefinitionEnum.GrantAllocationBudgetLineItem:
                     return GrantAllocationBudgetLineItem;
                 case FieldDefinitionEnum.GrantAllocationChangeLogNote:
@@ -836,7 +986,57 @@ namespace ProjectFirma.Web.Models
         GrantAllocationAward = 361,
         GrantAllocationAwardName = 362,
         GrantAllocationAwardAmount = 363,
-        GrantAllocationAwardExpirationDate = 364
+        GrantAllocationAwardExpirationDate = 364,
+        GrantAllocationAwardIndirectCost = 365,
+        GrantAllocationAwardIndirectCostAllocationTotal = 366,
+        GrantAllocationAwardIndirectCostApplicableAmount = 367,
+        GrantAllocationAwardIndirectTotal = 368,
+        GrantAllocationAwardIndirectRemaining = 369,
+        GrantAllocationAwardSupplies = 370,
+        GrantAllocationAwardSuppliesAllocationTotal = 371,
+        GrantAllocationAwardSuppliesAllocationRemaining = 372,
+        GrantAllocationAwardSuppliesDescription = 373,
+        GrantAllocationAwardSuppliesTarOrMonth = 374,
+        GrantAllocationAwardSuppliesDate = 375,
+        GrantAllocationAwardSuppliesAmount = 376,
+        GrantAllocationAwardSuppliesNotes = 377,
+        GrantAllocationAwardPersonnelAndBenefits = 378,
+        GrantAllocationAwardPersonnelAndBenefitsAllocationTotal = 379,
+        GrantAllocationAwardPersonnelAndBenefitsForester = 380,
+        GrantAllocationAwardPersonnelAndBenefitsDescription = 381,
+        GrantAllocationAwardPersonnelAndBenefitsTarOrMonth = 382,
+        GrantAllocationAwardPersonnelAndBenefitsDate = 383,
+        GrantAllocationAwardPersonnelAndBenefitsTarHours = 384,
+        GrantAllocationAwardPersonnelAndBenefitsHourlyRate = 385,
+        GrantAllocationAwardPersonnelAndBenefitsFringeRate = 386,
+        GrantAllocationAwardPersonnelAndBenefitsNotes = 387,
+        GrantAllocationAwardTravel = 388,
+        GrantAllocationAwardTravelAllocationTotal = 389,
+        GrantAllocationAwardTravelForester = 390,
+        GrantAllocationAwardTravelAllocationRemaining = 391,
+        GrantAllocationAwardTravelDescription = 392,
+        GrantAllocationAwardTravelTarOrMonth = 393,
+        GrantAllocationAwardTravelDate = 394,
+        GrantAllocationAwardTravelType = 395,
+        GrantAllocationAwardTravelMiles = 396,
+        GrantAllocationAwardTravelMileageRate = 397,
+        GrantAllocationAwardTravelAmount = 398,
+        GrantAllocationAwardTravelNotes = 399,
+        GrantAllocationAwardLandownerCostShare = 400,
+        GrantAllocationAwardLandownerCostShareAllocationTotal = 401,
+        GrantAllocationAwardLandownerCostShareAllocationRemaining = 402,
+        GrantAllocationAwardLandownerCostSharePercentAllocated = 403,
+        GrantAllocationAwardLandownerCostShareFundRemaining = 404,
+        GrantAllocationAwardLandownerCostShareTargetFootprintAcreage = 405,
+        GrantAllocationAwardLandownerCostShareTargetTotalAcreage = 406,
+        GrantAllocationAwardLandownerCostShareForester = 407,
+        GrantAllocationAwardContractorInvoice = 408,
+        GrantAllocationAwardContractorInvoiceAllocationTotal = 409,
+        GrantAllocationAwardContractorInvoiceAllocationRemaining = 410,
+        GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining = 411,
+        GrantAllocationAwardContractorInvoiceContractor = 412,
+        GrantAllocationAwardContractorInvoiceTargetTotalAcreage = 413,
+        GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining = 414
     }
 
     public partial class FieldDefinitionProjectType : FieldDefinition
@@ -1923,5 +2123,305 @@ namespace ProjectFirma.Web.Models
     {
         private FieldDefinitionGrantAllocationAwardExpirationDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
         public static readonly FieldDefinitionGrantAllocationAwardExpirationDate Instance = new FieldDefinitionGrantAllocationAwardExpirationDate(364, @"GrantAllocationAwardExpirationDate", @"Grant Allocation Award Expiration Date", @"<p>Placeholder definition for Grant Allocation Award Expiration Date.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardIndirectCost : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardIndirectCost(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectCost Instance = new FieldDefinitionGrantAllocationAwardIndirectCost(365, @"GrantAllocationAwardIndirectCost", @"Grant Allocation Award Indirect Cost", @"<p>Placeholder definition for Grant Allocation Award Indirect Cost.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardIndirectCostAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardIndirectCostAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectCostAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardIndirectCostAllocationTotal(366, @"GrantAllocationAwardIndirectCostAllocationTotal", @"Grant Allocation Award Indirect Cost Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Indirect Cost Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardIndirectCostApplicableAmount : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardIndirectCostApplicableAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectCostApplicableAmount Instance = new FieldDefinitionGrantAllocationAwardIndirectCostApplicableAmount(367, @"GrantAllocationAwardIndirectCostApplicableAmount", @"Grant Allocation Award Indirect Cost Applicable Amount", @"<p>Placeholder definition for Grant Allocation Award Indirect Cost Applicable Amount.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardIndirectTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardIndirectTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectTotal Instance = new FieldDefinitionGrantAllocationAwardIndirectTotal(368, @"GrantAllocationAwardIndirectTotal", @"Grant Allocation Award Indirect Total", @"<p>Placeholder definition for Grant Allocation Award Indirect Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardIndirectRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardIndirectRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardIndirectRemaining Instance = new FieldDefinitionGrantAllocationAwardIndirectRemaining(369, @"GrantAllocationAwardIndirectRemaining", @"Grant Allocation Award Indirect Remaining", @"<p>Placeholder definition for Grant Allocation Award Indirect Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSupplies : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSupplies(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSupplies Instance = new FieldDefinitionGrantAllocationAwardSupplies(370, @"GrantAllocationAwardSupplies", @"Grant Allocation Award Supplies", @"<p>Placeholder definition for Grant Allocation Award Supplies.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardSuppliesAllocationTotal(371, @"GrantAllocationAwardSuppliesAllocationTotal", @"Grant Allocation Award Supplies Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Supplies Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesAllocationRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesAllocationRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesAllocationRemaining Instance = new FieldDefinitionGrantAllocationAwardSuppliesAllocationRemaining(372, @"GrantAllocationAwardSuppliesAllocationRemaining", @"Grant Allocation Award Supplies Allocation Remaining", @"<p>Placeholder definition for Grant Allocation Award Supplies Allocation Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesDescription : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesDescription(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesDescription Instance = new FieldDefinitionGrantAllocationAwardSuppliesDescription(373, @"GrantAllocationAwardSuppliesDescription", @"Grant Allocation Award Supplies Description", @"<p>Placeholder definition for Grant Allocation Award Supplies Description.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesTarOrMonth : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesTarOrMonth(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesTarOrMonth Instance = new FieldDefinitionGrantAllocationAwardSuppliesTarOrMonth(374, @"GrantAllocationAwardSuppliesTarOrMonth", @"Grant Allocation Award Supplies TAR or Month", @"<p>Placeholder definition for Grant Allocation Award Supplies TAR or Month.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesDate : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesDate Instance = new FieldDefinitionGrantAllocationAwardSuppliesDate(375, @"GrantAllocationAwardSuppliesDate", @"Grant Allocation Award Supplies Date", @"<p>Placeholder definition for Grant Allocation Award Supplies Date.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesAmount : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesAmount Instance = new FieldDefinitionGrantAllocationAwardSuppliesAmount(376, @"GrantAllocationAwardSuppliesAmount", @"Grant Allocation Award Supplies Amount", @"<p>Placeholder definition for Grant Allocation Award Supplies Amount.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesNotes : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesNotes(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesNotes Instance = new FieldDefinitionGrantAllocationAwardSuppliesNotes(377, @"GrantAllocationAwardSuppliesNotes", @"Grant Allocation Award Supplies Notes", @"<p>Placeholder definition for Grant Allocation Award Supplies Notes.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefits : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefits(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefits Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefits(378, @"GrantAllocationAwardPersonnelAndBenefits", @"Grant Allocation Award Personnel &amp; Benefits", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationTotal(379, @"GrantAllocationAwardPersonnelAndBenefitsAllocationTotal", @"Grant Allocation Award Personnel &amp; Benefits Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsForester : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsForester(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsForester Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsForester(380, @"GrantAllocationAwardPersonnelAndBenefitsForester", @"Grant Allocation Award Personnel &amp; Benefits Forester", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Forester.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDescription : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDescription(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDescription Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDescription(381, @"GrantAllocationAwardPersonnelAndBenefitsDescription", @"Grant Allocation Award Personnel &amp; Benefits Description", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Description.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarOrMonth : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarOrMonth(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarOrMonth Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarOrMonth(382, @"GrantAllocationAwardPersonnelAndBenefitsTarOrMonth", @"Grant Allocation Award Personnel &amp; Benefits TAR or Month", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits TAR or Month.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDate : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDate Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsDate(383, @"GrantAllocationAwardPersonnelAndBenefitsDate", @"Grant Allocation Award Personnel &amp; Benefits Date", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Date.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarHours : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarHours(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarHours Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsTarHours(384, @"GrantAllocationAwardPersonnelAndBenefitsTarHours", @"Grant Allocation Award Personnel &amp; Benefits TAR Hours", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits TAR Hours.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsHourlyRate : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsHourlyRate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsHourlyRate Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsHourlyRate(385, @"GrantAllocationAwardPersonnelAndBenefitsHourlyRate", @"Grant Allocation Award Personnel &amp; Benefits Hourly Rate", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Hourly Rate.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsFringeRate : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsFringeRate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsFringeRate Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsFringeRate(386, @"GrantAllocationAwardPersonnelAndBenefitsFringeRate", @"Grant Allocation Award Personnel &amp; Benefits Fringe Rate", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Fringe Rate.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsNotes : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsNotes(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsNotes Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsNotes(387, @"GrantAllocationAwardPersonnelAndBenefitsNotes", @"Grant Allocation Award Personnel &amp; Benefits Notes", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Notes.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravel : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravel(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravel Instance = new FieldDefinitionGrantAllocationAwardTravel(388, @"GrantAllocationAwardTravel", @"Grant Allocation Award Travel", @"<p>Placeholder definition for Grant Allocation Award Travel.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardTravelAllocationTotal(389, @"GrantAllocationAwardTravelAllocationTotal", @"Grant Allocation Award Travel Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Travel Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelForester : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelForester(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelForester Instance = new FieldDefinitionGrantAllocationAwardTravelForester(390, @"GrantAllocationAwardTravelForester", @"Grant Allocation Award Travel Forester", @"<p>Placeholder definition for Grant Allocation Award Travel Forester.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelAllocationRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelAllocationRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelAllocationRemaining Instance = new FieldDefinitionGrantAllocationAwardTravelAllocationRemaining(391, @"GrantAllocationAwardTravelAllocationRemaining", @"Grant Allocation Award Travel Allocation Remaining", @"<p>Placeholder definition for Grant Allocation Award Travel Allocation Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelDescription : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelDescription(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelDescription Instance = new FieldDefinitionGrantAllocationAwardTravelDescription(392, @"GrantAllocationAwardTravelDescription", @"Grant Allocation Award Travel Description", @"<p>Placeholder definition for Grant Allocation Award Travel Description.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelTarOrMonth : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelTarOrMonth(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelTarOrMonth Instance = new FieldDefinitionGrantAllocationAwardTravelTarOrMonth(393, @"GrantAllocationAwardTravelTarOrMonth", @"Grant Allocation Award Travel TAR or Month", @"<p>Placeholder definition for Grant Allocation Award Travel TAR or Month.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelDate : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelDate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelDate Instance = new FieldDefinitionGrantAllocationAwardTravelDate(394, @"GrantAllocationAwardTravelDate", @"Grant Allocation Award Travel Date", @"<p>Placeholder definition for Grant Allocation Award Travel Date.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelType : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelType(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelType Instance = new FieldDefinitionGrantAllocationAwardTravelType(395, @"GrantAllocationAwardTravelType", @"Grant Allocation Award Travel Type", @"<p>Placeholder definition for Grant Allocation Award Travel Type.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelMiles : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelMiles(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelMiles Instance = new FieldDefinitionGrantAllocationAwardTravelMiles(396, @"GrantAllocationAwardTravelMiles", @"Grant Allocation Award Travel Miles", @"<p>Placeholder definition for Grant Allocation Award Travel Miles.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelMileageRate : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelMileageRate(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelMileageRate Instance = new FieldDefinitionGrantAllocationAwardTravelMileageRate(397, @"GrantAllocationAwardTravelMileageRate", @"Grant Allocation Award Travel Mileage Rate", @"<p>Placeholder definition for Grant Allocation Award Travel Mileage Rate.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelAmount : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelAmount Instance = new FieldDefinitionGrantAllocationAwardTravelAmount(398, @"GrantAllocationAwardTravelAmount", @"Grant Allocation Award Travel Amount", @"<p>Placeholder definition for Grant Allocation Award Travel Amount.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelNotes : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelNotes(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelNotes Instance = new FieldDefinitionGrantAllocationAwardTravelNotes(399, @"GrantAllocationAwardTravelNotes", @"Grant Allocation Award Travel Notes", @"<p>Placeholder definition for Grant Allocation Award Travel Notes.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShare : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShare(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShare Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShare(400, @"GrantAllocationAwardLandownerCostShare", @"Grant Allocation Award Landowner Cost Share", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationTotal(401, @"GrantAllocationAwardLandownerCostShareAllocationTotal", @"Grant Allocation Award Landowner Cost Share Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationRemaining Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareAllocationRemaining(402, @"GrantAllocationAwardLandownerCostShareAllocationRemaining", @"Grant Allocation Award Landowner Cost Share Allocation Remaining", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Allocation Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostSharePercentAllocated : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostSharePercentAllocated(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostSharePercentAllocated Instance = new FieldDefinitionGrantAllocationAwardLandownerCostSharePercentAllocated(403, @"GrantAllocationAwardLandownerCostSharePercentAllocated", @"Grant Allocation Award Landowner Cost Share Percent Allocated", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Percent Allocated.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareFundRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareFundRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareFundRemaining Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareFundRemaining(404, @"GrantAllocationAwardLandownerCostShareFundRemaining", @"Grant Allocation Award Landowner Cost Share Fund Remaining", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Fund Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareTargetFootprintAcreage : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareTargetFootprintAcreage(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareTargetFootprintAcreage Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareTargetFootprintAcreage(405, @"GrantAllocationAwardLandownerCostShareTargetFootprintAcreage", @"Grant Allocation Award Landowner Cost Share Target Footprint Acreage", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Target Footprint Acreage.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareTargetTotalAcreage : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareTargetTotalAcreage(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareTargetTotalAcreage Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareTargetTotalAcreage(406, @"GrantAllocationAwardLandownerCostShareTargetTotalAcreage", @"Grant Allocation Award Landowner Cost Share Target Total Acreage", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Target Total Acreage.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareForester : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareForester(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareForester Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareForester(407, @"GrantAllocationAwardLandownerCostShareForester", @"Grant Allocation Award Landowner Cost Share Forester", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Forester.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoice : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoice(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoice Instance = new FieldDefinitionGrantAllocationAwardContractorInvoice(408, @"GrantAllocationAwardContractorInvoice", @"Grant Allocation Award Contractor Invoice", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationTotal(409, @"GrantAllocationAwardContractorInvoiceAllocationTotal", @"Grant Allocation Award Contractor Invoice Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationRemaining Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceAllocationRemaining(410, @"GrantAllocationAwardContractorInvoiceAllocationRemaining", @"Grant Allocation Award Contractor Invoice Allocation Remaining", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Allocation Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoiceLandownerCostShareRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoiceLandownerCostShareRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceLandownerCostShareRemaining Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceLandownerCostShareRemaining(411, @"GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining", @"Grant Allocation Award Contractor Invoice Landowner Cost Share Remaining", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Landowner Cost Share Remaining.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoiceContractor : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoiceContractor(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceContractor Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceContractor(412, @"GrantAllocationAwardContractorInvoiceContractor", @"Grant Allocation Award Contractor Invoice Contractor", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Contractor.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoiceTargetTotalAcreage : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoiceTargetTotalAcreage(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceTargetTotalAcreage Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceTargetTotalAcreage(413, @"GrantAllocationAwardContractorInvoiceTargetTotalAcreage", @"Grant Allocation Award Contractor Invoice Target Total Acreage", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Target Total Acreage.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationRemaining : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationRemaining(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationRemaining Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsAllocationRemaining(414, @"GrantAllocationAwardPersonnelAndBenefitsAllocationRemaining", @"Grant Allocation Award Personnel &amp; Benefits Allocation Remaining", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Allocation Remaining.</p>");
     }
 }

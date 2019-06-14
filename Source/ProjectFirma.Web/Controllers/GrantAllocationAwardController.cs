@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Controllers
                 FocusAreaID = focusArea.FocusAreaID
             };
             return GrantAllocationAwardViewEdit(viewModel, "New");
-    }
+        }
 
         [HttpPost]
         [GrantAllocationAwardCreateFeature]
