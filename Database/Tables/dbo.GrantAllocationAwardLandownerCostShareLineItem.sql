@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem](
 	[GrantAllocationAwardLandownerCostShareLineItemID] [int] IDENTITY(1,1) NOT NULL,
 	[GrantAllocationAwardID] [int] NOT NULL,
 	[ProjectID] [int] NOT NULL,
-	[GrantAllocationAwardLandownerCostShareLineItemStatusID] [int] NOT NULL,
+	[LandownerCostShareLineItemStatusID] [int] NOT NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemStartDate] [datetime] NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemEndDate] [datetime] NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemFootprintAcres] [decimal](18, 0) NOT NULL,
@@ -36,10 +36,10 @@ REFERENCES [dbo].[GrantAllocationAward] ([GrantAllocationAwardID])
 GO
 ALTER TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem] CHECK CONSTRAINT [FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID]
 GO
-ALTER TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemStatus_GrantAllocationAwardLando] FOREIGN KEY([GrantAllocationAwardLandownerCostShareLineItemStatusID])
-REFERENCES [dbo].[GrantAllocationAwardLandownerCostShareLineItemStatus] ([GrantAllocationAwardLandownerCostShareLineItemStatusID])
+ALTER TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID] FOREIGN KEY([LandownerCostShareLineItemStatusID])
+REFERENCES [dbo].[LandownerCostShareLineItemStatus] ([LandownerCostShareLineItemStatusID])
 GO
-ALTER TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem] CHECK CONSTRAINT [FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemStatus_GrantAllocationAwardLando]
+ALTER TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem] CHECK CONSTRAINT [FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID]
 GO
 ALTER TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[Project] ([ProjectID])

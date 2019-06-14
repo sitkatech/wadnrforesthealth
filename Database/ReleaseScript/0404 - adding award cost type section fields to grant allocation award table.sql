@@ -64,13 +64,13 @@ create table dbo.GrantAllocationAwardTravelLineItem (
 )
 
 
-create table dbo.GrantAllocationAwardLandownerCostShareLineItemStatus (
-	GrantAllocationAwardLandownerCostShareLineItemStatusID int not null constraint PK_GrantAllocationAwardLandownerCostShareLineItemStatus_GrantAllocationAwardLandownerCostShareLineItemStatusID primary key,
-	GrantAllocationAwardLandownerCostShareLineItemStatusName varchar(255),
-	GrantAllocationAwardLandownerCostShareLineItemStatusDisplayName varchar(255)
+create table dbo.LandownerCostShareLineItemStatus (
+	LandownerCostShareLineItemStatusID int not null constraint PK_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID primary key,
+	LandownerCostShareLineItemStatusName varchar(255),
+	LandownerCostShareLineItemStatusDisplayName varchar(255)
 )
 
-insert into dbo.GrantAllocationAwardLandownerCostShareLineItemStatus (GrantAllocationAwardLandownerCostShareLineItemStatusID, GrantAllocationAwardLandownerCostShareLineItemStatusName, GrantAllocationAwardLandownerCostShareLineItemStatusDisplayName) values
+insert into dbo.LandownerCostShareLineItemStatus (LandownerCostShareLineItemStatusID, LandownerCostShareLineItemStatusName, LandownerCostShareLineItemStatusDisplayName) values
 (1, 'Planned', 'Planned'),
 (2, 'Completed', 'Completed'),
 (3, 'Cancelled', 'Cancelled');
@@ -81,7 +81,7 @@ create table dbo.GrantAllocationAwardLandownerCostShareLineItem (
 	GrantAllocationAwardID int not null constraint FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID foreign key references dbo.GrantAllocationAward(GrantAllocationAwardID),
 	[ProjectID] int NOT NULL constraint FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID foreign key references dbo.Project(ProjectID),
 	--the name for this contraint is TOO long, and code gen doesn't like it
-	[GrantAllocationAwardLandownerCostShareLineItemStatusID] [int] NOT NULL constraint FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemStatus_GrantAllocationAwardLandownerCostShareLineItemStatusID foreign key references dbo.GrantAllocationAwardLandownerCostShareLineItemStatus(GrantAllocationAwardLandownerCostShareLineItemStatusID),
+	[LandownerCostShareLineItemStatusID] [int] NOT NULL constraint FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID foreign key references dbo.LandownerCostShareLineItemStatus(LandownerCostShareLineItemStatusID),
 	[GrantAllocationAwardLandownerCostShareLineItemStartDate] [datetime] NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemEndDate] [datetime] NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemFootprintAcres] decimal NOT NULL,
@@ -120,7 +120,7 @@ create table dbo.GrantAllocationAwardContractorInvoice (
 	GrantAllocationAwardContractorInvoiceDescription varchar(255) not null,
 	GrantAllocationAwardContractorInvoiceNumber varchar(255) not null,
 	GrantAllocationAwardContractorInvoiceDate datetime not null,
-	GrantAllocationAwardContractorInvoiceType int not null constraint FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID foreign key references dbo.GrantAllocationAwardContractorInvoiceType(GrantAllocationAwardContractorInvoiceTypeID),
+	GrantAllocationAwardContractorInvoiceTypeID int not null constraint FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID foreign key references dbo.GrantAllocationAwardContractorInvoiceType(GrantAllocationAwardContractorInvoiceTypeID),
 	GrantAllocationAwardContractorInvoiceForemanHours decimal,
 	GrantAllocationAwardContractorInvoiceForemanRate money,
 	GrantAllocationAwardContractorInvoiceLaborHours decimal,

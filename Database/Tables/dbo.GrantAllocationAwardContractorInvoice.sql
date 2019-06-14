@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[GrantAllocationAwardContractorInvoice](
 	[GrantAllocationAwardContractorInvoiceDescription] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[GrantAllocationAwardContractorInvoiceNumber] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[GrantAllocationAwardContractorInvoiceDate] [datetime] NOT NULL,
-	[GrantAllocationAwardContractorInvoiceType] [int] NOT NULL,
+	[GrantAllocationAwardContractorInvoiceTypeID] [int] NOT NULL,
 	[GrantAllocationAwardContractorInvoiceForemanHours] [decimal](18, 0) NULL,
 	[GrantAllocationAwardContractorInvoiceForemanRate] [money] NULL,
 	[GrantAllocationAwardContractorInvoiceLaborHours] [decimal](18, 0) NULL,
@@ -39,7 +39,7 @@ REFERENCES [dbo].[GrantAllocationAward] ([GrantAllocationAwardID])
 GO
 ALTER TABLE [dbo].[GrantAllocationAwardContractorInvoice] CHECK CONSTRAINT [FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID]
 GO
-ALTER TABLE [dbo].[GrantAllocationAwardContractorInvoice]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID] FOREIGN KEY([GrantAllocationAwardContractorInvoiceType])
+ALTER TABLE [dbo].[GrantAllocationAwardContractorInvoice]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID] FOREIGN KEY([GrantAllocationAwardContractorInvoiceTypeID])
 REFERENCES [dbo].[GrantAllocationAwardContractorInvoiceType] ([GrantAllocationAwardContractorInvoiceTypeID])
 GO
 ALTER TABLE [dbo].[GrantAllocationAwardContractorInvoice] CHECK CONSTRAINT [FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID]

@@ -1,8 +1,8 @@
 
 
-delete from dbo.GrantAllocationAwardLandownerCostShareLineItemStatus
+delete from dbo.LandownerCostShareLineItemStatus
 
-insert into dbo.GrantAllocationAwardLandownerCostShareLineItemStatus (GrantAllocationAwardLandownerCostShareLineItemStatusID, GrantAllocationAwardLandownerCostShareLineItemStatusName, GrantAllocationAwardLandownerCostShareLineItemStatusDisplayName) values
+insert into dbo.LandownerCostShareLineItemStatus (LandownerCostShareLineItemStatusID, LandownerCostShareLineItemStatusName, LandownerCostShareLineItemStatusDisplayName) values
 (1, 'Planned', 'Planned'),
 (2, 'Completed', 'Completed'),
 (3, 'Cancelled', 'Cancelled');
