@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -753,8 +753,11 @@
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\Detail.cs" />
     <Compile Include="Views\GrantAllocationAward\DetailViewData.cs" />
+    <Compile Include="Views\GrantAllocationAward\EditIndirectCost.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAward.cs" />
+    <Compile Include="Views\GrantAllocationAward\EditIndirectCostViewData.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardViewData.cs" />
+    <Compile Include="Views\GrantAllocationAward\EditIndirectCostViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardViewModel.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsViewData.cs" />
@@ -1480,6 +1483,7 @@
     <Content Include="Views\JsonApiManagement\JsonApiLandingPage.cshtml" />
     <Content Include="Views\GrantAllocationAward\Detail.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAward.cshtml" />
+    <Content Include="Views\GrantAllocationAward\EditIndirectCost.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

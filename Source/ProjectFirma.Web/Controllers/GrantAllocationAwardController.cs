@@ -114,5 +114,53 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+
+        #region "Indirect Costs"
+        [HttpGet]
+        [GrantAllocationAwardEditAsAdminFeature]
+        public PartialViewResult EditIndirectCost(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditIndirectCostViewModel(grantAllocationAward);
+            return IndirectCostViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditIndirectCost(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditIndirectCostViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return IndirectCostViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+        private PartialViewResult IndirectCostViewEdit(EditIndirectCostViewModel viewModel)
+        {
+
+            var viewData = new EditIndirectCostViewData();
+            return RazorPartialView<EditIndirectCost, EditIndirectCostViewData, EditIndirectCostViewModel>(viewData, viewModel);
+        }
+        #endregion "Indirect Costs"
+
+        #region "Supplies"
+        #endregion "Supplies"
+
+        #region "Personnel & Benefits"
+        #endregion "Personnel & Benefits"
+
+        #region "Travel"
+        #endregion "Travel"
+
+        #region "Landowner Cost Share"
+        #endregion "Landowner Cost Share"
+
+        #region "Contractor Invoice"
+        #endregion "Contractor Invoice"
     }
 }
