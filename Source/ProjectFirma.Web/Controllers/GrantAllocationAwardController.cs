@@ -180,6 +180,34 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Supplies"
 
         #region "Personnel & Benefits"
+        [HttpGet]
+        [GrantAllocationAwardEditAsAdminFeature]
+        public PartialViewResult EditPersonnelAndBenefits(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditPersonnelAndBenefitsViewModel(grantAllocationAward);
+            return PersonnelAndBenefitsViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditPersonnelAndBenefits(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditPersonnelAndBenefitsViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return PersonnelAndBenefitsViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult PersonnelAndBenefitsViewEdit(EditPersonnelAndBenefitsViewModel viewModel)
+        {
+            var viewData = new EditPersonnelAndBenefitsViewData();
+            return RazorPartialView<EditPersonnelAndBenefits, EditPersonnelAndBenefitsViewData, EditPersonnelAndBenefitsViewModel>(viewData, viewModel);
+        }
         #endregion "Personnel & Benefits"
 
         #region "Travel"
