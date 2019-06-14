@@ -75,5 +75,48 @@ namespace ProjectFirma.Web.Models
                 return 0 - lineItemTotal;
             }
         }
+
+        public Money LandownerCostShareAllocationRemaining
+        {
+            get
+            {
+                //todo: tom fix this calculation
+                //this is the allocation total - sum of allocated amount from landowner cost share line items 
+                Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                if (LandownerCostShareAllocationTotal.HasValue)
+                {
+                    return LandownerCostShareAllocationTotal.Value - lineItemTotal;
+                }
+
+                return 0 - lineItemTotal;
+            }
+        }
+
+        public decimal LandownerCostSharePercentAllocated
+        {
+            get
+            {
+
+                //todo: tom fix this
+                //this is the sum of amount allocated from landowner cost share line items / allocation total
+                return 0;
+            }
+        }
+
+        public Money LandownerCostShareFundRemaining
+        {
+            get
+            {
+                //todo: tom fix this calculation
+                //this is the allocation total - sum of grant cost from landowner cost share line items 
+                Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                if (LandownerCostShareAllocationTotal.HasValue)
+                {
+                    return LandownerCostShareAllocationTotal.Value - lineItemTotal;
+                }
+
+                return 0 - lineItemTotal;
+            }
+        }
     }
 }

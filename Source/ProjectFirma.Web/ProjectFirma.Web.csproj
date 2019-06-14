@@ -753,9 +753,12 @@
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\Detail.cs" />
     <Compile Include="Views\GrantAllocationAward\DetailViewData.cs" />
+    <Compile Include="Views\GrantAllocationAward\EditLandownerCostShare.cs" />
     <Compile Include="Views\GrantAllocationAward\EditTravel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditPersonnelAndBenefits.cs" />
+    <Compile Include="Views\GrantAllocationAward\EditLandownerCostShareViewData.cs" />
     <Compile Include="Views\GrantAllocationAward\EditTravelViewData.cs" />
+    <Compile Include="Views\GrantAllocationAward\EditLandownerCostShareViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditTravelViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditSupplies.cs" />
     <Compile Include="Views\GrantAllocationAward\EditIndirectCost.cs" />
@@ -1496,6 +1499,7 @@
     <Content Include="Views\GrantAllocationAward\EditSupplies.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditPersonnelAndBenefits.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditTravel.cshtml" />
+    <Content Include="Views\GrantAllocationAward\EditLandownerCostShare.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />

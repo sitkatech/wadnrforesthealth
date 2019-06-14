@@ -36,15 +36,16 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class DetailViewData : FirmaViewData
     {
-        public string BackButtonUrl { get; private set; }
-        public string BackButtonText { get; set; }
-        public string EditGrantAllocationAwardUrl { get; set; }
-        public Models.GrantAllocationAward GrantAllocationAward { get; private set; }
-        public bool UserHasEditGrantAllocationAwardPermissions { get; private set; }
-        public string EditIndirectCostUrl { get; private set; }
-        public string EditSuppliesUrl { get; private set; }
-        public string EditPersonnelAndBenefitsUrl { get; private set; }
-        public string EditTravelUrl { get; private set; }
+        public string BackButtonUrl { get;  }
+        public string BackButtonText { get; }
+        public string EditGrantAllocationAwardUrl { get; }
+        public Models.GrantAllocationAward GrantAllocationAward { get;  }
+        public bool UserHasEditGrantAllocationAwardPermissions { get;  }
+        public string EditIndirectCostUrl { get;  }
+        public string EditSuppliesUrl { get;  }
+        public string EditPersonnelAndBenefitsUrl { get;  }
+        public string EditTravelUrl { get;  }
+        public string EditLandownerCostShareUrl { get;  }
 
 
         public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText) : base(currentPerson)
@@ -64,6 +65,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             EditSuppliesUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditSupplies(grantAllocationAward.PrimaryKey));
             EditPersonnelAndBenefitsUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditPersonnelAndBenefits(grantAllocationAward.PrimaryKey));
             EditTravelUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditTravel(grantAllocationAward.PrimaryKey));
+            EditLandownerCostShareUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditLandownerCostShare(grantAllocationAward.PrimaryKey));
 
 
         }

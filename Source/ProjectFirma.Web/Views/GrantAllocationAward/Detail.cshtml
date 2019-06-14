@@ -288,5 +288,84 @@
         </div>
     </div>
 
+    @* Landowner Cost Share Section*@
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditLandownerCostShareUrl, string.Format("Edit {0} {1}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName, FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
+                        @FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareAllocationTotal)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareAllocationTotal.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareAllocationRemaining)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareAllocationRemaining.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostSharePercentAllocated)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostSharePercentAllocated</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareFundRemaining)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareFundRemaining.ToStringCurrency()</span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareTargetFootprintAcreage)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareTargetFootprintAcreage</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareTargetTotalAcreage)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareTargetTotalAcreage</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareForester)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareForester</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* Contractor Invoice Section *@
+
+
 
 </div>
