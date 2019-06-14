@@ -73,8 +73,8 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunVendorImportJob()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Vendor Import (Button activated)");
-            socrataJob.DownloadSocrataVendorTable();
+            var vendorImportJob = new VendorImportHangfireBackgroundJob();
+            vendorImportJob.DownloadSocrataProgramIndexTable();
 
             var message = $"Socrata Vendors Imported";
             SetMessageForDisplay(message);

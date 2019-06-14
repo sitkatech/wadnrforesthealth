@@ -11,8 +11,8 @@ namespace ProjectFirma.Web.ScheduledJobs
         [Description("A partial test of Socrata interface. This is just a test to see if we can successfully download the vendor JSON file")]
         public void DownloadVendorTableData()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("SampleJobName");
-            socrataJob.DownloadSocrataVendorTable();
+            var vendorJob = new VendorImportHangfireBackgroundJob();
+            vendorJob.DownloadSocrataVendorTable();
         }
 
         [Test]

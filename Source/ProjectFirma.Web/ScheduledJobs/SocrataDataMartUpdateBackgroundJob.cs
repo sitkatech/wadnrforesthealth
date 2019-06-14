@@ -14,7 +14,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
-        private static readonly Uri VendorJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.VendorJsonSocrataBaseUrl);
         private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonSocrataBaseUrl);
         private static readonly Uri GrantExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.GrantExpendituresTempBaseUrl);
 
@@ -25,8 +24,6 @@ namespace ProjectFirma.Web.ScheduledJobs
         public SocrataDataMartUpdateBackgroundJob(string jobName) : base(jobName, ConcurrencySetting.OkToRunWhileOtherJobsAreRunning)
         {
         }
-
-
 
         public SocrataDataMartUpdateBackgroundJob(string jobName, ConcurrencySetting concurrencySetting) : base(jobName, concurrencySetting)
         {
@@ -41,7 +38,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         protected override void RunJobImplementation(IJobCancellationToken jobCancellationToken)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("You probably want to run derived versions of this class, not this class itself.");
         }
 
 
@@ -51,22 +48,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Starting '{JobName}' Socrata Data Mart updates");
         }
 
-        public void DownloadSocrataVendorTable()
-        {
-            Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
 
-            // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddSocrataMaxLimitTagToUrl(VendorJsonSocrataBaseUrl);
-            string vendorTempJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.Vendor);
-            Logger.Info($"Vendor JSON length: {vendorTempJson.Length}");
-            // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID  = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, vendorTempJson);
-            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
-            // Use the JSON to refresh the Vendor table
-            VendorImportJson(socrataDataMartRawJsonImportID);
-
-            Logger.Info($"Ending '{JobName}' DownloadSocrataVendorTable");
-        }
 
         public void DownloadSocrataProgramIndexTable()
         {
@@ -84,8 +66,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
         }
-
-
 
         public void DownloadGrantExpendituresTable()
         {
