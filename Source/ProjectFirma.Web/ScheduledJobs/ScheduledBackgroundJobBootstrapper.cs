@@ -92,6 +92,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // Hourly-ish tasks
             AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(Cron.Hourly(0)), recurringJobIds);
+            AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(Cron.Hourly(0)), recurringJobIds);
 
 
             /*

@@ -19,5 +19,10 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             ProjectCodeImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
+
+        public static void RunVendorImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        {
+            VendorImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
+        }
     }
 }

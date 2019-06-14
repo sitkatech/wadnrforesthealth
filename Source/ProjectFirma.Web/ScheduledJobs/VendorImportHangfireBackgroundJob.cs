@@ -45,7 +45,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' VendorImportJson");
         }
 
-
         public void DownloadSocrataVendorTable()
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");

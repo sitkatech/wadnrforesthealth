@@ -14,7 +14,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
     public class SocrataDataMartUpdateBackgroundJob : ScheduledBackgroundJobBase
     {
-        private static readonly Uri ProgramIndexJsonSocrataBaseUrl = new Uri(FirmaWebConfiguration.ProgramIndexJsonSocrataBaseUrl);
         private static readonly Uri GrantExpendituresJsonApiBaseUrl = new Uri(FirmaWebConfiguration.GrantExpendituresTempBaseUrl);
 
         /// <summary>
@@ -46,25 +45,6 @@ namespace ProjectFirma.Web.ScheduledJobs
         protected virtual void ProcessRemindersImpl()
         {
             Logger.Info($"Starting '{JobName}' Socrata Data Mart updates");
-        }
-
-
-
-        public void DownloadSocrataProgramIndexTable()
-        {
-           Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
-
-            // Pull JSON off the page into a (possibly huge) string
-            var fullUrl = AddSocrataMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);
-            string programIndexJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProgramIndex);
-            Logger.Info($"ProgramIndex JSON length: {programIndexJson.Length}");
-            // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProgramIndex, programIndexJson);
-            Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
-            // Use the JSON to refresh the Vendor table
-            ProgramIndexImportJson(socrataDataMartRawJsonImportID);
-
-            Logger.Info($"Ending '{JobName}' DownloadSocrataProgramIndexTable");
         }
 
         public void DownloadGrantExpendituresTable()
@@ -189,37 +169,9 @@ namespace ProjectFirma.Web.ScheduledJobs
             return newRawJsonImport.SocrataDataMartRawJsonImportID;
         }
 
-        private void VendorImportJson(int socrataDataMartRawJsonImportID)
-        {
-            Logger.Info($"Starting '{JobName}' VendorImportJson");
-            string vendorImportProc = "dbo.pVendorImportJson";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
-            {
-                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            Logger.Info($"Ending '{JobName}' VendorImportJson");
-        }
 
-        private void ProgramIndexImportJson(int socrataDataMartRawJsonImportID)
-        {
-            Logger.Info($"Starting '{JobName}' ProgramIndexImportJson");
-            string vendorImportProc = "dbo.pProgramIndexImportJson";
-            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
-            {
-                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            Logger.Info($"Ending '{JobName}' ProgramIndexImportJson");
-        }
+
+
 
 
         private void GrantExpenditureImportJson(int socrataDataMartRawJsonImportID, int bienniumToImport)

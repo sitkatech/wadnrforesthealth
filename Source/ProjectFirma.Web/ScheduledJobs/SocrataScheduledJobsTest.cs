@@ -19,8 +19,8 @@ namespace ProjectFirma.Web.ScheduledJobs
         [Ignore("The test is valid, but we want to avoid pounding on the web service when we don't have to, as we could get throttled.")]
         public void DownloadProgramIndexData()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("ProgramIndexTestJob");
-            socrataJob.DownloadSocrataProgramIndexTable();
+            var programIndexJob = new ProgramIndexImportHangfireBackgroundJob();
+            programIndexJob.DownloadSocrataProgramIndexTable();
         }
 
         [Test]
