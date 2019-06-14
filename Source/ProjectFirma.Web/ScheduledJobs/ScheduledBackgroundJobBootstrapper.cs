@@ -90,10 +90,14 @@ namespace ProjectFirma.Web.ScheduledJobs
             // predictable flow, rather than starting random, less predictable traffic jams.
             var recurringJobIds = new List<string>();
 
-            // Hourly-ish tasks
-            AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(Cron.Hourly(0)), recurringJobIds);
-            AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(Cron.Hourly(0)), recurringJobIds);
+            // 1:30 AM tasks
+            var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36); AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
+            AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
+            AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
+            AddRecurringJob(GrantExpenditureImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunGrantExpenditureImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
 
+            // See ConfigureScheduledBackgroundJobs in Gemini for further examples of how to schedule things at various time intervals. 
+            // Commented out examples below.
 
             /*
             AddRecurringJob(WorkflowNotificationsScheduledBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunWorkflowNotificationsScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(Cron.Hourly(2)), recurringJobIds);
@@ -164,7 +168,20 @@ namespace ProjectFirma.Web.ScheduledJobs
         }
 
 
+        /// <summary>
+        /// Convert hour/minute into cron time string for Hangfire
+        /// </summary>
+        private static string MakeDailyCronJobStringFromLocalTime(int hour, int minute)
+        {
+            var now = DateTime.Now;
+            var localCrontTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, 0, DateTimeKind.Local);
+            return Cron.Daily(localCrontTime.Hour, localCrontTime.Minute);
+        }
 
+        private static string MakeDailyCronJobStringForMinuteWithOffset(int minuteOffset, int runJobEveryNMinutes)
+        {
+            return $"{minuteOffset}-59/{runJobEveryNMinutes} * * * *";
+        }
 
 
         private static void AddRecurringJob(string jobName, 

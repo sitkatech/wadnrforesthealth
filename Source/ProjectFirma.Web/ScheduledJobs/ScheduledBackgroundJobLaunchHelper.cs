@@ -15,14 +15,26 @@ namespace ProjectFirma.Web.ScheduledJobs
             //projectUpdateReminderScheduledBackgroundJob.RunJob();
         }
 
+        public static void RunVendorImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        {
+            VendorImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
+        }
+
         public static void RunProjectCodeImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
             ProjectCodeImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
-        public static void RunVendorImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        public static void RunProgramIndexImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
-            VendorImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
+            ProgramIndexImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
+
+        public static void RunGrantExpenditureImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        {
+            GrantExpenditureImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
+        }
+
+
     }
 }
