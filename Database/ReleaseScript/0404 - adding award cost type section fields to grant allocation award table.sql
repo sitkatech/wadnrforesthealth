@@ -10,9 +10,9 @@ add
 	LandownerCostShareTargetFootprintAcreage int null,
 	LandownerCostShareTargetTotalAcreage int null,
 	LandownerCostShareForester varchar(255),
-	ContractorInvoicesAllocationTotal money null,
-	ContractorInvoicesContractor varchar(255),
-	ContractorInvoicesTargetTotalAcreage int null;
+	ContractorInvoiceAllocationTotal money null,
+	ContractorInvoiceContractor varchar(255),
+	ContractorInvoiceTargetTotalAcreage int null;
 
 
 
