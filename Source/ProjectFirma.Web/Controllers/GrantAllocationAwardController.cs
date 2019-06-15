@@ -100,7 +100,10 @@ namespace ProjectFirma.Web.Controllers
 
             var backButtonUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(x => x.Detail(grantAllocationAward.FocusAreaID));
             var backButtonText = $"Back to {FieldDefinition.FocusArea.GetFieldDefinitionLabel()}: {grantAllocationAward.FocusArea.FocusAreaName}";
-            var viewData = new DetailViewData(CurrentPerson, grantAllocationAward, backButtonUrl, backButtonText);
+
+            var suppliesLineItemGridSpec = new SuppliesLineItemGridSpec(CurrentPerson, grantAllocationAward);
+
+            var viewData = new DetailViewData(CurrentPerson, grantAllocationAward, backButtonUrl, backButtonText, suppliesLineItemGridSpec);
             return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
         }
 
@@ -177,6 +180,33 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditSuppliesViewData();
             return RazorPartialView<EditSupplies, EditSuppliesViewData, EditSuppliesViewModel>(viewData, viewModel);
         }
+
+        [GrantAllocationAwardViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAwardSuppliesLineItem> SuppliesLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var suppliesLineItems = grantAllocationAward.GrantAllocationAwardSuppliesLineItems;
+            var gridSpec = new SuppliesLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAwardSuppliesLineItem>(suppliesLineItems.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        public PartialViewResult NewSuppliesLineItem(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey suppliesLineItemPrimaryKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey suppliesLineItemPrimaryKey)
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion "Supplies"
 
         #region "Personnel & Benefits"
@@ -302,5 +332,8 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditContractorInvoice, EditContractorInvoiceViewData, EditContractorInvoiceViewModel>(viewData, viewModel);
         }
         #endregion "Contractor Invoice"
+
+
+        
     }
 }

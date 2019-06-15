@@ -552,6 +552,7 @@
     <Compile Include="Controllers\GrantAllocationAwardController.cs" />
     <Compile Include="Models\GrantAllocationAward.cs" />
     <Compile Include="Models\GrantAllocationAwardModelExtensions.cs" />
+    <Compile Include="Models\GrantAllocationAwardSuppliesLineItemModelExtensions.cs" />
     <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />
@@ -774,6 +775,7 @@
     <Compile Include="Views\GrantAllocationAward\EditSuppliesViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditIndirectCostViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardViewModel.cs" />
+    <Compile Include="Views\GrantAllocationAward\SuppliesLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActuals.cs" />

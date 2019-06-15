@@ -197,6 +197,10 @@
                             <span>@ViewDataTyped.GrantAllocationAward.SuppliesAllocationRemaining.ToStringCurrency()</span>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        @Html.DhtmlxGrid(ViewDataTyped.SuppliesLineItemGridSpec, ViewDataTyped.SuppliesLineItemGridName, ViewDataTyped.SuppliesLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                    </div>
 
                 </div>
             </div>

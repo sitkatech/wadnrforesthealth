@@ -48,8 +48,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string EditLandownerCostShareUrl { get;  }
         public string EditContractorInvoiceUrl { get;}
 
+        public SuppliesLineItemGridSpec SuppliesLineItemGridSpec { get; }
+        public string SuppliesLineItemGridName { get; }
+        public string SuppliesLineItemGridDataUrl { get; }
 
-        public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText) : base(currentPerson)
+
+        public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText, SuppliesLineItemGridSpec suppliesLineItemGridSpec) : base(currentPerson)
         {
             PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} Detail";
@@ -68,6 +72,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             EditTravelUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditTravel(grantAllocationAward.PrimaryKey));
             EditLandownerCostShareUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditLandownerCostShare(grantAllocationAward.PrimaryKey));
             EditContractorInvoiceUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditContractorInvoice(grantAllocationAward.PrimaryKey));
+
+            SuppliesLineItemGridName = "grantAllocationAwardSuppliesLineItemGridName";
+            SuppliesLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.SuppliesLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            SuppliesLineItemGridSpec = suppliesLineItemGridSpec;
 
 
         }
