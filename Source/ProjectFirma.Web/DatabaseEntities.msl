@@ -318,9 +318,9 @@
           <ScalarProperty Name="LandownerCostShareTargetFootprintAcreage" ColumnName="LandownerCostShareTargetFootprintAcreage" />
           <ScalarProperty Name="LandownerCostShareTargetTotalAcreage" ColumnName="LandownerCostShareTargetTotalAcreage" />
           <ScalarProperty Name="LandownerCostShareForester" ColumnName="LandownerCostShareForester" />
-          <ScalarProperty Name="ContractorInvoicesAllocationTotal" ColumnName="ContractorInvoicesAllocationTotal" />
-          <ScalarProperty Name="ContractorInvoicesContractor" ColumnName="ContractorInvoicesContractor" />
-          <ScalarProperty Name="ContractorInvoicesTargetTotalAcreage" ColumnName="ContractorInvoicesTargetTotalAcreage" />
+          <ScalarProperty Name="ContractorInvoiceAllocationTotal" ColumnName="ContractorInvoiceAllocationTotal" />
+          <ScalarProperty Name="ContractorInvoiceContractor" ColumnName="ContractorInvoiceContractor" />
+          <ScalarProperty Name="ContractorInvoiceTargetTotalAcreage" ColumnName="ContractorInvoiceTargetTotalAcreage" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

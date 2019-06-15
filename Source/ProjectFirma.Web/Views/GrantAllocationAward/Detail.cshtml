@@ -365,7 +365,63 @@
 
 
     @* Contractor Invoice Section *@
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h3>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContractorInvoiceUrl, string.Format("Edit {0} {1}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName, FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabelPluralized()), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
+                        @FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabelPluralized()
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceAllocationTotal)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceAllocationTotal.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceAllocationRemaining)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceAllocationRemaining.ToStringCurrency()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceLandownerCostShareRemaining)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceLandownerCostShareRemaining</span>
+                        </div>
+                    </div>
 
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceContractor)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceContractor</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceTargetTotalAcreage)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceTargetTotalAcreage</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>

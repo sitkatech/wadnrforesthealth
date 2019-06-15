@@ -273,6 +273,34 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Landowner Cost Share"
 
         #region "Contractor Invoice"
+        [HttpGet]
+        [GrantAllocationAwardEditAsAdminFeature]
+        public PartialViewResult EditContractorInvoice(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditContractorInvoiceViewModel(grantAllocationAward);
+            return ContractorInvoiceViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditContractorInvoice(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditContractorInvoiceViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ContractorInvoiceViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(grantAllocationAward);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ContractorInvoiceViewEdit(EditContractorInvoiceViewModel viewModel)
+        {
+            var viewData = new EditContractorInvoiceViewData();
+            return RazorPartialView<EditContractorInvoice, EditContractorInvoiceViewData, EditContractorInvoiceViewModel>(viewData, viewModel);
+        }
         #endregion "Contractor Invoice"
     }
 }

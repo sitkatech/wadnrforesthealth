@@ -118,5 +118,37 @@ namespace ProjectFirma.Web.Models
                 return 0 - lineItemTotal;
             }
         }
+
+        public Money ContractorInvoiceAllocationRemaining
+        {
+            get
+            {
+                //todo: tom fix this calculation
+                //this is the allocation total - a sum of invoice total on contractor invoice line items
+                Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                if (ContractorInvoiceAllocationTotal.HasValue)
+                {
+                    return ContractorInvoiceAllocationTotal.Value - lineItemTotal;
+                }
+
+                return 0 - lineItemTotal;
+            }
+        }
+
+        public Money ContractorInvoiceLandownerCostShareRemaining
+        {
+            get
+            {
+                //todo: tom fix this calculation
+                //this is the allocation total - a sum of invoice total on contractor invoice line items
+                Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                if (ContractorInvoiceAllocationTotal.HasValue)
+                {
+                    return ContractorInvoiceAllocationTotal.Value - lineItemTotal;
+                }
+
+                return 0 - lineItemTotal;
+            }
+        }
     }
 }

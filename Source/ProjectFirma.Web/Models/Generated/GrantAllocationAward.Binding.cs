@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate, decimal? indirectCostAllocationTotal, decimal? suppliesAllocationTotal, decimal? personnelAndBenefitsAllocationTotal, string personnelAndBenefitsForester, decimal? travelAllocationTotal, string travelForester, decimal? landownerCostShareAllocationTotal, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string landownerCostShareForester, decimal? contractorInvoicesAllocationTotal, string contractorInvoicesContractor, int? contractorInvoicesTargetTotalAcreage) : this()
+        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate, decimal? indirectCostAllocationTotal, decimal? suppliesAllocationTotal, decimal? personnelAndBenefitsAllocationTotal, string personnelAndBenefitsForester, decimal? travelAllocationTotal, string travelForester, decimal? landownerCostShareAllocationTotal, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string landownerCostShareForester, decimal? contractorInvoiceAllocationTotal, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage) : this()
         {
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
@@ -52,9 +52,9 @@ namespace ProjectFirma.Web.Models
             this.LandownerCostShareTargetFootprintAcreage = landownerCostShareTargetFootprintAcreage;
             this.LandownerCostShareTargetTotalAcreage = landownerCostShareTargetTotalAcreage;
             this.LandownerCostShareForester = landownerCostShareForester;
-            this.ContractorInvoicesAllocationTotal = contractorInvoicesAllocationTotal;
-            this.ContractorInvoicesContractor = contractorInvoicesContractor;
-            this.ContractorInvoicesTargetTotalAcreage = contractorInvoicesTargetTotalAcreage;
+            this.ContractorInvoiceAllocationTotal = contractorInvoiceAllocationTotal;
+            this.ContractorInvoiceContractor = contractorInvoiceContractor;
+            this.ContractorInvoiceTargetTotalAcreage = contractorInvoiceTargetTotalAcreage;
         }
 
         /// <summary>
@@ -178,9 +178,9 @@ namespace ProjectFirma.Web.Models
         public int? LandownerCostShareTargetFootprintAcreage { get; set; }
         public int? LandownerCostShareTargetTotalAcreage { get; set; }
         public string LandownerCostShareForester { get; set; }
-        public decimal? ContractorInvoicesAllocationTotal { get; set; }
-        public string ContractorInvoicesContractor { get; set; }
-        public int? ContractorInvoicesTargetTotalAcreage { get; set; }
+        public decimal? ContractorInvoiceAllocationTotal { get; set; }
+        public string ContractorInvoiceContractor { get; set; }
+        public int? ContractorInvoiceTargetTotalAcreage { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardID; } set { GrantAllocationAwardID = value; } }
 
@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Models
             public const int PersonnelAndBenefitsForester = 255;
             public const int TravelForester = 255;
             public const int LandownerCostShareForester = 255;
-            public const int ContractorInvoicesContractor = 255;
+            public const int ContractorInvoiceContractor = 255;
         }
     }
 }

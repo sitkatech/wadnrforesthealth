@@ -1406,9 +1406,9 @@
     <Property Name="LandownerCostShareTargetFootprintAcreage" Type="Int32" />
     <Property Name="LandownerCostShareTargetTotalAcreage" Type="Int32" />
     <Property Name="LandownerCostShareForester" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="ContractorInvoicesAllocationTotal" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="ContractorInvoicesContractor" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="ContractorInvoicesTargetTotalAcreage" Type="Int32" />
+    <Property Name="ContractorInvoiceAllocationTotal" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ContractorInvoiceContractor" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="ContractorInvoiceTargetTotalAcreage" Type="Int32" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID" FromRole="GrantAllocationAwards" ToRole="FocusArea" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationAwards" ToRole="GrantAllocation" />
     <NavigationProperty Name="GrantAllocationAwardContractorInvoices" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardContractorInvoices" />

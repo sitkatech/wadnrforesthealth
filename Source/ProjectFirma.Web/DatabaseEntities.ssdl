@@ -1321,9 +1321,9 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="LandownerCostShareTargetFootprintAcreage" Type="int" />
     <Property Name="LandownerCostShareTargetTotalAcreage" Type="int" />
     <Property Name="LandownerCostShareForester" Type="varchar" MaxLength="255" />
-    <Property Name="ContractorInvoicesAllocationTotal" Type="money" />
-    <Property Name="ContractorInvoicesContractor" Type="varchar" MaxLength="255" />
-    <Property Name="ContractorInvoicesTargetTotalAcreage" Type="int" />
+    <Property Name="ContractorInvoiceAllocationTotal" Type="money" />
+    <Property Name="ContractorInvoiceContractor" Type="varchar" MaxLength="255" />
+    <Property Name="ContractorInvoiceTargetTotalAcreage" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationAwardContractorInvoice">
     <Key>

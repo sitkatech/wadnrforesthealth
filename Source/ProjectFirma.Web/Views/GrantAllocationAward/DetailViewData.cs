@@ -46,6 +46,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string EditPersonnelAndBenefitsUrl { get;  }
         public string EditTravelUrl { get;  }
         public string EditLandownerCostShareUrl { get;  }
+        public string EditContractorInvoiceUrl { get;}
 
 
         public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText) : base(currentPerson)
@@ -66,6 +67,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             EditPersonnelAndBenefitsUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditPersonnelAndBenefits(grantAllocationAward.PrimaryKey));
             EditTravelUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditTravel(grantAllocationAward.PrimaryKey));
             EditLandownerCostShareUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditLandownerCostShare(grantAllocationAward.PrimaryKey));
+            EditContractorInvoiceUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditContractorInvoice(grantAllocationAward.PrimaryKey));
 
 
         }
