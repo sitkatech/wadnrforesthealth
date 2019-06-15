@@ -24,11 +24,5 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditLandownerCostShareViewData : FirmaUserControlViewData
     {
-        public EditLandownerCostShareViewData()
-        {
-            
-        }
-
     }
-
 }

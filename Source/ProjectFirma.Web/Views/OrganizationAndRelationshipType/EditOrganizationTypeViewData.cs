@@ -23,10 +23,5 @@ namespace ProjectFirma.Web.Views.OrganizationAndRelationshipType
 {
     public class EditOrganizationTypeViewData : FirmaUserControlViewData
     {
-       
-        public EditOrganizationTypeViewData()
-        {
-
-        }
     }
 }

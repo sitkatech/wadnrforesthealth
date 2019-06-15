@@ -24,11 +24,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditContractorInvoiceViewData : FirmaUserControlViewData
     {
-        public EditContractorInvoiceViewData()
-        {
-            
-        }
-
     }
 
 }

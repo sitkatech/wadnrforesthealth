@@ -24,11 +24,5 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditPersonnelAndBenefitsViewData : FirmaUserControlViewData
     {
-        public EditPersonnelAndBenefitsViewData()
-        {
-            
-        }
-
     }
-
 }

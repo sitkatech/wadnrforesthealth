@@ -23,8 +23,5 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 {
     public class ProjectTypeSelectionViewData : FirmaUserControlViewData
     {
-        public ProjectTypeSelectionViewData()
-        {
-        }
     }
 }
