@@ -46,6 +46,20 @@ namespace ProjectFirma.Web.Common
             set => SetValue(PersonKey, value);
         }
 
+        /// <summary>
+        /// Used when we can handle the Person possibly being null
+        /// </summary>
+        public static Person PersonThatCouldBeNull
+        {
+            get
+            {
+                var person = GetValueOrDefault<Person>(PersonKey, () => null);
+                return person;
+            }
+            set => SetValue(PersonKey, value);
+        }
+
+
         public static DatabaseEntities DatabaseEntities => (DatabaseEntities) LtInfoEntityTypeLoader;
 
         private static DatabaseEntities MakeNewContext(bool autoDetectChangesEnabled)
