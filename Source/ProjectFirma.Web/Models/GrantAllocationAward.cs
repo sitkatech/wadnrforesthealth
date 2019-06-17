@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.Models
         //todo: tom this is not right
         public decimal SpentAmount
         {
-            get { return GrantAllocationAwardAmount - 100m; }
+            get { return GrantAllocationAwardAmount - 0m; }
         }
 
         public decimal RemainingAmount => GrantAllocationAwardAmount - SpentAmount;

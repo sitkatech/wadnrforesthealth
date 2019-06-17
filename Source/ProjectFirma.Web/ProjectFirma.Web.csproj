@@ -552,6 +552,7 @@
     <Compile Include="Controllers\GrantAllocationAwardController.cs" />
     <Compile Include="Models\GrantAllocationAward.cs" />
     <Compile Include="Models\GrantAllocationAwardModelExtensions.cs" />
+    <Compile Include="Models\GrantAllocationAwardSuppliesLineItem.cs" />
     <Compile Include="Models\GrantAllocationAwardSuppliesLineItemModelExtensions.cs" />
     <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
@@ -573,9 +574,13 @@
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardSuppliesLineItemCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardCreateFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardSuppliesLineItemDeleteFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardDeleteFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardSuppliesLineItemEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardEditAsAdminFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardSuppliesLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardViewFeature.cs" />
     <Compile Include="Security\GrantsViewJsonApiFeature.cs" />
     <Compile Include="Controllers\GrantModificationController.cs" />

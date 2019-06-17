@@ -19,13 +19,6 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
-@using LtInfo.Common.Models
-@using Newtonsoft.Json.Linq
-@using ProjectFirma.Web.Common
-@using ProjectFirma.Web.Controllers
-@using ProjectFirma.Web.Models
-@using ProjectFirma.Web.Views.ProgramIndex
-@using ProjectFirma.Web.Views.ProjectCode
 @inherits ProjectFirma.Web.Views.GrantAllocationAward.EditGrantAllocationAward
 
 
@@ -33,7 +26,7 @@
 @Html.ValidationSummary()
 
 
-@using (Html.BeginForm(@ViewDataTyped.ControllerAction, "GrantAllocationAward", FormMethod.Post))
+@using (Html.BeginForm())
 {
 
     @Html.HiddenFor(m => m.GrantAllocationAwardID)

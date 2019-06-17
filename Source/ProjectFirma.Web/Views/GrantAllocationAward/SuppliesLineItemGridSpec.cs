@@ -39,9 +39,9 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel();
             ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabelPluralized();
 
-            bool hasDeletePermission = new GrantAllocationAwardDeleteFeature().HasPermissionByPerson(currentPerson);
-            bool hasEditPermission = new GrantAllocationAwardEditAsAdminFeature().HasPermissionByPerson(currentPerson);
-            bool hasCreatePermission = new GrantAllocationAwardCreateFeature().HasPermissionByPerson(currentPerson);
+            bool hasDeletePermission = new GrantAllocationAwardSuppliesLineItemDeleteFeature().HasPermissionByPerson(currentPerson);
+            bool hasEditPermission = new GrantAllocationAwardSuppliesLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
+            bool hasCreatePermission = new GrantAllocationAwardSuppliesLineItemCreateFeature().HasPermissionByPerson(currentPerson);
             if (hasCreatePermission)
             {
                 var newSuppliesLineItemUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.NewSuppliesLineItemFromGrantAllocationAward(grantAllocationAward.PrimaryKey));
@@ -51,12 +51,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             //delete column
             if (hasDeletePermission)
             {
-                //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteSuppliesLineItemUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteSuppliesLineItemUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
             //edit column
             if (hasEditPermission)
             {
-                //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditSuppliesLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditSuppliesLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
             }
 
             Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDescription.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);

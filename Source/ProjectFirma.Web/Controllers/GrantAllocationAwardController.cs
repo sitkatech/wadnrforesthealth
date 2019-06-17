@@ -18,16 +18,6 @@ namespace ProjectFirma.Web.Controllers
 {
     public class GrantAllocationAwardController : FirmaBaseController
     {
-        /// <summary>
-        /// This is here to help .NET find the New Post method, otherwise the form will fail to set the correct action. Please use NewForAFocusArea GET method for creating a new GrantAllocationSupplyLineItem object.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [GrantAllocationAwardCreateFeature]
-        public PartialViewResult New()
-        {
-            throw new NotImplementedException();
-        }
 
         [HttpGet]
         [GrantAllocationAwardCreateFeature]
@@ -38,18 +28,18 @@ namespace ProjectFirma.Web.Controllers
             {
                 FocusAreaID = focusArea.FocusAreaID
             };
-            return GrantAllocationAwardViewEdit(viewModel, "New");
+            return GrantAllocationAwardViewEdit(viewModel);
         }
 
         [HttpPost]
         [GrantAllocationAwardCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditGrantAllocationAwardViewModel viewModel)
+        public ActionResult NewForAFocusArea(FocusAreaPrimaryKey focusAreaPrimaryKey, EditGrantAllocationAwardViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 // Null is likely wrong here!!!
-                return GrantAllocationAwardViewEdit(viewModel, "New");
+                return GrantAllocationAwardViewEdit(viewModel);
             }
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == viewModel.GrantAllocationID);
             var focusArea = HttpRequestStorage.DatabaseEntities.FocusAreas.Single(fa => fa.FocusAreaID == viewModel.FocusAreaID);
@@ -64,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
         {
             var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
             var viewModel = new EditGrantAllocationAwardViewModel(grantAllocationAward);
-            return GrantAllocationAwardViewEdit(viewModel, "Edit");
+            return GrantAllocationAwardViewEdit(viewModel);
         }
 
         [HttpPost]
@@ -75,18 +65,18 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return GrantAllocationAwardViewEdit(viewModel, "Edit");
+                return GrantAllocationAwardViewEdit(viewModel);
             }
             viewModel.UpdateModel(grantAllocationAward);
             return new ModalDialogFormJsonResult();
         }
 
 
-        private PartialViewResult GrantAllocationAwardViewEdit(EditGrantAllocationAwardViewModel viewModel, string controllerAction)
+        private PartialViewResult GrantAllocationAwardViewEdit(EditGrantAllocationAwardViewModel viewModel)
         {
             var grantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations;
 
-            var viewData = new EditGrantAllocationAwardViewData(grantAllocations, controllerAction);
+            var viewData = new EditGrantAllocationAwardViewData(grantAllocations);
             return RazorPartialView<EditGrantAllocationAward, EditGrantAllocationAwardViewData, EditGrantAllocationAwardViewModel>(viewData, viewModel);
         }
 
@@ -155,7 +145,7 @@ namespace ProjectFirma.Web.Controllers
 
         #region "Supplies"
         [HttpGet]
-        [GrantAllocationAwardEditAsAdminFeature]
+        [GrantAllocationAwardSuppliesLineItemEditAsAdminFeature]
         public PartialViewResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
         {
             var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
@@ -164,7 +154,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardEditAsAdminFeature]
+        [GrantAllocationAwardSuppliesLineItemEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditSuppliesViewModel viewModel)
         {
@@ -183,7 +173,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditSupplies, EditSuppliesViewData, EditSuppliesViewModel>(viewData, viewModel);
         }
 
-        [GrantAllocationAwardViewFeature]
+        [GrantAllocationAwardSuppliesLineItemViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationAwardSuppliesLineItem> SuppliesLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
         {
             var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
@@ -194,7 +184,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [GrantAllocationAwardCreateFeature]
+        [GrantAllocationAwardSuppliesLineItemCreateFeature]
         public PartialViewResult NewSuppliesLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
         {
             var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
@@ -205,22 +195,10 @@ namespace ProjectFirma.Web.Controllers
             return GrantAllocationAwardSuppliesLineItemViewEdit(viewModel);
         }
 
-
-        /// <summary>
-        /// This is here to help .NET find the NewSuppliesLineItem Post method, otherwise the form will fail to set the correct action. Please use NewSuppliesLineItemFromGrantAllocationAward GET method for creating a new GrantAllocationSupplyLineItem object.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [GrantAllocationAwardCreateFeature]
-        public PartialViewResult NewSuppliesLineItem()
-        {
-            throw new NotImplementedException();
-        }
-
         [HttpPost]
-        [GrantAllocationAwardCreateFeature]
+        [GrantAllocationAwardSuppliesLineItemCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult NewSuppliesLineItem(EditGrantAllocationAwardSuppliesLineItemViewModel viewModel)
+        public ActionResult NewSuppliesLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditGrantAllocationAwardSuppliesLineItemViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -239,14 +217,59 @@ namespace ProjectFirma.Web.Controllers
             return RazorPartialView<EditGrantAllocationAwardSuppliesLineItem, EditGrantAllocationAwardSuppliesLineItemViewData, EditGrantAllocationAwardSuppliesLineItemViewModel>(viewData, viewModel);
         }
 
-        public void DeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey suppliesLineItemPrimaryKey)
+        [HttpGet]
+        [GrantAllocationAwardSuppliesLineItemDeleteFeature]
+        public PartialViewResult DeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey grantAllocationAwardSuppliesLineItemPrimaryKey)
         {
-            throw new NotImplementedException();
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardSuppliesLineItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteSuppliesLineItem(grantAllocationAwardSuppliesLineItemPrimaryKey.EntityObject, viewModel);
         }
 
-        public void EditSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey suppliesLineItemPrimaryKey)
+        private PartialViewResult ViewDeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItem grantAllocationSuppliesLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} '{grantAllocationSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardSuppliesLineItemDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey grantAllocationAwardSuppliesLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationAwardSuppliesLineItem = grantAllocationAwardSuppliesLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteSuppliesLineItem(grantAllocationAwardSuppliesLineItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} \"{grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription}\" successfully deleted.";
+            grantAllocationAwardSuppliesLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardSuppliesLineItemEditAsAdminFeature]
+        public PartialViewResult EditSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey grantAllocationAwardSuppliesLineItemPrimaryKey)
+        {
+            var grantAllocationAwardSuppliesLineItem = grantAllocationAwardSuppliesLineItemPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardSuppliesLineItemViewModel(grantAllocationAwardSuppliesLineItem);
+            return GrantAllocationAwardSuppliesLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardSuppliesLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey grantAllocationAwardSuppliesLineItemPrimaryKey, EditGrantAllocationAwardSuppliesLineItemViewModel viewModel)
+        {
+            var grantAllocationAwardSuppliesLineItem = grantAllocationAwardSuppliesLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardSuppliesLineItemViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(grantAllocationAwardSuppliesLineItem);
+            return new ModalDialogFormJsonResult();
         }
 
 

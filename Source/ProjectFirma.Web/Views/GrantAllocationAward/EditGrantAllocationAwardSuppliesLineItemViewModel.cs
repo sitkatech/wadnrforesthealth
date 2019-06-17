@@ -88,7 +88,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
         public void UpdateModel(Models.GrantAllocationAwardSuppliesLineItem grantAllocationAwardSuppliesLineItem)
         {
-            grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemID = GrantAllocationAwardSuppliesLineItemID;
+            //grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemID = GrantAllocationAwardSuppliesLineItemID;
             grantAllocationAwardSuppliesLineItem.GrantAllocationAwardID = GrantAllocationAwardID;
             grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription = Description;
             grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemTarOrMonth = TarOrMonth;
