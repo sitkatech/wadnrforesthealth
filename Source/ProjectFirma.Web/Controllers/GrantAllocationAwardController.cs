@@ -18,13 +18,15 @@ namespace ProjectFirma.Web.Controllers
 {
     public class GrantAllocationAwardController : FirmaBaseController
     {
-
+        /// <summary>
+        /// This is here to help .NET find the New Post method, otherwise the form will fail to set the correct action. Please use NewForAFocusArea GET method for creating a new GrantAllocationSupplyLineItem object.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [GrantAllocationAwardCreateFeature]
         public PartialViewResult New()
         {
-            var viewModel = new EditGrantAllocationAwardViewModel();
-            return GrantAllocationAwardViewEdit(viewModel, "New");
+            throw new NotImplementedException();
         }
 
         [HttpGet]
@@ -191,9 +193,50 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        public PartialViewResult NewSuppliesLineItem(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        [HttpGet]
+        [GrantAllocationAwardCreateFeature]
+        public PartialViewResult NewSuppliesLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardSuppliesLineItemViewModel()
+            {
+                GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID
+            };
+            return GrantAllocationAwardSuppliesLineItemViewEdit(viewModel);
+        }
+
+
+        /// <summary>
+        /// This is here to help .NET find the NewSuppliesLineItem Post method, otherwise the form will fail to set the correct action. Please use NewSuppliesLineItemFromGrantAllocationAward GET method for creating a new GrantAllocationSupplyLineItem object.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [GrantAllocationAwardCreateFeature]
+        public PartialViewResult NewSuppliesLineItem()
         {
             throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewSuppliesLineItem(EditGrantAllocationAwardSuppliesLineItemViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardSuppliesLineItemViewEdit(viewModel);
+            }
+
+            var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
+            var grantAllocationAwardSuppliesLineItem = GrantAllocationAwardSuppliesLineItem.CreateNewBlank(grantAllocationAward);
+            viewModel.UpdateModel(grantAllocationAwardSuppliesLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult GrantAllocationAwardSuppliesLineItemViewEdit(EditGrantAllocationAwardSuppliesLineItemViewModel viewModel)
+        {
+            var viewData = new EditGrantAllocationAwardSuppliesLineItemViewData();
+            return RazorPartialView<EditGrantAllocationAwardSuppliesLineItem, EditGrantAllocationAwardSuppliesLineItemViewData, EditGrantAllocationAwardSuppliesLineItemViewModel>(viewData, viewModel);
         }
 
         public void DeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItemPrimaryKey suppliesLineItemPrimaryKey)
