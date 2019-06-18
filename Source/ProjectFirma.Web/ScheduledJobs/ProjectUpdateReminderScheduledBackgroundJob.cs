@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.ScheduledJobs
 {
+    // Not sure if WADNR will need this; removing for the moment. It's a good reference example for
+    // how jobs could / did work, before the Gemini-flavored Hangfire overhaul. -- SLG 6/13/2019
+
+    /*
     public class ProjectUpdateReminderScheduledBackgroundJob : ScheduledBackgroundJobBase
     {
         public ProjectUpdateReminderScheduledBackgroundJob(string jobName) : base(jobName)
@@ -119,4 +124,5 @@ namespace ProjectFirma.Web.ScheduledJobs
             return notifications;
         }
     }
+    */
 }

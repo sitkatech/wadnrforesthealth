@@ -85,17 +85,6 @@ namespace ProjectFirma.Web.Models
             };
 
             return layerGeoJsons;
-        }     
-
-        public FancyTreeNode ToFancyTreeNode(Person currentPerson)
-        {
-            var fancyTreeNode = new FancyTreeNode(RegionName, RegionName, false) {MapUrl = null};
-
-            var projectChildren = GetAssociatedProjects(currentPerson).OrderBy(x => x.DisplayName)
-                .Select(x => x.ToFancyTreeNode()).ToList();
-            fancyTreeNode.Children = projectChildren.ToList();
-
-            return fancyTreeNode;
         }
 
         public PerformanceMeasureChartViewData GetPerformanceMeasureChartViewData(PerformanceMeasure performanceMeasure, Person currentPerson)

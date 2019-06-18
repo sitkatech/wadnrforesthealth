@@ -42,6 +42,34 @@ JSON format:
 update #programIndexSocrataTemp
 set program_index_code = dbo.fRemoveLeadingZeroes(program_index_code)
 
+-- Make sure we found something to import before going any further
+declare @socrataTempRowCount as bigint
+set @socrataTempRowCount= (select count(*) from #programIndexSocrataTemp)
+if @socrataTempRowCount = 0
+begin
+    RAISERROR ('No rows in incoming Program Index temp table #programIndexSocrataTemp', 16, 1)
+end
+
+---- All in the temp
+--    select tpi.* 
+--    from #programIndexSocrataTemp as tpi
+
+---- All ProgramIndexes
+--    select dbpi.*
+--    from dbo.ProgramIndex as dbpi
+
+
+---- what ProgramIndexes are we trying to delete?
+
+--    select dbpi.*
+--    from dbo.ProgramIndex as dbpi
+--    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
+--    where (tpi.program_index_code is null and tpi.biennium is null) 
+--    and 
+--    -- Ignore fake code on the Sitka side. 
+--    -- (Eventually this needs to go away, but not immediately.)
+--    (dbpi.ProgramIndexCode != '000' and dbpi.ProgramIndexTitle not like '%FAKE%')
+
 
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
@@ -52,7 +80,13 @@ where ProgramIndexID in
     from dbo.ProgramIndex as dbpi
     full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
     where (tpi.program_index_code is null and tpi.biennium is null)
+    and 
+    -- Ignore fake code on the Sitka side. 
+    -- (Eventually this needs to go away, but not immediately.)
+    (dbpi.ProgramIndexCode != '000' and dbpi.ProgramIndexTitle not like '%FAKE%')
 )
+
+
 
 -- UPDATE
 -- Update values for keys found in both sides
@@ -110,7 +144,7 @@ select * from dbo.ProgramIndex
 
 set statistics time on
 
-exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 2
+exec pProgramIndexImportJson @SocrataDataMartRawJsonImportID = 49
 
 set statistics time off
 

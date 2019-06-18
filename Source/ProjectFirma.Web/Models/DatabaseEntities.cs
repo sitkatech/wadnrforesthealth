@@ -47,6 +47,10 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        /// <summary>
+        /// Save changes using the current person
+        /// </summary>
+        /// <returns></returns>
         public override int SaveChanges()
         {
             var person = HttpRequestStorage.Person;

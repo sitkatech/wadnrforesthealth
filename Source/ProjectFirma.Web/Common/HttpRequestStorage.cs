@@ -35,30 +35,31 @@ namespace ProjectFirma.Web.Common
 
         protected override List<string> BackingStoreKeys => new List<string>();
 
+        /// <summary>
+        /// Has the Person object been set yet?
+        /// </summary>
+        /// <returns></returns>
+        public static bool PersonIsSet()
+        {
+            var person = GetValueForPerson();
+            return person != null;
+        }
+
         public static Person Person
         {
             get
             {
-                var person = GetValueOrDefault<Person>(PersonKey, () => null);
+                var person = GetValueForPerson();
                 Check.RequireNotNull(person, $"Attempting to access {nameof(Person)} before OnAuthentication is complete. Unexpected, some code may be trying to access Person too soon in request event lifecycle.");
                 return person;
             }
             set => SetValue(PersonKey, value);
         }
 
-        /// <summary>
-        /// Used when we can handle the Person possibly being null
-        /// </summary>
-        public static Person PersonThatCouldBeNull
+        private static Person GetValueForPerson()
         {
-            get
-            {
-                var person = GetValueOrDefault<Person>(PersonKey, () => null);
-                return person;
-            }
-            set => SetValue(PersonKey, value);
+            return GetValueOrDefault<Person>(PersonKey, () => null);
         }
-
 
         public static DatabaseEntities DatabaseEntities => (DatabaseEntities) LtInfoEntityTypeLoader;
 

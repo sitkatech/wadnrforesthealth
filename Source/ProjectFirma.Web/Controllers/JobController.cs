@@ -73,8 +73,8 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunVendorImportJob()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Vendor Import (Button activated)");
-            socrataJob.DownloadSocrataVendorTable();
+            var vendorImportJob = new VendorImportHangfireBackgroundJob();
+            vendorImportJob.DownloadSocrataVendorTable();
 
             var message = $"Socrata Vendors Imported";
             SetMessageForDisplay(message);
@@ -86,8 +86,8 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunProgramIndexImportJob()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Program Index Import (Button activated)");
-            socrataJob.DownloadSocrataProgramIndexTable();
+            var programIndexJob = new ProgramIndexImportHangfireBackgroundJob();
+            programIndexJob.DownloadSocrataProgramIndexTable();
 
             var message = $"Socrata Program Indices Imported";
             SetMessageForDisplay(message);
@@ -99,8 +99,8 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunProjectCodeImportJob()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Socrata Project Code Import (Button activated)");
-            socrataJob.DownloadSocrataProjectCodeTable();
+            var projectCodeJob = new ProjectCodeImportHangfireBackgroundJob();
+            projectCodeJob.DownloadSocrataProjectCodeTable();
 
             var message = $"Socrata Project Codes Imported";
             SetMessageForDisplay(message);
@@ -112,15 +112,14 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunGrantExpendituresImportJob()
         {
-            var socrataJob = new SocrataDataMartUpdateBackgroundJob("Grant Expenditures Import (Button activated)");
-            socrataJob.DownloadGrantExpendituresTable();
+            var grantExpenditureJob = new GrantExpenditureImportHangfireBackgroundJob();
+            grantExpenditureJob.DownloadGrantExpendituresTableForAllFiscalYears();
 
             var message = $"Socrata Grant Expenditures Imported";
             SetMessageForDisplay(message);
 
             return RedirectToAction(new SitkaRoute<JobController>(x => x.JobIndex()));
         }
-
 
         /// <summary>
         /// Maybe this deserves its own controller, but it's here for now.
