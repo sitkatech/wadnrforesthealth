@@ -28,11 +28,11 @@ namespace ProjectFirma.Web.Common
     {
         public override string GetUserAndSessionInformationForError(HttpContext context)
         {
-            var person = HttpRequestStorage.PersonThatCouldBeNull;
-            if (person == null)
-            {
-                return "User: None (Person == null)";
-            }
+            var person = HttpRequestStorage.Person;// ThatCouldBeNull;
+            //if (person == null)
+            //{
+            //    return "User: None (Person == null)";
+            //}
 
             if (person.IsAnonymousUser)
             {
