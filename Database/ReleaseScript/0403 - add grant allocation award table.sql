@@ -8,11 +8,3 @@ create table dbo.GrantAllocationAward(
 	GrantAllocationAwardExpirationDate DateTime not null
 );
 
-
---create table dbo.GrantAllocationAwardLineItem(
---	GrantAllocationAwardLineItemID int not null identity(1,1) constraint PK_GrantAllocationAwardLineItem_GrantAllocationAwardLineItemID primary key,
---	GrantAllocationAwardID int not null constraint FK_GrantAllocationAwardLineItem_GrantAllocationAward_GrantAllocationAwardID foreign key references dbo.GrantAllocationAward(GrantAllocationAwardID),
---	CostTypeID int not null constraint FK_GrantAllocationAwardLineItem_CostType_CostTypeID foreign key references dbo.CostType(CostTypeID),
-
-
---);

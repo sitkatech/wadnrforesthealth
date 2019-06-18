@@ -9,6 +9,19 @@ CREATE TABLE [dbo].[GrantAllocationAward](
 	[GrantAllocationAwardName] [varchar](250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[GrantAllocationAwardAmount] [money] NOT NULL,
 	[GrantAllocationAwardExpirationDate] [datetime] NOT NULL,
+	[IndirectCostAllocationTotal] [money] NULL,
+	[SuppliesAllocationTotal] [money] NULL,
+	[PersonnelAndBenefitsAllocationTotal] [money] NULL,
+	[PersonnelAndBenefitsForester] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[TravelAllocationTotal] [money] NULL,
+	[TravelForester] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[LandownerCostShareAllocationTotal] [money] NULL,
+	[LandownerCostShareTargetFootprintAcreage] [int] NULL,
+	[LandownerCostShareTargetTotalAcreage] [int] NULL,
+	[LandownerCostShareForester] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ContractorInvoiceAllocationTotal] [money] NULL,
+	[ContractorInvoiceContractor] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[ContractorInvoiceTargetTotalAcreage] [int] NULL,
  CONSTRAINT [PK_GrantAllocationAward_GrantAllocationAwardID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationAwardID] ASC

@@ -28,6 +28,11 @@
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationAward" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAward" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationAwardContractorInvoice" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAwardContractorInvoice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationAwardLandownerCostShareLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationAwardPersonnelAndBenefitsLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAwardPersonnelAndBenefitsLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationAwardSuppliesLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAwardSuppliesLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GrantAllocationAwardTravelLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationAwardTravelLineItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationBudgetLineItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationChangeLog" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.Store.GrantAllocationExpenditure" store:Type="Tables" Schema="dbo" />
@@ -51,6 +56,7 @@
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.Store.InvoiceLineItem" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LandownerCostShareLineItemStatus" EntityType="ProjectFirma.Web.Models.Store.LandownerCostShareLineItemStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -287,6 +293,38 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationAwards" EntitySet="GrantAllocationAward" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID">
+      <End Role="GrantAllocationAwardContractorInvoiceFileResource" EntitySet="FileResource" />
+      <End Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" EntitySet="GrantAllocationAwardContractorInvoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID">
+      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
+      <End Role="GrantAllocationAwardContractorInvoices" EntitySet="GrantAllocationAwardContractorInvoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
+      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
+      <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID">
+      <End Role="LandownerCostShareLineItemStatus" EntitySet="LandownerCostShareLineItemStatus" />
+      <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID">
+      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
+      <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" EntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID">
+      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
+      <End Role="GrantAllocationAwardSuppliesLineItems" EntitySet="GrantAllocationAwardSuppliesLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID">
+      <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
+      <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1263,6 +1301,110 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationAwardName" Type="varchar" Nullable="false" MaxLength="250" />
     <Property Name="GrantAllocationAwardAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationAwardExpirationDate" Type="datetime" Nullable="false" />
+    <Property Name="IndirectCostAllocationTotal" Type="money" />
+    <Property Name="SuppliesAllocationTotal" Type="money" />
+    <Property Name="PersonnelAndBenefitsAllocationTotal" Type="money" />
+    <Property Name="PersonnelAndBenefitsForester" Type="varchar" MaxLength="255" />
+    <Property Name="TravelAllocationTotal" Type="money" />
+    <Property Name="TravelForester" Type="varchar" MaxLength="255" />
+    <Property Name="LandownerCostShareAllocationTotal" Type="money" />
+    <Property Name="LandownerCostShareTargetFootprintAcreage" Type="int" />
+    <Property Name="LandownerCostShareTargetTotalAcreage" Type="int" />
+    <Property Name="LandownerCostShareForester" Type="varchar" MaxLength="255" />
+    <Property Name="ContractorInvoiceAllocationTotal" Type="money" />
+    <Property Name="ContractorInvoiceContractor" Type="varchar" MaxLength="255" />
+    <Property Name="ContractorInvoiceTargetTotalAcreage" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantAllocationAwardContractorInvoice">
+    <Key>
+      <PropertyRef Name="GrantAllocationAwardContractorInvoiceID" />
+    </Key>
+    <Property Name="GrantAllocationAwardContractorInvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardContractorInvoiceDescription" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardContractorInvoiceNumber" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardContractorInvoiceDate" Type="datetime" Nullable="false" />
+    <Property Name="GrantAllocationAwardContractorInvoiceTypeID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardContractorInvoiceForemanHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceForemanRate" Type="money" />
+    <Property Name="GrantAllocationAwardContractorInvoiceLaborHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceLaborRate" Type="money" />
+    <Property Name="GrantAllocationAwardContractorInvoiceGrappleHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceGrappleRate" Type="money" />
+    <Property Name="GrantAllocationAwardContractorInvoiceMasticationHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceMasticationRate" Type="money" />
+    <Property Name="GrantAllocationAwardContractorInvoiceTotal" Type="money" />
+    <Property Name="GrantAllocationAwardContractorInvoiceTaxRate" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceAcresReported" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="GrantAllocationAwardContractorInvoiceFileResourceID" Type="int" />
+  </EntityType>
+  <EntityType Name="GrantAllocationAwardLandownerCostShareLineItem">
+    <Key>
+      <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
+    </Key>
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="ProjectID" Type="int" Nullable="false" />
+    <Property Name="LandownerCostShareLineItemStatusID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" Type="datetime" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemEndDate" Type="datetime" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemNotes" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="GrantAllocationAwardPersonnelAndBenefitsLineItem">
+    <Key>
+      <PropertyRef Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" />
+    </Key>
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDescription" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" Type="datetime" Nullable="false" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" Type="money" Nullable="false" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" Type="money" Nullable="false" />
+    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="GrantAllocationAwardSuppliesLineItem">
+    <Key>
+      <PropertyRef Name="GrantAllocationAwardSuppliesLineItemID" />
+    </Key>
+    <Property Name="GrantAllocationAwardSuppliesLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardSuppliesLineItemDescription" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardSuppliesLineItemTarOrMonth" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardSuppliesLineItemDate" Type="datetime" Nullable="false" />
+    <Property Name="GrantAllocationAwardSuppliesLineItemAmount" Type="money" Nullable="false" />
+    <Property Name="GrantAllocationAwardSuppliesLineItemNotes" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="GrantAllocationAwardTravelLineItem">
+    <Key>
+      <PropertyRef Name="GrantAllocationAwardTravelLineItemID" />
+    </Key>
+    <Property Name="GrantAllocationAwardTravelLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardTravelLineItemDescription" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardTravelLineItemTarOrMonth" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="GrantAllocationAwardTravelLineItemDate" Type="datetime" Nullable="false" />
+    <Property Name="GrantAllocationAwardTravelLineItemTypeID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardTravelLineItemMiles" Type="int" />
+    <Property Name="GrantAllocationAwardTravelLineItemMileageRate" Type="money" />
+    <Property Name="GrantAllocationAwardTravelLineItemAmount" Type="money" />
+    <Property Name="GrantAllocationAwardTravelLineItemNotes" Type="varchar" MaxLength="2000" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -1536,6 +1678,14 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="InvoiceLineItemAmount" Type="money" Nullable="false" />
     <Property Name="InvoiceLineItemNote" Type="varchar" />
+  </EntityType>
+  <EntityType Name="LandownerCostShareLineItemStatus">
+    <Key>
+      <PropertyRef Name="LandownerCostShareLineItemStatusID" />
+    </Key>
+    <Property Name="LandownerCostShareLineItemStatusID" Type="int" Nullable="false" />
+    <Property Name="LandownerCostShareLineItemStatusName" Type="varchar" MaxLength="255" />
+    <Property Name="LandownerCostShareLineItemStatusDisplayName" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -2958,6 +3108,102 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocationAwards">
         <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID">
+    <End Role="GrantAllocationAwardContractorInvoiceFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
+    <End Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardContractorInvoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAwardContractorInvoiceFileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource">
+        <PropertyRef Name="GrantAllocationAwardContractorInvoiceFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID">
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAwardContractorInvoices" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardContractorInvoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAward">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardContractorInvoices">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAward">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID">
+    <End Role="LandownerCostShareLineItemStatus" Type="ProjectFirma.Web.Models.Store.LandownerCostShareLineItemStatus" Multiplicity="1" />
+    <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandownerCostShareLineItemStatus">
+        <PropertyRef Name="LandownerCostShareLineItemStatusID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
+        <PropertyRef Name="LandownerCostShareLineItemStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
+    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
+    <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
+        <PropertyRef Name="ProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_GrantAllocationAward_GrantAllocationAwardID">
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardPersonnelAndBenefitsLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAward">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardPersonnelAndBenefitsLineItems">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID">
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAwardSuppliesLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardSuppliesLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAward">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardSuppliesLineItems">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID">
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAwardTravelLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardTravelLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocationAward">
+        <PropertyRef Name="GrantAllocationAwardID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardTravelLineItems">
+        <PropertyRef Name="GrantAllocationAwardID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -24,13 +24,17 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected GrantAllocationAward()
         {
-
+            this.GrantAllocationAwardContractorInvoices = new HashSet<GrantAllocationAwardContractorInvoice>();
+            this.GrantAllocationAwardLandownerCostShareLineItems = new HashSet<GrantAllocationAwardLandownerCostShareLineItem>();
+            this.GrantAllocationAwardPersonnelAndBenefitsLineItems = new HashSet<GrantAllocationAwardPersonnelAndBenefitsLineItem>();
+            this.GrantAllocationAwardSuppliesLineItems = new HashSet<GrantAllocationAwardSuppliesLineItem>();
+            this.GrantAllocationAwardTravelLineItems = new HashSet<GrantAllocationAwardTravelLineItem>();
         }
 
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate) : this()
+        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate, decimal? indirectCostAllocationTotal, decimal? suppliesAllocationTotal, decimal? personnelAndBenefitsAllocationTotal, string personnelAndBenefitsForester, decimal? travelAllocationTotal, string travelForester, decimal? landownerCostShareAllocationTotal, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string landownerCostShareForester, decimal? contractorInvoiceAllocationTotal, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage) : this()
         {
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
@@ -38,6 +42,19 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationAwardName = grantAllocationAwardName;
             this.GrantAllocationAwardAmount = grantAllocationAwardAmount;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
+            this.IndirectCostAllocationTotal = indirectCostAllocationTotal;
+            this.SuppliesAllocationTotal = suppliesAllocationTotal;
+            this.PersonnelAndBenefitsAllocationTotal = personnelAndBenefitsAllocationTotal;
+            this.PersonnelAndBenefitsForester = personnelAndBenefitsForester;
+            this.TravelAllocationTotal = travelAllocationTotal;
+            this.TravelForester = travelForester;
+            this.LandownerCostShareAllocationTotal = landownerCostShareAllocationTotal;
+            this.LandownerCostShareTargetFootprintAcreage = landownerCostShareTargetFootprintAcreage;
+            this.LandownerCostShareTargetTotalAcreage = landownerCostShareTargetTotalAcreage;
+            this.LandownerCostShareForester = landownerCostShareForester;
+            this.ContractorInvoiceAllocationTotal = contractorInvoiceAllocationTotal;
+            this.ContractorInvoiceContractor = contractorInvoiceContractor;
+            this.ContractorInvoiceTargetTotalAcreage = contractorInvoiceTargetTotalAcreage;
         }
 
         /// <summary>
@@ -87,13 +104,13 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return false;
+            return GrantAllocationAwardContractorInvoices.Any() || GrantAllocationAwardLandownerCostShareLineItems.Any() || GrantAllocationAwardPersonnelAndBenefitsLineItems.Any() || GrantAllocationAwardSuppliesLineItems.Any() || GrantAllocationAwardTravelLineItems.Any();
         }
 
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAward).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAward).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(GrantAllocationAwardPersonnelAndBenefitsLineItem).Name, typeof(GrantAllocationAwardSuppliesLineItem).Name, typeof(GrantAllocationAwardTravelLineItem).Name};
 
 
         /// <summary>
@@ -109,8 +126,39 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void DeleteFull(DatabaseEntities dbContext)
         {
-            
+            DeleteChildren(dbContext);
             Delete(dbContext);
+        }
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public void DeleteChildren(DatabaseEntities dbContext)
+        {
+
+            foreach(var x in GrantAllocationAwardContractorInvoices.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationAwardLandownerCostShareLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationAwardPersonnelAndBenefitsLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationAwardSuppliesLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationAwardTravelLineItems.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
         }
 
         [Key]
@@ -120,15 +168,37 @@ namespace ProjectFirma.Web.Models
         public string GrantAllocationAwardName { get; set; }
         public decimal GrantAllocationAwardAmount { get; set; }
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
+        public decimal? IndirectCostAllocationTotal { get; set; }
+        public decimal? SuppliesAllocationTotal { get; set; }
+        public decimal? PersonnelAndBenefitsAllocationTotal { get; set; }
+        public string PersonnelAndBenefitsForester { get; set; }
+        public decimal? TravelAllocationTotal { get; set; }
+        public string TravelForester { get; set; }
+        public decimal? LandownerCostShareAllocationTotal { get; set; }
+        public int? LandownerCostShareTargetFootprintAcreage { get; set; }
+        public int? LandownerCostShareTargetTotalAcreage { get; set; }
+        public string LandownerCostShareForester { get; set; }
+        public decimal? ContractorInvoiceAllocationTotal { get; set; }
+        public string ContractorInvoiceContractor { get; set; }
+        public int? ContractorInvoiceTargetTotalAcreage { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardID; } set { GrantAllocationAwardID = value; } }
 
+        public virtual ICollection<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
+        public virtual ICollection<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
+        public virtual ICollection<GrantAllocationAwardPersonnelAndBenefitsLineItem> GrantAllocationAwardPersonnelAndBenefitsLineItems { get; set; }
+        public virtual ICollection<GrantAllocationAwardSuppliesLineItem> GrantAllocationAwardSuppliesLineItems { get; set; }
+        public virtual ICollection<GrantAllocationAwardTravelLineItem> GrantAllocationAwardTravelLineItems { get; set; }
         public virtual GrantAllocation GrantAllocation { get; set; }
         public virtual FocusArea FocusArea { get; set; }
 
         public static class FieldLengths
         {
             public const int GrantAllocationAwardName = 250;
+            public const int PersonnelAndBenefitsForester = 255;
+            public const int TravelForester = 255;
+            public const int LandownerCostShareForester = 255;
+            public const int ContractorInvoiceContractor = 255;
         }
     }
 }

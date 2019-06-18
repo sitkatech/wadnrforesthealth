@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditProjectViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditGrantAllocationAwardViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -21,29 +21,19 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
-using ProjectFirma.Web.Common;
-using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Views.GrantAllocation;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditGrantAllocationAwardViewData : FirmaUserControlViewData
     {
-
         public IEnumerable<SelectListItem> AvailableGrantAllocations { get; set; }
 
-        public string ControllerAction { get; set; }
-
-
-        public EditGrantAllocationAwardViewData(IEnumerable<Models.GrantAllocation> grantAllocations, string controllerAction)
+        public EditGrantAllocationAwardViewData(IEnumerable<Models.GrantAllocation> grantAllocations)
         {
             AvailableGrantAllocations = grantAllocations.ToSelectListWithEmptyFirstRow(v => v.GrantAllocationID.ToString(CultureInfo.InvariantCulture), k => k.GrantNumberAndGrantAllocationDisplayName);
 
-            ControllerAction = controllerAction;
         }
 
     }

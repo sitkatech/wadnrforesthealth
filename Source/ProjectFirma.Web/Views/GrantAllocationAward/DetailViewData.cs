@@ -36,16 +36,41 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class DetailViewData : FirmaViewData
     {
-        public string BackButtonUrl { get; private set; }
-        public string BackButtonText { get; set; }
-        public string EditGrantAllocationAwardUrl { get; set; }
-        public Models.GrantAllocationAward GrantAllocationAward { get; private set; }
-        public bool UserHasEditGrantAllocationAwardPermissions { get; private set; }
+        public string BackButtonUrl { get;  }
+        public string BackButtonText { get; }
+        public string EditGrantAllocationAwardUrl { get; }
+        public Models.GrantAllocationAward GrantAllocationAward { get;  }
+        public bool UserHasEditGrantAllocationAwardPermissions { get;  }
+        public string EditIndirectCostUrl { get;  }
+        public string EditSuppliesUrl { get;  }
+        public string EditPersonnelAndBenefitsUrl { get;  }
+        public string EditTravelUrl { get;  }
+        public string EditLandownerCostShareUrl { get;  }
+        public string EditContractorInvoiceUrl { get;}
+
+        public SuppliesLineItemGridSpec SuppliesLineItemGridSpec { get; }
+        public string SuppliesLineItemGridName { get; }
+        public string SuppliesLineItemGridDataUrl { get; }
+
+        public PersonnelAndBenefitsLineItemGridSpec PersonnelAndBenefitsLineItemGridSpec { get; }
+        public string PersonnelAndBenefitsLineItemGridName { get; }
+        public string PersonnelAndBenefitsLineItemGridDataUrl { get; }
+
+        public TravelLineItemGridSpec TravelLineItemGridSpec { get; }
+        public string TravelLineItemGridName { get; }
+        public string TravelLineItemGridDataUrl { get; }
 
 
-        public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText) : base(currentPerson)
+        public DetailViewData(Person currentPerson, 
+                              Models.GrantAllocationAward grantAllocationAward, 
+                              string backButtonUrl, 
+                              string backButtonText, 
+                              SuppliesLineItemGridSpec suppliesLineItemGridSpec,
+                              PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec,
+                              TravelLineItemGridSpec travelLineItemGridSpec
+                              ) : base(currentPerson)
         {
-            PageTitle = grantAllocationAward.GrantAllocationAwardName;
+            PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} Detail";
 
             BackButtonUrl = backButtonUrl;
@@ -55,6 +80,25 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             UserHasEditGrantAllocationAwardPermissions = new GrantAllocationAwardEditAsAdminFeature().HasPermissionByPerson(currentPerson);
 
             EditGrantAllocationAwardUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.Edit(grantAllocationAward.PrimaryKey));
+
+            EditIndirectCostUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditIndirectCost(grantAllocationAward.PrimaryKey));
+            EditSuppliesUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditSupplies(grantAllocationAward.PrimaryKey));
+            EditPersonnelAndBenefitsUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditPersonnelAndBenefits(grantAllocationAward.PrimaryKey));
+            EditTravelUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditTravel(grantAllocationAward.PrimaryKey));
+            EditLandownerCostShareUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditLandownerCostShare(grantAllocationAward.PrimaryKey));
+            EditContractorInvoiceUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditContractorInvoice(grantAllocationAward.PrimaryKey));
+
+            SuppliesLineItemGridName = "grantAllocationAwardSuppliesLineItemGridName";
+            SuppliesLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.SuppliesLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            SuppliesLineItemGridSpec = suppliesLineItemGridSpec;
+
+            PersonnelAndBenefitsLineItemGridName = "grantAllocationAwardPersonnelAndBenefitsLineItemGridName";
+            PersonnelAndBenefitsLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.PersonnelAndBenefitsLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            PersonnelAndBenefitsLineItemGridSpec = personnelAndBenefitsLineItemGridSpec;
+
+            TravelLineItemGridName = "grantAllocationAwardTravelLineItemGridName";
+            TravelLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.TravelLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            TravelLineItemGridSpec = travelLineItemGridSpec;
 
 
         }

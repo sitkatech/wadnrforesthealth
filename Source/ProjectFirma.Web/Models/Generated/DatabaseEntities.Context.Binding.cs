@@ -52,7 +52,12 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
+        public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
+        public virtual DbSet<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
+        public virtual DbSet<GrantAllocationAwardPersonnelAndBenefitsLineItem> GrantAllocationAwardPersonnelAndBenefitsLineItems { get; set; }
         public virtual DbSet<GrantAllocationAward> GrantAllocationAwards { get; set; }
+        public virtual DbSet<GrantAllocationAwardSuppliesLineItem> GrantAllocationAwardSuppliesLineItems { get; set; }
+        public virtual DbSet<GrantAllocationAwardTravelLineItem> GrantAllocationAwardTravelLineItems { get; set; }
         public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
         public virtual DbSet<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual DbSet<GrantAllocationExpenditureJsonStage> GrantAllocationExpenditureJsonStages { get; set; }
@@ -78,6 +83,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
         public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<LandownerCostShareLineItemStatus> LandownerCostShareLineItemStatuses { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -301,8 +307,33 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(googleChartType, "GoogleChartType", primaryKey);
                     return googleChartType;
 
+                case "GrantAllocationAwardContractorInvoice":
+                    return GrantAllocationAwardContractorInvoices.GetGrantAllocationAwardContractorInvoice(primaryKey);
+
+                case "GrantAllocationAwardContractorInvoiceType":
+                    var grantAllocationAwardContractorInvoiceType = GrantAllocationAwardContractorInvoiceType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(grantAllocationAwardContractorInvoiceType, "GrantAllocationAwardContractorInvoiceType", primaryKey);
+                    return grantAllocationAwardContractorInvoiceType;
+
+                case "GrantAllocationAwardLandownerCostShareLineItem":
+                    return GrantAllocationAwardLandownerCostShareLineItems.GetGrantAllocationAwardLandownerCostShareLineItem(primaryKey);
+
+                case "GrantAllocationAwardPersonnelAndBenefitsLineItem":
+                    return GrantAllocationAwardPersonnelAndBenefitsLineItems.GetGrantAllocationAwardPersonnelAndBenefitsLineItem(primaryKey);
+
                 case "GrantAllocationAward":
                     return GrantAllocationAwards.GetGrantAllocationAward(primaryKey);
+
+                case "GrantAllocationAwardSuppliesLineItem":
+                    return GrantAllocationAwardSuppliesLineItems.GetGrantAllocationAwardSuppliesLineItem(primaryKey);
+
+                case "GrantAllocationAwardTravelLineItem":
+                    return GrantAllocationAwardTravelLineItems.GetGrantAllocationAwardTravelLineItem(primaryKey);
+
+                case "GrantAllocationAwardTravelLineItemType":
+                    var grantAllocationAwardTravelLineItemType = GrantAllocationAwardTravelLineItemType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(grantAllocationAwardTravelLineItemType, "GrantAllocationAwardTravelLineItemType", primaryKey);
+                    return grantAllocationAwardTravelLineItemType;
 
                 case "GrantAllocationBudgetLineItem":
                     return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);
@@ -393,6 +424,9 @@ namespace ProjectFirma.Web.Models
                     var invoiceStatus = InvoiceStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(invoiceStatus, "InvoiceStatus", primaryKey);
                     return invoiceStatus;
+
+                case "LandownerCostShareLineItemStatus":
+                    return LandownerCostShareLineItemStatuses.GetLandownerCostShareLineItemStatus(primaryKey);
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
