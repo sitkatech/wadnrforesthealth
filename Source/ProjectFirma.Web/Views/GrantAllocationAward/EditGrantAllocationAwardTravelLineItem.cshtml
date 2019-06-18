@@ -19,14 +19,8 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
-@using LtInfo.Common.Models
-@using Microsoft.Web.Mvc
-@using Newtonsoft.Json.Linq
-@using ProjectFirma.Web.Common
-@using ProjectFirma.Web.Controllers
 @using ProjectFirma.Web.Models
-@using ProjectFirma.Web.Views.ProgramIndex
-@using ProjectFirma.Web.Views.ProjectCode
+
 @inherits ProjectFirma.Web.Views.GrantAllocationAward.EditGrantAllocationAwardTravelLineItem
 
 <script type="text/javascript">
@@ -34,21 +28,41 @@
 
 
     jQuery(document).ready(function () {
-        jQuery("#@Html.IdFor(m => m.TypeID)").on("change", function () {
-            debugger;
+        jQuery("input[type=radio][name=@Html.IdFor(m => m.TypeID)]").on("change", function () {
+            //debugger;
             if (jQuery(this).val() == @GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeID) {
                 jQuery("#@Html.IdFor(m => m.Amount)").prop("disabled", true);
                 jQuery("#@Html.IdFor(m => m.Miles)").prop("disabled", false);
                 jQuery("#@Html.IdFor(m => m.MileageRate)").prop("disabled", false);
+                jQuery("#@Html.IdFor(m => m.Amount)").val(0);
             } else {
                 jQuery("#@Html.IdFor(m => m.Amount)").prop("disabled", false);
                 jQuery("#@Html.IdFor(m => m.Miles)").prop("disabled", true);
                 jQuery("#@Html.IdFor(m => m.MileageRate)").prop("disabled", true);
+                jQuery("#@Html.IdFor(m => m.Miles)").val(0);
+                jQuery("#@Html.IdFor(m => m.MileageRate)").val(0);
+
             }
         });
 
-        jQuery("#@Html.IdFor(m => m.TypeID)").change();
+        jQuery("#@Html.IdFor(m => m.MileageRate)").on("change", function () {
+            CalculateAmountField();
+        });
+
+        jQuery("#@Html.IdFor(m => m.Miles)").on("change", function () {
+            CalculateAmountField();
+        });
+
+        jQuery("input[type=radio][name=@Html.IdFor(m => m.TypeID)]:checked").change();
+
     });
+
+    function CalculateAmountField() {
+        //debugger;
+        var miles = jQuery("#@Html.IdFor(m => m.Miles)").val();
+        var mileageRate = jQuery("#@Html.IdFor(m => m.MileageRate)").val().replace('$', '');
+        jQuery("#@Html.IdFor(m => m.Amount)").val('$' + (miles * mileageRate));
+    }
     // ]]>
 </script>
 
@@ -96,12 +110,14 @@
                 <div class="col-sm-9">
                     <div class="radio-inline">
                         <label>
-                            @Html.RadioButtonFor(m => m.TypeID, GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeID) @GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeDisplayName
+                            <input @(Model.TypeID == GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeID ? "checked=\"checked\"" : string.Empty ) id="@GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeName" name="@Html.IdFor(m => m.TypeID)" type="radio" value="@GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeID">
+                            @GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeDisplayName
                         </label>
                     </div>
                     <div class="radio-inline">
                         <label>
-                            @Html.RadioButtonFor(m => m.TypeID, GrantAllocationAwardTravelLineItemType.Other.GrantAllocationAwardTravelLineItemTypeID) @GrantAllocationAwardTravelLineItemType.Other.GrantAllocationAwardTravelLineItemTypeDisplayName
+                            <input @(Model.TypeID == GrantAllocationAwardTravelLineItemType.Other.GrantAllocationAwardTravelLineItemTypeID ? "checked=\"checked\"" : string.Empty ) id="@GrantAllocationAwardTravelLineItemType.Other.GrantAllocationAwardTravelLineItemTypeName" name="@Html.IdFor(m => m.TypeID)" type="radio" value="@GrantAllocationAwardTravelLineItemType.Other.GrantAllocationAwardTravelLineItemTypeID">
+                            @GrantAllocationAwardTravelLineItemType.Other.GrantAllocationAwardTravelLineItemTypeDisplayName
                         </label>
                     </div>
                     @Html.ValidationMessageFor(m => m.TypeID)

@@ -92,9 +92,22 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             }
 
             TypeID = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTypeID;
-            Miles = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles ?? 0;
-            MileageRate = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate ?? 0m;
-            Amount = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount ?? 0m;
+            switch (TypeID)
+            {
+                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Transportation:
+                    Miles = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles ?? 0;
+                    MileageRate = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate ?? 0m;
+                    Amount = 0m;
+                    break;
+                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Other:
+                    Miles = 0;
+                    MileageRate = 0m;
+                    Amount = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount ?? 0m;
+                    break;
+                default:
+                    throw new Exception($"Unhandled TypeID {TypeID} for GrantAllocationAwardTravelLineItemTypeEnum in EditGrantAllocationAwardTravelLineItemViewModel");
+            }
+            
             Notes = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemNotes;
         }
 
@@ -108,9 +121,23 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTarOrMonth = TarOrMonth;
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDate = Date;
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTypeID = TypeID;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles = Miles;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate = MileageRate;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount = Amount;
+            switch (TypeID)
+            {
+                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Transportation:
+                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles = Miles;
+                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate = MileageRate;
+                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount = null;
+                    break;
+                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Other:
+                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles = null;
+                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate = null;
+                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount = Amount;
+                    break;
+                default:
+                    throw new Exception($"Unhandled TypeID {TypeID} for GrantAllocationAwardTravelLineItemTypeEnum in EditGrantAllocationAwardTravelLineItemViewModel");
+            }
+
+            
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemNotes = Notes;
 
         }
