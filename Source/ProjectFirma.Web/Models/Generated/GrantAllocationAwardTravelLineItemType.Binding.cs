@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[GrantAllocationAwardTravelLineItemType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,94 +16,114 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GrantAllocationAwardTravelLineItemType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[GrantAllocationAwardTravelLineItemType]")]
-    public partial class GrantAllocationAwardTravelLineItemType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class GrantAllocationAwardTravelLineItemType : IHavePrimaryKey
     {
+        public static readonly GrantAllocationAwardTravelLineItemTypeTransportation Transportation = GrantAllocationAwardTravelLineItemTypeTransportation.Instance;
+        public static readonly GrantAllocationAwardTravelLineItemTypeOther Other = GrantAllocationAwardTravelLineItemTypeOther.Instance;
+
+        public static readonly List<GrantAllocationAwardTravelLineItemType> All;
+        public static readonly ReadOnlyDictionary<int, GrantAllocationAwardTravelLineItemType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected GrantAllocationAwardTravelLineItemType()
+        static GrantAllocationAwardTravelLineItemType()
         {
-            this.GrantAllocationAwardTravelLineItems = new HashSet<GrantAllocationAwardTravelLineItem>();
+            All = new List<GrantAllocationAwardTravelLineItemType> { Transportation, Other };
+            AllLookupDictionary = new ReadOnlyDictionary<int, GrantAllocationAwardTravelLineItemType>(All.ToDictionary(x => x.GrantAllocationAwardTravelLineItemTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public GrantAllocationAwardTravelLineItemType(int grantAllocationAwardTravelLineItemTypeID, string grantAllocationAwardTravelLineItemTypeName, string grantAllocationAwardTravelLineItemTypeDisplayName) : this()
+        protected GrantAllocationAwardTravelLineItemType(int grantAllocationAwardTravelLineItemTypeID, string grantAllocationAwardTravelLineItemTypeName, string grantAllocationAwardTravelLineItemTypeDisplayName)
         {
-            this.GrantAllocationAwardTravelLineItemTypeID = grantAllocationAwardTravelLineItemTypeID;
-            this.GrantAllocationAwardTravelLineItemTypeName = grantAllocationAwardTravelLineItemTypeName;
-            this.GrantAllocationAwardTravelLineItemTypeDisplayName = grantAllocationAwardTravelLineItemTypeDisplayName;
-        }
-
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static GrantAllocationAwardTravelLineItemType CreateNewBlank()
-        {
-            return new GrantAllocationAwardTravelLineItemType();
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return GrantAllocationAwardTravelLineItems.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAwardTravelLineItemType).Name, typeof(GrantAllocationAwardTravelLineItem).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.GrantAllocationAwardTravelLineItemTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in GrantAllocationAwardTravelLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            GrantAllocationAwardTravelLineItemTypeID = grantAllocationAwardTravelLineItemTypeID;
+            GrantAllocationAwardTravelLineItemTypeName = grantAllocationAwardTravelLineItemTypeName;
+            GrantAllocationAwardTravelLineItemTypeDisplayName = grantAllocationAwardTravelLineItemTypeDisplayName;
         }
 
         [Key]
-        public int GrantAllocationAwardTravelLineItemTypeID { get; set; }
-        public string GrantAllocationAwardTravelLineItemTypeName { get; set; }
-        public string GrantAllocationAwardTravelLineItemTypeDisplayName { get; set; }
+        public int GrantAllocationAwardTravelLineItemTypeID { get; private set; }
+        public string GrantAllocationAwardTravelLineItemTypeName { get; private set; }
+        public string GrantAllocationAwardTravelLineItemTypeDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantAllocationAwardTravelLineItemTypeID; } set { GrantAllocationAwardTravelLineItemTypeID = value; } }
+        public int PrimaryKey { get { return GrantAllocationAwardTravelLineItemTypeID; } }
 
-        public virtual ICollection<GrantAllocationAwardTravelLineItem> GrantAllocationAwardTravelLineItems { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(GrantAllocationAwardTravelLineItemType other)
         {
-            public const int GrantAllocationAwardTravelLineItemTypeName = 255;
-            public const int GrantAllocationAwardTravelLineItemTypeDisplayName = 255;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.GrantAllocationAwardTravelLineItemTypeID == GrantAllocationAwardTravelLineItemTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as GrantAllocationAwardTravelLineItemType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return GrantAllocationAwardTravelLineItemTypeID;
+        }
+
+        public static bool operator ==(GrantAllocationAwardTravelLineItemType left, GrantAllocationAwardTravelLineItemType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(GrantAllocationAwardTravelLineItemType left, GrantAllocationAwardTravelLineItemType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public GrantAllocationAwardTravelLineItemTypeEnum ToEnum { get { return (GrantAllocationAwardTravelLineItemTypeEnum)GetHashCode(); } }
+
+        public static GrantAllocationAwardTravelLineItemType ToType(int enumValue)
+        {
+            return ToType((GrantAllocationAwardTravelLineItemTypeEnum)enumValue);
+        }
+
+        public static GrantAllocationAwardTravelLineItemType ToType(GrantAllocationAwardTravelLineItemTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case GrantAllocationAwardTravelLineItemTypeEnum.Other:
+                    return Other;
+                case GrantAllocationAwardTravelLineItemTypeEnum.Transportation:
+                    return Transportation;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum GrantAllocationAwardTravelLineItemTypeEnum
+    {
+        Transportation = 1,
+        Other = 2
+    }
+
+    public partial class GrantAllocationAwardTravelLineItemTypeTransportation : GrantAllocationAwardTravelLineItemType
+    {
+        private GrantAllocationAwardTravelLineItemTypeTransportation(int grantAllocationAwardTravelLineItemTypeID, string grantAllocationAwardTravelLineItemTypeName, string grantAllocationAwardTravelLineItemTypeDisplayName) : base(grantAllocationAwardTravelLineItemTypeID, grantAllocationAwardTravelLineItemTypeName, grantAllocationAwardTravelLineItemTypeDisplayName) {}
+        public static readonly GrantAllocationAwardTravelLineItemTypeTransportation Instance = new GrantAllocationAwardTravelLineItemTypeTransportation(1, @"Transportation", @"Transportation");
+    }
+
+    public partial class GrantAllocationAwardTravelLineItemTypeOther : GrantAllocationAwardTravelLineItemType
+    {
+        private GrantAllocationAwardTravelLineItemTypeOther(int grantAllocationAwardTravelLineItemTypeID, string grantAllocationAwardTravelLineItemTypeName, string grantAllocationAwardTravelLineItemTypeDisplayName) : base(grantAllocationAwardTravelLineItemTypeID, grantAllocationAwardTravelLineItemTypeName, grantAllocationAwardTravelLineItemTypeDisplayName) {}
+        public static readonly GrantAllocationAwardTravelLineItemTypeOther Instance = new GrantAllocationAwardTravelLineItemTypeOther(2, @"Other", @"Other");
     }
 }

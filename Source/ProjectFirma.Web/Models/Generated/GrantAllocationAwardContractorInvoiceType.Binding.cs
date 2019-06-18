@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[GrantAllocationAwardContractorInvoiceType]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,94 +16,114 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GrantAllocationAwardContractorInvoiceType] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[GrantAllocationAwardContractorInvoiceType]")]
-    public partial class GrantAllocationAwardContractorInvoiceType : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class GrantAllocationAwardContractorInvoiceType : IHavePrimaryKey
     {
+        public static readonly GrantAllocationAwardContractorInvoiceTypeHourly Hourly = GrantAllocationAwardContractorInvoiceTypeHourly.Instance;
+        public static readonly GrantAllocationAwardContractorInvoiceTypeOther Other = GrantAllocationAwardContractorInvoiceTypeOther.Instance;
+
+        public static readonly List<GrantAllocationAwardContractorInvoiceType> All;
+        public static readonly ReadOnlyDictionary<int, GrantAllocationAwardContractorInvoiceType> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected GrantAllocationAwardContractorInvoiceType()
+        static GrantAllocationAwardContractorInvoiceType()
         {
-            this.GrantAllocationAwardContractorInvoices = new HashSet<GrantAllocationAwardContractorInvoice>();
+            All = new List<GrantAllocationAwardContractorInvoiceType> { Hourly, Other };
+            AllLookupDictionary = new ReadOnlyDictionary<int, GrantAllocationAwardContractorInvoiceType>(All.ToDictionary(x => x.GrantAllocationAwardContractorInvoiceTypeID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public GrantAllocationAwardContractorInvoiceType(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName) : this()
+        protected GrantAllocationAwardContractorInvoiceType(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName)
         {
-            this.GrantAllocationAwardContractorInvoiceTypeID = grantAllocationAwardContractorInvoiceTypeID;
-            this.GrantAllocationAwardContractorInvoiceTypeName = grantAllocationAwardContractorInvoiceTypeName;
-            this.GrantAllocationAwardContractorInvoiceDisplayName = grantAllocationAwardContractorInvoiceDisplayName;
-        }
-
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static GrantAllocationAwardContractorInvoiceType CreateNewBlank()
-        {
-            return new GrantAllocationAwardContractorInvoiceType();
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return GrantAllocationAwardContractorInvoices.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAwardContractorInvoiceType).Name, typeof(GrantAllocationAwardContractorInvoice).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.GrantAllocationAwardContractorInvoiceTypes.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in GrantAllocationAwardContractorInvoices.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            GrantAllocationAwardContractorInvoiceTypeID = grantAllocationAwardContractorInvoiceTypeID;
+            GrantAllocationAwardContractorInvoiceTypeName = grantAllocationAwardContractorInvoiceTypeName;
+            GrantAllocationAwardContractorInvoiceDisplayName = grantAllocationAwardContractorInvoiceDisplayName;
         }
 
         [Key]
-        public int GrantAllocationAwardContractorInvoiceTypeID { get; set; }
-        public string GrantAllocationAwardContractorInvoiceTypeName { get; set; }
-        public string GrantAllocationAwardContractorInvoiceDisplayName { get; set; }
+        public int GrantAllocationAwardContractorInvoiceTypeID { get; private set; }
+        public string GrantAllocationAwardContractorInvoiceTypeName { get; private set; }
+        public string GrantAllocationAwardContractorInvoiceDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return GrantAllocationAwardContractorInvoiceTypeID; } set { GrantAllocationAwardContractorInvoiceTypeID = value; } }
+        public int PrimaryKey { get { return GrantAllocationAwardContractorInvoiceTypeID; } }
 
-        public virtual ICollection<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(GrantAllocationAwardContractorInvoiceType other)
         {
-            public const int GrantAllocationAwardContractorInvoiceTypeName = 255;
-            public const int GrantAllocationAwardContractorInvoiceDisplayName = 255;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.GrantAllocationAwardContractorInvoiceTypeID == GrantAllocationAwardContractorInvoiceTypeID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as GrantAllocationAwardContractorInvoiceType);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return GrantAllocationAwardContractorInvoiceTypeID;
+        }
+
+        public static bool operator ==(GrantAllocationAwardContractorInvoiceType left, GrantAllocationAwardContractorInvoiceType right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(GrantAllocationAwardContractorInvoiceType left, GrantAllocationAwardContractorInvoiceType right)
+        {
+            return !Equals(left, right);
+        }
+
+        public GrantAllocationAwardContractorInvoiceTypeEnum ToEnum { get { return (GrantAllocationAwardContractorInvoiceTypeEnum)GetHashCode(); } }
+
+        public static GrantAllocationAwardContractorInvoiceType ToType(int enumValue)
+        {
+            return ToType((GrantAllocationAwardContractorInvoiceTypeEnum)enumValue);
+        }
+
+        public static GrantAllocationAwardContractorInvoiceType ToType(GrantAllocationAwardContractorInvoiceTypeEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case GrantAllocationAwardContractorInvoiceTypeEnum.Hourly:
+                    return Hourly;
+                case GrantAllocationAwardContractorInvoiceTypeEnum.Other:
+                    return Other;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum GrantAllocationAwardContractorInvoiceTypeEnum
+    {
+        Hourly = 1,
+        Other = 2
+    }
+
+    public partial class GrantAllocationAwardContractorInvoiceTypeHourly : GrantAllocationAwardContractorInvoiceType
+    {
+        private GrantAllocationAwardContractorInvoiceTypeHourly(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName) : base(grantAllocationAwardContractorInvoiceTypeID, grantAllocationAwardContractorInvoiceTypeName, grantAllocationAwardContractorInvoiceDisplayName) {}
+        public static readonly GrantAllocationAwardContractorInvoiceTypeHourly Instance = new GrantAllocationAwardContractorInvoiceTypeHourly(1, @"Hourly", @"Hourly");
+    }
+
+    public partial class GrantAllocationAwardContractorInvoiceTypeOther : GrantAllocationAwardContractorInvoiceType
+    {
+        private GrantAllocationAwardContractorInvoiceTypeOther(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName) : base(grantAllocationAwardContractorInvoiceTypeID, grantAllocationAwardContractorInvoiceTypeName, grantAllocationAwardContractorInvoiceDisplayName) {}
+        public static readonly GrantAllocationAwardContractorInvoiceTypeOther Instance = new GrantAllocationAwardContractorInvoiceTypeOther(2, @"Other", @"Other");
     }
 }

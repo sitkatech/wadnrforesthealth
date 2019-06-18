@@ -73,8 +73,6 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationAwardTravelLineItemTarOrMonth = grantAllocationAwardTravelLineItemTarOrMonth;
             this.GrantAllocationAwardTravelLineItemDate = grantAllocationAwardTravelLineItemDate;
             this.GrantAllocationAwardTravelLineItemTypeID = grantAllocationAwardTravelLineItemType.GrantAllocationAwardTravelLineItemTypeID;
-            this.GrantAllocationAwardTravelLineItemType = grantAllocationAwardTravelLineItemType;
-            grantAllocationAwardTravelLineItemType.GrantAllocationAwardTravelLineItems.Add(this);
         }
 
         /// <summary>
@@ -132,7 +130,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantAllocationAwardTravelLineItemID; } set { GrantAllocationAwardTravelLineItemID = value; } }
 
         public virtual GrantAllocationAward GrantAllocationAward { get; set; }
-        public virtual GrantAllocationAwardTravelLineItemType GrantAllocationAwardTravelLineItemType { get; set; }
+        public GrantAllocationAwardTravelLineItemType GrantAllocationAwardTravelLineItemType { get { return GrantAllocationAwardTravelLineItemType.AllLookupDictionary[GrantAllocationAwardTravelLineItemTypeID]; } }
 
         public static class FieldLengths
         {

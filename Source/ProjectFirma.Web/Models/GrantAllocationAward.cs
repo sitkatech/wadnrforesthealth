@@ -20,11 +20,16 @@ namespace ProjectFirma.Web.Models
             {
                 //todo: tom fix this
                 //This is the sum of the Supplies Total, Personnel&Benefits TAR amount total, and travel total
-                return 0m;
+                var suppliesTotal = this.GrantAllocationAwardSuppliesLineItems.Select(x => x.GrantAllocationAwardSuppliesLineItemAmount).Sum();
+                var personnelAndBenefitsTarTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemTarTotal).Sum();
+                var travelTotal = this.GrantAllocationAwardTravelLineItems.Where(x => x.GrantAllocationAwardTravelLineItemAmount != null).Select(x => x.GrantAllocationAwardTravelLineItemAmount).Sum();
+
+                return (Money)suppliesTotal + personnelAndBenefitsTarTotal + (Money)travelTotal;
             }
         }
 
-        public Money IndirectTotal {
+        public Money IndirectTotal
+        {
             get { return IndirectCostApplicableAmount * 0.287m; }
         }
 
@@ -56,10 +61,15 @@ namespace ProjectFirma.Web.Models
         public Money PersonnelAndBenefitsAllocationRemaining {
             get
             {
-                
-                //todo: tom fix this
                 //this is the sum of the TAR total(hourly total and fringe totals) of all personnel and benefit line items
-                return 0;
+                var hourlyTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal).Sum();
+                var fringeTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal).Sum();
+                if (PersonnelAndBenefitsAllocationTotal.HasValue)
+                {
+                    return PersonnelAndBenefitsAllocationTotal.Value - (hourlyTotal + fringeTotal);
+                }
+
+                return 0 - (hourlyTotal + fringeTotal);
             }
         }
 

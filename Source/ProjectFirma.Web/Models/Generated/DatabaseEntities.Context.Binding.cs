@@ -53,13 +53,11 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
-        public virtual DbSet<GrantAllocationAwardContractorInvoiceType> GrantAllocationAwardContractorInvoiceTypes { get; set; }
         public virtual DbSet<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
         public virtual DbSet<GrantAllocationAwardPersonnelAndBenefitsLineItem> GrantAllocationAwardPersonnelAndBenefitsLineItems { get; set; }
         public virtual DbSet<GrantAllocationAward> GrantAllocationAwards { get; set; }
         public virtual DbSet<GrantAllocationAwardSuppliesLineItem> GrantAllocationAwardSuppliesLineItems { get; set; }
         public virtual DbSet<GrantAllocationAwardTravelLineItem> GrantAllocationAwardTravelLineItems { get; set; }
-        public virtual DbSet<GrantAllocationAwardTravelLineItemType> GrantAllocationAwardTravelLineItemTypes { get; set; }
         public virtual DbSet<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
         public virtual DbSet<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual DbSet<GrantAllocationExpenditureJsonStage> GrantAllocationExpenditureJsonStages { get; set; }
@@ -313,7 +311,9 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardContractorInvoices.GetGrantAllocationAwardContractorInvoice(primaryKey);
 
                 case "GrantAllocationAwardContractorInvoiceType":
-                    return GrantAllocationAwardContractorInvoiceTypes.GetGrantAllocationAwardContractorInvoiceType(primaryKey);
+                    var grantAllocationAwardContractorInvoiceType = GrantAllocationAwardContractorInvoiceType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(grantAllocationAwardContractorInvoiceType, "GrantAllocationAwardContractorInvoiceType", primaryKey);
+                    return grantAllocationAwardContractorInvoiceType;
 
                 case "GrantAllocationAwardLandownerCostShareLineItem":
                     return GrantAllocationAwardLandownerCostShareLineItems.GetGrantAllocationAwardLandownerCostShareLineItem(primaryKey);
@@ -331,7 +331,9 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardTravelLineItems.GetGrantAllocationAwardTravelLineItem(primaryKey);
 
                 case "GrantAllocationAwardTravelLineItemType":
-                    return GrantAllocationAwardTravelLineItemTypes.GetGrantAllocationAwardTravelLineItemType(primaryKey);
+                    var grantAllocationAwardTravelLineItemType = GrantAllocationAwardTravelLineItemType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(grantAllocationAwardTravelLineItemType, "GrantAllocationAwardTravelLineItemType", primaryKey);
+                    return grantAllocationAwardTravelLineItemType;
 
                 case "GrantAllocationBudgetLineItem":
                     return GrantAllocationBudgetLineItems.GetGrantAllocationBudgetLineItem(primaryKey);

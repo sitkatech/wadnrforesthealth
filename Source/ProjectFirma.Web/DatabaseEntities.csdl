@@ -29,12 +29,10 @@
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="GrantAllocationAward" EntityType="ProjectFirma.Web.Models.GrantAllocationAward" />
     <EntitySet Name="GrantAllocationAwardContractorInvoice" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice" />
-    <EntitySet Name="GrantAllocationAwardContractorInvoiceType" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoiceType" />
     <EntitySet Name="GrantAllocationAwardLandownerCostShareLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" />
     <EntitySet Name="GrantAllocationAwardPersonnelAndBenefitsLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardPersonnelAndBenefitsLineItem" />
     <EntitySet Name="GrantAllocationAwardSuppliesLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardSuppliesLineItem" />
     <EntitySet Name="GrantAllocationAwardTravelLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem" />
-    <EntitySet Name="GrantAllocationAwardTravelLineItemType" EntityType="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItemType" />
     <EntitySet Name="GrantAllocationBudgetLineItem" EntityType="ProjectFirma.Web.Models.GrantAllocationBudgetLineItem" />
     <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.GrantAllocationChangeLog" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditure" />
@@ -420,10 +418,6 @@
       <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
       <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
     </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID">
-      <End Role="GrantAllocationAwardContractorInvoiceType" EntitySet="GrantAllocationAwardContractorInvoiceType" />
-      <End Role="GrantAllocationAwardContractorInvoices" EntitySet="GrantAllocationAwardContractorInvoice" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID">
       <End Role="LandownerCostShareLineItemStatus" EntitySet="LandownerCostShareLineItemStatus" />
       <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
@@ -431,10 +425,6 @@
     <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAwardTravelLineItemType_GrantAllocationAwardTravelLineItemTypeID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAwardTravelLineItemType_GrantAllocationAwardTravelLineItemTypeID">
-      <End Role="GrantAllocationAwardTravelLineItemType" EntitySet="GrantAllocationAwardTravelLineItemType" />
-      <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
       <End Role="ChangePerson" EntitySet="Person" />
@@ -1442,16 +1432,6 @@
     <Property Name="GrantAllocationAwardContractorInvoiceFileResourceID" Type="Int32" />
     <NavigationProperty Name="GrantAllocationAwardContractorInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" FromRole="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" ToRole="GrantAllocationAwardContractorInvoiceFileResource" />
     <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardContractorInvoices" ToRole="GrantAllocationAward" />
-    <NavigationProperty Name="GrantAllocationAwardContractorInvoiceType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID" FromRole="GrantAllocationAwardContractorInvoices" ToRole="GrantAllocationAwardContractorInvoiceType" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardContractorInvoiceType">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardContractorInvoiceTypeID" />
-    </Key>
-    <Property Name="GrantAllocationAwardContractorInvoiceTypeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceTypeName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceDisplayName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="GrantAllocationAwardContractorInvoices" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID" FromRole="GrantAllocationAwardContractorInvoiceType" ToRole="GrantAllocationAwardContractorInvoices" />
   </EntityType>
   <EntityType Name="GrantAllocationAwardLandownerCostShareLineItem">
     <Key>
@@ -1525,16 +1505,6 @@
     <Property Name="GrantAllocationAwardTravelLineItemAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardTravelLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardTravelLineItems" ToRole="GrantAllocationAward" />
-    <NavigationProperty Name="GrantAllocationAwardTravelLineItemType" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAwardTravelLineItemType_GrantAllocationAwardTravelLineItemTypeID" FromRole="GrantAllocationAwardTravelLineItems" ToRole="GrantAllocationAwardTravelLineItemType" />
-  </EntityType>
-  <EntityType Name="GrantAllocationAwardTravelLineItemType">
-    <Key>
-      <PropertyRef Name="GrantAllocationAwardTravelLineItemTypeID" />
-    </Key>
-    <Property Name="GrantAllocationAwardTravelLineItemTypeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemTypeName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemTypeDisplayName" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAwardTravelLineItemType_GrantAllocationAwardTravelLineItemTypeID" FromRole="GrantAllocationAwardTravelLineItemType" ToRole="GrantAllocationAwardTravelLineItems" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -3942,18 +3912,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GrantAllocationAwardContractorInvoice_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID">
-    <End Role="GrantAllocationAwardContractorInvoiceType" Type="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoiceType" Multiplicity="1" />
-    <End Role="GrantAllocationAwardContractorInvoices" Type="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAwardContractorInvoiceType">
-        <PropertyRef Name="GrantAllocationAwardContractorInvoiceTypeID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardContractorInvoices">
-        <PropertyRef Name="GrantAllocationAwardContractorInvoiceTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID">
     <End Role="LandownerCostShareLineItemStatus" Type="ProjectFirma.Web.Models.LandownerCostShareLineItemStatus" Multiplicity="1" />
     <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
@@ -3975,18 +3933,6 @@
       </Principal>
       <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
         <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAwardTravelLineItemType_GrantAllocationAwardTravelLineItemTypeID">
-    <End Role="GrantAllocationAwardTravelLineItemType" Type="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItemType" Multiplicity="1" />
-    <End Role="GrantAllocationAwardTravelLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationAwardTravelLineItemType">
-        <PropertyRef Name="GrantAllocationAwardTravelLineItemTypeID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardTravelLineItems">
-        <PropertyRef Name="GrantAllocationAwardTravelLineItemTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

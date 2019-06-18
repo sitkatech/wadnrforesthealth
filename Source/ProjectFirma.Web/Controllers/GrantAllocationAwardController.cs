@@ -95,13 +95,15 @@ namespace ProjectFirma.Web.Controllers
 
             var suppliesLineItemGridSpec = new SuppliesLineItemGridSpec(CurrentPerson, grantAllocationAward);
             var personnelAndBenefitsLineItemGridSpec = new PersonnelAndBenefitsLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var travelLineItemGridSpec = new TravelLineItemGridSpec(CurrentPerson, grantAllocationAward);
 
             var viewData = new DetailViewData(CurrentPerson, 
                                               grantAllocationAward, 
                                               backButtonUrl, 
                                               backButtonText, 
                                               suppliesLineItemGridSpec, 
-                                              personnelAndBenefitsLineItemGridSpec);
+                                              personnelAndBenefitsLineItemGridSpec,
+                                              travelLineItemGridSpec);
             return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
         }
 
@@ -444,6 +446,111 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditTravelViewData();
             return RazorPartialView<EditTravel, EditTravelViewData, EditTravelViewModel>(viewData, viewModel);
         }
+
+
+
+
+        [GrantAllocationAwardTravelLineItemViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAwardTravelLineItem> TravelLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var travelLineItems = grantAllocationAward.GrantAllocationAwardTravelLineItems;
+            var gridSpec = new TravelLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAwardTravelLineItem>(travelLineItems.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardTravelLineItemCreateFeature]
+        public PartialViewResult NewTravelLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardTravelLineItemViewModel()
+            {
+                GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID
+            };
+            return GrantAllocationAwardTravelLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardTravelLineItemCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewTravelLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditGrantAllocationAwardTravelLineItemViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardTravelLineItemViewEdit(viewModel);
+            }
+
+            var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
+            var travelLineItem = GrantAllocationAwardTravelLineItem.CreateNewBlank(grantAllocationAward, GrantAllocationAwardTravelLineItemType.Transportation);
+            viewModel.UpdateModel(travelLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult GrantAllocationAwardTravelLineItemViewEdit(EditGrantAllocationAwardTravelLineItemViewModel viewModel)
+        {
+            var travelTypes = GrantAllocationAwardTravelLineItemType.All;
+            var viewData = new EditGrantAllocationAwardTravelLineItemViewData(travelTypes);
+            return RazorPartialView<EditGrantAllocationAwardTravelLineItem, EditGrantAllocationAwardTravelLineItemViewData, EditGrantAllocationAwardTravelLineItemViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardTravelLineItemDeleteFeature]
+        public PartialViewResult DeleteTravelLineItem(GrantAllocationAwardTravelLineItemPrimaryKey grantAllocationAwardTravelLineItemPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardTravelLineItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteTravelLineItem(grantAllocationAwardTravelLineItemPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteTravelLineItem(GrantAllocationAwardTravelLineItem grantAllocationAwardTravelLineItem, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} '{grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDescription}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardTravelLineItemDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteTravelLineItem(GrantAllocationAwardTravelLineItemPrimaryKey grantAllocationAwardTravelLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var travelLineItem = grantAllocationAwardTravelLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteTravelLineItem(travelLineItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} \"{travelLineItem.GrantAllocationAwardTravelLineItemDescription}\" successfully deleted.";
+            travelLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardTravelLineItemEditAsAdminFeature]
+        public PartialViewResult EditTravelLineItem(GrantAllocationAwardTravelLineItemPrimaryKey grantAllocationAwardTravelLineItemPrimaryKey)
+        {
+            var travelLineItem = grantAllocationAwardTravelLineItemPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardTravelLineItemViewModel(travelLineItem);
+            return GrantAllocationAwardTravelLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardTravelLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditTravelLineItem(GrantAllocationAwardTravelLineItemPrimaryKey grantAllocationAwardTravelLineItemPrimaryKey, EditGrantAllocationAwardTravelLineItemViewModel viewModel)
+        {
+            var travelLineItem = grantAllocationAwardTravelLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardTravelLineItemViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(travelLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+
         #endregion "Travel"
 
         #region "Landowner Cost Share"

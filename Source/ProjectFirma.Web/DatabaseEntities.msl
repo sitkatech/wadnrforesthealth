@@ -349,15 +349,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardContractorInvoiceType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoiceType">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardContractorInvoiceType">
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceTypeID" ColumnName="GrantAllocationAwardContractorInvoiceTypeID" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceTypeName" ColumnName="GrantAllocationAwardContractorInvoiceTypeName" />
-          <ScalarProperty Name="GrantAllocationAwardContractorInvoiceDisplayName" ColumnName="GrantAllocationAwardContractorInvoiceDisplayName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationAwardLandownerCostShareLineItem">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem">
         <MappingFragment StoreEntitySet="GrantAllocationAwardLandownerCostShareLineItem">
@@ -426,15 +417,6 @@
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemMileageRate" ColumnName="GrantAllocationAwardTravelLineItemMileageRate" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemAmount" ColumnName="GrantAllocationAwardTravelLineItemAmount" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemNotes" ColumnName="GrantAllocationAwardTravelLineItemNotes" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GrantAllocationAwardTravelLineItemType">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItemType">
-        <MappingFragment StoreEntitySet="GrantAllocationAwardTravelLineItemType">
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemTypeID" ColumnName="GrantAllocationAwardTravelLineItemTypeID" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemTypeName" ColumnName="GrantAllocationAwardTravelLineItemTypeName" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemTypeDisplayName" ColumnName="GrantAllocationAwardTravelLineItemTypeDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

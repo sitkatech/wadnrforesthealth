@@ -82,8 +82,6 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationAwardContractorInvoiceNumber = grantAllocationAwardContractorInvoiceNumber;
             this.GrantAllocationAwardContractorInvoiceDate = grantAllocationAwardContractorInvoiceDate;
             this.GrantAllocationAwardContractorInvoiceTypeID = grantAllocationAwardContractorInvoiceType.GrantAllocationAwardContractorInvoiceTypeID;
-            this.GrantAllocationAwardContractorInvoiceType = grantAllocationAwardContractorInvoiceType;
-            grantAllocationAwardContractorInvoiceType.GrantAllocationAwardContractorInvoices.Add(this);
         }
 
         /// <summary>
@@ -150,7 +148,7 @@ namespace ProjectFirma.Web.Models
         public int PrimaryKey { get { return GrantAllocationAwardContractorInvoiceID; } set { GrantAllocationAwardContractorInvoiceID = value; } }
 
         public virtual GrantAllocationAward GrantAllocationAward { get; set; }
-        public virtual GrantAllocationAwardContractorInvoiceType GrantAllocationAwardContractorInvoiceType { get; set; }
+        public GrantAllocationAwardContractorInvoiceType GrantAllocationAwardContractorInvoiceType { get { return GrantAllocationAwardContractorInvoiceType.AllLookupDictionary[GrantAllocationAwardContractorInvoiceTypeID]; } }
         public virtual FileResource GrantAllocationAwardContractorInvoiceFileResource { get; set; }
 
         public static class FieldLengths

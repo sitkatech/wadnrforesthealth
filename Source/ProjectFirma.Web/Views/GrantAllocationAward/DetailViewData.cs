@@ -56,13 +56,18 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string PersonnelAndBenefitsLineItemGridName { get; }
         public string PersonnelAndBenefitsLineItemGridDataUrl { get; }
 
+        public TravelLineItemGridSpec TravelLineItemGridSpec { get; }
+        public string TravelLineItemGridName { get; }
+        public string TravelLineItemGridDataUrl { get; }
+
 
         public DetailViewData(Person currentPerson, 
                               Models.GrantAllocationAward grantAllocationAward, 
                               string backButtonUrl, 
                               string backButtonText, 
                               SuppliesLineItemGridSpec suppliesLineItemGridSpec,
-                              PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec
+                              PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec,
+                              TravelLineItemGridSpec travelLineItemGridSpec
                               ) : base(currentPerson)
         {
             PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
@@ -90,6 +95,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             PersonnelAndBenefitsLineItemGridName = "grantAllocationAwardPersonnelAndBenefitsLineItemGridName";
             PersonnelAndBenefitsLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.PersonnelAndBenefitsLineItemGridJsonData(grantAllocationAward.PrimaryKey));
             PersonnelAndBenefitsLineItemGridSpec = personnelAndBenefitsLineItemGridSpec;
+
+            TravelLineItemGridName = "grantAllocationAwardTravelLineItemGridName";
+            TravelLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.TravelLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            TravelLineItemGridSpec = travelLineItemGridSpec;
 
 
         }
