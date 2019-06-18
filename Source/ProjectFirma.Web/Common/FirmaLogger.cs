@@ -28,20 +28,20 @@ namespace ProjectFirma.Web.Common
     {
         public override string GetUserAndSessionInformationForError(HttpContext context)
         {
-            var person = HttpRequestStorage.Person;// ThatCouldBeNull;
-            //if (person == null)
-            //{
-            //    return "User: None (Person == null)";
-            //}
+            var personOrNull = HttpRequestStorage.GetValueForPersonOrNull();
+            if (personOrNull == null)
+            {
+                return "User: None (Person == null)";
+            }
 
-            if (person.IsAnonymousUser)
+            if (personOrNull.IsAnonymousUser)
             {
                 return "User: Anonymous";
             }
 
-            string organizationName = person.Organization.OrganizationName;
+            string organizationName = personOrNull.Organization.OrganizationName;
             return
-                $"User: {person.FullNameFirstLast}{Environment.NewLine}LogonName: {person.Email}{Environment.NewLine}PersonID: {person.PersonID}{Environment.NewLine}Organization: {organizationName}{Environment.NewLine}";
+                $"User: {personOrNull.FullNameFirstLast}{Environment.NewLine}LogonName: {personOrNull.Email}{Environment.NewLine}PersonID: {personOrNull.PersonID}{Environment.NewLine}Organization: {organizationName}{Environment.NewLine}";
         }
     }
 }

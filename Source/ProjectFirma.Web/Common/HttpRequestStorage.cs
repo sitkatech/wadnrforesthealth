@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Common
         /// <returns></returns>
         public static bool PersonIsSet()
         {
-            var person = GetValueForPerson();
+            var person = GetValueForPersonOrNull();
             return person != null;
         }
 
@@ -49,14 +49,14 @@ namespace ProjectFirma.Web.Common
         {
             get
             {
-                var person = GetValueForPerson();
+                var person = GetValueForPersonOrNull();
                 Check.RequireNotNull(person, $"Attempting to access {nameof(Person)} before OnAuthentication is complete. Unexpected, some code may be trying to access Person too soon in request event lifecycle.");
                 return person;
             }
             set => SetValue(PersonKey, value);
         }
 
-        private static Person GetValueForPerson()
+        public static Person GetValueForPersonOrNull()
         {
             return GetValueOrDefault<Person>(PersonKey, () => null);
         }
