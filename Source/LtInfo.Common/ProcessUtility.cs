@@ -23,9 +23,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using log4net;
+using static System.String;
 
 namespace LtInfo.Common
 {
@@ -36,19 +38,19 @@ namespace LtInfo.Common
 
         public static string ConjoinCommandLineArguments(List<string> commandLineArguments)
         {
-            return string.Join(" ", commandLineArguments.Select(EncodeArgumentForCommandLine).ToList());
+            return Join(" ", commandLineArguments.Select(EncodeArgumentForCommandLine).ToList());
         }
 
         public static ProcessUtilityResult ShellAndWaitImpl(string workingDirectory, string exeFileName, List<string> commandLineArguments, bool redirectStdErrAndStdOut, int? maxTimeoutMs)
         {
             var argumentsAsString = ConjoinCommandLineArguments(commandLineArguments);
-            var stdErrAndStdOut = string.Empty;
+            var stdErrAndStdOut = Empty;
 
             // Start the indicated program and wait for it
             // to finish, hiding while we wait.
             var objProc = new Process { StartInfo = new ProcessStartInfo(exeFileName, argumentsAsString) };
 
-            if (!string.IsNullOrEmpty(workingDirectory))
+            if (!IsNullOrEmpty(workingDirectory))
             {
                 objProc.StartInfo.WorkingDirectory = workingDirectory;
             }
@@ -111,27 +113,26 @@ namespace LtInfo.Common
         private class ProcessStreamReader
         {
             private readonly object _outputLock = new object();
-            private string _diagnosticOutput = string.Empty;
-            private string _standardOut = string.Empty;
+            private readonly StringBuilder _diagnosticOutput = new StringBuilder();
+            private readonly StringBuilder _standardOut = new StringBuilder();
 
             public void ReceiveStdOut(object sender, DataReceivedEventArgs e)
             {
                 lock (_outputLock)
                 {
-                    _diagnosticOutput += string.Format("{0}\r\n", string.Format("[stdout] {0}", e.Data));
-                    if (!string.IsNullOrWhiteSpace(e.Data))
+                    _diagnosticOutput.Append($"[stdout] {e.Data}\r\n");
+                    if (!IsNullOrWhiteSpace(e.Data))
                     {
-                        _standardOut += string.Format("{0}\r\n", e.Data);
+                        _standardOut.Append($"{e.Data}\r\n");
                     }
                 }
             }
 
             public void ReceiveStdErr(object sender, DataReceivedEventArgs e)
             {
-                var message = string.Format("[stderr] {0}", e.Data);
                 lock (_outputLock)
                 {
-                    _diagnosticOutput += string.Format("{0}\r\n", message);
+                    _diagnosticOutput.Append($"[stderr] {e.Data}\r\n");
                 }
             }
 
@@ -142,7 +143,7 @@ namespace LtInfo.Common
                 {
                     lock (_outputLock)
                     {
-                        return _diagnosticOutput;
+                        return _diagnosticOutput.ToString();
                     }
                 }
             }
@@ -153,7 +154,7 @@ namespace LtInfo.Common
                 {
                     lock (_outputLock)
                     {
-                        return _standardOut;
+                        return _standardOut.ToString();
                     }
                 }
             }
@@ -259,7 +260,7 @@ namespace LtInfo.Common
 
             // We must surround with DQUOTE, but first handle special BACKSLASH and embedded DQUOTE stuff
             const char backslash = '\\';
-            var encodedArgument = String.Empty;
+            var encodedArgument = Empty;
             for (var i = 0; ; i++)
             {
                 var numberOfBackslashes = 0;
@@ -296,7 +297,7 @@ namespace LtInfo.Common
                 }
             }
             // Surround the entire argument with DQUOTE
-            return String.Format("\"{0}\"", encodedArgument);
+            return Format("\"{0}\"", encodedArgument);
         }
     }
 }
