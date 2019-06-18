@@ -94,8 +94,14 @@ namespace ProjectFirma.Web.Controllers
             var backButtonText = $"Back to {FieldDefinition.FocusArea.GetFieldDefinitionLabel()}: {grantAllocationAward.FocusArea.FocusAreaName}";
 
             var suppliesLineItemGridSpec = new SuppliesLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var personnelAndBenefitsLineItemGridSpec = new PersonnelAndBenefitsLineItemGridSpec(CurrentPerson, grantAllocationAward);
 
-            var viewData = new DetailViewData(CurrentPerson, grantAllocationAward, backButtonUrl, backButtonText, suppliesLineItemGridSpec);
+            var viewData = new DetailViewData(CurrentPerson, 
+                                              grantAllocationAward, 
+                                              backButtonUrl, 
+                                              backButtonText, 
+                                              suppliesLineItemGridSpec, 
+                                              personnelAndBenefitsLineItemGridSpec);
             return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
         }
 
@@ -145,7 +151,7 @@ namespace ProjectFirma.Web.Controllers
 
         #region "Supplies"
         [HttpGet]
-        [GrantAllocationAwardSuppliesLineItemEditAsAdminFeature]
+        [GrantAllocationAwardEditAsAdminFeature]
         public PartialViewResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
         {
             var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
@@ -154,7 +160,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpPost]
-        [GrantAllocationAwardSuppliesLineItemEditAsAdminFeature]
+        [GrantAllocationAwardEditAsAdminFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditSuppliesViewModel viewModel)
         {
@@ -172,6 +178,7 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditSuppliesViewData();
             return RazorPartialView<EditSupplies, EditSuppliesViewData, EditSuppliesViewModel>(viewData, viewModel);
         }
+
 
         [GrantAllocationAwardSuppliesLineItemViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationAwardSuppliesLineItem> SuppliesLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
@@ -304,6 +311,108 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditPersonnelAndBenefitsViewData();
             return RazorPartialView<EditPersonnelAndBenefits, EditPersonnelAndBenefitsViewData, EditPersonnelAndBenefitsViewModel>(viewData, viewModel);
         }
+
+
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAwardPersonnelAndBenefitsLineItem> PersonnelAndBenefitsLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var personnelAndBenefitsLineItems = grantAllocationAward.GrantAllocationAwardPersonnelAndBenefitsLineItems;
+            var gridSpec = new PersonnelAndBenefitsLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAwardPersonnelAndBenefitsLineItem>(personnelAndBenefitsLineItems.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemCreateFeature]
+        public PartialViewResult NewPersonnelAndBenefitsLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel()
+            {
+                GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID
+            };
+            return GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewPersonnelAndBenefitsLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(viewModel);
+            }
+
+            var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
+            var personnelAndBenefitsLineItem = GrantAllocationAwardPersonnelAndBenefitsLineItem.CreateNewBlank(grantAllocationAward);
+            viewModel.UpdateModel(personnelAndBenefitsLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel viewModel)
+        {
+            var viewData = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData();
+            return RazorPartialView<EditGrantAllocationAwardPersonnelAndBenefitsLineItem, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemDeleteFeature]
+        public PartialViewResult DeletePersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeletePersonnelAndBenefitsLineItem(grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeletePersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItem grantAllocationAwardPersonnelAndBenefitsLineItem, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} '{grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeletePersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var personnelAndBenefitsLineItem = grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeletePersonnelAndBenefitsLineItem(personnelAndBenefitsLineItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} \"{personnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription}\" successfully deleted.";
+            personnelAndBenefitsLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemEditAsAdminFeature]
+        public PartialViewResult EditPersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey)
+        {
+            var personnelAndBenefitsLineItem = grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel(personnelAndBenefitsLineItem);
+            return GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardPersonnelAndBenefitsLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditPersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel viewModel)
+        {
+            var personnelAndBenefitsLineItem = grantAllocationAwardPersonnelAndBenefitsLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(personnelAndBenefitsLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+
         #endregion "Personnel & Benefits"
 
         #region "Travel"

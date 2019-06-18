@@ -52,8 +52,18 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string SuppliesLineItemGridName { get; }
         public string SuppliesLineItemGridDataUrl { get; }
 
+        public PersonnelAndBenefitsLineItemGridSpec PersonnelAndBenefitsLineItemGridSpec { get; }
+        public string PersonnelAndBenefitsLineItemGridName { get; }
+        public string PersonnelAndBenefitsLineItemGridDataUrl { get; }
 
-        public DetailViewData(Person currentPerson, Models.GrantAllocationAward grantAllocationAward, string backButtonUrl, string backButtonText, SuppliesLineItemGridSpec suppliesLineItemGridSpec) : base(currentPerson)
+
+        public DetailViewData(Person currentPerson, 
+                              Models.GrantAllocationAward grantAllocationAward, 
+                              string backButtonUrl, 
+                              string backButtonText, 
+                              SuppliesLineItemGridSpec suppliesLineItemGridSpec,
+                              PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec
+                              ) : base(currentPerson)
         {
             PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
             BreadCrumbTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} Detail";
@@ -76,6 +86,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             SuppliesLineItemGridName = "grantAllocationAwardSuppliesLineItemGridName";
             SuppliesLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.SuppliesLineItemGridJsonData(grantAllocationAward.PrimaryKey));
             SuppliesLineItemGridSpec = suppliesLineItemGridSpec;
+
+            PersonnelAndBenefitsLineItemGridName = "grantAllocationAwardPersonnelAndBenefitsLineItemGridName";
+            PersonnelAndBenefitsLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.PersonnelAndBenefitsLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            PersonnelAndBenefitsLineItemGridSpec = personnelAndBenefitsLineItemGridSpec;
 
 
         }
