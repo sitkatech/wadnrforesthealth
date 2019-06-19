@@ -582,9 +582,13 @@
     <Compile Include="ScheduledJobs\VendorImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProjectCodeImportHangfireBackgroundJob.cs" />
     <Compile Include="Security\AgreementsViewJsonApiFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardContractorInvoiceCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardLandownerCostShareLineItemCreateFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardContractorInvoiceDeleteFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardLandownerCostShareLineItemDeleteFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardContractorInvoiceEditAsAdminFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature.cs" />
+    <Compile Include="Security\GrantAllocationAwardContractorInvoiceViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardLandownerCostShareLineItemViewFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardPersonnelAndBenefitsLineItemCreateFeature.cs" />
     <Compile Include="Security\GrantAllocationAwardTravelLineItemCreateFeature.cs" />
