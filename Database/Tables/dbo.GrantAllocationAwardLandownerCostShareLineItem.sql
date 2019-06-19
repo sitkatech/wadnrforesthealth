@@ -24,6 +24,8 @@ CREATE TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem](
 	[GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres] [decimal](18, 0) NOT NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemSlashAcres] [decimal](18, 0) NOT NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemNotes] [varchar](2000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount] [money] NOT NULL,
+	[GrantAllocationAwardLandownerCostShareLineItemTotalCost] [money] NOT NULL,
  CONSTRAINT [PK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAwardLandownerCostShareLineItemID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationAwardLandownerCostShareLineItemID] ASC

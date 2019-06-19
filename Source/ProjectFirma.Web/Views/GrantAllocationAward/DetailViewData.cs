@@ -60,6 +60,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string TravelLineItemGridName { get; }
         public string TravelLineItemGridDataUrl { get; }
 
+        public LandownerCostShareLineItemGridSpec LandownerCostShareLineItemGridSpec { get; }
+        public string LandownerCostShareLineItemGridName { get; }
+        public string LandownerCostShareLineItemGridDataUrl { get; }
+
 
         public DetailViewData(Person currentPerson, 
                               Models.GrantAllocationAward grantAllocationAward, 
@@ -67,7 +71,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                               string backButtonText, 
                               SuppliesLineItemGridSpec suppliesLineItemGridSpec,
                               PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec,
-                              TravelLineItemGridSpec travelLineItemGridSpec
+                              TravelLineItemGridSpec travelLineItemGridSpec,
+                              LandownerCostShareLineItemGridSpec landownerCostShareLineItemGridSpec
                               ) : base(currentPerson)
         {
             PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
@@ -99,6 +104,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             TravelLineItemGridName = "grantAllocationAwardTravelLineItemGridName";
             TravelLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.TravelLineItemGridJsonData(grantAllocationAward.PrimaryKey));
             TravelLineItemGridSpec = travelLineItemGridSpec;
+
+            LandownerCostShareLineItemGridName = "grantAllocationAwardLandownerCostShareLineItemGridName";
+            LandownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.LandownerCostShareLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            LandownerCostShareLineItemGridSpec = landownerCostShareLineItemGridSpec;
 
 
         }

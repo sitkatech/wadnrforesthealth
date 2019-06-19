@@ -373,6 +373,8 @@
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" />
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" ColumnName="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" />
           <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemNotes" ColumnName="GrantAllocationAwardLandownerCostShareLineItemNotes" />
+          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" ColumnName="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" />
+          <ScalarProperty Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" ColumnName="GrantAllocationAwardLandownerCostShareLineItemTotalCost" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -713,15 +715,6 @@
           <ScalarProperty Name="CostTypeID" ColumnName="CostTypeID" />
           <ScalarProperty Name="InvoiceLineItemAmount" ColumnName="InvoiceLineItemAmount" />
           <ScalarProperty Name="InvoiceLineItemNote" ColumnName="InvoiceLineItemNote" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="LandownerCostShareLineItemStatus">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.LandownerCostShareLineItemStatus">
-        <MappingFragment StoreEntitySet="LandownerCostShareLineItemStatus">
-          <ScalarProperty Name="LandownerCostShareLineItemStatusID" ColumnName="LandownerCostShareLineItemStatusID" />
-          <ScalarProperty Name="LandownerCostShareLineItemStatusName" ColumnName="LandownerCostShareLineItemStatusName" />
-          <ScalarProperty Name="LandownerCostShareLineItemStatusDisplayName" ColumnName="LandownerCostShareLineItemStatusDisplayName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

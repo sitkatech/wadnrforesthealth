@@ -83,7 +83,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<InteractionEventType> InteractionEventTypes { get; set; }
         public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
-        public virtual DbSet<LandownerCostShareLineItemStatus> LandownerCostShareLineItemStatuses { get; set; }
         public virtual DbSet<NotificationProject> NotificationProjects { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<OrganizationBoundaryStaging> OrganizationBoundaryStagings { get; set; }
@@ -426,7 +425,9 @@ namespace ProjectFirma.Web.Models
                     return invoiceStatus;
 
                 case "LandownerCostShareLineItemStatus":
-                    return LandownerCostShareLineItemStatuses.GetLandownerCostShareLineItemStatus(primaryKey);
+                    var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(landownerCostShareLineItemStatus, "LandownerCostShareLineItemStatus", primaryKey);
+                    return landownerCostShareLineItemStatus;
 
                 case "MeasurementUnitType":
                     var measurementUnitType = MeasurementUnitType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

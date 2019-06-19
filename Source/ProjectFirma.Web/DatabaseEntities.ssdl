@@ -56,7 +56,6 @@
     <EntitySet Name="InteractionEventType" EntityType="ProjectFirma.Web.Models.Store.InteractionEventType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Invoice" EntityType="ProjectFirma.Web.Models.Store.Invoice" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InvoiceLineItem" EntityType="ProjectFirma.Web.Models.Store.InvoiceLineItem" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LandownerCostShareLineItemStatus" EntityType="ProjectFirma.Web.Models.Store.LandownerCostShareLineItemStatus" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Notification" EntityType="ProjectFirma.Web.Models.Store.Notification" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationProject" EntityType="ProjectFirma.Web.Models.Store.NotificationProject" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization" EntityType="ProjectFirma.Web.Models.Store.Organization" store:Type="Tables" Schema="dbo" />
@@ -304,10 +303,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
       <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
-      <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID">
-      <End Role="LandownerCostShareLineItemStatus" EntitySet="LandownerCostShareLineItemStatus" />
       <End Role="GrantAllocationAwardLandownerCostShareLineItems" EntitySet="GrantAllocationAwardLandownerCostShareLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardLandownerCostShareLineItem_Project_ProjectID">
@@ -1364,6 +1359,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="decimal" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="decimal" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" Type="money" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" Type="money" Nullable="false" />
   </EntityType>
   <EntityType Name="GrantAllocationAwardPersonnelAndBenefitsLineItem">
     <Key>
@@ -1678,14 +1675,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="CostTypeID" Type="int" Nullable="false" />
     <Property Name="InvoiceLineItemAmount" Type="money" Nullable="false" />
     <Property Name="InvoiceLineItemNote" Type="varchar" />
-  </EntityType>
-  <EntityType Name="LandownerCostShareLineItemStatus">
-    <Key>
-      <PropertyRef Name="LandownerCostShareLineItemStatusID" />
-    </Key>
-    <Property Name="LandownerCostShareLineItemStatusID" Type="int" Nullable="false" />
-    <Property Name="LandownerCostShareLineItemStatusName" Type="varchar" MaxLength="255" />
-    <Property Name="LandownerCostShareLineItemStatusDisplayName" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -3144,18 +3133,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
         <PropertyRef Name="GrantAllocationAwardID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_LandownerCostShareLineItemStatus_LandownerCostShareLineItemStatusID">
-    <End Role="LandownerCostShareLineItemStatus" Type="ProjectFirma.Web.Models.Store.LandownerCostShareLineItemStatus" Multiplicity="1" />
-    <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LandownerCostShareLineItemStatus">
-        <PropertyRef Name="LandownerCostShareLineItemStatusID" />
-      </Principal>
-      <Dependent Role="GrantAllocationAwardLandownerCostShareLineItems">
-        <PropertyRef Name="LandownerCostShareLineItemStatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
