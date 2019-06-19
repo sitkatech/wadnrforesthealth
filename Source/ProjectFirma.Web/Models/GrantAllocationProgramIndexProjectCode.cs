@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Models
                 string projectCodeName = projectCode != null ? projectCode.AuditDescriptionString : ViewUtilities.NotFoundString;
 
                 // If someone wants a different format here, have at it!
-                return $"PI{programIndexName}~PC{projectCodeName}";
+                return $"{programIndexName}-{projectCodeName}";
             }
         }
 

@@ -96,6 +96,7 @@ namespace ProjectFirma.Web.Controllers
             var suppliesLineItemGridSpec = new SuppliesLineItemGridSpec(CurrentPerson, grantAllocationAward);
             var personnelAndBenefitsLineItemGridSpec = new PersonnelAndBenefitsLineItemGridSpec(CurrentPerson, grantAllocationAward);
             var travelLineItemGridSpec = new TravelLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var landownerCostShareLineItemGridSpec = new LandownerCostShareLineItemGridSpec(CurrentPerson, grantAllocationAward);
 
             var viewData = new DetailViewData(CurrentPerson, 
                                               grantAllocationAward, 
@@ -103,7 +104,8 @@ namespace ProjectFirma.Web.Controllers
                                               backButtonText, 
                                               suppliesLineItemGridSpec, 
                                               personnelAndBenefitsLineItemGridSpec,
-                                              travelLineItemGridSpec);
+                                              travelLineItemGridSpec,
+                                              landownerCostShareLineItemGridSpec);
             return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
         }
 
@@ -582,6 +584,112 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditLandownerCostShareViewData();
             return RazorPartialView<EditLandownerCostShare, EditLandownerCostShareViewData, EditLandownerCostShareViewModel>(viewData, viewModel);
         }
+
+
+        [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAwardLandownerCostShareLineItem> LandownerCostShareLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var landownerCostShareLineItems = grantAllocationAward.GrantAllocationAwardLandownerCostShareLineItems;
+            var gridSpec = new LandownerCostShareLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAwardLandownerCostShareLineItem>(landownerCostShareLineItems.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
+        public PartialViewResult NewLandownerCostShareLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardLandownerCostShareLineItemViewModel()
+            {
+                GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID
+            };
+            return GrantAllocationAwardLandownerCostShareLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewLandownerCostShareLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditGrantAllocationAwardLandownerCostShareLineItemViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardLandownerCostShareLineItemViewEdit(viewModel);
+            }
+
+            var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
+            var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == viewModel.ProjectID);
+            var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.Single(x => x.LandownerCostShareLineItemStatusID == viewModel.StatusID);
+            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(grantAllocationAward, project, landownerCostShareLineItemStatus);
+            viewModel.UpdateModel(landownerCostShareLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult GrantAllocationAwardLandownerCostShareLineItemViewEdit(EditGrantAllocationAwardLandownerCostShareLineItemViewModel viewModel)
+        {
+            var statusList = LandownerCostShareLineItemStatus.All;
+            var projectList = HttpRequestStorage.DatabaseEntities.Projects.ToList().OrderBy(x => x.DisplayName);
+            var viewData = new EditGrantAllocationAwardLandownerCostShareLineItemViewData(statusList, projectList);
+            return RazorPartialView<EditGrantAllocationAwardLandownerCostShareLineItem, EditGrantAllocationAwardLandownerCostShareLineItemViewData, EditGrantAllocationAwardLandownerCostShareLineItemViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardLandownerCostShareLineItemDeleteFeature]
+        public PartialViewResult DeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItemPrimaryKey grantAllocationAwardLandownerCostShareLineItemPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardLandownerCostShareLineItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteLandownerCostShareLineItem(grantAllocationAwardLandownerCostShareLineItemPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()}?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardLandownerCostShareLineItemDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItemPrimaryKey grantAllocationAwardLandownerCostShareLineItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var landownerCostShareLineItem = grantAllocationAwardLandownerCostShareLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteLandownerCostShareLineItem(landownerCostShareLineItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} successfully deleted.";
+            landownerCostShareLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        public PartialViewResult EditLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItemPrimaryKey grantAllocationAwardLandownerCostShareLineItemPrimaryKey)
+        {
+            var landownerCostShareLineItem = grantAllocationAwardLandownerCostShareLineItemPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardLandownerCostShareLineItemViewModel(landownerCostShareLineItem);
+            return GrantAllocationAwardLandownerCostShareLineItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItemPrimaryKey grantAllocationAwardLandownerCostShareLineItemPrimaryKey, EditGrantAllocationAwardLandownerCostShareLineItemViewModel viewModel)
+        {
+            var landownerCostShareLineItem = grantAllocationAwardLandownerCostShareLineItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardLandownerCostShareLineItemViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(landownerCostShareLineItem);
+            return new ModalDialogFormJsonResult();
+        }
+
+
         #endregion "Landowner Cost Share"
 
         #region "Contractor Invoice"

@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[LandownerCostShareLineItemStatus]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,94 +16,124 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[LandownerCostShareLineItemStatus] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[LandownerCostShareLineItemStatus]")]
-    public partial class LandownerCostShareLineItemStatus : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class LandownerCostShareLineItemStatus : IHavePrimaryKey
     {
+        public static readonly LandownerCostShareLineItemStatusPlanned Planned = LandownerCostShareLineItemStatusPlanned.Instance;
+        public static readonly LandownerCostShareLineItemStatusCompleted Completed = LandownerCostShareLineItemStatusCompleted.Instance;
+        public static readonly LandownerCostShareLineItemStatusCancelled Cancelled = LandownerCostShareLineItemStatusCancelled.Instance;
+
+        public static readonly List<LandownerCostShareLineItemStatus> All;
+        public static readonly ReadOnlyDictionary<int, LandownerCostShareLineItemStatus> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected LandownerCostShareLineItemStatus()
+        static LandownerCostShareLineItemStatus()
         {
-            this.GrantAllocationAwardLandownerCostShareLineItems = new HashSet<GrantAllocationAwardLandownerCostShareLineItem>();
+            All = new List<LandownerCostShareLineItemStatus> { Planned, Completed, Cancelled };
+            AllLookupDictionary = new ReadOnlyDictionary<int, LandownerCostShareLineItemStatus>(All.ToDictionary(x => x.LandownerCostShareLineItemStatusID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public LandownerCostShareLineItemStatus(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName) : this()
+        protected LandownerCostShareLineItemStatus(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName)
         {
-            this.LandownerCostShareLineItemStatusID = landownerCostShareLineItemStatusID;
-            this.LandownerCostShareLineItemStatusName = landownerCostShareLineItemStatusName;
-            this.LandownerCostShareLineItemStatusDisplayName = landownerCostShareLineItemStatusDisplayName;
-        }
-
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static LandownerCostShareLineItemStatus CreateNewBlank()
-        {
-            return new LandownerCostShareLineItemStatus();
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return GrantAllocationAwardLandownerCostShareLineItems.Any();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(LandownerCostShareLineItemStatus).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.LandownerCostShareLineItemStatuses.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in GrantAllocationAwardLandownerCostShareLineItems.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
+            LandownerCostShareLineItemStatusID = landownerCostShareLineItemStatusID;
+            LandownerCostShareLineItemStatusName = landownerCostShareLineItemStatusName;
+            LandownerCostShareLineItemStatusDisplayName = landownerCostShareLineItemStatusDisplayName;
         }
 
         [Key]
-        public int LandownerCostShareLineItemStatusID { get; set; }
-        public string LandownerCostShareLineItemStatusName { get; set; }
-        public string LandownerCostShareLineItemStatusDisplayName { get; set; }
+        public int LandownerCostShareLineItemStatusID { get; private set; }
+        public string LandownerCostShareLineItemStatusName { get; private set; }
+        public string LandownerCostShareLineItemStatusDisplayName { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return LandownerCostShareLineItemStatusID; } set { LandownerCostShareLineItemStatusID = value; } }
+        public int PrimaryKey { get { return LandownerCostShareLineItemStatusID; } }
 
-        public virtual ICollection<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(LandownerCostShareLineItemStatus other)
         {
-            public const int LandownerCostShareLineItemStatusName = 255;
-            public const int LandownerCostShareLineItemStatusDisplayName = 255;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.LandownerCostShareLineItemStatusID == LandownerCostShareLineItemStatusID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as LandownerCostShareLineItemStatus);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return LandownerCostShareLineItemStatusID;
+        }
+
+        public static bool operator ==(LandownerCostShareLineItemStatus left, LandownerCostShareLineItemStatus right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(LandownerCostShareLineItemStatus left, LandownerCostShareLineItemStatus right)
+        {
+            return !Equals(left, right);
+        }
+
+        public LandownerCostShareLineItemStatusEnum ToEnum { get { return (LandownerCostShareLineItemStatusEnum)GetHashCode(); } }
+
+        public static LandownerCostShareLineItemStatus ToType(int enumValue)
+        {
+            return ToType((LandownerCostShareLineItemStatusEnum)enumValue);
+        }
+
+        public static LandownerCostShareLineItemStatus ToType(LandownerCostShareLineItemStatusEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case LandownerCostShareLineItemStatusEnum.Cancelled:
+                    return Cancelled;
+                case LandownerCostShareLineItemStatusEnum.Completed:
+                    return Completed;
+                case LandownerCostShareLineItemStatusEnum.Planned:
+                    return Planned;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum LandownerCostShareLineItemStatusEnum
+    {
+        Planned = 1,
+        Completed = 2,
+        Cancelled = 3
+    }
+
+    public partial class LandownerCostShareLineItemStatusPlanned : LandownerCostShareLineItemStatus
+    {
+        private LandownerCostShareLineItemStatusPlanned(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName) : base(landownerCostShareLineItemStatusID, landownerCostShareLineItemStatusName, landownerCostShareLineItemStatusDisplayName) {}
+        public static readonly LandownerCostShareLineItemStatusPlanned Instance = new LandownerCostShareLineItemStatusPlanned(1, @"Planned", @"Planned");
+    }
+
+    public partial class LandownerCostShareLineItemStatusCompleted : LandownerCostShareLineItemStatus
+    {
+        private LandownerCostShareLineItemStatusCompleted(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName) : base(landownerCostShareLineItemStatusID, landownerCostShareLineItemStatusName, landownerCostShareLineItemStatusDisplayName) {}
+        public static readonly LandownerCostShareLineItemStatusCompleted Instance = new LandownerCostShareLineItemStatusCompleted(2, @"Completed", @"Completed");
+    }
+
+    public partial class LandownerCostShareLineItemStatusCancelled : LandownerCostShareLineItemStatus
+    {
+        private LandownerCostShareLineItemStatusCancelled(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName) : base(landownerCostShareLineItemStatusID, landownerCostShareLineItemStatusName, landownerCostShareLineItemStatusDisplayName) {}
+        public static readonly LandownerCostShareLineItemStatusCancelled Instance = new LandownerCostShareLineItemStatusCancelled(3, @"Cancelled", @"Cancelled");
     }
 }

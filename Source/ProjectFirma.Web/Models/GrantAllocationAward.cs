@@ -90,9 +90,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                //todo: tom fix this calculation
                 //this is the allocation total - sum of allocated amount from landowner cost share line items 
-                Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                Money lineItemTotal = GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount).Sum();
                 if (LandownerCostShareAllocationTotal.HasValue)
                 {
                     return LandownerCostShareAllocationTotal.Value - lineItemTotal;
@@ -106,9 +105,12 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-
-                //todo: tom fix this
                 //this is the sum of amount allocated from landowner cost share line items / allocation total
+                Money lineItemTotal = GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount).Sum();
+                if (LandownerCostShareAllocationTotal.HasValue)
+                {
+                    return lineItemTotal / LandownerCostShareAllocationTotal.Value;
+                }
                 return 0;
             }
         }
@@ -117,9 +119,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                //todo: tom fix this calculation
                 //this is the allocation total - sum of grant cost from landowner cost share line items 
-                Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                Money lineItemTotal = GrantAllocationAwardLandownerCostShareLineItems.Select(s => (decimal)s.GrantAllocationAwardLandownerCostShareLineItemGrantCost).Sum();
                 if (LandownerCostShareAllocationTotal.HasValue)
                 {
                     return LandownerCostShareAllocationTotal.Value - lineItemTotal;
