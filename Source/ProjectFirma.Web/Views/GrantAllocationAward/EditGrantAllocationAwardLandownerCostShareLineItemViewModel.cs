@@ -108,7 +108,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         /// </summary>
         public EditGrantAllocationAwardLandownerCostShareLineItemViewModel()
         {
-
+            StartDate = DateTime.Today;
+            EndDate = DateTime.Today;
         }
 
         public EditGrantAllocationAwardLandownerCostShareLineItemViewModel(Models.GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem)

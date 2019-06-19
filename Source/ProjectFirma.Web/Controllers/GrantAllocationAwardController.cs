@@ -619,7 +619,9 @@ namespace ProjectFirma.Web.Controllers
             }
 
             var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
-            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(grantAllocationAward, null, LandownerCostShareLineItemStatus.Planned);
+            var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == viewModel.ProjectID);
+            var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.Single(x => x.LandownerCostShareLineItemStatusID == viewModel.StatusID);
+            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(grantAllocationAward, project, landownerCostShareLineItemStatus);
             viewModel.UpdateModel(landownerCostShareLineItem);
             return new ModalDialogFormJsonResult();
         }
@@ -627,7 +629,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult GrantAllocationAwardLandownerCostShareLineItemViewEdit(EditGrantAllocationAwardLandownerCostShareLineItemViewModel viewModel)
         {
             var statusList = LandownerCostShareLineItemStatus.All;
-            var projectList = HttpRequestStorage.DatabaseEntities.Projects.ToList();
+            var projectList = HttpRequestStorage.DatabaseEntities.Projects.ToList().OrderBy(x => x.DisplayName);
             var viewData = new EditGrantAllocationAwardLandownerCostShareLineItemViewData(statusList, projectList);
             return RazorPartialView<EditGrantAllocationAwardLandownerCostShareLineItem, EditGrantAllocationAwardLandownerCostShareLineItemViewData, EditGrantAllocationAwardLandownerCostShareLineItemViewModel>(viewData, viewModel);
         }
@@ -642,7 +644,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} \"{grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID}\"?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()}?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -658,7 +660,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteLandownerCostShareLineItem(landownerCostShareLineItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} \"{landownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemID}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} successfully deleted.";
             landownerCostShareLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();

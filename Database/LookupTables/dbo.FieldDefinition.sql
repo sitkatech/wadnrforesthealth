@@ -253,4 +253,5 @@ VALUES
 (431, N'GrantAllocationAwardLandownerCostShareSlashAcres', 'Grant Allocation Award Landowner Cost Share Slash Acres', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Slash Acres.</p>'),
 (432, N'GrantAllocationAwardLandownerCostShareNotes', 'Grant Allocation Award Landowner Cost Share Notes', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Notes.</p>'),
 (433, N'GrantAllocationAwardLandownerCostShareAllocatedAmount', 'Grant Allocation Award Landowner Cost Share Allocated Amount', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Allocated Amount.</p>'),
-(434, N'GrantAllocationAwardLandownerCostShareTotalCost', 'Grant Allocation Award Landowner Cost Share Total Cost', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Total Cost.</p>')
+(434, N'GrantAllocationAwardLandownerCostShareTotalCost', 'Grant Allocation Award Landowner Cost Share Total Cost', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Total Cost.</p>'),
+(435, N'GrantAllocationAwardLandownerCostShareGrantCost', 'Grant Allocation Award Landowner Cost Share Grant Cost', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Grant Cost.</p>')

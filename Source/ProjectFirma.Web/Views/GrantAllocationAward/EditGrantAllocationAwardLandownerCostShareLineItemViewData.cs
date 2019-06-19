@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public EditGrantAllocationAwardLandownerCostShareLineItemViewData(IEnumerable<LandownerCostShareLineItemStatus> statusList, IEnumerable<Models.Project> projectList)
         {
             StatusList = statusList.ToSelectList(x => x.LandownerCostShareLineItemStatusID.ToString(CultureInfo.InvariantCulture), y => y.LandownerCostShareLineItemStatusDisplayName);
-            ProjectList = projectList.ToSelectList(x => x.ProjectID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            ProjectList = projectList.ToSelectListWithEmptyFirstRow(x => x.ProjectID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
         }
     }
 

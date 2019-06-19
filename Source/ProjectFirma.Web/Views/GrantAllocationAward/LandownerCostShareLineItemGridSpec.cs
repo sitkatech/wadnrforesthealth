@@ -59,13 +59,32 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditLandownerCostShareLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            //Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareDescription.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);
-            //Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            //Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareDate.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            //Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMiles.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemMiles, 125, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnAggregationType.Total);
-            //Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMileageRate.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemMileageRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            //Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareAmount.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemAmountForDisplay, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareNotes.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.Project.ToGridHeaderString(), a => UrlTemplate.MakeHrefString(a.Project.GetDetailUrl(), a.Project.ProjectName), 150, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(),
+                a => a.GrantAllocationAward.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(),
+                75, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStatus.GetFieldDefinitionLabel(), a => a.GetStatusDisplayName(), 125, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareStartDate.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemStartDate, 125, DhtmlxGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareEndDate.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemEndDate, 125, DhtmlxGridColumnFormatType.Date);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareFootprintAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareChippingAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemChippingAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostSharePruningAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemPruningAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareThinningAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemThinningAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareSlashAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemSlashAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMasticationAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrazingAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLopAndScatterAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBiomassRemovalAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareBroadcastBurnAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareHandPileBurnAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareOtherTreatmentAcres.GetFieldDefinitionLabel(), a => a.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres, 75, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
+            
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareAllocatedAmount.ToGridHeaderString(), a => a.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareTotalCost.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemTotalCost, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrantCost.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemGrantCost, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareNotes.ToGridHeaderString(), a => a.GrantAllocationAwardLandownerCostShareLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
         }
     }
 }
