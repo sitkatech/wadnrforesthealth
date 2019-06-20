@@ -721,9 +721,113 @@ namespace ProjectFirma.Web.Controllers
             var viewData = new EditContractorInvoiceViewData();
             return RazorPartialView<EditContractorInvoice, EditContractorInvoiceViewData, EditContractorInvoiceViewModel>(viewData, viewModel);
         }
+
+
+        [GrantAllocationAwardContractorInvoiceItemViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAwardContractorInvoice> ContractorInvoiceItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var contractorInvoices = grantAllocationAward.GrantAllocationAwardContractorInvoices;
+            var gridSpec = new ContractorInvoiceItemGridSpec(CurrentPerson, grantAllocationAward);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAwardContractorInvoice>(contractorInvoices.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardContractorInvoiceItemCreateFeature]
+        public PartialViewResult NewContractorInvoiceItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardContractorInvoiceItemViewModel()
+            {
+                GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID
+            };
+            return GrantAllocationAwardContractorInvoiceItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardContractorInvoiceItemCreateFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewContractorInvoiceItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditGrantAllocationAwardContractorInvoiceItemViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardContractorInvoiceItemViewEdit(viewModel);
+            }
+
+            var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
+            var contractorInvoiceType = GrantAllocationAwardContractorInvoiceType.All.Single(x => x.GrantAllocationAwardContractorInvoiceTypeID == viewModel.TypeID);
+            var contractorInvoice = GrantAllocationAwardContractorInvoice.CreateNewBlank(grantAllocationAward, contractorInvoiceType);
+            viewModel.UpdateModel(contractorInvoice);
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult GrantAllocationAwardContractorInvoiceItemViewEdit(EditGrantAllocationAwardContractorInvoiceItemViewModel viewModel)
+        {
+            var invoiceTypes = GrantAllocationAwardContractorInvoiceType.All;
+            var viewData = new EditGrantAllocationAwardContractorInvoiceItemViewData(invoiceTypes);
+            return RazorPartialView<EditGrantAllocationAwardContractorInvoiceItem, EditGrantAllocationAwardContractorInvoiceItemViewData, EditGrantAllocationAwardContractorInvoiceItemViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardContractorInvoiceItemDeleteFeature]
+        public PartialViewResult DeleteContractorInvoiceItem(GrantAllocationAwardContractorInvoicePrimaryKey grantAllocationAwardContractorInvoiceItemPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardContractorInvoiceItemPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteContractorInvoiceItem(grantAllocationAwardContractorInvoiceItemPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteContractorInvoiceItem(GrantAllocationAwardContractorInvoice grantAllocationAwardContractorInvoiceItem, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} \"{grantAllocationAwardContractorInvoiceItem.GrantAllocationAwardContractorInvoiceDescription}\"?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardContractorInvoiceItemDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteContractorInvoiceItem(GrantAllocationAwardContractorInvoicePrimaryKey grantAllocationAwardContractorInvoicePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var contractorInvoiceItem = grantAllocationAwardContractorInvoicePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteContractorInvoiceItem(contractorInvoiceItem, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} \"{contractorInvoiceItem.GrantAllocationAwardContractorInvoiceDescription}\" successfully deleted.";
+            contractorInvoiceItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+        [HttpGet]
+        [GrantAllocationAwardContractorInvoiceItemEditAsAdminFeature]
+        public PartialViewResult EditContractorInvoiceItem(GrantAllocationAwardContractorInvoicePrimaryKey grantAllocationAwardContractorInvoiceItemPrimaryKey)
+        {
+            var contractorInvoice = grantAllocationAwardContractorInvoiceItemPrimaryKey.EntityObject;
+            var viewModel = new EditGrantAllocationAwardContractorInvoiceItemViewModel(contractorInvoice);
+            return GrantAllocationAwardContractorInvoiceItemViewEdit(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardContractorInvoiceItemEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult EditContractorInvoiceItem(GrantAllocationAwardContractorInvoicePrimaryKey grantAllocationAwardContractorInvoiceItemPrimaryKey, EditGrantAllocationAwardContractorInvoiceItemViewModel viewModel)
+        {
+            var contractorInvoice = grantAllocationAwardContractorInvoiceItemPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return GrantAllocationAwardContractorInvoiceItemViewEdit(viewModel);
+            }
+            viewModel.UpdateModel(contractorInvoice);
+            return new ModalDialogFormJsonResult();
+        }
+
+
         #endregion "Contractor Invoice"
 
 
-        
+
     }
 }

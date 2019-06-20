@@ -4,11 +4,11 @@ using ProjectFirma.Web.Models;
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("Delete Grant Allocation Award Contractor Invoice")]
-    public class GrantAllocationAwardContractorInvoiceDeleteFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantAllocationAwardContractorInvoice>
+    public class GrantAllocationAwardContractorInvoiceItemDeleteFeature : FirmaFeatureWithContext, IFirmaBaseFeatureWithContext<GrantAllocationAwardContractorInvoice>
     {
         private readonly FirmaFeatureWithContextImpl<GrantAllocationAwardContractorInvoice> _firmaFeatureWithContextImpl;
 
-        public GrantAllocationAwardContractorInvoiceDeleteFeature()
+        public GrantAllocationAwardContractorInvoiceItemDeleteFeature()
             : base(new List<Role> { Role.SitkaAdmin, Role.Admin })
         {
             _firmaFeatureWithContextImpl = new FirmaFeatureWithContextImpl<GrantAllocationAwardContractorInvoice>(this);

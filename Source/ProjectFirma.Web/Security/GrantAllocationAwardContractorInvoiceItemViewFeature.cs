@@ -3,7 +3,7 @@
 namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View A Grant Allocation Award Contractor Invoice")]
-    public class GrantAllocationAwardContractorInvoiceViewFeature : AnonymousUnclassifiedFeature
+    public class GrantAllocationAwardContractorInvoiceItemViewFeature : AnonymousUnclassifiedFeature
     {
 
     }
