@@ -41,10 +41,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         [Required]
         public string GrantAllocationAwardName { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAward)]
-        [Required]
-        public Money GrantAllocationAwardAmount { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardExpirationDate)]
         [Required]
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
@@ -63,7 +59,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
             GrantAllocationAwardName = grantAllocationAward.GrantAllocationAwardName;
-            GrantAllocationAwardAmount = grantAllocationAward.GrantAllocationAwardAmount;
             if (grantAllocationAward.GrantAllocationAwardExpirationDate == DateTime.MinValue)
             {
                 GrantAllocationAwardExpirationDate = DateTime.Today;
@@ -84,7 +79,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             grantAllocationAward.GrantAllocationAwardID = GrantAllocationAwardID;
             grantAllocationAward.GrantAllocationAwardName = GrantAllocationAwardName;
-            grantAllocationAward.GrantAllocationAwardAmount = GrantAllocationAwardAmount;
             grantAllocationAward.GrantAllocationAwardExpirationDate = GrantAllocationAwardExpirationDate;
 
             grantAllocationAward.GrantAllocationID = GrantAllocationID;

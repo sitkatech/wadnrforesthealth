@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditIndirectCostViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditGrantAllocationAwardContractorInvoiceItemViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,11 +19,26 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
+using System.Globalization;
+using System.Web.Mvc;
+using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
-    public class EditIndirectCostViewData : FirmaUserControlViewData
+    public class EditGrantAllocationAwardContractorInvoiceItemViewData : FirmaUserControlViewData
     {
+        public IEnumerable<SelectListItem> InvoiceTypes { get; }
+
+
+        public EditGrantAllocationAwardContractorInvoiceItemViewData(IEnumerable<GrantAllocationAwardContractorInvoiceType> invoiceTypes)
+        {
+            InvoiceTypes = invoiceTypes.ToSelectList(x => x.GrantAllocationAwardContractorInvoiceTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationAwardContractorInvoiceTypeDisplayName);
+
+
+        }
+
     }
 
 }

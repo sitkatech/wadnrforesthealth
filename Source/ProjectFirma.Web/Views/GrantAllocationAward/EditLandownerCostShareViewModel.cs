@@ -30,18 +30,11 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     {
         public int GrantAllocationAwardID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareAllocationTotal)]
-        [Required]
-        public Money LandownerCostShareAllocationTotal { get; set; }
-
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareTargetFootprintAcreage)]
         public int LandownerCostShareTargetFootprintAcreage { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareTargetTotalAcreage)]
         public int LandownerCostShareTargetTotalAcreage { get; set; }
-
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareForester)]
-        public string LandownerCostShareForester { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -53,10 +46,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public EditLandownerCostShareViewModel(Models.GrantAllocationAward grantAllocationAward)
         {
             GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
-            LandownerCostShareAllocationTotal = grantAllocationAward.LandownerCostShareAllocationTotal ?? 0m;
             LandownerCostShareTargetFootprintAcreage = grantAllocationAward.LandownerCostShareTargetFootprintAcreage ?? 0;
             LandownerCostShareTargetTotalAcreage = grantAllocationAward.LandownerCostShareTargetTotalAcreage ?? 0;
-            LandownerCostShareForester = grantAllocationAward.LandownerCostShareForester;
 
         }
 
@@ -65,11 +56,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public void UpdateModel(Models.GrantAllocationAward grantAllocationAward)
         {
             grantAllocationAward.GrantAllocationAwardID = GrantAllocationAwardID;
-            grantAllocationAward.LandownerCostShareAllocationTotal = LandownerCostShareAllocationTotal;
             grantAllocationAward.LandownerCostShareTargetFootprintAcreage = LandownerCostShareTargetFootprintAcreage;
             grantAllocationAward.LandownerCostShareTargetTotalAcreage = LandownerCostShareTargetTotalAcreage;
-            grantAllocationAward.LandownerCostShareForester = LandownerCostShareForester;
-
         }
     }
 

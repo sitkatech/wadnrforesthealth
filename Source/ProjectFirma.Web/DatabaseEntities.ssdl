@@ -1294,21 +1294,12 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationAwardName" Type="varchar" Nullable="false" MaxLength="250" />
-    <Property Name="GrantAllocationAwardAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationAwardExpirationDate" Type="datetime" Nullable="false" />
-    <Property Name="IndirectCostAllocationTotal" Type="money" />
-    <Property Name="SuppliesAllocationTotal" Type="money" />
-    <Property Name="PersonnelAndBenefitsAllocationTotal" Type="money" />
-    <Property Name="PersonnelAndBenefitsForester" Type="varchar" MaxLength="255" />
-    <Property Name="TravelAllocationTotal" Type="money" />
-    <Property Name="TravelForester" Type="varchar" MaxLength="255" />
-    <Property Name="LandownerCostShareAllocationTotal" Type="money" />
     <Property Name="LandownerCostShareTargetFootprintAcreage" Type="int" />
     <Property Name="LandownerCostShareTargetTotalAcreage" Type="int" />
-    <Property Name="LandownerCostShareForester" Type="varchar" MaxLength="255" />
-    <Property Name="ContractorInvoiceAllocationTotal" Type="money" />
     <Property Name="ContractorInvoiceContractor" Type="varchar" MaxLength="255" />
     <Property Name="ContractorInvoiceTargetTotalAcreage" Type="int" />
+    <Property Name="GrantAllocationAwardCalendarStartYear" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationAwardContractorInvoice">
     <Key>

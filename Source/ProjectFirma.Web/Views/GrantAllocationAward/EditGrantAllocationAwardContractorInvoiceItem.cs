@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditPersonnelAndBenefits.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditGrantAllocationAwardContractorInvoiceItem.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -23,7 +23,7 @@ using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
-    public abstract class EditPersonnelAndBenefits : TypedWebPartialViewPage<EditPersonnelAndBenefitsViewData, EditPersonnelAndBenefitsViewModel>
+    public abstract class EditGrantAllocationAwardContractorInvoiceItem : TypedWebPartialViewPage<EditGrantAllocationAwardContractorInvoiceItemViewData, EditGrantAllocationAwardContractorInvoiceItemViewModel>
     {
     }
 

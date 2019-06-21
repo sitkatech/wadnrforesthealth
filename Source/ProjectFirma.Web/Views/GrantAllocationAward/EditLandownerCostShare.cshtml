@@ -34,15 +34,6 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.LandownerCostShareAllocationTotal)
-            </div>
-            <div class="col-sm-9">
-                @Html.EditorFor(m => m.LandownerCostShareAllocationTotal, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.LandownerCostShareAllocationTotal)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.LandownerCostShareTargetFootprintAcreage)
             </div>
             <div class="col-sm-9">
@@ -57,16 +48,6 @@
             <div class="col-sm-9">
                 @Html.EditorFor(m => m.LandownerCostShareTargetTotalAcreage, new { @class = "form-control", style = "width:100%" })
                 @Html.ValidationMessageFor(m => m.LandownerCostShareTargetTotalAcreage)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.LandownerCostShareForester)
-            </div>
-            <div class="col-sm-9">
-                @Html.TextBoxFor(m => m.LandownerCostShareForester, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.LandownerCostShareForester)
             </div>
         </div>
     </div>

@@ -105,10 +105,10 @@ create table dbo.GrantAllocationAwardLandownerCostShareLineItem (
 create table dbo.GrantAllocationAwardContractorInvoiceType (
 	GrantAllocationAwardContractorInvoiceTypeID int not null constraint PK_GrantAllocationAwardContractorInvoiceType_GrantAllocationAwardContractorInvoiceTypeID primary key,
 	GrantAllocationAwardContractorInvoiceTypeName varchar(255),
-	GrantAllocationAwardContractorInvoiceDisplayName varchar(255)
+	GrantAllocationAwardContractorInvoiceTypeDisplayName varchar(255)
 )
 
-insert into dbo.GrantAllocationAwardContractorInvoiceType (GrantAllocationAwardContractorInvoiceTypeID, GrantAllocationAwardContractorInvoiceTypeName, GrantAllocationAwardContractorInvoiceDisplayName) values
+insert into dbo.GrantAllocationAwardContractorInvoiceType (GrantAllocationAwardContractorInvoiceTypeID, GrantAllocationAwardContractorInvoiceTypeName, GrantAllocationAwardContractorInvoiceTypeDisplayName) values
 (1, 'Hourly', 'Hourly'),
 (2, 'Other', 'Other');
 

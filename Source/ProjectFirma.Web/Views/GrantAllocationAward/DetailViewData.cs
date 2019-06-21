@@ -41,10 +41,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string EditGrantAllocationAwardUrl { get; }
         public Models.GrantAllocationAward GrantAllocationAward { get;  }
         public bool UserHasEditGrantAllocationAwardPermissions { get;  }
-        public string EditIndirectCostUrl { get;  }
-        public string EditSuppliesUrl { get;  }
-        public string EditPersonnelAndBenefitsUrl { get;  }
-        public string EditTravelUrl { get;  }
+
         public string EditLandownerCostShareUrl { get;  }
         public string EditContractorInvoiceUrl { get;}
 
@@ -64,6 +61,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string LandownerCostShareLineItemGridName { get; }
         public string LandownerCostShareLineItemGridDataUrl { get; }
 
+        public ContractorInvoiceItemGridSpec ContractorInvoiceItemGridSpec { get; }
+        public string ContractorInvoiceItemGridName { get; }
+        public string ContractorInvoiceItemGridDataUrl { get; }
+
 
         public DetailViewData(Person currentPerson, 
                               Models.GrantAllocationAward grantAllocationAward, 
@@ -72,7 +73,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                               SuppliesLineItemGridSpec suppliesLineItemGridSpec,
                               PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec,
                               TravelLineItemGridSpec travelLineItemGridSpec,
-                              LandownerCostShareLineItemGridSpec landownerCostShareLineItemGridSpec
+                              LandownerCostShareLineItemGridSpec landownerCostShareLineItemGridSpec,
+                              ContractorInvoiceItemGridSpec contractorInvoiceItemGridSpec
                               ) : base(currentPerson)
         {
             PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
@@ -86,10 +88,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             EditGrantAllocationAwardUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.Edit(grantAllocationAward.PrimaryKey));
 
-            EditIndirectCostUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditIndirectCost(grantAllocationAward.PrimaryKey));
-            EditSuppliesUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditSupplies(grantAllocationAward.PrimaryKey));
-            EditPersonnelAndBenefitsUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditPersonnelAndBenefits(grantAllocationAward.PrimaryKey));
-            EditTravelUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditTravel(grantAllocationAward.PrimaryKey));
             EditLandownerCostShareUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditLandownerCostShare(grantAllocationAward.PrimaryKey));
             EditContractorInvoiceUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditContractorInvoice(grantAllocationAward.PrimaryKey));
 
@@ -108,6 +106,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             LandownerCostShareLineItemGridName = "grantAllocationAwardLandownerCostShareLineItemGridName";
             LandownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.LandownerCostShareLineItemGridJsonData(grantAllocationAward.PrimaryKey));
             LandownerCostShareLineItemGridSpec = landownerCostShareLineItemGridSpec;
+
+            ContractorInvoiceItemGridName = "grantAllocationAwardContractorInvoiceItemGridName";
+            ContractorInvoiceItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.ContractorInvoiceItemGridJsonData(grantAllocationAward.PrimaryKey));
+            ContractorInvoiceItemGridSpec = contractorInvoiceItemGridSpec;
 
 
         }

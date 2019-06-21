@@ -36,17 +36,17 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        protected GrantAllocationAwardContractorInvoiceType(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName)
+        protected GrantAllocationAwardContractorInvoiceType(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceTypeDisplayName)
         {
             GrantAllocationAwardContractorInvoiceTypeID = grantAllocationAwardContractorInvoiceTypeID;
             GrantAllocationAwardContractorInvoiceTypeName = grantAllocationAwardContractorInvoiceTypeName;
-            GrantAllocationAwardContractorInvoiceDisplayName = grantAllocationAwardContractorInvoiceDisplayName;
+            GrantAllocationAwardContractorInvoiceTypeDisplayName = grantAllocationAwardContractorInvoiceTypeDisplayName;
         }
 
         [Key]
         public int GrantAllocationAwardContractorInvoiceTypeID { get; private set; }
         public string GrantAllocationAwardContractorInvoiceTypeName { get; private set; }
-        public string GrantAllocationAwardContractorInvoiceDisplayName { get; private set; }
+        public string GrantAllocationAwardContractorInvoiceTypeDisplayName { get; private set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardContractorInvoiceTypeID; } }
 
@@ -117,13 +117,13 @@ namespace ProjectFirma.Web.Models
 
     public partial class GrantAllocationAwardContractorInvoiceTypeHourly : GrantAllocationAwardContractorInvoiceType
     {
-        private GrantAllocationAwardContractorInvoiceTypeHourly(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName) : base(grantAllocationAwardContractorInvoiceTypeID, grantAllocationAwardContractorInvoiceTypeName, grantAllocationAwardContractorInvoiceDisplayName) {}
+        private GrantAllocationAwardContractorInvoiceTypeHourly(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceTypeDisplayName) : base(grantAllocationAwardContractorInvoiceTypeID, grantAllocationAwardContractorInvoiceTypeName, grantAllocationAwardContractorInvoiceTypeDisplayName) {}
         public static readonly GrantAllocationAwardContractorInvoiceTypeHourly Instance = new GrantAllocationAwardContractorInvoiceTypeHourly(1, @"Hourly", @"Hourly");
     }
 
     public partial class GrantAllocationAwardContractorInvoiceTypeOther : GrantAllocationAwardContractorInvoiceType
     {
-        private GrantAllocationAwardContractorInvoiceTypeOther(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceDisplayName) : base(grantAllocationAwardContractorInvoiceTypeID, grantAllocationAwardContractorInvoiceTypeName, grantAllocationAwardContractorInvoiceDisplayName) {}
+        private GrantAllocationAwardContractorInvoiceTypeOther(int grantAllocationAwardContractorInvoiceTypeID, string grantAllocationAwardContractorInvoiceTypeName, string grantAllocationAwardContractorInvoiceTypeDisplayName) : base(grantAllocationAwardContractorInvoiceTypeID, grantAllocationAwardContractorInvoiceTypeName, grantAllocationAwardContractorInvoiceTypeDisplayName) {}
         public static readonly GrantAllocationAwardContractorInvoiceTypeOther Instance = new GrantAllocationAwardContractorInvoiceTypeOther(2, @"Other", @"Other");
     }
 }
