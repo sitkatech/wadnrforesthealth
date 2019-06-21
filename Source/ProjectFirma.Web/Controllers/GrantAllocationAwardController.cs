@@ -123,68 +123,10 @@ namespace ProjectFirma.Web.Controllers
 
 
         #region "Indirect Costs"
-        [HttpGet]
-        [GrantAllocationAwardEditAsAdminFeature]
-        public PartialViewResult EditIndirectCost(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            var viewModel = new EditIndirectCostViewModel(grantAllocationAward);
-            return IndirectCostViewEdit(viewModel);
-        }
 
-        [HttpPost]
-        [GrantAllocationAwardEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditIndirectCost(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditIndirectCostViewModel viewModel)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return IndirectCostViewEdit(viewModel);
-            }
-            viewModel.UpdateModel(grantAllocationAward);
-            return new ModalDialogFormJsonResult();
-        }
-
-
-        private PartialViewResult IndirectCostViewEdit(EditIndirectCostViewModel viewModel)
-        {
-
-            var viewData = new EditIndirectCostViewData();
-            return RazorPartialView<EditIndirectCost, EditIndirectCostViewData, EditIndirectCostViewModel>(viewData, viewModel);
-        }
         #endregion "Indirect Costs"
 
         #region "Supplies"
-        [HttpGet]
-        [GrantAllocationAwardEditAsAdminFeature]
-        public PartialViewResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            var viewModel = new EditSuppliesViewModel(grantAllocationAward);
-            return SuppliesViewEdit(viewModel);
-        }
-
-        [HttpPost]
-        [GrantAllocationAwardEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditSupplies(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditSuppliesViewModel viewModel)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return SuppliesViewEdit(viewModel);
-            }
-            viewModel.UpdateModel(grantAllocationAward);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult SuppliesViewEdit(EditSuppliesViewModel viewModel)
-        {
-            var viewData = new EditSuppliesViewData();
-            return RazorPartialView<EditSupplies, EditSuppliesViewData, EditSuppliesViewModel>(viewData, viewModel);
-        }
-
 
         [GrantAllocationAwardSuppliesLineItemViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationAwardSuppliesLineItem> SuppliesLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
@@ -289,35 +231,6 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Supplies"
 
         #region "Personnel & Benefits"
-        [HttpGet]
-        [GrantAllocationAwardEditAsAdminFeature]
-        public PartialViewResult EditPersonnelAndBenefits(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            var viewModel = new EditPersonnelAndBenefitsViewModel(grantAllocationAward);
-            return PersonnelAndBenefitsViewEdit(viewModel);
-        }
-
-        [HttpPost]
-        [GrantAllocationAwardEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditPersonnelAndBenefits(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditPersonnelAndBenefitsViewModel viewModel)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return PersonnelAndBenefitsViewEdit(viewModel);
-            }
-            viewModel.UpdateModel(grantAllocationAward);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult PersonnelAndBenefitsViewEdit(EditPersonnelAndBenefitsViewModel viewModel)
-        {
-            var viewData = new EditPersonnelAndBenefitsViewData();
-            return RazorPartialView<EditPersonnelAndBenefits, EditPersonnelAndBenefitsViewData, EditPersonnelAndBenefitsViewModel>(viewData, viewModel);
-        }
-
 
         [GrantAllocationAwardPersonnelAndBenefitsLineItemViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationAwardPersonnelAndBenefitsLineItem> PersonnelAndBenefitsLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
@@ -422,37 +335,6 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Personnel & Benefits"
 
         #region "Travel"
-        [HttpGet]
-        [GrantAllocationAwardEditAsAdminFeature]
-        public PartialViewResult EditTravel(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            var viewModel = new EditTravelViewModel(grantAllocationAward);
-            return TravelViewEdit(viewModel);
-        }
-
-        [HttpPost]
-        [GrantAllocationAwardEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditTravel(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditTravelViewModel viewModel)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return TravelViewEdit(viewModel);
-            }
-            viewModel.UpdateModel(grantAllocationAward);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult TravelViewEdit(EditTravelViewModel viewModel)
-        {
-            var viewData = new EditTravelViewData();
-            return RazorPartialView<EditTravel, EditTravelViewData, EditTravelViewModel>(viewData, viewModel);
-        }
-
-
-
 
         [GrantAllocationAwardTravelLineItemViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationAwardTravelLineItem> TravelLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)

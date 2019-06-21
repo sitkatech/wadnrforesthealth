@@ -308,19 +308,11 @@
           <ScalarProperty Name="GrantAllocationAwardName" ColumnName="GrantAllocationAwardName" />
           <ScalarProperty Name="GrantAllocationAwardAmount" ColumnName="GrantAllocationAwardAmount" />
           <ScalarProperty Name="GrantAllocationAwardExpirationDate" ColumnName="GrantAllocationAwardExpirationDate" />
-          <ScalarProperty Name="IndirectCostAllocationTotal" ColumnName="IndirectCostAllocationTotal" />
-          <ScalarProperty Name="SuppliesAllocationTotal" ColumnName="SuppliesAllocationTotal" />
-          <ScalarProperty Name="PersonnelAndBenefitsAllocationTotal" ColumnName="PersonnelAndBenefitsAllocationTotal" />
-          <ScalarProperty Name="PersonnelAndBenefitsForester" ColumnName="PersonnelAndBenefitsForester" />
-          <ScalarProperty Name="TravelAllocationTotal" ColumnName="TravelAllocationTotal" />
-          <ScalarProperty Name="TravelForester" ColumnName="TravelForester" />
-          <ScalarProperty Name="LandownerCostShareAllocationTotal" ColumnName="LandownerCostShareAllocationTotal" />
           <ScalarProperty Name="LandownerCostShareTargetFootprintAcreage" ColumnName="LandownerCostShareTargetFootprintAcreage" />
           <ScalarProperty Name="LandownerCostShareTargetTotalAcreage" ColumnName="LandownerCostShareTargetTotalAcreage" />
-          <ScalarProperty Name="LandownerCostShareForester" ColumnName="LandownerCostShareForester" />
-          <ScalarProperty Name="ContractorInvoiceAllocationTotal" ColumnName="ContractorInvoiceAllocationTotal" />
           <ScalarProperty Name="ContractorInvoiceContractor" ColumnName="ContractorInvoiceContractor" />
           <ScalarProperty Name="ContractorInvoiceTargetTotalAcreage" ColumnName="ContractorInvoiceTargetTotalAcreage" />
+          <ScalarProperty Name="GrantAllocationAwardCalendarStartYear" ColumnName="GrantAllocationAwardCalendarStartYear" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

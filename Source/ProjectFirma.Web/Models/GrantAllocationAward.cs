@@ -28,20 +28,31 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money IndirectTotal
+        public Money IndirectCostTotal
         {
             get { return IndirectCostApplicableAmount * 0.287m; }
         }
 
-        public Money IndirectBalance {
+        public Money IndirectCostAllocationTotal
+        {
             get
             {
-                if (IndirectCostAllocationTotal.HasValue)
-                {
-                    return IndirectCostAllocationTotal.Value - IndirectTotal;
-                }
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Where(x => x.CostTypeID == (int)CostTypeEnum.IndirectCosts).Sum(v => v.GrantAllocationBudgetLineItemAmount);
+            }
+        }
 
-                return 0 - IndirectTotal;
+        public Money IndirectCostBalance {
+            get
+            {
+                return IndirectCostAllocationTotal - IndirectCostTotal;
+            }
+        }
+
+        public Money SuppliesAllocationTotal
+        {
+            get
+            {
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Where(x => x.CostTypeID == (int)CostTypeEnum.Supplies).Sum(v => v.GrantAllocationBudgetLineItemAmount);
             }
         }
 
@@ -49,12 +60,15 @@ namespace ProjectFirma.Web.Models
             get
             {
                 Money lineItemTotal = GrantAllocationAwardSuppliesLineItems.Select(s => s.GrantAllocationAwardSuppliesLineItemAmount).Sum();
-                if (SuppliesAllocationTotal.HasValue)
-                {
-                    return SuppliesAllocationTotal.Value - lineItemTotal;
-                }
+                return SuppliesAllocationTotal - lineItemTotal;
+            }
+        }
 
-                return 0 - lineItemTotal;
+        public Money PersonnelAndBenefitsAllocationTotal
+        {
+            get
+            {
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Where(x => x.CostTypeID == (int)CostTypeEnum.Personnel || x.CostTypeID == (int)CostTypeEnum.Benefits).Sum(v => v.GrantAllocationBudgetLineItemAmount);
             }
         }
 
@@ -64,12 +78,15 @@ namespace ProjectFirma.Web.Models
                 //this is the sum of the TAR total(hourly total and fringe totals) of all personnel and benefit line items
                 var hourlyTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal).Sum();
                 var fringeTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal).Sum();
-                if (PersonnelAndBenefitsAllocationTotal.HasValue)
-                {
-                    return PersonnelAndBenefitsAllocationTotal.Value - (hourlyTotal + fringeTotal);
-                }
+                return PersonnelAndBenefitsAllocationTotal - (hourlyTotal + fringeTotal);
+            }
+        }
 
-                return 0 - (hourlyTotal + fringeTotal);
+        public Money TravelAllocationTotal
+        {
+            get
+            {
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Where(x => x.CostTypeID == (int)CostTypeEnum.Travel).Sum(v => v.GrantAllocationBudgetLineItemAmount);
             }
         }
 
@@ -77,59 +94,69 @@ namespace ProjectFirma.Web.Models
             get
             {
                 Money lineItemTotal = GrantAllocationAwardTravelLineItems.Select(s => s.GrantAllocationAwardTravelLineItemAmount.HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
-                if (TravelAllocationTotal.HasValue)
-                {
-                    return TravelAllocationTotal.Value - lineItemTotal;
-                }
-
-                return 0 - lineItemTotal;
+                return TravelAllocationTotal - lineItemTotal;
             }
         }
 
+        /// <summary>
+        ///     This is the combined total for both contractual type (Landowner Cost Share and Contractor Invoice)
+        /// </summary>
+        public Money ContractualAllocationTotal
+        {
+            get
+            {
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Where(x => x.CostTypeID == (int)CostTypeEnum.Contractual).Sum(v => v.GrantAllocationBudgetLineItemAmount);
+            }
+        }
+
+        //todo: tom fix this
         public Money LandownerCostShareAllocationBalance
         {
             get
             {
                 //this is the allocation total - sum of allocated amount from landowner cost share line items 
                 Money lineItemTotal = GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount).Sum();
-                if (LandownerCostShareAllocationTotal.HasValue)
-                {
-                    return LandownerCostShareAllocationTotal.Value - lineItemTotal;
-                }
+                //if (LandownerCostShareAllocationTotal.HasValue)
+                //{
+                //    return LandownerCostShareAllocationTotal.Value - lineItemTotal;
+                //}
 
                 return 0 - lineItemTotal;
             }
         }
 
+        //todo: tom fix this
         public decimal LandownerCostSharePercentAllocated
         {
             get
             {
                 //this is the sum of amount allocated from landowner cost share line items / allocation total
                 Money lineItemTotal = GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount).Sum();
-                if (LandownerCostShareAllocationTotal.HasValue)
-                {
-                    return lineItemTotal / LandownerCostShareAllocationTotal.Value;
-                }
+                //if (LandownerCostShareAllocationTotal.HasValue)
+                //{
+                //    return lineItemTotal / LandownerCostShareAllocationTotal.Value;
+                //}
                 return 0;
             }
         }
 
+        //todo: tom fix this
         public Money LandownerCostShareFundBalance
         {
             get
             {
                 //this is the allocation total - sum of grant cost from landowner cost share line items 
                 Money lineItemTotal = GrantAllocationAwardLandownerCostShareLineItems.Select(s => (decimal)s.GrantAllocationAwardLandownerCostShareLineItemGrantCost).Sum();
-                if (LandownerCostShareAllocationTotal.HasValue)
-                {
-                    return LandownerCostShareAllocationTotal.Value - lineItemTotal;
-                }
+                //if (LandownerCostShareAllocationTotal.HasValue)
+                //{
+                //    return LandownerCostShareAllocationTotal.Value - lineItemTotal;
+                //}
 
                 return 0 - lineItemTotal;
             }
         }
 
+        //todo: tom fix this
         public Money ContractorInvoiceAllocationBalance
         {
             get
@@ -137,10 +164,10 @@ namespace ProjectFirma.Web.Models
                 //todo: tom fix this calculation
                 //this is the allocation total - a sum of invoice total on contractor invoice line items
                 Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
-                if (ContractorInvoiceAllocationTotal.HasValue)
-                {
-                    return ContractorInvoiceAllocationTotal.Value - lineItemTotal;
-                }
+                //if (ContractorInvoiceAllocationTotal.HasValue)
+                //{
+                //    return ContractorInvoiceAllocationTotal.Value - lineItemTotal;
+                //}
 
                 return 0 - lineItemTotal;
             }
@@ -153,10 +180,10 @@ namespace ProjectFirma.Web.Models
                 //todo: tom fix this calculation
                 //this is the allocation total - a sum of invoice total on contractor invoice line items
                 Money lineItemTotal = 0m;// GrantAllocationAwardLandownerCostShareLineItems.Select(s => s.GrantAllocationAwardLandownerCostShareAllo .HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
-                if (ContractorInvoiceAllocationTotal.HasValue)
-                {
-                    return ContractorInvoiceAllocationTotal.Value - lineItemTotal;
-                }
+                //if (ContractorInvoiceAllocationTotal.HasValue)
+                //{
+                //    return ContractorInvoiceAllocationTotal.Value - lineItemTotal;
+                //}
 
                 return 0 - lineItemTotal;
             }

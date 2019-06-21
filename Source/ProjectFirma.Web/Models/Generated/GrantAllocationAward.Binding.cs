@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate, decimal? indirectCostAllocationTotal, decimal? suppliesAllocationTotal, decimal? personnelAndBenefitsAllocationTotal, string personnelAndBenefitsForester, decimal? travelAllocationTotal, string travelForester, decimal? landownerCostShareAllocationTotal, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string landownerCostShareForester, decimal? contractorInvoiceAllocationTotal, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage) : this()
+        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage, int? grantAllocationAwardCalendarStartYear) : this()
         {
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
@@ -42,19 +42,11 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationAwardName = grantAllocationAwardName;
             this.GrantAllocationAwardAmount = grantAllocationAwardAmount;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
-            this.IndirectCostAllocationTotal = indirectCostAllocationTotal;
-            this.SuppliesAllocationTotal = suppliesAllocationTotal;
-            this.PersonnelAndBenefitsAllocationTotal = personnelAndBenefitsAllocationTotal;
-            this.PersonnelAndBenefitsForester = personnelAndBenefitsForester;
-            this.TravelAllocationTotal = travelAllocationTotal;
-            this.TravelForester = travelForester;
-            this.LandownerCostShareAllocationTotal = landownerCostShareAllocationTotal;
             this.LandownerCostShareTargetFootprintAcreage = landownerCostShareTargetFootprintAcreage;
             this.LandownerCostShareTargetTotalAcreage = landownerCostShareTargetTotalAcreage;
-            this.LandownerCostShareForester = landownerCostShareForester;
-            this.ContractorInvoiceAllocationTotal = contractorInvoiceAllocationTotal;
             this.ContractorInvoiceContractor = contractorInvoiceContractor;
             this.ContractorInvoiceTargetTotalAcreage = contractorInvoiceTargetTotalAcreage;
+            this.GrantAllocationAwardCalendarStartYear = grantAllocationAwardCalendarStartYear;
         }
 
         /// <summary>
@@ -168,19 +160,11 @@ namespace ProjectFirma.Web.Models
         public string GrantAllocationAwardName { get; set; }
         public decimal GrantAllocationAwardAmount { get; set; }
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
-        public decimal? IndirectCostAllocationTotal { get; set; }
-        public decimal? SuppliesAllocationTotal { get; set; }
-        public decimal? PersonnelAndBenefitsAllocationTotal { get; set; }
-        public string PersonnelAndBenefitsForester { get; set; }
-        public decimal? TravelAllocationTotal { get; set; }
-        public string TravelForester { get; set; }
-        public decimal? LandownerCostShareAllocationTotal { get; set; }
         public int? LandownerCostShareTargetFootprintAcreage { get; set; }
         public int? LandownerCostShareTargetTotalAcreage { get; set; }
-        public string LandownerCostShareForester { get; set; }
-        public decimal? ContractorInvoiceAllocationTotal { get; set; }
         public string ContractorInvoiceContractor { get; set; }
         public int? ContractorInvoiceTargetTotalAcreage { get; set; }
+        public int? GrantAllocationAwardCalendarStartYear { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardID; } set { GrantAllocationAwardID = value; } }
 
@@ -195,9 +179,6 @@ namespace ProjectFirma.Web.Models
         public static class FieldLengths
         {
             public const int GrantAllocationAwardName = 250;
-            public const int PersonnelAndBenefitsForester = 255;
-            public const int TravelForester = 255;
-            public const int LandownerCostShareForester = 255;
             public const int ContractorInvoiceContractor = 255;
         }
     }
