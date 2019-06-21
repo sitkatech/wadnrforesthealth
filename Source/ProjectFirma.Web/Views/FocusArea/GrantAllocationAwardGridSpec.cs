@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             Add(Models.FieldDefinition.GrantAllocationAwardName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.GrantAllocationAwardName), 150, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardAmount.ToGridHeaderString(), x => x.GrantAllocationAwardAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add("Spent Amount", x => x.SpentAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
-            Add("Remaining Amount", x => x.RemainingAmount, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add("Remaining Amount", x => x.Balance, 90, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardExpirationDate.ToGridHeaderString(), x => x.GrantAllocationAwardExpirationDate.ToStringDate(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProgramIndexProjectCode.ToGridHeaderString(), x => x.GrantAllocation.GetAssociatedProgramIndexProjectCodePairsCommaDelimited(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
 

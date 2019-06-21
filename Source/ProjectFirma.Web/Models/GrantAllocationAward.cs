@@ -13,7 +13,7 @@ namespace ProjectFirma.Web.Models
             get { return GrantAllocationAwardAmount - 0m; }
         }
 
-        public decimal RemainingAmount => GrantAllocationAwardAmount - SpentAmount;
+        public decimal Balance => GrantAllocationAwardAmount - SpentAmount;
         public Money IndirectCostApplicableAmount
         {
             get
@@ -33,7 +33,7 @@ namespace ProjectFirma.Web.Models
             get { return IndirectCostApplicableAmount * 0.287m; }
         }
 
-        public Money IndirectRemaining {
+        public Money IndirectBalance {
             get
             {
                 if (IndirectCostAllocationTotal.HasValue)
@@ -45,7 +45,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money SuppliesAllocationRemaining {
+        public Money SuppliesAllocationBalance {
             get
             {
                 Money lineItemTotal = GrantAllocationAwardSuppliesLineItems.Select(s => s.GrantAllocationAwardSuppliesLineItemAmount).Sum();
@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money PersonnelAndBenefitsAllocationRemaining {
+        public Money PersonnelAndBenefitsAllocationBalance {
             get
             {
                 //this is the sum of the TAR total(hourly total and fringe totals) of all personnel and benefit line items
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money TravelAllocationRemaining {
+        public Money TravelAllocationBalance {
             get
             {
                 Money lineItemTotal = GrantAllocationAwardTravelLineItems.Select(s => s.GrantAllocationAwardTravelLineItemAmount.HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
@@ -86,7 +86,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money LandownerCostShareAllocationRemaining
+        public Money LandownerCostShareAllocationBalance
         {
             get
             {
@@ -115,7 +115,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money LandownerCostShareFundRemaining
+        public Money LandownerCostShareFundBalance
         {
             get
             {
@@ -130,7 +130,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money ContractorInvoiceAllocationRemaining
+        public Money ContractorInvoiceAllocationBalance
         {
             get
             {
@@ -146,7 +146,7 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public Money ContractorInvoiceLandownerCostShareRemaining
+        public Money ContractorInvoiceLandownerCostShareBalance
         {
             get
             {
