@@ -64,6 +64,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public string LandownerCostShareLineItemGridName { get; }
         public string LandownerCostShareLineItemGridDataUrl { get; }
 
+        public ContractorInvoiceItemGridSpec ContractorInvoiceItemGridSpec { get; }
+        public string ContractorInvoiceItemGridName { get; }
+        public string ContractorInvoiceItemGridDataUrl { get; }
+
 
         public DetailViewData(Person currentPerson, 
                               Models.GrantAllocationAward grantAllocationAward, 
@@ -72,7 +76,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                               SuppliesLineItemGridSpec suppliesLineItemGridSpec,
                               PersonnelAndBenefitsLineItemGridSpec personnelAndBenefitsLineItemGridSpec,
                               TravelLineItemGridSpec travelLineItemGridSpec,
-                              LandownerCostShareLineItemGridSpec landownerCostShareLineItemGridSpec
+                              LandownerCostShareLineItemGridSpec landownerCostShareLineItemGridSpec,
+                              ContractorInvoiceItemGridSpec contractorInvoiceItemGridSpec
                               ) : base(currentPerson)
         {
             PageTitle = $"{Models.FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()}: {grantAllocationAward.GrantAllocationAwardName}";
@@ -108,6 +113,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             LandownerCostShareLineItemGridName = "grantAllocationAwardLandownerCostShareLineItemGridName";
             LandownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.LandownerCostShareLineItemGridJsonData(grantAllocationAward.PrimaryKey));
             LandownerCostShareLineItemGridSpec = landownerCostShareLineItemGridSpec;
+
+            ContractorInvoiceItemGridName = "grantAllocationAwardContractorInvoiceItemGridName";
+            ContractorInvoiceItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.ContractorInvoiceItemGridJsonData(grantAllocationAward.PrimaryKey));
+            ContractorInvoiceItemGridSpec = contractorInvoiceItemGridSpec;
 
 
         }

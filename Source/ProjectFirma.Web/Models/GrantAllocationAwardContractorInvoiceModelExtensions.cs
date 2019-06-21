@@ -6,7 +6,7 @@ namespace ProjectFirma.Web.Models
 {
     public static class GrantAllocationAwardContractorInvoiceModelExtensions
     {
-        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.DeleteContractorInvoice(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.DeleteContractorInvoiceItem(UrlTemplate.Parameter1Int)));
         public static string GetDeleteContractorInvoiceUrl(this GrantAllocationAwardContractorInvoice contractorInvoice)
         {
             return DeleteUrlTemplate.ParameterReplace(contractorInvoice.GrantAllocationAwardContractorInvoiceID);

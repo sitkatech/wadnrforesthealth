@@ -97,6 +97,7 @@ namespace ProjectFirma.Web.Controllers
             var personnelAndBenefitsLineItemGridSpec = new PersonnelAndBenefitsLineItemGridSpec(CurrentPerson, grantAllocationAward);
             var travelLineItemGridSpec = new TravelLineItemGridSpec(CurrentPerson, grantAllocationAward);
             var landownerCostShareLineItemGridSpec = new LandownerCostShareLineItemGridSpec(CurrentPerson, grantAllocationAward);
+            var contractorInvoiceItemGridSpec = new ContractorInvoiceItemGridSpec(CurrentPerson, grantAllocationAward);
 
             var viewData = new DetailViewData(CurrentPerson, 
                                               grantAllocationAward, 
@@ -105,7 +106,8 @@ namespace ProjectFirma.Web.Controllers
                                               suppliesLineItemGridSpec, 
                                               personnelAndBenefitsLineItemGridSpec,
                                               travelLineItemGridSpec,
-                                              landownerCostShareLineItemGridSpec);
+                                              landownerCostShareLineItemGridSpec,
+                                              contractorInvoiceItemGridSpec);
             return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
         }
 
@@ -758,7 +760,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
             var contractorInvoiceType = GrantAllocationAwardContractorInvoiceType.All.Single(x => x.GrantAllocationAwardContractorInvoiceTypeID == viewModel.TypeID);
             var contractorInvoice = GrantAllocationAwardContractorInvoice.CreateNewBlank(grantAllocationAward, contractorInvoiceType);
-            viewModel.UpdateModel(contractorInvoice);
+            viewModel.UpdateModel(contractorInvoice, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
@@ -787,9 +789,9 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [GrantAllocationAwardContractorInvoiceItemDeleteFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteContractorInvoiceItem(GrantAllocationAwardContractorInvoicePrimaryKey grantAllocationAwardContractorInvoicePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteContractorInvoiceItem(GrantAllocationAwardContractorInvoicePrimaryKey grantAllocationAwardContractorInvoiceItemPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            var contractorInvoiceItem = grantAllocationAwardContractorInvoicePrimaryKey.EntityObject;
+            var contractorInvoiceItem = grantAllocationAwardContractorInvoiceItemPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
                 return ViewDeleteContractorInvoiceItem(contractorInvoiceItem, viewModel);
@@ -820,7 +822,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return GrantAllocationAwardContractorInvoiceItemViewEdit(viewModel);
             }
-            viewModel.UpdateModel(contractorInvoice);
+            viewModel.UpdateModel(contractorInvoice, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 

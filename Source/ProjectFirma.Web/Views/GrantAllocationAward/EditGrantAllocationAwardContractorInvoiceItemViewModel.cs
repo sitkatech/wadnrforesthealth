@@ -20,6 +20,7 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -28,38 +29,66 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditGrantAllocationAwardContractorInvoiceItemViewModel : FormViewModel
     {
-        public int GrantAllocationAwardTravelLineItemID { get; set; }
+        public int GrantAllocationAwardContractorInvoiceID { get; set; }
         public int GrantAllocationAwardID { get; set; }
 
 
-        [StringLength(Models.GrantAllocationAwardTravelLineItem.FieldLengths.GrantAllocationAwardTravelLineItemDescription)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelDescription)]
+        [StringLength(Models.GrantAllocationAwardContractorInvoice.FieldLengths.GrantAllocationAwardContractorInvoiceDescription)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceDescription)]
         [Required]
         public string Description { get; set; }
 
-        [StringLength(GrantAllocationAwardTravelLineItem.FieldLengths.GrantAllocationAwardTravelLineItemTarOrMonth)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelTarOrMonth)]
+        [StringLength(GrantAllocationAwardContractorInvoice.FieldLengths.GrantAllocationAwardContractorInvoiceNumber)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceNumber)]
         [Required]
-        public string TarOrMonth { get; set; }
+        public string InvoiceNumber { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelDate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceDate)]
         [Required]
         public DateTime Date { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelType)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceType)]
         [Required]
         public int TypeID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelMiles)]
-        public int Miles { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceForemanHours)]
+        public decimal? ForemanHours { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelMileageRate)]
-        public Money MileageRate { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceForemanRate)]
+        public Money? ForemanRate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelAmount)]
-        public Money Amount { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceLaborHours)]
+        public decimal? LaborHours { get; set; }
 
-        [StringLength(GrantAllocationAwardTravelLineItem.FieldLengths.GrantAllocationAwardTravelLineItemNotes)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceLaborRate)]
+        public Money? LaborRate { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceGrappleHours)]
+        public decimal? GrappleHours { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceGrappleRate)]
+        public Money? GrappleRate { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceForemanHours)]
+        public decimal? MasticationHours { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceForemanRate)]
+        public Money? MasticationRate { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceTotal)]
+        public Money? Total { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceTaxRate)]
+        public decimal? TaxRate { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceAcresReported)]
+        public decimal? AcresReported { get; set; }
+
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceDocumentUpload)]
+        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
+        public HttpPostedFileBase FileResourceData { get; set; }
+
+        [StringLength(GrantAllocationAwardContractorInvoice.FieldLengths.GrantAllocationAwardContractorInvoiceNotes)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelNotes)]
         public string Notes { get; set; }
 
@@ -71,74 +100,118 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public EditGrantAllocationAwardContractorInvoiceItemViewModel()
         {
             Date = DateTime.Today;
-            //Default to Transportation Type
-            TypeID = GrantAllocationAwardTravelLineItemType.Transportation.GrantAllocationAwardTravelLineItemTypeID;
+            //Default to Hourly Type
+            TypeID = GrantAllocationAwardContractorInvoiceType.Hourly.GrantAllocationAwardContractorInvoiceTypeID;
         }
 
-        public EditGrantAllocationAwardContractorInvoiceItemViewModel(Models.GrantAllocationAwardTravelLineItem grantAllocationAwardTravelLineItem)
+        public EditGrantAllocationAwardContractorInvoiceItemViewModel(Models.GrantAllocationAwardContractorInvoice grantAllocationAwardContractorInvoice)
         {
-            GrantAllocationAwardTravelLineItemID = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemID;
-            GrantAllocationAwardID = grantAllocationAwardTravelLineItem.GrantAllocationAwardID;
+            GrantAllocationAwardContractorInvoiceID = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceID;
+            GrantAllocationAwardID = grantAllocationAwardContractorInvoice.GrantAllocationAwardID;
 
-            Description = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDescription;
-            TarOrMonth = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTarOrMonth;
-            if (grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDate == DateTime.MinValue)
+            Description = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceDescription;
+            InvoiceNumber = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceNumber;
+            if (grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceDate == DateTime.MinValue)
             {
                 Date = DateTime.Today;
             }
             else
             {
-                Date = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDate;
+                Date = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceDate;
             }
 
-            TypeID = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTypeID;
+            TypeID = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTypeID;
             switch (TypeID)
             {
-                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Transportation:
-                    Miles = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles ?? 0;
-                    MileageRate = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate ?? 0m;
-                    Amount = 0m;
+                case (int)GrantAllocationAwardContractorInvoiceTypeEnum.Hourly:
+                    ForemanHours = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceForemanHours ?? 0m;
+                    ForemanRate = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceForemanRate ?? 0m;
+                    LaborHours = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceLaborHours ?? 0m;
+                    LaborRate = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceLaborRate ?? 0m;
+                    GrappleHours = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceGrappleHours ?? 0m;
+                    GrappleRate = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceGrappleRate ?? 0m;
+                    MasticationHours = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceMasticationHours ?? 0m;
+                    MasticationRate = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceMasticationRate ?? 0m;
+                    Total = 0m;
                     break;
-                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Other:
-                    Miles = 0;
-                    MileageRate = 0m;
-                    Amount = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount ?? 0m;
+                case (int)GrantAllocationAwardContractorInvoiceTypeEnum.Other:
+                    ForemanHours = null;
+                    ForemanRate =  null;
+                    LaborHours = null;
+                    LaborRate = null;
+                    GrappleHours = null;
+                    GrappleRate = null;
+                    MasticationHours = null;
+                    MasticationRate = null;
+                    Total = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTotal ?? 0m;
                     break;
                 default:
-                    throw new Exception($"Unhandled TypeID {TypeID} for GrantAllocationAwardTravelLineItemTypeEnum in EditGrantAllocationAwardTravelLineItemViewModel");
+                    throw new Exception($"Unhandled TypeID {TypeID} for GrantAllocationAwardContractorInvoiceTypeEnum in EditGrantAllocationAwardContractorInvoiceItemViewModel");
             }
+
+            TaxRate = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTaxRate;
+            AcresReported = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceAcresReported;
+            //FileResourceID = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceFileResourceID;
             
-            Notes = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemNotes;
+            Notes = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceNotes;
         }
 
 
 
-        public void UpdateModel(Models.GrantAllocationAwardTravelLineItem grantAllocationAwardTravelLineItem)
+        public void UpdateModel(Models.GrantAllocationAwardContractorInvoice grantAllocationAwardContractorInvoice, Person currentPerson)
         {
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemID = GrantAllocationAwardTravelLineItemID;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardID = GrantAllocationAwardID;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDescription = Description;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTarOrMonth = TarOrMonth;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDate = Date;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTypeID = TypeID;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceID = GrantAllocationAwardContractorInvoiceID;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardID = GrantAllocationAwardID;
+
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceDescription = Description;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceNumber = InvoiceNumber;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceDate = Date;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTypeID = TypeID;
             switch (TypeID)
             {
-                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Transportation:
-                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles = Miles;
-                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate = MileageRate;
-                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount = null;
+                case (int)GrantAllocationAwardContractorInvoiceTypeEnum.Hourly:
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceForemanHours = ForemanHours;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceForemanRate = ForemanRate;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceLaborHours = LaborHours;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceLaborRate = LaborRate;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceGrappleHours = GrappleHours;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceGrappleRate = GrappleRate;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceMasticationHours = MasticationHours;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceMasticationRate = MasticationRate;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTotal = null;
                     break;
-                case (int)GrantAllocationAwardTravelLineItemTypeEnum.Other:
-                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMiles = null;
-                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemMileageRate = null;
-                    grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemAmount = Amount;
+                case (int)GrantAllocationAwardContractorInvoiceTypeEnum.Other:
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceForemanHours = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceForemanRate = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceLaborHours = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceLaborRate = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceGrappleHours = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceGrappleRate = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceMasticationHours = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceMasticationRate = null;
+                    grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTotal = Total;
                     break;
                 default:
-                    throw new Exception($"Unhandled TypeID {TypeID} for GrantAllocationAwardTravelLineItemTypeEnum in EditGrantAllocationAwardTravelLineItemViewModel");
+                    throw new Exception($"Unhandled TypeID {TypeID} for GrantAllocationAwardContractorInvoiceTypeEnum in EditGrantAllocationAwardContractorInvoiceItemViewModel");
             }
 
-            
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemNotes = Notes;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceTaxRate = TaxRate;
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceAcresReported = AcresReported;
+
+            if (FileResourceData != null)
+            {
+                var currentFileResource = grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceFileResource;
+                grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceFileResource = null;
+                // Delete old file, if present
+                if (currentFileResource != null)
+                {
+                    HttpRequestStorage.DatabaseEntities.SaveChanges();
+                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentFileResource);
+                }
+                grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(FileResourceData, currentPerson);
+            }
+
+            grantAllocationAwardContractorInvoice.GrantAllocationAwardContractorInvoiceNotes = Notes;
 
         }
     }

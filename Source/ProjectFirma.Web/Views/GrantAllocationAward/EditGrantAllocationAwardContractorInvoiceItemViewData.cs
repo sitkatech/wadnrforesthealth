@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="EditGrantAllocationAwardTravelLineItemViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="EditGrantAllocationAwardContractorInvoiceItemViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -29,12 +29,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditGrantAllocationAwardContractorInvoiceItemViewData : FirmaUserControlViewData
     {
-        public IEnumerable<SelectListItem> TravelTypes { get; }
+        public IEnumerable<SelectListItem> InvoiceTypes { get; }
 
 
-        public EditGrantAllocationAwardContractorInvoiceItemViewData(IEnumerable<GrantAllocationAwardTravelLineItemType> travelTypes)
+        public EditGrantAllocationAwardContractorInvoiceItemViewData(IEnumerable<GrantAllocationAwardContractorInvoiceType> invoiceTypes)
         {
-            TravelTypes = travelTypes.ToSelectList(x => x.GrantAllocationAwardTravelLineItemTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationAwardTravelLineItemTypeDisplayName);
+            InvoiceTypes = invoiceTypes.ToSelectList(x => x.GrantAllocationAwardContractorInvoiceTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationAwardContractorInvoiceTypeDisplayName);
 
 
         }

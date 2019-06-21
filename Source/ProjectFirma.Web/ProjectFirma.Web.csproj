@@ -822,6 +822,7 @@
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\LandownerCostShareLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\PersonnelAndBenefitsLineItemGridSpec.cs" />
+    <Compile Include="Views\GrantAllocationAward\ContractorInvoiceItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\TravelLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocationAward\SuppliesLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetVsActualsGridSpec.cs" />
