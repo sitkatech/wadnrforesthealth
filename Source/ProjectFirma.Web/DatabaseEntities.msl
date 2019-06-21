@@ -306,7 +306,6 @@
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="GrantAllocationAwardName" ColumnName="GrantAllocationAwardName" />
-          <ScalarProperty Name="GrantAllocationAwardAmount" ColumnName="GrantAllocationAwardAmount" />
           <ScalarProperty Name="GrantAllocationAwardExpirationDate" ColumnName="GrantAllocationAwardExpirationDate" />
           <ScalarProperty Name="LandownerCostShareTargetFootprintAcreage" ColumnName="LandownerCostShareTargetFootprintAcreage" />
           <ScalarProperty Name="LandownerCostShareTargetTotalAcreage" ColumnName="LandownerCostShareTargetTotalAcreage" />

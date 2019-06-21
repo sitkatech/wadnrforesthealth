@@ -1379,7 +1379,6 @@
     <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
     <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationAwardName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
-    <Property Name="GrantAllocationAwardAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardExpirationDate" Type="DateTime" Nullable="false" />
     <Property Name="LandownerCostShareTargetFootprintAcreage" Type="Int32" />
     <Property Name="LandownerCostShareTargetTotalAcreage" Type="Int32" />

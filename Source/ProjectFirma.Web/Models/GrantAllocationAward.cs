@@ -7,10 +7,24 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString => GrantAllocationAwardName;
 
+        
+        public Money GrantAllocationAwardAmount
+        {
+            get
+            {
+                //Sum of all the budget line items for this grant allocation
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Sum(v => v.GrantAllocationBudgetLineItemAmount);
+            }
+        }
+
         //todo: tom this is not right
         public decimal SpentAmount
         {
-            get { return GrantAllocationAwardAmount - 0m; }
+            get
+            {
+                var totalCosts = PersonnelAndBenefitsTotalCost;
+                return GrantAllocationAwardAmount - 0m;
+            }
         }
 
         public decimal Balance => GrantAllocationAwardAmount - SpentAmount;
@@ -72,13 +86,24 @@ namespace ProjectFirma.Web.Models
             }
         }
 
+        public Money PersonnelAndBenefitsTotalCost
+        {
+            get
+            {
+                //this is the sum of the TAR total(hourly total and fringe totals) of all personnel and benefit line items
+                var hourlyTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal).Sum();
+                var fringeTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal).Sum();
+                return (hourlyTotal + fringeTotal);
+            }
+        }
+
         public Money PersonnelAndBenefitsAllocationBalance {
             get
             {
                 //this is the sum of the TAR total(hourly total and fringe totals) of all personnel and benefit line items
                 var hourlyTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal).Sum();
                 var fringeTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal).Sum();
-                return PersonnelAndBenefitsAllocationTotal - (hourlyTotal + fringeTotal);
+                return PersonnelAndBenefitsAllocationTotal - PersonnelAndBenefitsTotalCost;
             }
         }
 

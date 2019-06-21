@@ -34,13 +34,12 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage, int? grantAllocationAwardCalendarStartYear) : this()
+        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage, int? grantAllocationAwardCalendarStartYear) : this()
         {
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
             this.FocusAreaID = focusAreaID;
             this.GrantAllocationAwardName = grantAllocationAwardName;
-            this.GrantAllocationAwardAmount = grantAllocationAwardAmount;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
             this.LandownerCostShareTargetFootprintAcreage = landownerCostShareTargetFootprintAcreage;
             this.LandownerCostShareTargetTotalAcreage = landownerCostShareTargetTotalAcreage;
@@ -52,7 +51,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationID, int focusAreaID, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate) : this()
+        public GrantAllocationAward(int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -60,14 +59,13 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationID = grantAllocationID;
             this.FocusAreaID = focusAreaID;
             this.GrantAllocationAwardName = grantAllocationAwardName;
-            this.GrantAllocationAwardAmount = grantAllocationAwardAmount;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationAward(GrantAllocation grantAllocation, FocusArea focusArea, string grantAllocationAwardName, decimal grantAllocationAwardAmount, DateTime grantAllocationAwardExpirationDate) : this()
+        public GrantAllocationAward(GrantAllocation grantAllocation, FocusArea focusArea, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -78,7 +76,6 @@ namespace ProjectFirma.Web.Models
             this.FocusArea = focusArea;
             focusArea.GrantAllocationAwards.Add(this);
             this.GrantAllocationAwardName = grantAllocationAwardName;
-            this.GrantAllocationAwardAmount = grantAllocationAwardAmount;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
         }
 
@@ -87,7 +84,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantAllocationAward CreateNewBlank(GrantAllocation grantAllocation, FocusArea focusArea)
         {
-            return new GrantAllocationAward(grantAllocation, focusArea, default(string), default(decimal), default(DateTime));
+            return new GrantAllocationAward(grantAllocation, focusArea, default(string), default(DateTime));
         }
 
         /// <summary>
@@ -158,7 +155,6 @@ namespace ProjectFirma.Web.Models
         public int GrantAllocationID { get; set; }
         public int FocusAreaID { get; set; }
         public string GrantAllocationAwardName { get; set; }
-        public decimal GrantAllocationAwardAmount { get; set; }
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
         public int? LandownerCostShareTargetFootprintAcreage { get; set; }
         public int? LandownerCostShareTargetTotalAcreage { get; set; }

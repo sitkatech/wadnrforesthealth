@@ -1294,7 +1294,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationID" Type="int" Nullable="false" />
     <Property Name="FocusAreaID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationAwardName" Type="varchar" Nullable="false" MaxLength="250" />
-    <Property Name="GrantAllocationAwardAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationAwardExpirationDate" Type="datetime" Nullable="false" />
     <Property Name="LandownerCostShareTargetFootprintAcreage" Type="int" />
     <Property Name="LandownerCostShareTargetTotalAcreage" Type="int" />

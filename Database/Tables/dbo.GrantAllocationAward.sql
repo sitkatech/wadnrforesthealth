@@ -7,7 +7,6 @@ CREATE TABLE [dbo].[GrantAllocationAward](
 	[GrantAllocationID] [int] NOT NULL,
 	[FocusAreaID] [int] NOT NULL,
 	[GrantAllocationAwardName] [varchar](250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[GrantAllocationAwardAmount] [money] NOT NULL,
 	[GrantAllocationAwardExpirationDate] [datetime] NOT NULL,
 	[LandownerCostShareTargetFootprintAcreage] [int] NULL,
 	[LandownerCostShareTargetTotalAcreage] [int] NULL,

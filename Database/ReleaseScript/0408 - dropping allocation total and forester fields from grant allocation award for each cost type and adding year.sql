@@ -1,6 +1,6 @@
 --Drop the AllocationTotals
 alter table dbo.GrantAllocationAward
-drop column IndirectCostAllocationTotal, SuppliesAllocationTotal, PersonnelAndBenefitsAllocationTotal, TravelAllocationTotal, LandownerCostShareAllocationTotal, ContractorInvoiceAllocationTotal
+drop column GrantAllocationAwardAmount, IndirectCostAllocationTotal, SuppliesAllocationTotal, PersonnelAndBenefitsAllocationTotal, TravelAllocationTotal, LandownerCostShareAllocationTotal, ContractorInvoiceAllocationTotal
 
 
 --Drop the ForesterFields
