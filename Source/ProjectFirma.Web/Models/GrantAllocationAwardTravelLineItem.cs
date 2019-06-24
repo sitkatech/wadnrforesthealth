@@ -6,19 +6,17 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString => GrantAllocationAwardTravelLineItemDescription;
 
-        public Money GrantAllocationAwardTravelLineItemAmountForDisplay
+        public Money GrantAllocationAwardTravelLineItemCalculatedAmount
         {
             get
             {
                 if (this.GrantAllocationAwardTravelLineItemTypeID == (int) GrantAllocationAwardTravelLineItemTypeEnum.Transportation)
                 {
-                    return (Money) ((GrantAllocationAwardTravelLineItemMiles ?? 0) * GrantAllocationAwardTravelLineItemMileageRate);
+                    return (GrantAllocationAwardTravelLineItemMiles ?? 0) * (GrantAllocationAwardTravelLineItemMileageRate ?? 0);
                 }
-                else
-                {
-                    return (Money) (GrantAllocationAwardTravelLineItemAmount ?? 0m);
-                }
-                
+
+                return GrantAllocationAwardTravelLineItemAmount ?? 0m;
+
             }
         }
     }

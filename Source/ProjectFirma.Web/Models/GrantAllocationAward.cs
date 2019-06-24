@@ -32,13 +32,12 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                //todo: tom fix this
                 //This is the sum of the Supplies Total, Personnel&Benefits TAR amount total, and travel total
                 var suppliesTotal = this.GrantAllocationAwardSuppliesLineItems.Select(x => x.GrantAllocationAwardSuppliesLineItemAmount).Sum();
                 var personnelAndBenefitsTarTotal = this.GrantAllocationAwardPersonnelAndBenefitsLineItems.Select(x => (decimal)x.GrantAllocationAwardPersonnelAndBenefitsLineItemTarTotal).Sum();
-                var travelTotal = this.GrantAllocationAwardTravelLineItems.Where(x => x.GrantAllocationAwardTravelLineItemAmount != null).Select(x => x.GrantAllocationAwardTravelLineItemAmount).Sum();
+                var travelTotal = this.GrantAllocationAwardTravelLineItems.ToList().Select(x => (decimal)x.GrantAllocationAwardTravelLineItemCalculatedAmount).Sum();
 
-                return (Money)suppliesTotal + personnelAndBenefitsTarTotal + (Money)travelTotal;
+                return (Money)suppliesTotal + personnelAndBenefitsTarTotal + travelTotal;
             }
         }
 
@@ -118,7 +117,7 @@ namespace ProjectFirma.Web.Models
         public Money TravelAllocationBalance {
             get
             {
-                Money lineItemTotal = GrantAllocationAwardTravelLineItems.Select(s => s.GrantAllocationAwardTravelLineItemAmount.HasValue ? s.GrantAllocationAwardTravelLineItemAmount.Value : 0).Sum();
+                Money lineItemTotal = GrantAllocationAwardTravelLineItems.Select(s => (decimal)s.GrantAllocationAwardTravelLineItemCalculatedAmount).Sum();
                 return TravelAllocationTotal - lineItemTotal;
             }
         }
