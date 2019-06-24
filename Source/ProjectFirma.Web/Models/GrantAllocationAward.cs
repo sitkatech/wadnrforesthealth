@@ -13,7 +13,7 @@ namespace ProjectFirma.Web.Models
             get
             {
                 //Sum of all the budget line items for this grant allocation
-                return this.GrantAllocation.GrantAllocationBudgetLineItems.Sum(v => v.GrantAllocationBudgetLineItemAmount);
+                return this.GrantAllocation.GrantAllocationBudgetLineItems.Where(x => x.CostTypeID == (int)CostTypeEnum.IndirectCosts || x.CostTypeID == (int)CostTypeEnum.Supplies || x.CostTypeID == (int)CostTypeEnum.Personnel || x.CostTypeID == (int)CostTypeEnum.Benefits || x.CostTypeID == (int)CostTypeEnum.Contractual || x.CostTypeID == (int)CostTypeEnum.Travel).Sum(v => v.GrantAllocationBudgetLineItemAmount);
             }
         }
 
