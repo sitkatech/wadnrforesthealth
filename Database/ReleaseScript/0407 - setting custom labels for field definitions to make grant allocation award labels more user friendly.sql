@@ -142,7 +142,7 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1693, 394, NULL, N'Date')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1694, 365, NULL, NULL)
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1694, 365, NULL, N'Indirect Cost')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1695, 398, NULL, N'Amount')
 GO
@@ -322,6 +322,14 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1774, 462, N'<p>This is the Award Amount minus the Spent Amount</p>
 ', N'Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1775, 400, NULL, N'Landowner Cost Share')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1776, 378, NULL, N'Personnel & Benefits')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1777, 370, NULL, N'Supplies')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1778, 388, NULL, N'Travel')
 GO
 SET IDENTITY_INSERT [dbo].[FieldDefinitionData] OFF
 GO
