@@ -36,8 +36,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public TravelLineItemGridSpec(Person currentPerson, Models.GrantAllocationAward grantAllocationAward)
         {
             ShowFilterBar = true;
-            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel();
-            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabelPluralized();
+            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardTravelLineItem.GetFieldDefinitionLabel();
+            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardTravelLineItem.GetFieldDefinitionLabelPluralized();
 
             bool hasDeletePermission = new GrantAllocationAwardTravelLineItemDeleteFeature().HasPermissionByPerson(currentPerson);
             bool hasEditPermission = new GrantAllocationAwardTravelLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);

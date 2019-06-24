@@ -36,8 +36,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public PersonnelAndBenefitsLineItemGridSpec(Person currentPerson, Models.GrantAllocationAward grantAllocationAward)
         {
             ShowFilterBar = true;
-            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel();
-            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabelPluralized();
+            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsLineItem.GetFieldDefinitionLabel();
+            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsLineItem.GetFieldDefinitionLabelPluralized();
 
             bool hasDeletePermission = new GrantAllocationAwardPersonnelAndBenefitsLineItemDeleteFeature().HasPermissionByPerson(currentPerson);
             bool hasEditPermission = new GrantAllocationAwardPersonnelAndBenefitsLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);

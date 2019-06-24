@@ -17,13 +17,12 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        //todo: tom this is not right
         public decimal SpentAmount
         {
             get
             {
-                var totalCosts = IndirectCostTotal + SuppliesAllocationTotal + PersonnelAndBenefitsTotalCost + TravelLineItemSum + ContractualLineItemSum;
-                return GrantAllocationAwardAmount - totalCosts;
+                var totalCosts = IndirectCostTotal + SuppliesLineItemAmountSum + PersonnelAndBenefitsTotalCost + TravelLineItemSum + ContractualLineItemSum;
+                return totalCosts;
             }
         }
 

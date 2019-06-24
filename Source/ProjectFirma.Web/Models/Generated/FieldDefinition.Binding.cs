@@ -287,6 +287,16 @@ namespace ProjectFirma.Web.Models
         public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceAcresReported GrantAllocationAwardContractorInvoiceAcresReported = FieldDefinitionGrantAllocationAwardContractorInvoiceAcresReported.Instance;
         public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceDocumentUpload GrantAllocationAwardContractorInvoiceDocumentUpload = FieldDefinitionGrantAllocationAwardContractorInvoiceDocumentUpload.Instance;
         public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceNotes GrantAllocationAwardContractorInvoiceNotes = FieldDefinitionGrantAllocationAwardContractorInvoiceNotes.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractual GrantAllocationAwardContractual = FieldDefinitionGrantAllocationAwardContractual.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractualAllocationTotal GrantAllocationAwardContractualAllocationTotal = FieldDefinitionGrantAllocationAwardContractualAllocationTotal.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractualAllocationBalance GrantAllocationAwardContractualAllocationBalance = FieldDefinitionGrantAllocationAwardContractualAllocationBalance.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesLineItem GrantAllocationAwardSuppliesLineItem = FieldDefinitionGrantAllocationAwardSuppliesLineItem.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsLineItem GrantAllocationAwardPersonnelAndBenefitsLineItem = FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsLineItem.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardTravelLineItem GrantAllocationAwardTravelLineItem = FieldDefinitionGrantAllocationAwardTravelLineItem.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareLineItem GrantAllocationAwardLandownerCostShareLineItem = FieldDefinitionGrantAllocationAwardLandownerCostShareLineItem.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceLineItem GrantAllocationAwardContractorInvoiceLineItem = FieldDefinitionGrantAllocationAwardContractorInvoiceLineItem.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardSpentAmount GrantAllocationAwardSpentAmount = FieldDefinitionGrantAllocationAwardSpentAmount.Instance;
+        public static readonly FieldDefinitionGrantAllocationAwardBalance GrantAllocationAwardBalance = FieldDefinitionGrantAllocationAwardBalance.Instance;
 
         public static readonly List<FieldDefinition> All;
         public static readonly ReadOnlyDictionary<int, FieldDefinition> AllLookupDictionary;
@@ -296,7 +306,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FieldDefinition()
         {
-            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, TotalRequestedInvoicePaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectBalance, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationBalance, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsDescription, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationBalance, GrantAllocationAwardTravelDescription, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationBalance, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundBalance, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationBalance, GrantAllocationAwardContractorInvoiceLandownerCostShareBalance, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationBalance, GrantAllocationAwardLandownerCostShareStatus, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, GrantAllocationAwardLandownerCostShareNotes, GrantAllocationAwardLandownerCostShareAllocatedAmount, GrantAllocationAwardLandownerCostShareTotalCost, GrantAllocationAwardLandownerCostShareGrantCost, GrantAllocationAwardContractorInvoiceDescription, GrantAllocationAwardContractorInvoiceNumber, GrantAllocationAwardContractorInvoiceDate, GrantAllocationAwardContractorInvoiceType, GrantAllocationAwardContractorInvoiceForemanHours, GrantAllocationAwardContractorInvoiceForemanRate, GrantAllocationAwardContractorInvoiceLaborHours, GrantAllocationAwardContractorInvoiceLaborRate, GrantAllocationAwardContractorInvoiceGrappleHours, GrantAllocationAwardContractorInvoiceGrappleRate, GrantAllocationAwardContractorInvoiceMasticationHours, GrantAllocationAwardContractorInvoiceMasticationRate, GrantAllocationAwardContractorInvoiceTotal, GrantAllocationAwardContractorInvoiceTaxRate, GrantAllocationAwardContractorInvoiceAcresReported, GrantAllocationAwardContractorInvoiceDocumentUpload, GrantAllocationAwardContractorInvoiceNotes };
+            All = new List<FieldDefinition> { ProjectType, ExpectedValue, TaxonomyTrunk, PrimaryContactOrganization, ProjectsStewardOrganizationRelationshipToProject, Organization, Password, PerformanceMeasure, PerformanceMeasureType, MeasurementUnit, PhotoCaption, PhotoCredit, PhotoTiming, OrganizationPrimaryContact, TaxonomyBranch, CompletionDate, ProjectDescription, ProjectName, ProjectNote, ExpirationDate, ReportedValue, OrganizationType, ProjectGrantAllocationRequestTotalAmount, ProjectStage, ClassificationName, EstimatedTotalCost, UnfundedNeed, Username, Project, Classification, PerformanceMeasureSubcategory, PerformanceMeasureSubcategoryOption, IsPrimaryTaxonomyBranch, FundedAmount, ProjectLocation, ExcludeFromFactSheet, ProjectCostInYearOfExpenditure, GlobalInflationRate, ReportingYear, TagName, TagDescription, ReportedExpenditure, Application, SpendingAssociatedWithPM, StartApprovalDate, AssociatedTaxonomyBranches, ExternalLinks, CurrentYearForPVCalculations, LifecycleOperatingCost, PerformanceMeasureChartTitle, RoleName, Region, PerformanceMeasureChartCaption, MonitoringProgram, MonitoringApproach, MonitoringProgramPartner, MonitoringProgramUrl, ClassificationDescription, ClassificationGoalStatement, ClassificationNarrative, TaxonomySystemName, ProjectTypeDisplayNameForProject, ProjectRelationshipType, ProjectSteward, ChartLastUpdatedDate, UnsecuredFunding, ProjectStewardOrganizationDisplayName, ClassificationSystem, ClassificationSystemName, ProjectPrimaryContact, CustomPageDisplayType, TaxonomyTrunkDescription, TaxonomyBranchDescription, ProjectTypeDescription, ShowApplicationsToThePublic, ShowLeadImplementerLogoOnFactSheet, ProjectCustomAttribute, ProjectCustomAttributeDataType, ProjectUpdateKickOffDate, ProjectUpdateReminderInterval, ProjectUpdateCloseOutDate, PerformanceMeasureIsAggregatable, GrantAllocationAmount, NormalUser, ProjectStewardshipArea, ProjectInternalNote, StatewideVendorNumber, Contact, ContactRelationshipType, Contractor, Landowner, Partner, PrimaryContact, FocusArea, Grant, GrantAllocation, CostType, ProjectCode, GrantAllocationProjectCode, ProgramIndex, GrantName, GrantShortName, GrantStatus, GrantType, GrantNumber, CFDA, TotalAwardAmount, GrantStartDate, GrantEndDate, GrantNote, PriorityArea, Invoice, Agreement, FederalFundCode, AllocationAmount, AgreementType, AgreementNumber, AgreementTitle, AgreementStartDate, AgreementEndDate, AgreementAmount, ProgramManager, AgreementNotes, AgreementStatus, GrantAllocationNote, FileResource, ProjectTotalCompletedFootprintAcres, FocusAreaTotalProjectReportedExpendiures, FocusAreaTotalProjectEstimatedTotalCosts, FocusAreaTotalCompletedFootprintAcres, FocusAreaTotalPlannedFootprintAcres, FocusAreaCloseoutReportProjectList, RequestorName, InvoiceDate, PurchaseAuthority, TotalRequestedInvoicePaymentAmount, PreparedByPerson, InvoiceIdentifyingName, GrantNoteInternal, GrantAllocationNoteInternal, InvoiceStatus, InvoiceApprovalStatus, InvoiceApprovalComment, MatchAmount, Vendor, EstimatedIndirectCost, EstimatedPersonnelAndBenefitsCost, EstimatedSuppliesCost, EstimatedTravelCost, InvoiceID, InvoiceLineItem, InteractionEvent, InteractionEventType, DNRStaffPerson, InteractionEventContact, InteractionEventProject, InteractionEventLocation, GrantAllocationName, Division, GrantManager, Job, JobImportTableType, GrantAllocationBudgetLineItem, GrantModificationPurpose, GrantModificationStatus, GrantModificationAmount, GrantModificationDescription, GrantModificationStartDate, GrantModificationEndDate, GrantModificationName, GrantModification, GrantModificationNoteInternal, ProgramIndexProjectCode, FhtProjectNumber, GrantCurrentBalance, GrantAllocationCurrentBalance, GrantAllocationChangeLogNote, GrantAllocationAward, GrantAllocationAwardName, GrantAllocationAwardAmount, GrantAllocationAwardExpirationDate, GrantAllocationAwardIndirectCost, GrantAllocationAwardIndirectCostAllocationTotal, GrantAllocationAwardIndirectCostApplicableAmount, GrantAllocationAwardIndirectTotal, GrantAllocationAwardIndirectBalance, GrantAllocationAwardSupplies, GrantAllocationAwardSuppliesAllocationTotal, GrantAllocationAwardSuppliesAllocationBalance, GrantAllocationAwardSuppliesDescription, GrantAllocationAwardSuppliesTarOrMonth, GrantAllocationAwardSuppliesDate, GrantAllocationAwardSuppliesAmount, GrantAllocationAwardSuppliesNotes, GrantAllocationAwardPersonnelAndBenefits, GrantAllocationAwardPersonnelAndBenefitsAllocationTotal, GrantAllocationAwardPersonnelAndBenefitsForester, GrantAllocationAwardPersonnelAndBenefitsDescription, GrantAllocationAwardPersonnelAndBenefitsTarOrMonth, GrantAllocationAwardPersonnelAndBenefitsDate, GrantAllocationAwardPersonnelAndBenefitsTarHours, GrantAllocationAwardPersonnelAndBenefitsHourlyRate, GrantAllocationAwardPersonnelAndBenefitsFringeRate, GrantAllocationAwardPersonnelAndBenefitsNotes, GrantAllocationAwardTravel, GrantAllocationAwardTravelAllocationTotal, GrantAllocationAwardTravelForester, GrantAllocationAwardTravelAllocationBalance, GrantAllocationAwardTravelDescription, GrantAllocationAwardTravelTarOrMonth, GrantAllocationAwardTravelDate, GrantAllocationAwardTravelType, GrantAllocationAwardTravelMiles, GrantAllocationAwardTravelMileageRate, GrantAllocationAwardTravelAmount, GrantAllocationAwardTravelNotes, GrantAllocationAwardLandownerCostShare, GrantAllocationAwardLandownerCostShareAllocationTotal, GrantAllocationAwardLandownerCostShareAllocationBalance, GrantAllocationAwardLandownerCostSharePercentAllocated, GrantAllocationAwardLandownerCostShareFundBalance, GrantAllocationAwardLandownerCostShareTargetFootprintAcreage, GrantAllocationAwardLandownerCostShareTargetTotalAcreage, GrantAllocationAwardLandownerCostShareForester, GrantAllocationAwardContractorInvoice, GrantAllocationAwardContractorInvoiceAllocationTotal, GrantAllocationAwardContractorInvoiceAllocationBalance, GrantAllocationAwardContractorInvoiceLandownerCostShareBalance, GrantAllocationAwardContractorInvoiceContractor, GrantAllocationAwardContractorInvoiceTargetTotalAcreage, GrantAllocationAwardPersonnelAndBenefitsAllocationBalance, GrantAllocationAwardLandownerCostShareStatus, GrantAllocationAwardLandownerCostShareStartDate, GrantAllocationAwardLandownerCostShareEndDate, GrantAllocationAwardLandownerCostShareFootprintAcres, GrantAllocationAwardLandownerCostShareChippingAcres, GrantAllocationAwardLandownerCostSharePruningAcres, GrantAllocationAwardLandownerCostShareThinningAcres, GrantAllocationAwardLandownerCostShareMasticationAcres, GrantAllocationAwardLandownerCostShareGrazingAcres, GrantAllocationAwardLandownerCostShareLopAndScatterAcres, GrantAllocationAwardLandownerCostShareBiomassRemovalAcres, GrantAllocationAwardLandownerCostShareHandPileAcres, GrantAllocationAwardLandownerCostShareBroadcastBurnAcres, GrantAllocationAwardLandownerCostShareHandPileBurnAcres, GrantAllocationAwardLandownerCostShareMachinePileBurnAcres, GrantAllocationAwardLandownerCostShareOtherTreatmentAcres, GrantAllocationAwardLandownerCostShareSlashAcres, GrantAllocationAwardLandownerCostShareNotes, GrantAllocationAwardLandownerCostShareAllocatedAmount, GrantAllocationAwardLandownerCostShareTotalCost, GrantAllocationAwardLandownerCostShareGrantCost, GrantAllocationAwardContractorInvoiceDescription, GrantAllocationAwardContractorInvoiceNumber, GrantAllocationAwardContractorInvoiceDate, GrantAllocationAwardContractorInvoiceType, GrantAllocationAwardContractorInvoiceForemanHours, GrantAllocationAwardContractorInvoiceForemanRate, GrantAllocationAwardContractorInvoiceLaborHours, GrantAllocationAwardContractorInvoiceLaborRate, GrantAllocationAwardContractorInvoiceGrappleHours, GrantAllocationAwardContractorInvoiceGrappleRate, GrantAllocationAwardContractorInvoiceMasticationHours, GrantAllocationAwardContractorInvoiceMasticationRate, GrantAllocationAwardContractorInvoiceTotal, GrantAllocationAwardContractorInvoiceTaxRate, GrantAllocationAwardContractorInvoiceAcresReported, GrantAllocationAwardContractorInvoiceDocumentUpload, GrantAllocationAwardContractorInvoiceNotes, GrantAllocationAwardContractual, GrantAllocationAwardContractualAllocationTotal, GrantAllocationAwardContractualAllocationBalance, GrantAllocationAwardSuppliesLineItem, GrantAllocationAwardPersonnelAndBenefitsLineItem, GrantAllocationAwardTravelLineItem, GrantAllocationAwardLandownerCostShareLineItem, GrantAllocationAwardContractorInvoiceLineItem, GrantAllocationAwardSpentAmount, GrantAllocationAwardBalance };
             AllLookupDictionary = new ReadOnlyDictionary<int, FieldDefinition>(All.ToDictionary(x => x.FieldDefinitionID));
         }
 
@@ -484,6 +494,8 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAward;
                 case FieldDefinitionEnum.GrantAllocationAwardAmount:
                     return GrantAllocationAwardAmount;
+                case FieldDefinitionEnum.GrantAllocationAwardBalance:
+                    return GrantAllocationAwardBalance;
                 case FieldDefinitionEnum.GrantAllocationAwardContractorInvoice:
                     return GrantAllocationAwardContractorInvoice;
                 case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceAcresReported:
@@ -514,6 +526,8 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardContractorInvoiceLaborRate;
                 case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceLandownerCostShareBalance:
                     return GrantAllocationAwardContractorInvoiceLandownerCostShareBalance;
+                case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceLineItem:
+                    return GrantAllocationAwardContractorInvoiceLineItem;
                 case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceMasticationHours:
                     return GrantAllocationAwardContractorInvoiceMasticationHours;
                 case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceMasticationRate:
@@ -530,6 +544,12 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardContractorInvoiceTotal;
                 case FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceType:
                     return GrantAllocationAwardContractorInvoiceType;
+                case FieldDefinitionEnum.GrantAllocationAwardContractual:
+                    return GrantAllocationAwardContractual;
+                case FieldDefinitionEnum.GrantAllocationAwardContractualAllocationBalance:
+                    return GrantAllocationAwardContractualAllocationBalance;
+                case FieldDefinitionEnum.GrantAllocationAwardContractualAllocationTotal:
+                    return GrantAllocationAwardContractualAllocationTotal;
                 case FieldDefinitionEnum.GrantAllocationAwardExpirationDate:
                     return GrantAllocationAwardExpirationDate;
                 case FieldDefinitionEnum.GrantAllocationAwardIndirectBalance:
@@ -572,6 +592,8 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardLandownerCostShareHandPileAcres;
                 case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareHandPileBurnAcres:
                     return GrantAllocationAwardLandownerCostShareHandPileBurnAcres;
+                case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareLineItem:
+                    return GrantAllocationAwardLandownerCostShareLineItem;
                 case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareLopAndScatterAcres:
                     return GrantAllocationAwardLandownerCostShareLopAndScatterAcres;
                 case FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareMachinePileBurnAcres:
@@ -618,12 +640,16 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardPersonnelAndBenefitsFringeRate;
                 case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsHourlyRate:
                     return GrantAllocationAwardPersonnelAndBenefitsHourlyRate;
+                case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsLineItem:
+                    return GrantAllocationAwardPersonnelAndBenefitsLineItem;
                 case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsNotes:
                     return GrantAllocationAwardPersonnelAndBenefitsNotes;
                 case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsTarHours:
                     return GrantAllocationAwardPersonnelAndBenefitsTarHours;
                 case FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth:
                     return GrantAllocationAwardPersonnelAndBenefitsTarOrMonth;
+                case FieldDefinitionEnum.GrantAllocationAwardSpentAmount:
+                    return GrantAllocationAwardSpentAmount;
                 case FieldDefinitionEnum.GrantAllocationAwardSupplies:
                     return GrantAllocationAwardSupplies;
                 case FieldDefinitionEnum.GrantAllocationAwardSuppliesAllocationBalance:
@@ -636,6 +662,8 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardSuppliesDate;
                 case FieldDefinitionEnum.GrantAllocationAwardSuppliesDescription:
                     return GrantAllocationAwardSuppliesDescription;
+                case FieldDefinitionEnum.GrantAllocationAwardSuppliesLineItem:
+                    return GrantAllocationAwardSuppliesLineItem;
                 case FieldDefinitionEnum.GrantAllocationAwardSuppliesNotes:
                     return GrantAllocationAwardSuppliesNotes;
                 case FieldDefinitionEnum.GrantAllocationAwardSuppliesTarOrMonth:
@@ -654,6 +682,8 @@ namespace ProjectFirma.Web.Models
                     return GrantAllocationAwardTravelDescription;
                 case FieldDefinitionEnum.GrantAllocationAwardTravelForester:
                     return GrantAllocationAwardTravelForester;
+                case FieldDefinitionEnum.GrantAllocationAwardTravelLineItem:
+                    return GrantAllocationAwardTravelLineItem;
                 case FieldDefinitionEnum.GrantAllocationAwardTravelMileageRate:
                     return GrantAllocationAwardTravelMileageRate;
                 case FieldDefinitionEnum.GrantAllocationAwardTravelMiles:
@@ -1188,7 +1218,17 @@ namespace ProjectFirma.Web.Models
         GrantAllocationAwardContractorInvoiceTaxRate = 449,
         GrantAllocationAwardContractorInvoiceAcresReported = 450,
         GrantAllocationAwardContractorInvoiceDocumentUpload = 451,
-        GrantAllocationAwardContractorInvoiceNotes = 452
+        GrantAllocationAwardContractorInvoiceNotes = 452,
+        GrantAllocationAwardContractual = 453,
+        GrantAllocationAwardContractualAllocationTotal = 454,
+        GrantAllocationAwardContractualAllocationBalance = 455,
+        GrantAllocationAwardSuppliesLineItem = 456,
+        GrantAllocationAwardPersonnelAndBenefitsLineItem = 457,
+        GrantAllocationAwardTravelLineItem = 458,
+        GrantAllocationAwardLandownerCostShareLineItem = 459,
+        GrantAllocationAwardContractorInvoiceLineItem = 460,
+        GrantAllocationAwardSpentAmount = 461,
+        GrantAllocationAwardBalance = 462
     }
 
     public partial class FieldDefinitionProjectType : FieldDefinition
@@ -2803,5 +2843,65 @@ namespace ProjectFirma.Web.Models
     {
         private FieldDefinitionGrantAllocationAwardContractorInvoiceNotes(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
         public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceNotes Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceNotes(452, @"GrantAllocationAwardContractorInvoiceNotes", @"Grant Allocation Award Contractor Invoice Notes", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Notes.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractual : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractual(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractual Instance = new FieldDefinitionGrantAllocationAwardContractual(453, @"GrantAllocationAwardContractual", @"Grant Allocation Award Contractual", @"<p>Placeholder definition for Grant Allocation Award Contractual.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractualAllocationTotal : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractualAllocationTotal(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractualAllocationTotal Instance = new FieldDefinitionGrantAllocationAwardContractualAllocationTotal(454, @"GrantAllocationAwardContractualAllocationTotal", @"Grant Allocation Award Contractual Allocation Total", @"<p>Placeholder definition for Grant Allocation Award Contractual Allocation Total.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractualAllocationBalance : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractualAllocationBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractualAllocationBalance Instance = new FieldDefinitionGrantAllocationAwardContractualAllocationBalance(455, @"GrantAllocationAwardContractualAllocationBalance", @"Grant Allocation Award Contractual Allocation Balance", @"<p>Placeholder definition for Grant Allocation Award Contractual Allocation Balance.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSuppliesLineItem : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSuppliesLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSuppliesLineItem Instance = new FieldDefinitionGrantAllocationAwardSuppliesLineItem(456, @"GrantAllocationAwardSuppliesLineItem", @"Grant Allocation Award Supplies Line Item", @"<p>Placeholder definition for Grant Allocation Award Supplies Line Item.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsLineItem : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsLineItem Instance = new FieldDefinitionGrantAllocationAwardPersonnelAndBenefitsLineItem(457, @"GrantAllocationAwardPersonnelAndBenefitsLineItem", @"Grant Allocation Award Personnel &amp; Benefits Line Item", @"<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Line Item.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardTravelLineItem : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardTravelLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardTravelLineItem Instance = new FieldDefinitionGrantAllocationAwardTravelLineItem(458, @"GrantAllocationAwardTravelLineItem", @"Grant Allocation Award TravelLineItem", @"<p>Placeholder definition for Grant Allocation Award Travel Line Item.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardLandownerCostShareLineItem : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardLandownerCostShareLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardLandownerCostShareLineItem Instance = new FieldDefinitionGrantAllocationAwardLandownerCostShareLineItem(459, @"GrantAllocationAwardLandownerCostShareLineItem", @"Grant Allocation Award Landowner Cost Share Line Item", @"<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Line Item.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardContractorInvoiceLineItem : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardContractorInvoiceLineItem(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardContractorInvoiceLineItem Instance = new FieldDefinitionGrantAllocationAwardContractorInvoiceLineItem(460, @"GrantAllocationAwardContractorInvoiceLineItem", @"Grant Allocation Award Contractor Invoice Line Item", @"<p>Placeholder definition for Grant Allocation Award Contractor Invoice Line Item.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardSpentAmount : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardSpentAmount(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardSpentAmount Instance = new FieldDefinitionGrantAllocationAwardSpentAmount(461, @"GrantAllocationAwardSpentAmount", @"Grant Allocation Award Spent Amount", @"<p>Placeholder definition for Grant Allocation Award Spent Amount.</p>");
+    }
+
+    public partial class FieldDefinitionGrantAllocationAwardBalance : FieldDefinition
+    {
+        private FieldDefinitionGrantAllocationAwardBalance(int fieldDefinitionID, string fieldDefinitionName, string fieldDefinitionDisplayName, string defaultDefinition) : base(fieldDefinitionID, fieldDefinitionName, fieldDefinitionDisplayName, defaultDefinition) {}
+        public static readonly FieldDefinitionGrantAllocationAwardBalance Instance = new FieldDefinitionGrantAllocationAwardBalance(462, @"GrantAllocationAwardBalance", @"Grant Allocation Award Balance", @"<p>Placeholder definition for Grant Allocation Award Balance.</p>");
     }
 }
