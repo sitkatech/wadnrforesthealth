@@ -282,7 +282,7 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1757, 437, NULL, N'Invoice Number')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1758, 449, NULL, N'Tax Rate')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1758, 449, NULL, N'Tax Rate (%)')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1759, 448, NULL, N'Invoice Total')
 GO
