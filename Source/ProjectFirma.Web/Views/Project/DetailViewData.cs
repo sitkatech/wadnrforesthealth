@@ -27,6 +27,7 @@ using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.Agreement;
+using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.ProjectUpdate;
@@ -40,7 +41,6 @@ using ProjectFirma.Web.Views.Shared.ProjectLocationControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using ProjectFirma.Web.Views.Shared.TextControls;
-using ProjectFirma.Web.Views.TreatmentActivity;
 
 namespace ProjectFirma.Web.Views.Project
 {
@@ -91,9 +91,9 @@ namespace ProjectFirma.Web.Views.Project
         public string ProjectNotificationGridName { get; }
         public string ProjectNotificationGridDataUrl { get; }
 
-        public TreatmentActivityProjectDetailGridSpec TreatmentActivityProjectDetailGridSpec { get; }
-        public string TreatmentActivityGridName { get; }
-        public string TreatmentActivityGridDataUrl { get; }
+        public LandownerCostShareLineItemProjectDetailGridSpec LandownerCostShareLineItemProjectDetailGridSpec { get; }
+        public string LandownerCostShareLineItemGridName { get; }
+        public string LandownerCostShareLineItemGridDataUrl { get; }
 
         public string EditProjectPriorityAreaFormID { get; }
         public string EditProjectRegionFormID { get; }
@@ -114,7 +114,6 @@ namespace ProjectFirma.Web.Views.Project
         public ProjectCostShareViewData ProjectCostShareViewData { get; }
         public ProjectDocumentsDetailViewData ProjectDocumentsDetailViewData { get; }
         public ProjectAttributesViewData ProjectAttributesViewData { get; }
-        public string EditTreatmentActivityUrl { get; }
         public string EditProjectPeopleUrl { get; }
         
         public ProjectPeopleDetailViewData ProjectPeopleDetailViewData { get; }
@@ -148,8 +147,8 @@ namespace ProjectFirma.Web.Views.Project
             ProjectOrganizationsDetailViewData projectOrganizationsDetailViewData,
             List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID, ProjectPeopleDetailViewData projectPeopleDetailViewData,
-            TreatmentActivityProjectDetailGridSpec treatmentActivityProjectDetailGridSpec,
-            string treatmentActivityGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl,
+            LandownerCostShareLineItemProjectDetailGridSpec landownerCostShareLineItemProjectDetailGridSpec,
+            string landownerCostShareLineItemGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl,
             InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl)
             : base(currentPerson, project)
         {
@@ -360,15 +359,12 @@ namespace ProjectFirma.Web.Views.Project
                 SitkaRoute<ProjectDocumentController>.BuildUrlFromExpression(x => x.New(project)), project.ProjectName,
                 new ProjectEditAsAdminFeature().HasPermission(currentPerson, project).HasPermission);
 
-            EditTreatmentActivityUrl =
-                SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(x => x.NewTreatmentActivity(project.PrimaryKey));
-
             EditProjectPeopleUrl =
                 SitkaRoute<ProjectPersonController>.BuildUrlFromExpression(x => x.EditPeople(project));
 
-            TreatmentActivityProjectDetailGridSpec = treatmentActivityProjectDetailGridSpec;
-            TreatmentActivityGridName = "treatmentActivityGrid";
-            TreatmentActivityGridDataUrl = treatmentActivityGridDataUrl;
+            LandownerCostShareLineItemProjectDetailGridSpec = landownerCostShareLineItemProjectDetailGridSpec;
+            LandownerCostShareLineItemGridName = "landownerCostShareLineItemGrid";
+            LandownerCostShareLineItemGridDataUrl = landownerCostShareLineItemGridDataUrl;
 
             ProjectInteractionEventsGridSpec = projectInteractionEventsGridSpec;
             ProjectInteractionEventsGridName = "projectInteractionEventsGrid";

@@ -23,21 +23,26 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.TreatmentActivity
+namespace ProjectFirma.Web.Views.GrantAllocationAwardLandownerCostShareLineItem
 {
     public class IndexViewData : FirmaViewData
     {
-        public readonly TreatmentActivityIndexGridSpec GridSpec;
+        public readonly LandownerCostShareIndexGridSpec GridSpec;
         public readonly string GridName;
         public readonly string GridDataUrl;
 
         public IndexViewData(Person currentPerson) : base(currentPerson)
         {
-            PageTitle = "Treatment Activities";
-            GridSpec = new TreatmentActivityIndexGridSpec(currentPerson) {ObjectNameSingular = "Treatment Activity", ObjectNamePlural = "Treatment Activities", SaveFiltersInCookie = true};
+            PageTitle = "Treatments";
+            GridSpec = new LandownerCostShareIndexGridSpec(currentPerson)
+            {
+                ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel(),
+                ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabelPluralized(),
+                SaveFiltersInCookie = true
+            };
 
-            GridName = "treatmentActivtiesGrid";
-            GridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tac => tac.IndexGridJsonData());
+            GridName = "landownerCostShareLineItemGrid";
+            GridDataUrl = SitkaRoute<GrantAllocationAwardLandownerCostShareLineItemController>.BuildUrlFromExpression(tac => tac.IndexGridJsonData());
         }
     }
 }

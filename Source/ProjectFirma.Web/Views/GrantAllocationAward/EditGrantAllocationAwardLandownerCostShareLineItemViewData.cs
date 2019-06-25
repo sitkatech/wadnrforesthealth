@@ -32,11 +32,13 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     {
         public IEnumerable<SelectListItem> StatusList { get; }
         public IEnumerable<SelectListItem> ProjectList { get; }
+        public IEnumerable<SelectListItem> GrantAllocationAwardList { get; }
 
-        public EditGrantAllocationAwardLandownerCostShareLineItemViewData(IEnumerable<LandownerCostShareLineItemStatus> statusList, IEnumerable<Models.Project> projectList)
+        public EditGrantAllocationAwardLandownerCostShareLineItemViewData(IEnumerable<LandownerCostShareLineItemStatus> statusList, IEnumerable<Models.Project> projectList, IEnumerable<Models.GrantAllocationAward> grantAllocationAwards)
         {
             StatusList = statusList.ToSelectList(x => x.LandownerCostShareLineItemStatusID.ToString(CultureInfo.InvariantCulture), y => y.LandownerCostShareLineItemStatusDisplayName);
             ProjectList = projectList.ToSelectListWithEmptyFirstRow(x => x.ProjectID.ToString(CultureInfo.InvariantCulture), y => y.DisplayName);
+            GrantAllocationAwardList = grantAllocationAwards.ToSelectListWithEmptyFirstRow(x => x.GrantAllocationAwardID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationAwardName);
         }
     }
 

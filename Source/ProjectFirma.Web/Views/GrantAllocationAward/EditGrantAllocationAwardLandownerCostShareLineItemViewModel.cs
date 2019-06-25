@@ -30,8 +30,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     public class EditGrantAllocationAwardLandownerCostShareLineItemViewModel : FormViewModel, IValidatableObject
     {
         public int GrantAllocationAwardLandownerCostShareLineItemID { get; set; }
-        public int? GrantAllocationAwardID { get; set; }
 
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAward)]
+        [Required]
+        public int? GrantAllocationAwardID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]
         [Required]
@@ -97,7 +99,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareTotalCost)]
         public Money TotalCost { get; set; }
 
-        [StringLength(GrantAllocationAwardLandownerCostShareLineItem.FieldLengths.GrantAllocationAwardLandownerCostShareLineItemNotes)]
+        [StringLength(Models.GrantAllocationAwardLandownerCostShareLineItem.FieldLengths.GrantAllocationAwardLandownerCostShareLineItemNotes)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardLandownerCostShareNotes)]
         public string Notes { get; set; }
 

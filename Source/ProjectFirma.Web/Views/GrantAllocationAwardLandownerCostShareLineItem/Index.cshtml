@@ -23,7 +23,8 @@
 @using LtInfo.Common.DhtmlWrappers
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
-@inherits ProjectFirma.Web.Views.TreatmentActivity.Index
+@using ProjectFirma.Web.Models
+@inherits ProjectFirma.Web.Views.GrantAllocationAwardLandownerCostShareLineItem.Index
 @section JavascriptAndStylesContent
 {
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
@@ -32,9 +33,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
+            <div class="panel panelFirma">
+                <div class="panel-heading panelTitle">
+                    <h2>@FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()</h2>
+                </div>
                 <div class="panel-body">
                     @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                 </div>
+            </div>
         </div>
     </div>
 </div>
