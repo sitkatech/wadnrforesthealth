@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.FocusArea;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.Shared;
@@ -14,6 +17,21 @@ namespace ProjectFirma.Web.Controllers
 {
     public class GrantAllocationAwardController : FirmaBaseController
     {
+
+        [AnonymousUnclassifiedFeature]
+        public JsonResult GetGrantAllocationEndDate(int grantAllocationID)
+        {
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(x => x.GrantAllocationID == grantAllocationID);
+
+            if (grantAllocation != null)
+            {
+                var grantAllocationEndDateJsonStructure =  new {endDate = grantAllocation.EndDateDisplay, name = grantAllocation.DisplayName, id = grantAllocation.GrantAllocationID};
+                //use JSON structure for jquery's autocomplete functionality
+                return Json(grantAllocationEndDateJsonStructure, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         [GrantAllocationAwardCreateFeature]
