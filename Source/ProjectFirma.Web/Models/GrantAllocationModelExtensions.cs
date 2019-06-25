@@ -70,7 +70,7 @@ namespace ProjectFirma.Web.Models
                 var expendituresFromDatamart = grantAllocation.GrantAllocationExpenditures
                     .Where(gae => gae.CostTypeID == costType.CostTypeID).Select(gae => gae.ExpenditureAmount).Sum();
 
-                var invoicedToDate = grantAllocation.InvoiceLineItems.Where(ili => ili.CostTypeID == costType.CostTypeID).Select(ili => ili.InvoiceLineItemAmount).Sum();
+                var invoicedToDate = grantAllocation.GrantAllocationAwards.Sum(grantAllocationAward => grantAllocationAward.GetInvoicedToDateByCostType(costType));
                 
 
                 var budgetVsActualLineItem = new BudgetVsActualLineItem(costType, budget, expendituresFromDatamart, invoicedToDate);
@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Models
         {
             var budget = grantAllocation.GrantAllocationBudgetLineItems.Select(bli => bli.GrantAllocationBudgetLineItemAmount).Sum();
             var expendituresFromDatamart = grantAllocation.GrantAllocationExpenditures.Select(gae => gae.ExpenditureAmount).Sum();
-            var invoicedToDate = grantAllocation.InvoiceLineItems.Select(ili => ili.InvoiceLineItemAmount).Sum();
+            var invoicedToDate = grantAllocation.GrantAllocationAwards.Sum(grantAllocationAward => grantAllocationAward.GetTotalInvoicedToDate());
 
             var budgetVsActualLineItem = new BudgetVsActualLineItem(budget, expendituresFromDatamart, invoicedToDate);
             return budgetVsActualLineItem;
