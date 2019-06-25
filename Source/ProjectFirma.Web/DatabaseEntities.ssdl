@@ -1338,7 +1338,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
     </Key>
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
+    <Property Name="GrantAllocationAwardID" Type="int" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
     <Property Name="LandownerCostShareLineItemStatusID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" Type="datetime" />
@@ -3124,7 +3124,7 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="0..1" />
     <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GrantAllocationAward">

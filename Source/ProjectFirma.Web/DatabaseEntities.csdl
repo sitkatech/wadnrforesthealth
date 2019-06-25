@@ -1432,7 +1432,7 @@
       <PropertyRef Name="GrantAllocationAwardLandownerCostShareLineItemID" />
     </Key>
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
+    <Property Name="GrantAllocationAwardID" Type="Int32" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
     <Property Name="LandownerCostShareLineItemStatusID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" Type="DateTime" />
@@ -3855,7 +3855,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_GrantAllocationAwardLandownerCostShareLineItem_GrantAllocationAward_GrantAllocationAwardID">
-    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="1" />
+    <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.GrantAllocationAward" Multiplicity="0..1" />
     <End Role="GrantAllocationAwardLandownerCostShareLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardLandownerCostShareLineItem" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GrantAllocationAward">

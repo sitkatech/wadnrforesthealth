@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     public class EditGrantAllocationAwardLandownerCostShareLineItemViewModel : FormViewModel, IValidatableObject
     {
         public int GrantAllocationAwardLandownerCostShareLineItemID { get; set; }
-        public int GrantAllocationAwardID { get; set; }
+        public int? GrantAllocationAwardID { get; set; }
 
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.Project)]

@@ -507,7 +507,8 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
             var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == viewModel.ProjectID);
             var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.Single(x => x.LandownerCostShareLineItemStatusID == viewModel.StatusID);
-            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(grantAllocationAward, project, landownerCostShareLineItemStatus);
+            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(project, landownerCostShareLineItemStatus);
+            landownerCostShareLineItem.GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
             viewModel.UpdateModel(landownerCostShareLineItem);
             return new ModalDialogFormJsonResult();
         }

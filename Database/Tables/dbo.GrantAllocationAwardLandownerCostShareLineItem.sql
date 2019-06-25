@@ -4,7 +4,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[GrantAllocationAwardLandownerCostShareLineItem](
 	[GrantAllocationAwardLandownerCostShareLineItemID] [int] IDENTITY(1,1) NOT NULL,
-	[GrantAllocationAwardID] [int] NOT NULL,
+	[GrantAllocationAwardID] [int] NULL,
 	[ProjectID] [int] NOT NULL,
 	[LandownerCostShareLineItemStatusID] [int] NOT NULL,
 	[GrantAllocationAwardLandownerCostShareLineItemStartDate] [datetime] NULL,
