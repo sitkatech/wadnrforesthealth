@@ -69,10 +69,10 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceGrappleRate)]
         public Money? GrappleRate { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceForemanHours)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceMasticationHours)]
         public decimal? MasticationHours { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceForemanRate)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceMasticationRate)]
         public Money? MasticationRate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceTotal)]

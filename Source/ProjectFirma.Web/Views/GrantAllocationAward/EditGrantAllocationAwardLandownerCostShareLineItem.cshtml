@@ -64,6 +64,24 @@
         </div>
         <div class="form-group no-margin-top">
             <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.AllocatedAmount)
+            </div>
+            <div class="col-sm-2">
+                @Html.EditorFor(m => m.AllocatedAmount, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.AllocatedAmount)
+            </div>
+
+            <div class="col-sm-3 control-label">
+                @Html.LabelWithSugarFor(m => m.TotalCost)
+            </div>
+            <div class="col-sm-2">
+                @Html.EditorFor(m => m.TotalCost, new { @class = "form-control", style = "width:100%" })
+                @Html.ValidationMessageFor(m => m.TotalCost)
+            </div>
+        </div>
+
+        <div class="form-group no-margin-top">
+            <div class="col-sm-3 control-label">
                 @Html.LabelWithSugarFor(m => m.StartDate)
             </div>
             <div class="col-sm-2">
@@ -225,24 +243,7 @@
             </div>
         </div>
 
-        <div class="form-group no-margin-top col-md-6">
-            <div class="col-sm-7 text-right control-label">
-                @Html.LabelWithSugarFor(m => m.AllocatedAmount)
-            </div>
-            <div class="input-group col-sm-5">
-                @Html.EditorFor(m => m.AllocatedAmount, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.AllocatedAmount)
-            </div>
-        </div>
-        <div class="form-group no-margin-top col-md-6">
-            <div class="col-sm-7 text-right control-label">
-                @Html.LabelWithSugarFor(m => m.TotalCost)
-            </div>
-            <div class="input-group col-sm-5">
-                @Html.EditorFor(m => m.TotalCost, new { @class = "form-control", style = "width:100%" })
-                @Html.ValidationMessageFor(m => m.TotalCost)
-            </div>
-        </div>
+        
     </div>
     <div class="form-horizontal">
         <div class="form-group no-margin-top col-md-12">
