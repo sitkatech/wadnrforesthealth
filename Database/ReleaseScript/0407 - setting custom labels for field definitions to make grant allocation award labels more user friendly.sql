@@ -104,7 +104,8 @@ VALUES
 (459, N'GrantAllocationAwardLandownerCostShareLineItem', 'Grant Allocation Award Landowner Cost Share Line Item', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Line Item.</p>'),
 (460, N'GrantAllocationAwardContractorInvoiceLineItem', 'Grant Allocation Award Contractor Invoice Line Item', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Line Item.</p>'),
 (461, N'GrantAllocationAwardSpentAmount', 'Grant Allocation Award Spent Amount', N'<p>Placeholder definition for Grant Allocation Award Spent Amount.</p>'),
-(462, N'GrantAllocationAwardBalance', 'Grant Allocation Award Balance', N'<p>Placeholder definition for Grant Allocation Award Balance.</p>')
+(462, N'GrantAllocationAwardBalance', 'Grant Allocation Award Balance', N'<p>Placeholder definition for Grant Allocation Award Balance.</p>'),
+(463, N'GrantAllocationAwardLandownerCostShareActualMatch', 'Grant Allocation Award Landowner Cost Share Actual Match', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Actual Match.</p>')
 
 
 SET IDENTITY_INSERT [dbo].[FieldDefinitionData] ON 
@@ -330,6 +331,8 @@ GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1777, 370, NULL, N'Supplies')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1778, 388, NULL, N'Travel')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1779, 463, NULL, N'Actual Match')
 GO
 SET IDENTITY_INSERT [dbo].[FieldDefinitionData] OFF
 GO

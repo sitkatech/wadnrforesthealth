@@ -9,8 +9,15 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                //TotalCost <(2 *AllocatedAmount) ? 0.5*TotalCost : AllocatedAmount
-                return GrantAllocationAwardLandownerCostShareLineItemTotalCost < (2 * GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount) ? .5m * GrantAllocationAwardLandownerCostShareLineItemTotalCost : GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
+                return GrantAllocationAwardLandownerCostShareLineItemTotalCost - GrantAllocationAwardLandownerCostShareLineItemActualMatch;
+            }
+        }
+
+        public Money GrantAllocationAwardLandownerCostShareLineItemActualMatch
+        {
+            get
+            {
+                return GrantAllocationAwardLandownerCostShareLineItemTotalCost - GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
             }
         }
 
