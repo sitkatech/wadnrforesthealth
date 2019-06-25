@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditPersonnelAndBenefitsLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsDescription.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsName.ToGridHeaderString(), s => s.Person != null ? s.Person.GetFullNameFirstLastAndOrgAsUrl().ToString() : string.Empty, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsDate.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsTarHours.ToGridHeaderString(), s => s.GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours, 125, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnAggregationType.Total);

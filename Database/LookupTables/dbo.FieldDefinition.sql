@@ -200,7 +200,7 @@ VALUES
 (378, N'GrantAllocationAwardPersonnelAndBenefits', N'Grant Allocation Award Personnel &amp; Benefits', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits.</p>'),
 (379, N'GrantAllocationAwardPersonnelAndBenefitsAllocationTotal', N'Grant Allocation Award Personnel &amp; Benefits Allocation Total', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Allocation Total.</p>'),
 (380, N'GrantAllocationAwardPersonnelAndBenefitsForester', N'Grant Allocation Award Personnel &amp; Benefits Forester', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Forester.</p>'),
-(381, N'GrantAllocationAwardPersonnelAndBenefitsDescription', N'Grant Allocation Award Personnel &amp; Benefits Description', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Description.</p>'),
+(381, N'GrantAllocationAwardPersonnelAndBenefitsName', N'Grant Allocation Award Personnel &amp; Benefits Name', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Name.</p>'),
 (382, N'GrantAllocationAwardPersonnelAndBenefitsTarOrMonth', N'Grant Allocation Award Personnel &amp; Benefits TAR or Month', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits TAR or Month.</p>'),
 (383, N'GrantAllocationAwardPersonnelAndBenefitsDate', N'Grant Allocation Award Personnel &amp; Benefits Date', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Date.</p>'),
 (384, N'GrantAllocationAwardPersonnelAndBenefitsTarHours', N'Grant Allocation Award Personnel &amp; Benefits TAR Hours', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits TAR Hours.</p>'),

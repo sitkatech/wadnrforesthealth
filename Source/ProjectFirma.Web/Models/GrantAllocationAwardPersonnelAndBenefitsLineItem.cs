@@ -4,7 +4,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class GrantAllocationAwardPersonnelAndBenefitsLineItem : IAuditableEntity
     {
-        public string AuditDescriptionString => GrantAllocationAwardPersonnelAndBenefitsLineItemDescription;
+        public string AuditDescriptionString => $"GrantAllocationAwardPersonnelAndBenefitsLineItemID:{GrantAllocationAwardPersonnelAndBenefitsLineItemID} Note:{GrantAllocationAwardPersonnelAndBenefitsLineItemNotes}";
         public Money GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal
         {
             get

@@ -32,10 +32,9 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public int GrantAllocationAwardID { get; set; }
 
 
-        [StringLength(Models.GrantAllocationAwardPersonnelAndBenefitsLineItem.FieldLengths.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsDescription)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsName)]
         [Required]
-        public string Description { get; set; }
+        public int? PersonID { get; set; }
 
         [StringLength(GrantAllocationAwardPersonnelAndBenefitsLineItem.FieldLengths.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardPersonnelAndBenefitsTarOrMonth)]
@@ -77,7 +76,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             GrantAllocationAwardPersonnelAndBenefitsLineItemID = grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemID;
             GrantAllocationAwardID = grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardID;
 
-            Description = grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription;
+            PersonID = grantAllocationAwardPersonnelAndBenefitsLineItem.PersonID;
             TarOrMonth = grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth;
             if (grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDate == DateTime.MinValue)
             {
@@ -100,7 +99,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemID = GrantAllocationAwardPersonnelAndBenefitsLineItemID;
             grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardID = GrantAllocationAwardID;
-            grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription = Description;
+            grantAllocationAwardPersonnelAndBenefitsLineItem.PersonID = PersonID;
             grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth = TarOrMonth;
             grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDate = Date;
             grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours = TarHours;

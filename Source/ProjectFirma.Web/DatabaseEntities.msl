@@ -374,13 +374,13 @@
         <MappingFragment StoreEntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem">
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemID" />
           <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDescription" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemDescription" />
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" />
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" />
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" />
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" />
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" />
           <ScalarProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" ColumnName="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -272,7 +272,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel viewModel)
         {
-            var viewData = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData();
+            var peopleList = HttpRequestStorage.DatabaseEntities.People.ToList().OrderBy(x => x.FullNameLastFirst);
+            var viewData = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData(peopleList);
             return RazorPartialView<EditGrantAllocationAwardPersonnelAndBenefitsLineItem, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel>(viewData, viewModel);
         }
 
@@ -286,7 +287,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeletePersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItem grantAllocationAwardPersonnelAndBenefitsLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} '{grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsLineItem.GetFieldDefinitionLabel()}?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -302,7 +303,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeletePersonnelAndBenefitsLineItem(personnelAndBenefitsLineItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} \"{personnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsLineItem.GetFieldDefinitionLabel()} successfully deleted.";
             personnelAndBenefitsLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
