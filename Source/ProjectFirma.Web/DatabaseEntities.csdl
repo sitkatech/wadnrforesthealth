@@ -1390,17 +1390,17 @@
     <Property Name="GrantAllocationAwardContractorInvoiceNumber" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardContractorInvoiceDate" Type="DateTime" Nullable="false" />
     <Property Name="GrantAllocationAwardContractorInvoiceTypeID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceForemanHours" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationAwardContractorInvoiceForemanHours" Type="Decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceForemanRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceLaborHours" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationAwardContractorInvoiceLaborHours" Type="Decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceLaborRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceGrappleHours" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationAwardContractorInvoiceGrappleHours" Type="Decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceGrappleRate" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceMasticationHours" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationAwardContractorInvoiceMasticationHours" Type="Decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceMasticationRate" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardContractorInvoiceTotal" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="GrantAllocationAwardContractorInvoiceTaxRate" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardContractorInvoiceAcresReported" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationAwardContractorInvoiceTaxRate" Type="Decimal" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardContractorInvoiceAcresReported" Type="Decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardContractorInvoiceFileResourceID" Type="Int32" />
     <NavigationProperty Name="GrantAllocationAwardContractorInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" FromRole="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" ToRole="GrantAllocationAwardContractorInvoiceFileResource" />
@@ -1416,20 +1416,20 @@
     <Property Name="LandownerCostShareLineItemStatusID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" Type="DateTime" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemEndDate" Type="DateTime" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="Decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />

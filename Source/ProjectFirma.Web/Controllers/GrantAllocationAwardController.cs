@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.MvcResults;
@@ -7,11 +6,8 @@ using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Views.FocusArea;
-using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
-using ProjectFirma.Web.Views.Shared.TextControls;
 using DetailViewData = ProjectFirma.Web.Views.GrantAllocationAward.DetailViewData;
 
 namespace ProjectFirma.Web.Controllers
@@ -38,7 +34,6 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Null is likely wrong here!!!
                 return GrantAllocationAwardViewEdit(viewModel);
             }
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == viewModel.GrantAllocationID);
