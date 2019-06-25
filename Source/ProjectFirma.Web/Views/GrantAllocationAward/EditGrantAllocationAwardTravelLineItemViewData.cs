@@ -31,12 +31,14 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
     {
         public IEnumerable<SelectListItem> TravelTypes { get; }
 
+        public IEnumerable<SelectListItem> People { get; }
 
-        public EditGrantAllocationAwardTravelLineItemViewData(IEnumerable<GrantAllocationAwardTravelLineItemType> travelTypes)
+
+        public EditGrantAllocationAwardTravelLineItemViewData(IEnumerable<GrantAllocationAwardTravelLineItemType> travelTypes, IEnumerable<Person> people)
         {
             TravelTypes = travelTypes.ToSelectList(x => x.GrantAllocationAwardTravelLineItemTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantAllocationAwardTravelLineItemTypeDisplayName);
 
-
+            People = people.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLastAndOrg);
         }
 
     }

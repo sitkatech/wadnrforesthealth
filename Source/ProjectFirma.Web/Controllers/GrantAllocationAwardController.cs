@@ -182,7 +182,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteSuppliesLineItem(GrantAllocationAwardSuppliesLineItem grantAllocationSuppliesLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} '{grantAllocationSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardSuppliesLineItem.GetFieldDefinitionLabel()} '{grantAllocationSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription}'?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteSuppliesLineItem(grantAllocationAwardSuppliesLineItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardSupplies.GetFieldDefinitionLabel()} \"{grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardSuppliesLineItem.GetFieldDefinitionLabel()} \"{grantAllocationAwardSuppliesLineItem.GrantAllocationAwardSuppliesLineItemDescription}\" successfully deleted.";
             grantAllocationAwardSuppliesLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -272,7 +272,8 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult GrantAllocationAwardPersonnelAndBenefitsLineItemViewEdit(EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel viewModel)
         {
-            var viewData = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData();
+            var peopleList = HttpRequestStorage.DatabaseEntities.People.ToList().OrderBy(x => x.FullNameLastFirst);
+            var viewData = new EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData(peopleList);
             return RazorPartialView<EditGrantAllocationAwardPersonnelAndBenefitsLineItem, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData, EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel>(viewData, viewModel);
         }
 
@@ -286,7 +287,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeletePersonnelAndBenefitsLineItem(GrantAllocationAwardPersonnelAndBenefitsLineItem grantAllocationAwardPersonnelAndBenefitsLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} '{grantAllocationAwardPersonnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsLineItem.GetFieldDefinitionLabel()}?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -302,7 +303,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeletePersonnelAndBenefitsLineItem(personnelAndBenefitsLineItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardPersonnelAndBenefits.GetFieldDefinitionLabel()} \"{personnelAndBenefitsLineItem.GrantAllocationAwardPersonnelAndBenefitsLineItemDescription}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardPersonnelAndBenefitsLineItem.GetFieldDefinitionLabel()} successfully deleted.";
             personnelAndBenefitsLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -377,7 +378,8 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult GrantAllocationAwardTravelLineItemViewEdit(EditGrantAllocationAwardTravelLineItemViewModel viewModel)
         {
             var travelTypes = GrantAllocationAwardTravelLineItemType.All;
-            var viewData = new EditGrantAllocationAwardTravelLineItemViewData(travelTypes);
+            var peopleList = HttpRequestStorage.DatabaseEntities.People.ToList().OrderBy(x => x.FullNameLastFirst);
+            var viewData = new EditGrantAllocationAwardTravelLineItemViewData(travelTypes, peopleList);
             return RazorPartialView<EditGrantAllocationAwardTravelLineItem, EditGrantAllocationAwardTravelLineItemViewData, EditGrantAllocationAwardTravelLineItemViewModel>(viewData, viewModel);
         }
 
@@ -391,7 +393,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteTravelLineItem(GrantAllocationAwardTravelLineItem grantAllocationAwardTravelLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} '{grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDescription}'?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardTravelLineItem.GetFieldDefinitionLabel()}?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -407,7 +409,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteTravelLineItem(travelLineItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} \"{travelLineItem.GrantAllocationAwardTravelLineItemDescription}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardTravelLineItem.GetFieldDefinitionLabel()} successfully deleted.";
             travelLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -528,7 +530,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteLandownerCostShareLineItem(GrantAllocationAwardLandownerCostShareLineItem grantAllocationAwardLandownerCostShareLineItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()}?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()}?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -544,7 +546,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteLandownerCostShareLineItem(landownerCostShareLineItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()} successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel()} successfully deleted.";
             landownerCostShareLineItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();
@@ -663,7 +665,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteContractorInvoiceItem(GrantAllocationAwardContractorInvoice grantAllocationAwardContractorInvoiceItem, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} \"{grantAllocationAwardContractorInvoiceItem.GrantAllocationAwardContractorInvoiceDescription}\"?";
+            var confirmMessage = $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAwardContractorInvoiceLineItem.GetFieldDefinitionLabel()} \"{grantAllocationAwardContractorInvoiceItem.GrantAllocationAwardContractorInvoiceDescription}\"?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -679,7 +681,7 @@ namespace ProjectFirma.Web.Controllers
                 return ViewDeleteContractorInvoiceItem(contractorInvoiceItem, viewModel);
             }
 
-            var message = $"{FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabel()} \"{contractorInvoiceItem.GrantAllocationAwardContractorInvoiceDescription}\" successfully deleted.";
+            var message = $"{FieldDefinition.GrantAllocationAwardContractorInvoiceLineItem.GetFieldDefinitionLabel()} \"{contractorInvoiceItem.GrantAllocationAwardContractorInvoiceDescription}\" successfully deleted.";
             contractorInvoiceItem.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
             return new ModalDialogFormJsonResult();

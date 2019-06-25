@@ -36,8 +36,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public LandownerCostShareLineItemGridSpec(Person currentPerson, Models.GrantAllocationAward grantAllocationAward)
         {
             ShowFilterBar = true;
-            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel();
-            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabelPluralized();
+            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel();
+            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabelPluralized();
 
             bool hasDeletePermission = new GrantAllocationAwardLandownerCostShareLineItemDeleteFeature().HasPermissionByPerson(currentPerson);
             bool hasEditPermission = new GrantAllocationAwardLandownerCostShareLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
@@ -83,6 +83,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareAllocatedAmount.ToGridHeaderString(), a => a.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareTotalCost.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemTotalCost, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareActualMatch.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemActualMatch, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareGrantCost.ToGridHeaderString(), s => s.GrantAllocationAwardLandownerCostShareLineItemGrantCost, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardLandownerCostShareNotes.ToGridHeaderString(), a => a.GrantAllocationAwardLandownerCostShareLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
         }

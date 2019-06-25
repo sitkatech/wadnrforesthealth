@@ -23,12 +23,20 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
+using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
     public class EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData : FirmaUserControlViewData
     {
+        public IEnumerable<SelectListItem> People { get; }
 
+        public EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewData(IEnumerable<Person> people)
+        {
+            People = people.ToSelectListWithEmptyFirstRow(x => x.PersonID.ToString(CultureInfo.InvariantCulture), y => y.FullNameFirstLastAndOrg);
+
+
+        }
     }
 
 }

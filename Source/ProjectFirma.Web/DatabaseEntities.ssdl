@@ -313,12 +313,20 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
       <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" EntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" EntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID">
       <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
       <End Role="GrantAllocationAwardSuppliesLineItems" EntitySet="GrantAllocationAwardSuppliesLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID">
       <End Role="GrantAllocationAward" EntitySet="GrantAllocationAward" />
+      <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAwardTravelLineItem_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
       <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID">
@@ -1359,13 +1367,13 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDescription" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarOrMonth" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemDate" Type="datetime" Nullable="false" />
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemTarHours" Type="int" Nullable="false" />
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyRate" Type="money" Nullable="false" />
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemFringeRate" Type="money" Nullable="false" />
     <Property Name="GrantAllocationAwardPersonnelAndBenefitsLineItemNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="PersonID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationAwardSuppliesLineItem">
     <Key>
@@ -1385,7 +1393,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     </Key>
     <Property Name="GrantAllocationAwardTravelLineItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationAwardID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemDescription" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GrantAllocationAwardTravelLineItemTarOrMonth" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GrantAllocationAwardTravelLineItemDate" Type="datetime" Nullable="false" />
     <Property Name="GrantAllocationAwardTravelLineItemTypeID" Type="int" Nullable="false" />
@@ -1393,6 +1400,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationAwardTravelLineItemMileageRate" Type="money" />
     <Property Name="GrantAllocationAwardTravelLineItemAmount" Type="money" />
     <Property Name="GrantAllocationAwardTravelLineItemNotes" Type="varchar" MaxLength="2000" />
+    <Property Name="PersonID" Type="int" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -3151,6 +3159,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardPersonnelAndBenefitsLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardPersonnelAndBenefitsLineItems">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocationAwardSuppliesLineItem_GrantAllocationAward_GrantAllocationAwardID">
     <End Role="GrantAllocationAward" Type="ProjectFirma.Web.Models.Store.GrantAllocationAward" Multiplicity="1" />
     <End Role="GrantAllocationAwardSuppliesLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardSuppliesLineItem" Multiplicity="*" />
@@ -3172,6 +3192,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocationAwardTravelLineItems">
         <PropertyRef Name="GrantAllocationAwardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardTravelLineItem_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
+    <End Role="GrantAllocationAwardTravelLineItems" Type="ProjectFirma.Web.Models.Store.GrantAllocationAwardTravelLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardTravelLineItems">
+        <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

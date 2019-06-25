@@ -36,8 +36,8 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public TravelLineItemGridSpec(Person currentPerson, Models.GrantAllocationAward grantAllocationAward)
         {
             ShowFilterBar = true;
-            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel();
-            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabelPluralized();
+            ObjectNameSingular = Models.FieldDefinition.GrantAllocationAwardTravelLineItem.GetFieldDefinitionLabel();
+            ObjectNamePlural = Models.FieldDefinition.GrantAllocationAwardTravelLineItem.GetFieldDefinitionLabelPluralized();
 
             bool hasDeletePermission = new GrantAllocationAwardTravelLineItemDeleteFeature().HasPermissionByPerson(currentPerson);
             bool hasEditPermission = new GrantAllocationAwardTravelLineItemEditAsAdminFeature().HasPermissionByPerson(currentPerson);
@@ -59,12 +59,12 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTravelLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardTravelDescription.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardTravelName.ToGridHeaderString(), s => s.Person != null ? s.Person.FullNameFirstLastAndOrgShortName : string.Empty, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelDate.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelMiles.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemMiles, 125, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelMileageRate.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemMileageRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
-            Add(Models.FieldDefinition.GrantAllocationAwardTravelAmount.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemAmountForDisplay, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.GrantAllocationAwardTravelAmount.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemCalculatedAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelNotes.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
         }
     }

@@ -23,7 +23,7 @@ VALUES
 (378, N'GrantAllocationAwardPersonnelAndBenefits', 'Grant Allocation Award Personnel &amp; Benefits', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits.</p>'),
 (379, N'GrantAllocationAwardPersonnelAndBenefitsAllocationTotal', 'Grant Allocation Award Personnel &amp; Benefits Allocation Total', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Allocation Total.</p>'),
 (380, N'GrantAllocationAwardPersonnelAndBenefitsForester', 'Grant Allocation Award Personnel &amp; Benefits Forester', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Forester.</p>'),
-(381, N'GrantAllocationAwardPersonnelAndBenefitsDescription', 'Grant Allocation Award Personnel &amp; Benefits Description', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Description.</p>'),
+(381, N'GrantAllocationAwardPersonnelAndBenefitsName', N'Grant Allocation Award Personnel &amp; Benefits Name', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Name.</p>'),
 (382, N'GrantAllocationAwardPersonnelAndBenefitsTarOrMonth', 'Grant Allocation Award Personnel &amp; Benefits TAR or Month', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits TAR or Month.</p>'),
 (383, N'GrantAllocationAwardPersonnelAndBenefitsDate', 'Grant Allocation Award Personnel &amp; Benefits Date', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Date.</p>'),
 (384, N'GrantAllocationAwardPersonnelAndBenefitsTarHours', 'Grant Allocation Award Personnel &amp; Benefits TAR Hours', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits TAR Hours.</p>'),
@@ -34,7 +34,7 @@ VALUES
 (389, N'GrantAllocationAwardTravelAllocationTotal', 'Grant Allocation Award Travel Allocation Total', N'<p>Placeholder definition for Grant Allocation Award Travel Allocation Total.</p>'),
 (390, N'GrantAllocationAwardTravelForester', 'Grant Allocation Award Travel Forester', N'<p>Placeholder definition for Grant Allocation Award Travel Forester.</p>'),
 (391, N'GrantAllocationAwardTravelAllocationRemaining', 'Grant Allocation Award Travel Allocation Remaining', N'<p>Placeholder definition for Grant Allocation Award Travel Allocation Remaining.</p>'),
-(392, N'GrantAllocationAwardTravelDescription', 'Grant Allocation Award Travel Description', N'<p>Placeholder definition for Grant Allocation Award Travel Description.</p>'),
+(392, N'GrantAllocationAwardTravelName', 'Grant Allocation Award Travel Name', N'<p>Placeholder definition for Grant Allocation Award Travel Name.</p>'),
 (393, N'GrantAllocationAwardTravelTarOrMonth', 'Grant Allocation Award Travel TAR or Month', N'<p>Placeholder definition for Grant Allocation Award Travel TAR or Month.</p>'),
 (394, N'GrantAllocationAwardTravelDate', 'Grant Allocation Award Travel Date', N'<p>Placeholder definition for Grant Allocation Award Travel Date.</p>'),
 (395, N'GrantAllocationAwardTravelType', 'Grant Allocation Award Travel Type', N'<p>Placeholder definition for Grant Allocation Award Travel Type.</p>'),
@@ -77,15 +77,35 @@ VALUES
 (432, N'GrantAllocationAwardLandownerCostShareNotes', 'Grant Allocation Award Landowner Cost Share Notes', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Notes.</p>'),
 (433, N'GrantAllocationAwardLandownerCostShareAllocatedAmount', 'Grant Allocation Award Landowner Cost Share Allocated Amount', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Allocated Amount.</p>'),
 (434, N'GrantAllocationAwardLandownerCostShareTotalCost', 'Grant Allocation Award Landowner Cost Share Total Cost', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Total Cost.</p>'),
-(435, N'GrantAllocationAwardLandownerCostShareGrantCost', 'Grant Allocation Award Landowner Cost Share Grant Cost', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Grant Cost.</p>')
-
-
-
-
-
-
-
-
+(435, N'GrantAllocationAwardLandownerCostShareGrantCost', 'Grant Allocation Award Landowner Cost Share Grant Cost', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Grant Cost.</p>'),
+(436, N'GrantAllocationAwardContractorInvoiceDescription', 'Grant Allocation Award Contractor Invoice Description', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Description.</p>'),
+(437, N'GrantAllocationAwardContractorInvoiceNumber', 'Grant Allocation Award Contractor Invoice Number', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Number.</p>'),
+(438, N'GrantAllocationAwardContractorInvoiceDate', 'Grant Allocation Award Contractor Invoice Date', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Date.</p>'),
+(439, N'GrantAllocationAwardContractorInvoiceType', 'Grant Allocation Award Contractor Invoice Type', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Type.</p>'),
+(440, N'GrantAllocationAwardContractorInvoiceForemanHours', 'Grant Allocation Award Contractor Invoice Foreman Hours', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Foreman Hours.</p>'),
+(441, N'GrantAllocationAwardContractorInvoiceForemanRate',  'Grant Allocation Award Contractor Invoice Foreman Rate', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Foreman Rate.</p>'),
+(442, N'GrantAllocationAwardContractorInvoiceLaborHours', 'Grant Allocation Award Contractor Invoice Labor Hours', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Labor Hours.</p>'),
+(443, N'GrantAllocationAwardContractorInvoiceLaborRate',  'Grant Allocation Award Contractor Invoice Labor Rate',  N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Labor Rate.</p>'),
+(444, N'GrantAllocationAwardContractorInvoiceGrappleHours', 'Grant Allocation Award Contractor Invoice Grapple Hours', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Grapple Hours.</p>'),
+(445, N'GrantAllocationAwardContractorInvoiceGrappleRate',  'Grant Allocation Award Contractor Invoice Grapple Rate',  N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Grapple Rate.</p>'),
+(446, N'GrantAllocationAwardContractorInvoiceMasticationHours', 'Grant Allocation Award Contractor Invoice Mastication Hours', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Mastication Hours.</p>'),
+(447, N'GrantAllocationAwardContractorInvoiceMasticationRate',  'Grant Allocation Award Contractor Invoice Mastication Rate',  N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Mastication Rate.</p>'),
+(448, N'GrantAllocationAwardContractorInvoiceTotal',  'Grant Allocation Award Contractor Invoice Total',  N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Total.</p>'),
+(449, N'GrantAllocationAwardContractorInvoiceTaxRate', 'Grant Allocation Award Contractor Invoice Tax Rate', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Tax Rate.</p>'),
+(450, N'GrantAllocationAwardContractorInvoiceAcresReported',  'Grant Allocation Award Contractor Invoice Acres Reported',  N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Acres Reported.</p>'),
+(451, N'GrantAllocationAwardContractorInvoiceDocumentUpload', 'Grant Allocation Award Contractor Invoice Document Upload', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Document Upload.</p>'),
+(452, N'GrantAllocationAwardContractorInvoiceNotes',  'Grant Allocation Award Contractor Invoice Notes',  N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Notes.</p>'),
+(453, N'GrantAllocationAwardContractual',  'Grant Allocation Award Contractual',  N'<p>Placeholder definition for Grant Allocation Award Contractual.</p>'),
+(454, N'GrantAllocationAwardContractualAllocationTotal',  'Grant Allocation Award Contractual Allocation Total',  N'<p>Placeholder definition for Grant Allocation Award Contractual Allocation Total.</p>'),
+(455, N'GrantAllocationAwardContractualAllocationBalance',  'Grant Allocation Award Contractual Allocation Balance',  N'<p>Placeholder definition for Grant Allocation Award Contractual Allocation Balance.</p>'),
+(456, N'GrantAllocationAwardSuppliesLineItem', 'Grant Allocation Award Supplies Line Item', N'<p>Placeholder definition for Grant Allocation Award Supplies Line Item.</p>'),
+(457, N'GrantAllocationAwardPersonnelAndBenefitsLineItem', 'Grant Allocation Award Personnel &amp; Benefits Line Item', N'<p>Placeholder definition for Grant Allocation Award Personnel &amp; Benefits Line Item.</p>'),
+(458, N'GrantAllocationAwardTravelLineItem', 'Grant Allocation Award TravelLineItem', N'<p>Placeholder definition for Grant Allocation Award Travel Line Item.</p>'),
+(459, N'GrantAllocationAwardLandownerCostShareLineItem', 'Grant Allocation Award Landowner Cost Share Line Item', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Line Item.</p>'),
+(460, N'GrantAllocationAwardContractorInvoiceLineItem', 'Grant Allocation Award Contractor Invoice Line Item', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Line Item.</p>'),
+(461, N'GrantAllocationAwardSpentAmount', 'Grant Allocation Award Spent Amount', N'<p>Placeholder definition for Grant Allocation Award Spent Amount.</p>'),
+(462, N'GrantAllocationAwardBalance', 'Grant Allocation Award Balance', N'<p>Placeholder definition for Grant Allocation Award Balance.</p>'),
+(463, N'GrantAllocationAwardLandownerCostShareActualMatch', 'Grant Allocation Award Landowner Cost Share Actual Match', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Actual Match.</p>')
 
 
 SET IDENTITY_INSERT [dbo].[FieldDefinitionData] ON 
@@ -93,8 +113,8 @@ GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1680, 408, N'<p>The Contractor Invoice related to a Grant Allocation Award</p>
 ', N'Contractor Invoice')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1681, 410, N'<p>The Allocation Remaining for this Contractor Invoice</p>
-', N'Allocation Remaining')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1681, 410, N'<p>The Allocation Balance for this Contractor Invoice</p>
+', N'Allocation Balance')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1682, 395, NULL, N'Type')
 GO
@@ -117,7 +137,7 @@ GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1690, 413, N'<p>The Target Total Acreage for this Contractor Invoice</p>
 ', N'Target Total Acreage')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1691, 392, NULL, N'Description')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1691, 392, NULL, N'Name')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1692, 364, NULL, N'Expiration Date')
 GO
@@ -127,14 +147,17 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1695, 398, NULL, N'Amount')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1696, 389, NULL, N'Allocation Total')
-GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1697, 366, N'<p>Allocation Total for this Indirect Cost</p>
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1696, 389, N'<p>The Travel total of the Grant Allocation Budget Line Items from the Grant Allocation</p>
 ', N'Allocation Total')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1698, 367, NULL, N'Applicable Amount')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1697, 366, N'<p>The Indirect Cost total of the Grant Allocation Budget Line Items from the Grant Allocation</p>
+', N'Allocation Total')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1699, 368, NULL, N'Indirect Total')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1698, 367, N'<p>Sum of the Supplies Total, Personnel &amp; Benefits TAR Total, and Travel Total</p>
+', N'Applicable Amount')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1699, 368, N'<p>This is the Indirect Cost Applicable Amount multiplied by 22.4%</p>
+', N'Indirect Total')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1700, 374, NULL, N'TAR or Month')
 GO
@@ -157,7 +180,8 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1709, 419, NULL, N'Chipping Acres')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1710, 371, NULL, N'Allocation Total')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1710, 371, N'<p>The Supplies total of the Grant Allocation Budget Line Items from the Grant Allocation</p>
+', N'Allocation Total')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1711, 417, N'<p>End Date for this Landowner Cost Share</p>
 ', N'End Date')
@@ -186,7 +210,7 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1722, 423, NULL, N'Grazing Acres')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1723, 381, NULL, N'Description')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1723, 381, NULL, N'Name')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1724, 426, NULL, N'Hand Pile Acres')
 GO
@@ -194,7 +218,8 @@ INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID]
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1726, 428, NULL, N'Hand Pile Burn Acres')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1727, 379, NULL, N'Allocation Total')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1727, 379, N'<p>The Personnel total and Benefits total of the Grant Allocation Budget Line Items from the Grant Allocation</p>
+', N'Allocation Total')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1728, 424, NULL, N'Lop and Scatter Acres')
 GO
@@ -224,6 +249,90 @@ GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1740, 416, NULL, N'Date')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1741, 431, NULL, N'Slash Acres')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1742, 450, NULL, N'Acres Reported')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1743, 438, NULL, N'Invoice Date')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1744, 436, NULL, N'Description')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1745, 451, NULL, N'Invoice Document')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1746, 440, NULL, N'Foreman Hours')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1747, 441, NULL, N'Foreman Rate')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1748, 444, NULL, N'Grapple Hours')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1749, 445, NULL, N'Grapple Rate')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1750, 442, NULL, N'Labor Hours')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1751, 443, NULL, N'Labor Rate')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1752, 411, NULL, N'Landowner Cost Share Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1753, 460, NULL, N'Contractor Invoice Line Item')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1754, 446, NULL, N'Mastication Hours')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1755, 447, NULL, N'Mastication Rate')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1756, 452, NULL, N'Notes')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1757, 437, NULL, N'Invoice Number')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1758, 449, NULL, N'Tax Rate')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1759, 448, NULL, N'Invoice Total')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1760, 439, NULL, N'Invoice Type')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1761, 453, NULL, N'Contractual')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1762, 455, N'<p>This is the Contractual Allocation Total minus the sum of the Landowner Cost Share line item total and the Contractor Invoice item total</p>
+', N'Allocation Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1763, 454, N'<p>The Contractual total of the Grant Allocation Budget Line Items from the Grant Allocation</p>
+', N'Allocation Total')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1764, 369, N'<p>This is the Indirect Allocation Total minus the Indirect Total</p>
+', N'Indirect Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1765, 402, NULL, N'Allocation Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1766, 459, NULL, N'Landowner Cost Share Line Item')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1767, 414, N'<p>This is the Personnel &amp; Benefits Allocation Total minus the TAR Total of all Personnel &amp; Benefits line items</p>
+', N'Allocation Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1768, 457, NULL, N'Personnel & Benefits Line Item')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1769, 372, N'<p>This is the Supplied Allocation Total minus the Supplies Line Item Amount total</p>
+', N'Allocation Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1770, 456, NULL, N'Supplies Line Item')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1771, 391, N'<p>This is the Travel Allocation Total minus the Amount total from the Travel Line Items</p>
+', N'Allocation Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1772, 458, NULL, N'Travel Line Item')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1773, 461, N'<p>Sum of the Indirect Total, Supplies Total, Personnel &amp; Benefits TAR Total, Travel Total, and Contractual Total</p>
+', N'Spent Amount')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1774, 462, N'<p>This is the Award Amount minus the Spent Amount</p>
+', N'Balance')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1775, 400, NULL, N'Landowner Cost Share')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1776, 378, NULL, N'Personnel & Benefits')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1777, 370, NULL, N'Supplies')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1778, 388, NULL, N'Travel')
+GO
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1779, 463, NULL, N'Actual Match')
 GO
 SET IDENTITY_INSERT [dbo].[FieldDefinitionData] OFF
 GO

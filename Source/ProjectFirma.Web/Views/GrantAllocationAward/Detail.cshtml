@@ -72,7 +72,7 @@
                             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocation, string.Format("Funding {0}", FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()))
                         </div>
                         <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocation.GrantNumberAndGrantAllocationDisplayName</span>
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl</span>
                         </div>
                     </div>
                     <div class="row">
@@ -93,7 +93,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            @Html.Label("Spent Amount")
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardSpentAmount)
                         </div>
                         <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.SpentAmount.ToStringCurrency()</span>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            @Html.Label("Balance")
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardBalance)
                         </div>
                         <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.Balance.ToStringCurrency()</span>
@@ -127,7 +127,7 @@
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @FieldDefinition.GrantAllocationAwardIndirectCost.GetFieldDefinitionLabel()
+                        @FieldDefinition.GrantAllocationAwardIndirectCost.GetFieldDefinitionLabelPluralized()
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div>
                         @Html.DhtmlxGrid(ViewDataTyped.SuppliesLineItemGridSpec, ViewDataTyped.SuppliesLineItemGridName, ViewDataTyped.SuppliesLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
@@ -234,7 +234,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div>
                         @Html.DhtmlxGrid(ViewDataTyped.PersonnelAndBenefitsLineItemGridSpec, ViewDataTyped.PersonnelAndBenefitsLineItemGridName, ViewDataTyped.PersonnelAndBenefitsLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
@@ -271,7 +271,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div>
                         @Html.DhtmlxGrid(ViewDataTyped.TravelLineItemGridSpec, ViewDataTyped.TravelLineItemGridName, ViewDataTyped.TravelLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
 
@@ -280,51 +280,43 @@
         </div>
     </div>
 
-    @* Landowner Cost Share Section*@
+    @* Contractual Section*@
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
                     <h3>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditLandownerCostShareUrl, string.Format("Edit {0} {1}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName, FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
-                        @FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()
+                        @FieldDefinition.GrantAllocationAwardContractual.GetFieldDefinitionLabel()
                     </h3>
                 </div>
                 <div class="panel-body">
-                    @*<div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareAllocationTotal)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareAllocationTotal.ToStringCurrency()</span>
-                        </div>
-                    </div>*@
+
                     <div class="row">
                         <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareAllocationBalance)
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractualAllocationTotal)
                         </div>
                         <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareAllocationBalance.ToStringCurrency()</span>
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractualAllocationTotal.ToStringCurrency()</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostSharePercentAllocated)
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractualAllocationBalance)
                         </div>
                         <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostSharePercentAllocated</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareFundBalance)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareFundBalance.ToStringCurrency()</span>
+                            <span>@ViewDataTyped.GrantAllocationAward.ContractualAllocationBalance.ToStringCurrency()</span>
                         </div>
                     </div>
 
 
+                    <hr />
+
+                    <h4>
+                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditLandownerCostShareUrl, string.Format("Edit {0} {1}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName, FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
+                        @FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()
+                    </h4>
+
+                    @* Landowner Cost Share Section *@
                     <div class="row">
                         <div class="col-sm-4">
                             @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareTargetFootprintAcreage)
@@ -342,51 +334,17 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div>
                         @Html.DhtmlxGrid(ViewDataTyped.LandownerCostShareLineItemGridSpec, ViewDataTyped.LandownerCostShareLineItemGridName, ViewDataTyped.LandownerCostShareLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
+                    <hr />
 
-    @* Contractor Invoice Section *@
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    <h3>
+                    @* Contractor Invoice Section *@
+                    <h4>
                         @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditContractorInvoiceUrl, string.Format("Edit {0} {1}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName, FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabelPluralized()), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
                         @FieldDefinition.GrantAllocationAwardContractorInvoice.GetFieldDefinitionLabelPluralized()
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    @*<div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceAllocationTotal)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceAllocationTotal.ToStringCurrency()</span>
-                        </div>
-                    </div>*@
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceAllocationBalance)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceAllocationBalance.ToStringCurrency()</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceLandownerCostShareBalance)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceLandownerCostShareBalance</span>
-                        </div>
-                    </div>
-
+                    </h4>
 
                     <div class="row">
                         <div class="col-sm-4">
@@ -405,10 +363,11 @@
                         </div>
                     </div>
 
-                    
-                    <div class="row">
+
+                    <div>
                         @Html.DhtmlxGrid(ViewDataTyped.ContractorInvoiceItemGridSpec, ViewDataTyped.ContractorInvoiceItemGridName, ViewDataTyped.ContractorInvoiceItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                     </div>
+
 
                 </div>
             </div>
