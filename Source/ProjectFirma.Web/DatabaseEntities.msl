@@ -402,7 +402,6 @@
         <MappingFragment StoreEntitySet="GrantAllocationAwardTravelLineItem">
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemID" ColumnName="GrantAllocationAwardTravelLineItemID" />
           <ScalarProperty Name="GrantAllocationAwardID" ColumnName="GrantAllocationAwardID" />
-          <ScalarProperty Name="GrantAllocationAwardTravelLineItemDescription" ColumnName="GrantAllocationAwardTravelLineItemDescription" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemTarOrMonth" ColumnName="GrantAllocationAwardTravelLineItemTarOrMonth" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemDate" ColumnName="GrantAllocationAwardTravelLineItemDate" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemTypeID" ColumnName="GrantAllocationAwardTravelLineItemTypeID" />
@@ -410,6 +409,7 @@
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemMileageRate" ColumnName="GrantAllocationAwardTravelLineItemMileageRate" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemAmount" ColumnName="GrantAllocationAwardTravelLineItemAmount" />
           <ScalarProperty Name="GrantAllocationAwardTravelLineItemNotes" ColumnName="GrantAllocationAwardTravelLineItemNotes" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

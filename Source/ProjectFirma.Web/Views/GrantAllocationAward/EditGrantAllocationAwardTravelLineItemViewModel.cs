@@ -32,10 +32,9 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public int GrantAllocationAwardID { get; set; }
 
 
-        [StringLength(Models.GrantAllocationAwardTravelLineItem.FieldLengths.GrantAllocationAwardTravelLineItemDescription)]
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelDescription)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelName)]
         [Required]
-        public string Description { get; set; }
+        public int? PersonID { get; set; }
 
         [StringLength(GrantAllocationAwardTravelLineItem.FieldLengths.GrantAllocationAwardTravelLineItemTarOrMonth)]
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardTravelTarOrMonth)]
@@ -80,7 +79,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             GrantAllocationAwardTravelLineItemID = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemID;
             GrantAllocationAwardID = grantAllocationAwardTravelLineItem.GrantAllocationAwardID;
 
-            Description = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDescription;
+            PersonID = grantAllocationAwardTravelLineItem.PersonID;
             TarOrMonth = grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTarOrMonth;
             if (grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDate == DateTime.MinValue)
             {
@@ -117,7 +116,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         {
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemID = GrantAllocationAwardTravelLineItemID;
             grantAllocationAwardTravelLineItem.GrantAllocationAwardID = GrantAllocationAwardID;
-            grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDescription = Description;
+            grantAllocationAwardTravelLineItem.PersonID = PersonID;
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTarOrMonth = TarOrMonth;
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemDate = Date;
             grantAllocationAwardTravelLineItem.GrantAllocationAwardTravelLineItemTypeID = TypeID;

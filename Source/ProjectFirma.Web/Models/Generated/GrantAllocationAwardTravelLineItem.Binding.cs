@@ -30,11 +30,10 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAwardTravelLineItem(int grantAllocationAwardTravelLineItemID, int grantAllocationAwardID, string grantAllocationAwardTravelLineItemDescription, string grantAllocationAwardTravelLineItemTarOrMonth, DateTime grantAllocationAwardTravelLineItemDate, int grantAllocationAwardTravelLineItemTypeID, int? grantAllocationAwardTravelLineItemMiles, decimal? grantAllocationAwardTravelLineItemMileageRate, decimal? grantAllocationAwardTravelLineItemAmount, string grantAllocationAwardTravelLineItemNotes) : this()
+        public GrantAllocationAwardTravelLineItem(int grantAllocationAwardTravelLineItemID, int grantAllocationAwardID, string grantAllocationAwardTravelLineItemTarOrMonth, DateTime grantAllocationAwardTravelLineItemDate, int grantAllocationAwardTravelLineItemTypeID, int? grantAllocationAwardTravelLineItemMiles, decimal? grantAllocationAwardTravelLineItemMileageRate, decimal? grantAllocationAwardTravelLineItemAmount, string grantAllocationAwardTravelLineItemNotes, int? personID) : this()
         {
             this.GrantAllocationAwardTravelLineItemID = grantAllocationAwardTravelLineItemID;
             this.GrantAllocationAwardID = grantAllocationAwardID;
-            this.GrantAllocationAwardTravelLineItemDescription = grantAllocationAwardTravelLineItemDescription;
             this.GrantAllocationAwardTravelLineItemTarOrMonth = grantAllocationAwardTravelLineItemTarOrMonth;
             this.GrantAllocationAwardTravelLineItemDate = grantAllocationAwardTravelLineItemDate;
             this.GrantAllocationAwardTravelLineItemTypeID = grantAllocationAwardTravelLineItemTypeID;
@@ -42,18 +41,18 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationAwardTravelLineItemMileageRate = grantAllocationAwardTravelLineItemMileageRate;
             this.GrantAllocationAwardTravelLineItemAmount = grantAllocationAwardTravelLineItemAmount;
             this.GrantAllocationAwardTravelLineItemNotes = grantAllocationAwardTravelLineItemNotes;
+            this.PersonID = personID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAwardTravelLineItem(int grantAllocationAwardID, string grantAllocationAwardTravelLineItemDescription, string grantAllocationAwardTravelLineItemTarOrMonth, DateTime grantAllocationAwardTravelLineItemDate, int grantAllocationAwardTravelLineItemTypeID) : this()
+        public GrantAllocationAwardTravelLineItem(int grantAllocationAwardID, string grantAllocationAwardTravelLineItemTarOrMonth, DateTime grantAllocationAwardTravelLineItemDate, int grantAllocationAwardTravelLineItemTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardTravelLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.GrantAllocationAwardID = grantAllocationAwardID;
-            this.GrantAllocationAwardTravelLineItemDescription = grantAllocationAwardTravelLineItemDescription;
             this.GrantAllocationAwardTravelLineItemTarOrMonth = grantAllocationAwardTravelLineItemTarOrMonth;
             this.GrantAllocationAwardTravelLineItemDate = grantAllocationAwardTravelLineItemDate;
             this.GrantAllocationAwardTravelLineItemTypeID = grantAllocationAwardTravelLineItemTypeID;
@@ -62,14 +61,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationAwardTravelLineItem(GrantAllocationAward grantAllocationAward, string grantAllocationAwardTravelLineItemDescription, string grantAllocationAwardTravelLineItemTarOrMonth, DateTime grantAllocationAwardTravelLineItemDate, GrantAllocationAwardTravelLineItemType grantAllocationAwardTravelLineItemType) : this()
+        public GrantAllocationAwardTravelLineItem(GrantAllocationAward grantAllocationAward, string grantAllocationAwardTravelLineItemTarOrMonth, DateTime grantAllocationAwardTravelLineItemDate, GrantAllocationAwardTravelLineItemType grantAllocationAwardTravelLineItemType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardTravelLineItemID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
             this.GrantAllocationAward = grantAllocationAward;
             grantAllocationAward.GrantAllocationAwardTravelLineItems.Add(this);
-            this.GrantAllocationAwardTravelLineItemDescription = grantAllocationAwardTravelLineItemDescription;
             this.GrantAllocationAwardTravelLineItemTarOrMonth = grantAllocationAwardTravelLineItemTarOrMonth;
             this.GrantAllocationAwardTravelLineItemDate = grantAllocationAwardTravelLineItemDate;
             this.GrantAllocationAwardTravelLineItemTypeID = grantAllocationAwardTravelLineItemType.GrantAllocationAwardTravelLineItemTypeID;
@@ -80,7 +78,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantAllocationAwardTravelLineItem CreateNewBlank(GrantAllocationAward grantAllocationAward, GrantAllocationAwardTravelLineItemType grantAllocationAwardTravelLineItemType)
         {
-            return new GrantAllocationAwardTravelLineItem(grantAllocationAward, default(string), default(string), default(DateTime), grantAllocationAwardTravelLineItemType);
+            return new GrantAllocationAwardTravelLineItem(grantAllocationAward, default(string), default(DateTime), grantAllocationAwardTravelLineItemType);
         }
 
         /// <summary>
@@ -118,7 +116,6 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int GrantAllocationAwardTravelLineItemID { get; set; }
         public int GrantAllocationAwardID { get; set; }
-        public string GrantAllocationAwardTravelLineItemDescription { get; set; }
         public string GrantAllocationAwardTravelLineItemTarOrMonth { get; set; }
         public DateTime GrantAllocationAwardTravelLineItemDate { get; set; }
         public int GrantAllocationAwardTravelLineItemTypeID { get; set; }
@@ -126,15 +123,16 @@ namespace ProjectFirma.Web.Models
         public decimal? GrantAllocationAwardTravelLineItemMileageRate { get; set; }
         public decimal? GrantAllocationAwardTravelLineItemAmount { get; set; }
         public string GrantAllocationAwardTravelLineItemNotes { get; set; }
+        public int? PersonID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardTravelLineItemID; } set { GrantAllocationAwardTravelLineItemID = value; } }
 
         public virtual GrantAllocationAward GrantAllocationAward { get; set; }
         public GrantAllocationAwardTravelLineItemType GrantAllocationAwardTravelLineItemType { get { return GrantAllocationAwardTravelLineItemType.AllLookupDictionary[GrantAllocationAwardTravelLineItemTypeID]; } }
+        public virtual Person Person { get; set; }
 
         public static class FieldLengths
         {
-            public const int GrantAllocationAwardTravelLineItemDescription = 255;
             public const int GrantAllocationAwardTravelLineItemTarOrMonth = 255;
             public const int GrantAllocationAwardTravelLineItemNotes = 2000;
         }

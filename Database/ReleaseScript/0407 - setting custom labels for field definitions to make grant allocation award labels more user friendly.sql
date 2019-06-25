@@ -34,7 +34,7 @@ VALUES
 (389, N'GrantAllocationAwardTravelAllocationTotal', 'Grant Allocation Award Travel Allocation Total', N'<p>Placeholder definition for Grant Allocation Award Travel Allocation Total.</p>'),
 (390, N'GrantAllocationAwardTravelForester', 'Grant Allocation Award Travel Forester', N'<p>Placeholder definition for Grant Allocation Award Travel Forester.</p>'),
 (391, N'GrantAllocationAwardTravelAllocationRemaining', 'Grant Allocation Award Travel Allocation Remaining', N'<p>Placeholder definition for Grant Allocation Award Travel Allocation Remaining.</p>'),
-(392, N'GrantAllocationAwardTravelDescription', 'Grant Allocation Award Travel Description', N'<p>Placeholder definition for Grant Allocation Award Travel Description.</p>'),
+(392, N'GrantAllocationAwardTravelName', 'Grant Allocation Award Travel Name', N'<p>Placeholder definition for Grant Allocation Award Travel Name.</p>'),
 (393, N'GrantAllocationAwardTravelTarOrMonth', 'Grant Allocation Award Travel TAR or Month', N'<p>Placeholder definition for Grant Allocation Award Travel TAR or Month.</p>'),
 (394, N'GrantAllocationAwardTravelDate', 'Grant Allocation Award Travel Date', N'<p>Placeholder definition for Grant Allocation Award Travel Date.</p>'),
 (395, N'GrantAllocationAwardTravelType', 'Grant Allocation Award Travel Type', N'<p>Placeholder definition for Grant Allocation Award Travel Type.</p>'),
@@ -137,7 +137,7 @@ GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1690, 413, N'<p>The Target Total Acreage for this Contractor Invoice</p>
 ', N'Target Total Acreage')
 GO
-INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1691, 392, NULL, N'Description')
+INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1691, 392, NULL, N'Name')
 GO
 INSERT [dbo].[FieldDefinitionData] ([FieldDefinitionDataID], [FieldDefinitionID], [FieldDefinitionDataValue], [FieldDefinitionLabel]) VALUES (1692, 364, NULL, N'Expiration Date')
 GO

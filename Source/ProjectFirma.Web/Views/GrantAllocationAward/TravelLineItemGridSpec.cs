@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeEditIconAsModalDialogLinkBootstrap(new ModalDialogForm(x.GetEditTravelLineItemUrl(), $"Edit this {Models.FieldDefinition.GrantAllocationAwardTravel.GetFieldDefinitionLabel()} Line Item")), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add(Models.FieldDefinition.GrantAllocationAwardTravelDescription.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);
+            Add(Models.FieldDefinition.GrantAllocationAwardTravelName.ToGridHeaderString(), s => s.Person != null ? s.Person.FullNameFirstLastAndOrgShortName : string.Empty, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelDate.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelMiles.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemMiles, 125, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnAggregationType.Total);

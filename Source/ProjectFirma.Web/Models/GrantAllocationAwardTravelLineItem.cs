@@ -4,7 +4,7 @@ namespace ProjectFirma.Web.Models
 {
     public partial class GrantAllocationAwardTravelLineItem : IAuditableEntity
     {
-        public string AuditDescriptionString => GrantAllocationAwardTravelLineItemDescription;
+        public string AuditDescriptionString => $"GrantAllocationAwardTravelLineItemID: {GrantAllocationAwardTravelLineItemID}";
 
         public Money GrantAllocationAwardTravelLineItemCalculatedAmount
         {

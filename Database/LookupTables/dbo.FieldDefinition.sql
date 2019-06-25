@@ -211,7 +211,7 @@ VALUES
 (389, N'GrantAllocationAwardTravelAllocationTotal', 'Grant Allocation Award Travel Allocation Total', N'<p>Placeholder definition for Grant Allocation Award Travel Allocation Total.</p>'),
 (390, N'GrantAllocationAwardTravelForester', 'Grant Allocation Award Travel Forester', N'<p>Placeholder definition for Grant Allocation Award Travel Forester.</p>'),
 (391, N'GrantAllocationAwardTravelAllocationBalance', 'Grant Allocation Award Travel Allocation Balance', N'<p>Placeholder definition for Grant Allocation Award Travel Allocation Balance.</p>'),
-(392, N'GrantAllocationAwardTravelDescription', 'Grant Allocation Award Travel Description', N'<p>Placeholder definition for Grant Allocation Award Travel Description.</p>'),
+(392, N'GrantAllocationAwardTravelName', 'Grant Allocation Award Travel Name', N'<p>Placeholder definition for Grant Allocation Award Travel Name.</p>'),
 (393, N'GrantAllocationAwardTravelTarOrMonth', 'Grant Allocation Award Travel TAR or Month', N'<p>Placeholder definition for Grant Allocation Award Travel TAR or Month.</p>'),
 (394, N'GrantAllocationAwardTravelDate', 'Grant Allocation Award Travel Date', N'<p>Placeholder definition for Grant Allocation Award Travel Date.</p>'),
 (395, N'GrantAllocationAwardTravelType', 'Grant Allocation Award Travel Type', N'<p>Placeholder definition for Grant Allocation Award Travel Type.</p>'),

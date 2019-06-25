@@ -425,6 +425,10 @@
       <End Role="Person" EntitySet="Person" />
       <End Role="GrantAllocationAwardPersonnelAndBenefitsLineItems" EntitySet="GrantAllocationAwardPersonnelAndBenefitsLineItem" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationAwardTravelLineItem_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="GrantAllocationAwardTravelLineItems" EntitySet="GrantAllocationAwardTravelLineItem" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID">
       <End Role="ChangePerson" EntitySet="Person" />
       <End Role="GrantAllocationChangeLogsWhereYouAreTheChangePerson" EntitySet="GrantAllocationChangeLog" />
@@ -1488,7 +1492,6 @@
     </Key>
     <Property Name="GrantAllocationAwardTravelLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GrantAllocationAwardID" Type="Int32" Nullable="false" />
-    <Property Name="GrantAllocationAwardTravelLineItemDescription" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardTravelLineItemTarOrMonth" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardTravelLineItemDate" Type="DateTime" Nullable="false" />
     <Property Name="GrantAllocationAwardTravelLineItemTypeID" Type="Int32" Nullable="false" />
@@ -1496,7 +1499,9 @@
     <Property Name="GrantAllocationAwardTravelLineItemMileageRate" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardTravelLineItemAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="GrantAllocationAwardTravelLineItemNotes" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
+    <Property Name="PersonID" Type="Int32" />
     <NavigationProperty Name="GrantAllocationAward" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAwardTravelLineItems" ToRole="GrantAllocationAward" />
+    <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="GrantAllocationAwardTravelLineItems" ToRole="Person" />
   </EntityType>
   <EntityType Name="GrantAllocationBudgetLineItem">
     <Key>
@@ -2086,6 +2091,7 @@
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
     <NavigationProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" />
+    <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardTravelLineItems" />
     <NavigationProperty Name="GrantAllocationChangeLogsWhereYouAreTheChangePerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_Person_ChangePersonID_PersonID" FromRole="ChangePerson" ToRole="GrantAllocationChangeLogsWhereYouAreTheChangePerson" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheCreatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_CreatedByPersonID_PersonID" FromRole="CreatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheCreatedByPerson" />
     <NavigationProperty Name="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_Person_LastUpdatedByPersonID_PersonID" FromRole="LastUpdatedByPerson" ToRole="GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson" />
@@ -3916,6 +3922,18 @@
         <PropertyRef Name="PersonID" />
       </Principal>
       <Dependent Role="GrantAllocationAwardPersonnelAndBenefitsLineItems">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationAwardTravelLineItem_Person_PersonID">
+    <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
+    <End Role="GrantAllocationAwardTravelLineItems" Type="ProjectFirma.Web.Models.GrantAllocationAwardTravelLineItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GrantAllocationAwardTravelLineItems">
         <PropertyRef Name="PersonID" />
       </Dependent>
     </ReferentialConstraint>
