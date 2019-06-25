@@ -433,25 +433,19 @@
                             <div class="col-sm-6">
                                 <h4>Treatments</h4>
                             </div>
-                            <div class="col-sm-6 text-right">
-                                @if (ViewDataTyped.UserHasEditProjectPermissions)
-                                {
-                                    @ModalDialogFormHelper.ModalDialogFormLink(string.Format("{0} Add Treatment", FirmaDhtmlxGridHtmlHelpers.PlusIcon), ViewDataTyped.EditTreatmentActivityUrl, "Add Treatment", new List<string> { "btn", "btn-sm", "btn-firma" }, ViewDataTyped.UserHasEditProjectPermissions)
-                                }
-                            </div>
                         </div>
 
                         <br />
 
-                        @if (ViewDataTyped.Project.TreatmentActivities.Any())
+                        @if (ViewDataTyped.Project.GrantAllocationAwardLandownerCostShareLineItems.Any())
                         {
                             <div class="panel-body">
-                                @Html.DhtmlxGrid(ViewDataTyped.TreatmentActivityProjectDetailGridSpec, ViewDataTyped.TreatmentActivityGridName, ViewDataTyped.TreatmentActivityGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
+                                @Html.DhtmlxGrid(ViewDataTyped.LandownerCostShareLineItemProjectDetailGridSpec, ViewDataTyped.LandownerCostShareLineItemGridName, ViewDataTyped.LandownerCostShareLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
                             </div>
                         }
                         else
                         {
-                            <p class="systemText">No Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+                            <p class="systemText">No @FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem.GetFieldDefinitionLabel() Treatments identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
                         }
                     </div>
                 </div>

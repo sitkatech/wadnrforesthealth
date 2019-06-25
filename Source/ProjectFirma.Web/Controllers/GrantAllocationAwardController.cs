@@ -482,6 +482,16 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
+        [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
+        public GridJsonNetJObjectResult<GrantAllocationAwardLandownerCostShareLineItem> LandownerCostShareLineItemProjectDetailGridJsonData(ProjectPrimaryKey projectPrimaryKey)
+        {
+            var project = projectPrimaryKey.EntityObject;
+            var landownerCostShareLineItems = project.GrantAllocationAwardLandownerCostShareLineItems;
+            var gridSpec = new LandownerCostShareLineItemProjectDetailGridSpec(CurrentPerson);
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<GrantAllocationAwardLandownerCostShareLineItem>(landownerCostShareLineItems.ToList(), gridSpec);
+            return gridJsonNetJObjectResult;
+        }
+
         [HttpGet]
         [GrantAllocationAwardLandownerCostShareLineItemCreateFeature]
         public PartialViewResult NewLandownerCostShareLineItemFromGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
@@ -507,7 +517,8 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationAward = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.Single(ga => ga.GrantAllocationAwardID == viewModel.GrantAllocationAwardID);
             var project = HttpRequestStorage.DatabaseEntities.Projects.Single(x => x.ProjectID == viewModel.ProjectID);
             var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.Single(x => x.LandownerCostShareLineItemStatusID == viewModel.StatusID);
-            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(grantAllocationAward, project, landownerCostShareLineItemStatus);
+            var landownerCostShareLineItem = GrantAllocationAwardLandownerCostShareLineItem.CreateNewBlank(project, landownerCostShareLineItemStatus);
+            landownerCostShareLineItem.GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
             viewModel.UpdateModel(landownerCostShareLineItem);
             return new ModalDialogFormJsonResult();
         }
@@ -516,7 +527,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var statusList = LandownerCostShareLineItemStatus.All;
             var projectList = HttpRequestStorage.DatabaseEntities.Projects.ToList().OrderBy(x => x.DisplayName);
-            var viewData = new EditGrantAllocationAwardLandownerCostShareLineItemViewData(statusList, projectList);
+            var grantAllocationAwardList = HttpRequestStorage.DatabaseEntities.GrantAllocationAwards.OrderBy(x => x.GrantAllocationAwardName);
+            var viewData = new EditGrantAllocationAwardLandownerCostShareLineItemViewData(statusList, projectList, grantAllocationAwardList);
             return RazorPartialView<EditGrantAllocationAwardLandownerCostShareLineItem, EditGrantAllocationAwardLandownerCostShareLineItemViewData, EditGrantAllocationAwardLandownerCostShareLineItemViewModel>(viewData, viewModel);
         }
 

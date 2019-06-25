@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             TravelLineItemGridSpec = travelLineItemGridSpec;
 
             LandownerCostShareLineItemGridName = "grantAllocationAwardLandownerCostShareLineItemGridName";
-            LandownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.LandownerCostShareLineItemGridJsonData(grantAllocationAward.PrimaryKey));
+            LandownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.LandownerCostShareLineItemGridJsonData(grantAllocationAward));
             LandownerCostShareLineItemGridSpec = landownerCostShareLineItemGridSpec;
 
             ContractorInvoiceItemGridName = "grantAllocationAwardContractorInvoiceItemGridName";

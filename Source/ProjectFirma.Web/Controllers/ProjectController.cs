@@ -43,12 +43,12 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.ExcelWorkbookUtilities;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Models.ApiJson;
+using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.InteractionEvent;
 using ProjectFirma.Web.Views.ProjectFunding;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
 using ProjectFirma.Web.Views.Shared.ProjectOrganization;
 using ProjectFirma.Web.Views.Shared.ProjectPerson;
-using ProjectFirma.Web.Views.TreatmentActivity;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
@@ -216,8 +216,8 @@ namespace ProjectFirma.Web.Controllers
 
             var projectCustomAttributeTypes = project.GetProjectCustomAttributeTypesForThisProject();
 
-            var treamentActivityGridSpec = new TreatmentActivityProjectDetailGridSpec(CurrentPerson);
-            var treatmentActivityGridDataUrl = SitkaRoute<TreatmentActivityController>.BuildUrlFromExpression(tc => tc.TreatmentActivityGridJsonData(project));
+            var landownerCostShareLineItemProjectDetailGridSpec = new LandownerCostShareLineItemProjectDetailGridSpec(CurrentPerson);
+            var landownerCostShareLineItemGridDataUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(tc => tc.LandownerCostShareLineItemProjectDetailGridJsonData(project));
 
             var projectInteractionEventsGridSpec = new InteractionEventGridSpec(CurrentPerson, project);
             var projectInteractionEventsGridDataUrl =
@@ -263,7 +263,7 @@ namespace ProjectFirma.Web.Controllers
                 projectOrganizationsDetailViewData,
                 classificationSystems,
                 ProjectLocationController.EditProjectBoundingBoxFormID, projectPeopleDetailViewData,
-                treamentActivityGridSpec, treatmentActivityGridDataUrl, editProjectRegionUrl, editProjectPriorityAreaUrl,
+                landownerCostShareLineItemProjectDetailGridSpec, landownerCostShareLineItemGridDataUrl, editProjectRegionUrl, editProjectPriorityAreaUrl,
                 projectInteractionEventsGridSpec, projectInteractionEventsGridDataUrl);
             return RazorView<Detail, DetailViewData>(viewData);
         }

@@ -35,7 +35,11 @@ namespace ProjectFirma.Web.Models
                     invoicedToDate = grantAllocationAward.TravelLineItemSum;
                     break;
                 case (int)CostTypeEnum.Personnel:
+                    invoicedToDate = grantAllocationAward.GrantAllocationAwardPersonnelAndBenefitsLineItems.Sum(pb => pb.GrantAllocationAwardPersonnelAndBenefitsLineItemHourlyTotal);
+                    break;
                 case (int)CostTypeEnum.Benefits:
+                    invoicedToDate = grantAllocationAward.GrantAllocationAwardPersonnelAndBenefitsLineItems.Sum(pb => pb.GrantAllocationAwardPersonnelAndBenefitsLineItemFringeTotal);
+                    break;
                 case (int)CostTypeEnum.Equipment:
                 case (int)CostTypeEnum.Other:
                     break;

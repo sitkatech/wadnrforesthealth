@@ -172,10 +172,10 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             }
             if (ProjectStageID == ProjectStage.Completed.ProjectStageID)
             {
-                var treatmentActivitiesOnProject = HttpRequestStorage.DatabaseEntities.TreatmentActivities.Where(x => x.ProjectID == ProjectID).ToList();
-                if (treatmentActivitiesOnProject.Any(x => x.TreatmentActivityStatus == TreatmentActivityStatus.Planned))
+                var landownerCostShareLineItemsOnProject = HttpRequestStorage.DatabaseEntities.GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.ProjectID == ProjectID).ToList();
+                if (landownerCostShareLineItemsOnProject.Any(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned))
                 {
-                    yield return new SitkaValidationResult<BasicsViewModel, int?>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all Treatment Activities must be Completed or Cancelled.", m => m.ProjectStageID);
+                    yield return new SitkaValidationResult<BasicsViewModel, int?>($"Before marking the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} completed, all {Models.FieldDefinition.GrantAllocationAwardLandownerCostShareLineItem} Treatments must be Completed or Cancelled.", m => m.ProjectStageID);
                 }
             }
 
