@@ -161,7 +161,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContact> tmpAgreementContacts { get; set; }
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
-        public virtual DbSet<TreatmentActivity> TreatmentActivities { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
 
@@ -787,14 +786,6 @@ namespace ProjectFirma.Web.Models
 
                 case "TrainingVideo":
                     return TrainingVideos.GetTrainingVideo(primaryKey);
-
-                case "TreatmentActivity":
-                    return TreatmentActivities.GetTreatmentActivity(primaryKey);
-
-                case "TreatmentActivityStatus":
-                    var treatmentActivityStatus = TreatmentActivityStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(treatmentActivityStatus, "TreatmentActivityStatus", primaryKey);
-                    return treatmentActivityStatus;
 
                 case "TreatmentType":
                     var treatmentType = TreatmentType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);

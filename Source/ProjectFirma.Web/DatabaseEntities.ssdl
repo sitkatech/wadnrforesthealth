@@ -134,7 +134,6 @@
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContact" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.Store.TreatmentActivity" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
       <DefiningQuery>SELECT 
@@ -1000,26 +999,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID" Association="ProjectFirma.Web.Models.Store.FK_TaxonomyBranch_TaxonomyTrunk_TaxonomyTrunkID">
       <End Role="TaxonomyTrunk" EntitySet="TaxonomyTrunk" />
       <End Role="TaxonomyBranches" EntitySet="TaxonomyBranch" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
-      <End Role="GrantAllocationProgramIndexProjectCode" EntitySet="GrantAllocationProgramIndexProjectCode" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
-      <End Role="TreatmentActivityContact" EntitySet="Person" />
-      <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_ProgramIndex_ProgramIndexID">
-      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.Store.FK_TreatmentActivity_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Agreement">
@@ -2572,35 +2551,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="VideoDescription" Type="varchar" MaxLength="500" />
     <Property Name="VideoUploadDate" Type="datetime" Nullable="false" />
     <Property Name="VideoURL" Type="varchar" Nullable="false" MaxLength="100" />
-  </EntityType>
-  <EntityType Name="TreatmentActivity">
-    <Key>
-      <PropertyRef Name="TreatmentActivityID" />
-    </Key>
-    <Property Name="TreatmentActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="TreatmentActivityStartDate" Type="datetime" />
-    <Property Name="TreatmentActivityEndDate" Type="datetime" />
-    <Property Name="TreatmentActivityStatusID" Type="int" Nullable="false" />
-    <Property Name="TreatmentActivityContactID" Type="int" />
-    <Property Name="TreatmentActivityFootprintAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityChippingAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityPruningAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityThinningAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityMasticationAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityGrazingAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityLopAndScatterAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityBiomassRemovalAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityHandPileAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityBroadcastBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityHandPileBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityMachinePileBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityOtherTreatmentAcres" Type="decimal" Nullable="false" />
-    <Property Name="TreatmentActivityNotes" Type="varchar(max)" />
-    <Property Name="ProgramIndexID" Type="int" />
-    <Property Name="ProjectCodeID" Type="int" />
-    <Property Name="TreatmentActivitySlashAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="int" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -5220,66 +5170,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="TaxonomyBranches">
         <PropertyRef Name="TaxonomyTrunkID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
-    <End Role="GrantAllocationProgramIndexProjectCode" Type="ProjectFirma.Web.Models.Store.GrantAllocationProgramIndexProjectCode" Multiplicity="0..1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationProgramIndexProjectCode">
-        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
-    <End Role="TreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="0..1" />
-    <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TreatmentActivityContact">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact">
-        <PropertyRef Name="TreatmentActivityContactID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_ProgramIndex_ProgramIndexID">
-    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.Store.ProgramIndex" Multiplicity="0..1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramIndex">
-        <PropertyRef Name="ProgramIndexID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="ProgramIndexID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.Store.ProjectCode" Multiplicity="0..1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.Store.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -46,3 +46,8 @@ insert into dbo.GrantAllocationAwardLandownerCostShareLineItem ([ProjectID]
 		  ,0
 		  ,0
 				 from dbo.TreatmentActivity
+
+
+
+drop table dbo.TreatmentActivity;
+drop table dbo.TreatmentActivityStatus;

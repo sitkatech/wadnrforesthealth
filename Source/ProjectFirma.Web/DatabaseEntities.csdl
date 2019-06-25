@@ -134,7 +134,6 @@
     <EntitySet Name="tmpAgreementContact" EntityType="ProjectFirma.Web.Models.tmpAgreementContact" />
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
-    <EntitySet Name="TreatmentActivity" EntityType="ProjectFirma.Web.Models.TreatmentActivity" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
@@ -457,10 +456,6 @@
       <End Role="ProjectCode" EntitySet="ProjectCode" />
       <End Role="GrantAllocationProgramIndexProjectCodes" EntitySet="GrantAllocationProgramIndexProjectCode" />
     </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
-      <End Role="GrantAllocationProgramIndexProjectCode" EntitySet="GrantAllocationProgramIndexProjectCode" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationProgramManager_Person_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_Person_PersonID">
       <End Role="Person" EntitySet="Person" />
       <End Role="GrantAllocationProgramManagers" EntitySet="GrantAllocationProgramManager" />
@@ -781,10 +776,6 @@
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="SystemAttributesWhereYouAreThePrimaryContactPerson" EntitySet="SystemAttribute" />
     </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
-      <End Role="TreatmentActivityContact" EntitySet="Person" />
-      <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" EntitySet="TreatmentActivity" />
-    </AssociationSet>
     <AssociationSet Name="FK_PersonStewardRegion_Region_RegionID" Association="ProjectFirma.Web.Models.FK_PersonStewardRegion_Region_RegionID">
       <End Role="Region" EntitySet="Region" />
       <End Role="PersonStewardRegions" EntitySet="PersonStewardRegion" />
@@ -800,10 +791,6 @@
     <AssociationSet Name="FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID" Association="ProjectFirma.Web.Models.FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID">
       <End Role="PriorityArea" EntitySet="PriorityArea" />
       <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_ProgramIndex_ProgramIndexID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID">
-      <End Role="ProgramIndex" EntitySet="ProgramIndex" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_Project_ProjectType_ProjectTypeID" Association="ProjectFirma.Web.Models.FK_Project_ProjectType_ProjectTypeID">
       <End Role="ProjectType" EntitySet="ProjectType" />
@@ -880,14 +867,6 @@
     <AssociationSet Name="FK_ProjectUpdateBatch_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectUpdateBatches" EntitySet="ProjectUpdateBatch" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_Project_ProjectID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID">
-      <End Role="Project" EntitySet="Project" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TreatmentActivity_ProjectCode_ProjectCodeID" Association="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID">
-      <End Role="ProjectCode" EntitySet="ProjectCode" />
-      <End Role="TreatmentActivities" EntitySet="TreatmentActivity" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID" Association="ProjectFirma.Web.Models.FK_ProjectCustomAttribute_ProjectCustomAttributeType_ProjectCustomAttributeTypeID">
       <End Role="ProjectCustomAttributeType" EntitySet="ProjectCustomAttributeType" />
@@ -1628,7 +1607,6 @@
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="GrantAllocation" />
     <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="ProgramIndex" />
     <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" FromRole="GrantAllocationProgramIndexProjectCodes" ToRole="ProjectCode" />
-    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" FromRole="GrantAllocationProgramIndexProjectCode" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="GrantAllocationProgramManager">
     <Key>
@@ -2137,7 +2115,6 @@
     <NavigationProperty Name="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="UpdatePerson" ToRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" />
     <NavigationProperty Name="SupportRequestLogsWhereYouAreTheRequestPerson" Relationship="ProjectFirma.Web.Models.FK_SupportRequestLog_Person_RequestPersonID_PersonID" FromRole="RequestPerson" ToRole="SupportRequestLogsWhereYouAreTheRequestPerson" />
     <NavigationProperty Name="SystemAttributesWhereYouAreThePrimaryContactPerson" Relationship="ProjectFirma.Web.Models.FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID" FromRole="PrimaryContactPerson" ToRole="SystemAttributesWhereYouAreThePrimaryContactPerson" />
-    <NavigationProperty Name="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" FromRole="TreatmentActivityContact" ToRole="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" />
   </EntityType>
   <EntityType Name="PersonAllowedAuthenticator">
     <Key>
@@ -2201,7 +2178,6 @@
     <Property Name="Subprogram" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="Subactivity" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="GrantAllocationProgramIndexProjectCodes" />
-    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="ProgramIndex" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="Project">
     <Key>
@@ -2263,7 +2239,6 @@
     <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="Project" ToRole="ProjectRegions" />
     <NavigationProperty Name="ProjectTags" Relationship="ProjectFirma.Web.Models.FK_ProjectTag_Project_ProjectID" FromRole="Project" ToRole="ProjectTags" />
     <NavigationProperty Name="ProjectUpdateBatches" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateBatch_Project_ProjectID" FromRole="Project" ToRole="ProjectUpdateBatches" />
-    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="Project" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -2287,7 +2262,6 @@
     <Property Name="ProjectStartDate" Type="DateTime" />
     <Property Name="ProjectEndDate" Type="DateTime" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="GrantAllocationProgramIndexProjectCodes" />
-    <NavigationProperty Name="TreatmentActivities" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID" FromRole="ProjectCode" ToRole="TreatmentActivities" />
   </EntityType>
   <EntityType Name="ProjectCustomAttribute">
     <Key>
@@ -2987,40 +2961,6 @@
     <Property Name="VideoDescription" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
     <Property Name="VideoUploadDate" Type="DateTime" Nullable="false" />
     <Property Name="VideoURL" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="TreatmentActivity">
-    <Key>
-      <PropertyRef Name="TreatmentActivityID" />
-    </Key>
-    <Property Name="TreatmentActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentActivityStartDate" Type="DateTime" />
-    <Property Name="TreatmentActivityEndDate" Type="DateTime" />
-    <Property Name="TreatmentActivityStatusID" Type="Int32" Nullable="false" />
-    <Property Name="TreatmentActivityContactID" Type="Int32" />
-    <Property Name="TreatmentActivityFootprintAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityChippingAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityPruningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityThinningAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityMasticationAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityGrazingAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityLopAndScatterAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityBiomassRemovalAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityHandPileAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityBroadcastBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityHandPileBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityMachinePileBurnAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityOtherTreatmentAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="TreatmentActivityNotes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="ProgramIndexID" Type="Int32" />
-    <Property Name="ProjectCodeID" Type="Int32" />
-    <Property Name="TreatmentActivitySlashAcres" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-    <Property Name="GrantAllocationProgramIndexProjectCodeID" Type="Int32" />
-    <NavigationProperty Name="GrantAllocationProgramIndexProjectCode" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID" FromRole="TreatmentActivities" ToRole="GrantAllocationProgramIndexProjectCode" />
-    <NavigationProperty Name="TreatmentActivityContact" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID" FromRole="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" ToRole="TreatmentActivityContact" />
-    <NavigationProperty Name="ProgramIndex" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProgramIndex_ProgramIndexID" FromRole="TreatmentActivities" ToRole="ProgramIndex" />
-    <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_Project_ProjectID" FromRole="TreatmentActivities" ToRole="Project" />
-    <NavigationProperty Name="ProjectCode" Relationship="ProjectFirma.Web.Models.FK_TreatmentActivity_ProjectCode_ProjectCodeID" FromRole="TreatmentActivities" ToRole="ProjectCode" />
   </EntityType>
   <EntityType Name="Vendor">
     <Key>
@@ -4022,18 +3962,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TreatmentActivity_GrantAllocationProgramIndexProjectCode_GrantAllocationProgramIndexProjectCodeID">
-    <End Role="GrantAllocationProgramIndexProjectCode" Type="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode" Multiplicity="0..1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationProgramIndexProjectCode">
-        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="GrantAllocationProgramIndexProjectCodeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocationProgramManager_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
     <End Role="GrantAllocationProgramManagers" Type="ProjectFirma.Web.Models.GrantAllocationProgramManager" Multiplicity="*" />
@@ -4994,18 +4922,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TreatmentActivity_Person_TreatmentActivityContactID_PersonID">
-    <End Role="TreatmentActivityContact" Type="ProjectFirma.Web.Models.Person" Multiplicity="0..1" />
-    <End Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TreatmentActivityContact">
-        <PropertyRef Name="PersonID" />
-      </Principal>
-      <Dependent Role="TreatmentActivitiesWhereYouAreTheTreatmentActivityContact">
-        <PropertyRef Name="TreatmentActivityContactID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PersonStewardRegion_Region_RegionID">
     <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
     <End Role="PersonStewardRegions" Type="ProjectFirma.Web.Models.PersonStewardRegion" Multiplicity="*" />
@@ -5051,18 +4967,6 @@
       </Principal>
       <Dependent Role="ProjectPriorityAreaUpdates">
         <PropertyRef Name="PriorityAreaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_ProgramIndex_ProgramIndexID">
-    <End Role="ProgramIndex" Type="ProjectFirma.Web.Models.ProgramIndex" Multiplicity="0..1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProgramIndex">
-        <PropertyRef Name="ProgramIndexID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="ProgramIndexID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5291,30 +5195,6 @@
       </Principal>
       <Dependent Role="ProjectUpdateBatches">
         <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_Project_ProjectID">
-    <End Role="Project" Type="ProjectFirma.Web.Models.Project" Multiplicity="1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Project">
-        <PropertyRef Name="ProjectID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="ProjectID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TreatmentActivity_ProjectCode_ProjectCodeID">
-    <End Role="ProjectCode" Type="ProjectFirma.Web.Models.ProjectCode" Multiplicity="0..1" />
-    <End Role="TreatmentActivities" Type="ProjectFirma.Web.Models.TreatmentActivity" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProjectCode">
-        <PropertyRef Name="ProjectCodeID" />
-      </Principal>
-      <Dependent Role="TreatmentActivities">
-        <PropertyRef Name="ProjectCodeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

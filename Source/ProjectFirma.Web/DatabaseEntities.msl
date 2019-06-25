@@ -1670,36 +1670,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TreatmentActivity">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.TreatmentActivity">
-        <MappingFragment StoreEntitySet="TreatmentActivity">
-          <ScalarProperty Name="TreatmentActivityID" ColumnName="TreatmentActivityID" />
-          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="TreatmentActivityStartDate" ColumnName="TreatmentActivityStartDate" />
-          <ScalarProperty Name="TreatmentActivityEndDate" ColumnName="TreatmentActivityEndDate" />
-          <ScalarProperty Name="TreatmentActivityStatusID" ColumnName="TreatmentActivityStatusID" />
-          <ScalarProperty Name="TreatmentActivityContactID" ColumnName="TreatmentActivityContactID" />
-          <ScalarProperty Name="TreatmentActivityFootprintAcres" ColumnName="TreatmentActivityFootprintAcres" />
-          <ScalarProperty Name="TreatmentActivityChippingAcres" ColumnName="TreatmentActivityChippingAcres" />
-          <ScalarProperty Name="TreatmentActivityPruningAcres" ColumnName="TreatmentActivityPruningAcres" />
-          <ScalarProperty Name="TreatmentActivityThinningAcres" ColumnName="TreatmentActivityThinningAcres" />
-          <ScalarProperty Name="TreatmentActivityMasticationAcres" ColumnName="TreatmentActivityMasticationAcres" />
-          <ScalarProperty Name="TreatmentActivityGrazingAcres" ColumnName="TreatmentActivityGrazingAcres" />
-          <ScalarProperty Name="TreatmentActivityLopAndScatterAcres" ColumnName="TreatmentActivityLopAndScatterAcres" />
-          <ScalarProperty Name="TreatmentActivityBiomassRemovalAcres" ColumnName="TreatmentActivityBiomassRemovalAcres" />
-          <ScalarProperty Name="TreatmentActivityHandPileAcres" ColumnName="TreatmentActivityHandPileAcres" />
-          <ScalarProperty Name="TreatmentActivityBroadcastBurnAcres" ColumnName="TreatmentActivityBroadcastBurnAcres" />
-          <ScalarProperty Name="TreatmentActivityHandPileBurnAcres" ColumnName="TreatmentActivityHandPileBurnAcres" />
-          <ScalarProperty Name="TreatmentActivityMachinePileBurnAcres" ColumnName="TreatmentActivityMachinePileBurnAcres" />
-          <ScalarProperty Name="TreatmentActivityOtherTreatmentAcres" ColumnName="TreatmentActivityOtherTreatmentAcres" />
-          <ScalarProperty Name="TreatmentActivityNotes" ColumnName="TreatmentActivityNotes" />
-          <ScalarProperty Name="ProgramIndexID" ColumnName="ProgramIndexID" />
-          <ScalarProperty Name="ProjectCodeID" ColumnName="ProjectCodeID" />
-          <ScalarProperty Name="TreatmentActivitySlashAcres" ColumnName="TreatmentActivitySlashAcres" />
-          <ScalarProperty Name="GrantAllocationProgramIndexProjectCodeID" ColumnName="GrantAllocationProgramIndexProjectCodeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Vendor">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Vendor">
         <MappingFragment StoreEntitySet="Vendor">
