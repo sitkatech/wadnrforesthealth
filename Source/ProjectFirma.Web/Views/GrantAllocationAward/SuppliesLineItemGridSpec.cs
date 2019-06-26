@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDescription.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDescription, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardSuppliesTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDate.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardSuppliesDate.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemDate, 125, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantAllocationAwardSuppliesAmount.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardSuppliesNotes.ToGridHeaderString(), s => s.GrantAllocationAwardSuppliesLineItemNotes, 250, DhtmlxGridColumnFilterType.Text);
         }
