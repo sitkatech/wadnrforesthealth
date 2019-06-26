@@ -33,6 +33,43 @@ namespace ProjectFirma.Web.Controllers
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpGet]
+        [GrantAllocationAwardDeleteFeature]
+        public PartialViewResult DeleteGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantAllocationAward(grantAllocationAwardPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantAllocationAward(GrantAllocationAward grantAllocationAward, ConfirmDialogFormViewModel viewModel)
+        {
+            var canDelete = !grantAllocationAward.HasDependentObjects();
+            var confirmMessage = canDelete
+                ? $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} '{grantAllocationAward.GrantAllocationAwardName}'?"
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage(FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel(), SitkaRoute<GrantAllocationAwardController>.BuildLinkFromExpression(x => x.GrantAllocationAwardDetail(grantAllocationAward), "here"));
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantAllocationAward(grantAllocationAward, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} \"{grantAllocationAward.GrantAllocationAwardName}\" successfully deleted.";
+            grantAllocationAward.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+
         [HttpGet]
         [GrantAllocationAwardCreateFeature]
         public PartialViewResult NewForAFocusArea(FocusAreaPrimaryKey focusAreaPrimaryKey)
