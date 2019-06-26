@@ -24,13 +24,8 @@
 @using LtInfo.Common.DhtmlWrappers
 @using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.ModalDialog
-@using LtInfo.Common.Views
 @using ProjectFirma.Web.Models
-@using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
-@using ProjectFirma.Web.Views.GrantAllocation
-@using ProjectFirma.Web.Views.Shared.GrantAllocationControls
-@using ProjectFirma.Web.Views.Shared.TextControls
 
 @inherits ProjectFirma.Web.Views.GrantAllocationAward.Detail
 
@@ -113,6 +108,14 @@
                         </div>
                         <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardExpirationDate.ToShortDateString()</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardCalendarStartYear)
+                        </div>
+                        <div class="col-sm-8">
+                            <span>@ViewDataTyped.GrantAllocationAward.GrantAllocationAwardCalendarStartYear</span>
                         </div>
                     </div>
                 </div>

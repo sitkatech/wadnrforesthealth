@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, string contractorInvoiceContractor, int? grantAllocationAwardCalendarStartYear) : this()
+        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, string contractorInvoiceContractor, int grantAllocationAwardCalendarStartYear) : this()
         {
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
@@ -48,7 +48,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate) : this()
+        public GrantAllocationAward(int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, int grantAllocationAwardCalendarStartYear) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -57,12 +57,13 @@ namespace ProjectFirma.Web.Models
             this.FocusAreaID = focusAreaID;
             this.GrantAllocationAwardName = grantAllocationAwardName;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
+            this.GrantAllocationAwardCalendarStartYear = grantAllocationAwardCalendarStartYear;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public GrantAllocationAward(GrantAllocation grantAllocation, FocusArea focusArea, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate) : this()
+        public GrantAllocationAward(GrantAllocation grantAllocation, FocusArea focusArea, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, int grantAllocationAwardCalendarStartYear) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.GrantAllocationAwardID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -74,6 +75,7 @@ namespace ProjectFirma.Web.Models
             focusArea.GrantAllocationAwards.Add(this);
             this.GrantAllocationAwardName = grantAllocationAwardName;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
+            this.GrantAllocationAwardCalendarStartYear = grantAllocationAwardCalendarStartYear;
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static GrantAllocationAward CreateNewBlank(GrantAllocation grantAllocation, FocusArea focusArea)
         {
-            return new GrantAllocationAward(grantAllocation, focusArea, default(string), default(DateTime));
+            return new GrantAllocationAward(grantAllocation, focusArea, default(string), default(DateTime), default(int));
         }
 
         /// <summary>
@@ -154,7 +156,7 @@ namespace ProjectFirma.Web.Models
         public string GrantAllocationAwardName { get; set; }
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
         public string ContractorInvoiceContractor { get; set; }
-        public int? GrantAllocationAwardCalendarStartYear { get; set; }
+        public int GrantAllocationAwardCalendarStartYear { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardID; } set { GrantAllocationAwardID = value; } }
 

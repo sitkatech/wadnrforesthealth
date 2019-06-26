@@ -282,6 +282,7 @@ VALUES
 (460, N'GrantAllocationAwardContractorInvoiceLineItem', 'Grant Allocation Award Contractor Invoice Line Item', N'<p>Placeholder definition for Grant Allocation Award Contractor Invoice Line Item.</p>'),
 (461, N'GrantAllocationAwardSpentAmount', 'Grant Allocation Award Spent Amount', N'<p>Placeholder definition for Grant Allocation Award Spent Amount.</p>'),
 (462, N'GrantAllocationAwardBalance', 'Grant Allocation Award Balance', N'<p>Placeholder definition for Grant Allocation Award Balance.</p>'),
-(463, N'GrantAllocationAwardLandownerCostShareActualMatch', 'Grant Allocation Award Landowner Cost Share Actual Match', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Actual Match.</p>')
+(463, N'GrantAllocationAwardLandownerCostShareActualMatch', 'Grant Allocation Award Landowner Cost Share Actual Match', N'<p>Placeholder definition for Grant Allocation Award Landowner Cost Share Actual Match.</p>'),
+(464, N'GrantAllocationAwardCalendarStartYear', 'Grant Allocation Award Calendar Start Year', N'<p>Placeholder definition for Grant Allocation Award Calendar Start Year.</p>')
 
 

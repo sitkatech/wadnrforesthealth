@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
@@ -26,7 +27,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
-    public class EditGrantAllocationAwardViewModel : FormViewModel
+    public class EditGrantAllocationAwardViewModel : FormViewModel, IValidatableObject
     {
         public int GrantAllocationAwardID { get; set; }
 
@@ -45,7 +46,11 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         [Required]
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
 
-        
+        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardCalendarStartYear)]
+        [Required]
+        public int GrantAllocationAwardCalendarStartYear { get; set; }
+
+
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -53,20 +58,16 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public EditGrantAllocationAwardViewModel()
         {
             GrantAllocationAwardExpirationDate = DateTime.Today;
+            GrantAllocationAwardCalendarStartYear = DateTime.Today.Year;
         }
 
         public EditGrantAllocationAwardViewModel(Models.GrantAllocationAward grantAllocationAward)
         {
             GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
             GrantAllocationAwardName = grantAllocationAward.GrantAllocationAwardName;
-            if (grantAllocationAward.GrantAllocationAwardExpirationDate == DateTime.MinValue)
-            {
-                GrantAllocationAwardExpirationDate = DateTime.Today;
-            }
-            else
-            {
-                GrantAllocationAwardExpirationDate = grantAllocationAward.GrantAllocationAwardExpirationDate;
-            }
+            GrantAllocationAwardExpirationDate = grantAllocationAward.GrantAllocationAwardExpirationDate == DateTime.MinValue ? DateTime.Today : grantAllocationAward.GrantAllocationAwardExpirationDate;
+            GrantAllocationAwardCalendarStartYear = grantAllocationAward.GrantAllocationAwardCalendarStartYear;
+
 
             GrantAllocationID = grantAllocationAward.GrantAllocationID;
             FocusAreaID = grantAllocationAward.FocusAreaID;
@@ -80,10 +81,19 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             grantAllocationAward.GrantAllocationAwardID = GrantAllocationAwardID;
             grantAllocationAward.GrantAllocationAwardName = GrantAllocationAwardName;
             grantAllocationAward.GrantAllocationAwardExpirationDate = GrantAllocationAwardExpirationDate;
+            grantAllocationAward.GrantAllocationAwardCalendarStartYear = GrantAllocationAwardCalendarStartYear;
 
             grantAllocationAward.GrantAllocationID = GrantAllocationID;
             grantAllocationAward.FocusAreaID = FocusAreaID;
 
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (GrantAllocationAwardCalendarStartYear < 1800 || GrantAllocationAwardCalendarStartYear > 2200)
+            {
+                yield return new ValidationResult($"{Models.FieldDefinition.GrantAllocationAwardCalendarStartYear.GetFieldDefinitionLabel()} must be a valid year.");
+            }
         }
     }
 
