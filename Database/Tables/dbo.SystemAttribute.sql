@@ -41,20 +41,20 @@ REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_SystemAttribute_Person_PrimaryContactPersonID_PersonID]
 GO
-ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [FK_TenantAttribute_ProjectStewardshipAreaType_ProjectStewardshipAreaTypeID] FOREIGN KEY([ProjectStewardshipAreaTypeID])
+ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [FK_SystemAttribute_ProjectStewardshipAreaType_ProjectStewardshipAreaTypeID] FOREIGN KEY([ProjectStewardshipAreaTypeID])
 REFERENCES [dbo].[ProjectStewardshipAreaType] ([ProjectStewardshipAreaTypeID])
 GO
-ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_TenantAttribute_ProjectStewardshipAreaType_ProjectStewardshipAreaTypeID]
+ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_SystemAttribute_ProjectStewardshipAreaType_ProjectStewardshipAreaTypeID]
 GO
-ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [FK_TenantAttribute_TaxonomyLevel_AssociatePerfomanceMeasureTaxonomyLevelID_TaxonomyLevelID] FOREIGN KEY([AssociatePerfomanceMeasureTaxonomyLevelID])
+ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [FK_SystemAttribute_TaxonomyLevel_AssociatePerfomanceMeasureTaxonomyLevelID_TaxonomyLevelID] FOREIGN KEY([AssociatePerfomanceMeasureTaxonomyLevelID])
 REFERENCES [dbo].[TaxonomyLevel] ([TaxonomyLevelID])
 GO
-ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_TenantAttribute_TaxonomyLevel_AssociatePerfomanceMeasureTaxonomyLevelID_TaxonomyLevelID]
+ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_SystemAttribute_TaxonomyLevel_AssociatePerfomanceMeasureTaxonomyLevelID_TaxonomyLevelID]
 GO
-ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [FK_TenantAttribute_TaxonomyLevel_TaxonomyLevelID] FOREIGN KEY([TaxonomyLevelID])
+ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [FK_SystemAttribute_TaxonomyLevel_TaxonomyLevelID] FOREIGN KEY([TaxonomyLevelID])
 REFERENCES [dbo].[TaxonomyLevel] ([TaxonomyLevelID])
 GO
-ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_TenantAttribute_TaxonomyLevel_TaxonomyLevelID]
+ALTER TABLE [dbo].[SystemAttribute] CHECK CONSTRAINT [FK_SystemAttribute_TaxonomyLevel_TaxonomyLevelID]
 GO
 ALTER TABLE [dbo].[SystemAttribute]  WITH CHECK ADD  CONSTRAINT [CK_TenantAttribute_AssociatedPerfomanceMeasureTaxonomyLevelLessThanEqualToTaxonomyLevelID] CHECK  (([AssociatePerfomanceMeasureTaxonomyLevelID]<=[TaxonomyLevelID]))
 GO

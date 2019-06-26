@@ -23,7 +23,7 @@ CREATE TABLE [dbo].[ProjectPersonRelationshipType](
 ) ON [PRIMARY]
 
 GO
-ALTER TABLE [dbo].[ProjectPersonRelationshipType]  WITH CHECK ADD  CONSTRAINT [FK_ProjectPersonRelationshipType_ProjectPersonRelationshipType] FOREIGN KEY([FieldDefinitionID])
+ALTER TABLE [dbo].[ProjectPersonRelationshipType]  WITH CHECK ADD  CONSTRAINT [FK_ProjectPersonRelationshipType_FieldDefinition_FieldDefinitionID] FOREIGN KEY([FieldDefinitionID])
 REFERENCES [dbo].[FieldDefinition] ([FieldDefinitionID])
 GO
-ALTER TABLE [dbo].[ProjectPersonRelationshipType] CHECK CONSTRAINT [FK_ProjectPersonRelationshipType_ProjectPersonRelationshipType]
+ALTER TABLE [dbo].[ProjectPersonRelationshipType] CHECK CONSTRAINT [FK_ProjectPersonRelationshipType_FieldDefinition_FieldDefinitionID]
