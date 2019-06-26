@@ -18,7 +18,7 @@ namespace ProjectFirma.Web.Controllers
     public class GrantAllocationAwardController : FirmaBaseController
     {
 
-        [HttpGet]
+        [HttpPost]
         [AnonymousUnclassifiedFeature]
         public JsonResult GetGrantAllocationEndDate(int grantAllocationID)
         {
