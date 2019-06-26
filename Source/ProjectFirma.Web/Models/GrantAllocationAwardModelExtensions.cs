@@ -15,6 +15,16 @@ namespace ProjectFirma.Web.Models
             return DetailUrlTemplate.ParameterReplace(grantAllocationAward.GrantAllocationAwardID);
         }
 
+        public static readonly UrlTemplate<int> DeleteUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(t => t.DeleteGrantAllocationAward(UrlTemplate.Parameter1Int)));
+        public static string GetDeleteUrl(this GrantAllocationAward grantAllocationAward)
+        {
+            return DeleteUrlTemplate.ParameterReplace(grantAllocationAward.GrantAllocationAwardID);
+        }
+        public static bool CanGrantAllocationAwardBeDeleted(this GrantAllocationAward grantAllocationAward)
+        {
+            return !grantAllocationAward.HasDependentObjects();
+        }
+
 
         public static decimal GetInvoicedToDateByCostType(this GrantAllocationAward grantAllocationAward, CostType costType)
         {

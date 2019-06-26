@@ -7,7 +7,6 @@ namespace ProjectFirma.Web.Models
     {
         public string AuditDescriptionString => GrantAllocationAwardName;
 
-        
         public Money GrantAllocationAwardAmount
         {
             get
@@ -174,6 +173,5 @@ namespace ProjectFirma.Web.Models
                 return LandownerCostShareLineItemSum + ContractorInvoiceItemSum;
             }
         }
-
     }
 }

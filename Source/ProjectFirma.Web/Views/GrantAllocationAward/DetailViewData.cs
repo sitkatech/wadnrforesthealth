@@ -19,18 +19,10 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
-using System.Linq;
-using LtInfo.Common;
-using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using ProjectFirma.Web.Views.GrantAllocation;
-using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
-using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.GrantAllocationAward
 {
@@ -42,7 +34,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public Models.GrantAllocationAward GrantAllocationAward { get;  }
         public bool UserHasEditGrantAllocationAwardPermissions { get;  }
 
-        public string EditLandownerCostShareUrl { get;  }
         public string EditContractorInvoiceUrl { get;}
 
         public SuppliesLineItemGridSpec SuppliesLineItemGridSpec { get; }
@@ -87,8 +78,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             UserHasEditGrantAllocationAwardPermissions = new GrantAllocationAwardEditAsAdminFeature().HasPermissionByPerson(currentPerson);
 
             EditGrantAllocationAwardUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.Edit(grantAllocationAward.PrimaryKey));
-
-            EditLandownerCostShareUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditLandownerCostShare(grantAllocationAward.PrimaryKey));
             EditContractorInvoiceUrl = SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.EditContractorInvoice(grantAllocationAward.PrimaryKey));
 
             SuppliesLineItemGridName = "grantAllocationAwardSuppliesLineItemGridName";

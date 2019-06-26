@@ -1367,11 +1367,8 @@
     <Property Name="FocusAreaID" Type="Int32" Nullable="false" />
     <Property Name="GrantAllocationAwardName" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
     <Property Name="GrantAllocationAwardExpirationDate" Type="DateTime" Nullable="false" />
-    <Property Name="LandownerCostShareTargetFootprintAcreage" Type="Int32" />
-    <Property Name="LandownerCostShareTargetTotalAcreage" Type="Int32" />
     <Property Name="ContractorInvoiceContractor" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-    <Property Name="ContractorInvoiceTargetTotalAcreage" Type="Int32" />
-    <Property Name="GrantAllocationAwardCalendarStartYear" Type="Int32" />
+    <Property Name="GrantAllocationAwardCalendarStartYear" Type="Int32" Nullable="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID" FromRole="GrantAllocationAwards" ToRole="FocusArea" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationAwards" ToRole="GrantAllocation" />
     <NavigationProperty Name="GrantAllocationAwardContractorInvoices" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_GrantAllocationAward_GrantAllocationAwardID" FromRole="GrantAllocationAward" ToRole="GrantAllocationAwardContractorInvoices" />

@@ -71,8 +71,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                return GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned)
-                    .Select(x => x.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres).Sum();
+                return Math.Round(GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Planned)
+                    .Select(x => x.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres).Sum(), 2);
             }
         }
 
@@ -80,8 +80,8 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                return GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Completed)
-                    .Select(x => x.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres).Sum();
+                return Math.Round(GrantAllocationAwardLandownerCostShareLineItems.Where(x => x.LandownerCostShareLineItemStatus == LandownerCostShareLineItemStatus.Completed)
+                    .Select(x => x.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres).Sum(), 2);
             }
         }
 
