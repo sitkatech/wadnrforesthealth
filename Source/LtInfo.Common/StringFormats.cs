@@ -163,6 +163,14 @@ namespace LtInfo.Common
             }
             return value;
         }
+        public static string ToStringCurrencyFull(this Money value)
+        {
+            return value.ToString("$#,##0.00");
+        }
+        public static string ToStringCurrencyFull(this Money? value)
+        {
+            return value.HasValue ? value.Value.ToStringCurrencyFull() : String.Empty;
+        }
 
         public static string ToStringCurrencyFull(this decimal value)
         {

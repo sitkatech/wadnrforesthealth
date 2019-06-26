@@ -21,6 +21,7 @@ namespace ProjectFirma.Web.Models
         public static readonly LandownerCostShareLineItemStatusPlanned Planned = LandownerCostShareLineItemStatusPlanned.Instance;
         public static readonly LandownerCostShareLineItemStatusCompleted Completed = LandownerCostShareLineItemStatusCompleted.Instance;
         public static readonly LandownerCostShareLineItemStatusCancelled Cancelled = LandownerCostShareLineItemStatusCancelled.Instance;
+        public static readonly LandownerCostShareLineItemStatusInProgress InProgress = LandownerCostShareLineItemStatusInProgress.Instance;
 
         public static readonly List<LandownerCostShareLineItemStatus> All;
         public static readonly ReadOnlyDictionary<int, LandownerCostShareLineItemStatus> AllLookupDictionary;
@@ -30,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static LandownerCostShareLineItemStatus()
         {
-            All = new List<LandownerCostShareLineItemStatus> { Planned, Completed, Cancelled };
+            All = new List<LandownerCostShareLineItemStatus> { Planned, Completed, Cancelled, InProgress };
             AllLookupDictionary = new ReadOnlyDictionary<int, LandownerCostShareLineItemStatus>(All.ToDictionary(x => x.LandownerCostShareLineItemStatusID));
         }
 
@@ -104,6 +105,8 @@ namespace ProjectFirma.Web.Models
                     return Cancelled;
                 case LandownerCostShareLineItemStatusEnum.Completed:
                     return Completed;
+                case LandownerCostShareLineItemStatusEnum.InProgress:
+                    return InProgress;
                 case LandownerCostShareLineItemStatusEnum.Planned:
                     return Planned;
                 default:
@@ -116,7 +119,8 @@ namespace ProjectFirma.Web.Models
     {
         Planned = 1,
         Completed = 2,
-        Cancelled = 3
+        Cancelled = 3,
+        InProgress = 4
     }
 
     public partial class LandownerCostShareLineItemStatusPlanned : LandownerCostShareLineItemStatus
@@ -135,5 +139,11 @@ namespace ProjectFirma.Web.Models
     {
         private LandownerCostShareLineItemStatusCancelled(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName) : base(landownerCostShareLineItemStatusID, landownerCostShareLineItemStatusName, landownerCostShareLineItemStatusDisplayName) {}
         public static readonly LandownerCostShareLineItemStatusCancelled Instance = new LandownerCostShareLineItemStatusCancelled(3, @"Cancelled", @"Cancelled");
+    }
+
+    public partial class LandownerCostShareLineItemStatusInProgress : LandownerCostShareLineItemStatus
+    {
+        private LandownerCostShareLineItemStatusInProgress(int landownerCostShareLineItemStatusID, string landownerCostShareLineItemStatusName, string landownerCostShareLineItemStatusDisplayName) : base(landownerCostShareLineItemStatusID, landownerCostShareLineItemStatusName, landownerCostShareLineItemStatusDisplayName) {}
+        public static readonly LandownerCostShareLineItemStatusInProgress Instance = new LandownerCostShareLineItemStatusInProgress(4, @"InProgress", @"In Progress");
     }
 }

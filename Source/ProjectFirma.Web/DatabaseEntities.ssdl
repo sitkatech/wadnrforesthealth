@@ -1298,17 +1298,17 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GrantAllocationAwardContractorInvoiceNumber" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="GrantAllocationAwardContractorInvoiceDate" Type="datetime" Nullable="false" />
     <Property Name="GrantAllocationAwardContractorInvoiceTypeID" Type="int" Nullable="false" />
-    <Property Name="GrantAllocationAwardContractorInvoiceForemanHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceForemanHours" Type="decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceForemanRate" Type="money" />
-    <Property Name="GrantAllocationAwardContractorInvoiceLaborHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceLaborHours" Type="decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceLaborRate" Type="money" />
-    <Property Name="GrantAllocationAwardContractorInvoiceGrappleHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceGrappleHours" Type="decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceGrappleRate" Type="money" />
-    <Property Name="GrantAllocationAwardContractorInvoiceMasticationHours" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceMasticationHours" Type="decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceMasticationRate" Type="money" />
     <Property Name="GrantAllocationAwardContractorInvoiceTotal" Type="money" />
-    <Property Name="GrantAllocationAwardContractorInvoiceTaxRate" Type="decimal" />
-    <Property Name="GrantAllocationAwardContractorInvoiceAcresReported" Type="decimal" />
+    <Property Name="GrantAllocationAwardContractorInvoiceTaxRate" Type="decimal" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardContractorInvoiceAcresReported" Type="decimal" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardContractorInvoiceNotes" Type="varchar" MaxLength="2000" />
     <Property Name="GrantAllocationAwardContractorInvoiceFileResourceID" Type="int" />
   </EntityType>
@@ -1322,20 +1322,20 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="LandownerCostShareLineItemStatusID" Type="int" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemStartDate" Type="datetime" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemEndDate" Type="datetime" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="decimal" Nullable="false" />
-    <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="decimal" Nullable="false" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemFootprintAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemChippingAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemPruningAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemThinningAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMasticationAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemGrazingAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
+    <Property Name="GrantAllocationAwardLandownerCostShareLineItemSlashAcres" Type="decimal" Nullable="false" Precision="38" Scale="10" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemNotes" Type="varchar" MaxLength="2000" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount" Type="money" Nullable="false" />
     <Property Name="GrantAllocationAwardLandownerCostShareLineItemTotalCost" Type="money" Nullable="false" />

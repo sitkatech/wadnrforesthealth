@@ -19,6 +19,8 @@
     </license>
     -----------------------------------------------------------------------*@
 @using LtInfo.Common.HtmlHelperExtensions
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Controllers
 @inherits ProjectFirma.Web.Views.GrantAllocationAward.EditGrantAllocationAward
 
 
@@ -47,7 +49,7 @@
                 @Html.LabelWithSugarFor(m => m.GrantAllocationID)
             </div>
             <div class="col-sm-9">
-                @Html.SearchableDropDownListFor(m => m.GrantAllocationID, ViewDataTyped.AvailableGrantAllocations, new { @class = "form-control selectpicker", style = "width:auto" })
+                @Html.SearchableDropDownListFor(m => m.GrantAllocationID, ViewDataTyped.AvailableGrantAllocations, new { @class = "form-control selectpicker", style = "width:auto", onchange = "return getGrantAllocationEndDate(this)" })
                 @Html.ValidationMessageFor(m => m.GrantAllocationID)
             </div>
         </div>
@@ -62,6 +64,32 @@
     </div>
 
 }
+
+
+<script type="text/javascript">
+    // <![CDATA[
+    function getGrantAllocationEndDate(myField)
+    {
+        if (!myField.value)
+        {
+            return true;
+        }
+
+        jQuery.ajax({
+                method: "POST",
+                url: "@Html.Raw(SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.GetGrantAllocationEndDate(0)))",
+                data: { grantAllocationID: myField.value }
+            })
+            .done(function (msg) {
+                if (msg != null)
+                {
+                    jQuery("#@Html.IdFor(x => x.GrantAllocationAwardExpirationDate)").val(msg.endDate);
+                }
+            });
+        return false;
+    }
+    // ]]>
+</script>
 
 
 

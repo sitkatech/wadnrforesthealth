@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             Add(Models.FieldDefinition.GrantAllocationAwardTravelName.ToGridHeaderString(), s => s.Person != null ? s.Person.FullNameFirstLastAndOrgShortName : string.Empty, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelTarOrMonth.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemTarOrMonth , 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAwardTravelDate.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardTravelDate.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemDate, 125, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelMiles.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemMiles, 125, DhtmlxGridColumnFormatType.Integer, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelMileageRate.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemMileageRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);
             Add(Models.FieldDefinition.GrantAllocationAwardTravelAmount.ToGridHeaderString(), s => s.GrantAllocationAwardTravelLineItemCalculatedAmount, 125, DhtmlxGridColumnFormatType.CurrencyWithCents, DhtmlxGridColumnAggregationType.Total);

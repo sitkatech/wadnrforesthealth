@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Views.Job
                 //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
             }
 
-            Add("Create Date", a => a.CreateDate.ToString(CultureInfo.InvariantCulture), 200, DhtmlxGridColumnFilterType.FormattedNumeric);
+            Add("Create Date", a => a.CreateDate, 200, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.SocrataDataMartRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add("JSON Data Length", a => a.RawJsonStringLength.Value.ToString(), 100);
 

@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
 
             Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDescription.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDescription, 200, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceNumber.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceNumber, 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDate.ToShortDateString(), 125, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceDate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceDate, 125, DhtmlxGridColumnFormatType.Date);
 
             Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceForemanHours.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceForemanHours, 125, DhtmlxGridColumnFormatType.Decimal, DhtmlxGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.GrantAllocationAwardContractorInvoiceForemanRate.ToGridHeaderString(), s => s.GrantAllocationAwardContractorInvoiceForemanRate, 125, DhtmlxGridColumnFormatType.CurrencyWithCents);

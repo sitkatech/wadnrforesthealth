@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.Invoice
             Add(Models.FieldDefinition.InvoiceIdentifyingName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.InvoiceIdentifyingName),
                 InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterHtmlStrict);
             Add(Models.FieldDefinition.RequestorName.ToGridHeaderString(), x => x.RequestorName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
-            Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDateDisplay, 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add(Models.FieldDefinition.InvoiceDate.ToGridHeaderString(), x => x.InvoiceDate, 90, DhtmlxGridColumnFormatType.Date);
             Add(Models.FieldDefinition.PurchaseAuthority.ToGridHeaderString(), x => x.PurchaseAuthorityDisplay, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.InvoiceStatus.ToGridHeaderString(), x =>
                 x.InvoiceStatus.InvoiceStatusDisplayName, InvoiceGridSpec.InvoiceColumnWidth, DhtmlxGridColumnFilterType.SelectFilterStrict);

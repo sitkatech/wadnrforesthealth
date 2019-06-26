@@ -87,7 +87,7 @@ namespace ProjectFirma.Web.Models
                 if (GrantAllocationAwardContractorInvoiceTaxRate.HasValue)
                 { 
                     //TaxRate * GrantAllocationAwardContractorInvoiceTotalWithoutTax
-                    return GrantAllocationAwardContractorInvoiceTaxRate.Value * (decimal)GrantAllocationAwardContractorInvoiceTotalWithoutTax;
+                    return (GrantAllocationAwardContractorInvoiceTaxRate.Value / 100) * (decimal)GrantAllocationAwardContractorInvoiceTotalWithoutTax;
                 }
 
                 return 0m;

@@ -1,23 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.FocusArea;
-using ProjectFirma.Web.Views.GrantAllocation;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
-using ProjectFirma.Web.Views.Shared.TextControls;
 using DetailViewData = ProjectFirma.Web.Views.GrantAllocationAward.DetailViewData;
 
 namespace ProjectFirma.Web.Controllers
 {
     public class GrantAllocationAwardController : FirmaBaseController
     {
+
+        [AnonymousUnclassifiedFeature]
+        public JsonResult GetGrantAllocationEndDate(int grantAllocationID)
+        {
+            var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(x => x.GrantAllocationID == grantAllocationID);
+
+            if (grantAllocation != null)
+            {
+                var grantAllocationEndDateJsonStructure =  new {endDate = grantAllocation.EndDateDisplay, name = grantAllocation.DisplayName, id = grantAllocation.GrantAllocationID};
+                //use JSON structure for jquery's autocomplete functionality
+                return Json(grantAllocationEndDateJsonStructure, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         [GrantAllocationAwardCreateFeature]
@@ -38,7 +52,6 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Null is likely wrong here!!!
                 return GrantAllocationAwardViewEdit(viewModel);
             }
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.Single(ga => ga.GrantAllocationID == viewModel.GrantAllocationID);
