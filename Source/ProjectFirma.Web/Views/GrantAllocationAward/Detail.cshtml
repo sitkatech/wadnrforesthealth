@@ -312,27 +312,10 @@
                     <hr />
 
                     <h4>
-                        @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditLandownerCostShareUrl, string.Format("Edit {0} {1}", ViewDataTyped.GrantAllocationAward.GrantAllocationAwardName, FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()), 950, ViewDataTyped.UserHasEditGrantAllocationAwardPermissions)
                         @FieldDefinition.GrantAllocationAwardLandownerCostShare.GetFieldDefinitionLabel()
                     </h4>
 
                     @* Landowner Cost Share Section *@
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareTargetFootprintAcreage)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareTargetFootprintAcreage</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardLandownerCostShareTargetTotalAcreage)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.LandownerCostShareTargetTotalAcreage</span>
-                        </div>
-                    </div>
 
                     <div>
                         @Html.DhtmlxGrid(ViewDataTyped.LandownerCostShareLineItemGridSpec, ViewDataTyped.LandownerCostShareLineItemGridName, ViewDataTyped.LandownerCostShareLineItemGridDataUrl, "height:300px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
@@ -352,14 +335,6 @@
                         </div>
                         <div class="col-sm-8">
                             <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceContractor</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @Html.LabelWithSugarFor(FieldDefinition.GrantAllocationAwardContractorInvoiceTargetTotalAcreage)
-                        </div>
-                        <div class="col-sm-8">
-                            <span>@ViewDataTyped.GrantAllocationAward.ContractorInvoiceTargetTotalAcreage</span>
                         </div>
                     </div>
 

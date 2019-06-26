@@ -34,17 +34,14 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, int? landownerCostShareTargetFootprintAcreage, int? landownerCostShareTargetTotalAcreage, string contractorInvoiceContractor, int? contractorInvoiceTargetTotalAcreage, int? grantAllocationAwardCalendarStartYear) : this()
+        public GrantAllocationAward(int grantAllocationAwardID, int grantAllocationID, int focusAreaID, string grantAllocationAwardName, DateTime grantAllocationAwardExpirationDate, string contractorInvoiceContractor, int? grantAllocationAwardCalendarStartYear) : this()
         {
             this.GrantAllocationAwardID = grantAllocationAwardID;
             this.GrantAllocationID = grantAllocationID;
             this.FocusAreaID = focusAreaID;
             this.GrantAllocationAwardName = grantAllocationAwardName;
             this.GrantAllocationAwardExpirationDate = grantAllocationAwardExpirationDate;
-            this.LandownerCostShareTargetFootprintAcreage = landownerCostShareTargetFootprintAcreage;
-            this.LandownerCostShareTargetTotalAcreage = landownerCostShareTargetTotalAcreage;
             this.ContractorInvoiceContractor = contractorInvoiceContractor;
-            this.ContractorInvoiceTargetTotalAcreage = contractorInvoiceTargetTotalAcreage;
             this.GrantAllocationAwardCalendarStartYear = grantAllocationAwardCalendarStartYear;
         }
 
@@ -156,10 +153,7 @@ namespace ProjectFirma.Web.Models
         public int FocusAreaID { get; set; }
         public string GrantAllocationAwardName { get; set; }
         public DateTime GrantAllocationAwardExpirationDate { get; set; }
-        public int? LandownerCostShareTargetFootprintAcreage { get; set; }
-        public int? LandownerCostShareTargetTotalAcreage { get; set; }
         public string ContractorInvoiceContractor { get; set; }
-        public int? ContractorInvoiceTargetTotalAcreage { get; set; }
         public int? GrantAllocationAwardCalendarStartYear { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationAwardID; } set { GrantAllocationAwardID = value; } }
