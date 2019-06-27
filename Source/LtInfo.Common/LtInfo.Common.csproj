@@ -171,6 +171,7 @@
     <Compile Include="DataTableExtensions.cs" />
     <Compile Include="DbSpatial\DbSpatialHelper.cs" />
     <Compile Include="DbSpatial\DbSpatialHelperTest.cs" />
+    <Compile Include="DecimalFormats.cs" />
     <Compile Include="DesignByContract\AssertionException.cs" />
     <Compile Include="DesignByContract\Check.cs" />
     <Compile Include="DesignByContract\InvariantException.cs" />

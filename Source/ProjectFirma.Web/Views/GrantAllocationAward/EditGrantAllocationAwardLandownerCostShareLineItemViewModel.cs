@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using LtInfo.Common;
 using LtInfo.Common.Models;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -124,20 +125,20 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             ProjectID = grantAllocationAwardLandownerCostShareLineItem.ProjectID;
             StatusID = grantAllocationAwardLandownerCostShareLineItem.LandownerCostShareLineItemStatusID;
 
-            FootprintAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres;
-            SlashAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemSlashAcres;
-            ChippingAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemChippingAcres;
-            PruningAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemPruningAcres;
-            ThinningAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemThinningAcres;
-            MasticationAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres;
-            GrazingAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres;
-            LopAndScatterAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres;
-            BiomassRemovalAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres;
-            HandPileAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres;
-            BroadcastBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres;
-            HandPileBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres;
-            MachinePileBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres;
-            OtherTreatmentAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres;
+            FootprintAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemFootprintAcres.ToDecimalFormatted();
+            SlashAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemSlashAcres.ToDecimalFormatted();
+            ChippingAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemChippingAcres.ToDecimalFormatted();
+            PruningAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemPruningAcres.ToDecimalFormatted();
+            ThinningAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemThinningAcres.ToDecimalFormatted();
+            MasticationAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMasticationAcres.ToDecimalFormatted();
+            GrazingAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemGrazingAcres.ToDecimalFormatted();
+            LopAndScatterAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemLopAndScatterAcres.ToDecimalFormatted();
+            BiomassRemovalAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBiomassRemovalAcres.ToDecimalFormatted();
+            HandPileAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileAcres.ToDecimalFormatted();
+            BroadcastBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemBroadcastBurnAcres.ToDecimalFormatted();
+            HandPileBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres.ToDecimalFormatted();
+            MachinePileBurnAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres.ToDecimalFormatted();
+            OtherTreatmentAcres = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres.ToDecimalFormatted();
 
             TotalCost = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemTotalCost;
             AllocatedAmount = grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount;
@@ -179,6 +180,7 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemHandPileBurnAcres = HandPileBurnAcres;
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemMachinePileBurnAcres = MachinePileBurnAcres;
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemOtherTreatmentAcres = OtherTreatmentAcres;
+            grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemSlashAcres = SlashAcres;
 
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemAllocatedAmount = AllocatedAmount;
             grantAllocationAwardLandownerCostShareLineItem.GrantAllocationAwardLandownerCostShareLineItemTotalCost = TotalCost;
