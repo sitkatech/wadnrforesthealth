@@ -8,4 +8,4 @@ alter table dbo.GrantAllocationAward
 drop column PersonnelAndBenefitsForester,TravelForester,LandownerCostShareForester
 
 alter table dbo.GrantAllocationAward
-add GrantAllocationAwardCalendarStartYear int 
+add GrantAllocationAwardCalendarStartYear int not null

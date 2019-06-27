@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -796,11 +796,8 @@
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardSuppliesLineItemViewData.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardPersonnelAndBenefitsLineItemViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardSuppliesLineItemViewModel.cs" />
-    <Compile Include="Views\GrantAllocationAward\EditLandownerCostShare.cs" />
     <Compile Include="Views\GrantAllocationAward\EditContractorInvoiceViewData.cs" />
     <Compile Include="Views\GrantAllocationAward\EditContractorInvoiceViewModel.cs" />
-    <Compile Include="Views\GrantAllocationAward\EditLandownerCostShareViewData.cs" />
-    <Compile Include="Views\GrantAllocationAward\EditLandownerCostShareViewModel.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAward.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardViewData.cs" />
     <Compile Include="Views\GrantAllocationAward\EditGrantAllocationAwardViewModel.cs" />
@@ -1529,7 +1526,6 @@
     <Content Include="Views\JsonApiManagement\JsonApiLandingPage.cshtml" />
     <Content Include="Views\GrantAllocationAward\Detail.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAward.cshtml" />
-    <Content Include="Views\GrantAllocationAward\EditLandownerCostShare.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardSuppliesLineItem.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardPersonnelAndBenefitsLineItem.cshtml" />
     <Content Include="Views\GrantAllocationAward\EditGrantAllocationAwardTravelLineItem.cshtml" />

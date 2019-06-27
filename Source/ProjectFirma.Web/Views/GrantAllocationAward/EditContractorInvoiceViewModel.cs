@@ -33,8 +33,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceContractor)]
         public string ContractorInvoiceContractor { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.GrantAllocationAwardContractorInvoiceTargetTotalAcreage)]
-        public int ContractorInvoiceTargetTotalAcreage { get; set; }
 
         /// <summary>
         /// Needed by the ModelBinder
@@ -46,7 +44,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public EditContractorInvoiceViewModel(Models.GrantAllocationAward grantAllocationAward)
         {
             GrantAllocationAwardID = grantAllocationAward.GrantAllocationAwardID;
-            ContractorInvoiceTargetTotalAcreage = grantAllocationAward.ContractorInvoiceTargetTotalAcreage ?? 0;
             ContractorInvoiceContractor = grantAllocationAward.ContractorInvoiceContractor;
 
         }
@@ -56,7 +53,6 @@ namespace ProjectFirma.Web.Views.GrantAllocationAward
         public void UpdateModel(Models.GrantAllocationAward grantAllocationAward)
         {
             grantAllocationAward.GrantAllocationAwardID = GrantAllocationAwardID;
-            grantAllocationAward.ContractorInvoiceTargetTotalAcreage = ContractorInvoiceTargetTotalAcreage;
             grantAllocationAward.ContractorInvoiceContractor = ContractorInvoiceContractor;
 
         }

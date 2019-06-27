@@ -8,11 +8,8 @@ CREATE TABLE [dbo].[GrantAllocationAward](
 	[FocusAreaID] [int] NOT NULL,
 	[GrantAllocationAwardName] [varchar](250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[GrantAllocationAwardExpirationDate] [datetime] NOT NULL,
-	[LandownerCostShareTargetFootprintAcreage] [int] NULL,
-	[LandownerCostShareTargetTotalAcreage] [int] NULL,
 	[ContractorInvoiceContractor] [varchar](255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[ContractorInvoiceTargetTotalAcreage] [int] NULL,
-	[GrantAllocationAwardCalendarStartYear] [int] NULL,
+	[GrantAllocationAwardCalendarStartYear] [int] NOT NULL,
  CONSTRAINT [PK_GrantAllocationAward_GrantAllocationAwardID] PRIMARY KEY CLUSTERED 
 (
 	[GrantAllocationAwardID] ASC

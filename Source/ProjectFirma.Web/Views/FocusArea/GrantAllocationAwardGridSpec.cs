@@ -48,6 +48,12 @@ namespace ProjectFirma.Web.Views.FocusArea
                 CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, 950, $"Create a new {ObjectNameSingular}");
             }
 
+            var userHasDeletePermissions = new GrantAllocationAwardDeleteFeature().HasPermissionByPerson(currentPerson);
+            if (userHasDeletePermissions)
+            {
+                Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), userHasDeletePermissions, x.CanGrantAllocationAwardBeDeleted(), true), 30, DhtmlxGridColumnFilterType.None);
+            }
+
 
             Add(Models.FieldDefinition.GrantNumber.ToGridHeaderString(), x => x.GrantAllocation.Grant.GrantNumber, 140, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.GrantAllocationName.ToGridHeaderString("Funding Grant Allocation"), x => UrlTemplate.MakeHrefString(x.GrantAllocation.GetDetailUrl(), x.GrantAllocation.GrantAllocationName), 250, DhtmlxGridColumnFilterType.Text);

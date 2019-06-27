@@ -18,21 +18,59 @@ namespace ProjectFirma.Web.Controllers
     public class GrantAllocationAwardController : FirmaBaseController
     {
 
-        [HttpGet]
+        [HttpPost]
         [AnonymousUnclassifiedFeature]
-        public JsonResult GetGrantAllocationEndDate(int grantAllocationID)
+        public JsonResult GetGrantAllocationDates(int grantAllocationID)
         {
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(x => x.GrantAllocationID == grantAllocationID);
 
             if (grantAllocation != null)
             {
-                var grantAllocationEndDateJsonStructure =  new {endDate = grantAllocation.EndDateDisplay, name = grantAllocation.DisplayName, id = grantAllocation.GrantAllocationID};
+                var grantAllocationStartYear = grantAllocation.StartDate.HasValue ? grantAllocation.StartDate.Value.Year : DateTime.Now.Year;
+                var grantAllocationEndDateJsonStructure =  new {endDate = grantAllocation.EndDateDisplay, startYear = grantAllocationStartYear, name = grantAllocation.DisplayName, id = grantAllocation.GrantAllocationID};
                 //use JSON structure for jquery's autocomplete functionality
                 return Json(grantAllocationEndDateJsonStructure, JsonRequestBehavior.AllowGet);
             }
 
             return Json(null, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpGet]
+        [GrantAllocationAwardDeleteFeature]
+        public PartialViewResult DeleteGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationAwardPrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantAllocationAward(grantAllocationAwardPrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantAllocationAward(GrantAllocationAward grantAllocationAward, ConfirmDialogFormViewModel viewModel)
+        {
+            var canDelete = !grantAllocationAward.HasDependentObjects();
+            var confirmMessage = canDelete
+                ? $"Are you sure you want to delete this {FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} '{grantAllocationAward.GrantAllocationAwardName}'?"
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage(FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel(), SitkaRoute<GrantAllocationAwardController>.BuildLinkFromExpression(x => x.GrantAllocationAwardDetail(grantAllocationAward), "here"));
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationAwardDeleteFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantAllocationAward(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantAllocationAward(grantAllocationAward, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocationAward.GetFieldDefinitionLabel()} \"{grantAllocationAward.GrantAllocationAwardName}\" successfully deleted.";
+            grantAllocationAward.DeleteFull(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
 
         [HttpGet]
         [GrantAllocationAwardCreateFeature]
@@ -456,36 +494,6 @@ namespace ProjectFirma.Web.Controllers
         #endregion "Travel"
 
         #region "Landowner Cost Share"
-        [HttpGet]
-        [GrantAllocationAwardEditAsAdminFeature]
-        public PartialViewResult EditLandownerCostShare(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            var viewModel = new EditLandownerCostShareViewModel(grantAllocationAward);
-            return LandownerCostShareViewEdit(viewModel);
-        }
-
-        [HttpPost]
-        [GrantAllocationAwardEditAsAdminFeature]
-        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult EditLandownerCostShare(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey, EditLandownerCostShareViewModel viewModel)
-        {
-            var grantAllocationAward = grantAllocationAwardPrimaryKey.EntityObject;
-            if (!ModelState.IsValid)
-            {
-                return LandownerCostShareViewEdit(viewModel);
-            }
-            viewModel.UpdateModel(grantAllocationAward);
-            return new ModalDialogFormJsonResult();
-        }
-
-        private PartialViewResult LandownerCostShareViewEdit(EditLandownerCostShareViewModel viewModel)
-        {
-            var viewData = new EditLandownerCostShareViewData();
-            return RazorPartialView<EditLandownerCostShare, EditLandownerCostShareViewData, EditLandownerCostShareViewModel>(viewData, viewModel);
-        }
-
-
         [GrantAllocationAwardLandownerCostShareLineItemViewFeature]
         public GridJsonNetJObjectResult<GrantAllocationAwardLandownerCostShareLineItem> LandownerCostShareLineItemGridJsonData(GrantAllocationAwardPrimaryKey grantAllocationAwardPrimaryKey)
         {
