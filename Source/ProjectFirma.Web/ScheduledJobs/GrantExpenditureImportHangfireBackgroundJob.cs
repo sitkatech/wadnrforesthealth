@@ -66,7 +66,18 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Step through all the desired Bienniums
             for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)
             {
-                ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear, lastFinanceApiLoadDate);
+                // Since only 2007 current blows up, we want to process all the other available years in the meantime.
+                // This sends us and email reminding us something is wrong, and there is also good data about success in the tables itself.
+                // -- SLG 6/27/2019 -- https://projects.sitkatech.com/projects/wa_dnr_forest_health_tracker/cards/1635
+                try
+                {
+                    ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear, lastFinanceApiLoadDate);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Error importing Expenditures for Biennium Fiscal Year {bienniumFiscalYear}: {e.Message}");
+                }
+                
             }
 
             Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
