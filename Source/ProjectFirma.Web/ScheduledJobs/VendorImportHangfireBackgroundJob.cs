@@ -59,8 +59,23 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Push that string into a raw JSON string in the raw staging table
             var socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.Vendor, lastFinanceApiLoadDate, null, vendorJson);
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
-            // Use the JSON to refresh the Project Code table
-            VendorImportJson(socrataDataMartRawJsonImportID);
+            
+            try
+            {
+                // Use the JSON to refresh the Project Code table
+                VendorImportJson(socrataDataMartRawJsonImportID);
+            }
+            catch (Exception e)
+            {
+                // Log the error
+                Logger.Error($"VendorImportJson failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}: {e.Message}");
+                // Mark as failed in table
+                MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingFailed);
+                throw;
+            }
+            // If we get this far, it's successfully imported, and we can mark it as such
+            MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
+
 
             Logger.Info($"Ending '{JobName}' DownloadSocrataVendorTable");
         }

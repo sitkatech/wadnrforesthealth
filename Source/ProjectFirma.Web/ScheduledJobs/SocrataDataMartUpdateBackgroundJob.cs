@@ -95,11 +95,11 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Because these objects are so huge, we try to avoid bringing them into memory directly, hence 
             // the proc to keep it at arm's length.
             Logger.Info($"Starting '{JobName}' MarkJsonImportStatus");
-            string vendorImportProc = "dbo.pMarkJsonImportStatus";
+            string markJsonImportStatus = "dbo.pMarkJsonImportStatus";
             using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
             {
                 Logger.Info($"'{JobName}' MarkJsonImportStatus - Marking socrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID} as JsonImportStatusType {jsonImportStatusType.JsonImportStatusTypeName}");
-                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                using (SqlCommand cmd = new SqlCommand(markJsonImportStatus, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
