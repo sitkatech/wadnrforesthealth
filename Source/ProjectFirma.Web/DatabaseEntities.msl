@@ -1704,6 +1704,11 @@
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="SocrataDataMartRawJsonImportTableTypeID" ColumnName="SocrataDataMartRawJsonImportTableTypeID" />
           <ScalarProperty Name="SocrataDataMartRawJsonImportTableTypeName" ColumnName="SocrataDataMartRawJsonImportTableTypeName" />
+          <ScalarProperty Name="BienniumFiscalYear" ColumnName="BienniumFiscalYear" />
+          <ScalarProperty Name="FinanceApiLastLoadDate" ColumnName="FinanceApiLastLoadDate" />
+          <ScalarProperty Name="JsonImportStatusTypeID" ColumnName="JsonImportStatusTypeID" />
+          <ScalarProperty Name="JsonImportStatusTypeName" ColumnName="JsonImportStatusTypeName" />
+          <ScalarProperty Name="JsonImportDate" ColumnName="JsonImportDate" />
           <ScalarProperty Name="RawJsonStringLength" ColumnName="RawJsonStringLength" />
         </MappingFragment>
       </EntityTypeMapping>

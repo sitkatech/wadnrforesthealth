@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Globalization;
 using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.HtmlHelperExtensions;
 using LtInfo.Common.Views;
@@ -43,8 +42,15 @@ namespace ProjectFirma.Web.Views.Job
                 //Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
             }
 
-            Add("Create Date", a => a.CreateDate, 200, DhtmlxGridColumnFormatType.Date);
+            const int dateWidth = 125;
+
+            Add("RawJSONImportID", a => a.SocrataDataMartRawJsonImportID.ToString(), 50, DhtmlxGridColumnFilterType.Numeric);
             Add(Models.FieldDefinition.JobImportTableType.ToGridHeaderString(), a => a.SocrataDataMartRawJsonImportTableTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Create Date", a => a.CreateDate, dateWidth, DhtmlxGridColumnFormatType.Date);
+            Add("Biennium Fiscal Year", a => a.BienniumFiscalYear.ToString(), 100, DhtmlxGridColumnFilterType.Numeric);
+            Add("Json Import Status Type Name", a => a.JsonImportStatusTypeName, 200, DhtmlxGridColumnFilterType.SelectFilterStrict);
+            Add("Json Import Date", a => a.JsonImportDate, dateWidth, DhtmlxGridColumnFormatType.DateTime);
+            Add("Finance API Last Load Date", a => a.FinanceApiLastLoadDate, dateWidth, DhtmlxGridColumnFormatType.DateTime);
             Add("JSON Data Length", a => a.RawJsonStringLength.Value.ToString(), 100);
 
             // Would be great to also have metadata about how many records deleted/updated/inserted.

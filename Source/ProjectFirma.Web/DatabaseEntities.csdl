@@ -2996,11 +2996,18 @@
       <PropertyRef Name="CreateDate" />
       <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeID" />
       <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeName" />
+      <PropertyRef Name="JsonImportStatusTypeID" />
+      <PropertyRef Name="JsonImportStatusTypeName" />
     </Key>
     <Property Name="SocrataDataMartRawJsonImportID" Type="Int32" Nullable="false" />
     <Property Name="CreateDate" Type="DateTime" Nullable="false" />
     <Property Name="SocrataDataMartRawJsonImportTableTypeID" Type="Int32" Nullable="false" />
     <Property Name="SocrataDataMartRawJsonImportTableTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="BienniumFiscalYear" Type="Int32" />
+    <Property Name="FinanceApiLastLoadDate" Type="DateTime" />
+    <Property Name="JsonImportStatusTypeID" Type="Int32" Nullable="false" />
+    <Property Name="JsonImportStatusTypeName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="JsonImportDate" Type="DateTime" />
     <Property Name="RawJsonStringLength" Type="Int64" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">

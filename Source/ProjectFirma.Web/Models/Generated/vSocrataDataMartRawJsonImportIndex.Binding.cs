@@ -25,12 +25,17 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public vSocrataDataMartRawJsonImportIndex(int socrataDataMartRawJsonImportID, DateTime createDate, int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName, long? rawJsonStringLength) : this()
+        public vSocrataDataMartRawJsonImportIndex(int socrataDataMartRawJsonImportID, DateTime createDate, int socrataDataMartRawJsonImportTableTypeID, string socrataDataMartRawJsonImportTableTypeName, int? bienniumFiscalYear, DateTime? financeApiLastLoadDate, int jsonImportStatusTypeID, string jsonImportStatusTypeName, DateTime? jsonImportDate, long? rawJsonStringLength) : this()
         {
             this.SocrataDataMartRawJsonImportID = socrataDataMartRawJsonImportID;
             this.CreateDate = createDate;
             this.SocrataDataMartRawJsonImportTableTypeID = socrataDataMartRawJsonImportTableTypeID;
             this.SocrataDataMartRawJsonImportTableTypeName = socrataDataMartRawJsonImportTableTypeName;
+            this.BienniumFiscalYear = bienniumFiscalYear;
+            this.FinanceApiLastLoadDate = financeApiLastLoadDate;
+            this.JsonImportStatusTypeID = jsonImportStatusTypeID;
+            this.JsonImportStatusTypeName = jsonImportStatusTypeName;
+            this.JsonImportDate = jsonImportDate;
             this.RawJsonStringLength = rawJsonStringLength;
         }
 
@@ -43,6 +48,11 @@ namespace ProjectFirma.Web.Models
             this.CreateDate = vSocrataDataMartRawJsonImportIndex.CreateDate;
             this.SocrataDataMartRawJsonImportTableTypeID = vSocrataDataMartRawJsonImportIndex.SocrataDataMartRawJsonImportTableTypeID;
             this.SocrataDataMartRawJsonImportTableTypeName = vSocrataDataMartRawJsonImportIndex.SocrataDataMartRawJsonImportTableTypeName;
+            this.BienniumFiscalYear = vSocrataDataMartRawJsonImportIndex.BienniumFiscalYear;
+            this.FinanceApiLastLoadDate = vSocrataDataMartRawJsonImportIndex.FinanceApiLastLoadDate;
+            this.JsonImportStatusTypeID = vSocrataDataMartRawJsonImportIndex.JsonImportStatusTypeID;
+            this.JsonImportStatusTypeName = vSocrataDataMartRawJsonImportIndex.JsonImportStatusTypeName;
+            this.JsonImportDate = vSocrataDataMartRawJsonImportIndex.JsonImportDate;
             this.RawJsonStringLength = vSocrataDataMartRawJsonImportIndex.RawJsonStringLength;
             CallAfterConstructor(vSocrataDataMartRawJsonImportIndex);
         }
@@ -53,6 +63,11 @@ namespace ProjectFirma.Web.Models
         public DateTime CreateDate { get; set; }
         public int SocrataDataMartRawJsonImportTableTypeID { get; set; }
         public string SocrataDataMartRawJsonImportTableTypeName { get; set; }
+        public int? BienniumFiscalYear { get; set; }
+        public DateTime? FinanceApiLastLoadDate { get; set; }
+        public int JsonImportStatusTypeID { get; set; }
+        public string JsonImportStatusTypeName { get; set; }
+        public DateTime? JsonImportDate { get; set; }
         public long? RawJsonStringLength { get; set; }
     }
 }

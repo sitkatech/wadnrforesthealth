@@ -141,6 +141,11 @@
 [vSocrataDataMartRawJsonImportIndex].[CreateDate] AS [CreateDate], 
 [vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportTableTypeID] AS [SocrataDataMartRawJsonImportTableTypeID], 
 [vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportTableTypeName] AS [SocrataDataMartRawJsonImportTableTypeName], 
+[vSocrataDataMartRawJsonImportIndex].[BienniumFiscalYear] AS [BienniumFiscalYear], 
+[vSocrataDataMartRawJsonImportIndex].[FinanceApiLastLoadDate] AS [FinanceApiLastLoadDate], 
+[vSocrataDataMartRawJsonImportIndex].[JsonImportStatusTypeID] AS [JsonImportStatusTypeID], 
+[vSocrataDataMartRawJsonImportIndex].[JsonImportStatusTypeName] AS [JsonImportStatusTypeName], 
+[vSocrataDataMartRawJsonImportIndex].[JsonImportDate] AS [JsonImportDate], 
 [vSocrataDataMartRawJsonImportIndex].[RawJsonStringLength] AS [RawJsonStringLength]
 FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImportIndex]</DefiningQuery>
     </EntitySet>
@@ -2599,11 +2604,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       <PropertyRef Name="CreateDate" />
       <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeID" />
       <PropertyRef Name="SocrataDataMartRawJsonImportTableTypeName" />
+      <PropertyRef Name="JsonImportStatusTypeID" />
+      <PropertyRef Name="JsonImportStatusTypeName" />
     </Key>
     <Property Name="SocrataDataMartRawJsonImportID" Type="int" Nullable="false" />
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
     <Property Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Nullable="false" />
     <Property Name="SocrataDataMartRawJsonImportTableTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="BienniumFiscalYear" Type="int" />
+    <Property Name="FinanceApiLastLoadDate" Type="datetime" />
+    <Property Name="JsonImportStatusTypeID" Type="int" Nullable="false" />
+    <Property Name="JsonImportStatusTypeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="JsonImportDate" Type="datetime" />
     <Property Name="RawJsonStringLength" Type="bigint" />
   </EntityType>
   <Association Name="FK_Agreement_AgreementStatus_AgreementStatusID">
