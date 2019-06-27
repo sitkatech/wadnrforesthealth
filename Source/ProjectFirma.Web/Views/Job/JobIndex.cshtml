@@ -78,33 +78,46 @@
 <br />
 
 <form action="@Html.Raw(ClearPriorDataMartRawJsonImportsUrl())" method="post">
-    <button type="submit" class="btn btn-primary">Clear Prior Socrata Import Jobs</button>
+    <button type="submit" class="btn btn-primary job-run-btn">Clear Prior Socrata Import Jobs</button>
 </form>
 
 <br />
 <br />
 
 <form action="@Html.Raw(RunVendorUrl())" method="post">
-    <button type="submit" class="btn btn-primary">Run Vendor Import Job</button>
+    <button type="submit" class="btn btn-primary job-run-btn">Run Vendor Import Job</button>
 </form>
 
 <br />
 
 <form action="@Html.Raw(RunProgramIndexUrl())" method="post">
-    <button type="submit" class="btn btn-primary">Run Program Index Import Job</button>
+    <button type="submit" class="btn btn-primary job-run-btn">Run Program Index Import Job</button>
 </form>
 
 <br />
 
 <form action="@Html.Raw(RunProjectCodeUrl())" method="post">
-    <button type="submit" class="btn btn-primary">Run Project Code Import Job</button>
+    <button type="submit" class="btn btn-primary job-run-btn">Run Project Code Import Job</button>
 </form>
 
 <br />
 
 <form action="@Html.Raw(RunGrantExpendituresImportUrl())" method="post">
-    <button type="submit" class="btn btn-primary">Run Grant Expenditures Import Job</button>
+    <button type="submit" class="btn btn-primary job-run-btn">Run Grant Expenditures Import Job</button>
 </form>
+
+
+<script type="text/javascript">
+    // <![CDATA[
+
+    jQuery(document).ready(function () {
+        jQuery(".job-run-btn").on("click", function () {
+            jQuery(".job-run-btn").attr("disabled", "disabled");
+        });
+    });
+
+    // ]]>
+</script>
 
 
 
