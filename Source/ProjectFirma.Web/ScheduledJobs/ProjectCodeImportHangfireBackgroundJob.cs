@@ -53,6 +53,15 @@ namespace ProjectFirma.Web.ScheduledJobs
             // See how current the data is
             DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
 
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.ProjectCode.SocrataDataMartRawJsonImportTableTypeID, null);
+
+            // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
+            if (importInfo != null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
+            {
+                Logger.Info($"DownloadSocrataProjectCodeTable - ProjectCode table already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
+                return;
+            }
+
             // Pull JSON off the page into a (possibly huge) string
             var fullUrl = AddSocrataMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
             var projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);

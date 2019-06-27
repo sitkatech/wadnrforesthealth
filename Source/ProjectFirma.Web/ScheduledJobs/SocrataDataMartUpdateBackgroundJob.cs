@@ -137,7 +137,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         }
 
 
-        public SuccessfulJsonImportInfo LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(int socrataDataMartRawJsonImportTableTypeID, int optionalBienniumFiscalYear)
+        public SuccessfulJsonImportInfo LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(int socrataDataMartRawJsonImportTableTypeID, int? optionalBienniumFiscalYear)
         {
             // Because these objects are so huge, we try to avoid bringing them into memory directly, hence 
             // the proc to keep it at arm's length.

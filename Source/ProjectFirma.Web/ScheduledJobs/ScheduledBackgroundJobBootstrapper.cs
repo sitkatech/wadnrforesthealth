@@ -93,12 +93,15 @@ namespace ProjectFirma.Web.ScheduledJobs
             const int runJobEveryFifteenMinutes = 15;
 
             // Every 15 minutes jobs
-            AddRecurringJob(GrantExpenditureImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunGrantExpenditureImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled($"*/{runJobEveryFifteenMinutes} * * * *"), recurringJobIds);
+            var cronValueFor15Minutes = CronValueOrNeverIfJobsDisabled($"*/{runJobEveryFifteenMinutes} * * * *");
+            AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            AddRecurringJob(GrantExpenditureImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunGrantExpenditureImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
 
             // 1:30 AM tasks
-            var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36); AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
-            AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
-            AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), CronValueOrNeverIfJobsDisabled(oneThirtyAmCronString), recurringJobIds);
+            //var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36);
+            
 
             // See ConfigureScheduledBackgroundJobs in Gemini for further examples of how to schedule things at various time intervals. 
             // Commented out examples below.
