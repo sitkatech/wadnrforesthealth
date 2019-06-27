@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 using Hangfire;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -49,6 +48,9 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
 
+            // See how current the data is
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+
             // 2001 is the first biennium for which API returned data. This is WAY farther back than needed, but
             // harmless to overreach, since we only use data for which we have matching PI/PC.
             const int beginBienniumFiscalYear = 2001;
@@ -64,7 +66,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Step through all the desired Bienniums
             for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)
             {
-                ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear);
+                ImportExpendituresForGivenBienniumFiscalYear(bienniumFiscalYear, lastFinanceApiLoadDate);
             }
 
             Logger.Info($"Ending '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
@@ -87,26 +89,51 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' GrantExpenditureImportJson");
         }
 
-        private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear)
+        private void ImportExpendituresForGivenBienniumFiscalYear(int bienniumFiscalYear, DateTime lastFinanceApiLoadDate)
         {
             Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium Fiscal Year {bienniumFiscalYear}");
 
+            var importInfo = LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(SocrataDataMartRawJsonImportTableType.GrantExpenditure.SocrataDataMartRawJsonImportTableTypeID, bienniumFiscalYear);
+
+            // If we've already successfully imported the latest data available for this fiscal year, skip doing it again.
+            if (importInfo!= null && importInfo.FinanceApiLastLoadDate == lastFinanceApiLoadDate)
+            {
+                Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium {bienniumFiscalYear} already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
+                return;
+            }
+
             var fullUrl = GetGrantExpendituresJsonApiUrlWithAllParameters(bienniumFiscalYear);
             // Pull JSON off the page into a (possibly huge) string
+            Logger.Info($"Attempting to retrieve Expenditures for Biennium Fiscal Year {bienniumFiscalYear} from URL {fullUrl}...");
             string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
             // The JSON coming off this particular function is wonky and pre-escaped. I may suggest Tammy fix it, but for the moment we'll work with it, and 
             // clean it up ourselves.
+            /*
             grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.IndexOf('"'), 1);
             grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.LastIndexOf('"'), 1);
+            */
             // Optional? Needed? 
-            grantExpenditureJson = Regex.Unescape(grantExpenditureJson);
+            //grantExpenditureJson = Regex.Unescape(grantExpenditureJson);
             Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, grantExpenditureJson);
+            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, grantExpenditureJson);
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
 
-            // Import the given Biennium
-            GrantExpenditureImportJson(socrataDataMartRawJsonImportID, bienniumFiscalYear);
+            try
+            {
+                // Import the given Biennium
+                GrantExpenditureImportJson(socrataDataMartRawJsonImportID, bienniumFiscalYear);
+            }
+            catch (Exception e)
+            {
+                // Log the error
+                Logger.Error($"ImportExpendituresForGivenBienniumFiscalYear failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}: {e.Message}");
+                // Mark as failed in table
+                MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingFailed);
+                throw;
+            }
+            // If we get this far, it's successfully imported, and we can mark it as such
+            MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
         }
 
         /// <summary>
@@ -117,7 +144,8 @@ namespace ProjectFirma.Web.ScheduledJobs
         public static Uri GetGrantExpendituresJsonApiUrlWithAllParameters(int biennium)
         {
             var builder = new UriBuilder(GrantExpendituresJsonApiBaseUrl);
-            builder.Query += $"/{biennium}";
+            //builder.Query += $"/{biennium}";
+            builder.Query += $"q={biennium}";
             return builder.Uri;
         }
 
@@ -125,5 +153,9 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             DownloadGrantExpendituresTableForAllFiscalYears();
         }
+
+
+
+
     }
 }

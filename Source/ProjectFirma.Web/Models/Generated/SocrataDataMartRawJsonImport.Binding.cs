@@ -30,18 +30,22 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public SocrataDataMartRawJsonImport(int socrataDataMartRawJsonImportID, DateTime createDate, int socrataDataMartRawJsonImportTableTypeID, string rawJsonString) : this()
+        public SocrataDataMartRawJsonImport(int socrataDataMartRawJsonImportID, DateTime createDate, int socrataDataMartRawJsonImportTableTypeID, int? bienniumFiscalYear, DateTime? financeApiLastLoadDate, string rawJsonString, DateTime? jsonImportDate, int jsonImportStatusTypeID) : this()
         {
             this.SocrataDataMartRawJsonImportID = socrataDataMartRawJsonImportID;
             this.CreateDate = createDate;
             this.SocrataDataMartRawJsonImportTableTypeID = socrataDataMartRawJsonImportTableTypeID;
+            this.BienniumFiscalYear = bienniumFiscalYear;
+            this.FinanceApiLastLoadDate = financeApiLastLoadDate;
             this.RawJsonString = rawJsonString;
+            this.JsonImportDate = jsonImportDate;
+            this.JsonImportStatusTypeID = jsonImportStatusTypeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public SocrataDataMartRawJsonImport(DateTime createDate, int socrataDataMartRawJsonImportTableTypeID, string rawJsonString) : this()
+        public SocrataDataMartRawJsonImport(DateTime createDate, int socrataDataMartRawJsonImportTableTypeID, string rawJsonString, int jsonImportStatusTypeID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.SocrataDataMartRawJsonImportID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -49,26 +53,28 @@ namespace ProjectFirma.Web.Models
             this.CreateDate = createDate;
             this.SocrataDataMartRawJsonImportTableTypeID = socrataDataMartRawJsonImportTableTypeID;
             this.RawJsonString = rawJsonString;
+            this.JsonImportStatusTypeID = jsonImportStatusTypeID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public SocrataDataMartRawJsonImport(DateTime createDate, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString) : this()
+        public SocrataDataMartRawJsonImport(DateTime createDate, SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString, JsonImportStatusType jsonImportStatusType) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.SocrataDataMartRawJsonImportID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.CreateDate = createDate;
             this.SocrataDataMartRawJsonImportTableTypeID = socrataDataMartRawJsonImportTableType.SocrataDataMartRawJsonImportTableTypeID;
             this.RawJsonString = rawJsonString;
+            this.JsonImportStatusTypeID = jsonImportStatusType.JsonImportStatusTypeID;
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static SocrataDataMartRawJsonImport CreateNewBlank(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType)
+        public static SocrataDataMartRawJsonImport CreateNewBlank(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, JsonImportStatusType jsonImportStatusType)
         {
-            return new SocrataDataMartRawJsonImport(default(DateTime), socrataDataMartRawJsonImportTableType, default(string));
+            return new SocrataDataMartRawJsonImport(default(DateTime), socrataDataMartRawJsonImportTableType, default(string), jsonImportStatusType);
         }
 
         /// <summary>
@@ -107,11 +113,16 @@ namespace ProjectFirma.Web.Models
         public int SocrataDataMartRawJsonImportID { get; set; }
         public DateTime CreateDate { get; set; }
         public int SocrataDataMartRawJsonImportTableTypeID { get; set; }
+        public int? BienniumFiscalYear { get; set; }
+        public DateTime? FinanceApiLastLoadDate { get; set; }
         public string RawJsonString { get; set; }
+        public DateTime? JsonImportDate { get; set; }
+        public int JsonImportStatusTypeID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return SocrataDataMartRawJsonImportID; } set { SocrataDataMartRawJsonImportID = value; } }
 
         public SocrataDataMartRawJsonImportTableType SocrataDataMartRawJsonImportTableType { get { return SocrataDataMartRawJsonImportTableType.AllLookupDictionary[SocrataDataMartRawJsonImportTableTypeID]; } }
+        public JsonImportStatusType JsonImportStatusType { get { return JsonImportStatusType.AllLookupDictionary[JsonImportStatusTypeID]; } }
 
         public static class FieldLengths
         {

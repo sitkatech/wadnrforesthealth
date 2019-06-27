@@ -2436,7 +2436,11 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="SocrataDataMartRawJsonImportID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CreateDate" Type="datetime" Nullable="false" />
     <Property Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Nullable="false" />
+    <Property Name="BienniumFiscalYear" Type="int" />
+    <Property Name="FinanceApiLastLoadDate" Type="datetime" />
     <Property Name="RawJsonString" Type="varchar(max)" Nullable="false" />
+    <Property Name="JsonImportDate" Type="datetime" />
+    <Property Name="JsonImportStatusTypeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="StateProvince">
     <Key>
@@ -5199,6 +5203,14 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
   <Function Name="pGrantExpenditureImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
     <Parameter Name="BienniumToImport" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SocrataDataMartRawJsonImportTableTypeID" Type="int" Mode="In" />
+    <Parameter Name="OptionalBienniumFiscalYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="pMarkJsonImportStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />
+    <Parameter Name="JsonImportStatusTypeID" Type="int" Mode="In" />
   </Function>
   <Function Name="pProgramIndexImportJson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SocrataDataMartRawJsonImportID" Type="int" Mode="In" />

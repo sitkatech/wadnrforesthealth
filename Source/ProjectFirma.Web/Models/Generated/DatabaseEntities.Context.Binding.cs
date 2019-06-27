@@ -423,6 +423,11 @@ namespace ProjectFirma.Web.Models
                     Check.RequireNotNullThrowNotFound(invoiceStatus, "InvoiceStatus", primaryKey);
                     return invoiceStatus;
 
+                case "JsonImportStatusType":
+                    var jsonImportStatusType = JsonImportStatusType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(jsonImportStatusType, "JsonImportStatusType", primaryKey);
+                    return jsonImportStatusType;
+
                 case "LandownerCostShareLineItemStatus":
                     var landownerCostShareLineItemStatus = LandownerCostShareLineItemStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(landownerCostShareLineItemStatus, "LandownerCostShareLineItemStatus", primaryKey);

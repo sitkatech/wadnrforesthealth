@@ -49,12 +49,15 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
 
+            // See how current the data is
+            DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
+
             // Pull JSON off the page into a (possibly huge) string
             var fullUrl = AddSocrataMaxLimitTagToUrl(ProgramIndexJsonSocrataBaseUrl);
             string programIndexJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProgramIndex);
             Logger.Info($"Program Index JSON length: {programIndexJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
-            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProgramIndex, programIndexJson);
+            int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.ProgramIndex, lastFinanceApiLoadDate, null, programIndexJson);
             Logger.Info($"New SocrataDataMartRawJsonImportID: {socrataDataMartRawJsonImportID}");
             // Use the JSON to refresh the Vendor table
             ProgramIndexImportJson(socrataDataMartRawJsonImportID);

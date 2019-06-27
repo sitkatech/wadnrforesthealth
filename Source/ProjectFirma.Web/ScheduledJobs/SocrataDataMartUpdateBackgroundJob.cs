@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Net;
 using Hangfire;
@@ -61,10 +62,15 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
         }
 
-        public int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType, string rawJsonString)
+        public int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType,
+                                               DateTime lastFinanceApiLoadDate,
+                                               int? optionalBienniumFiscalYear,
+                                               string rawJsonString)
         {
             Logger.Info($"Starting '{JobName}' ShoveRawJsonStringIntoTable");
-            SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString);
+            SocrataDataMartRawJsonImport newRawJsonImport = new SocrataDataMartRawJsonImport(DateTime.Now, socrataDataMartRawJsonImportTableType, rawJsonString, JsonImportStatusType.NotYetProcessed);
+            newRawJsonImport.FinanceApiLastLoadDate = lastFinanceApiLoadDate;
+            newRawJsonImport.BienniumFiscalYear = optionalBienniumFiscalYear;
 
             HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Add(newRawJsonImport);
 
@@ -83,6 +89,91 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' ShoveRawJsonStringIntoTable");
             return newRawJsonImport.SocrataDataMartRawJsonImportID;
         }
+
+        public void MarkJsonImportStatus(int socrataDataMartRawJsonImportID, JsonImportStatusType jsonImportStatusType)
+        {
+            // Because these objects are so huge, we try to avoid bringing them into memory directly, hence 
+            // the proc to keep it at arm's length.
+            Logger.Info($"Starting '{JobName}' MarkJsonImportStatus");
+            string vendorImportProc = "dbo.pMarkJsonImportStatus";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                Logger.Info($"'{JobName}' MarkJsonImportStatus - Marking socrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID} as JsonImportStatusType {jsonImportStatusType.JsonImportStatusTypeName}");
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportID", socrataDataMartRawJsonImportID);
+                    cmd.Parameters.AddWithValue("@JsonImportStatusTypeID", jsonImportStatusType.JsonImportStatusTypeID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Logger.Info($"Ending '{JobName}' MarkJsonImportStatus");
+        }
+
+        public class SuccessfulJsonImportInfo
+        {
+            public int SocrataDataMartRawJsonImportTableTypeID;
+            public int BienniumFiscalYear;
+            public DateTime JsonImportDate;
+            public DateTime FinanceApiLastLoadDate;
+
+            /// <summary>
+            /// Empty constructor
+            /// </summary>
+            public SuccessfulJsonImportInfo()
+            {
+            }
+
+            /// <summary>
+            /// Complete Constructor
+            /// </summary>
+            public SuccessfulJsonImportInfo(int socrataDataMartRawJsonImportTableTypeID, int bienniumFiscalYear, DateTime jsonImportDate, DateTime financeApiLastLoadDate)
+            {
+                SocrataDataMartRawJsonImportTableTypeID = socrataDataMartRawJsonImportTableTypeID;
+                BienniumFiscalYear = bienniumFiscalYear;
+                JsonImportDate = jsonImportDate;
+                FinanceApiLastLoadDate = financeApiLastLoadDate;
+            }
+        }
+
+
+        public SuccessfulJsonImportInfo LatestSuccessfulJsonImportInfoForBienniumAndImportTableType(int socrataDataMartRawJsonImportTableTypeID, int optionalBienniumFiscalYear)
+        {
+            // Because these objects are so huge, we try to avoid bringing them into memory directly, hence 
+            // the proc to keep it at arm's length.
+            Logger.Info($"Starting '{JobName}' LatestSuccessfulJsonImportInfoForBienniumAndImportTableType");
+            string vendorImportProc = "dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SocrataDataMartRawJsonImportTableTypeID", socrataDataMartRawJsonImportTableTypeID);
+                    cmd.Parameters.AddWithValue("@OptionalBienniumFiscalYear", optionalBienniumFiscalYear);
+                    using (SqlDataReader dataReader = cmd.ExecuteReader())
+                    {
+                        SuccessfulJsonImportInfo importInfo = new SuccessfulJsonImportInfo();
+
+                        bool queryReturnedData = dataReader.Read();
+                        if (!queryReturnedData)
+                        {
+                            return null;
+                        }
+
+                        importInfo.SocrataDataMartRawJsonImportTableTypeID = (int)dataReader["SocrataDataMartRawJsonImportTableTypeID"];
+                        importInfo.BienniumFiscalYear = (int)dataReader["BienniumFiscalYear"];
+                        importInfo.JsonImportDate = (DateTime)dataReader["JsonImportDate"];
+                        importInfo.FinanceApiLastLoadDate = (DateTime)dataReader["FinanceApiLastLoadDate"];
+
+                        Logger.Info($"Ending '{JobName}' pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType");
+
+                        return importInfo;
+                    }
+                }
+            }
+        }
+
+        //exec dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType @SocrataDataMartRawJsonImportTableTypeID= 4, @OptionalBienniumFiscalYear = 2003
 
         protected SqlConnection CreateAndOpenSqlConnection()
         {

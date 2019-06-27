@@ -249,6 +249,8 @@
     <Compile Include="Models\Generated\InvoicePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceStatus.Binding.cs" />
     <Compile Include="Models\Generated\InvoiceStatusPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\JsonImportStatusType.Binding.cs" />
+    <Compile Include="Models\Generated\JsonImportStatusTypePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\LandownerCostShareLineItemStatus.Binding.cs" />
     <Compile Include="Models\Generated\LandownerCostShareLineItemStatusPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\MeasurementUnitType.Binding.cs" />
@@ -574,6 +576,7 @@
     <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
+    <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\ProgramIndexImportHangfireBackgroundJob.cs" />
     <Compile Include="ScheduledJobs\VendorImportHangfireBackgroundJob.cs" />
