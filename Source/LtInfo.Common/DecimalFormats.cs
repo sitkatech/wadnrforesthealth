@@ -11,7 +11,7 @@ namespace LtInfo.Common
         /// <returns></returns>
         public static decimal ToDecimalFormatted(this decimal value)
         {
-            return decimal.Parse(value.ToString("#.##"));
+            return decimal.Parse(value.ToString("0.##"));
         }
     }
 }
