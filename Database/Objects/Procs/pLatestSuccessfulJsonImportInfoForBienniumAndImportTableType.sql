@@ -38,5 +38,6 @@ exec dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType @SocrataDa
 */
 
 /*
+delete from dbo.SocrataDataMartRawJsonImport 
 select * from dbo.SocrataDataMartRawJsonImport 
 */
