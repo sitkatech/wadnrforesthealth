@@ -85,13 +85,14 @@
 
         jQuery.ajax({
                 method: "POST",
-                url: "@Html.Raw(SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.GetGrantAllocationEndDate(0)))",
+                url: "@Html.Raw(SitkaRoute<GrantAllocationAwardController>.BuildUrlFromExpression(x => x.GetGrantAllocationDates(0)))",
                 data: { grantAllocationID: myField.value }
             })
             .done(function (msg) {
                 if (msg != null)
                 {
                     jQuery("#@Html.IdFor(x => x.GrantAllocationAwardExpirationDate)").val(msg.endDate);
+                    jQuery("#@Html.IdFor(x => x.GrantAllocationAwardCalendarStartYear)").val(msg.startYear);
                 }
             });
         return false;

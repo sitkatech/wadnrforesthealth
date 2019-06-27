@@ -20,13 +20,14 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpPost]
         [AnonymousUnclassifiedFeature]
-        public JsonResult GetGrantAllocationEndDate(int grantAllocationID)
+        public JsonResult GetGrantAllocationDates(int grantAllocationID)
         {
             var grantAllocation = HttpRequestStorage.DatabaseEntities.GrantAllocations.FirstOrDefault(x => x.GrantAllocationID == grantAllocationID);
 
             if (grantAllocation != null)
             {
-                var grantAllocationEndDateJsonStructure =  new {endDate = grantAllocation.EndDateDisplay, name = grantAllocation.DisplayName, id = grantAllocation.GrantAllocationID};
+                var grantAllocationStartYear = grantAllocation.StartDate.HasValue ? grantAllocation.StartDate.Value.Year : DateTime.Now.Year;
+                var grantAllocationEndDateJsonStructure =  new {endDate = grantAllocation.EndDateDisplay, startYear = grantAllocationStartYear, name = grantAllocation.DisplayName, id = grantAllocation.GrantAllocationID};
                 //use JSON structure for jquery's autocomplete functionality
                 return Json(grantAllocationEndDateJsonStructure, JsonRequestBehavior.AllowGet);
             }
