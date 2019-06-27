@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -11,7 +9,6 @@ using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.FocusArea;
 using ProjectFirma.Web.Views.GrantAllocationAward;
 using ProjectFirma.Web.Views.Shared;
-using DetailViewData = ProjectFirma.Web.Views.GrantAllocationAward.DetailViewData;
 
 namespace ProjectFirma.Web.Controllers
 {
@@ -151,7 +148,7 @@ namespace ProjectFirma.Web.Controllers
             var landownerCostShareLineItemGridSpec = new LandownerCostShareLineItemGridSpec(CurrentPerson, grantAllocationAward);
             var contractorInvoiceItemGridSpec = new ContractorInvoiceItemGridSpec(CurrentPerson, grantAllocationAward);
 
-            var viewData = new DetailViewData(CurrentPerson, 
+            var viewData = new Views.GrantAllocationAward.DetailViewData(CurrentPerson, 
                                               grantAllocationAward, 
                                               backButtonUrl, 
                                               backButtonText, 
@@ -160,7 +157,7 @@ namespace ProjectFirma.Web.Controllers
                                               travelLineItemGridSpec,
                                               landownerCostShareLineItemGridSpec,
                                               contractorInvoiceItemGridSpec);
-            return RazorView<Views.GrantAllocationAward.Detail, DetailViewData>(viewData);
+            return RazorView<Views.GrantAllocationAward.Detail, Views.GrantAllocationAward.DetailViewData>(viewData);
         }
 
         [GrantAllocationAwardViewFeature]
