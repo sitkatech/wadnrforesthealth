@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Controllers
                 "PerformanceMeasureController.SaveChartConfiguration",
                 "RoleController.Detail",
                 "RoleController.PersonWithRoleGridJsonData",
-                "GrantAllocationAwardController.GetGrantAllocationEndDate"
+                "GrantAllocationAwardController.GetGrantAllocationDates"
             };
             var missingHumanReadable = missing.Select(x => $"{x.ReflectedType.Name}.{x.Name}").Where(x => !exceptions.Contains(x)).ToList();
             Assert.That(missingHumanReadable,
