@@ -55,11 +55,14 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult ClearPriorDataMartRawJsonImports()
         {
-            // This may be slow, we'll see.
             int priorJobCount = HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Count();
-            foreach (var databaseEntitiesSocrataDataMartRawJsonImport in HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports)
+            lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
             {
-                databaseEntitiesSocrataDataMartRawJsonImport.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                // This may be slow, we'll see.
+                foreach (var databaseEntitiesSocrataDataMartRawJsonImport in HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports)
+                {
+                    databaseEntitiesSocrataDataMartRawJsonImport.DeleteFull(HttpRequestStorage.DatabaseEntities);
+                }
             }
 
             var message = $"{priorJobCount} Prior Socrata DataMart Json Imports cleared";
@@ -73,8 +76,11 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunVendorImportJob()
         {
-            var vendorImportJob = new VendorImportHangfireBackgroundJob();
-            vendorImportJob.DownloadSocrataVendorTable();
+            lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
+            {
+                var vendorImportJob = new VendorImportHangfireBackgroundJob();
+                vendorImportJob.DownloadSocrataVendorTable();
+            }
 
             var message = $"Socrata Vendors Imported";
             SetMessageForDisplay(message);
@@ -86,8 +92,11 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunProgramIndexImportJob()
         {
-            var programIndexJob = new ProgramIndexImportHangfireBackgroundJob();
-            programIndexJob.DownloadSocrataProgramIndexTable();
+            lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
+            {
+                var programIndexJob = new ProgramIndexImportHangfireBackgroundJob();
+                programIndexJob.DownloadSocrataProgramIndexTable();
+            }
 
             var message = $"Socrata Program Indices Imported";
             SetMessageForDisplay(message);
@@ -99,8 +108,11 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunProjectCodeImportJob()
         {
-            var projectCodeJob = new ProjectCodeImportHangfireBackgroundJob();
-            projectCodeJob.DownloadSocrataProjectCodeTable();
+            lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
+            {
+                var projectCodeJob = new ProjectCodeImportHangfireBackgroundJob();
+                projectCodeJob.DownloadSocrataProjectCodeTable();
+            }
 
             var message = $"Socrata Project Codes Imported";
             SetMessageForDisplay(message);
@@ -112,8 +124,11 @@ namespace ProjectFirma.Web.Controllers
         [JobManageFeature]
         public ActionResult RunGrantExpendituresImportJob()
         {
-            var grantExpenditureJob = new GrantExpenditureImportHangfireBackgroundJob();
-            grantExpenditureJob.DownloadGrantExpendituresTableForAllFiscalYears();
+            lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
+            {
+                var grantExpenditureJob = new GrantExpenditureImportHangfireBackgroundJob();
+                grantExpenditureJob.DownloadGrantExpendituresTableForAllFiscalYears();
+            }
 
             var message = $"Socrata Grant Expenditures Imported";
             SetMessageForDisplay(message);
