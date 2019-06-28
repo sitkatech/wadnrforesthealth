@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using LtInfo.Common.DesignByContract;
 
 namespace LtInfo.Common.GdalOgr
 {
@@ -35,6 +36,7 @@ namespace LtInfo.Common.GdalOgr
             var processUtilityResult = ProcessUtility.ShellAndWaitImpl(ogrInfoFileInfo.DirectoryName, ogrInfoFileInfo.FullName, commandLineArguments, true, Convert.ToInt32(totalMilliseconds));
 
             List<string> featureClassesFromFileGdb = processUtilityResult.StdOut.Split(new[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries).ToList();
+            Check.Ensure(featureClassesFromFileGdb.Any(), "No feature classes found in GDB!");
             return featureClassesFromFileGdb.Select(x => x.Split(' ').Skip(1).First()).ToList();
         }
 
