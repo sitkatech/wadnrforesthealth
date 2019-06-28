@@ -113,7 +113,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public class SuccessfulJsonImportInfo
         {
             public int SocrataDataMartRawJsonImportTableTypeID;
-            public int BienniumFiscalYear;
+            public int? BienniumFiscalYear;
             public DateTime JsonImportDate;
             public DateTime FinanceApiLastLoadDate;
 
@@ -161,7 +161,10 @@ namespace ProjectFirma.Web.ScheduledJobs
                         }
 
                         importInfo.SocrataDataMartRawJsonImportTableTypeID = (int)dataReader["SocrataDataMartRawJsonImportTableTypeID"];
-                        importInfo.BienniumFiscalYear = (int)dataReader["BienniumFiscalYear"];
+                        if (dataReader["BienniumFiscalYear"] != System.DBNull.Value)
+                        {
+                            importInfo.BienniumFiscalYear = (int?)dataReader["BienniumFiscalYear"];
+                        }
                         importInfo.JsonImportDate = (DateTime)dataReader["JsonImportDate"];
                         importInfo.FinanceApiLastLoadDate = (DateTime)dataReader["FinanceApiLastLoadDate"];
 
