@@ -1,2 +1,0 @@
-insert into dbo.LandownerCostShareLineItemStatus (LandownerCostShareLineItemStatusID, LandownerCostShareLineItemStatusName, LandownerCostShareLineItemStatusDisplayName) values
-(4, 'InProgress', 'In Progress')

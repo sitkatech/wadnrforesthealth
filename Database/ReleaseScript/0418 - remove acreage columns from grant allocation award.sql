@@ -1,2 +1,0 @@
-alter table dbo.GrantAllocationAward
-drop column LandownerCostShareTargetFootprintAcreage, LandownerCostShareTargetTotalAcreage, ContractorInvoiceTargetTotalAcreage;
