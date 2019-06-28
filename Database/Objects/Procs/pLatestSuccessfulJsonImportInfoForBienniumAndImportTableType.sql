@@ -5,7 +5,7 @@ GO
 CREATE PROCEDURE dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType
 (
     @SocrataDataMartRawJsonImportTableTypeID int null,
-    @OptionalBienniumFiscalYear int null
+    @OptionalBienniumFiscalYear int null = null
 )
 AS
 begin
