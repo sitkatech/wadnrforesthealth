@@ -117,14 +117,17 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Pull JSON off the page into a (possibly huge) string
             Logger.Info($"Attempting to retrieve Expenditures for Biennium Fiscal Year {bienniumFiscalYear} from URL {fullUrl}...");
             string grantExpenditureJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.GrantExpenditure);
-            // The JSON coming off this particular function is wonky and pre-escaped. I may suggest Tammy fix it, but for the moment we'll work with it, and 
-            // clean it up ourselves.
-            /*
-            grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.IndexOf('"'), 1);
-            grantExpenditureJson = grantExpenditureJson.Remove(grantExpenditureJson.LastIndexOf('"'), 1);
-            */
-            // Optional? Needed? 
-            //grantExpenditureJson = Regex.Unescape(grantExpenditureJson);
+
+            // HACK -- We are finding bad data like this in 2007 :   "DocDate": "0905-11-08T00:00:00"
+            //         In this ONE CASE, we will surgically replace the "0905" year with 2005, which it what it apparently should be.
+            //         We target it narrowly because we'd want to be attentive if the problem gets any worse / changes / moves to other years, etc.
+            //         (We have asked Tammy Osborn @ WA DNR to fix this, but we'd like to move on an silence relevant errors in the meantime. 
+            //         This code can be removed once Tammy fixes the data upstream.)
+            if (bienniumFiscalYear == 2007)
+            {
+                grantExpenditureJson = grantExpenditureJson.Replace("\"DocDate\":\"0905-11-08T00:00:00\"", "\"DocDate\":\"2005-11-08T00:00:00\"");
+            }
+
             Logger.Info($"GrantExpenditure BienniumFiscalYear {bienniumFiscalYear} JSON length: {grantExpenditureJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
             int socrataDataMartRawJsonImportID = ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType.GrantExpenditure, lastFinanceApiLoadDate, bienniumFiscalYear, grantExpenditureJson);
