@@ -97,11 +97,22 @@ namespace ProjectFirma.Web.ScheduledJobs
             AddRecurringJob(VendorImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunVendorImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
             AddRecurringJob(GrantExpenditureImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunGrantExpenditureImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
             AddRecurringJob(ProjectCodeImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProjectCodeImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
-            AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+
+            // We only add this job if we are beyond this date, so that can get to phase 2 without this job screaming at us.
+            // This job (and likely others) needs a proper merge function, but we have no budget for this currently. -- SLG 7/9/2019
+            const int yearToRestartProgramIndex = 2019;
+            const int monthToRestartProgramIndex = 10;
+            const int dayToRestartProgramIndex = 1;
+            const int hourToRestartProgramIndex = 11;
+            var dateTimeToRestartProgramIndex = new DateTime(yearToRestartProgramIndex, monthToRestartProgramIndex, dayToRestartProgramIndex, hourToRestartProgramIndex, 0, 0);
+            if (DateTime.Now >= dateTimeToRestartProgramIndex)
+            {
+                AddRecurringJob(ProgramIndexImportHangfireBackgroundJob.Instance.JobName, () => ScheduledBackgroundJobLaunchHelper.RunProgramIndexImportScheduledBackgroundJob(JobCancellationToken.Null), cronValueFor15Minutes, recurringJobIds);
+            }
 
             // 1:30 AM tasks
             //var oneThirtyAmCronString = MakeDailyCronJobStringFromLocalTime(1, 36);
-            
+
 
             // See ConfigureScheduledBackgroundJobs in Gemini for further examples of how to schedule things at various time intervals. 
             // Commented out examples below.
