@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Net;
 using Hangfire;
+using log4net;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
 
@@ -62,6 +63,8 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
         }
 
+
+
         public int ShoveRawJsonStringIntoTable(SocrataDataMartRawJsonImportTableType socrataDataMartRawJsonImportTableType,
                                                DateTime lastFinanceApiLoadDate,
                                                int? optionalBienniumFiscalYear,
@@ -108,6 +111,23 @@ namespace ProjectFirma.Web.ScheduledJobs
                 }
             }
             Logger.Info($"Ending '{JobName}' MarkJsonImportStatus");
+        }
+
+        public static void ClearSocrataDataMartRawJsonImportsTable()
+        {
+            ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
+
+            logger.Info($"Starting  pClearSocrataDataMartRawJsonImportsTable");
+            string vendorImportProc = "pClearSocrataDataMartRawJsonImportsTable";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            logger.Info($"Ending pClearSocrataDataMartRawJsonImportsTable");
         }
 
         public class SuccessfulJsonImportInfo
@@ -178,7 +198,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         //exec dbo.pLatestSuccessfulJsonImportInfoForBienniumAndImportTableType @SocrataDataMartRawJsonImportTableTypeID= 4, @OptionalBienniumFiscalYear = 2003
 
-        protected SqlConnection CreateAndOpenSqlConnection()
+        public static SqlConnection CreateAndOpenSqlConnection()
         {
             var db = new UnitTestCommon.ProjectFirmaSqlDatabase();
             var sqlConnection = db.CreateConnection();

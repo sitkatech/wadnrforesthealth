@@ -19,6 +19,8 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using ProjectFirma.Web.Security;
@@ -56,14 +58,8 @@ namespace ProjectFirma.Web.Controllers
         public ActionResult ClearPriorDataMartRawJsonImports()
         {
             int priorJobCount = HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports.Count();
-            lock (ScheduledBackgroundJobBase.ScheduledBackgroundGlobalJobLock)
-            {
-                // This may be slow, we'll see.
-                foreach (var databaseEntitiesSocrataDataMartRawJsonImport in HttpRequestStorage.DatabaseEntities.SocrataDataMartRawJsonImports)
-                {
-                    databaseEntitiesSocrataDataMartRawJsonImport.DeleteFull(HttpRequestStorage.DatabaseEntities);
-                }
-            }
+
+            SocrataDataMartUpdateBackgroundJob.ClearSocrataDataMartRawJsonImportsTable();
 
             var message = $"{priorJobCount} Prior Socrata DataMart Json Imports cleared";
             SetMessageForDisplay(message);
