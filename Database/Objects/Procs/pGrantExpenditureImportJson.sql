@@ -166,6 +166,9 @@ select * from dbo.SocrataDataMartRawJsonImport
 
 set statistics time on
 exec pGrantExpenditureImportJson @SocrataDataMartRawJsonImportID = 9, @BienniumToImport = 2009
+
+exec pGrantExpenditureImportJson @SocrataDataMartRawJsonImportID = 1308, @BienniumToImport = 2007
+
 set statistics time off
 
 */

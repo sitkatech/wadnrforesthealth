@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         {
         }
 
-        private void ClearGrantAllocationExpenditureTables()
+        private void ClearGrantAllocationExpenditureTables(int bienniumFiscalYear)
         {
             Logger.Info($"Starting '{JobName}' ClearGrantAllocationExpenditureTables");
             string vendorImportProc = "pClearGrantAllocationExpenditureTables";
@@ -38,6 +38,7 @@ namespace ProjectFirma.Web.ScheduledJobs
                 using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@bienniumFiscalYear", bienniumFiscalYear);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -60,8 +61,7 @@ namespace ProjectFirma.Web.ScheduledJobs
             // Go at least one biennium beyond the current one
             var endBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear() + bienniumStep;
 
-            // Always clear the expenditure data before doing the import, at least for now
-            ClearGrantAllocationExpenditureTables();
+
 
             // Step through all the desired Bienniums
             for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)
@@ -112,6 +112,9 @@ namespace ProjectFirma.Web.ScheduledJobs
                 Logger.Info($"ImportExpendituresForGivenBienniumFiscalYear - Biennium {bienniumFiscalYear} already current. Last import: {importInfo.JsonImportDate} - LastFinanceApiLoadDate: {lastFinanceApiLoadDate}");
                 return;
             }
+
+            // Clear the expenditure data for the given Biennium before doing the import
+            ClearGrantAllocationExpenditureTables(bienniumFiscalYear);
 
             var fullUrl = GetGrantExpendituresJsonApiUrlWithAllParameters(bienniumFiscalYear);
             // Pull JSON off the page into a (possibly huge) string
