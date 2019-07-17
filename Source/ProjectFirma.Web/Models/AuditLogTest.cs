@@ -19,7 +19,6 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.UnitTestCommon;
@@ -164,6 +163,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestProjectTypeAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -203,6 +205,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestProjectAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -254,6 +259,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestTaxonomyTrunkAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -296,6 +304,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestOrganizationAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -309,7 +320,7 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
             // Check that the audit log mentions this object
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for Organization named \"{0}\" in Audit Log database entries.", testOrganization.OrganizationName));
+            System.Diagnostics.Trace.WriteLine($"Looking for Organization named \"{testOrganization.OrganizationName}\" in Audit Log database entries.");
             Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testOrganization.OrganizationName)));
 
             // Change audit logging
@@ -338,6 +349,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestTaxonomyBranchAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -380,6 +394,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestProjectNoteAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -422,6 +439,9 @@ namespace ProjectFirma.Web.Models
         [Test]
         public void TestClassificationAuditLogging()
         {
+            // This test can become sluggish and fail when the table is very full, which suggests the table likely needs to be trimmed regularly.
+            AuditLog.ClearAuditLogTable();
+
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
 
@@ -435,7 +455,7 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
             // Check that the audit log mentions this object
-            System.Diagnostics.Trace.WriteLine(string.Format("Looking for Classification \"{0}\" in Audit Log database entries.", testClassification.DisplayName));
+            System.Diagnostics.Trace.WriteLine($"Looking for Classification \"{testClassification.DisplayName}\" in Audit Log database entries.");
             Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testClassification.DisplayName)));
 
             // Change audit logging

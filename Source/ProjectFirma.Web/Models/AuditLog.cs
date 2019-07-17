@@ -20,13 +20,16 @@ Source code is available upon request via <support@sitkatech.com>.
 -----------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
+using log4net.Repository.Hierarchy;
 using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 
@@ -209,8 +212,8 @@ namespace ProjectFirma.Web.Models
                 var projectID = (int?) entry.Property(PropertyNameProjectID).CurrentValue;
                 if (projectID.HasValue)
                 {
-                    auditLog.ProjectID = projectID;    
-                }                
+                    auditLog.ProjectID = projectID;
+                }
             }
         }
 
@@ -462,6 +465,23 @@ namespace ProjectFirma.Web.Models
                 newName = string.Empty; //ProjectLocationArea.AllLookupDictionary[(int) currentValue].ProjectLocationAreaDisplayName;
             }
             return auditLogEventType.GetAuditStringForOperationType("Location", oldName, newName);
+        }
+
+        /// <summary>
+        /// Clear the AuditLog table.
+        /// Implemented using a proc for raw speed.
+        /// </summary>
+        public static void ClearAuditLogTable()
+        {
+            string vendorImportProc = "pClearAuditLogTable";
+            using (SqlConnection sqlConnection = ScheduledJobs.SocrataDataMartUpdateBackgroundJob.CreateAndOpenSqlConnection())
+            {
+                using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
