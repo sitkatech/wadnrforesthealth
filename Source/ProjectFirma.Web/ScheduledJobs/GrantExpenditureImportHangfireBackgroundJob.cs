@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadGrantExpendituresTableForAllFiscalYears()
         {
             Logger.Info($"Starting '{JobName}' DownloadGrantExpendituresTableForAllFiscalYears");
+            ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
 
             // See how current the data is
             DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();
@@ -60,8 +61,6 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // Go at least one biennium beyond the current one
             var endBienniumFiscalYear = CurrentBiennium.GetCurrentBienniumFiscalYear() + bienniumStep;
-
-
 
             // Step through all the desired Bienniums
             for (var bienniumFiscalYear = beginBienniumFiscalYear; bienniumFiscalYear <= endBienniumFiscalYear; bienniumFiscalYear += bienniumStep)

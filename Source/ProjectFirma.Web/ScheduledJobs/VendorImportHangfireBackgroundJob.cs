@@ -48,6 +48,7 @@ namespace ProjectFirma.Web.ScheduledJobs
         public void DownloadSocrataVendorTable()
         {
             Logger.Info($"Starting '{JobName}' DownloadSocrataVendorTable");
+            ClearOutdatedSocrataDataMartRawJsonImportsTableEntries();
 
             // See how current the data is
             DateTime lastFinanceApiLoadDate = FinanceApiLastLoadUtil.GetLastLoadDate();

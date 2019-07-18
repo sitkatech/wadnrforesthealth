@@ -23,6 +23,7 @@
 @using LtInfo.Common.DhtmlWrappers
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Controllers
+@using ProjectFirma.Web.ScheduledJobs
 @inherits ProjectFirma.Web.Views.Job.JobIndex
 
 @functions
@@ -75,6 +76,15 @@
 </div>
 
 <br />
+<br />
+
+<div>
+    <div style="font-style: italic">
+        Import jobs older than @SocrataDataMartUpdateBackgroundJob.StaleEntriesDayCutoff days before the latest Finance API Last Load date will be automatically cleared when jobs are run.<br/>
+        If you wish to clear all prior jobs, use the 'Clear Prior Socrata Import Jobs' button below.
+    </div>
+</div>
+
 <br />
 
 <form action="@Html.Raw(ClearPriorDataMartRawJsonImportsUrl())" method="post">

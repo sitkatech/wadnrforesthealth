@@ -113,6 +113,9 @@ namespace ProjectFirma.Web.ScheduledJobs
             Logger.Info($"Ending '{JobName}' MarkJsonImportStatus");
         }
 
+        /// <summary>
+        /// Clears *ALL* entries in the table.
+        /// </summary>
         public static void ClearSocrataDataMartRawJsonImportsTable()
         {
             ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
@@ -128,6 +131,34 @@ namespace ProjectFirma.Web.ScheduledJobs
                 }
             }
             logger.Info($"Ending pClearSocrataDataMartRawJsonImportsTable");
+        }
+
+
+        // Anything older than this number of days before the last API load date in the table will be cleared.
+        // This could be made configurable, and should be if this value proves to be
+        // in any way controversial. -- SLG 7/18/2019
+        public const int StaleEntriesDayCutoff = 5;
+
+        // 
+        /// <summary>
+        /// Clears only *OLD* entries in the Socrata imports table
+        /// </summary>
+        public static void ClearOutdatedSocrataDataMartRawJsonImportsTableEntries()
+        {
+            ILog logger = LogManager.GetLogger(typeof(SocrataDataMartUpdateBackgroundJob));
+
+            logger.Info($"Starting pClearOutdatedSocrataDataMartRawJsonImports({StaleEntriesDayCutoff} days)");
+            string vendorImportProc = "pClearOutdatedSocrataDataMartRawJsonImports";
+            using (SqlConnection sqlConnection = CreateAndOpenSqlConnection())
+            {
+                using (var cmd = new SqlCommand(vendorImportProc, sqlConnection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@daysOldToRemove", StaleEntriesDayCutoff);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            logger.Info($"Ending pClearOutdatedSocrataDataMartRawJsonImports({StaleEntriesDayCutoff} days)");
         }
 
         public class SuccessfulJsonImportInfo
