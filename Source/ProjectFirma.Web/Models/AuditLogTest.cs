@@ -69,7 +69,7 @@ namespace ProjectFirma.Web.Models
             var result = AuditLog.GetAuditDescriptionStringIfAnyForProperty(objectContext, dbEntry, "ProjectTypeID", AuditLogEventType.Modified);
 
             // Assert
-            Assert.That(result, Is.EqualTo(string.Format("ProjectType: {0} changed to {1}", originalProjectTypeName, newProjectType.ProjectTypeName)));
+            Assert.That(result, Is.EqualTo($"ProjectType: {originalProjectTypeName} changed to {newProjectType.ProjectTypeName}"));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace ProjectFirma.Web.Models
             var result = AuditLog.GetAuditDescriptionStringIfAnyForProperty(objectContext, dbEntry, "ProjectStageID", AuditLogEventType.Modified);
 
             // Assert
-            Assert.That(result, Is.EqualTo(string.Format("Project Stage: {0} changed to {1}", originalProjectStageName, newProjectStage.ProjectStageDisplayName)));
+            Assert.That(result, Is.EqualTo($"Project Stage: {originalProjectStageName} changed to {newProjectStage.ProjectStageDisplayName}"));
         }
 
         [Test]
@@ -132,8 +132,7 @@ namespace ProjectFirma.Web.Models
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
             // Check that the audit log mentions this GrantAllocation
-            System.Diagnostics.Trace.WriteLine(
-                $"Looking for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} named \"{testGrantAllocation.GrantAllocationName}\" in Audit Log database entries.");
+            System.Diagnostics.Trace.WriteLine($"Looking for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} named \"{testGrantAllocation.GrantAllocationName}\" in Audit Log database entries.");
             Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testGrantAllocation.GrantAllocationName)));
 
             // Change audit logging

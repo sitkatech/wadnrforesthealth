@@ -71,7 +71,8 @@ namespace ProjectFirma.Web.Models
             "ProjectDocumentUpdate",
             "PersonStewardOrganization",
             "PersonStewardTaxonomyBranch",
-            "PersonStewardRegion"
+            "PersonStewardRegion",
+            "SocrataDataMartRawJsonImport"
         };
 
         public string AuditDescriptionDisplay
