@@ -14,6 +14,9 @@ begin
 declare @maxFinanceApiLastLoadDate datetime
 set @maxFinanceApiLastLoadDate = (select MAX(FinanceApiLastLoadDate) from dbo.SocrataDataMartRawJsonImport)
 
+-- For clarity. There's no work to do if we have no records in the table.
+if @maxFinanceApiLastLoadDate is null return;
+
 -- Calculate a cutoff date, before which we will delete records
 declare @cutoffFinanceApiLastLoadDate datetime
 set @cutoffFinanceApiLastLoadDate = DATEADD(DAY, -@daysOldToRemove, @maxFinanceApiLastLoadDate)
@@ -29,8 +32,6 @@ GO
 /*
 
 exec dbo.pClearOutdatedSocrataDataMartRawJsonImports 2
-
-select * from [dbo].[SocrataDataMartRawJsonImport]
 
 */
 
