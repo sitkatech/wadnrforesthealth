@@ -18,7 +18,6 @@ namespace ProjectFirma.Web.ScheduledJobs
             public DateTime LoadCompleteDt;
         }
 
-        protected static readonly ILog Logger;
 
         public static DateTime GetLastLoadDate()
         {
@@ -37,8 +36,10 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             catch (Exception exception)
             {
+                var logger = LogManager.GetLogger(typeof(FinanceApiLastLoadUtil));
+
                 string errorMessage = $"Error retrieving URL {lastLoadDateUrl}: {exception.Message}";
-                Logger.Error(errorMessage);
+                logger.Error(errorMessage);
                 throw;
             }
 
