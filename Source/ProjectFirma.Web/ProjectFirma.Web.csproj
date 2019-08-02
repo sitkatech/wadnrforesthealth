@@ -557,6 +557,7 @@
     <Compile Include="Models\GrantAllocationAwardSuppliesLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationAwardTravelLineItem.cs" />
     <Compile Include="Models\GrantAllocationAwardTravelLineItemModelExtensions.cs" />
+    <Compile Include="Models\GrantAllocationChangeLog.cs" />
     <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
     <Compile Include="Controllers\JsonApiController.cs" />

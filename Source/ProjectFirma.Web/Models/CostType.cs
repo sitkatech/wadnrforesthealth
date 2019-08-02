@@ -11,7 +11,5 @@ namespace ProjectFirma.Web.Models
         {
             return All.Where(ct => ct.IsValidInvoiceLineItemCostType).ToList();
         }
-
-
     }
 }
