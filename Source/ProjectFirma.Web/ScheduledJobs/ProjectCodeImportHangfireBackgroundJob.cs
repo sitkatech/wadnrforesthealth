@@ -65,6 +65,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             // Pull JSON off the page into a (possibly huge) string
             var fullUrl = AddSocrataMaxLimitTagToUrl(ProjectCodeJsonSocrataBaseUrl);
+            Logger.Info($"Retrieving ProjectCode JSON from URL: {fullUrl}");
             var projectCodeJson = DownloadSocrataUrlToString(fullUrl, SocrataDataMartRawJsonImportTableType.ProjectCode);
             Logger.Info($"ProjectCode JSON length: {projectCodeJson.Length}");
             // Push that string into a raw JSON string in the raw staging table
