@@ -33,9 +33,9 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Views.Project
 {
-    public class IndexGridSpec : GridSpec<Models.Project>
+    public class ProjectIndexGridSpec : GridSpec<Models.Project>
     {
-        public IndexGridSpec(Person currentPerson)
+        public ProjectIndexGridSpec(Person currentPerson)
         {
             var userHasTagManagePermissions = new FirmaAdminFeature().HasPermissionByPerson(currentPerson);
             var userHasDeletePermissions = new ProjectDeleteFeature().HasPermissionByPerson(currentPerson);
@@ -52,7 +52,8 @@ namespace ProjectFirma.Web.Views.Project
                 Add(string.Empty, x => DhtmlxGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.GetDeleteUrl(), true, true), 30, DhtmlxGridColumnFilterType.None);
             }
 
-            Add(string.Empty, x => UrlTemplate.MakeHrefString(x.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString()), 30, DhtmlxGridColumnFilterType.None);
+
+            Add(string.Empty, x => MakeFactSheetUrl(x), 30, DhtmlxGridColumnFilterType.None);
 
             Add(Models.FieldDefinition.FhtProjectNumber.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.FhtProjectNumber), 100, DhtmlxGridColumnFilterType.Text);
             Add(Models.FieldDefinition.ProjectName.ToGridHeaderString(), x => UrlTemplate.MakeHrefString(x.GetDetailUrl(), x.ProjectName), 300, DhtmlxGridColumnFilterType.Html);
@@ -80,6 +81,17 @@ namespace ProjectFirma.Web.Views.Project
             Add(Models.FieldDefinition.ProgramIndex.ToGridHeaderString(), x => x.ProgramIndices.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.ProjectCode.ToGridHeaderString(), x => x.ProjectCodes.ToDistinctOrderedCsvList(), 90, DhtmlxGridColumnFilterType.Text);
 
+        }
+
+        private static HtmlString MakeFactSheetUrl(Models.Project project)
+        {
+            // Only offer FactSheet viewer if one is actually available
+            if (ProjectController.FactSheetIsAvailable(project))
+            {
+                return UrlTemplate.MakeHrefString(project.GetFactSheetUrl(), FirmaDhtmlxGridHtmlHelpers.FactSheetIcon.ToString());
+            }
+
+            return new HtmlString(string.Empty);
         }
     }
 }

@@ -52,7 +52,6 @@ using ProjectFirma.Web.Views.Shared.ProjectPerson;
 using Detail = ProjectFirma.Web.Views.Project.Detail;
 using DetailViewData = ProjectFirma.Web.Views.Project.DetailViewData;
 using Index = ProjectFirma.Web.Views.Project.Index;
-using IndexGridSpec = ProjectFirma.Web.Views.Project.IndexGridSpec;
 using IndexViewData = ProjectFirma.Web.Views.Project.IndexViewData;
 
 namespace ProjectFirma.Web.Controllers
@@ -362,6 +361,7 @@ namespace ProjectFirma.Web.Controllers
             Check.Assert(factSheetIsAvailable, $"There is no Fact Sheet available for this {FieldDefinition.Project.GetFieldDefinitionLabel()}.");
             return project.IsBackwardLookingFactSheetRelevant() ? ViewBackwardLookingFactSheet(project) : ViewForwardLookingFactSheet(project);
         }
+
         private ViewResult ViewBackwardLookingFactSheet(Project project)
         {
             new ProjectViewFeature().DemandPermission(CurrentPerson, project);
@@ -435,7 +435,7 @@ namespace ProjectFirma.Web.Controllers
         [ProjectsViewFullListFeature]
         public GridJsonNetJObjectResult<Project> IndexGridJsonData()
         {
-            var gridSpec = new IndexGridSpec(CurrentPerson);
+            var gridSpec = new ProjectIndexGridSpec(CurrentPerson);
             var projects = HttpRequestStorage.DatabaseEntities.Projects.Include(x => x.PerformanceMeasureActuals).Include(x => x.ProjectGrantAllocationRequests).Include(x => x.ProjectGrantAllocationExpenditures).Include(x => x.ProjectImages).Include(x => x.ProjectRegions).Include(x => x.ProjectPriorityAreas).Include(x => x.ProjectOrganizations).ToList().GetActiveProjects();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projects, gridSpec);
             return gridJsonNetJObjectResult;

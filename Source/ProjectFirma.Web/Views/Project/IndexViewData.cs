@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.Project
 {
     public class IndexViewData : FirmaViewData
     {
-        public readonly IndexGridSpec GridSpec;
+        public readonly ProjectIndexGridSpec GridSpec;
         public readonly string GridName;
         public readonly string GridDataUrl;
         public readonly string ProposeNewProjectUrl;
@@ -40,8 +40,7 @@ namespace ProjectFirma.Web.Views.Project
         {
             PageTitle = $"Full {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} List";
 
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
-
+            GridSpec = new ProjectIndexGridSpec(currentPerson) {ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", SaveFiltersInCookie = true};
 
             if (new ProjectCreateNewFeature().HasPermissionByPerson(CurrentPerson))
             {
