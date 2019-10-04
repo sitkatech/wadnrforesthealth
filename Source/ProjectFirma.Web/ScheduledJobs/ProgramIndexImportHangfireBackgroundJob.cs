@@ -77,11 +77,12 @@ namespace ProjectFirma.Web.ScheduledJobs
             }
             catch (Exception e)
             {
-                // Log the error
-                Logger.Error($"ProgramIndexImportJson failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}: {e.Message}");
                 // Mark as failed in table
                 MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingFailed);
-                throw;
+
+                // add more debugging information to the exception and re-throw
+                var exceptionWithMoreInfo = new ApplicationException($"ProgramIndexImportJson failed for SocrataDataMartRawJsonImportID {socrataDataMartRawJsonImportID}", e);
+                throw exceptionWithMoreInfo;
             }
             // If we get this far, it's successfully imported, and we can mark it as such
             MarkJsonImportStatus(socrataDataMartRawJsonImportID, JsonImportStatusType.ProcessingSuceeded);
