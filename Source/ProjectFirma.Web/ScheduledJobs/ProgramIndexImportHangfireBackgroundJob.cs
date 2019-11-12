@@ -47,9 +47,9 @@ namespace ProjectFirma.Web.ScheduledJobs
 
         public void DownloadSocrataProgramIndexTable()
         {
-            if (DateTime.Compare(DateTime.Now, new DateTime(2019, 11, 11)) < 0)
+            if (DateTime.Compare(DateTime.Now, new DateTime(2019, 12, 3)) < 0)
             {
-                Logger.Info($"We have some issues with Program Index data coming from the feed. Skipping job '{JobName}' until 11/11/2019");
+                Logger.Info($"We have some issues with Program Index data coming from the feed. Skipping job '{JobName}' until 12/03/2019");
                 return;
             }
             Logger.Info($"Starting '{JobName}' DownloadSocrataProgramIndexTable");
