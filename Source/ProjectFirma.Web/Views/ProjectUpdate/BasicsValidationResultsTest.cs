@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             Assert.That(!warningMessages.Contains(FirmaValidationMessages.CompletionDateGreaterThanEqualToImplementationStartYear));
 
             projectUpdate.ProjectStageID = ProjectStage.Planned.ProjectStageID;
-            projectUpdate.PlannedDate = new DateTime(2020,1,1);
+            projectUpdate.PlannedDate = new DateTime(2025,1,1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
             Assert.That(!warningMessages.Contains(BasicsValidationResult.PlannedDateIsRequired));
@@ -71,7 +71,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
 
 
             projectUpdate.ProjectStageID = ProjectStage.Implementation.ProjectStageID;
-            projectUpdate.PlannedDate = new DateTime(2020, 1, 1);
+            projectUpdate.PlannedDate = new DateTime(2025, 1, 1);
             warningMessages = new BasicsValidationResult(projectUpdate).GetWarningMessages();
 
             Assert.That(warningMessages.Contains(BasicsValidationResult.ImplementationStartYearShouldBeLessThanCurrentYear));
