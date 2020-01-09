@@ -108,6 +108,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public void TestAgreementJsonApi()
         {
             var agreementJsonUrl = SitkaRoute<AgreementController>.BuildAbsoluteUrlFromExpression(c => c.AgreementJsonApi());
+            Console.WriteLine($"Attempting to retrieve JSON URL: {agreementJsonUrl}");
             var webClient = new WebClient();
             string jsonContent = null;
             // Having some trouble with bad SSL handshakes - but only on Sprague, so I'm adding some debugging to hopefully clarify. -- SLG 1/9/2020
