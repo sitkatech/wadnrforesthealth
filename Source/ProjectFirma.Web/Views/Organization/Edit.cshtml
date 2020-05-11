@@ -114,9 +114,25 @@ Source code is available upon request via <support@sitkatech.com>.
                     @Html.ValidationMessageFor(m => m.IsActive)
                 </div>
             </div>
-
+            @if (!Model.IsEditable)
+            {
+                <div class="form-group">
+                    <div class="col-sm-3 control-label">
+                        @Html.LabelWithSugarFor(m => m.IsEditable)
+                    </div>
+                    <div class="col-sm-9">
+                        @Html.CheckBoxFor(m => m.IsEditable, new {@disabled = "disabled"})
+                        @Html.ValidationMessageFor(m => m.IsEditable)
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.IsEditable)
+            }
         </div>
     @Html.HiddenFor(m => m.OrganizationID)
+
 }
 
 

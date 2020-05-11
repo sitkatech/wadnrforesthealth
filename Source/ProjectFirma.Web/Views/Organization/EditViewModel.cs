@@ -69,6 +69,9 @@ namespace ProjectFirma.Web.Views.Organization
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }
 
+        [DisplayName("Is Editable")]
+        public bool IsEditable { get; set; }
+
         [DisplayName("Logo")]
         [SitkaFileExtensions("jpg|jpeg|gif|png")]
         public HttpPostedFileBase LogoFileResourceData { get; set; }
@@ -89,6 +92,7 @@ namespace ProjectFirma.Web.Views.Organization
             PrimaryContactPersonID = organization.PrimaryContactPerson?.PersonID;
             OrganizationUrl = organization.OrganizationUrl;
             VendorID = organization.VendorID;
+            IsEditable = organization.IsEditable;
             if (organization.Vendor != null)
             {
                 VendorDisplayName = organization.Vendor.GetVendorNameWithFullStatewideVendorNumber();
@@ -113,6 +117,14 @@ namespace ProjectFirma.Web.Views.Organization
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (!IsEditable)
+            {
+                var originalOrg = HttpRequestStorage.DatabaseEntities.Organizations.Single(x => x.OrganizationID == OrganizationID);
+                var errorMessage = $"Editing is not allowed for organization, {originalOrg.OrganizationName}. If you need more assistance please contact Sitka Technical Support.";
+                yield return new SitkaValidationResult<EditViewModel, bool>(errorMessage, x => x.IsEditable);
+            }
+
+
             if (LogoFileResourceData != null && LogoFileResourceData.ContentLength > MaxLogoSizeInBytes)
             {
                 var errorMessage = $"Logo is too large - must be less than {FileUtility.FormatBytes(MaxLogoSizeInBytes)}. Your logo was {FileUtility.FormatBytes(LogoFileResourceData.ContentLength)}.";
