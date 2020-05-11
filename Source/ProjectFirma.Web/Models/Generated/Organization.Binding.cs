@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Organization(int organizationID, Guid? organizationGuid, string organizationName, string organizationShortName, int? primaryContactPersonID, bool isActive, string organizationUrl, int? logoFileResourceID, int organizationTypeID, DbGeometry organizationBoundary, int? vendorID) : this()
+        public Organization(int organizationID, Guid? organizationGuid, string organizationName, string organizationShortName, int? primaryContactPersonID, bool isActive, string organizationUrl, int? logoFileResourceID, int organizationTypeID, DbGeometry organizationBoundary, int? vendorID, bool isEditable) : this()
         {
             this.OrganizationID = organizationID;
             this.OrganizationGuid = organizationGuid;
@@ -50,12 +50,13 @@ namespace ProjectFirma.Web.Models
             this.OrganizationTypeID = organizationTypeID;
             this.OrganizationBoundary = organizationBoundary;
             this.VendorID = vendorID;
+            this.IsEditable = isEditable;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Organization(string organizationName, string organizationShortName, bool isActive, int organizationTypeID) : this()
+        public Organization(string organizationName, string organizationShortName, bool isActive, int organizationTypeID, bool isEditable) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.OrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -64,12 +65,13 @@ namespace ProjectFirma.Web.Models
             this.OrganizationShortName = organizationShortName;
             this.IsActive = isActive;
             this.OrganizationTypeID = organizationTypeID;
+            this.IsEditable = isEditable;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public Organization(string organizationName, string organizationShortName, bool isActive, OrganizationType organizationType) : this()
+        public Organization(string organizationName, string organizationShortName, bool isActive, OrganizationType organizationType, bool isEditable) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.OrganizationID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -79,6 +81,7 @@ namespace ProjectFirma.Web.Models
             this.OrganizationTypeID = organizationType.OrganizationTypeID;
             this.OrganizationType = organizationType;
             organizationType.Organizations.Add(this);
+            this.IsEditable = isEditable;
         }
 
         /// <summary>
@@ -86,7 +89,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public static Organization CreateNewBlank(OrganizationType organizationType)
         {
-            return new Organization(default(string), default(string), default(bool), organizationType);
+            return new Organization(default(string), default(string), default(bool), organizationType, default(bool));
         }
 
         /// <summary>
@@ -179,6 +182,7 @@ namespace ProjectFirma.Web.Models
         public int OrganizationTypeID { get; set; }
         public DbGeometry OrganizationBoundary { get; set; }
         public int? VendorID { get; set; }
+        public bool IsEditable { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return OrganizationID; } set { OrganizationID = value; } }
 

@@ -1837,6 +1837,7 @@
     <Property Name="OrganizationTypeID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationBoundary" Type="Geometry" />
     <Property Name="VendorID" Type="Int32" />
+    <Property Name="IsEditable" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Organization" ToRole="Agreements" />
     <NavigationProperty Name="LogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="OrganizationsWhereYouAreTheLogoFileResource" ToRole="LogoFileResource" />
     <NavigationProperty Name="Grants" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Organization" ToRole="Grants" />

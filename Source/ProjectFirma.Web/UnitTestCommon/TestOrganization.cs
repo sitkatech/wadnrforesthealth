@@ -30,11 +30,9 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Organization Create()
             {
                 var organizationType = TestOrganizationType.Create();
-                var organization =
-                    new Organization(
-                        TestFramework.MakeTestName("Organization", Organization.FieldLengths.OrganizationName), TestFramework.MakeTestName("OrgShortName",
-                            Organization.FieldLengths.OrganizationShortName), true,
-                        organizationType);
+                var orgTestName = TestFramework.MakeTestName("Organization", Organization.FieldLengths.OrganizationName);
+                var orgTestShortName = TestFramework.MakeTestName("OrgShortName", Organization.FieldLengths.OrganizationShortName);
+                var organization = new Organization(orgTestName, orgTestShortName, true, organizationType, true);
                 return organization;
             }
 
@@ -47,7 +45,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 //Person testPersonPrimaryContact = TestPerson.Create();
 
                 var organizationType = TestOrganizationType.Create();
-                var testOrganization = new Organization(testOrganizationName, testOrganizationShortName, true, organizationType);
+                var testOrganization = new Organization(testOrganizationName, testOrganizationShortName, true, organizationType, true);
                 //testOrganization.PrimaryContactPerson = testPersonPrimaryContact;
 
                 // Now we sew up the Person with our org
@@ -85,7 +83,8 @@ namespace ProjectFirma.Web.UnitTestCommon
             public static Organization Create(string organizationName)
             {
                 var organizationType = TestOrganizationType.Create();
-                var organization = new Organization(organizationName, MakeTestName(organizationName, Organization.FieldLengths.OrganizationShortName), true, organizationType);
+                var testOrganizationShortName = MakeTestName(organizationName, Organization.FieldLengths.OrganizationShortName);
+                var organization = new Organization(organizationName, testOrganizationShortName, true, organizationType, true);
                 return organization;
             }
 
@@ -98,7 +97,7 @@ namespace ProjectFirma.Web.UnitTestCommon
                 //Person testPersonPrimaryContact = TestPerson.Create();
 
                 var organizationType = TestOrganizationType.Create();
-                var testOrganization = new Organization(testOrganizationName, testOrganizationShortName, true, organizationType);
+                var testOrganization = new Organization(testOrganizationName, testOrganizationShortName, true, organizationType, true);
                 //testOrganization.PrimaryContactPerson = testPersonPrimaryContact;
 
                 // Now we sew up the Person with our org

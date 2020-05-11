@@ -1688,6 +1688,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="OrganizationTypeID" Type="int" Nullable="false" />
     <Property Name="OrganizationBoundary" Type="geometry" />
     <Property Name="VendorID" Type="int" />
+    <Property Name="IsEditable" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="OrganizationBoundaryStaging">
     <Key>

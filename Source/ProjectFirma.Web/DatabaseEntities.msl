@@ -739,6 +739,7 @@
           <ScalarProperty Name="OrganizationTypeID" ColumnName="OrganizationTypeID" />
           <ScalarProperty Name="OrganizationBoundary" ColumnName="OrganizationBoundary" />
           <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+          <ScalarProperty Name="IsEditable" ColumnName="IsEditable" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[Organization](
 	[OrganizationTypeID] [int] NOT NULL,
 	[OrganizationBoundary] [geometry] NULL,
 	[VendorID] [int] NULL,
+	[IsEditable] [bit] NOT NULL,
  CONSTRAINT [PK_Organization_OrganizationID] PRIMARY KEY CLUSTERED 
 (
 	[OrganizationID] ASC
