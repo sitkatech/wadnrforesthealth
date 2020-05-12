@@ -19,7 +19,6 @@ JSON format:
 
     -- Create temp table from the bulk JSON field
     ---------------------------------------------
-/*
 
     SELECT programIndexTemp.*
     into #programIndexSocrataTemp
@@ -38,40 +37,34 @@ JSON format:
     )
     AS programIndexTemp
 
-*/
 
 -- Make sure we found something to import before going any further
 ------------------------------------------------------------------
-/*
+
 declare @socrataTempRowCount as bigint
 set @socrataTempRowCount= (select count(*) from #programIndexSocrataTemp)
 if @socrataTempRowCount = 0
 begin
     RAISERROR ('No rows in incoming Program Index temp table #programIndexSocrataTemp', 16, 1)
-    --rollback tran
-    --return
+    rollback tran
+    return
 end
-*/
+
 
 -- Current and Previous Bienniums
 ---------------------------------
 DROP TABLE IF EXISTS #CurrentAndNextBiennium
-GO
 -- Current biennium
 select dbo.fGetCurrentFiscalYearBiennium() as BienniumYear into #CurrentAndNextBiennium
-GO
 -- Next biennium
 insert into #CurrentAndNextBiennium (BienniumYear) values(dbo.fGetCurrentFiscalYearBiennium() + 2)
-GO
 
 -- Bienniums found in Incoming data
 -----------------------------------
 DROP TABLE IF EXISTS #BienniumsFoundInIncomingData;
-GO
 select distinct pist.biennium as BienniumYear
 into #BienniumsFoundInIncomingData
 from #programIndexSocrataTemp as pist
-GO
 
 --select * from #CurrentAndNextBiennium
 --select * from #BienniumsFoundInIncomingData
