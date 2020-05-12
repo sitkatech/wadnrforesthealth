@@ -576,6 +576,7 @@
     <Compile Include="Models\ApiJson\GrantApiJson.cs" />
     <Compile Include="Models\ApiJson\GrantAllocationApiJson.cs" />
     <Compile Include="Models\SocrataDataMartRawJsonImport.cs" />
+    <Compile Include="Models\SqlBienniumTest.cs" />
     <Compile Include="Models\vSocrataDataMartRawJsonImportIndex.cs" />
     <Compile Include="ScheduledJobs\FinanceAPILastLoadUtil.cs" />
     <Compile Include="ScheduledJobs\GrantExpenditureImportHangfireBackgroundJob.cs" />
