@@ -37,39 +37,71 @@ JSON format:
     )
     AS programIndexTemp
 
-
--- Remove leading zeros from incoming ProgramIndexCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
-update #programIndexSocrataTemp
-set program_index_code = dbo.fRemoveLeadingZeroes(program_index_code)
-
 -- Make sure we found something to import before going any further
+------------------------------------------------------------------
 declare @socrataTempRowCount as bigint
 set @socrataTempRowCount= (select count(*) from #programIndexSocrataTemp)
 if @socrataTempRowCount = 0
 begin
     RAISERROR ('No rows in incoming Program Index temp table #programIndexSocrataTemp', 16, 1)
+    rollback tran
+    return
 end
 
----- All in the temp
---    select tpi.* 
---    from #programIndexSocrataTemp as tpi
+-- Current and Previous Bienniums
+---------------------------------
+DROP TABLE IF EXISTS #CurrentAndPreviousBiennium;
+GO
+select dbo.fGetCurrentFiscalYearBiennium() as BienniumYear into #CurrentAndPreviousBiennium
+GO
+insert into #CurrentAndPreviousBiennium (BienniumYear) values(dbo.fGetCurrentFiscalYearBiennium() + 2)
+GO
 
----- All ProgramIndexes
---    select dbpi.*
---    from dbo.ProgramIndex as dbpi
+-- Bienniums found in Incoming data
+-----------------------------------
+DROP TABLE IF EXISTS #BienniumsFoundInIncomingData;
+GO
+select distinct pist.biennium as BienniumYear
+into #BienniumsFoundInIncomingData
+from #programIndexSocrataTemp as pist
+GO
 
+--select * from #CurrentAndPreviousBiennium
+--select * from #BienniumsFoundInIncomingData
 
----- what ProgramIndexes are we trying to delete?
+-- Make sure expected and incoming Bienniums overlap exactly.
+-- If they do not, we likely have a problem and should stop.
+--------------------------------------------------------------
 
---    select dbpi.*
---    from dbo.ProgramIndex as dbpi
---    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
---    where (tpi.program_index_code is null and tpi.biennium is null) 
---    and 
---    -- Ignore fake code on the Sitka side. 
---    -- (Eventually this needs to go away, but not immediately.)
---    (dbpi.ProgramIndexCode != '000' and dbpi.ProgramIndexTitle not like '%FAKE%')
+DECLARE @bienniumsOverlapExactly bit
+set @bienniumsOverlapExactly =
+(
+  CASE 
+    WHEN EXISTS (
+      SELECT * FROM #CurrentAndPreviousBiennium as cpb 
+      FULL JOIN #BienniumsFoundInIncomingData as bfid ON cpb.BienniumYear = bfid.BienniumYear
+      WHERE cpb.BienniumYear IS NULL OR bfid.BienniumYear IS NULL
+      )
+    -- Elements in tables are not equal'
+    THEN 0
+    -- Elements in tables are equal
+    ELSE 1
+  END
+)
 
+if @bienniumsOverlapExactly = 0
+begin
+    RAISERROR ('Incoming Bienniums do not match expected Bienniums!', 16, 1)
+    rollback tran
+    return
+end
+
+-- Get started doing import
+----------------------------
+
+-- Remove leading zeros from incoming ProgramIndexCodes before we start comparing, since we store them in the WADNR tables without leading zeroes.
+update #programIndexSocrataTemp
+set program_index_code = dbo.fRemoveLeadingZeroes(program_index_code)
 
 -- DELETE
 -- Delete ProgramIndexes in our table not found in incoming temp table
@@ -78,13 +110,20 @@ where ProgramIndexID in
 (
     select dbpi.ProgramIndexID
     from dbo.ProgramIndex as dbpi
-    full outer join #programIndexSocrataTemp as tpi on tpi.program_index_code = dbpi.ProgramIndexCode and tpi.biennium = dbpi.Biennium
-    where (tpi.program_index_code is null and tpi.biennium is null)
+    full outer join #programIndexSocrataTemp as tpi on 
+            tpi.program_index_code = dbpi.ProgramIndexCode 
+            and 
+            tpi.biennium = dbpi.Biennium
+    where 
+    (tpi.program_index_code is null and tpi.biennium is null)
     and 
     -- Ignore fake code on the Sitka side. 
     -- (Eventually this needs to go away, but not immediately.)
     (dbpi.ProgramIndexCode != '000' and dbpi.ProgramIndexTitle not like '%FAKE%')
 )
+and
+-- Only delete if we are dealing with current or previous biennium
+Biennium in (dbo.fGetCurrentFiscalYearBiennium(), dbo.fGetCurrentFiscalYearBiennium() - 2)
 
 
 
