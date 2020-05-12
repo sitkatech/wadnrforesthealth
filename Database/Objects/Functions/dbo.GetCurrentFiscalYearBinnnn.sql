@@ -26,11 +26,13 @@ begin
     declare @afterJulyFirst bit
     set @afterJulyFirst = (case when @monthToCheck >= 7 then 1 else 0 end) --asdfadfsad
 
+    -- Odd Year, after July 1st
     if ((@isOddYear = 1) and (@afterJulyFirst = 1))
     begin
         return @yearToCheck;
     end
 
+    -- Odd year, before July 1st
     if ((@isOddYear = 1) and (@afterJulyFirst = 0))
     begin
         return @yearToCheck - 2;
