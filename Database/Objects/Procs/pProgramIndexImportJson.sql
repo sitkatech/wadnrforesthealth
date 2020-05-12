@@ -19,6 +19,7 @@ JSON format:
 
     -- Create temp table from the bulk JSON field
     ---------------------------------------------
+/*
 
     SELECT programIndexTemp.*
     into #programIndexSocrataTemp
@@ -37,24 +38,30 @@ JSON format:
     )
     AS programIndexTemp
 
+*/
+
 -- Make sure we found something to import before going any further
 ------------------------------------------------------------------
+/*
 declare @socrataTempRowCount as bigint
 set @socrataTempRowCount= (select count(*) from #programIndexSocrataTemp)
 if @socrataTempRowCount = 0
 begin
     RAISERROR ('No rows in incoming Program Index temp table #programIndexSocrataTemp', 16, 1)
-    rollback tran
-    return
+    --rollback tran
+    --return
 end
+*/
 
 -- Current and Previous Bienniums
 ---------------------------------
-DROP TABLE IF EXISTS #CurrentAndPreviousBiennium;
+DROP TABLE IF EXISTS #CurrentAndNextBiennium
 GO
-select dbo.fGetCurrentFiscalYearBiennium() as BienniumYear into #CurrentAndPreviousBiennium
+-- Current biennium
+select dbo.fGetCurrentFiscalYearBiennium() as BienniumYear into #CurrentAndNextBiennium
 GO
-insert into #CurrentAndPreviousBiennium (BienniumYear) values(dbo.fGetCurrentFiscalYearBiennium() + 2)
+-- Next biennium
+insert into #CurrentAndNextBiennium (BienniumYear) values(dbo.fGetCurrentFiscalYearBiennium() + 2)
 GO
 
 -- Bienniums found in Incoming data
@@ -66,7 +73,7 @@ into #BienniumsFoundInIncomingData
 from #programIndexSocrataTemp as pist
 GO
 
---select * from #CurrentAndPreviousBiennium
+--select * from #CurrentAndNextBiennium
 --select * from #BienniumsFoundInIncomingData
 
 -- Make sure expected and incoming Bienniums overlap exactly.
@@ -78,7 +85,7 @@ set @bienniumsOverlapExactly =
 (
   CASE 
     WHEN EXISTS (
-      SELECT * FROM #CurrentAndPreviousBiennium as cpb 
+      SELECT * FROM #CurrentAndNextBiennium as cpb 
       FULL JOIN #BienniumsFoundInIncomingData as bfid ON cpb.BienniumYear = bfid.BienniumYear
       WHERE cpb.BienniumYear IS NULL OR bfid.BienniumYear IS NULL
       )
@@ -122,8 +129,8 @@ where ProgramIndexID in
     (dbpi.ProgramIndexCode != '000' and dbpi.ProgramIndexTitle not like '%FAKE%')
 )
 and
--- Only delete if we are dealing with current or previous biennium
-Biennium in (dbo.fGetCurrentFiscalYearBiennium(), dbo.fGetCurrentFiscalYearBiennium() - 2)
+-- Only delete if we are dealing with current or next biennium
+Biennium in (select BienniumYear from #CurrentAndNextBiennium)
 
 
 
