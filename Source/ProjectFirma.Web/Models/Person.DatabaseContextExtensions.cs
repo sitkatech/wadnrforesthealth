@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LtInfo.Common;
 using LtInfo.Common.DesignByContract;
 
 namespace ProjectFirma.Web.Models
@@ -70,7 +71,16 @@ namespace ProjectFirma.Web.Models
 
         public static List<Person> GetPeopleWhoReceiveSupportEmails(this IQueryable<Person> people)
         {
-            return people.ToList().Where(x => x.ReceiveSupportEmails && x.IsActive).OrderBy(ht => ht.FullNameLastFirst).ToList();
+            var peopleWhoReceiveSupportEmails = people.ToList().Where(x => x.ReceiveSupportEmails && x.IsActive).OrderBy(ht => ht.FullNameLastFirst).ToList();
+            var peopleWhoDontHaveEmails = peopleWhoReceiveSupportEmails.Where(x => string.IsNullOrEmpty(x.Email)).ToList();
+            if (peopleWhoDontHaveEmails.Any())
+            {
+                var peoplesNames = peopleWhoDontHaveEmails.Select(x => x.FullNameFirstLast);
+                var peoplesNamesAsString = string.Join(", ", peoplesNames);
+                SitkaLogger.Instance.LogDetailedErrorMessage(
+                    $"There are {peopleWhoDontHaveEmails.Count} without an email address that are supposed to receive support emails. They are {peoplesNamesAsString}. Please add emails for these users");
+            }
+            return peopleWhoReceiveSupportEmails.Where(x => !string.IsNullOrEmpty(x.Email)).ToList();
         }
     }
 }
