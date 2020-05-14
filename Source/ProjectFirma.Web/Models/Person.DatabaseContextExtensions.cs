@@ -75,10 +75,10 @@ namespace ProjectFirma.Web.Models
             var peopleWhoDontHaveEmails = peopleWhoReceiveSupportEmails.Where(x => string.IsNullOrEmpty(x.Email)).ToList();
             if (peopleWhoDontHaveEmails.Any())
             {
-                var peoplesNames = peopleWhoDontHaveEmails.Select(x => x.FullNameFirstLast);
+                var peoplesNames = peopleWhoDontHaveEmails.Select(x => x.PersonID + " " + x.FullNameFirstLast);
                 var peoplesNamesAsString = string.Join(", ", peoplesNames);
                 SitkaLogger.Instance.LogDetailedErrorMessage(
-                    $"There are {peopleWhoDontHaveEmails.Count} without an email address that are supposed to receive support emails. They are {peoplesNamesAsString}. Please add emails for these users");
+                    $"There are {peopleWhoDontHaveEmails.Count} Person(s) without an email address that are supposed to receive support emails. They are {peoplesNamesAsString}. Please add emails for these users.");
             }
             return peopleWhoReceiveSupportEmails.Where(x => !string.IsNullOrEmpty(x.Email)).ToList();
         }
