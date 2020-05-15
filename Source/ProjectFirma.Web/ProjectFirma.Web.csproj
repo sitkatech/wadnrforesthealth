@@ -1021,6 +1021,7 @@
       <DependentUpon>style-WashingtonDepartmentOfNaturalResources.css</DependentUpon>
     </Content>
     <Content Include="Content\img\SAW-logo.jpg" />
+    <Content Include="Content\img\wadnr-logo-cropped.png" />
     <Content Include="Content\img\wadnr-logo.jpg" />
     <Content Include="Views\Agreement\EditAgreementGrantAllocationsController.js" />
     <Content Include="Views\GrantAllocation\EditGrantAllocationController.js" />
