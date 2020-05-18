@@ -56,7 +56,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public DateTime? PlannedDate { get; set; }
         
         [FieldDefinitionDisplay(FieldDefinitionEnum.ExpirationDate)]
-        [Required]
         public DateTime? ExpirationDate { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.CompletionDate)]
