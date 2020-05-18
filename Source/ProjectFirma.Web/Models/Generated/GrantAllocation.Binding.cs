@@ -100,6 +100,85 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(AgreementGrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(AgreementGrantAllocation).Name);
+            }
+
+            if(GrantAllocationAwards.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAward).Name);
+            }
+
+            if(GrantAllocationBudgetLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationBudgetLineItem).Name);
+            }
+
+            if(GrantAllocationChangeLogs.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationChangeLog).Name);
+            }
+
+            if(GrantAllocationExpenditures.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationExpenditure).Name);
+            }
+
+            if(GrantAllocationNotes.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationNote).Name);
+            }
+
+            if(GrantAllocationNoteInternals.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationNoteInternal).Name);
+            }
+
+            if(GrantAllocationProgramIndexProjectCodes.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationProgramIndexProjectCode).Name);
+            }
+
+            if(GrantAllocationProgramManagers.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationProgramManager).Name);
+            }
+
+            if(InvoiceLineItems.Any())
+            {
+                dependentObjects.Add(typeof(InvoiceLineItem).Name);
+            }
+
+            if(ProjectGrantAllocationExpenditures.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditure).Name);
+            }
+
+            if(ProjectGrantAllocationExpenditureUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditureUpdate).Name);
+            }
+
+            if(ProjectGrantAllocationRequests.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationRequest).Name);
+            }
+
+            if(ProjectGrantAllocationRequestUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationRequestUpdate).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationAward).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};

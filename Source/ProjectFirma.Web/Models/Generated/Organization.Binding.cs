@@ -102,6 +102,55 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(Agreements.Any())
+            {
+                dependentObjects.Add(typeof(Agreement).Name);
+            }
+
+            if(Grants.Any())
+            {
+                dependentObjects.Add(typeof(Grant).Name);
+            }
+
+            if(GrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
+            if(OrganizationBoundaryStagings.Any())
+            {
+                dependentObjects.Add(typeof(OrganizationBoundaryStaging).Name);
+            }
+
+            if(People.Any())
+            {
+                dependentObjects.Add(typeof(Person).Name);
+            }
+
+            if(PersonStewardOrganizations.Any())
+            {
+                dependentObjects.Add(typeof(PersonStewardOrganization).Name);
+            }
+
+            if(ProjectOrganizations.Any())
+            {
+                dependentObjects.Add(typeof(ProjectOrganization).Name);
+            }
+
+            if(ProjectOrganizationUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectOrganizationUpdate).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Organization).Name, typeof(Agreement).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(OrganizationBoundaryStaging).Name, typeof(Person).Name, typeof(PersonStewardOrganization).Name, typeof(ProjectOrganization).Name, typeof(ProjectOrganizationUpdate).Name};

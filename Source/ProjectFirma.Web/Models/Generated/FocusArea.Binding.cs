@@ -88,6 +88,35 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(FocusAreaLocationStagings.Any())
+            {
+                dependentObjects.Add(typeof(FocusAreaLocationStaging).Name);
+            }
+
+            if(GrantAllocationAwards.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAward).Name);
+            }
+
+            if(Projects.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
+
+            if(ProjectUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectUpdate).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FocusArea).Name, typeof(FocusAreaLocationStaging).Name, typeof(GrantAllocationAward).Name, typeof(Project).Name, typeof(ProjectUpdate).Name};

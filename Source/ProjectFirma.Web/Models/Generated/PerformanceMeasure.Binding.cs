@@ -109,6 +109,65 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(ClassificationPerformanceMeasures.Any())
+            {
+                dependentObjects.Add(typeof(ClassificationPerformanceMeasure).Name);
+            }
+
+            if(PerformanceMeasureActuals.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureActual).Name);
+            }
+
+            if(PerformanceMeasureActualSubcategoryOptions.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureActualSubcategoryOption).Name);
+            }
+
+            if(PerformanceMeasureActualSubcategoryOptionUpdates.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureActualSubcategoryOptionUpdate).Name);
+            }
+
+            if(PerformanceMeasureActualUpdates.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureActualUpdate).Name);
+            }
+
+            if(PerformanceMeasureExpecteds.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureExpected).Name);
+            }
+
+            if(PerformanceMeasureExpectedSubcategoryOptions.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureExpectedSubcategoryOption).Name);
+            }
+
+            if(PerformanceMeasureNotes.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureNote).Name);
+            }
+
+            if(PerformanceMeasureSubcategories.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureSubcategory).Name);
+            }
+
+            if(ProjectTypePerformanceMeasures.Any())
+            {
+                dependentObjects.Add(typeof(ProjectTypePerformanceMeasure).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(PerformanceMeasure).Name, typeof(ClassificationPerformanceMeasure).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureActualSubcategoryOption).Name, typeof(PerformanceMeasureActualSubcategoryOptionUpdate).Name, typeof(PerformanceMeasureActualUpdate).Name, typeof(PerformanceMeasureExpected).Name, typeof(PerformanceMeasureExpectedSubcategoryOption).Name, typeof(PerformanceMeasureNote).Name, typeof(PerformanceMeasureSubcategory).Name, typeof(ProjectTypePerformanceMeasure).Name};

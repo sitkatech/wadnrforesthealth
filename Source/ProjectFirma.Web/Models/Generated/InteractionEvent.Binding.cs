@@ -91,6 +91,25 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(InteractionEventContacts.Any())
+            {
+                dependentObjects.Add(typeof(InteractionEventContact).Name);
+            }
+
+            if(InteractionEventProjects.Any())
+            {
+                dependentObjects.Add(typeof(InteractionEventProject).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(InteractionEventProject).Name};

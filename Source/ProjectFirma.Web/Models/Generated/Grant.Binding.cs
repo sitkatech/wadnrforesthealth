@@ -98,6 +98,35 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(GrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
+            if(GrantModifications.Any())
+            {
+                dependentObjects.Add(typeof(GrantModification).Name);
+            }
+
+            if(GrantNotes.Any())
+            {
+                dependentObjects.Add(typeof(GrantNote).Name);
+            }
+
+            if(GrantNoteInternals.Any())
+            {
+                dependentObjects.Add(typeof(GrantNoteInternal).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantModification).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name};

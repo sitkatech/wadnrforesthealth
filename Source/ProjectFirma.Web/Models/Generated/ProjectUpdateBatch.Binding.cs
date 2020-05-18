@@ -131,6 +131,100 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(PerformanceMeasureActualUpdates.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureActualUpdate).Name);
+            }
+
+            if(ProjectCustomAttributeUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectCustomAttributeUpdate).Name);
+            }
+
+            if(ProjectDocumentUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectDocumentUpdate).Name);
+            }
+
+            if(ProjectExemptReportingYearUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectExemptReportingYearUpdate).Name);
+            }
+
+            if(ProjectExternalLinkUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectExternalLinkUpdate).Name);
+            }
+
+            if(ProjectGrantAllocationExpenditureUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditureUpdate).Name);
+            }
+
+            if(ProjectGrantAllocationRequestUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationRequestUpdate).Name);
+            }
+
+            if(ProjectImageUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectImageUpdate).Name);
+            }
+
+            if(ProjectLocationStagingUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocationStagingUpdate).Name);
+            }
+
+            if(ProjectLocationUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocationUpdate).Name);
+            }
+
+            if(ProjectNoteUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectNoteUpdate).Name);
+            }
+
+            if(ProjectOrganizationUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectOrganizationUpdate).Name);
+            }
+
+            if(ProjectPersonUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectPersonUpdate).Name);
+            }
+
+            if(ProjectPriorityAreaUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectPriorityAreaUpdate).Name);
+            }
+
+            if(ProjectRegionUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectRegionUpdate).Name);
+            }
+
+            if((ProjectUpdate != null))
+            {
+                dependentObjects.Add(typeof(ProjectUpdate).Name);
+            }
+
+            if(ProjectUpdateHistories.Any())
+            {
+                dependentObjects.Add(typeof(ProjectUpdateHistory).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectUpdateBatch).Name, typeof(PerformanceMeasureActualUpdate).Name, typeof(ProjectCustomAttributeUpdate).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectExemptReportingYearUpdate).Name, typeof(ProjectExternalLinkUpdate).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequestUpdate).Name, typeof(ProjectImageUpdate).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectLocationUpdate).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectOrganizationUpdate).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectPriorityAreaUpdate).Name, typeof(ProjectRegionUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateHistory).Name};

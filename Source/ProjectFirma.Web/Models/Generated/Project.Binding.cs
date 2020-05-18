@@ -139,6 +139,130 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(GrantAllocationAwardLandownerCostShareLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardLandownerCostShareLineItem).Name);
+            }
+
+            if(InteractionEventProjects.Any())
+            {
+                dependentObjects.Add(typeof(InteractionEventProject).Name);
+            }
+
+            if(NotificationProjects.Any())
+            {
+                dependentObjects.Add(typeof(NotificationProject).Name);
+            }
+
+            if(PerformanceMeasureActuals.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureActual).Name);
+            }
+
+            if(PerformanceMeasureExpecteds.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureExpected).Name);
+            }
+
+            if(ProjectClassifications.Any())
+            {
+                dependentObjects.Add(typeof(ProjectClassification).Name);
+            }
+
+            if(ProjectCustomAttributes.Any())
+            {
+                dependentObjects.Add(typeof(ProjectCustomAttribute).Name);
+            }
+
+            if(ProjectDocuments.Any())
+            {
+                dependentObjects.Add(typeof(ProjectDocument).Name);
+            }
+
+            if(ProjectExemptReportingYears.Any())
+            {
+                dependentObjects.Add(typeof(ProjectExemptReportingYear).Name);
+            }
+
+            if(ProjectExternalLinks.Any())
+            {
+                dependentObjects.Add(typeof(ProjectExternalLink).Name);
+            }
+
+            if(ProjectGrantAllocationExpenditures.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationExpenditure).Name);
+            }
+
+            if(ProjectGrantAllocationRequests.Any())
+            {
+                dependentObjects.Add(typeof(ProjectGrantAllocationRequest).Name);
+            }
+
+            if(ProjectImages.Any())
+            {
+                dependentObjects.Add(typeof(ProjectImage).Name);
+            }
+
+            if(ProjectInternalNotes.Any())
+            {
+                dependentObjects.Add(typeof(ProjectInternalNote).Name);
+            }
+
+            if(ProjectLocations.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocation).Name);
+            }
+
+            if(ProjectLocationStagings.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocationStaging).Name);
+            }
+
+            if(ProjectNotes.Any())
+            {
+                dependentObjects.Add(typeof(ProjectNote).Name);
+            }
+
+            if(ProjectOrganizations.Any())
+            {
+                dependentObjects.Add(typeof(ProjectOrganization).Name);
+            }
+
+            if(ProjectPeople.Any())
+            {
+                dependentObjects.Add(typeof(ProjectPerson).Name);
+            }
+
+            if(ProjectPriorityAreas.Any())
+            {
+                dependentObjects.Add(typeof(ProjectPriorityArea).Name);
+            }
+
+            if(ProjectRegions.Any())
+            {
+                dependentObjects.Add(typeof(ProjectRegion).Name);
+            }
+
+            if(ProjectTags.Any())
+            {
+                dependentObjects.Add(typeof(ProjectTag).Name);
+            }
+
+            if(ProjectUpdateBatches.Any())
+            {
+                dependentObjects.Add(typeof(ProjectUpdateBatch).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Project).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(InteractionEventProject).Name, typeof(NotificationProject).Name, typeof(PerformanceMeasureActual).Name, typeof(PerformanceMeasureExpected).Name, typeof(ProjectClassification).Name, typeof(ProjectCustomAttribute).Name, typeof(ProjectDocument).Name, typeof(ProjectExemptReportingYear).Name, typeof(ProjectExternalLink).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectImage).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocation).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectNote).Name, typeof(ProjectOrganization).Name, typeof(ProjectPerson).Name, typeof(ProjectPriorityArea).Name, typeof(ProjectRegion).Name, typeof(ProjectTag).Name, typeof(ProjectUpdateBatch).Name};

@@ -73,6 +73,45 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(Agreements.Any())
+            {
+                dependentObjects.Add(typeof(Agreement).Name);
+            }
+
+            if(FocusAreas.Any())
+            {
+                dependentObjects.Add(typeof(FocusArea).Name);
+            }
+
+            if(GrantAllocations.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
+            if(PersonStewardRegions.Any())
+            {
+                dependentObjects.Add(typeof(PersonStewardRegion).Name);
+            }
+
+            if(ProjectRegions.Any())
+            {
+                dependentObjects.Add(typeof(ProjectRegion).Name);
+            }
+
+            if(ProjectRegionUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectRegionUpdate).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(Agreement).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};

@@ -96,6 +96,40 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(GrantAllocationAwardContractorInvoices.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardContractorInvoice).Name);
+            }
+
+            if(GrantAllocationAwardLandownerCostShareLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardLandownerCostShareLineItem).Name);
+            }
+
+            if(GrantAllocationAwardPersonnelAndBenefitsLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardPersonnelAndBenefitsLineItem).Name);
+            }
+
+            if(GrantAllocationAwardSuppliesLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardSuppliesLineItem).Name);
+            }
+
+            if(GrantAllocationAwardTravelLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardTravelLineItem).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocationAward).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantAllocationAwardLandownerCostShareLineItem).Name, typeof(GrantAllocationAwardPersonnelAndBenefitsLineItem).Name, typeof(GrantAllocationAwardSuppliesLineItem).Name, typeof(GrantAllocationAwardTravelLineItem).Name};

@@ -86,6 +86,30 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(Projects.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
+
+            if(ProjectTypePerformanceMeasures.Any())
+            {
+                dependentObjects.Add(typeof(ProjectTypePerformanceMeasure).Name);
+            }
+
+            if(ProjectTypeProjectCustomAttributeTypes.Any())
+            {
+                dependentObjects.Add(typeof(ProjectTypeProjectCustomAttributeType).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProjectType).Name, typeof(Project).Name, typeof(ProjectTypePerformanceMeasure).Name, typeof(ProjectTypeProjectCustomAttributeType).Name};

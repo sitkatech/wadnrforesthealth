@@ -112,6 +112,105 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(AgreementsWhereYouAreTheAgreementFileResource.Any())
+            {
+                dependentObjects.Add(typeof(Agreement).Name);
+            }
+
+            if(ClassificationsWhereYouAreTheKeyImageFileResource.Any())
+            {
+                dependentObjects.Add(typeof(Classification).Name);
+            }
+
+            if(CustomPageImages.Any())
+            {
+                dependentObjects.Add(typeof(CustomPageImage).Name);
+            }
+
+            if(FieldDefinitionDataImages.Any())
+            {
+                dependentObjects.Add(typeof(FieldDefinitionDataImage).Name);
+            }
+
+            if(FirmaHomePageImages.Any())
+            {
+                dependentObjects.Add(typeof(FirmaHomePageImage).Name);
+            }
+
+            if(FirmaPageImages.Any())
+            {
+                dependentObjects.Add(typeof(FirmaPageImage).Name);
+            }
+
+            if(GrantsWhereYouAreTheGrantFileResource.Any())
+            {
+                dependentObjects.Add(typeof(Grant).Name);
+            }
+
+            if(GrantAllocationsWhereYouAreTheGrantAllocationFileResource.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
+            if(GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardContractorInvoice).Name);
+            }
+
+            if(GrantModificationsWhereYouAreTheGrantModificationFileResource.Any())
+            {
+                dependentObjects.Add(typeof(GrantModification).Name);
+            }
+
+            if(InvoicesWhereYouAreTheInvoiceFileResource.Any())
+            {
+                dependentObjects.Add(typeof(Invoice).Name);
+            }
+
+            if(OrganizationsWhereYouAreTheLogoFileResource.Any())
+            {
+                dependentObjects.Add(typeof(Organization).Name);
+            }
+
+            if(ProjectDocuments.Any())
+            {
+                dependentObjects.Add(typeof(ProjectDocument).Name);
+            }
+
+            if(ProjectDocumentUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectDocumentUpdate).Name);
+            }
+
+            if(ProjectImages.Any())
+            {
+                dependentObjects.Add(typeof(ProjectImage).Name);
+            }
+
+            if(ProjectImageUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectImageUpdate).Name);
+            }
+
+            if(SystemAttributesWhereYouAreTheBannerLogoFileResource.Any())
+            {
+                dependentObjects.Add(typeof(SystemAttribute).Name);
+            }
+
+            if(SystemAttributesWhereYouAreTheSquareLogoFileResource.Any())
+            {
+                dependentObjects.Add(typeof(SystemAttribute).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(FileResource).Name, typeof(Agreement).Name, typeof(Classification).Name, typeof(CustomPageImage).Name, typeof(FieldDefinitionDataImage).Name, typeof(FirmaHomePageImage).Name, typeof(FirmaPageImage).Name, typeof(Grant).Name, typeof(GrantAllocation).Name, typeof(GrantAllocationAwardContractorInvoice).Name, typeof(GrantModification).Name, typeof(Invoice).Name, typeof(Organization).Name, typeof(ProjectDocument).Name, typeof(ProjectDocumentUpdate).Name, typeof(ProjectImage).Name, typeof(ProjectImageUpdate).Name, typeof(SystemAttribute).Name};

@@ -149,6 +149,255 @@ namespace ProjectFirma.Web.Models
         }
 
         /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            if(AgreementPeople.Any())
+            {
+                dependentObjects.Add(typeof(AgreementPerson).Name);
+            }
+
+            if(AuditLogs.Any())
+            {
+                dependentObjects.Add(typeof(AuditLog).Name);
+            }
+
+            if(FileResourcesWhereYouAreTheCreatePerson.Any())
+            {
+                dependentObjects.Add(typeof(FileResource).Name);
+            }
+
+            if(GrantAllocationsWhereYouAreTheGrantManager.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocation).Name);
+            }
+
+            if(GrantAllocationAwardPersonnelAndBenefitsLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardPersonnelAndBenefitsLineItem).Name);
+            }
+
+            if(GrantAllocationAwardTravelLineItems.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationAwardTravelLineItem).Name);
+            }
+
+            if(GrantAllocationChangeLogsWhereYouAreTheChangePerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationChangeLog).Name);
+            }
+
+            if(GrantAllocationNotesWhereYouAreTheCreatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationNote).Name);
+            }
+
+            if(GrantAllocationNotesWhereYouAreTheLastUpdatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationNote).Name);
+            }
+
+            if(GrantAllocationNoteInternalsWhereYouAreTheCreatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationNoteInternal).Name);
+            }
+
+            if(GrantAllocationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationNoteInternal).Name);
+            }
+
+            if(GrantAllocationProgramManagers.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationProgramManager).Name);
+            }
+
+            if(GrantModificationNoteInternalsWhereYouAreTheCreatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantModificationNoteInternal).Name);
+            }
+
+            if(GrantModificationNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantModificationNoteInternal).Name);
+            }
+
+            if(GrantNotesWhereYouAreTheCreatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantNote).Name);
+            }
+
+            if(GrantNotesWhereYouAreTheLastUpdatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantNote).Name);
+            }
+
+            if(GrantNoteInternalsWhereYouAreTheCreatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantNoteInternal).Name);
+            }
+
+            if(GrantNoteInternalsWhereYouAreTheLastUpdatedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(GrantNoteInternal).Name);
+            }
+
+            if(InteractionEventsWhereYouAreTheStaffPerson.Any())
+            {
+                dependentObjects.Add(typeof(InteractionEvent).Name);
+            }
+
+            if(InteractionEventContacts.Any())
+            {
+                dependentObjects.Add(typeof(InteractionEventContact).Name);
+            }
+
+            if(InvoicesWhereYouAreThePreparedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(Invoice).Name);
+            }
+
+            if(Notifications.Any())
+            {
+                dependentObjects.Add(typeof(Notification).Name);
+            }
+
+            if(OrganizationsWhereYouAreThePrimaryContactPerson.Any())
+            {
+                dependentObjects.Add(typeof(Organization).Name);
+            }
+
+            if(PerformanceMeasureNotesWhereYouAreTheCreatePerson.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureNote).Name);
+            }
+
+            if(PerformanceMeasureNotesWhereYouAreTheUpdatePerson.Any())
+            {
+                dependentObjects.Add(typeof(PerformanceMeasureNote).Name);
+            }
+
+            if(PeopleWhereYouAreTheAddedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(Person).Name);
+            }
+
+            if(PersonAllowedAuthenticators.Any())
+            {
+                dependentObjects.Add(typeof(PersonAllowedAuthenticator).Name);
+            }
+
+            if(PersonStewardOrganizations.Any())
+            {
+                dependentObjects.Add(typeof(PersonStewardOrganization).Name);
+            }
+
+            if(PersonStewardRegions.Any())
+            {
+                dependentObjects.Add(typeof(PersonStewardRegion).Name);
+            }
+
+            if(PersonStewardTaxonomyBranches.Any())
+            {
+                dependentObjects.Add(typeof(PersonStewardTaxonomyBranch).Name);
+            }
+
+            if(ProjectsWhereYouAreThePrimaryContactPerson.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
+
+            if(ProjectsWhereYouAreTheProposingPerson.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
+
+            if(ProjectsWhereYouAreTheReviewedByPerson.Any())
+            {
+                dependentObjects.Add(typeof(Project).Name);
+            }
+
+            if(ProjectInternalNotesWhereYouAreTheCreatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectInternalNote).Name);
+            }
+
+            if(ProjectInternalNotesWhereYouAreTheUpdatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectInternalNote).Name);
+            }
+
+            if(ProjectLocationStagings.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocationStaging).Name);
+            }
+
+            if(ProjectLocationStagingUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectLocationStagingUpdate).Name);
+            }
+
+            if(ProjectNotesWhereYouAreTheCreatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectNote).Name);
+            }
+
+            if(ProjectNotesWhereYouAreTheUpdatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectNote).Name);
+            }
+
+            if(ProjectNoteUpdatesWhereYouAreTheCreatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectNoteUpdate).Name);
+            }
+
+            if(ProjectNoteUpdatesWhereYouAreTheUpdatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectNoteUpdate).Name);
+            }
+
+            if(ProjectPeople.Any())
+            {
+                dependentObjects.Add(typeof(ProjectPerson).Name);
+            }
+
+            if(ProjectPersonUpdates.Any())
+            {
+                dependentObjects.Add(typeof(ProjectPersonUpdate).Name);
+            }
+
+            if(ProjectUpdatesWhereYouAreThePrimaryContactPerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectUpdate).Name);
+            }
+
+            if(ProjectUpdateBatchesWhereYouAreTheLastUpdatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectUpdateBatch).Name);
+            }
+
+            if(ProjectUpdateHistoriesWhereYouAreTheUpdatePerson.Any())
+            {
+                dependentObjects.Add(typeof(ProjectUpdateHistory).Name);
+            }
+
+            if(SupportRequestLogsWhereYouAreTheRequestPerson.Any())
+            {
+                dependentObjects.Add(typeof(SupportRequestLog).Name);
+            }
+
+            if(SystemAttributesWhereYouAreThePrimaryContactPerson.Any())
+            {
+                dependentObjects.Add(typeof(SystemAttribute).Name);
+            }
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
         /// Dependent type names of this entity
         /// </summary>
         public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Person).Name, typeof(AgreementPerson).Name, typeof(AuditLog).Name, typeof(FileResource).Name, typeof(GrantAllocation).Name, typeof(GrantAllocationAwardPersonnelAndBenefitsLineItem).Name, typeof(GrantAllocationAwardTravelLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramManager).Name, typeof(GrantModificationNoteInternal).Name, typeof(GrantNote).Name, typeof(GrantNoteInternal).Name, typeof(InteractionEvent).Name, typeof(InteractionEventContact).Name, typeof(Invoice).Name, typeof(Notification).Name, typeof(Organization).Name, typeof(PerformanceMeasureNote).Name, typeof(PersonAllowedAuthenticator).Name, typeof(PersonStewardOrganization).Name, typeof(PersonStewardRegion).Name, typeof(PersonStewardTaxonomyBranch).Name, typeof(Project).Name, typeof(ProjectInternalNote).Name, typeof(ProjectLocationStaging).Name, typeof(ProjectLocationStagingUpdate).Name, typeof(ProjectNote).Name, typeof(ProjectNoteUpdate).Name, typeof(ProjectPerson).Name, typeof(ProjectPersonUpdate).Name, typeof(ProjectUpdate).Name, typeof(ProjectUpdateBatch).Name, typeof(ProjectUpdateHistory).Name, typeof(SupportRequestLog).Name, typeof(SystemAttribute).Name};
