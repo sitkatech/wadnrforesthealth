@@ -6,6 +6,7 @@ select '${db-user}' as AccountName
 into #accountsToCreate
 union select '${db-batch-user}'
 union select '${db-geoserver-user}'
+union select '${db-geoserver-docker-user}', 'S'
 
 -- Clear out any existing logins
 print 'Clearing out any existing logins'
@@ -24,6 +25,9 @@ from
 	union select '${local-db-geoserver-user}'
 	union select '${qa-db-geoserver-user}'
 	union select '${prod-db-geoserver-user}'
+    union select '${local-db-geoserver-docker-user}', 'S'
+    union select '${qa-db-geoserver-docker-user}', 'S'
+    union select '${prod-db-geoserver-docker-user}', 'S'
 ) a left join #accountsToCreate ac on a.AccountName = ac.AccountName
 where ac.AccountName is null
 
