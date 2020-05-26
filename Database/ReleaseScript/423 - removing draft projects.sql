@@ -64,5 +64,6 @@ delete from dbo.ProjectLocationStaging where ProjectID not in (select P.ProjectI
 
 delete from dbo.ProjectNote where ProjectID not in (select P.ProjectID from dbo.Project p where p.FhtProjectNumber in ('FHT-2020-003', 'FHT-2020-002', 'FHT-2020-004'))
 
+delete from dbo.ProjectImage where ProjectID not in (select P.ProjectID from dbo.Project p where p.FhtProjectNumber in ('FHT-2020-003', 'FHT-2020-002', 'FHT-2020-004'))
 
 delete from dbo.Project where ProjectID not in(select P.ProjectID from dbo.Project p where p.FhtProjectNumber in ('FHT-2020-003', 'FHT-2020-002', 'FHT-2020-004'))
