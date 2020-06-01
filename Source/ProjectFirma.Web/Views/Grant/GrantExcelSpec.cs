@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Grant
             AddColumn(Models.FieldDefinition.GrantStartDate.FieldDefinitionDisplayName, x => x.StartDate);
             AddColumn(Models.FieldDefinition.GrantEndDate.FieldDefinitionDisplayName, x => x.EndDate);
             AddColumn($"Parent Grant {Models.FieldDefinition.GrantStatus.FieldDefinitionDisplayName}", x => x.Grant.GrantStatus.GrantStatusName);
-            AddColumn(Models.FieldDefinition.Region.FieldDefinitionDisplayName, x => x.Region?.RegionName ?? string.Empty);
+            AddColumn(Models.FieldDefinition.DnrUplandRegion.FieldDefinitionDisplayName, x => x.Region?.RegionName ?? string.Empty);
             AddColumn(Models.FieldDefinition.FederalFundCode.FieldDefinitionDisplayName, x => x.FederalFundCodeDisplay);
             AddColumn(Models.FieldDefinition.AllocationAmount.FieldDefinitionDisplayName, x => x.AllocationAmount);
             AddColumn(Models.FieldDefinition.ProgramIndexProjectCode.FieldDefinitionDisplayName, x => x.GetAssociatedProgramIndexProjectCodePairsCommaDelimited());

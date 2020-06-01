@@ -58,7 +58,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.Division)]
         public int? DivisionID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Region)]
+        [FieldDefinitionDisplay(FieldDefinitionEnum.DnrUplandRegion)]
         public int? RegionID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
