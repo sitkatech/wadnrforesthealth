@@ -39,7 +39,7 @@ ProjectFirmaMaps.ProjectLocationSummary = function(projectLocationSummaryMapInit
     if (!projectLocationSummaryMapInitJson.HasDetailedLocation &&
         !projectLocationSummaryMapInitJson.HasSimpleLocation &&
         !projectLocationSummaryMapInitJson.HasRegions &&
-        !projectLocationSummaryMapInitJson.HasPriorityAreas) {
+        !projectLocationSummaryMapInitJson.HasPriorityLandscapes) {
         this.blockMap();
     }
 };

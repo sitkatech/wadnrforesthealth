@@ -314,9 +314,9 @@ namespace ProjectFirma.Web.Models
             return ProjectRegions.Any() || !string.IsNullOrWhiteSpace(NoRegionsExplanation);
         }
 
-        public bool IsProjectPriorityAreaValid()
+        public bool IsProjectPriorityLandscapeValid()
         {
-            return ProjectPriorityAreas.Any() || !string.IsNullOrWhiteSpace(NoPriorityAreasExplanation);
+            return ProjectPriorityLandscapes.Any() || !string.IsNullOrWhiteSpace(NoPriorityLandscapesExplanation);
         }
 
         public bool IsMyProject(Person person)
@@ -402,9 +402,9 @@ namespace ProjectFirma.Web.Models
         {
             return ProjectRegions.Select(x => x.Region);
         }
-        public IEnumerable<PriorityArea> GetProjectPriorityAreas()
+        public IEnumerable<PriorityLandscape> GetProjectPriorityLandscapes()
         {
-            return ProjectPriorityAreas.Select(x => x.PriorityArea);
+            return ProjectPriorityLandscapes.Select(x => x.PriorityLandscape);
         }
 
         public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()

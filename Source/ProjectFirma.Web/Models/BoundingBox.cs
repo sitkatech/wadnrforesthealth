@@ -224,10 +224,10 @@ namespace ProjectFirma.Web.Models
                 return new BoundingBox(new Point(project.ProjectLocationPoint), 0.001m);
             }
 
-            if (project.GetProjectRegions().Any() || project.GetProjectPriorityAreas().Any())
+            if (project.GetProjectRegions().Any() || project.GetProjectPriorityLandscapes().Any())
             {
                 var dbGeometrys = project.GetProjectRegions().Select(x => x.RegionLocation).ToList();
-                dbGeometrys.AddRange(project.GetProjectPriorityAreas().Select(x => x.PriorityAreaLocation).ToList());
+                dbGeometrys.AddRange(project.GetProjectPriorityLandscapes().Select(x => x.PriorityLandscapeLocation).ToList());
                 return new BoundingBox(dbGeometrys);
             }
 
