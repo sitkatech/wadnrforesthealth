@@ -58,8 +58,8 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         [FieldDefinitionDisplay(FieldDefinitionEnum.Division)]
         public int? DivisionID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.DnrUplandRegion)]
-        public int? RegionID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.DNRUplandRegion)]
+        public int? DNRUplandRegionID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.AllocationAmount)]
         public Money? AllocationAmount { get; set; }
@@ -108,7 +108,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             FederalFundCodeID = grantAllocation.FederalFundCodeID;
             DivisionID = grantAllocation.DivisionID;
-            RegionID = grantAllocation.RegionIDDisplay;
+            DNRUplandRegionID = grantAllocation.RegionIDDisplay;
             AllocationAmount = grantAllocation.AllocationAmount;
             StartDate = grantAllocation.StartDate;
             EndDate = grantAllocation.EndDate;
@@ -187,7 +187,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             
             grantAllocation.FederalFundCodeID = FederalFundCodeID;
             grantAllocation.DivisionID = DivisionID;
-            grantAllocation.RegionID = RegionID;
+            grantAllocation.DNRUplandRegionID = DNRUplandRegionID;
             if (grantAllocation.AllocationAmount != AllocationAmount)
             {
                 GrantAllocationChangeLog newChange = new GrantAllocationChangeLog(

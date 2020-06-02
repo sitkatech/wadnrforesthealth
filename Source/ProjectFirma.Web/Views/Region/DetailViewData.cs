@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Region
 {
     public class DetailViewData : FirmaViewData
     {
-        public readonly Models.DNRUplandRegion DnrUplandRegion;
+        public readonly Models.DNRUplandRegion DNRUplandRegion;
         public readonly bool UserHasRegionManagePermissions;
         public readonly string IndexUrl;
         public readonly BasicProjectInfoGridSpec BasicProjectInfoGridSpec;
@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Views.Region
 
         public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
         {
-            DnrUplandRegion = dnrUplandRegion;
+            DNRUplandRegion = dnrUplandRegion;
             MapInitJson = mapInitJson;
             ViewGoogleChartViewData = viewGoogleChartViewData;
             PageTitle = dnrUplandRegion.DNRUplandRegionName;

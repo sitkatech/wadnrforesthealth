@@ -37,10 +37,10 @@ namespace ProjectFirma.Web.Views.Shared.UserStewardshipAreas
             StewardshipAreaID = taxonomyBranch.TaxonomyBranchID;
             StewardshipAreaName = taxonomyBranch.DisplayName;
         }
-        public StewardshipAreaSimple(Models.Region region)
+        public StewardshipAreaSimple(Models.DNRUplandRegion dnrUplandRegion)
         {
-            StewardshipAreaID = region.RegionID;
-            StewardshipAreaName = region.DisplayName;
+            StewardshipAreaID = dnrUplandRegion.DNRUplandRegionID;
+            StewardshipAreaName = dnrUplandRegion.DisplayName;
         }
     }
 }

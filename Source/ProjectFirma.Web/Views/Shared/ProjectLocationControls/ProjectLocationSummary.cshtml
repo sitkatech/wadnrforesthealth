@@ -94,13 +94,13 @@ Source code is available upon request via <support@sitkatech.com>.
                 Regions
             </label>
             <ul class="noListStyle">
-                @foreach (var region in ViewDataTyped.Regions.OrderBy(x => x.DisplayName))
+                @foreach (var region in ViewDataTyped.DNRUplandRegions.OrderBy(x => x.DisplayName))
                 {
                     <li>
                         <a href="@region.GetDetailUrl()">@region.DisplayName </a>
                     </li>
                 }
-                @if (!ViewDataTyped.Regions.Any())
+                @if (!ViewDataTyped.DNRUplandRegions.Any())
                 {
                     <li style="list-style-type: none; margin-left: -40px;">
                         None Selected

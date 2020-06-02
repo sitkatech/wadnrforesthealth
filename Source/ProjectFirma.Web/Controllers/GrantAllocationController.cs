@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.Controllers
             var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
             var grants = HttpRequestStorage.DatabaseEntities.Grants.ToList();
             var divisions = Division.All;
-            var regions = HttpRequestStorage.DatabaseEntities.Regions;
+            var regions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions;
             var federalFundCodes = HttpRequestStorage.DatabaseEntities.FederalFundCodes;
             var people = HttpRequestStorage.DatabaseEntities.People.ToList();
 

@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var region = DnrUplandRegion != null ? DnrUplandRegion.DisplayName : ViewUtilities.NotFoundString;
+                var region = DNRUplandRegion != null ? DNRUplandRegion.DisplayName : ViewUtilities.NotFoundString;
                 var projectUpdate = ProjectUpdateBatch != null ? ProjectUpdateBatch.ProjectUpdate.DisplayName : ViewUtilities.NotFoundString;
                 return $"Region: {region}, {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {projectUpdate}";
             }
@@ -20,7 +20,7 @@ namespace ProjectFirma.Web.Models
         {
             var project = projectUpdateBatch.Project;
             var projectRegionUpdates = project.ProjectRegions.Select(
-                projectRegionToClone => new ProjectRegionUpdate(projectUpdateBatch, projectRegionToClone.DnrUplandRegion)).ToList();
+                projectRegionToClone => new ProjectRegionUpdate(projectUpdateBatch, projectRegionToClone.DNRUplandRegion)).ToList();
             projectUpdateBatch.ProjectRegionUpdates = projectRegionUpdates;
         }
 
@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Models
                 // Completely rebuild the list
                 projectUpdateBatch.ProjectRegionUpdates.ToList().ForEach(x =>
                 {
-                    var projectRegion = new ProjectRegion(project, x.DnrUplandRegion);
+                    var projectRegion = new ProjectRegion(project, x.DNRUplandRegion);
                     allProjectRegions.Add(projectRegion);
                 });
             }

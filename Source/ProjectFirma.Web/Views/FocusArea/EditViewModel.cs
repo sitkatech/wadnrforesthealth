@@ -46,8 +46,8 @@ namespace ProjectFirma.Web.Views.FocusArea
         public int FocusAreaStatusID { get; set; }
 
         [Required]
-        [DisplayName("Region")]
-        public int RegionID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.DNRUplandRegion)]
+        public int DNRUplandRegionID { get; set; }
 
         [DisplayName("Planned Footprint Acres")]
         public decimal? PlannedFootprintAcres { get; set; }
@@ -64,7 +64,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             FocusAreaID = focusArea.FocusAreaID;
             FocusAreaName = focusArea.FocusAreaName;
             FocusAreaStatusID = focusArea.FocusAreaStatusID;
-            RegionID = focusArea.RegionID;
+            DNRUplandRegionID = focusArea.DNRUplandRegionID;
             PlannedFootprintAcres = focusArea.PlannedFootprintAcres;
         }
 
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Views.FocusArea
         {
             focusArea.FocusAreaName = FocusAreaName;
             focusArea.FocusAreaStatusID = FocusAreaStatusID;
-            focusArea.RegionID = RegionID;
+            focusArea.DNRUplandRegionID = DNRUplandRegionID;
             focusArea.FocusAreaID = FocusAreaID;
             focusArea.PlannedFootprintAcres = PlannedFootprintAcres;
         }

@@ -75,17 +75,17 @@ namespace ProjectFirma.Web.Models
         public override bool CanStewardProject(Person person, Project project)
         {
             var canStewardProjectsRegionsForProject = project.GetCanStewardProjectsRegions().Select(x => x.DNRUplandRegionID).ToList();
-            return GetPersonStewardRegions(person).Any(x => canStewardProjectsRegionsForProject.Contains(x.RegionID));
+            return GetPersonStewardRegions(person).Any(x => canStewardProjectsRegionsForProject.Contains(x.DNRUplandRegionID));
         }
 
         public override List<HtmlString> GetProjectStewardshipAreaHtmlStringList(Person person)
         {
-            return GetPersonStewardRegions(person).Select(x => x.DnrUplandRegion.GetRegionDisplayNameAsUrl()).ToList();
+            return GetPersonStewardRegions(person).Select(x => x.DNRUplandRegion.GetRegionDisplayNameAsUrl()).ToList();
         }
 
         private List<PersonStewardRegion> GetPersonStewardRegions(Person person)
         {
-            return person.PersonStewardRegions.OrderBy(x => x.DnrUplandRegion.DNRUplandRegionName).ToList();
+            return person.PersonStewardRegions.OrderBy(x => x.DNRUplandRegion.DNRUplandRegionName).ToList();
         }
     }
 

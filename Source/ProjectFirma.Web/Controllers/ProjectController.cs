@@ -178,7 +178,7 @@ namespace ProjectFirma.Web.Controllers
             var priorityAreas = project.GetProjectPriorityAreas().ToList();
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(project, $"project_{project.ProjectID}_Map", false);
             var mapFormID = GenerateEditProjectLocationFormID(project);
-            var regions = project.ProjectRegions.Select(x => x.DnrUplandRegion).ToList();
+            var regions = project.ProjectRegions.Select(x => x.DNRUplandRegion).ToList();
             var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(project, projectLocationSummaryMapInitJson, priorityAreas, regions, project.NoRegionsExplanation, project.NoPriorityAreasExplanation);
 
             var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();

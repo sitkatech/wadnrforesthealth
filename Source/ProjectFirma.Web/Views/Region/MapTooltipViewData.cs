@@ -8,14 +8,14 @@ namespace ProjectFirma.Web.Views.Region
 {
     public class MapTooltipViewData : FirmaViewData
     {
-        public readonly Models.DNRUplandRegion DnrUplandRegion;
+        public readonly Models.DNRUplandRegion DNRUplandRegion;
         public readonly HtmlString RegionDetailLink;
 
         public MapTooltipViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion) : base(currentPerson)
         {
-            DnrUplandRegion = dnrUplandRegion;
+            DNRUplandRegion = dnrUplandRegion;
             RegionDetailLink = SitkaRoute<RegionController>
-                .BuildLinkFromExpression(c => c.Detail(DnrUplandRegion), DnrUplandRegion.DNRUplandRegionName).ToHTMLFormattedString();
+                .BuildLinkFromExpression(c => c.Detail(DNRUplandRegion), DNRUplandRegion.DNRUplandRegionName).ToHTMLFormattedString();
         }
     }
 }

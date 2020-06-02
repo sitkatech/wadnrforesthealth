@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult EditProjectRegions(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var regionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
+            var regionIDs = project.ProjectRegions.Select(x => x.DNRUplandRegionID).ToList();
             var noRegionsExplanation = project.NoRegionsExplanation;
             var viewModel = new EditProjectRegionsViewModel(regionIDs, noRegionsExplanation);
             return ViewEditProjectRegions(viewModel, project);
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Controllers
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
             var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
             var regionIDs = viewModel.RegionIDs ?? new List<int>();
-            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
+            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project, null));
             var editProjectRegionsFormID = GetEditProjectRegionsFormID();
 
@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Controllers
         public JsonResult FindRegionByName(string term)
         {
             var searchString = term.Trim();
-            return Json(HttpRequestStorage.DatabaseEntities.Regions
+            return Json(HttpRequestStorage.DatabaseEntities.DNRUplandRegions
                 .Where(x => x.DNRUplandRegionName.Contains(searchString)).OrderBy(x => x.DNRUplandRegionName).Take(20).ToList()
                 .Select(x => new {RegionName = x.DNRUplandRegionName, RegionID = x.DNRUplandRegionID}).ToList(), JsonRequestBehavior.AllowGet);
         }

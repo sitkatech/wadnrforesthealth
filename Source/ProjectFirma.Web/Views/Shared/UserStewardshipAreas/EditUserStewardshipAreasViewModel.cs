@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.Views.Shared.UserStewardshipAreas
                 (x, y) =>
                 {
                     x.PersonID = y.PersonID;
-                    x.RegionID = y.RegionID;
+                    x.DNRUplandRegionID = y.DNRUplandRegionID;
                 });
         }
     }

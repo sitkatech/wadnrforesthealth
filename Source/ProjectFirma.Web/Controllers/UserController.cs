@@ -266,7 +266,7 @@ namespace ProjectFirma.Web.Controllers
                     viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.PersonStewardTaxonomyBranches.Local);
                     break;
                 case ProjectStewardshipAreaTypeEnum.Regions:
-                    HttpRequestStorage.DatabaseEntities.Regions.Load();
+                    HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Load();
                     viewModel.UpdateModel(person, HttpRequestStorage.DatabaseEntities.PersonStewardRegions.Local);
                     break;
                 default:
@@ -295,7 +295,7 @@ namespace ProjectFirma.Web.Controllers
                     viewData = new EditUserStewardshipAreasViewData(CurrentPerson, allTaxonomyBranches, false);
                     break;
                 case ProjectStewardshipAreaTypeEnum.Regions:
-                    var allRegions = HttpRequestStorage.DatabaseEntities.Regions.ToList();
+                    var allRegions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.ToList();
                     viewData = new EditUserStewardshipAreasViewData(CurrentPerson, allRegions, false);
                     break;
                 default:

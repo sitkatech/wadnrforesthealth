@@ -1108,7 +1108,7 @@ namespace ProjectFirma.Web.Controllers
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
 
-            var regionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.RegionID).ToList();
+            var regionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegionID).ToList();
             var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
             var viewModel = new RegionsViewModel(regionIDs, noRegionsExplanation);
             return ViewRegions(project, projectUpdateBatch, viewModel);
@@ -1155,7 +1155,7 @@ namespace ProjectFirma.Web.Controllers
             var regions = projectUpdate.GetProjectRegions().ToList();
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate, $"project_{project.ProjectID}_EditMap", false);
             var regionIDs = viewModel.RegionIDs ?? new List<int>();
-            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
+            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Regions(project, null));
             var editProjectRegionsFormId = GenerateEditProjectLocationFormID(project);
 
@@ -2852,8 +2852,8 @@ namespace ProjectFirma.Web.Controllers
         private static bool IsRegionUpdated(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            var originalRegionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
-            var updatedRegionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.RegionID).ToList();
+            var originalRegionIDs = project.ProjectRegions.Select(x => x.DNRUplandRegionID).ToList();
+            var updatedRegionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegionID).ToList();
 
             if (!originalRegionIDs.Any() && !updatedRegionIDs.Any())
                 return false;

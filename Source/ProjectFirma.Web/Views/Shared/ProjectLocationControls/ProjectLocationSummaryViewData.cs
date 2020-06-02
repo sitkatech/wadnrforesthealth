@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
         public readonly string ProjectLocationNotes;
         public readonly ProjectLocationSummaryMapInitJson ProjectLocationSummaryMapInitJson;
         public readonly List<Models.PriorityArea> PriorityAreas;
-        public readonly List<Models.Region> Regions;
+        public readonly List<Models.DNRUplandRegion> DNRUplandRegions;
         public readonly string NoRegionsExplanation;
         public readonly bool HasLocationNotes;
         public readonly bool HasLocationInformation;
@@ -38,13 +38,13 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public ProjectLocationSummaryViewData(IProject project,
             ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson,
-            List<Models.PriorityArea> priorityAreas, List<Models.Region> regions, string noRegionsExplanation,
+            List<Models.PriorityArea> priorityAreas, List<Models.DNRUplandRegion> dnrUplandRegions, string noRegionsExplanation,
             string noPriorityAreasExplanation)
         {
             ProjectLocationNotes = project.ProjectLocationNotes;
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
             PriorityAreas = priorityAreas;
-            Regions = regions;
+            DNRUplandRegions = dnrUplandRegions;
             NoRegionsExplanation = noRegionsExplanation;
             HasLocationNotes = !string.IsNullOrWhiteSpace(project.ProjectLocationNotes);
             HasLocationInformation = project.ProjectLocationSimpleType != ProjectLocationSimpleType.None;

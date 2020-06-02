@@ -238,7 +238,7 @@ namespace ProjectFirma.Web.Models
             // --------------------
 
             // Stash for later; we'll need to clean these up
-            var testRegion = testProject.FocusArea.Region;
+            var testRegion = testProject.FocusArea.DNRUplandRegion;
             var testFocusArea = testProject.FocusArea;
 
             testProject.DeleteFull(dbContext);

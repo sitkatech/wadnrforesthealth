@@ -42,7 +42,7 @@ namespace ProjectFirma.Web.Models
         IEnumerable<IProjectCustomAttribute> ProjectCustomAttributes { get; set; }
         IEnumerable<IProjectLocation> GetProjectLocationDetails();
         DbGeometry GetDefaultBoundingBox();
-        IEnumerable<Region> GetProjectRegions();
+        IEnumerable<DNRUplandRegion> GetProjectRegions();
         IEnumerable<PriorityArea> GetProjectPriorityAreas();
         GeoJSON.Net.Feature.FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection();
         GeoJSON.Net.Feature.FeatureCollection DetailedLocationsByTypeToGeoJsonFeatureCollection(ProjectLocationType projectLocationType);

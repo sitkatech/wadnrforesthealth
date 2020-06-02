@@ -48,8 +48,8 @@ namespace ProjectFirma.Web.Models.ApiJson
             AgreementAmount = agreement.AgreementAmount;
             ExpendedAmount = agreement.ExpendedAmount;
             BalanceAmount = agreement.BalanceAmount;
-            RegionID = agreement.RegionID;
-            RegionName = agreement.DnrUplandRegion?.DNRUplandRegionName;
+            RegionID = agreement.DNRUplandRegionID;
+            RegionName = agreement.DNRUplandRegion?.DNRUplandRegionName;
             FirstBillDueOn = agreement.FirstBillDueOn;
             Notes = agreement.Notes;
             AgreementTitle = agreement.AgreementTitle;

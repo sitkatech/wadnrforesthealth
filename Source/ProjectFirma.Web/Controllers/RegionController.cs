@@ -60,15 +60,15 @@ namespace ProjectFirma.Web.Controllers
         public GridJsonNetJObjectResult<DNRUplandRegion> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var regions = HttpRequestStorage.DatabaseEntities.Regions.OrderBy(x => x.DNRUplandRegionName).ToList();
+            var regions = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.OrderBy(x => x.DNRUplandRegionName).ToList();
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<DNRUplandRegion>(regions, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
         [RegionViewFeature]
-        public ViewResult Detail(RegionPrimaryKey regionPrimaryKey)
+        public ViewResult Detail(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
-            var region = regionPrimaryKey.EntityObject;
+            var region = dnrUplandRegionPrimaryKey.EntityObject;
             var mapDivID = $"region_{region.DNRUplandRegionID}_Map";
 
             var associatedProjects = region.GetAssociatedProjects(CurrentPerson);
@@ -101,9 +101,9 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [RegionManageFeature]
-        public PartialViewResult DeleteRegion(RegionPrimaryKey regionPrimaryKey)
+        public PartialViewResult DeleteRegion(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
-            var region = regionPrimaryKey.EntityObject;
+            var region = dnrUplandRegionPrimaryKey.EntityObject;
             var viewModel = new ConfirmDialogFormViewModel(region.DNRUplandRegionID);
             return ViewDeleteRegion(region, viewModel);
         }
@@ -122,9 +122,9 @@ namespace ProjectFirma.Web.Controllers
         [HttpPost]
         [RegionManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult DeleteRegion(RegionPrimaryKey regionPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult DeleteRegion(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
-            var region = regionPrimaryKey.EntityObject;
+            var region = dnrUplandRegionPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
                 return ViewDeleteRegion(region, viewModel);
@@ -134,18 +134,18 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [RegionViewFeature]
-        public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(RegionPrimaryKey regionPrimaryKey)
+        public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);
-            var projectRegions = regionPrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
+            var projectRegions = dnrUplandRegionPrimaryKey.EntityObject.GetAssociatedProjects(CurrentPerson);
             var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Project>(projectRegions, gridSpec);
             return gridJsonNetJObjectResult;
         }
         
         [AnonymousUnclassifiedFeature]
-        public PartialViewResult MapTooltip(RegionPrimaryKey regionPrimaryKey)
+        public PartialViewResult MapTooltip(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
-            var viewData = new MapTooltipViewData(CurrentPerson, regionPrimaryKey.EntityObject);
+            var viewData = new MapTooltipViewData(CurrentPerson, dnrUplandRegionPrimaryKey.EntityObject);
             return RazorPartialView<MapTooltip, MapTooltipViewData>(viewData);
         }
     }

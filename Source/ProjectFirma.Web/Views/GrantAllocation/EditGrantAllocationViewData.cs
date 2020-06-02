@@ -54,7 +54,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
                                         IEnumerable<GrantType> grantTypes,
                                         List<ProjectFirma.Web.Models.Grant> grants,
                                         IEnumerable<Division> divisions,
-                                        IEnumerable<Models.Region> regions,
+                                        IEnumerable<Models.DNRUplandRegion> dnrUplandRegions,
                                         IEnumerable<FederalFundCode> federalFundCodes,
                                         List<Person> allPeople)
         {
@@ -62,7 +62,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             GrantTypes = grantTypes.ToSelectListWithEmptyFirstRow(x => x.GrantTypeID.ToString(CultureInfo.InvariantCulture), y => y.GrantTypeName);
             GrantNumbers = grants.OrderBy(x => x.GrantNumber).ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => y.GrantNumber);
             Divisions = divisions.OrderBy(x => x.DivisionDisplayName).ToSelectListWithEmptyFirstRow(x => x.DivisionID.ToString(CultureInfo.InvariantCulture), y => y.DivisionDisplayName);
-            Regions = regions.OrderBy(x => x.RegionName).ToSelectListWithEmptyFirstRow(x => x.RegionID.ToString(CultureInfo.InvariantCulture), y => y.RegionName);
+            Regions = dnrUplandRegions.OrderBy(x => x.DNRUplandRegionName).ToSelectListWithEmptyFirstRow(x => x.DNRUplandRegionID.ToString(CultureInfo.InvariantCulture), y => y.DNRUplandRegionName);
             
             FederalFundCodes = federalFundCodes.OrderBy(x => x.FederalFundCodeAbbrev).ToSelectListWithEmptyFirstRow(
                 x => x.FederalFundCodeID.ToString(CultureInfo.InvariantCulture), y => y.FederalFundCodeAbbrev);

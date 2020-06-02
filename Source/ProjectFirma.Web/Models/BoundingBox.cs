@@ -226,7 +226,7 @@ namespace ProjectFirma.Web.Models
 
             if (project.GetProjectRegions().Any() || project.GetProjectPriorityAreas().Any())
             {
-                var dbGeometrys = project.GetProjectRegions().Select(x => x.RegionLocation).ToList();
+                var dbGeometrys = project.GetProjectRegions().Select(x => x.DNRUplandRegionLocation).ToList();
                 dbGeometrys.AddRange(project.GetProjectPriorityAreas().Select(x => x.PriorityAreaLocation).ToList());
                 return new BoundingBox(dbGeometrys);
             }

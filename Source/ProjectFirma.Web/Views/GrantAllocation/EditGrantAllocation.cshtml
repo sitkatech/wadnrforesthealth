@@ -43,15 +43,15 @@
     jQuery(document).ready(function () {
         jQuery("#@Html.IdFor(m => m.DivisionID)").on("change", function () {
             if (jQuery(this).val() > 0) {
-                jQuery("#@Html.IdFor(m => m.RegionID)").prop("disabled", true);
+                jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").prop("disabled", true);
                 //console.log("divisionID is greater than 0:" + jQuery(this).val());
             } else {
-                jQuery("#@Html.IdFor(m => m.RegionID)").prop("disabled", false);
+                jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").prop("disabled", false);
                 //console.log("divisionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
-        jQuery("#@Html.IdFor(m => m.RegionID)").on("change", function() {
+        jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").on("change", function() {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", true);
                 //console.log("dnrUplandRegionID is greater than 0:" + jQuery(this).val());
@@ -72,7 +72,7 @@
             }
         });
 
-        jQuery("#@Html.IdFor(m => m.RegionID)").change();
+        jQuery("#@Html.IdFor(m => m.DNRUplandRegionID)").change();
         jQuery("#@Html.IdFor(m => m.DivisionID)").change();
     });
     // ]]>
@@ -180,11 +180,11 @@
     </div>
     <div class="form-group">
         <div class="col-xs-3 control-label">
-            @Html.LabelWithSugarFor(m => m.RegionID)
+            @Html.LabelWithSugarFor(m => m.DNRUplandRegionID)
         </div>
         <div class="col-xs-3">
-            @Html.DropDownListFor(m => m.RegionID, ViewDataTyped.Regions, new { style = "width: 100%;", @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.RegionID)
+            @Html.DropDownListFor(m => m.DNRUplandRegionID, ViewDataTyped.Regions, new { style = "width: 100%;", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DNRUplandRegionID)
         </div>
         <div class="col-xs-2 control-label">
             @Html.LabelWithSugarFor(m => m.DivisionID)

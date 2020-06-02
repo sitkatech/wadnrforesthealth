@@ -54,13 +54,13 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         public void UpdateModel(Models.Project project, List<Models.ProjectRegion> currentProjectRegions, IList<Models.ProjectRegion> allProjectRegions)
         {
             var newProjectRegions = RegionIDs?.Select(x => new Models.ProjectRegion(project.ProjectID, x)).ToList() ?? new List<Models.ProjectRegion>();
-            currentProjectRegions.Merge(newProjectRegions, allProjectRegions, (x, y) => x.ProjectID == y.ProjectID && x.RegionID == y.RegionID);
+            currentProjectRegions.Merge(newProjectRegions, allProjectRegions, (x, y) => x.ProjectID == y.ProjectID && x.DNRUplandRegionID == y.DNRUplandRegionID);
         }
 
         public void UpdateModel(ProjectUpdateBatch project, List<ProjectRegionUpdate> currentProjectRegions, IList<ProjectRegionUpdate> allProjectRegions)
         {
             var newProjectRegions = RegionIDs?.Select(x => new ProjectRegionUpdate(project.ProjectUpdateBatchID, x)).ToList() ?? new List<ProjectRegionUpdate>();
-            currentProjectRegions.Merge(newProjectRegions, allProjectRegions, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.RegionID == y.RegionID);
+            currentProjectRegions.Merge(newProjectRegions, allProjectRegions, (x, y) => x.ProjectUpdateBatchID == y.ProjectUpdateBatchID && x.DNRUplandRegionID == y.DNRUplandRegionID);
         }
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

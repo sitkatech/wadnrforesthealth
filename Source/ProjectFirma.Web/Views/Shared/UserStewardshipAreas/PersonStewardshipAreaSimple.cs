@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Views.Shared.UserStewardshipAreas
         public PersonStewardshipAreaSimple(PersonStewardRegion personStewardRegion)
         {
             PersonStewardshipAreaID = personStewardRegion.PersonStewardRegionID;
-            StewardshipAreaID = personStewardRegion.RegionID;
+            StewardshipAreaID = personStewardRegion.DNRUplandRegionID;
         }
     }
 }

@@ -107,7 +107,7 @@ namespace ProjectFirma.Web.Models
 
         public List<DNRUplandRegion> GetCanStewardProjectsRegions()
         {
-            return ProjectRegions.Select(x => x.DnrUplandRegion).ToList();
+            return ProjectRegions.Select(x => x.DNRUplandRegion).ToList();
         }
 
         public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
@@ -400,7 +400,7 @@ namespace ProjectFirma.Web.Models
 
         public IEnumerable<DNRUplandRegion> GetProjectRegions()
         {
-            return ProjectRegions.Select(x => x.DnrUplandRegion);
+            return ProjectRegions.Select(x => x.DNRUplandRegion);
         }
         public IEnumerable<PriorityArea> GetProjectPriorityAreas()
         {

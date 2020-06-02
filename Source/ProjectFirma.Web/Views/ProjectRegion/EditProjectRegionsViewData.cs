@@ -38,11 +38,10 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         public readonly string SimplePointMarkerImg;
 
         public EditProjectRegionsViewData(Person currentPerson, MapInitJson mapInitJson,
-            List<Models.Region> regionsInViewModel, string editProjectRegionsUrl,
+            List<Models.DNRUplandRegion> dnrUplandRegionsInViewModel, string editProjectRegionsUrl,
             string editProjectRegionsFormID, bool hasProjectLocationPoint, bool hasProjectLocationDetail) : base(currentPerson)
         {
-            ViewDataForAngular =
-                new EditProjectRegionsViewDataForAngular(mapInitJson, regionsInViewModel);
+            ViewDataForAngular = new EditProjectRegionsViewDataForAngular(mapInitJson, dnrUplandRegionsInViewModel);
             EditProjectRegionsFormID = editProjectRegionsFormID;
             EditProjectRegionsUrl = editProjectRegionsUrl;
             HasProjectLocationPoint = hasProjectLocationPoint;
@@ -61,12 +60,12 @@ namespace ProjectFirma.Web.Views.ProjectRegion
         public readonly string RegionMapServiceLayerName;
         public readonly string MapServiceUrl;
 
-        public EditProjectRegionsViewDataForAngular(MapInitJson mapInitJson, List<Models.Region> regionsInViewModel)
+        public EditProjectRegionsViewDataForAngular(MapInitJson mapInitJson, List<Models.DNRUplandRegion> dnrUplandRegionsInViewModel)
         {
             MapInitJson = mapInitJson;
             FindRegionByNameUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.FindRegionByName(null));
             TypeAheadInputId = "regionSearch";
-            RegionNameByID = regionsInViewModel.ToDictionary(x => x.RegionID, x => x.RegionName);
+            RegionNameByID = dnrUplandRegionsInViewModel.ToDictionary(x => x.DNRUplandRegionID, x => x.DNRUplandRegionName);
             RegionMapServiceLayerName = FirmaWebConfiguration.GetRegionWmsLayerName();
             MapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
         }

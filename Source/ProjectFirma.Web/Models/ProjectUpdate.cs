@@ -109,7 +109,7 @@ namespace ProjectFirma.Web.Models
 
         public IEnumerable<DNRUplandRegion> GetProjectRegions()
         {
-            return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.DnrUplandRegion);
+            return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegion);
         }
 
         public IEnumerable<PriorityArea> GetProjectPriorityAreas()

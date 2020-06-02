@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             FederalFundCodeName = grantAllocation.FederalFundCodeDisplay;
             OrganizationID = grantAllocation.OrganizationID;
             OrganizationName = grantAllocation.Organization?.OrganizationName;
-            RegionID = grantAllocation.RegionID;
+            RegionID = grantAllocation.DNRUplandRegionID;
             RegionName = grantAllocation.RegionNameDisplay;
             DivisionID = grantAllocation.DivisionID;
             DivisionName = grantAllocation.Division != null ? grantAllocation.Division.DivisionDisplayName : null;

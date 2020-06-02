@@ -866,7 +866,7 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Regions(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var regionIDs = project.ProjectRegions.Select(x => x.RegionID).ToList();
+            var regionIDs = project.ProjectRegions.Select(x => x.DNRUplandRegionID).ToList();
             var noRegionsExplanation = project.NoRegionsExplanation;
             var viewModel = new RegionsViewModel(regionIDs, noRegionsExplanation);
             return ViewEditRegion(project, viewModel);
@@ -879,7 +879,7 @@ namespace ProjectFirma.Web.Controllers
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
             var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
             var regionIDs = viewModel.RegionIDs ?? new List<int>();
-            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
+            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.Regions(project, null));
             var editProjectRegionsFormId = GenerateEditProjectRegionsFormID(project);
 

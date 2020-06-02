@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.Models
         {
             get
             {
-                var region = DnrUplandRegion != null ? DnrUplandRegion.DisplayName : ViewUtilities.NotFoundString;
+                var region = DNRUplandRegion != null ? DNRUplandRegion.DisplayName : ViewUtilities.NotFoundString;
                 var project = Project != null ? Project.DisplayName : ViewUtilities.NotFoundString;
                 return $"Region: {region}, {FieldDefinition.Project.GetFieldDefinitionLabel()} Update: {project}";
             }

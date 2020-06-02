@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsProjectLocationDetailedSectionComplete = IsBasicsSectionComplete;
 
             var regionIDs = project.ProjectRegions
-                .Select(x => x.RegionID).ToList();
+                .Select(x => x.DNRUplandRegionID).ToList();
             var editProjectRegionsValidationResults = new EditProjectRegionsViewModel(regionIDs,
                     project.NoRegionsExplanation).GetValidationResults();
 
