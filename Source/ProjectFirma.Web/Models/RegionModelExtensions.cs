@@ -29,14 +29,14 @@ namespace ProjectFirma.Web.Models
 {
     public static class RegionModelExtensions
     {
-        public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<Region> regions)
+        public static FeatureCollection ToGeoJsonFeatureCollection(this IEnumerable<DNRUplandRegion> regions)
         {
             return new FeatureCollection(regions.Select(x => x.MakeFeatureWithRelevantProperties()).ToList());
         }
 
-        public static HtmlString GetRegionDisplayNameAsUrl(this Region region)
+        public static HtmlString GetRegionDisplayNameAsUrl(this DNRUplandRegion dnrUplandRegion)
         {
-            return region != null ? UrlTemplate.MakeHrefString(region.GetDetailUrl(), region.DisplayName) : new HtmlString(null);
+            return dnrUplandRegion != null ? UrlTemplate.MakeHrefString(dnrUplandRegion.GetDetailUrl(), dnrUplandRegion.DisplayName) : new HtmlString(null);
         }
     }
 }

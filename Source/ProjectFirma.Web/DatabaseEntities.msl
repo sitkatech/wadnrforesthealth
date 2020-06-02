@@ -12,7 +12,7 @@
           <ScalarProperty Name="AgreementAmount" ColumnName="AgreementAmount" />
           <ScalarProperty Name="ExpendedAmount" ColumnName="ExpendedAmount" />
           <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="FirstBillDueOn" ColumnName="FirstBillDueOn" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="AgreementTitle" ColumnName="AgreementTitle" />
@@ -160,6 +160,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DNRUplandRegion">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.DNRUplandRegion">
+        <MappingFragment StoreEntitySet="DNRUplandRegion">
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
+          <ScalarProperty Name="DNRUplandRegionAbbrev" ColumnName="DNRUplandRegionAbbrev" />
+          <ScalarProperty Name="DNRUplandRegionName" ColumnName="DNRUplandRegionName" />
+          <ScalarProperty Name="DNRUplandRegionLocation" ColumnName="DNRUplandRegionLocation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="FederalFundCode">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.FederalFundCode">
         <MappingFragment StoreEntitySet="FederalFundCode">
@@ -246,7 +256,7 @@
           <ScalarProperty Name="FocusAreaName" ColumnName="FocusAreaName" />
           <ScalarProperty Name="FocusAreaStatusID" ColumnName="FocusAreaStatusID" />
           <ScalarProperty Name="FocusAreaLocation" ColumnName="FocusAreaLocation" />
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="PlannedFootprintAcres" ColumnName="PlannedFootprintAcres" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -292,7 +302,7 @@
           <ScalarProperty Name="AllocationAmount" ColumnName="AllocationAmount" />
           <ScalarProperty Name="FederalFundCodeID" ColumnName="FederalFundCodeID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
           <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
@@ -944,7 +954,7 @@
         <MappingFragment StoreEntitySet="PersonStewardRegion">
           <ScalarProperty Name="PersonStewardRegionID" ColumnName="PersonStewardRegionID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1375,7 +1385,7 @@
         <MappingFragment StoreEntitySet="ProjectRegion">
           <ScalarProperty Name="ProjectRegionID" ColumnName="ProjectRegionID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1384,7 +1394,7 @@
         <MappingFragment StoreEntitySet="ProjectRegionUpdate">
           <ScalarProperty Name="ProjectRegionUpdateID" ColumnName="ProjectRegionUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1508,16 +1518,6 @@
           <ScalarProperty Name="ProjectUpdateStateID" ColumnName="ProjectUpdateStateID" />
           <ScalarProperty Name="UpdatePersonID" ColumnName="UpdatePersonID" />
           <ScalarProperty Name="TransitionDate" ColumnName="TransitionDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Region">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Region">
-        <MappingFragment StoreEntitySet="Region">
-          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
-          <ScalarProperty Name="RegionAbbrev" ColumnName="RegionAbbrev" />
-          <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-          <ScalarProperty Name="RegionLocation" ColumnName="RegionLocation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

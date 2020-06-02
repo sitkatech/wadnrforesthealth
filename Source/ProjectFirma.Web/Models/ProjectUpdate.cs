@@ -107,9 +107,9 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.Project.GetDefaultBoundingBox();
         }
 
-        public IEnumerable<Region> GetProjectRegions()
+        public IEnumerable<DNRUplandRegion> GetProjectRegions()
         {
-            return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.Region);
+            return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.DnrUplandRegion);
         }
 
         public IEnumerable<PriorityArea> GetProjectPriorityAreas()

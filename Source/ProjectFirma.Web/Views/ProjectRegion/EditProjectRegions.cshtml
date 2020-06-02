@@ -76,10 +76,10 @@ Source code is available upon request via <support@sitkatech.com>.
                     </button>
                 </span>
             </div>
-            <div class="alert alert-warning" ng-if="!AngularModel.RegionIDs || AngularModel.RegionIDs.length < 1">
+            <div class="alert alert-warning" ng-if="!AngularModel.DNRUplandRegionIDs || AngularModel.DNRUplandRegionIDs.length < 1">
                 No regions selected for this @FieldDefinition.Project.GetFieldDefinitionLabel(), provide an explanation in the @Html.DisplayNameFor(m => m.NoRegionsExplanation) field or select a region.
             </div>
-            <div ng-if="AngularModel.RegionIDs.length >= 1">
+            <div ng-if="AngularModel.DNRUplandRegionIDs.length >= 1">
                 <table class="table">
                     <thead>
                         <tr>
@@ -88,14 +88,14 @@ Source code is available upon request via <support@sitkatech.com>.
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="regionId in AngularModel.RegionIDs">
+                        <tr ng-repeat="regionId in AngularModel.DNRUplandRegionIDs">
                             <td>
                                 <input type="hidden" name="@Html.NameFor(x => x.RegionIDs)" value="{{regionId}}" />
                                 <a ng-click="toggleRegion(regionId)">
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
                             </td>
-                            <td ng-bind="getRegionName(regionId)"></td>
+                            <td ng-bind="getDNRUplandRegionName(regionId)"></td>
                         </tr>
                     </tbody>
                 </table>

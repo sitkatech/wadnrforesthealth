@@ -54,10 +54,10 @@
         jQuery("#@Html.IdFor(m => m.RegionID)").on("change", function() {
             if (jQuery(this).val() > 0) {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", true);
-                //console.log("regionID is greater than 0:" + jQuery(this).val());
+                //console.log("dnrUplandRegionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.DivisionID)").prop("disabled", false);
-                //console.log("regionID is NOT greater than 0:" + jQuery(this).val());
+                //console.log("dnrUplandRegionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 
@@ -65,10 +65,10 @@
         jQuery("#@Html.IdFor(m => m.AllocationAmount)").on("change", function() {
             if (jQuery(this).val() != initialAllocationAmount) {
                 jQuery("#@Html.IdFor(m => m.GrantAllocationChangeLogNote)").prop("disabled", false);
-                //console.log("regionID is greater than 0:" + jQuery(this).val());
+                //console.log("dnrUplandRegionID is greater than 0:" + jQuery(this).val());
             } else {
                 jQuery("#@Html.IdFor(m => m.GrantAllocationChangeLogNote)").prop("disabled", true);
-                //console.log("regionID is NOT greater than 0:" + jQuery(this).val());
+                //console.log("dnrUplandRegionID is NOT greater than 0:" + jQuery(this).val());
             }
         });
 

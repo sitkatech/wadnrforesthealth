@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? regionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models
             this.AllocationAmount = allocationAmount;
             this.FederalFundCodeID = federalFundCodeID;
             this.OrganizationID = organizationID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
             this.DivisionID = divisionID;
             this.GrantManagerID = grantManagerID;
             this.GrantAllocationFileResourceID = grantAllocationFileResourceID;
@@ -286,7 +286,7 @@ namespace ProjectFirma.Web.Models
         public decimal? AllocationAmount { get; set; }
         public int? FederalFundCodeID { get; set; }
         public int? OrganizationID { get; set; }
-        public int? RegionID { get; set; }
+        public int? DNRUplandRegionID { get; set; }
         public int? DivisionID { get; set; }
         public int? GrantManagerID { get; set; }
         public int? GrantAllocationFileResourceID { get; set; }
@@ -310,7 +310,7 @@ namespace ProjectFirma.Web.Models
         public virtual Grant Grant { get; set; }
         public virtual FederalFundCode FederalFundCode { get; set; }
         public virtual Organization Organization { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual DNRUplandRegion DNRUplandRegion { get; set; }
         public Division Division { get { return DivisionID.HasValue ? Division.AllLookupDictionary[DivisionID.Value] : null; } }
         public virtual Person GrantManager { get; set; }
         public virtual FileResource GrantAllocationFileResource { get; set; }

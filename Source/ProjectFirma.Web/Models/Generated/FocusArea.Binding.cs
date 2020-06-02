@@ -33,49 +33,49 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public FocusArea(int focusAreaID, string focusAreaName, int focusAreaStatusID, DbGeometry focusAreaLocation, int regionID, decimal? plannedFootprintAcres) : this()
+        public FocusArea(int focusAreaID, string focusAreaName, int focusAreaStatusID, DbGeometry focusAreaLocation, int dNRUplandRegionID, decimal? plannedFootprintAcres) : this()
         {
             this.FocusAreaID = focusAreaID;
             this.FocusAreaName = focusAreaName;
             this.FocusAreaStatusID = focusAreaStatusID;
             this.FocusAreaLocation = focusAreaLocation;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
             this.PlannedFootprintAcres = plannedFootprintAcres;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public FocusArea(string focusAreaName, int focusAreaStatusID, int regionID) : this()
+        public FocusArea(string focusAreaName, int focusAreaStatusID, int dNRUplandRegionID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.FocusAreaID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.FocusAreaName = focusAreaName;
             this.FocusAreaStatusID = focusAreaStatusID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public FocusArea(string focusAreaName, FocusAreaStatus focusAreaStatus, Region region) : this()
+        public FocusArea(string focusAreaName, FocusAreaStatus focusAreaStatus, DNRUplandRegion dNRUplandRegion) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.FocusAreaID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.FocusAreaName = focusAreaName;
             this.FocusAreaStatusID = focusAreaStatus.FocusAreaStatusID;
-            this.RegionID = region.RegionID;
-            this.Region = region;
-            region.FocusAreas.Add(this);
+            this.DNRUplandRegionID = dNRUplandRegion.DNRUplandRegionID;
+            this.DNRUplandRegion = dNRUplandRegion;
+            dNRUplandRegion.FocusAreas.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static FocusArea CreateNewBlank(FocusAreaStatus focusAreaStatus, Region region)
+        public static FocusArea CreateNewBlank(FocusAreaStatus focusAreaStatus, DNRUplandRegion dNRUplandRegion)
         {
-            return new FocusArea(default(string), focusAreaStatus, region);
+            return new FocusArea(default(string), focusAreaStatus, dNRUplandRegion);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace ProjectFirma.Web.Models
         public string FocusAreaName { get; set; }
         public int FocusAreaStatusID { get; set; }
         public DbGeometry FocusAreaLocation { get; set; }
-        public int RegionID { get; set; }
+        public int DNRUplandRegionID { get; set; }
         public decimal? PlannedFootprintAcres { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return FocusAreaID; } set { FocusAreaID = value; } }
@@ -180,7 +180,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectUpdate> ProjectUpdates { get; set; }
         public FocusAreaStatus FocusAreaStatus { get { return FocusAreaStatus.AllLookupDictionary[FocusAreaStatusID]; } }
-        public virtual Region Region { get; set; }
+        public virtual DNRUplandRegion DNRUplandRegion { get; set; }
 
         public static class FieldLengths
         {

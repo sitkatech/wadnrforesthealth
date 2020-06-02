@@ -11,7 +11,7 @@ CREATE TABLE [dbo].[Agreement](
 	[AgreementAmount] [money] NULL,
 	[ExpendedAmount] [money] NULL,
 	[BalanceAmount] [money] NULL,
-	[RegionID] [int] NULL,
+	[DNRUplandRegionID] [int] NULL,
 	[FirstBillDueOn] [datetime] NULL,
 	[Notes] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[AgreementTitle] [varchar](256) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -36,6 +36,11 @@ REFERENCES [dbo].[AgreementType] ([AgreementTypeID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_AgreementType_AgreementTypeID]
 GO
+ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_DNRUplandRegion_DNRUplandRegionID] FOREIGN KEY([DNRUplandRegionID])
+REFERENCES [dbo].[DNRUplandRegion] ([DNRUplandRegionID])
+GO
+ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_DNRUplandRegion_DNRUplandRegionID]
+GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID] FOREIGN KEY([AgreementFileResourceID])
 REFERENCES [dbo].[FileResource] ([FileResourceID])
 GO
@@ -45,11 +50,6 @@ ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Organiza
 REFERENCES [dbo].[Organization] ([OrganizationID])
 GO
 ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_Organization_OrganizationID]
-GO
-ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_Region_RegionID] FOREIGN KEY([RegionID])
-REFERENCES [dbo].[Region] ([RegionID])
-GO
-ALTER TABLE [dbo].[Agreement] CHECK CONSTRAINT [FK_Agreement_Region_RegionID]
 GO
 ALTER TABLE [dbo].[Agreement]  WITH CHECK ADD  CONSTRAINT [FK_Agreement_tmpAgreement2_tmpAgreement2ID] FOREIGN KEY([tmpAgreement2ID])
 REFERENCES [dbo].[tmpAgreement2] ([TmpAgreement2ID])

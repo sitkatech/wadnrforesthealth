@@ -47,7 +47,7 @@ namespace ProjectFirma.Web.Controllers
             var layerGeoJsons = new List<LayerGeoJson>();
             layerGeoJsons = new List<LayerGeoJson>
             {
-                Region.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
+                DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
             };
 
             var mapInitJson = new MapInitJson("regionIndex", 10, layerGeoJsons, BoundingBox.MakeNewDefaultBoundingBox());
@@ -57,11 +57,11 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [RegionViewFeature]
-        public GridJsonNetJObjectResult<Region> IndexGridJsonData()
+        public GridJsonNetJObjectResult<DNRUplandRegion> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
-            var regions = HttpRequestStorage.DatabaseEntities.Regions.OrderBy(x => x.RegionName).ToList();
-            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<Region>(regions, gridSpec);
+            var regions = HttpRequestStorage.DatabaseEntities.Regions.OrderBy(x => x.DNRUplandRegionName).ToList();
+            var gridJsonNetJObjectResult = new GridJsonNetJObjectResult<DNRUplandRegion>(regions, gridSpec);
             return gridJsonNetJObjectResult;
         }
 
@@ -69,11 +69,11 @@ namespace ProjectFirma.Web.Controllers
         public ViewResult Detail(RegionPrimaryKey regionPrimaryKey)
         {
             var region = regionPrimaryKey.EntityObject;
-            var mapDivID = $"region_{region.RegionID}_Map";
+            var mapDivID = $"region_{region.DNRUplandRegionID}_Map";
 
             var associatedProjects = region.GetAssociatedProjects(CurrentPerson);
-            var layers = Region.GetRegionAndAssociatedProjectLayers(region, associatedProjects);
-            var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(region.RegionLocation));
+            var layers = DNRUplandRegion.GetRegionAndAssociatedProjectLayers(region, associatedProjects);
+            var mapInitJson = new MapInitJson(mapDivID, 10, layers, new BoundingBox(region.DNRUplandRegionLocation));
 
             var grantAllocationExpenditures = new List<GrantAllocationExpenditure>();
             region.GrantAllocations.ForEach(x => grantAllocationExpenditures.AddRange(x.GrantAllocationExpenditures));
@@ -104,16 +104,16 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult DeleteRegion(RegionPrimaryKey regionPrimaryKey)
         {
             var region = regionPrimaryKey.EntityObject;
-            var viewModel = new ConfirmDialogFormViewModel(region.RegionID);
+            var viewModel = new ConfirmDialogFormViewModel(region.DNRUplandRegionID);
             return ViewDeleteRegion(region, viewModel);
         }
 
-        private PartialViewResult ViewDeleteRegion(Region region, ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewDeleteRegion(DNRUplandRegion dnrUplandRegion, ConfirmDialogFormViewModel viewModel)
         {
-            var canDelete = !region.HasDependentObjects();
+            var canDelete = !dnrUplandRegion.HasDependentObjects();
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete this Region '{region.RegionName}'?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"<p>Washington State Department of Natural Resources has&nbsp;six upland region offices&nbsp;that help to&nbsp;provide localized services throughout Washington.</p>", SitkaRoute<RegionController>.BuildLinkFromExpression(x => x.Detail(region), "here"));
+                ? $"Are you sure you want to delete this Region '{dnrUplandRegion.DNRUplandRegionName}'?"
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"<p>Washington State Department of Natural Resources has&nbsp;six upland region offices&nbsp;that help to&nbsp;provide localized services throughout Washington.</p>", SitkaRoute<RegionController>.BuildLinkFromExpression(x => x.Detail(dnrUplandRegion), "here"));
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);

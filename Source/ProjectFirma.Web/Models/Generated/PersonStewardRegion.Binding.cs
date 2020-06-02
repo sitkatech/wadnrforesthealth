@@ -30,46 +30,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonStewardRegion(int personStewardRegionID, int personID, int regionID) : this()
+        public PersonStewardRegion(int personStewardRegionID, int personID, int dNRUplandRegionID) : this()
         {
             this.PersonStewardRegionID = personStewardRegionID;
             this.PersonID = personID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public PersonStewardRegion(int personID, int regionID) : this()
+        public PersonStewardRegion(int personID, int dNRUplandRegionID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonStewardRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.PersonID = personID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public PersonStewardRegion(Person person, Region region) : this()
+        public PersonStewardRegion(Person person, DNRUplandRegion dNRUplandRegion) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.PersonStewardRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.PersonID = person.PersonID;
             this.Person = person;
             person.PersonStewardRegions.Add(this);
-            this.RegionID = region.RegionID;
-            this.Region = region;
-            region.PersonStewardRegions.Add(this);
+            this.DNRUplandRegionID = dNRUplandRegion.DNRUplandRegionID;
+            this.DNRUplandRegion = dNRUplandRegion;
+            dNRUplandRegion.PersonStewardRegions.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static PersonStewardRegion CreateNewBlank(Person person, Region region)
+        public static PersonStewardRegion CreateNewBlank(Person person, DNRUplandRegion dNRUplandRegion)
         {
-            return new PersonStewardRegion(person, region);
+            return new PersonStewardRegion(person, dNRUplandRegion);
         }
 
         /// <summary>
@@ -117,12 +117,12 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int PersonStewardRegionID { get; set; }
         public int PersonID { get; set; }
-        public int RegionID { get; set; }
+        public int DNRUplandRegionID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return PersonStewardRegionID; } set { PersonStewardRegionID = value; } }
 
         public virtual Person Person { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual DNRUplandRegion DNRUplandRegion { get; set; }
 
         public static class FieldLengths
         {

@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="Region.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegion.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -31,20 +31,20 @@ using ProjectFirma.Web.Views.PerformanceMeasure;
 
 namespace ProjectFirma.Web.Models
 {
-    public partial class Region : IAuditableEntity
+    public partial class DNRUplandRegion : IAuditableEntity
     {
-        public string DisplayName => RegionName;
+        public string DisplayName => DNRUplandRegionName;
 
         public List<Project> GetAssociatedProjects(Person person)
         {
             return ProjectRegions.Select(ptc => ptc.Project).ToList().GetActiveProjectsAndProposals(person.CanViewProposals);
         }
 
-        public string AuditDescriptionString => RegionName;
+        public string AuditDescriptionString => DNRUplandRegionName;
 
         public Feature MakeFeatureWithRelevantProperties()
         {
-            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(RegionLocation);
+            var feature = DbGeometryToGeoJsonHelper.FromDbGeometry(DNRUplandRegionLocation);
             feature.Properties.Add("Region", this.GetRegionDisplayNameAsUrl().ToString());
             return feature;
         }
@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Models
         public string GetDetailUrl()
         {
             var urlTemplateString = SitkaRoute<RegionController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int));
-            return urlTemplateString.Replace(UrlTemplate.Parameter1Int.ToString(), this.RegionID.ToString());
+            return urlTemplateString.Replace(UrlTemplate.Parameter1Int.ToString(), this.DNRUplandRegionID.ToString());
         }
 
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
@@ -67,13 +67,13 @@ namespace ProjectFirma.Web.Models
                 layerInitialVisibility);
         }
 
-        public static List<LayerGeoJson> GetRegionAndAssociatedProjectLayers(Region region, List<Project> projects)
+        public static List<LayerGeoJson> GetRegionAndAssociatedProjectLayers(DNRUplandRegion dnrUplandRegion, List<Project> projects)
         {
             var projectLayerGeoJson = new LayerGeoJson($"{FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()} - Simple",
                 Project.MappedPointsToGeoJsonFeatureCollection(projects, true, false),
                 "#ffff00", 1, LayerInitialVisibility.Show);
-            var regionLayerGeoJson = new LayerGeoJson(region.DisplayName,
-                new List<Region> { region }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
+            var regionLayerGeoJson = new LayerGeoJson(dnrUplandRegion.DisplayName,
+                new List<DNRUplandRegion> { dnrUplandRegion }.ToGeoJsonFeatureCollection(), "#2dc3a1", 1,
                 LayerInitialVisibility.Show);
 
             var layerGeoJsons = new List<LayerGeoJson>

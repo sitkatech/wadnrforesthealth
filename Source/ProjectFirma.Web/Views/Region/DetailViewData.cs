@@ -35,7 +35,7 @@ namespace ProjectFirma.Web.Views.Region
 {
     public class DetailViewData : FirmaViewData
     {
-        public readonly Models.Region Region;
+        public readonly Models.DNRUplandRegion DnrUplandRegion;
         public readonly bool UserHasRegionManagePermissions;
         public readonly string IndexUrl;
         public readonly BasicProjectInfoGridSpec BasicProjectInfoGridSpec;
@@ -45,12 +45,12 @@ namespace ProjectFirma.Web.Views.Region
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
         public readonly List<PerformanceMeasureChartViewData> PerformanceMeasureChartViewDatas;
 
-        public DetailViewData(Person currentPerson, Models.Region region, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
+        public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData, List<Models.PerformanceMeasure> performanceMeasures) : base(currentPerson)
         {
-            Region = region;
+            DnrUplandRegion = dnrUplandRegion;
             MapInitJson = mapInitJson;
             ViewGoogleChartViewData = viewGoogleChartViewData;
-            PageTitle = region.RegionName;
+            PageTitle = dnrUplandRegion.DNRUplandRegionName;
             EntityName = "Region";
             UserHasRegionManagePermissions = new RegionManageFeature().HasPermissionByPerson(currentPerson);
             IndexUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(x => x.Index());
@@ -63,9 +63,9 @@ namespace ProjectFirma.Web.Views.Region
                 SaveFiltersInCookie = true
             };
           
-            BasicProjectInfoGridDataUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(region));
+            BasicProjectInfoGridDataUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(dnrUplandRegion));
 
-            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>region.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
+            PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>dnrUplandRegion.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
         }
 
         

@@ -11,7 +11,7 @@ CREATE TABLE [dbo].[GrantAllocation](
 	[AllocationAmount] [money] NULL,
 	[FederalFundCodeID] [int] NULL,
 	[OrganizationID] [int] NULL,
-	[RegionID] [int] NULL,
+	[DNRUplandRegionID] [int] NULL,
 	[DivisionID] [int] NULL,
 	[GrantManagerID] [int] NULL,
 	[GrantAllocationFileResourceID] [int] NULL,
@@ -31,6 +31,11 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[Division] ([DivisionID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Division_DivisionID]
+GO
+ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID] FOREIGN KEY([DNRUplandRegionID])
+REFERENCES [dbo].[DNRUplandRegion] ([DNRUplandRegionID])
+GO
+ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID]
 GO
 ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_FederalFundCode_FederalFundCodeID] FOREIGN KEY([FederalFundCodeID])
 REFERENCES [dbo].[FederalFundCode] ([FederalFundCodeID])
@@ -56,8 +61,3 @@ ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocat
 REFERENCES [dbo].[Person] ([PersonID])
 GO
 ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Person_GrantManagerID_PersonID]
-GO
-ALTER TABLE [dbo].[GrantAllocation]  WITH CHECK ADD  CONSTRAINT [FK_GrantAllocation_Region_RegionID] FOREIGN KEY([RegionID])
-REFERENCES [dbo].[Region] ([RegionID])
-GO
-ALTER TABLE [dbo].[GrantAllocation] CHECK CONSTRAINT [FK_GrantAllocation_Region_RegionID]

@@ -49,7 +49,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             ExpendedAmount = agreement.ExpendedAmount;
             BalanceAmount = agreement.BalanceAmount;
             RegionID = agreement.RegionID;
-            RegionName = agreement.Region?.RegionName;
+            RegionName = agreement.DnrUplandRegion?.DNRUplandRegionName;
             FirstBillDueOn = agreement.FirstBillDueOn;
             Notes = agreement.Notes;
             AgreementTitle = agreement.AgreementTitle;

@@ -15,6 +15,7 @@
     <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.Store.CurrentBiennium" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.Store.CustomPage" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.Store.CustomPageImage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DNRUplandRegion" EntityType="ProjectFirma.Web.Models.Store.DNRUplandRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.Store.FederalFundCode" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionData" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.Store.FieldDefinitionDataImage" store:Type="Tables" Schema="dbo" />
@@ -122,7 +123,6 @@
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateConfiguration" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.Store.ProjectUpdateHistory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Region" EntityType="ProjectFirma.Web.Models.Store.Region" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.Store.RelationshipType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.Store.SocrataDataMartRawJsonImport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.Store.StateProvince" store:Type="Tables" Schema="dbo" />
@@ -157,16 +157,16 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
+    <AssociationSet Name="FK_Agreement_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
       <End Role="AgreementFileResource" EntitySet="FileResource" />
       <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_Agreement_Organization_OrganizationID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_Agreement_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.Store.FK_AgreementGrantAllocation_Agreement_AgreementID">
@@ -241,8 +241,8 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
-    <AssociationSet Name="FK_FocusArea_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_FocusArea_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
+    <AssociationSet Name="FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
       <End Role="FocusAreas" EntitySet="FocusArea" />
     </AssociationSet>
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
@@ -265,6 +265,10 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="Organization" EntitySet="Organization" />
       <End Role="Grants" EntitySet="Grant" />
     </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
@@ -284,10 +288,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GrantAllocation_Person_GrantManagerID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Person_GrantManagerID_PersonID">
       <End Role="GrantManager" EntitySet="Person" />
       <End Role="GrantAllocationsWhereYouAreTheGrantManager" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocation_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAward_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.Store.FK_GrantAllocationAward_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
@@ -645,12 +645,12 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="Person" EntitySet="Person" />
       <End Role="PersonStewardOrganizations" EntitySet="PersonStewardOrganization" />
     </AssociationSet>
-    <AssociationSet Name="FK_PersonStewardRegion_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardRegion_Person_PersonID">
-      <End Role="Person" EntitySet="Person" />
+    <AssociationSet Name="FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
       <End Role="PersonStewardRegions" EntitySet="PersonStewardRegion" />
     </AssociationSet>
-    <AssociationSet Name="FK_PersonStewardRegion_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardRegion_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
+    <AssociationSet Name="FK_PersonStewardRegion_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardRegion_Person_PersonID">
+      <End Role="Person" EntitySet="Person" />
       <End Role="PersonStewardRegions" EntitySet="PersonStewardRegion" />
     </AssociationSet>
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_Person_PersonID" Association="ProjectFirma.Web.Models.Store.FK_PersonStewardTaxonomyBranch_Person_PersonID">
@@ -913,20 +913,20 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
     </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="ProjectRegions" EntitySet="ProjectRegion" />
+    </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegion_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
       <End Role="ProjectRegions" EntitySet="ProjectRegion" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectRegion_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegion_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
-      <End Role="ProjectRegions" EntitySet="ProjectRegion" />
+    <AssociationSet Name="FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectRegionUpdate_Region_RegionID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegionUpdate_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
       <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectTag_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectTag_Project_ProjectID">
@@ -1018,7 +1018,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="AgreementAmount" Type="money" />
     <Property Name="ExpendedAmount" Type="money" />
     <Property Name="BalanceAmount" Type="money" />
-    <Property Name="RegionID" Type="int" />
+    <Property Name="DNRUplandRegionID" Type="int" />
     <Property Name="FirstBillDueOn" Type="datetime" />
     <Property Name="Notes" Type="varchar(max)" />
     <Property Name="AgreementTitle" Type="varchar" Nullable="false" MaxLength="256" />
@@ -1151,6 +1151,15 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="CustomPageID" Type="int" Nullable="false" />
     <Property Name="FileResourceID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="DNRUplandRegion">
+    <Key>
+      <PropertyRef Name="DNRUplandRegionID" />
+    </Key>
+    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
+    <Property Name="DNRUplandRegionAbbrev" Type="nvarchar" MaxLength="10" />
+    <Property Name="DNRUplandRegionName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="DNRUplandRegionLocation" Type="geometry" />
+  </EntityType>
   <EntityType Name="FederalFundCode">
     <Key>
       <PropertyRef Name="FederalFundCodeID" />
@@ -1230,7 +1239,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="FocusAreaName" Type="varchar" Nullable="false" MaxLength="200" />
     <Property Name="FocusAreaStatusID" Type="int" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="geometry" />
-    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
     <Property Name="PlannedFootprintAcres" Type="decimal" />
   </EntityType>
   <EntityType Name="FocusAreaLocationStaging">
@@ -1273,7 +1282,7 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="AllocationAmount" Type="money" />
     <Property Name="FederalFundCodeID" Type="int" />
     <Property Name="OrganizationID" Type="int" />
-    <Property Name="RegionID" Type="int" />
+    <Property Name="DNRUplandRegionID" Type="int" />
     <Property Name="DivisionID" Type="int" />
     <Property Name="GrantManagerID" Type="int" />
     <Property Name="GrantAllocationFileResourceID" Type="int" />
@@ -1891,7 +1900,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="PersonStewardRegionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="int" Nullable="false" />
-    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PersonStewardTaxonomyBranch">
     <Key>
@@ -2285,7 +2294,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectRegionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectRegionUpdate">
     <Key>
@@ -2293,7 +2302,7 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     </Key>
     <Property Name="ProjectRegionUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectTag">
     <Key>
@@ -2409,15 +2418,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="ProjectUpdateStateID" Type="int" Nullable="false" />
     <Property Name="UpdatePersonID" Type="int" Nullable="false" />
     <Property Name="TransitionDate" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Region">
-    <Key>
-      <PropertyRef Name="RegionID" />
-    </Key>
-    <Property Name="RegionID" Type="int" Nullable="false" />
-    <Property Name="RegionAbbrev" Type="nvarchar" MaxLength="10" />
-    <Property Name="RegionName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="RegionLocation" Type="geometry" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -2585,6 +2585,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Email" Type="varchar" MaxLength="200" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+-->
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
@@ -2592,9 +2595,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationD
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationSimple' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
--->
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImportIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -2643,6 +2643,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Agreement_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
     <End Role="AgreementFileResource" Type="ProjectFirma.Web.Models.Store.FileResource" Multiplicity="0..1" />
     <End Role="AgreementsWhereYouAreTheAgreementFileResource" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
@@ -2664,18 +2676,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="OrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agreement_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Store.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2895,15 +2895,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_FocusArea_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="1" />
+  <Association Name="FK_FocusArea_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="1" />
     <End Role="FocusAreas" Type="ProjectFirma.Web.Models.Store.FocusArea" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
       </Principal>
       <Dependent Role="FocusAreas">
-        <PropertyRef Name="RegionID" />
+        <PropertyRef Name="DNRUplandRegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2967,6 +2967,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
     <End Role="FederalFundCode" Type="ProjectFirma.Web.Models.Store.FederalFundCode" Multiplicity="0..1" />
     <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
@@ -3024,18 +3036,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GrantAllocationsWhereYouAreTheGrantManager">
         <PropertyRef Name="GrantManagerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.Store.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4107,6 +4107,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="1" />
+    <End Role="PersonStewardRegions" Type="ProjectFirma.Web.Models.Store.PersonStewardRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="PersonStewardRegions">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PersonStewardRegion_Person_PersonID">
     <End Role="Person" Type="ProjectFirma.Web.Models.Store.Person" Multiplicity="1" />
     <End Role="PersonStewardRegions" Type="ProjectFirma.Web.Models.Store.PersonStewardRegion" Multiplicity="*" />
@@ -4116,18 +4128,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="PersonStewardRegions">
         <PropertyRef Name="PersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PersonStewardRegion_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="1" />
-    <End Role="PersonStewardRegions" Type="ProjectFirma.Web.Models.Store.PersonStewardRegion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="PersonStewardRegions">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4911,6 +4911,18 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="1" />
+    <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.Store.ProjectRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="ProjectRegions">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProjectRegion_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
     <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.Store.ProjectRegion" Multiplicity="*" />
@@ -4923,15 +4935,15 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectRegion_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="1" />
-    <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.Store.ProjectRegion" Multiplicity="*" />
+  <Association Name="FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.Store.DNRUplandRegion" Multiplicity="1" />
+    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
       </Principal>
-      <Dependent Role="ProjectRegions">
-        <PropertyRef Name="RegionID" />
+      <Dependent Role="ProjectRegionUpdates">
+        <PropertyRef Name="DNRUplandRegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4944,18 +4956,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="ProjectRegionUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectRegionUpdate_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Store.Region" Multiplicity="1" />
-    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="ProjectRegionUpdates">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

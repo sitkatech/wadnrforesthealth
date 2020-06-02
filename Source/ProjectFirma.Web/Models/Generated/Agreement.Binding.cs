@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Agreement(int agreementID, int agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? regionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? agreementStatusID, int? agreementFileResourceID, int? tmpAgreement2ID) : this()
+        public Agreement(int agreementID, int agreementTypeID, string agreementNumber, DateTime? startDate, DateTime? endDate, decimal? agreementAmount, decimal? expendedAmount, decimal? balanceAmount, int? dNRUplandRegionID, DateTime? firstBillDueOn, string notes, string agreementTitle, int organizationID, int? agreementStatusID, int? agreementFileResourceID, int? tmpAgreement2ID) : this()
         {
             this.AgreementID = agreementID;
             this.AgreementTypeID = agreementTypeID;
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models
             this.AgreementAmount = agreementAmount;
             this.ExpendedAmount = expendedAmount;
             this.BalanceAmount = balanceAmount;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
             this.FirstBillDueOn = firstBillDueOn;
             this.Notes = notes;
             this.AgreementTitle = agreementTitle;
@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Models
         public decimal? AgreementAmount { get; set; }
         public decimal? ExpendedAmount { get; set; }
         public decimal? BalanceAmount { get; set; }
-        public int? RegionID { get; set; }
+        public int? DNRUplandRegionID { get; set; }
         public DateTime? FirstBillDueOn { get; set; }
         public string Notes { get; set; }
         public string AgreementTitle { get; set; }
@@ -178,7 +178,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<AgreementGrantAllocation> AgreementGrantAllocations { get; set; }
         public virtual ICollection<AgreementPerson> AgreementPeople { get; set; }
         public virtual AgreementType AgreementType { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual DNRUplandRegion DNRUplandRegion { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual AgreementStatus AgreementStatus { get; set; }
         public virtual FileResource AgreementFileResource { get; set; }

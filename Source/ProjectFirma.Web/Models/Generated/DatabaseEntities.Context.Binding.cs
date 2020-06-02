@@ -42,6 +42,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<CurrentBiennium> CurrentBiennia { get; set; }
         public virtual DbSet<CustomPageImage> CustomPageImages { get; set; }
         public virtual DbSet<CustomPage> CustomPages { get; set; }
+        public virtual DbSet<DNRUplandRegion> DNRUplandRegions { get; set; }
         public virtual DbSet<FederalFundCode> FederalFundCodes { get; set; }
         public virtual DbSet<FieldDefinitionDataImage> FieldDefinitionDataImages { get; set; }
         public virtual DbSet<FieldDefinitionData> FieldDefinitionDatas { get; set; }
@@ -149,7 +150,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectUpdateConfiguration> ProjectUpdateConfigurations { get; set; }
         public virtual DbSet<ProjectUpdateHistory> ProjectUpdateHistories { get; set; }
         public virtual DbSet<ProjectUpdate> ProjectUpdates { get; set; }
-        public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<RelationshipType> RelationshipTypes { get; set; }
         public virtual DbSet<SocrataDataMartRawJsonImport> SocrataDataMartRawJsonImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
@@ -244,6 +244,9 @@ namespace ProjectFirma.Web.Models
                     var division = Division.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(division, "Division", primaryKey);
                     return division;
+
+                case "DNRUplandRegion":
+                    return DNRUplandRegions.GetDNRUplandRegion(primaryKey);
 
                 case "FederalFundCode":
                     return FederalFundCodes.GetFederalFundCode(primaryKey);
@@ -735,9 +738,6 @@ namespace ProjectFirma.Web.Models
                     var projectWorkflowSectionGrouping = ProjectWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(projectWorkflowSectionGrouping, "ProjectWorkflowSectionGrouping", primaryKey);
                     return projectWorkflowSectionGrouping;
-
-                case "Region":
-                    return Regions.GetRegion(primaryKey);
 
                 case "RelationshipType":
                     return RelationshipTypes.GetRelationshipType(primaryKey);

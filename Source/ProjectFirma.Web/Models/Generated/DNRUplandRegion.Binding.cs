@@ -1,7 +1,7 @@
 //  IMPORTANT:
 //  This file is generated. Your changes will be lost.
 //  Use the corresponding partial class for customizations.
-//  Source Table: [dbo].[Region]
+//  Source Table: [dbo].[DNRUplandRegion]
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +15,14 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[Region] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[Region]")]
-    public partial class Region : IHavePrimaryKey, ICanDeleteFull
+    // Table [dbo].[DNRUplandRegion] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[DNRUplandRegion]")]
+    public partial class DNRUplandRegion : IHavePrimaryKey, ICanDeleteFull
     {
         /// <summary>
         /// Default Constructor; only used by EF
         /// </summary>
-        protected Region()
+        protected DNRUplandRegion()
         {
             this.Agreements = new HashSet<Agreement>();
             this.FocusAreas = new HashSet<FocusArea>();
@@ -35,32 +35,32 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Region(int regionID, string regionAbbrev, string regionName, DbGeometry regionLocation) : this()
+        public DNRUplandRegion(int dNRUplandRegionID, string dNRUplandRegionAbbrev, string dNRUplandRegionName, DbGeometry dNRUplandRegionLocation) : this()
         {
-            this.RegionID = regionID;
-            this.RegionAbbrev = regionAbbrev;
-            this.RegionName = regionName;
-            this.RegionLocation = regionLocation;
+            this.DNRUplandRegionID = dNRUplandRegionID;
+            this.DNRUplandRegionAbbrev = dNRUplandRegionAbbrev;
+            this.DNRUplandRegionName = dNRUplandRegionName;
+            this.DNRUplandRegionLocation = dNRUplandRegionLocation;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Region(string regionName) : this()
+        public DNRUplandRegion(string dNRUplandRegionName) : this()
         {
             // Mark this as a new object by setting primary key with special value
-            this.RegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.DNRUplandRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
-            this.RegionName = regionName;
+            this.DNRUplandRegionName = dNRUplandRegionName;
         }
 
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static Region CreateNewBlank()
+        public static DNRUplandRegion CreateNewBlank()
         {
-            return new Region(default(string));
+            return new DNRUplandRegion(default(string));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(Region).Name, typeof(Agreement).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(DNRUplandRegion).Name, typeof(Agreement).Name, typeof(FocusArea).Name, typeof(GrantAllocation).Name, typeof(PersonStewardRegion).Name, typeof(ProjectRegion).Name, typeof(ProjectRegionUpdate).Name};
 
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         public void Delete(DatabaseEntities dbContext)
         {
-            dbContext.Regions.Remove(this);
+            dbContext.DNRUplandRegions.Remove(this);
         }
         
         /// <summary>
@@ -171,12 +171,12 @@ namespace ProjectFirma.Web.Models
         }
 
         [Key]
-        public int RegionID { get; set; }
-        public string RegionAbbrev { get; set; }
-        public string RegionName { get; set; }
-        public DbGeometry RegionLocation { get; set; }
+        public int DNRUplandRegionID { get; set; }
+        public string DNRUplandRegionAbbrev { get; set; }
+        public string DNRUplandRegionName { get; set; }
+        public DbGeometry DNRUplandRegionLocation { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return RegionID; } set { RegionID = value; } }
+        public int PrimaryKey { get { return DNRUplandRegionID; } set { DNRUplandRegionID = value; } }
 
         public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<FocusArea> FocusAreas { get; set; }
@@ -187,8 +187,8 @@ namespace ProjectFirma.Web.Models
 
         public static class FieldLengths
         {
-            public const int RegionAbbrev = 10;
-            public const int RegionName = 100;
+            public const int DNRUplandRegionAbbrev = 10;
+            public const int DNRUplandRegionName = 100;
         }
     }
 }

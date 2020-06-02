@@ -55,17 +55,17 @@ namespace ProjectFirma.Web.UnitTestCommon
 
                 var focusArea = FocusArea.CreateNewBlank(FocusAreaStatus.InProgress, testRegion);
                 focusArea.FocusAreaName = MakeTestName("Test Focus Area");
-                focusArea.Region.RegionName = MakeTestName("Test Region Name", 100);
+                focusArea.DnrUplandRegion.DNRUplandRegionName = MakeTestName("Test Region Name", 100);
                 return focusArea;
             }
         }
 
         public static class TestRegion
         {
-            public static Region Create()
+            public static DNRUplandRegion Create()
             {
-                var testRegion = Region.CreateNewBlank();
-                testRegion.RegionName = MakeTestName("Test Region", 100);
+                var testRegion = DNRUplandRegion.CreateNewBlank();
+                testRegion.DNRUplandRegionName = MakeTestName("Test Region", 100);
                 return testRegion;
             }
         }

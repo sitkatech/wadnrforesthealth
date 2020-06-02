@@ -26,11 +26,11 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Region
 {
-    public class IndexGridSpec : GridSpec<Models.Region>
+    public class IndexGridSpec : GridSpec<Models.DNRUplandRegion>
     {
         public IndexGridSpec(Person person)
         {
-            Add("Region", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.RegionName), 300, DhtmlxGridColumnFilterType.Html);
+            Add("Region", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DNRUplandRegionName), 300, DhtmlxGridColumnFilterType.Html);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
         }
     }

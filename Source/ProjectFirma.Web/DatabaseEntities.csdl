@@ -15,6 +15,7 @@
     <EntitySet Name="CurrentBiennium" EntityType="ProjectFirma.Web.Models.CurrentBiennium" />
     <EntitySet Name="CustomPage" EntityType="ProjectFirma.Web.Models.CustomPage" />
     <EntitySet Name="CustomPageImage" EntityType="ProjectFirma.Web.Models.CustomPageImage" />
+    <EntitySet Name="DNRUplandRegion" EntityType="ProjectFirma.Web.Models.DNRUplandRegion" />
     <EntitySet Name="FederalFundCode" EntityType="ProjectFirma.Web.Models.FederalFundCode" />
     <EntitySet Name="FieldDefinitionData" EntityType="ProjectFirma.Web.Models.FieldDefinitionData" />
     <EntitySet Name="FieldDefinitionDataImage" EntityType="ProjectFirma.Web.Models.FieldDefinitionDataImage" />
@@ -122,7 +123,6 @@
     <EntitySet Name="ProjectUpdateBatch" EntityType="ProjectFirma.Web.Models.ProjectUpdateBatch" />
     <EntitySet Name="ProjectUpdateConfiguration" EntityType="ProjectFirma.Web.Models.ProjectUpdateConfiguration" />
     <EntitySet Name="ProjectUpdateHistory" EntityType="ProjectFirma.Web.Models.ProjectUpdateHistory" />
-    <EntitySet Name="Region" EntityType="ProjectFirma.Web.Models.Region" />
     <EntitySet Name="RelationshipType" EntityType="ProjectFirma.Web.Models.RelationshipType" />
     <EntitySet Name="SocrataDataMartRawJsonImport" EntityType="ProjectFirma.Web.Models.SocrataDataMartRawJsonImport" />
     <EntitySet Name="StateProvince" EntityType="ProjectFirma.Web.Models.StateProvince" />
@@ -144,16 +144,16 @@
       <End Role="AgreementType" EntitySet="AgreementType" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
+    <AssociationSet Name="FK_Agreement_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_Agreement_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="Agreements" EntitySet="Agreement" />
+    </AssociationSet>
     <AssociationSet Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
       <End Role="AgreementFileResource" EntitySet="FileResource" />
       <End Role="AgreementsWhereYouAreTheAgreementFileResource" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_Agreement_Organization_OrganizationID" Association="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID">
       <End Role="Organization" EntitySet="Organization" />
-      <End Role="Agreements" EntitySet="Agreement" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Agreement_Region_RegionID" Association="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
       <End Role="Agreements" EntitySet="Agreement" />
     </AssociationSet>
     <AssociationSet Name="FK_AgreementGrantAllocation_Agreement_AgreementID" Association="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID">
@@ -207,6 +207,26 @@
     <AssociationSet Name="FK_CustomPageImage_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID">
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="CustomPageImages" EntitySet="CustomPageImage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="FocusAreas" EntitySet="FocusArea" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="PersonStewardRegions" EntitySet="PersonStewardRegion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="ProjectRegions" EntitySet="ProjectRegion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID">
+      <End Role="DNRUplandRegion" EntitySet="DNRUplandRegion" />
+      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocation_FederalFundCode_FederalFundCodeID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID">
       <End Role="FederalFundCode" EntitySet="FederalFundCode" />
@@ -284,10 +304,6 @@
       <End Role="FirmaPage" EntitySet="FirmaPage" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
-    <AssociationSet Name="FK_FocusArea_Region_RegionID" Association="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
-      <End Role="FocusAreas" EntitySet="FocusArea" />
-    </AssociationSet>
     <AssociationSet Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="FocusAreaLocationStagings" EntitySet="FocusAreaLocationStaging" />
@@ -339,10 +355,6 @@
     <AssociationSet Name="FK_GrantAllocation_Person_GrantManagerID_PersonID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID">
       <End Role="GrantManager" EntitySet="Person" />
       <End Role="GrantAllocationsWhereYouAreTheGrantManager" EntitySet="GrantAllocation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_Region_RegionID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
-      <End Role="GrantAllocations" EntitySet="GrantAllocation" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -776,10 +788,6 @@
       <End Role="PrimaryContactPerson" EntitySet="Person" />
       <End Role="SystemAttributesWhereYouAreThePrimaryContactPerson" EntitySet="SystemAttribute" />
     </AssociationSet>
-    <AssociationSet Name="FK_PersonStewardRegion_Region_RegionID" Association="ProjectFirma.Web.Models.FK_PersonStewardRegion_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
-      <End Role="PersonStewardRegions" EntitySet="PersonStewardRegion" />
-    </AssociationSet>
     <AssociationSet Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID" Association="ProjectFirma.Web.Models.FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
       <End Role="TaxonomyBranch" EntitySet="TaxonomyBranch" />
       <End Role="PersonStewardTaxonomyBranches" EntitySet="PersonStewardTaxonomyBranch" />
@@ -952,16 +960,8 @@
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectRegion_Region_RegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
-      <End Role="ProjectRegions" EntitySet="ProjectRegion" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProjectRegionUpdate_Region_RegionID" Association="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_Region_RegionID">
-      <End Role="Region" EntitySet="Region" />
       <End Role="ProjectRegionUpdates" EntitySet="ProjectRegionUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectTag_Tag_TagID" Association="ProjectFirma.Web.Models.FK_ProjectTag_Tag_TagID">
@@ -1012,7 +1012,7 @@
     <Property Name="AgreementAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ExpendedAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="BalanceAmount" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="RegionID" Type="Int32" />
+    <Property Name="DNRUplandRegionID" Type="Int32" />
     <Property Name="FirstBillDueOn" Type="DateTime" />
     <Property Name="Notes" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="AgreementTitle" Type="String" Nullable="false" MaxLength="256" Unicode="false" FixedLength="false" />
@@ -1022,9 +1022,9 @@
     <Property Name="tmpAgreement2ID" Type="Int32" />
     <NavigationProperty Name="AgreementStatus" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID" FromRole="Agreements" ToRole="AgreementStatus" />
     <NavigationProperty Name="AgreementType" Relationship="ProjectFirma.Web.Models.FK_Agreement_AgreementType_AgreementTypeID" FromRole="Agreements" ToRole="AgreementType" />
+    <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_Agreement_DNRUplandRegion_DNRUplandRegionID" FromRole="Agreements" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="AgreementFileResource" Relationship="ProjectFirma.Web.Models.FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID" FromRole="AgreementsWhereYouAreTheAgreementFileResource" ToRole="AgreementFileResource" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Agreement_Organization_OrganizationID" FromRole="Agreements" ToRole="Organization" />
-    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Agreements" ToRole="Region" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Agreement_AgreementID" FromRole="Agreement" ToRole="AgreementPeople" />
   </EntityType>
@@ -1170,6 +1170,21 @@
     <NavigationProperty Name="CustomPage" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_CustomPage_CustomPageID" FromRole="CustomPageImages" ToRole="CustomPage" />
     <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_CustomPageImage_FileResource_FileResourceID" FromRole="CustomPageImages" ToRole="FileResource" />
   </EntityType>
+  <EntityType Name="DNRUplandRegion">
+    <Key>
+      <PropertyRef Name="DNRUplandRegionID" />
+    </Key>
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionAbbrev" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="DNRUplandRegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DNRUplandRegionLocation" Type="Geometry" />
+    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="Agreements" />
+    <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="FocusAreas" />
+    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="GrantAllocations" />
+    <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="PersonStewardRegions" />
+    <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="ProjectRegions" />
+    <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID" FromRole="DNRUplandRegion" ToRole="ProjectRegionUpdates" />
+  </EntityType>
   <EntityType Name="FederalFundCode">
     <Key>
       <PropertyRef Name="FederalFundCodeID" />
@@ -1276,9 +1291,9 @@
     <Property Name="FocusAreaName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
     <Property Name="FocusAreaStatusID" Type="Int32" Nullable="false" />
     <Property Name="FocusAreaLocation" Type="Geometry" />
-    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
     <Property Name="PlannedFootprintAcres" Type="Decimal" Precision="18" Scale="0" />
-    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="FocusAreas" ToRole="Region" />
+    <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_FocusArea_DNRUplandRegion_DNRUplandRegionID" FromRole="FocusAreas" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="FocusAreaLocationStagings" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="FocusAreaLocationStagings" />
     <NavigationProperty Name="GrantAllocationAwards" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="GrantAllocationAwards" />
     <NavigationProperty Name="Projects" Relationship="ProjectFirma.Web.Models.FK_Project_FocusArea_FocusAreaID" FromRole="FocusArea" ToRole="Projects" />
@@ -1333,17 +1348,17 @@
     <Property Name="AllocationAmount" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="FederalFundCodeID" Type="Int32" />
     <Property Name="OrganizationID" Type="Int32" />
-    <Property Name="RegionID" Type="Int32" />
+    <Property Name="DNRUplandRegionID" Type="Int32" />
     <Property Name="DivisionID" Type="Int32" />
     <Property Name="GrantManagerID" Type="Int32" />
     <Property Name="GrantAllocationFileResourceID" Type="Int32" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
+    <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="GrantAllocations" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
     <NavigationProperty Name="GrantAllocationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" FromRole="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" ToRole="GrantAllocationFileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
-    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID" FromRole="GrantAllocations" ToRole="Region" />
     <NavigationProperty Name="GrantAllocationAwards" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAward_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationAwards" />
     <NavigationProperty Name="GrantAllocationBudgetLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationBudgetLineItems" />
     <NavigationProperty Name="GrantAllocationChangeLogs" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationChangeLogs" />
@@ -2139,9 +2154,9 @@
     </Key>
     <Property Name="PersonStewardRegionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PersonID" Type="Int32" Nullable="false" />
-    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="PersonStewardRegions" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Person_PersonID" FromRole="PersonStewardRegions" ToRole="Person" />
-    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Region_RegionID" FromRole="PersonStewardRegions" ToRole="Region" />
   </EntityType>
   <EntityType Name="PersonStewardTaxonomyBranch">
     <Key>
@@ -2633,9 +2648,9 @@
     </Key>
     <Property Name="ProjectRegionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="Int32" Nullable="false" />
-    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID" FromRole="ProjectRegions" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="Project" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Project_ProjectID" FromRole="ProjectRegions" ToRole="Project" />
-    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID" FromRole="ProjectRegions" ToRole="Region" />
   </EntityType>
   <EntityType Name="ProjectRegionUpdate">
     <Key>
@@ -2643,9 +2658,9 @@
     </Key>
     <Property Name="ProjectRegionUpdateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="Int32" Nullable="false" />
-    <Property Name="RegionID" Type="Int32" Nullable="false" />
+    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID" FromRole="ProjectRegionUpdates" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectRegionUpdates" ToRole="ProjectUpdateBatch" />
-    <NavigationProperty Name="Region" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_Region_RegionID" FromRole="ProjectRegionUpdates" ToRole="Region" />
   </EntityType>
   <EntityType Name="ProjectTag">
     <Key>
@@ -2795,21 +2810,6 @@
     <Property Name="TransitionDate" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="UpdatePerson" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_Person_UpdatePersonID_PersonID" FromRole="ProjectUpdateHistoriesWhereYouAreTheUpdatePerson" ToRole="UpdatePerson" />
     <NavigationProperty Name="ProjectUpdateBatch" Relationship="ProjectFirma.Web.Models.FK_ProjectUpdateHistory_ProjectUpdateBatch_ProjectUpdateBatchID" FromRole="ProjectUpdateHistories" ToRole="ProjectUpdateBatch" />
-  </EntityType>
-  <EntityType Name="Region">
-    <Key>
-      <PropertyRef Name="RegionID" />
-    </Key>
-    <Property Name="RegionID" Type="Int32" Nullable="false" />
-    <Property Name="RegionAbbrev" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
-    <Property Name="RegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="RegionLocation" Type="Geometry" />
-    <NavigationProperty Name="Agreements" Relationship="ProjectFirma.Web.Models.FK_Agreement_Region_RegionID" FromRole="Region" ToRole="Agreements" />
-    <NavigationProperty Name="FocusAreas" Relationship="ProjectFirma.Web.Models.FK_FocusArea_Region_RegionID" FromRole="Region" ToRole="FocusAreas" />
-    <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Region_RegionID" FromRole="Region" ToRole="GrantAllocations" />
-    <NavigationProperty Name="PersonStewardRegions" Relationship="ProjectFirma.Web.Models.FK_PersonStewardRegion_Region_RegionID" FromRole="Region" ToRole="PersonStewardRegions" />
-    <NavigationProperty Name="ProjectRegions" Relationship="ProjectFirma.Web.Models.FK_ProjectRegion_Region_RegionID" FromRole="Region" ToRole="ProjectRegions" />
-    <NavigationProperty Name="ProjectRegionUpdates" Relationship="ProjectFirma.Web.Models.FK_ProjectRegionUpdate_Region_RegionID" FromRole="Region" ToRole="ProjectRegionUpdates" />
   </EntityType>
   <EntityType Name="RelationshipType">
     <Key>
@@ -3035,6 +3035,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Agreement_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="0..1" />
+    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="Agreements">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Agreement_FileResource_AgreementFileResourceID_FileResourceID">
     <End Role="AgreementFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
     <End Role="AgreementsWhereYouAreTheAgreementFileResource" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
@@ -3056,18 +3068,6 @@
       </Principal>
       <Dependent Role="Agreements">
         <PropertyRef Name="OrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Agreement_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="0..1" />
-    <End Role="Agreements" Type="ProjectFirma.Web.Models.Agreement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="Agreements">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3224,6 +3224,66 @@
       </Principal>
       <Dependent Role="CustomPageImages">
         <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FocusArea_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="1" />
+    <End Role="FocusAreas" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="FocusAreas">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="0..1" />
+    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="GrantAllocations">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonStewardRegion_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="1" />
+    <End Role="PersonStewardRegions" Type="ProjectFirma.Web.Models.PersonStewardRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="PersonStewardRegions">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegion_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="1" />
+    <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.ProjectRegion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="ProjectRegions">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRegionUpdate_DNRUplandRegion_DNRUplandRegionID">
+    <End Role="DNRUplandRegion" Type="ProjectFirma.Web.Models.DNRUplandRegion" Multiplicity="1" />
+    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.ProjectRegionUpdate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DNRUplandRegion">
+        <PropertyRef Name="DNRUplandRegionID" />
+      </Principal>
+      <Dependent Role="ProjectRegionUpdates">
+        <PropertyRef Name="DNRUplandRegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3455,18 +3515,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_FocusArea_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
-    <End Role="FocusAreas" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="FocusAreas">
-        <PropertyRef Name="RegionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_FocusAreaLocationStaging_FocusArea_FocusAreaID">
     <End Role="FocusArea" Type="ProjectFirma.Web.Models.FocusArea" Multiplicity="1" />
     <End Role="FocusAreaLocationStagings" Type="ProjectFirma.Web.Models.FocusAreaLocationStaging" Multiplicity="*" />
@@ -3620,18 +3668,6 @@
       </Principal>
       <Dependent Role="GrantAllocationsWhereYouAreTheGrantManager">
         <PropertyRef Name="GrantManagerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="0..1" />
-    <End Role="GrantAllocations" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="GrantAllocations">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4931,18 +4967,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PersonStewardRegion_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
-    <End Role="PersonStewardRegions" Type="ProjectFirma.Web.Models.PersonStewardRegion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="PersonStewardRegions">
-        <PropertyRef Name="RegionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PersonStewardTaxonomyBranch_TaxonomyBranch_TaxonomyBranchID">
     <End Role="TaxonomyBranch" Type="ProjectFirma.Web.Models.TaxonomyBranch" Multiplicity="1" />
     <End Role="PersonStewardTaxonomyBranches" Type="ProjectFirma.Web.Models.PersonStewardTaxonomyBranch" Multiplicity="*" />
@@ -5459,18 +5483,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectRegion_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
-    <End Role="ProjectRegions" Type="ProjectFirma.Web.Models.ProjectRegion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="ProjectRegions">
-        <PropertyRef Name="RegionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProjectRegionUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.ProjectUpdateBatch" Multiplicity="1" />
     <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.ProjectRegionUpdate" Multiplicity="*" />
@@ -5480,18 +5492,6 @@
       </Principal>
       <Dependent Role="ProjectRegionUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ProjectRegionUpdate_Region_RegionID">
-    <End Role="Region" Type="ProjectFirma.Web.Models.Region" Multiplicity="1" />
-    <End Role="ProjectRegionUpdates" Type="ProjectFirma.Web.Models.ProjectRegionUpdate" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="ProjectRegionUpdates">
-        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

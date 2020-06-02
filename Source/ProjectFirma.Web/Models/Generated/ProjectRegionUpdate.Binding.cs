@@ -30,46 +30,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectRegionUpdate(int projectRegionUpdateID, int projectUpdateBatchID, int regionID) : this()
+        public ProjectRegionUpdate(int projectRegionUpdateID, int projectUpdateBatchID, int dNRUplandRegionID) : this()
         {
             this.ProjectRegionUpdateID = projectRegionUpdateID;
             this.ProjectUpdateBatchID = projectUpdateBatchID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectRegionUpdate(int projectUpdateBatchID, int regionID) : this()
+        public ProjectRegionUpdate(int projectUpdateBatchID, int dNRUplandRegionID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectRegionUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectUpdateBatchID = projectUpdateBatchID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectRegionUpdate(ProjectUpdateBatch projectUpdateBatch, Region region) : this()
+        public ProjectRegionUpdate(ProjectUpdateBatch projectUpdateBatch, DNRUplandRegion dNRUplandRegion) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectRegionUpdateID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectUpdateBatchID = projectUpdateBatch.ProjectUpdateBatchID;
             this.ProjectUpdateBatch = projectUpdateBatch;
             projectUpdateBatch.ProjectRegionUpdates.Add(this);
-            this.RegionID = region.RegionID;
-            this.Region = region;
-            region.ProjectRegionUpdates.Add(this);
+            this.DNRUplandRegionID = dNRUplandRegion.DNRUplandRegionID;
+            this.DNRUplandRegion = dNRUplandRegion;
+            dNRUplandRegion.ProjectRegionUpdates.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectRegionUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, Region region)
+        public static ProjectRegionUpdate CreateNewBlank(ProjectUpdateBatch projectUpdateBatch, DNRUplandRegion dNRUplandRegion)
         {
-            return new ProjectRegionUpdate(projectUpdateBatch, region);
+            return new ProjectRegionUpdate(projectUpdateBatch, dNRUplandRegion);
         }
 
         /// <summary>
@@ -117,12 +117,12 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectRegionUpdateID { get; set; }
         public int ProjectUpdateBatchID { get; set; }
-        public int RegionID { get; set; }
+        public int DNRUplandRegionID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectRegionUpdateID; } set { ProjectRegionUpdateID = value; } }
 
         public virtual ProjectUpdateBatch ProjectUpdateBatch { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual DNRUplandRegion DNRUplandRegion { get; set; }
 
         public static class FieldLengths
         {

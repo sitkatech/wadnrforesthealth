@@ -301,7 +301,7 @@ namespace ProjectFirma.Web.Controllers
                 .ToList();
 
             layerGeoJsons.Add(PriorityArea.GetPriorityAreaWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
-            layerGeoJsons.Add(Region.GetRegionWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
+            layerGeoJsons.Add(DNRUplandRegion.GetRegionWmsLayerGeoJson("#90C3D4", 0.1m, LayerInitialVisibility.Hide));
             var boundingBox = BoundingBox.MakeBoundingBoxFromProject(project);
             var mapInitJson = new MapInitJson("EditProjectBoundingBoxMap", 10, layerGeoJsons, boundingBox)
             {

@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Controllers
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
             var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
             var regionIDs = viewModel.RegionIDs ?? new List<int>();
-            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.RegionID)).ToList();
+            var regionsInViewModel = HttpRequestStorage.DatabaseEntities.Regions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project, null));
             var editProjectRegionsFormID = GetEditProjectRegionsFormID();
 
@@ -86,8 +86,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var searchString = term.Trim();
             return Json(HttpRequestStorage.DatabaseEntities.Regions
-                .Where(x => x.RegionName.Contains(searchString)).OrderBy(x => x.RegionName).Take(20).ToList()
-                .Select(x => new {x.RegionName, x.RegionID}).ToList(), JsonRequestBehavior.AllowGet);
+                .Where(x => x.DNRUplandRegionName.Contains(searchString)).OrderBy(x => x.DNRUplandRegionName).Take(20).ToList()
+                .Select(x => new {RegionName = x.DNRUplandRegionName, RegionID = x.DNRUplandRegionID}).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         public static string GetEditProjectRegionsFormID()

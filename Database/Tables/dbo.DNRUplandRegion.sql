@@ -2,17 +2,17 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Region](
-	[RegionID] [int] NOT NULL,
-	[RegionAbbrev] [nvarchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[RegionName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[RegionLocation] [geometry] NULL,
+CREATE TABLE [dbo].[DNRUplandRegion](
+	[DNRUplandRegionID] [int] NOT NULL,
+	[DNRUplandRegionAbbrev] [nvarchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[DNRUplandRegionName] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[DNRUplandRegionLocation] [geometry] NULL,
  CONSTRAINT [PK_Region_RegionID] PRIMARY KEY CLUSTERED 
 (
-	[RegionID] ASC
+	[DNRUplandRegionID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [AK_Region_RegionName] UNIQUE NONCLUSTERED 
 (
-	[RegionName] ASC
+	[DNRUplandRegionName] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

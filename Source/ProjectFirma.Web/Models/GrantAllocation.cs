@@ -25,8 +25,8 @@ namespace ProjectFirma.Web.Models
         public HtmlString GrantNumberAndGrantAllocationDisplayNameAsUrl => UrlTemplate.MakeHrefString(SummaryUrl, GrantNumberAndGrantAllocationDisplayName);
 
         // ReSharper disable once InconsistentNaming
-        public int RegionIDDisplay => RegionID.HasValue ? Region.RegionID : -1;
-        public string RegionNameDisplay => Region != null ? Region.RegionName : string.Empty;
+        public int RegionIDDisplay => RegionID.HasValue ? DnrUplandRegion.DNRUplandRegionID : -1;
+        public string RegionNameDisplay => DnrUplandRegion != null ? DnrUplandRegion.DNRUplandRegionName : string.Empty;
         public string DivisionNameDisplay => Division != null ? Division.DivisionDisplayName : string.Empty;
 
         public string DisplayName => this.GrantAllocationName;

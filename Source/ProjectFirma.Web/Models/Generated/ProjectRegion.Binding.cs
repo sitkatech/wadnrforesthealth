@@ -30,46 +30,46 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectRegion(int projectRegionID, int projectID, int regionID) : this()
+        public ProjectRegion(int projectRegionID, int projectID, int dNRUplandRegionID) : this()
         {
             this.ProjectRegionID = projectRegionID;
             this.ProjectID = projectID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectRegion(int projectID, int regionID) : this()
+        public ProjectRegion(int projectID, int dNRUplandRegionID) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.ProjectID = projectID;
-            this.RegionID = regionID;
+            this.DNRUplandRegionID = dNRUplandRegionID;
         }
 
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectRegion(Project project, Region region) : this()
+        public ProjectRegion(Project project, DNRUplandRegion dNRUplandRegion) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectRegionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             this.ProjectID = project.ProjectID;
             this.Project = project;
             project.ProjectRegions.Add(this);
-            this.RegionID = region.RegionID;
-            this.Region = region;
-            region.ProjectRegions.Add(this);
+            this.DNRUplandRegionID = dNRUplandRegion.DNRUplandRegionID;
+            this.DNRUplandRegion = dNRUplandRegion;
+            dNRUplandRegion.ProjectRegions.Add(this);
         }
 
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectRegion CreateNewBlank(Project project, Region region)
+        public static ProjectRegion CreateNewBlank(Project project, DNRUplandRegion dNRUplandRegion)
         {
-            return new ProjectRegion(project, region);
+            return new ProjectRegion(project, dNRUplandRegion);
         }
 
         /// <summary>
@@ -117,12 +117,12 @@ namespace ProjectFirma.Web.Models
         [Key]
         public int ProjectRegionID { get; set; }
         public int ProjectID { get; set; }
-        public int RegionID { get; set; }
+        public int DNRUplandRegionID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return ProjectRegionID; } set { ProjectRegionID = value; } }
 
         public virtual Project Project { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual DNRUplandRegion DNRUplandRegion { get; set; }
 
         public static class FieldLengths
         {

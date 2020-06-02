@@ -1,15 +1,15 @@
-if exists (select * from dbo.sysobjects where id = object_id('dbo.vGeoServerRegion'))
-	drop view dbo.vGeoServerRegion
+if exists (select * from dbo.sysobjects where id = object_id('dbo.vGeoServerDnrUplandRegion'))
+	drop view dbo.vGeoServerDnrUplandRegion
 go
 
-create view dbo.vGeoServerRegion
+create view dbo.vGeoServerDNRUplandRegion
 as
 select
-	r.RegionID,
-	r.RegionID as PrimaryKey,
-	r.RegionName,
-	r.RegionLocation,
-	r.RegionLocation as Ogr_Geometry
+	r.DNRUplandRegionID,
+	r.DNRUplandRegionID as PrimaryKey,
+	r.DNRUplandRegionName,
+	r.DNRUplandRegionLocation,
+	r.DNRUplandRegionLocation as Ogr_Geometry
 	
 from
-	dbo.Region as r
+	dbo.DnrUplandRegion as r

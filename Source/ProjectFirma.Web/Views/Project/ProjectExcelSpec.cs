@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.Project
                     AddColumn(y.ClassificationSystemNamePluralized, x => string.Join(",", x.ProjectClassifications.Where(z => z.Classification.ClassificationSystem == y).Select(tc => tc.Classification.DisplayName)));
                 });
             AddColumn("Priority Areas", x => string.Join(",", x.GetProjectPriorityAreas().Select(y => y.PriorityAreaName)));
-            AddColumn("Regions", x => string.Join(",", x.GetProjectRegions().Select(y => y.RegionName)));
+            AddColumn("Regions", x => string.Join(",", x.GetProjectRegions().Select(y => y.DNRUplandRegionName)));
             AddColumn(Models.FieldDefinition.StartApprovalDate.GetFieldDefinitionLabel(), x => x.GetImplementationStartYear());
             AddColumn(Models.FieldDefinition.CompletionDate.GetFieldDefinitionLabel(), x => x.GetCompletionYear());
             AddColumn(Models.FieldDefinition.ProjectDescription.GetFieldDefinitionLabel(), x => x.ProjectDescription);

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -104,6 +104,9 @@
     <Compile Include="Models\Generated\DatabaseEntities.Context.Binding.cs" />
     <Compile Include="Models\Generated\Division.Binding.cs" />
     <Compile Include="Models\Generated\DivisionPrimaryKey.Binding.cs" />
+    <Compile Include="Models\Generated\DNRUplandRegion.Binding.cs" />
+    <Compile Include="Models\Generated\DNRUplandRegion.DatabaseContextExtensions.cs" />
+    <Compile Include="Models\Generated\DNRUplandRegionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.Binding.cs" />
     <Compile Include="Models\Generated\FederalFundCode.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\FederalFundCodePrimaryKey.Binding.cs" />
@@ -493,9 +496,6 @@
     <Compile Include="Models\Generated\ProjectUpdateStatePrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\ProjectWorkflowSectionGrouping.Binding.cs" />
     <Compile Include="Models\Generated\ProjectWorkflowSectionGroupingPrimaryKey.Binding.cs" />
-    <Compile Include="Models\Generated\Region.Binding.cs" />
-    <Compile Include="Models\Generated\Region.DatabaseContextExtensions.cs" />
-    <Compile Include="Models\Generated\RegionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\RelationshipType.Binding.cs" />
     <Compile Include="Models\Generated\RelationshipType.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\RelationshipTypePrimaryKey.Binding.cs" />
@@ -680,7 +680,7 @@
     <Compile Include="Models\ProjectTypeJson.cs" />
     <Compile Include="Models\ProjectTypeProjectCustomAttributeType.cs" />
     <Compile Include="Models\RegionModelExtensions.cs" />
-    <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\DNRUplandRegion.cs" />
     <Compile Include="Models\Grant.cs" />
     <Compile Include="Models\GrantAllocationModelExtensions.cs" />
     <Compile Include="Models\GrantModelExtensions.cs" />

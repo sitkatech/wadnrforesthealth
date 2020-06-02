@@ -105,9 +105,9 @@ namespace ProjectFirma.Web.Models
             return ProjectType.TaxonomyBranch;
         }
 
-        public List<Region> GetCanStewardProjectsRegions()
+        public List<DNRUplandRegion> GetCanStewardProjectsRegions()
         {
-            return ProjectRegions.Select(x => x.Region).ToList();
+            return ProjectRegions.Select(x => x.DnrUplandRegion).ToList();
         }
 
         public IEnumerable<Organization> GetOrganizationsToReportInAccomplishments()
@@ -398,9 +398,9 @@ namespace ProjectFirma.Web.Models
             return DefaultBoundingBox;
         }
 
-        public IEnumerable<Region> GetProjectRegions()
+        public IEnumerable<DNRUplandRegion> GetProjectRegions()
         {
-            return ProjectRegions.Select(x => x.Region);
+            return ProjectRegions.Select(x => x.DnrUplandRegion);
         }
         public IEnumerable<PriorityArea> GetProjectPriorityAreas()
         {

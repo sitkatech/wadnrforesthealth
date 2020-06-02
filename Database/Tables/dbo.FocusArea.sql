@@ -7,7 +7,7 @@ CREATE TABLE [dbo].[FocusArea](
 	[FocusAreaName] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[FocusAreaStatusID] [int] NOT NULL,
 	[FocusAreaLocation] [geometry] NULL,
-	[RegionID] [int] NOT NULL,
+	[DNRUplandRegionID] [int] NOT NULL,
 	[PlannedFootprintAcres] [decimal](18, 0) NULL,
  CONSTRAINT [PK_FocusArea_FocusAreaID] PRIMARY KEY CLUSTERED 
 (
@@ -20,12 +20,12 @@ CREATE TABLE [dbo].[FocusArea](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_DNRUplandRegion_DNRUplandRegionID] FOREIGN KEY([DNRUplandRegionID])
+REFERENCES [dbo].[DNRUplandRegion] ([DNRUplandRegionID])
+GO
+ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_DNRUplandRegion_DNRUplandRegionID]
+GO
 ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_FocusAreaStatus_FocusAreaStatusID] FOREIGN KEY([FocusAreaStatusID])
 REFERENCES [dbo].[FocusAreaStatus] ([FocusAreaStatusID])
 GO
 ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_FocusAreaStatus_FocusAreaStatusID]
-GO
-ALTER TABLE [dbo].[FocusArea]  WITH CHECK ADD  CONSTRAINT [FK_FocusArea_Region_RegionID] FOREIGN KEY([RegionID])
-REFERENCES [dbo].[Region] ([RegionID])
-GO
-ALTER TABLE [dbo].[FocusArea] CHECK CONSTRAINT [FK_FocusArea_Region_RegionID]
