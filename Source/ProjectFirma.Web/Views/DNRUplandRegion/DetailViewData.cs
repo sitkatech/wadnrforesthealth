@@ -21,17 +21,15 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Collections.Generic;
 using System.Linq;
-using ProjectFirma.Web.Views.Project;
-using ProjectFirma.Web.Views.Results;
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
-using LtInfo.Common;
-using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Views.PerformanceMeasure;
+using ProjectFirma.Web.Views.Project;
 using ProjectFirma.Web.Views.Shared;
 
-namespace ProjectFirma.Web.Views.Region
+namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
     public class DetailViewData : FirmaViewData
     {
@@ -51,15 +49,15 @@ namespace ProjectFirma.Web.Views.Region
             MapInitJson = mapInitJson;
             ViewGoogleChartViewData = viewGoogleChartViewData;
             PageTitle = dnrUplandRegion.DNRUplandRegionName;
-            EntityName = "Region";
+            EntityName = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel();
             UserHasRegionManagePermissions = new RegionManageFeature().HasPermissionByPerson(currentPerson);
             IndexUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "regionProjectListGrid";
             BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false)
             {
-                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this Region",
-                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this Region",
+                ObjectNameSingular = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
+                ObjectNamePlural = $"{Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
                 SaveFiltersInCookie = true
             };
           

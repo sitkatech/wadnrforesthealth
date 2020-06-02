@@ -19,11 +19,11 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
-using ProjectFirma.Web.Common;
 
-namespace ProjectFirma.Web.Views.Region
+namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
     public class IndexViewData : FirmaViewData
     {
@@ -34,9 +34,9 @@ namespace ProjectFirma.Web.Views.Region
 
         public IndexViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = "Regions";
+            PageTitle = Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName;
             MapInitJson = mapInitJson;
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Region", ObjectNamePlural = $"Regions", SaveFiltersInCookie = true};
+            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, ObjectNamePlural = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), SaveFiltersInCookie = true};
             GridName = "regionsGrid";
             GridDataUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
         }

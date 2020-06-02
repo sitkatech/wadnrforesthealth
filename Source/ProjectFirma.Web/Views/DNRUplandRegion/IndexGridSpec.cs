@@ -24,13 +24,13 @@ using LtInfo.Common.DhtmlWrappers;
 using LtInfo.Common.Views;
 using ProjectFirma.Web.Models;
 
-namespace ProjectFirma.Web.Views.Region
+namespace ProjectFirma.Web.Views.DNRUplandRegion
 {
     public class IndexGridSpec : GridSpec<Models.DNRUplandRegion>
     {
         public IndexGridSpec(Person person)
         {
-            Add("Region", a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DNRUplandRegionName), 300, DhtmlxGridColumnFilterType.Html);
+            Add(Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, a => UrlTemplate.MakeHrefString(a.GetDetailUrl(), a.DNRUplandRegionName), 300, DhtmlxGridColumnFilterType.Html);
             Add($"# of {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}", a => a.GetAssociatedProjects(person).Count, 65);
         }
     }

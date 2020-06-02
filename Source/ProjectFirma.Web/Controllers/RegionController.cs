@@ -27,15 +27,15 @@ using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.Shared;
-using ProjectFirma.Web.Views.Region;
 using LtInfo.Common.MvcResults;
 using MoreLinq;
 using NUnit.Framework;
-using Detail = ProjectFirma.Web.Views.Region.Detail;
-using DetailViewData = ProjectFirma.Web.Views.Region.DetailViewData;
-using Index = ProjectFirma.Web.Views.Region.Index;
-using IndexGridSpec = ProjectFirma.Web.Views.Region.IndexGridSpec;
-using IndexViewData = ProjectFirma.Web.Views.Region.IndexViewData;
+using ProjectFirma.Web.Views.DNRUplandRegion;
+using Detail = ProjectFirma.Web.Views.DNRUplandRegion.Detail;
+using DetailViewData = ProjectFirma.Web.Views.DNRUplandRegion.DetailViewData;
+using Index = ProjectFirma.Web.Views.DNRUplandRegion.Index;
+using IndexGridSpec = ProjectFirma.Web.Views.DNRUplandRegion.IndexGridSpec;
+using IndexViewData = ProjectFirma.Web.Views.DNRUplandRegion.IndexViewData;
 
 namespace ProjectFirma.Web.Controllers
 {

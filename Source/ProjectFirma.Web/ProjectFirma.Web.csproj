@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -965,13 +965,13 @@
     <Compile Include="Views\Vendor\EditVendor.cs" />
     <Compile Include="Views\Vendor\VendorSearchResults.cs" />
     <Compile Include="Views\Vendor\VendorSearchResultsViewData.cs" />
-    <Compile Include="Views\Region\Detail.cs" />
-    <Compile Include="Views\Region\DetailViewData.cs" />
-    <Compile Include="Views\Region\Index.cs" />
-    <Compile Include="Views\Region\IndexGridSpec.cs" />
-    <Compile Include="Views\Region\IndexViewData.cs" />
-    <Compile Include="Views\Region\MapTooltip.cs" />
-    <Compile Include="Views\Region\MapTooltipViewData.cs" />
+    <Compile Include="Views\DNRUplandRegion\Detail.cs" />
+    <Compile Include="Views\DNRUplandRegion\DetailViewData.cs" />
+    <Compile Include="Views\DNRUplandRegion\Index.cs" />
+    <Compile Include="Views\DNRUplandRegion\IndexGridSpec.cs" />
+    <Compile Include="Views\DNRUplandRegion\IndexViewData.cs" />
+    <Compile Include="Views\DNRUplandRegion\MapTooltip.cs" />
+    <Compile Include="Views\DNRUplandRegion\MapTooltipViewData.cs" />
     <Compile Include="Views\Shared\GrantAllocationControls\GrantAllocationBasics.cs" />
     <Compile Include="Views\Shared\GrantAllocationControls\GrantAllocationBasicsViewData.cs" />
     <Compile Include="Views\Shared\InvoiceControls\InvoiceBasics.cs" />
@@ -2113,9 +2113,9 @@
     <Content Include="Views\Shared\ProjectPerson\EditPeople.cshtml" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPeopleDetail.cshtml" />
     <Content Include="Views\GrantAllocationAwardLandownerCostShareLineItem\Index.cshtml" />
-    <Content Include="Views\Region\Detail.cshtml" />
-    <Content Include="Views\Region\Index.cshtml" />
-    <Content Include="Views\Region\MapTooltip.cshtml" />
+    <Content Include="Views\DNRUplandRegion\Detail.cshtml" />
+    <Content Include="Views\DNRUplandRegion\Index.cshtml" />
+    <Content Include="Views\DNRUplandRegion\MapTooltip.cshtml" />
     <Content Include="Views\PriorityArea\Detail.cshtml" />
     <Content Include="Views\PriorityArea\Index.cshtml" />
     <Content Include="Views\PriorityArea\MapTooltip.cshtml" />

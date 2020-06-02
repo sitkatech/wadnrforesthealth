@@ -29,7 +29,7 @@
 @using ProjectFirma.Web.Common
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Views.PerformanceMeasure
-@inherits ProjectFirma.Web.Views.Region.Detail
+@inherits ProjectFirma.Web.Views.DNRUplandRegion.Detail
 
 @section JavascriptAndStylesContent
 {
@@ -64,7 +64,7 @@
 </script>
 
 <div>
-    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Regions </a>
+    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized() </a>
 </div>
 
 <div class="row">
@@ -75,13 +75,13 @@
             </div>
             <div class="panel-body">
                 <p>
-                    This map displays the location of any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() associated with this Region
+                    This map displays the location of any @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() and @FieldDefinition.Application.GetFieldDefinitionLabelPluralized() associated with this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()
                 </p>
                 <div id="@ViewDataTyped.MapInitJson.MapDivID" style="height: 320px; margin: 5px 0 5px 0">
                 </div>
                 <p style="font-size: 10px">To zoom, hold down Shift and drag a rectangle.</p>
 
-                <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple Regions, but are mapped in a single location. Therefore some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside of the Region boundary.</p>
+                <p>@FieldDefinition.Project.GetFieldDefinitionLabelPluralized() can be associated with multiple @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), but are mapped in a single location. Therefore some @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() may appear outside of the @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel() boundary.</p>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
                 }
                 else
                 {
-                    <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this Region.</p>
+            <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditure data yet provided for this @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().</p>
                 }
             </div>
         </div>

@@ -24,7 +24,7 @@ Source code is available upon request via <support@sitkatech.com>.
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using ProjectFirma.Web.Models
-@inherits ProjectFirma.Web.Views.Region.Index
+@inherits ProjectFirma.Web.Views.DNRUplandRegion.Index
 @section JavascriptAndStylesContent
 {
     @{ DhtmlxGridIncludes.RenderPartialView(Html); }
@@ -52,7 +52,7 @@ Source code is available upon request via <support@sitkatech.com>.
         <div class="col-md-6">
             <div class="panel panelFirma">
                 <div class="panel-heading panelTitle">
-                    <h2>Regions</h2>
+                    <h2>@FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized()</h2>
                 </div>
                 <div class="panel-body">
                     @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, "height:500px", DhtmlxGridResizeType.VerticalResizableHorizontalAutoFit)
