@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFullGrantList FullGrantList = FirmaPageTypeFullGrantList.Instance;
         public static readonly FirmaPageTypeFullGrantAllocationList FullGrantAllocationList = FirmaPageTypeFullGrantAllocationList.Instance;
         public static readonly FirmaPageTypeRegionsList RegionsList = FirmaPageTypeRegionsList.Instance;
-        public static readonly FirmaPageTypePriorityAreasList PriorityAreasList = FirmaPageTypePriorityAreasList.Instance;
+        public static readonly FirmaPageTypePriorityLandscapesList PriorityLandscapesList = FirmaPageTypePriorityLandscapesList.Instance;
         public static readonly FirmaPageTypeFullAgreementList FullAgreementList = FirmaPageTypeFullAgreementList.Instance;
         public static readonly FirmaPageTypeFullInvoiceList FullInvoiceList = FirmaPageTypeFullInvoiceList.Instance;
         public static readonly FirmaPageTypeInteractionEventList InteractionEventList = FirmaPageTypeInteractionEventList.Instance;
@@ -63,7 +63,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityAreasList, FullAgreementList, FullInvoiceList, InteractionEventList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -183,8 +183,8 @@ namespace ProjectFirma.Web.Models
                     return PendingProjects;
                 case FirmaPageTypeEnum.PerformanceMeasuresList:
                     return PerformanceMeasuresList;
-                case FirmaPageTypeEnum.PriorityAreasList:
-                    return PriorityAreasList;
+                case FirmaPageTypeEnum.PriorityLandscapesList:
+                    return PriorityLandscapesList;
                 case FirmaPageTypeEnum.ProjectMap:
                     return ProjectMap;
                 case FirmaPageTypeEnum.ProjectStewardOrganizationList:
@@ -247,7 +247,7 @@ namespace ProjectFirma.Web.Models
         FullGrantList = 56,
         FullGrantAllocationList = 57,
         RegionsList = 58,
-        PriorityAreasList = 59,
+        PriorityLandscapesList = 59,
         FullAgreementList = 60,
         FullInvoiceList = 61,
         InteractionEventList = 62
@@ -445,10 +445,10 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeRegionsList Instance = new FirmaPageTypeRegionsList(58, @"RegionsList", @"Regions List", 1);
     }
 
-    public partial class FirmaPageTypePriorityAreasList : FirmaPageType
+    public partial class FirmaPageTypePriorityLandscapesList : FirmaPageType
     {
-        private FirmaPageTypePriorityAreasList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
-        public static readonly FirmaPageTypePriorityAreasList Instance = new FirmaPageTypePriorityAreasList(59, @"PriorityAreasList", @"Priority Areas List", 1);
+        private FirmaPageTypePriorityLandscapesList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypePriorityLandscapesList Instance = new FirmaPageTypePriorityLandscapesList(59, @"PriorityLandscapesList", @"Priority Landscapes List", 1);
     }
 
     public partial class FirmaPageTypeFullAgreementList : FirmaPageType

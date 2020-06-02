@@ -77,7 +77,7 @@
     <EntitySet Name="PersonStewardOrganization" EntityType="ProjectFirma.Web.Models.Store.PersonStewardOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardRegion" EntityType="ProjectFirma.Web.Models.Store.PersonStewardRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonStewardTaxonomyBranch" EntityType="ProjectFirma.Web.Models.Store.PersonStewardTaxonomyBranch" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PriorityArea" EntityType="ProjectFirma.Web.Models.Store.PriorityArea" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.PriorityLandscape" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProgramIndex" EntityType="ProjectFirma.Web.Models.Store.ProgramIndex" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Project" EntityType="ProjectFirma.Web.Models.Store.Project" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectClassification" EntityType="ProjectFirma.Web.Models.Store.ProjectClassification" store:Type="Tables" Schema="dbo" />
@@ -110,8 +110,8 @@
     <EntitySet Name="ProjectOrganizationUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectOrganizationUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPerson" EntityType="ProjectFirma.Web.Models.Store.ProjectPerson" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectPersonUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPersonUpdate" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectPriorityArea" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityArea" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProjectPriorityAreaUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityAreaUpdate" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityLandscape" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectPriorityLandscapeUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectPriorityLandscapeUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegion" EntityType="ProjectFirma.Web.Models.Store.ProjectRegion" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectRegionUpdate" EntityType="ProjectFirma.Web.Models.Store.ProjectRegionUpdate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProjectTag" EntityType="ProjectFirma.Web.Models.Store.ProjectTag" store:Type="Tables" Schema="dbo" />
@@ -135,6 +135,15 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityLandscape" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityLandscape">
+      <DefiningQuery>SELECT 
+[vGeoServerPriorityLandscape].[PriorityLandscapeID] AS [PriorityLandscapeID], 
+[vGeoServerPriorityLandscape].[PrimaryKey] AS [PrimaryKey], 
+[vGeoServerPriorityLandscape].[PriorityLandscapeName] AS [PriorityLandscapeName], 
+[vGeoServerPriorityLandscape].[PriorityLandscapeLocation] AS [PriorityLandscapeLocation], 
+[vGeoServerPriorityLandscape].[Ogr_Geometry] AS [Ogr_Geometry]
+FROM [dbo].[vGeoServerPriorityLandscape] AS [vGeoServerPriorityLandscape]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.Store.vSocrataDataMartRawJsonImportIndex" store:Type="Views" store:Schema="dbo" store:Name="vSocrataDataMartRawJsonImportIndex">
       <DefiningQuery>SELECT 
 [vSocrataDataMartRawJsonImportIndex].[SocrataDataMartRawJsonImportID] AS [SocrataDataMartRawJsonImportID], 
@@ -897,21 +906,21 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
       <End Role="ProjectPersonUpdates" EntitySet="ProjectPersonUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectPriorityArea_PriorityArea_PriorityAreaID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityArea_PriorityArea_PriorityAreaID">
-      <End Role="PriorityArea" EntitySet="PriorityArea" />
-      <End Role="ProjectPriorityAreas" EntitySet="ProjectPriorityArea" />
+    <AssociationSet Name="FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="ProjectPriorityLandscapes" EntitySet="ProjectPriorityLandscape" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectPriorityArea_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityArea_Project_ProjectID">
+    <AssociationSet Name="FK_ProjectPriorityLandscape_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityLandscape_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
-      <End Role="ProjectPriorityAreas" EntitySet="ProjectPriorityArea" />
+      <End Role="ProjectPriorityLandscapes" EntitySet="ProjectPriorityLandscape" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID">
-      <End Role="PriorityArea" EntitySet="PriorityArea" />
-      <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
+    <AssociationSet Name="FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID">
+      <End Role="PriorityLandscape" EntitySet="PriorityLandscape" />
+      <End Role="ProjectPriorityLandscapeUpdates" EntitySet="ProjectPriorityLandscapeUpdate" />
     </AssociationSet>
-    <AssociationSet Name="FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+    <AssociationSet Name="FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID" Association="ProjectFirma.Web.Models.Store.FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
       <End Role="ProjectUpdateBatch" EntitySet="ProjectUpdateBatch" />
-      <End Role="ProjectPriorityAreaUpdates" EntitySet="ProjectPriorityAreaUpdate" />
+      <End Role="ProjectPriorityLandscapeUpdates" EntitySet="ProjectPriorityLandscapeUpdate" />
     </AssociationSet>
     <AssociationSet Name="FK_ProjectRegion_Project_ProjectID" Association="ProjectFirma.Web.Models.Store.FK_ProjectRegion_Project_ProjectID">
       <End Role="Project" EntitySet="Project" />
@@ -1901,13 +1910,13 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="TaxonomyBranchID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="PriorityArea">
+  <EntityType Name="PriorityLandscape">
     <Key>
-      <PropertyRef Name="PriorityAreaID" />
+      <PropertyRef Name="PriorityLandscapeID" />
     </Key>
-    <Property Name="PriorityAreaID" Type="int" Nullable="false" />
-    <Property Name="PriorityAreaName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="PriorityAreaLocation" Type="geometry" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PriorityLandscapeLocation" Type="geometry" />
   </EntityType>
   <EntityType Name="ProgramIndex">
     <Key>
@@ -1951,9 +1960,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
     <Property Name="FocusAreaID" Type="int" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
-    <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ExpirationDate" Type="datetime" />
     <Property Name="FhtProjectNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectClassification">
     <Key>
@@ -2263,21 +2272,21 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="PersonID" Type="int" Nullable="false" />
     <Property Name="ProjectPersonRelationshipTypeID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ProjectPriorityArea">
+  <EntityType Name="ProjectPriorityLandscape">
     <Key>
-      <PropertyRef Name="ProjectPriorityAreaID" />
+      <PropertyRef Name="ProjectPriorityLandscapeID" />
     </Key>
-    <Property Name="ProjectPriorityAreaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectPriorityLandscapeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectID" Type="int" Nullable="false" />
-    <Property Name="PriorityAreaID" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ProjectPriorityAreaUpdate">
+  <EntityType Name="ProjectPriorityLandscapeUpdate">
     <Key>
-      <PropertyRef Name="ProjectPriorityAreaUpdateID" />
+      <PropertyRef Name="ProjectPriorityLandscapeUpdateID" />
     </Key>
-    <Property Name="ProjectPriorityAreaUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectPriorityLandscapeUpdateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProjectUpdateBatchID" Type="int" Nullable="false" />
-    <Property Name="PriorityAreaID" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProjectRegion">
     <Key>
@@ -2381,9 +2390,9 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="NoExpendituresToReportExplanation" Type="varchar(max)" />
     <Property Name="ContactsComment" Type="varchar" MaxLength="1000" />
     <Property Name="NoRegionsExplanation" Type="varchar" MaxLength="4000" />
-    <Property Name="NoPriorityAreasExplanation" Type="varchar" MaxLength="4000" />
     <Property Name="ProjectAttributesComment" Type="varchar" MaxLength="1000" />
     <Property Name="ProjectAttributesDiffLog" Type="varchar(max)" />
+    <Property Name="NoPriorityLandscapesExplanation" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ProjectUpdateConfiguration">
     <Key>
@@ -2585,8 +2594,20 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
     <Property Name="Email" Type="varchar" MaxLength="200" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityArea' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscape' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
+  <EntityType Name="vGeoServerPriorityLandscape">
+    <Key>
+      <PropertyRef Name="PriorityLandscapeID" />
+      <PropertyRef Name="PrimaryKey" />
+      <PropertyRef Name="PriorityLandscapeName" />
+    </Key>
+    <Property Name="PriorityLandscapeID" Type="int" Nullable="false" />
+    <Property Name="PrimaryKey" Type="int" Nullable="false" />
+    <Property Name="PriorityLandscapeName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PriorityLandscapeLocation" Type="geometry" />
+    <Property Name="Ogr_Geometry" Type="geometry" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerProjectLocationDetailed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
@@ -4863,50 +4884,50 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectPriorityArea_PriorityArea_PriorityAreaID">
-    <End Role="PriorityArea" Type="ProjectFirma.Web.Models.Store.PriorityArea" Multiplicity="1" />
-    <End Role="ProjectPriorityAreas" Type="ProjectFirma.Web.Models.Store.ProjectPriorityArea" Multiplicity="*" />
+  <Association Name="FK_ProjectPriorityLandscape_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
+    <End Role="ProjectPriorityLandscapes" Type="ProjectFirma.Web.Models.Store.ProjectPriorityLandscape" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="PriorityArea">
-        <PropertyRef Name="PriorityAreaID" />
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Principal>
-      <Dependent Role="ProjectPriorityAreas">
-        <PropertyRef Name="PriorityAreaID" />
+      <Dependent Role="ProjectPriorityLandscapes">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectPriorityArea_Project_ProjectID">
+  <Association Name="FK_ProjectPriorityLandscape_Project_ProjectID">
     <End Role="Project" Type="ProjectFirma.Web.Models.Store.Project" Multiplicity="1" />
-    <End Role="ProjectPriorityAreas" Type="ProjectFirma.Web.Models.Store.ProjectPriorityArea" Multiplicity="*" />
+    <End Role="ProjectPriorityLandscapes" Type="ProjectFirma.Web.Models.Store.ProjectPriorityLandscape" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Project">
         <PropertyRef Name="ProjectID" />
       </Principal>
-      <Dependent Role="ProjectPriorityAreas">
+      <Dependent Role="ProjectPriorityLandscapes">
         <PropertyRef Name="ProjectID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectPriorityAreaUpdate_PriorityArea_PriorityAreaID">
-    <End Role="PriorityArea" Type="ProjectFirma.Web.Models.Store.PriorityArea" Multiplicity="1" />
-    <End Role="ProjectPriorityAreaUpdates" Type="ProjectFirma.Web.Models.Store.ProjectPriorityAreaUpdate" Multiplicity="*" />
+  <Association Name="FK_ProjectPriorityLandscapeUpdate_PriorityLandscape_PriorityLandscapeID">
+    <End Role="PriorityLandscape" Type="ProjectFirma.Web.Models.Store.PriorityLandscape" Multiplicity="1" />
+    <End Role="ProjectPriorityLandscapeUpdates" Type="ProjectFirma.Web.Models.Store.ProjectPriorityLandscapeUpdate" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="PriorityArea">
-        <PropertyRef Name="PriorityAreaID" />
+      <Principal Role="PriorityLandscape">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Principal>
-      <Dependent Role="ProjectPriorityAreaUpdates">
-        <PropertyRef Name="PriorityAreaID" />
+      <Dependent Role="ProjectPriorityLandscapeUpdates">
+        <PropertyRef Name="PriorityLandscapeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ProjectPriorityAreaUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
+  <Association Name="FK_ProjectPriorityLandscapeUpdate_ProjectUpdateBatch_ProjectUpdateBatchID">
     <End Role="ProjectUpdateBatch" Type="ProjectFirma.Web.Models.Store.ProjectUpdateBatch" Multiplicity="1" />
-    <End Role="ProjectPriorityAreaUpdates" Type="ProjectFirma.Web.Models.Store.ProjectPriorityAreaUpdate" Multiplicity="*" />
+    <End Role="ProjectPriorityLandscapeUpdates" Type="ProjectFirma.Web.Models.Store.ProjectPriorityLandscapeUpdate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProjectUpdateBatch">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Principal>
-      <Dependent Role="ProjectPriorityAreaUpdates">
+      <Dependent Role="ProjectPriorityLandscapeUpdates">
         <PropertyRef Name="ProjectUpdateBatchID" />
       </Dependent>
     </ReferentialConstraint>

@@ -39,7 +39,7 @@ using LtInfo.Common.DesignByContract;
 using LtInfo.Common.Models;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Views.Project;
-using ProjectFirma.Web.Views.ProjectPriorityArea;
+using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
@@ -914,53 +914,53 @@ namespace ProjectFirma.Web.Controllers
 
         [HttpGet]
         [ProjectCreateFeature]
-        public ViewResult PriorityAreas(ProjectPrimaryKey projectPrimaryKey)
+        public ViewResult PriorityLandscapes(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var priorityAreaIDs = project.ProjectPriorityAreas.Select(x => x.PriorityAreaID).ToList();
-            var noPriorityAreasExplanation = project.NoPriorityAreasExplanation;
-            var viewModel = new PriorityAreasViewModel(priorityAreaIDs, noPriorityAreasExplanation);
-            return ViewEditPriorityArea(project, viewModel);
+            var priorityLandscapeIDs = project.ProjectPriorityLandscapes.Select(x => x.PriorityLandscapeID).ToList();
+            var noPriorityLandscapesExplanation = project.NoPriorityLandscapesExplanation;
+            var viewModel = new PriorityLandscapesViewModel(priorityLandscapeIDs, noPriorityLandscapesExplanation);
+            return ViewEditPriorityLandscape(project, viewModel);
         }
 
-        private ViewResult ViewEditPriorityArea(Project project, PriorityAreasViewModel viewModel)
+        private ViewResult ViewEditPriorityLandscape(Project project, PriorityLandscapesViewModel viewModel)
         {
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
-            var layers = MapInitJson.GetPriorityAreaMapLayers(LayerInitialVisibility.Show);
+            var layers = MapInitJson.GetPriorityLandscapeMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
-            var mapInitJson = new MapInitJson("projectPriorityAreaMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true };
-            var priorityAreaIDs = viewModel.PriorityAreaIDs ?? new List<int>();
-            var priorityAreasInViewModel = HttpRequestStorage.DatabaseEntities.PriorityAreas.Where(x => priorityAreaIDs.Contains(x.PriorityAreaID)).ToList();
-            var editProjectPriorityAreasPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.PriorityAreas(project, null));
-            var editProjectPriorityAreasFormId = GenerateEditProjectPriorityAreasFormID(project);
+            var mapInitJson = new MapInitJson("projectPriorityLandscapeMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true };
+            var priorityLandscapeIDs = viewModel.PriorityLandscapeIDs ?? new List<int>();
+            var priorityLandscapesInViewModel = HttpRequestStorage.DatabaseEntities.PriorityLandscapes.Where(x => priorityLandscapeIDs.Contains(x.PriorityLandscapeID)).ToList();
+            var editProjectPriorityLandscapesPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.PriorityLandscapes(project, null));
+            var editProjectPriorityLandscapesFormId = GenerateEditProjectPriorityLandscapesFormID(project);
 
-            var editProjectLocationViewData = new EditProjectPriorityAreasViewData(CurrentPerson, mapInitJson, priorityAreasInViewModel, editProjectPriorityAreasPostUrl, editProjectPriorityAreasFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail);
+            var editProjectLocationViewData = new EditProjectPriorityLandscapesViewData(CurrentPerson, mapInitJson, priorityLandscapesInViewModel, editProjectPriorityLandscapesPostUrl, editProjectPriorityLandscapesFormId, project.HasProjectLocationPoint, project.HasProjectLocationDetail);
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
-            proposalSectionsStatus.IsPriorityAreaSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPriorityAreaSectionComplete;
-            var viewData = new PriorityAreasViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
+            proposalSectionsStatus.IsPriorityLandscapeSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsPriorityLandscapeSectionComplete;
+            var viewData = new PriorityLandscapesViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
 
-            return RazorView<Views.ProjectCreate.PriorityAreas, PriorityAreasViewData, PriorityAreasViewModel>(viewData, viewModel);
+            return RazorView<Views.ProjectCreate.PriorityLandscapes, PriorityLandscapesViewData, PriorityLandscapesViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [ProjectCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult PriorityAreas(ProjectPrimaryKey projectPrimaryKey, PriorityAreasViewModel viewModel)
+        public ActionResult PriorityLandscapes(ProjectPrimaryKey projectPrimaryKey, PriorityLandscapesViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewEditPriorityArea(project, viewModel);
+                return ViewEditPriorityLandscape(project, viewModel);
             }
 
-            var currentProjectPriorityAreas = project.ProjectPriorityAreas.ToList();
-            var allProjectPriorityAreas = HttpRequestStorage.DatabaseEntities.ProjectPriorityAreas.Local;
-            viewModel.UpdateModel(project, currentProjectPriorityAreas, allProjectPriorityAreas);
+            var currentProjectPriorityLandscapes = project.ProjectPriorityLandscapes.ToList();
+            var allProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local;
+            viewModel.UpdateModel(project, currentProjectPriorityLandscapes, allProjectPriorityLandscapes);
 
-            project.NoPriorityAreasExplanation = viewModel.NoPriorityAreasExplanation;
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Priority Areas successfully saved.");
-            return GoToNextSection(viewModel, project, ProjectCreateSection.PriorityAreas.ProjectCreateSectionDisplayName);
+            project.NoPriorityLandscapesExplanation = viewModel.NoPriorityLandscapesExplanation;
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()} successfully saved.");
+            return GoToNextSection(viewModel, project, ProjectCreateSection.PriorityLandscapes.ProjectCreateSectionDisplayName);
         }
 
         private static string GenerateEditProjectGeospatialAreaFormID(Project project)
@@ -968,9 +968,9 @@ namespace ProjectFirma.Web.Controllers
             return $"editMapForProject{project.ProjectID}";
         }
 
-        private static string GenerateEditProjectPriorityAreasFormID(Project project)
+        private static string GenerateEditProjectPriorityLandscapesFormID(Project project)
         {
-            return $"editMapForProjectPriorityAreas{project.ProjectID}";
+            return $"editMapForProjectPriorityLandscapes{project.ProjectID}";
         }
 
         private static string GenerateEditProjectRegionsFormID(Project project)
