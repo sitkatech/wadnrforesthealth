@@ -60,16 +60,16 @@ Source code is available upon request via <support@sitkatech.com>.
         <hr />
         <div style="margin-bottom: 5px">
             <label>
-                Priority Areas
+                Priority Landscapes
             </label>
             <ul class="noListStyle">
-                @foreach (var priorityArea in ViewDataTyped.PriorityAreas.OrderBy(x => x.DisplayName))
+                @foreach (var priorityLandscape in ViewDataTyped.PriorityLandscapes.OrderBy(x => x.DisplayName))
                 {
                     <li>
-                        <a href="@priorityArea.GetDetailUrl()">@priorityArea.DisplayName </a>
+                        <a href="@priorityLandscape.GetDetailUrl()">@priorityLandscape.DisplayName </a>
                     </li>
                 }
-                @if (!ViewDataTyped.PriorityAreas.Any())
+                @if (!ViewDataTyped.PriorityLandscapes.Any())
                 {
                     <li style="list-style-type: none; margin-left: -40px;">
                         None Selected
@@ -77,14 +77,14 @@ Source code is available upon request via <support@sitkatech.com>.
                 }
             </ul>
         </div>
-        @if (!string.IsNullOrEmpty(ViewDataTyped.NoPriorityAreasExplanation))
+        @if (!string.IsNullOrEmpty(ViewDataTyped.NoPriorityLandscapesExplanation))
         {
             <div style="margin-bottom: 5px">
                 <label>
-                    Priority Areas Notes
+                    Priority Landscapes Notes
                 </label>
                 <div style="padding-left: 20px">
-                    @ViewDataTyped.NoPriorityAreasExplanation
+                    @ViewDataTyped.NoPriorityLandscapesExplanation
                 </div>
             </div>
         }

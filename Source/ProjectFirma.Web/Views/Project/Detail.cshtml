@@ -187,7 +187,7 @@
                                         <li>@ModalDialogFormHelper.ModalDialogFormLink("Detailed", ViewDataTyped.EditDetailedProjectLocationUrl, string.Format("Edit {0} - Detail", FieldDefinition.ProjectLocation.GetFieldDefinitionLabel()), 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.MapFormID)</li>
 
                                         <li>
-                                            @ModalDialogFormHelper.ModalDialogFormLink("Priority Areas", ViewDataTyped.EditProjectPriorityAreaUrl, "Edit Priority Areas", 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectPriorityAreaFormID)
+                                            @ModalDialogFormHelper.ModalDialogFormLink(FieldDefinition.PriorityLandscape.GetFieldDefinitionLabelPluralized(), ViewDataTyped.EditProjectPriorityLandscapeUrl, "Edit Priority Areas", 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectPriorityLandscapeFormID)
                                         </li>
                                         <li>
                                             @ModalDialogFormHelper.ModalDialogFormLink("Regions", ViewDataTyped.EditProjectRegionUrl, "Edit Regions", 1000, ViewDataTyped.UserHasEditProjectPermissions, ViewDataTyped.EditProjectRegionFormID)

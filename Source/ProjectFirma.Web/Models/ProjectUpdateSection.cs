@@ -112,22 +112,22 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectUpdateSectionPriorityAreas
+    public partial class ProjectUpdateSectionPriorityLandscapes
     {
         public override bool IsComplete(ProjectUpdateBatch projectUpdateBatch)
         {
-            return projectUpdateBatch.IsProjectPriorityAreaValid();
+            return projectUpdateBatch.IsProjectPriorityLandscapeValid();
         }
 
         public override string GetSectionUrl(Project project)
         {
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.PriorityAreas(project)) : null;
+            return ModelObjectHelpers.IsRealPrimaryKeyValue(projectUpdateBatch.ProjectUpdateBatchID) ? SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.PriorityLandscapes(project)) : null;
         }
 
         public override bool SectionIsUpdated(UpdateStatus updateStatus)
         {
-            return updateStatus.IsPriorityAreasUpdated;
+            return updateStatus.IsPriorityLandscapesUpdated;
         }
     }
 

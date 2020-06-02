@@ -104,7 +104,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<PersonStewardOrganization> PersonStewardOrganizations { get; set; }
         public virtual DbSet<PersonStewardRegion> PersonStewardRegions { get; set; }
         public virtual DbSet<PersonStewardTaxonomyBranch> PersonStewardTaxonomyBranches { get; set; }
-        public virtual DbSet<PriorityArea> PriorityAreas { get; set; }
+        public virtual DbSet<PriorityLandscape> PriorityLandscapes { get; set; }
         public virtual DbSet<ProgramIndex> ProgramIndices { get; set; }
         public virtual DbSet<ProjectClassification> ProjectClassifications { get; set; }
         public virtual DbSet<ProjectCode> ProjectCodes { get; set; }
@@ -136,8 +136,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<ProjectOrganizationUpdate> ProjectOrganizationUpdates { get; set; }
         public virtual DbSet<ProjectPerson> ProjectPeople { get; set; }
         public virtual DbSet<ProjectPersonUpdate> ProjectPersonUpdates { get; set; }
-        public virtual DbSet<ProjectPriorityArea> ProjectPriorityAreas { get; set; }
-        public virtual DbSet<ProjectPriorityAreaUpdate> ProjectPriorityAreaUpdates { get; set; }
+        public virtual DbSet<ProjectPriorityLandscape> ProjectPriorityLandscapes { get; set; }
+        public virtual DbSet<ProjectPriorityLandscapeUpdate> ProjectPriorityLandscapeUpdates { get; set; }
         public virtual DbSet<ProjectRegion> ProjectRegions { get; set; }
         public virtual DbSet<ProjectRegionUpdate> ProjectRegionUpdates { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
@@ -162,6 +162,7 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<tmpAgreementContactsImportTemplate> tmpAgreementContactsImportTemplates { get; set; }
         public virtual DbSet<TrainingVideo> TrainingVideos { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<vGeoServerPriorityLandscape> vGeoServerPriorityLandscapes { get; set; }
         public virtual DbSet<vSocrataDataMartRawJsonImportIndex> vSocrataDataMartRawJsonImportIndices { get; set; }
 
         public object LoadType(Type type, int primaryKey)
@@ -521,8 +522,8 @@ namespace ProjectFirma.Web.Models
                 case "PersonStewardTaxonomyBranch":
                     return PersonStewardTaxonomyBranches.GetPersonStewardTaxonomyBranch(primaryKey);
 
-                case "PriorityArea":
-                    return PriorityAreas.GetPriorityArea(primaryKey);
+                case "PriorityLandscape":
+                    return PriorityLandscapes.GetPriorityLandscape(primaryKey);
 
                 case "ProgramIndex":
                     return ProgramIndices.GetProgramIndex(primaryKey);
@@ -672,11 +673,11 @@ namespace ProjectFirma.Web.Models
                 case "ProjectPersonUpdate":
                     return ProjectPersonUpdates.GetProjectPersonUpdate(primaryKey);
 
-                case "ProjectPriorityArea":
-                    return ProjectPriorityAreas.GetProjectPriorityArea(primaryKey);
+                case "ProjectPriorityLandscape":
+                    return ProjectPriorityLandscapes.GetProjectPriorityLandscape(primaryKey);
 
-                case "ProjectPriorityAreaUpdate":
-                    return ProjectPriorityAreaUpdates.GetProjectPriorityAreaUpdate(primaryKey);
+                case "ProjectPriorityLandscapeUpdate":
+                    return ProjectPriorityLandscapeUpdates.GetProjectPriorityLandscapeUpdate(primaryKey);
 
                 case "ProjectRegion":
                     return ProjectRegions.GetProjectRegion(primaryKey);

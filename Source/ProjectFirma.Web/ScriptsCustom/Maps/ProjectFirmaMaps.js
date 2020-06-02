@@ -526,11 +526,11 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
                 link: linkHtml
             });
             break;
-        case "PriorityAreaLocation":
-            url = "/PriorityArea/Detail/" + firstFeature.properties.PriorityAreaID;
-            linkText = firstFeature.properties.PriorityAreaName;
+        case "PriorityLandscapeLocation":
+            url = "/PriorityLandscape/Detail/" + firstFeature.properties.PriorityLandscapeID;
+            linkText = firstFeature.properties.PriorityLandscapeName;
             linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
-            labelText = "Priority Area";
+            labelText = "Priority Landscape";
             deferred.resolve({
                 label: labelText,
                 link: linkHtml

@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Models
             return AreProjectBasicsValid && AreExpendituresValid() &&
                   // ArePerformanceMeasuresValid() &&
                    IsProjectLocationSimpleValid() &&
-                   IsProjectPriorityAreaValid() &&
+                   IsProjectPriorityLandscapeValid() &&
                    IsProjectRegionValid();
         }
 
@@ -124,8 +124,8 @@ namespace ProjectFirma.Web.Models
             // project locations - detailed
             ProjectLocationUpdate.CreateFromProject(projectUpdateBatch);
 
-            // project priority area
-            ProjectPriorityAreaUpdate.CreateFromProject(projectUpdateBatch);
+            // project priority landscape
+            ProjectPriorityLandscapeUpdate.CreateFromProject(projectUpdateBatch);
 
             // project region
             ProjectRegionUpdate.CreateFromProject(projectUpdateBatch);
@@ -269,10 +269,10 @@ namespace ProjectFirma.Web.Models
             RefreshFromDatabase(ProjectLocationStagingUpdates);
         }
 
-        public void DeleteProjectPriorityAreaUpdates()
+        public void DeleteProjectPriorityLandscapeUpdates()
         {
-            HttpRequestStorage.DatabaseEntities.ProjectPriorityAreaUpdates.DeleteProjectPriorityAreaUpdate(ProjectPriorityAreaUpdates);
-            RefreshFromDatabase(ProjectPriorityAreaUpdates);
+            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapeUpdates.DeleteProjectPriorityLandscapeUpdate(ProjectPriorityLandscapeUpdates);
+            RefreshFromDatabase(ProjectPriorityLandscapeUpdates);
         }
 
         public void DeleteProjectRegionUpdates()
@@ -502,16 +502,16 @@ namespace ProjectFirma.Web.Models
             return ValidateProjectRegion().IsValid;
         }
 
-        public PriorityAreasValidationResult ValidateProjectPriorityArea()
+        public PriorityLandscapesValidationResult ValidateProjectPriorityLandscape()
         {
-            var incomplete = !ProjectPriorityAreaUpdates.Any() && string.IsNullOrWhiteSpace(NoPriorityAreasExplanation);
-            var priorityAreaValidationResult = new PriorityAreasValidationResult(incomplete);
-            return priorityAreaValidationResult;
+            var incomplete = !ProjectPriorityLandscapeUpdates.Any() && string.IsNullOrWhiteSpace(NoPriorityLandscapesExplanation);
+            var priorityLandscapeValidationResult = new PriorityLandscapesValidationResult(incomplete);
+            return priorityLandscapeValidationResult;
         }
 
-        public bool IsProjectPriorityAreaValid()
+        public bool IsProjectPriorityLandscapeValid()
         {
-            return ValidateProjectPriorityArea().IsValid;
+            return ValidateProjectPriorityLandscape().IsValid;
         }
 
         public void SubmitToReviewer(Person currentPerson, DateTime transitionDate)
@@ -536,7 +536,7 @@ namespace ProjectFirma.Web.Models
             IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
             IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
             IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
-            IList<ProjectPriorityArea> projectPriorityAreas, 
+            IList<ProjectPriorityLandscape> projectPriorityLandscapes, 
             IList<ProjectRegion> projectRegions, 
             IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
             IList<ProjectOrganization> allProjectOrganizations,
@@ -556,7 +556,7 @@ namespace ProjectFirma.Web.Models
                 projectNotes,
                 projectImages,
                 projectLocations,
-                projectPriorityAreas,
+                projectPriorityLandscapes,
                 projectRegions,
                 projectGrantAllocationRequests,
                 allProjectOrganizations,
@@ -591,7 +591,7 @@ namespace ProjectFirma.Web.Models
                 IList<PerformanceMeasureActualSubcategoryOption> performanceMeasureActualSubcategoryOptions,
                 IList<ProjectExternalLink> projectExternalLinks, IList<ProjectNote> projectNotes,
                 IList<ProjectImage> projectImages, IList<ProjectLocation> projectLocations,
-                IList<ProjectPriorityArea> projectPriorityAreas,
+                IList<ProjectPriorityLandscape> projectPriorityLandscapes,
                 IList<ProjectRegion> projectRegions,
                 IList<ProjectGrantAllocationRequest> projectGrantAllocationRequests,
                 IList<ProjectOrganization> allProjectOrganizations,
@@ -635,8 +635,8 @@ namespace ProjectFirma.Web.Models
             // project location detailed
             ProjectLocationUpdate.CommitChangesToProject(this, projectLocations);
 
-            // project priorityArea
-            ProjectPriorityAreaUpdate.CommitChangesToProject(this, projectPriorityAreas);
+            // project priorityLandscape
+            ProjectPriorityLandscapeUpdate.CommitChangesToProject(this, projectPriorityLandscapes);
 
             // project region
             ProjectRegionUpdate.CommitChangesToProject(this, projectRegions);

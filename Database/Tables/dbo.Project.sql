@@ -28,9 +28,9 @@ CREATE TABLE [dbo].[Project](
 	[NoExpendituresToReportExplanation] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[FocusAreaID] [int] NULL,
 	[NoRegionsExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[NoPriorityAreasExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[ExpirationDate] [datetime] NULL,
 	[FhtProjectNumber] [varchar](20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[NoPriorityLandscapesExplanation] [varchar](4000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
  CONSTRAINT [PK_Project_ProjectID] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC

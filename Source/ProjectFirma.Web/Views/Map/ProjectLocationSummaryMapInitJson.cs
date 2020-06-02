@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.Map
         public bool HasSimpleLocation { get; }
         public bool HasDetailedLocation { get; }
         public bool HasRegions { get; }
-        public bool HasPriorityAreas { get; }
+        public bool HasPriorityLandscapes { get; }
         /* used by ProjectFirmaMaps.ProjectLocationSummary.js */
 
         public ProjectLocationSummaryMapInitJson(IProject project, string mapDivID, bool addProjectProperties) 
@@ -82,11 +82,11 @@ namespace ProjectFirma.Web.Views.Map
                 Layers.Add(new LayerGeoJson("Region", regionGeoJsonFeatureCollection, "#2dc3a1", 1, LayerInitialVisibility.Show));
             }
 
-            var priorityAreaGeoJsonFeatureCollection = project.GetProjectPriorityAreas().ToGeoJsonFeatureCollection();
-            HasPriorityAreas = (priorityAreaGeoJsonFeatureCollection != null);
-            if (HasPriorityAreas)
+            var priorityLandscapeGeoJsonFeatureCollection = project.GetProjectPriorityLandscapes().ToGeoJsonFeatureCollection();
+            HasPriorityLandscapes = (priorityLandscapeGeoJsonFeatureCollection != null);
+            if (HasPriorityLandscapes)
             {
-                Layers.Add(new LayerGeoJson("Priority Area", priorityAreaGeoJsonFeatureCollection, "#2dc3a1", 1, LayerInitialVisibility.Show));
+                Layers.Add(new LayerGeoJson("Priority Landscape", priorityLandscapeGeoJsonFeatureCollection, "#2dc3a1", 1, LayerInitialVisibility.Show));
             }
 
 

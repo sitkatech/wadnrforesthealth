@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Views.Project
         public string EditSimpleProjectLocationUrl { get; }
         public string EditDetailedProjectLocationUrl { get; }
         public string EditProjectRegionUrl { get; }
-        public string EditProjectPriorityAreaUrl { get; }
+        public string EditProjectPriorityLandscapeUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
         public string EditPerformanceMeasureExpectedsUrl { get; }
         public string EditPerformanceMeasureActualsUrl { get; }
@@ -95,7 +95,7 @@ namespace ProjectFirma.Web.Views.Project
         public string LandownerCostShareLineItemGridName { get; }
         public string LandownerCostShareLineItemGridDataUrl { get; }
 
-        public string EditProjectPriorityAreaFormID { get; }
+        public string EditProjectPriorityLandscapeFormID { get; }
         public string EditProjectRegionFormID { get; }
         public string EditProjectBoundingBoxFormID { get; }
         public string ProjectStewardCannotEditUrl { get; }
@@ -148,7 +148,7 @@ namespace ProjectFirma.Web.Views.Project
             List<Models.ClassificationSystem> classificationSystems,
             string editProjectBoundingBoxFormID, ProjectPeopleDetailViewData projectPeopleDetailViewData,
             LandownerCostShareLineItemProjectDetailGridSpec landownerCostShareLineItemProjectDetailGridSpec,
-            string landownerCostShareLineItemGridDataUrl, string editProjectRegionUrl, string editProjectPriorityAreaUrl,
+            string landownerCostShareLineItemGridDataUrl, string editProjectRegionUrl, string editProjectPriorityLandscapeUrl,
             InteractionEventGridSpec projectInteractionEventsGridSpec, string projectInteractionEventsGridDataUrl)
             : base(currentPerson, project)
         {
@@ -291,7 +291,7 @@ namespace ProjectFirma.Web.Views.Project
             EditSimpleProjectLocationUrl = editSimpleProjectLocationUrl;
             EditDetailedProjectLocationUrl = editDetailedProjectLocationUrl;
             EditProjectRegionUrl = editProjectRegionUrl;
-            EditProjectPriorityAreaUrl = editProjectPriorityAreaUrl;
+            EditProjectPriorityLandscapeUrl = editProjectPriorityLandscapeUrl;
 
             EditProjectBoundingBoxUrl = SitkaRoute<ProjectLocationController>.BuildUrlFromExpression(c => c.EditProjectBoundingBox(project));
             EditProjectBoundingBoxFormID = editProjectBoundingBoxFormID;
@@ -341,7 +341,7 @@ namespace ProjectFirma.Web.Views.Project
             ProjectNotificationGridDataUrl = projectNotificationGridDataUrl;
             ProjectOrganizationsDetailViewData = projectOrganizationsDetailViewData;
            
-            EditProjectPriorityAreaFormID = ProjectPriorityAreaController.GetEditProjectPriorityAreasFormID();
+            EditProjectPriorityLandscapeFormID = ProjectPriorityLandscapeController.GetEditProjectPriorityLandscapesFormID();
             EditProjectRegionFormID = ProjectRegionController.GetEditProjectRegionsFormID();
 
             ProjectStewardCannotEditUrl =
