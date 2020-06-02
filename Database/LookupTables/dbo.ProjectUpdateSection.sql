@@ -13,6 +13,6 @@ values
 (11, 'NotesAndDocuments', 'Documents and Notes', 120, 0, 5),
 (12, 'Organizations', 'Organizations', 25, 1, 1),
 (13, 'Contacts', 'Contacts', 26, 1, 1),
-(14, 'Regions', 'Regions', 50, 1, 2),
+(14, 'DNRUplandRegions', 'DNR Upland Regions', 50, 1, 2),
 (15, 'PriorityAreas', 'Priority Areas', 45, 1, 2),
 (16, 'ProjectAttributes', 'Project Attributes', 22, 1, 1)

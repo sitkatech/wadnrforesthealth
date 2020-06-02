@@ -83,7 +83,7 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectCreateSectionRegions
+    public partial class ProjectCreateSectionDNRUplandRegions
     {
         public override bool IsComplete(Project project)
         {

@@ -1139,7 +1139,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 projectUpdateBatch.NoRegionsExplanation = viewModel.NoRegionsExplanation;
             }
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.Regions.ProjectUpdateSectionDisplayName);
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.DNRUplandRegions.ProjectUpdateSectionDisplayName);
         }
 
         private ViewResult ViewRegions(Project project, ProjectUpdateBatch projectUpdateBatch, RegionsViewModel viewModel)

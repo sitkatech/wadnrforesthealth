@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionNotesAndDocuments NotesAndDocuments = ProjectUpdateSectionNotesAndDocuments.Instance;
         public static readonly ProjectUpdateSectionOrganizations Organizations = ProjectUpdateSectionOrganizations.Instance;
         public static readonly ProjectUpdateSectionContacts Contacts = ProjectUpdateSectionContacts.Instance;
-        public static readonly ProjectUpdateSectionRegions Regions = ProjectUpdateSectionRegions.Instance;
+        public static readonly ProjectUpdateSectionDNRUplandRegions DNRUplandRegions = ProjectUpdateSectionDNRUplandRegions.Instance;
         public static readonly ProjectUpdateSectionPriorityAreas PriorityAreas = ProjectUpdateSectionPriorityAreas.Instance;
         public static readonly ProjectUpdateSectionProjectAttributes ProjectAttributes = ProjectUpdateSectionProjectAttributes.Instance;
 
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityAreas, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -120,6 +120,8 @@ namespace ProjectFirma.Web.Models
                     return Basics;
                 case ProjectUpdateSectionEnum.Contacts:
                     return Contacts;
+                case ProjectUpdateSectionEnum.DNRUplandRegions:
+                    return DNRUplandRegions;
                 case ProjectUpdateSectionEnum.ExpectedFunding:
                     return ExpectedFunding;
                 case ProjectUpdateSectionEnum.ExternalLinks:
@@ -140,8 +142,6 @@ namespace ProjectFirma.Web.Models
                     return PriorityAreas;
                 case ProjectUpdateSectionEnum.ProjectAttributes:
                     return ProjectAttributes;
-                case ProjectUpdateSectionEnum.Regions:
-                    return Regions;
                 default:
                     throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
             }
@@ -160,7 +160,7 @@ namespace ProjectFirma.Web.Models
         NotesAndDocuments = 11,
         Organizations = 12,
         Contacts = 13,
-        Regions = 14,
+        DNRUplandRegions = 14,
         PriorityAreas = 15,
         ProjectAttributes = 16
     }
@@ -225,10 +225,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionContacts Instance = new ProjectUpdateSectionContacts(13, @"Contacts", @"Contacts", 26, true, 1);
     }
 
-    public partial class ProjectUpdateSectionRegions : ProjectUpdateSection
+    public partial class ProjectUpdateSectionDNRUplandRegions : ProjectUpdateSection
     {
-        private ProjectUpdateSectionRegions(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionRegions Instance = new ProjectUpdateSectionRegions(14, @"Regions", @"Regions", 50, true, 2);
+        private ProjectUpdateSectionDNRUplandRegions(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectUpdateSectionDNRUplandRegions Instance = new ProjectUpdateSectionDNRUplandRegions(14, @"DNRUplandRegions", @"DNR Upland Regions", 50, true, 2);
     }
 
     public partial class ProjectUpdateSectionPriorityAreas : ProjectUpdateSection

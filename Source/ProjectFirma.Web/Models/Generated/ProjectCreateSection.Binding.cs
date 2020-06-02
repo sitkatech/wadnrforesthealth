@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionNotesAndDocuments NotesAndDocuments = ProjectCreateSectionNotesAndDocuments.Instance;
         public static readonly ProjectCreateSectionOrganizations Organizations = ProjectCreateSectionOrganizations.Instance;
         public static readonly ProjectCreateSectionContacts Contacts = ProjectCreateSectionContacts.Instance;
-        public static readonly ProjectCreateSectionRegions Regions = ProjectCreateSectionRegions.Instance;
+        public static readonly ProjectCreateSectionDNRUplandRegions DNRUplandRegions = ProjectCreateSectionDNRUplandRegions.Instance;
         public static readonly ProjectCreateSectionPriorityAreas PriorityAreas = ProjectCreateSectionPriorityAreas.Instance;
         public static readonly ProjectCreateSectionProjectAttributes ProjectAttributes = ProjectCreateSectionProjectAttributes.Instance;
 
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, Regions, PriorityAreas, ProjectAttributes };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityAreas, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -123,6 +123,8 @@ namespace ProjectFirma.Web.Models
                     return Classifications;
                 case ProjectCreateSectionEnum.Contacts:
                     return Contacts;
+                case ProjectCreateSectionEnum.DNRUplandRegions:
+                    return DNRUplandRegions;
                 case ProjectCreateSectionEnum.ExpectedFunding:
                     return ExpectedFunding;
                 case ProjectCreateSectionEnum.ExpectedPerformanceMeasures:
@@ -141,8 +143,6 @@ namespace ProjectFirma.Web.Models
                     return PriorityAreas;
                 case ProjectCreateSectionEnum.ProjectAttributes:
                     return ProjectAttributes;
-                case ProjectCreateSectionEnum.Regions:
-                    return Regions;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
                     return ReportedPerformanceMeasures;
                 default:
@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Models
         NotesAndDocuments = 14,
         Organizations = 15,
         Contacts = 16,
-        Regions = 17,
+        DNRUplandRegions = 17,
         PriorityAreas = 18,
         ProjectAttributes = 19
     }
@@ -235,10 +235,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionContacts Instance = new ProjectCreateSectionContacts(16, @"Contacts", @"Contacts", 26, true, 1);
     }
 
-    public partial class ProjectCreateSectionRegions : ProjectCreateSection
+    public partial class ProjectCreateSectionDNRUplandRegions : ProjectCreateSection
     {
-        private ProjectCreateSectionRegions(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionRegions Instance = new ProjectCreateSectionRegions(17, @"Regions", @"Regions", 50, true, 2);
+        private ProjectCreateSectionDNRUplandRegions(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionDNRUplandRegions Instance = new ProjectCreateSectionDNRUplandRegions(17, @"DNRUplandRegions", @"DNR Upland Regions", 50, true, 2);
     }
 
     public partial class ProjectCreateSectionPriorityAreas : ProjectCreateSection
