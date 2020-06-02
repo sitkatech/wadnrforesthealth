@@ -918,11 +918,11 @@
     <Compile Include="Views\ProjectCreate\ContactsViewModel.cs" />
     <Compile Include="Views\Grant\GrantCreateHelper.cs" />
     <Compile Include="Views\ProjectCreate\PriorityAreas.cs" />
-    <Compile Include="Views\ProjectCreate\Regions.cs" />
+    <Compile Include="Views\ProjectCreate\DNRUplandRegions.cs" />
     <Compile Include="Views\ProjectCreate\PriorityAreasViewData.cs" />
-    <Compile Include="Views\ProjectCreate\RegionsViewData.cs" />
+    <Compile Include="Views\ProjectCreate\DNRUplandRegionsViewData.cs" />
     <Compile Include="Views\ProjectCreate\PriorityAreasViewModel.cs" />
-    <Compile Include="Views\ProjectCreate\RegionsViewModel.cs" />
+    <Compile Include="Views\ProjectCreate\DNRUplandRegionsViewModel.cs" />
     <Compile Include="Views\ProjectPriorityArea\EditProjectPriorityAreas.cs" />
     <Compile Include="Views\ProjectPriorityArea\EditProjectPriorityAreasViewData.cs" />
     <Compile Include="Views\ProjectPriorityArea\EditProjectPriorityAreasViewModel.cs" />
@@ -1044,7 +1044,7 @@
     <Content Include="Views\Grant\Detail.cshtml" />
     <Content Include="Views\InteractionEvent\InteractionEventController.js" />
     <Content Include="Views\InteractionEvent\InteractionEventLocationSimpleController.js" />
-    <Content Include="Views\ProjectCreate\Regions.cshtml" />
+    <Content Include="Views\ProjectCreate\DNRUplandRegions.cshtml" />
     <Content Include="Views\Grant\EditGrant.cshtml" />
     <Content Include="Views\GrantAllocation\Detail.cshtml" />
     <Content Include="Views\Grant\EditGrantNote.cshtml" />

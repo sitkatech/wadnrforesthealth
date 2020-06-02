@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="LocationSimpleViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="LocationSimpleViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,29 +19,21 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using ProjectFirma.Web.Models;
 using ProjectFirma.Web.Views.ProjectRegion;
 
-
 namespace ProjectFirma.Web.Views.ProjectCreate
-{    
-    public class RegionsViewModel : EditProjectRegionsViewModel
+{
+    public class DNRUplandRegionsViewData : ProjectCreateViewData
     {
-        /// <summary>
-        /// Needed by the ModelBinder
-        /// </summary>
-        public RegionsViewModel()
-        {
-        }
+        public readonly EditProjectRegionsViewData EditProjectRegionsViewData;
 
-        public RegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
+        public DNRUplandRegionsViewData(Person currentPerson,
+            Models.Project project,
+            ProposalSectionsStatus proposalSectionsStatus,
+            EditProjectRegionsViewData editProjectRegionsViewData) : base(currentPerson, project, Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, proposalSectionsStatus)
         {
+            EditProjectRegionsViewData = editProjectRegionsViewData;
         }
-        
-        public void UpdateModel(Models.Project project, List<Models.ProjectRegion> currentProjectRegions, ObservableCollection<Models.ProjectRegion> allProjectRegions)
-        {
-            base.UpdateModel(project, currentProjectRegions, allProjectRegions);
-        }
-    }    
+    }
 }

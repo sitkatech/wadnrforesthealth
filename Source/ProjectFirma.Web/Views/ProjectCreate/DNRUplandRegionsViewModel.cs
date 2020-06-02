@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="LocationSimpleViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionsViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -19,21 +19,29 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
-using ProjectFirma.Web.Models;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ProjectFirma.Web.Views.ProjectRegion;
 
-namespace ProjectFirma.Web.Views.ProjectCreate
-{
-    public class RegionsViewData : ProjectCreateViewData
-    {
-        public readonly EditProjectRegionsViewData EditProjectRegionsViewData;
 
-        public RegionsViewData(Person currentPerson,
-            Models.Project project,
-            ProposalSectionsStatus proposalSectionsStatus,
-            EditProjectRegionsViewData editProjectRegionsViewData) : base(currentPerson, project, "Regions", proposalSectionsStatus)
+namespace ProjectFirma.Web.Views.ProjectCreate
+{    
+    public class DNRUplandRegionsViewModel : EditProjectRegionsViewModel
+    {
+        /// <summary>
+        /// Needed by the ModelBinder
+        /// </summary>
+        public DNRUplandRegionsViewModel()
         {
-            EditProjectRegionsViewData = editProjectRegionsViewData;
         }
-    }
+
+        public DNRUplandRegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
+        {
+        }
+        
+        public void UpdateModel(Models.Project project, List<Models.ProjectRegion> currentProjectRegions, ObservableCollection<Models.ProjectRegion> allProjectRegions)
+        {
+            base.UpdateModel(project, currentProjectRegions, allProjectRegions);
+        }
+    }    
 }

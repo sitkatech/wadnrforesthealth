@@ -868,11 +868,11 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var regionIDs = project.ProjectRegions.Select(x => x.DNRUplandRegionID).ToList();
             var noRegionsExplanation = project.NoRegionsExplanation;
-            var viewModel = new RegionsViewModel(regionIDs, noRegionsExplanation);
+            var viewModel = new DNRUplandRegionsViewModel(regionIDs, noRegionsExplanation);
             return ViewEditRegion(project, viewModel);
         }
 
-        private ViewResult ViewEditRegion(Project project, RegionsViewModel viewModel)
+        private ViewResult ViewEditRegion(Project project, DNRUplandRegionsViewModel viewModel)
         {
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(project);
             var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
@@ -887,15 +887,15 @@ namespace ProjectFirma.Web.Controllers
 
             var proposalSectionsStatus = GetProposalSectionsStatus(project);
             proposalSectionsStatus.IsRegionSectionComplete = ModelState.IsValid && proposalSectionsStatus.IsRegionSectionComplete;
-            var viewData = new RegionsViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
+            var viewData = new DNRUplandRegionsViewData(CurrentPerson, project, proposalSectionsStatus, editProjectLocationViewData);
 
-            return RazorView<Views.ProjectCreate.Regions, RegionsViewData, RegionsViewModel>(viewData, viewModel);
+            return RazorView<Views.ProjectCreate.DNRUplandRegions, DNRUplandRegionsViewData, DNRUplandRegionsViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [ProjectCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey, RegionsViewModel viewModel)
+        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey, DNRUplandRegionsViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
