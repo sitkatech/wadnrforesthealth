@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="LocationSimpleViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionsViewData.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -27,19 +27,19 @@ using ProjectFirma.Web.Views.ProjectRegion;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
-    public class RegionsViewData : ProjectUpdateViewData
+    public class DNRUplandRegionsViewData : ProjectUpdateViewData
     {
         public readonly EditProjectRegionsViewData EditProjectRegionsViewData;
         public readonly ProjectLocationSummaryViewData ProjectLocationSummaryViewData;
         public readonly string RefreshUrl;
         public readonly SectionCommentsViewData SectionCommentsViewData;
 
-        public RegionsViewData(Person currentPerson,
+        public DNRUplandRegionsViewData(Person currentPerson,
             Models.ProjectUpdate projectUpdate,
             EditProjectRegionsViewData editProjectRegionsViewData,
             ProjectLocationSummaryViewData projectLocationSummaryViewData, 
-            RegionsValidationResult regionValidationResult,
-            UpdateStatus updateStatus) : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, regionValidationResult.GetWarningMessages(), "Regions")
+            DNRUplandRegionsValidationResult dnrUplandRegionValidationResult,
+            UpdateStatus updateStatus) : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, dnrUplandRegionValidationResult.GetWarningMessages(), Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName)
         {
             EditProjectRegionsViewData = editProjectRegionsViewData;
             ProjectLocationSummaryViewData = projectLocationSummaryViewData;

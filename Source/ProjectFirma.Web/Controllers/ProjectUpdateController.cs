@@ -1110,14 +1110,14 @@ namespace ProjectFirma.Web.Controllers
 
             var regionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegionID).ToList();
             var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
-            var viewModel = new RegionsViewModel(regionIDs, noRegionsExplanation);
+            var viewModel = new DNRUplandRegionsViewModel(regionIDs, noRegionsExplanation);
             return ViewRegions(project, projectUpdateBatch, viewModel);
         }
 
         [HttpPost]
         [ProjectUpdateCreateEditSubmitFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey, RegionsViewModel viewModel)
+        public ActionResult Regions(ProjectPrimaryKey projectPrimaryKey, DNRUplandRegionsViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
@@ -1142,7 +1142,7 @@ namespace ProjectFirma.Web.Controllers
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.DNRUplandRegions.ProjectUpdateSectionDisplayName);
         }
 
-        private ViewResult ViewRegions(Project project, ProjectUpdateBatch projectUpdateBatch, RegionsViewModel viewModel)
+        private ViewResult ViewRegions(Project project, ProjectUpdateBatch projectUpdateBatch, DNRUplandRegionsViewModel viewModel)
         {
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
 
@@ -1163,8 +1163,8 @@ namespace ProjectFirma.Web.Controllers
             var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
             var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityArea>(), regions, noRegionsExplanation, string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
-            var viewData = new RegionsViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, regionValidationResult, updateStatus);
-            return RazorView<Views.ProjectUpdate.Regions, RegionsViewData, RegionsViewModel>(viewData, viewModel);
+            var viewData = new DNRUplandRegionsViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, regionValidationResult, updateStatus);
+            return RazorView<Views.ProjectUpdate.DNRUplandRegions, DNRUplandRegionsViewData, DNRUplandRegionsViewModel>(viewData, viewModel);
         }
 
         [HttpGet]

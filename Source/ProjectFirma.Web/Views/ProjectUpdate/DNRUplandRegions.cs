@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="LocationSimple.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegions.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -22,7 +22,7 @@ using LtInfo.Common.Mvc;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
-    public abstract class Regions : TypedWebViewPage<RegionsViewData, RegionsViewModel>
+    public abstract class DNRUplandRegions : TypedWebViewPage<DNRUplandRegionsViewData, DNRUplandRegionsViewModel>
     {
     }
 }

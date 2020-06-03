@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionsViewModel.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -28,16 +28,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjectFirma.Web.Views.ProjectUpdate
 {
-    public class RegionsViewModel : EditProjectRegionsViewModel
+    public class DNRUplandRegionsViewModel : EditProjectRegionsViewModel
     {
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
-        public RegionsViewModel()
+        public DNRUplandRegionsViewModel()
         {
         }
 
-        public RegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
+        public DNRUplandRegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
         {
         }
 

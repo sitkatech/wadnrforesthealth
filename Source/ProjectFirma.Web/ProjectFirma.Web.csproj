@@ -938,13 +938,13 @@
     <Compile Include="Views\ProjectUpdate\CustomAttributesViewModel.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreas.cs" />
     <Compile Include="Views\ProjectUpdate\ProjectAttributeValidationResult.cs" />
-    <Compile Include="Views\ProjectUpdate\Regions.cs" />
+    <Compile Include="Views\ProjectUpdate\DNRUplandRegions.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreasValidationResult.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreasViewData.cs" />
-    <Compile Include="Views\ProjectUpdate\RegionsViewData.cs" />
+    <Compile Include="Views\ProjectUpdate\DNRUplandRegionsViewData.cs" />
     <Compile Include="Views\ProjectUpdate\PriorityAreasViewModel.cs" />
-    <Compile Include="Views\ProjectUpdate\RegionsViewModel.cs" />
-    <Compile Include="Views\ProjectUpdate\RegionsValidationResult.cs" />
+    <Compile Include="Views\ProjectUpdate\DNRUplandRegionsViewModel.cs" />
+    <Compile Include="Views\ProjectUpdate\DNRUplandRegionsValidationResult.cs" />
     <Compile Include="Views\PriorityArea\Detail.cs" />
     <Compile Include="Views\PriorityArea\DetailViewData.cs" />
     <Compile Include="Views\PriorityArea\Index.cs" />
@@ -1205,7 +1205,7 @@
     <Content Include="Views\ProjectUpdate\Contacts.cshtml" />
     <Content Include="Views\ProjectCreate\Contacts.cshtml" />
     <Content Include="Views\ProjectRegion\EditProjectRegions.cshtml" />
-    <Content Include="Views\ProjectUpdate\Regions.cshtml" />
+    <Content Include="Views\ProjectUpdate\DNRUplandRegions.cshtml" />
     <Content Include="Views\ProjectPriorityArea\EditProjectPriorityAreas.cshtml" />
     <Content Include="Views\ProjectCreate\PriorityAreas.cshtml" />
     <Compile Include="Views\Project\ForwardLookingFactSheet.cs" />

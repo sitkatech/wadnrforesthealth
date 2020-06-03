@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.ProjectRegion
             {
                 errors.Add(
                     new SitkaValidationResult<EditProjectRegionsViewModel, string>(
-                        $"Select at least one region or provide explanatory information in the Notes section if there are no applicable regions for this Project.",
+                        $"Select at least one {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()} or provide explanatory information in the Notes section if there are no applicable {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized()} for this Project.",
                         x => x.NoRegionsExplanation));
             }
 

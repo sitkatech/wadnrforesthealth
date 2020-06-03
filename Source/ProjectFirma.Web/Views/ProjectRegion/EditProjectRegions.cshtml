@@ -52,9 +52,9 @@ Source code is available upon request via <support@sitkatech.com>.
 <div class="row">
     <div class="col-xs-12">
         <p>
-            Select one or more regions to associate with this @FieldDefinition.Project.GetFieldDefinitionLabel().ToLower().
-            You can select regions by clicking on the map or searching by region name.
-            If your @FieldDefinition.Project.GetFieldDefinitionLabel().ToLower() is not associated with any region, please provide an explanation in the @Html.DisplayNameFor(m => m.NoRegionsExplanation).ToString().ToLower() field.
+            Select one or more @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized() to associate with this @FieldDefinition.Project.GetFieldDefinitionLabel().ToLower().
+            You can select @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized() by clicking on the map or searching by @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel() name.
+            If your @FieldDefinition.Project.GetFieldDefinitionLabel().ToLower() is not associated with any @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel(), please provide an explanation in the @Html.DisplayNameFor(m => m.NoRegionsExplanation).ToString().ToLower() field.
         </p>
     </div>
 </div>
@@ -77,14 +77,14 @@ Source code is available upon request via <support@sitkatech.com>.
                 </span>
             </div>
             <div class="alert alert-warning" ng-if="!AngularModel.DNRUplandRegionIDs || AngularModel.DNRUplandRegionIDs.length < 1">
-                No regions selected for this @FieldDefinition.Project.GetFieldDefinitionLabel(), provide an explanation in the @Html.DisplayNameFor(m => m.NoRegionsExplanation) field or select a region.
+                No @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized() selected for this @FieldDefinition.Project.GetFieldDefinitionLabel(), provide an explanation in the @Html.DisplayNameFor(m => m.NoRegionsExplanation) field or select a @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel().
             </div>
             <div ng-if="AngularModel.DNRUplandRegionIDs.length >= 1">
                 <table class="table">
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Region Name</th>
+                            <th>@FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel() Name</th>
                         </tr>
                     </thead>
                     <tbody>

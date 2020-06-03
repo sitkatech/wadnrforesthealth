@@ -490,10 +490,10 @@ namespace ProjectFirma.Web.Models
             return ValidateProjectLocationSimple().IsValid;
         }
 
-        public RegionsValidationResult ValidateProjectRegion()
+        public DNRUplandRegionsValidationResult ValidateProjectRegion()
         {
             var incomplete = !ProjectRegionUpdates.Any() && string.IsNullOrWhiteSpace(NoRegionsExplanation);
-            var regionValidationResult = new RegionsValidationResult(incomplete);
+            var regionValidationResult = new DNRUplandRegionsValidationResult(incomplete);
             return regionValidationResult;
         }
 
