@@ -113,7 +113,7 @@ VALUES
 (290, N'GrantStartDate', 'Start Date', N'<p>The start date of the grant. </p>'),
 (291, N'GrantEndDate', 'End Date', N'<p>The end date of the grant. </p>'),
 (292, N'GrantNote', 'Grant Note', N'<p>Any additional important information about the grant. </p>'),
-(293, N'PriorityArea', 'Priority Area', 'Placeholder definition for Priority Area'),
+(293, N'PriorityLandscape', 'Priority Landscape', 'Placeholder definition for Priority Landscape'),
 (294, N'Invoice', 'Invoice', N'<p>Placeholder for Invoice</p>'),
 (295, N'Agreement', 'Agreement', N'<p>Placeholder for Agreement.</p>'),
 (296, N'FederalFundCode', 'Federal Fund Code', 'Placeholder definition for Federal Fund Code description.'),

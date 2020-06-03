@@ -67,7 +67,7 @@ namespace ProjectFirma.Web.Common
 
         public static List<string> GetWmsLayerNames()
         {
-            return new List<string> { GetDNRUplandRegionWmsLayerName(), GetPriorityAreaWmsLayerName() };
+            return new List<string> { GetDNRUplandRegionWmsLayerName(), GetPriorityLandscapeWmsLayerName() };
         }
 
         public static string GetDNRUplandRegionWmsLayerName()
@@ -75,9 +75,9 @@ namespace ProjectFirma.Web.Common
             return "WADNRForestHealth:DNRUplandRegion"; //todo: move region layer name to web config
         }
 
-        public static string GetPriorityAreaWmsLayerName()
+        public static string GetPriorityLandscapeWmsLayerName()
         {
-            return "WADNRForestHealth:PriorityArea";//todo: move priorityArea layer name to web config
+            return "WADNRForestHealth:PriorityLandscape";//todo: move priorityLandscape layer name to web config
         }
 
         public static string GetAllProjectLocationsSimpleWmsLayerName()

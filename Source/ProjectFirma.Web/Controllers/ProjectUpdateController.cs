@@ -46,7 +46,7 @@ using MoreLinq;
 using ProjectFirma.Web.ScheduledJobs;
 using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.ProjectFunding;
-using ProjectFirma.Web.Views.ProjectPriorityArea;
+using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
 using ProjectFirma.Web.Views.Shared.ExpenditureAndBudgetControls;
 using ProjectFirma.Web.Views.Shared.PerformanceMeasureControls;
@@ -820,7 +820,7 @@ namespace ProjectFirma.Web.Controllers
             var mapPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.LocationSimple(project, null));
             var mapFormID = GenerateEditProjectLocationFormID(project);
             var editProjectLocationViewData = new ProjectLocationSimpleViewData(CurrentPerson, mapInitJsonForEdit, FirmaWebConfiguration.GetWmsLayerNames(), null, mapPostUrl, mapFormID, FirmaWebConfiguration.WebMapServiceUrl);
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityArea>(), new List<DNRUplandRegion>(), string.Empty, string.Empty);
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), new List<DNRUplandRegion>(), string.Empty, string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new LocationSimpleViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, locationSimpleValidationResult, updateStatus);
             return RazorView<LocationSimple, LocationSimpleViewData, LocationSimpleViewModel>(viewData, viewModel);
@@ -1161,7 +1161,7 @@ namespace ProjectFirma.Web.Controllers
 
             var editProjectLocationViewData = new EditProjectRegionsViewData(CurrentPerson, mapInitJson, regionsInViewModel, editProjectRegionsPostUrl, editProjectRegionsFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
             var noRegionsExplanation = projectUpdateBatch.NoRegionsExplanation;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityArea>(), regions, noRegionsExplanation, string.Empty);
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, new List<PriorityLandscape>(), regions, noRegionsExplanation, string.Empty);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new DNRUplandRegionsViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, regionValidationResult, updateStatus);
             return RazorView<Views.ProjectUpdate.DNRUplandRegions, DNRUplandRegionsViewData, DNRUplandRegionsViewModel>(viewData, viewModel);
@@ -1208,10 +1208,10 @@ namespace ProjectFirma.Web.Controllers
         }
         #endregion
 
-        #region PriorityArea functions
+        #region PriorityLandscape functions
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
-        public ActionResult PriorityAreas(ProjectPrimaryKey projectPrimaryKey)
+        public ActionResult PriorityLandscapes(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
@@ -1220,16 +1220,16 @@ namespace ProjectFirma.Web.Controllers
                 return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
             }
 
-            var priorityAreaIDs = projectUpdateBatch.ProjectPriorityAreaUpdates.Select(x => x.PriorityAreaID).ToList();
-            var noPriorityAreasExplanation = projectUpdateBatch.NoPriorityAreasExplanation;
-            var viewModel = new PriorityAreasViewModel(priorityAreaIDs, noPriorityAreasExplanation);
-            return ViewPriorityAreas(project, projectUpdateBatch, viewModel);
+            var priorityLandscapeIDs = projectUpdateBatch.ProjectPriorityLandscapeUpdates.Select(x => x.PriorityLandscapeID).ToList();
+            var noPriorityLandscapesExplanation = projectUpdateBatch.NoPriorityLandscapesExplanation;
+            var viewModel = new PriorityLandscapesViewModel(priorityLandscapeIDs, noPriorityLandscapesExplanation);
+            return ViewPriorityLandscapes(project, projectUpdateBatch, viewModel);
         }
 
         [HttpPost]
         [ProjectUpdateCreateEditSubmitFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult PriorityAreas(ProjectPrimaryKey projectPrimaryKey, PriorityAreasViewModel viewModel)
+        public ActionResult PriorityLandscapes(ProjectPrimaryKey projectPrimaryKey, PriorityLandscapesViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
@@ -1240,59 +1240,59 @@ namespace ProjectFirma.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return ViewPriorityAreas(project, projectUpdateBatch, viewModel);
+                return ViewPriorityLandscapes(project, projectUpdateBatch, viewModel);
             }
-            var currentProjectUpdatePriorityAreas = projectUpdateBatch.ProjectPriorityAreaUpdates.ToList();
-            var allProjectUpdatePriorityAreas = HttpRequestStorage.DatabaseEntities.ProjectPriorityAreaUpdates.Local;
-            viewModel.UpdateModelBatch(projectUpdateBatch, currentProjectUpdatePriorityAreas, allProjectUpdatePriorityAreas);
+            var currentProjectUpdatePriorityLandscapes = projectUpdateBatch.ProjectPriorityLandscapeUpdates.ToList();
+            var allProjectUpdatePriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapeUpdates.Local;
+            viewModel.UpdateModelBatch(projectUpdateBatch, currentProjectUpdatePriorityLandscapes, allProjectUpdatePriorityLandscapes);
 
-            projectUpdateBatch.NoPriorityAreasExplanation = viewModel.NoPriorityAreasExplanation;
+            projectUpdateBatch.NoPriorityLandscapesExplanation = viewModel.NoPriorityLandscapesExplanation;
             if (projectUpdateBatch.IsSubmitted)
             {
-                projectUpdateBatch.NoPriorityAreasExplanation = viewModel.NoPriorityAreasExplanation;
+                projectUpdateBatch.NoPriorityLandscapesExplanation = viewModel.NoPriorityLandscapesExplanation;
             }
-            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.PriorityAreas.ProjectUpdateSectionDisplayName);
+            return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.PriorityLandscapes.ProjectUpdateSectionDisplayName);
         }
 
-        private ViewResult ViewPriorityAreas(Project project, ProjectUpdateBatch projectUpdateBatch, PriorityAreasViewModel viewModel)
+        private ViewResult ViewPriorityLandscapes(Project project, ProjectUpdateBatch projectUpdateBatch, PriorityLandscapesViewModel viewModel)
         {
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
 
             var boundingBox = ProjectLocationSummaryMapInitJson.GetProjectBoundingBox(projectUpdate);
-            var layers = MapInitJson.GetPriorityAreaMapLayers(LayerInitialVisibility.Show);
+            var layers = MapInitJson.GetPriorityLandscapeMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(projectUpdate));
-            var mapInitJson = new MapInitJson("projectPriorityAreaMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
+            var mapInitJson = new MapInitJson("projectPriorityLandscapeMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
            
-            var priorityAreaValidationResult = projectUpdateBatch.ValidateProjectPriorityArea();
-            var priorityAreas = projectUpdate.GetProjectPriorityAreas().ToList();
+            var priorityLandscapeValidationResult = projectUpdateBatch.ValidateProjectPriorityLandscape();
+            var priorityLandscapes = projectUpdate.GetProjectPriorityLandscapes().ToList();
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate, $"project_{project.ProjectID}_EditMap", false);
-            var priorityAreaIDs = viewModel.PriorityAreaIDs ?? new List<int>();
-            var priorityAreasInViewModel = HttpRequestStorage.DatabaseEntities.PriorityAreas.Where(x => priorityAreaIDs.Contains(x.PriorityAreaID)).ToList();
-            var editProjectPriorityAreasPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.PriorityAreas(project, null));
-            var editProjectPriorityAreasFormId = GenerateEditProjectLocationFormID(project);
+            var priorityLandscapeIDs = viewModel.PriorityLandscapeIDs ?? new List<int>();
+            var priorityLandscapesInViewModel = HttpRequestStorage.DatabaseEntities.PriorityLandscapes.Where(x => priorityLandscapeIDs.Contains(x.PriorityLandscapeID)).ToList();
+            var editProjectPriorityLandscapesPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.PriorityLandscapes(project, null));
+            var editProjectPriorityLandscapesFormId = GenerateEditProjectLocationFormID(project);
 
-            var editProjectLocationViewData = new EditProjectPriorityAreasViewData(CurrentPerson, mapInitJson, priorityAreasInViewModel, editProjectPriorityAreasPostUrl, editProjectPriorityAreasFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
-            var noPriorityAreasExplanation = projectUpdateBatch.NoPriorityAreasExplanation;
-            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, priorityAreas, new List<DNRUplandRegion>(), string.Empty, noPriorityAreasExplanation);
+            var editProjectLocationViewData = new EditProjectPriorityLandscapesViewData(CurrentPerson, mapInitJson, priorityLandscapesInViewModel, editProjectPriorityLandscapesPostUrl, editProjectPriorityLandscapesFormId, projectUpdate.HasProjectLocationPoint, projectUpdate.HasProjectLocationDetail);
+            var noPriorityLandscapesExplanation = projectUpdateBatch.NoPriorityLandscapesExplanation;
+            var projectLocationSummaryViewData = new ProjectLocationSummaryViewData(projectUpdate, projectLocationSummaryMapInitJson, priorityLandscapes, new List<DNRUplandRegion>(), string.Empty, noPriorityLandscapesExplanation);
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
-            var viewData = new PriorityAreasViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, priorityAreaValidationResult, updateStatus);
-            return RazorView<Views.ProjectUpdate.PriorityAreas, PriorityAreasViewData, PriorityAreasViewModel>(viewData, viewModel);
+            var viewData = new PriorityLandscapesViewData(CurrentPerson, projectUpdate, editProjectLocationViewData, projectLocationSummaryViewData, priorityLandscapeValidationResult, updateStatus);
+            return RazorView<Views.ProjectUpdate.PriorityLandscapes, PriorityLandscapesViewData, PriorityLandscapesViewModel>(viewData, viewModel);
         }
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
-        public PartialViewResult RefreshProjectPriorityArea(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult RefreshProjectPriorityLandscape(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
             var viewModel = new ConfirmDialogFormViewModel(projectUpdateBatch.ProjectUpdateBatchID);
-            return ViewRefreshProjectPriorityArea(viewModel);
+            return ViewRefreshProjectPriorityLandscape(viewModel);
         }
 
         [HttpPost]
         [ProjectUpdateCreateEditSubmitFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult RefreshProjectPriorityArea(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        public ActionResult RefreshProjectPriorityLandscape(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
@@ -1301,21 +1301,21 @@ namespace ProjectFirma.Web.Controllers
             {
                 return new ModalDialogFormJsonResult();
             }
-            projectUpdateBatch.DeleteProjectPriorityAreaUpdates();
+            projectUpdateBatch.DeleteProjectPriorityLandscapeUpdates();
 
             // refresh the data
-            ProjectPriorityAreaUpdate.CreateFromProject(projectUpdateBatch);
-            projectUpdateBatch.NoPriorityAreasExplanation = project.NoPriorityAreasExplanation;
+            ProjectPriorityLandscapeUpdate.CreateFromProject(projectUpdateBatch);
+            projectUpdateBatch.NoPriorityLandscapesExplanation = project.NoPriorityLandscapesExplanation;
             //ProjectGeospatialAreaTypeNoteUpdate.CreateFromProject(projectUpdateBatch);
             projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
 
-        private PartialViewResult ViewRefreshProjectPriorityArea(ConfirmDialogFormViewModel viewModel)
+        private PartialViewResult ViewRefreshProjectPriorityLandscape(ConfirmDialogFormViewModel viewModel)
         {
             var viewData =
                 new ConfirmDialogFormViewData(
-                    $"Are you sure you want to refresh the Priority Area data? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and any updates made in this section will be lost.");
+                    $"Are you sure you want to refresh the {FieldDefinition.PriorityLandscape.GetFieldDefinitionLabel()} data? This will pull the most recently approved information for the {FieldDefinition.Project.GetFieldDefinitionLabel()} and any updates made in this section will be lost.");
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
         #endregion
@@ -1502,8 +1502,8 @@ namespace ProjectFirma.Web.Controllers
             var allProjectImages = HttpRequestStorage.DatabaseEntities.ProjectImages.Local;
             HttpRequestStorage.DatabaseEntities.ProjectLocations.Load();
             var allProjectLocations = HttpRequestStorage.DatabaseEntities.ProjectLocations.Local;
-            HttpRequestStorage.DatabaseEntities.ProjectPriorityAreas.Load();
-            var allProjectPriorityAreas = HttpRequestStorage.DatabaseEntities.ProjectPriorityAreas.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Load();
+            var allProjectPriorityLandscapes = HttpRequestStorage.DatabaseEntities.ProjectPriorityLandscapes.Local;
             HttpRequestStorage.DatabaseEntities.ProjectRegions.Load();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
             HttpRequestStorage.DatabaseEntities.ProjectOrganizations.Load();
@@ -1529,7 +1529,7 @@ namespace ProjectFirma.Web.Controllers
                 allProjectNotes,
                 allProjectImages,
                 allProjectLocations,
-                allProjectPriorityAreas,
+                allProjectPriorityLandscapes,
                 allProjectRegions,
                 allprojectGrantAllocationRequests,
                 allProjectOrganizations,
@@ -2819,7 +2819,7 @@ namespace ProjectFirma.Web.Controllers
             var isLocationSimpleUpdated = IsLocationSimpleUpdated(projectUpdateBatch.ProjectID);
             var isLocationDetailUpdated = IsLocationDetailedUpdated(projectUpdateBatch.ProjectID);
             var isRegionsUpdated = IsRegionUpdated(projectUpdateBatch);
-            var isPriorityAreasUpdated = IsPriorityAreaUpdated(projectUpdateBatch);
+            var isPriorityLandscapesUpdated = IsPriorityLandscapeUpdated(projectUpdateBatch);
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isProjectAttributesUpdated = DiffProjectAttributesImpl(projectUpdateBatch.ProjectID).HasChanged;
@@ -2841,7 +2841,7 @@ namespace ProjectFirma.Web.Controllers
                 isLocationDetailUpdated,
                 isProjectAttributesUpdated,
                 isRegionsUpdated,
-                isPriorityAreasUpdated,
+                isPriorityLandscapesUpdated,
                 isExternalLinksUpdated,
                 isNotesUpdated,
                 isExpectedFundingUpdated,
@@ -2864,19 +2864,19 @@ namespace ProjectFirma.Web.Controllers
             var enumerable = originalRegionIDs.Except(updatedRegionIDs);
             return enumerable.Any();
         }
-        private static bool IsPriorityAreaUpdated(ProjectUpdateBatch projectUpdateBatch)
+        private static bool IsPriorityLandscapeUpdated(ProjectUpdateBatch projectUpdateBatch)
         {
             var project = projectUpdateBatch.Project;
-            var originalPriorityAreaIDs = project.ProjectPriorityAreas.Select(x => x.PriorityAreaID).ToList();
-            var updatedPriorityAreaIDs = projectUpdateBatch.ProjectPriorityAreaUpdates.Select(x => x.PriorityAreaID).ToList();
+            var originalPriorityLandscapeIDs = project.ProjectPriorityLandscapes.Select(x => x.PriorityLandscapeID).ToList();
+            var updatedPriorityLandscapeIDs = projectUpdateBatch.ProjectPriorityLandscapeUpdates.Select(x => x.PriorityLandscapeID).ToList();
 
-            if (!originalPriorityAreaIDs.Any() && !updatedPriorityAreaIDs.Any())
+            if (!originalPriorityLandscapeIDs.Any() && !updatedPriorityLandscapeIDs.Any())
                 return false;
 
-            if (originalPriorityAreaIDs.Count != updatedPriorityAreaIDs.Count)
+            if (originalPriorityLandscapeIDs.Count != updatedPriorityLandscapeIDs.Count)
                 return true;
 
-            var enumerable = originalPriorityAreaIDs.Except(updatedPriorityAreaIDs);
+            var enumerable = originalPriorityLandscapeIDs.Except(updatedPriorityLandscapeIDs);
             return enumerable.Any();
         }
 

@@ -112,9 +112,9 @@ namespace ProjectFirma.Web.Models
             return ProjectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegion);
         }
 
-        public IEnumerable<PriorityArea> GetProjectPriorityAreas()
+        public IEnumerable<PriorityLandscape> GetProjectPriorityLandscapes()
         {
-            return ProjectUpdateBatch.ProjectPriorityAreaUpdates.Select(x => x.PriorityArea);
+            return ProjectUpdateBatch.ProjectPriorityLandscapeUpdates.Select(x => x.PriorityLandscape);
         }
 
         public FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection()

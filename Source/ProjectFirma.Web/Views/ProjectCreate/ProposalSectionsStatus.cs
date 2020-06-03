@@ -21,7 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 
 using System.Linq;
 using ProjectFirma.Web.Controllers;
-using ProjectFirma.Web.Views.ProjectPriorityArea;
+using ProjectFirma.Web.Views.ProjectPriorityLandscape;
 using ProjectFirma.Web.Views.ProjectRegion;
 
 namespace ProjectFirma.Web.Views.ProjectCreate
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public bool IsProjectOrganizationsSectionComplete { get; set; }
         public bool IsProjectContactsSectionComplete { get; set; }
         public bool IsRegionSectionComplete { get; set; }
-        public bool IsPriorityAreaSectionComplete { get; set; }
+        public bool IsPriorityLandscapeSectionComplete { get; set; }
 
         public ProposalSectionsStatus(Models.Project project)
         {
@@ -66,12 +66,12 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             IsRegionSectionComplete = !editProjectRegionsValidationResults.Any();
 
-            var priorityAreaIDs = project.ProjectPriorityAreas
-                .Select(x => x.PriorityAreaID).ToList();
-            var editProjectPriorityAreasValidationResults = new EditProjectPriorityAreasViewModel(priorityAreaIDs,
-                    project.NoPriorityAreasExplanation).GetValidationResults();
+            var priorityLandscapeIDs = project.ProjectPriorityLandscapes
+                .Select(x => x.PriorityLandscapeID).ToList();
+            var editProjectPriorityLandscapesValidationResults = new EditProjectPriorityLandscapesViewModel(priorityLandscapeIDs,
+                    project.NoPriorityLandscapesExplanation).GetValidationResults();
 
-            IsPriorityAreaSectionComplete = !editProjectPriorityAreasValidationResults.Any();
+            IsPriorityLandscapeSectionComplete = !editProjectPriorityLandscapesValidationResults.Any();
 
             var performanceMeasureValidationResults =
                 new ExpectedPerformanceMeasureValuesViewModel(project).GetValidationResults();
@@ -98,7 +98,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
             IsProjectLocationSimpleSectionComplete = false;
             IsProjectLocationDetailedSectionComplete = false;
             IsRegionSectionComplete = false;
-            IsPriorityAreaSectionComplete = false;
+            IsPriorityLandscapeSectionComplete = false;
             IsNotesSectionComplete = false;
         }
     }

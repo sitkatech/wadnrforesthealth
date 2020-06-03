@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionOrganizations Organizations = ProjectUpdateSectionOrganizations.Instance;
         public static readonly ProjectUpdateSectionContacts Contacts = ProjectUpdateSectionContacts.Instance;
         public static readonly ProjectUpdateSectionDNRUplandRegions DNRUplandRegions = ProjectUpdateSectionDNRUplandRegions.Instance;
-        public static readonly ProjectUpdateSectionPriorityAreas PriorityAreas = ProjectUpdateSectionPriorityAreas.Instance;
+        public static readonly ProjectUpdateSectionPriorityLandscapes PriorityLandscapes = ProjectUpdateSectionPriorityLandscapes.Instance;
         public static readonly ProjectUpdateSectionProjectAttributes ProjectAttributes = ProjectUpdateSectionProjectAttributes.Instance;
 
         public static readonly List<ProjectUpdateSection> All;
@@ -40,7 +40,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectUpdateSection()
         {
-            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityAreas, ProjectAttributes };
+            All = new List<ProjectUpdateSection> { Basics, LocationSimple, LocationDetailed, PerformanceMeasures, ExpectedFunding, Photos, ExternalLinks, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectUpdateSection>(All.ToDictionary(x => x.ProjectUpdateSectionID));
         }
 
@@ -138,8 +138,8 @@ namespace ProjectFirma.Web.Models
                     return PerformanceMeasures;
                 case ProjectUpdateSectionEnum.Photos:
                     return Photos;
-                case ProjectUpdateSectionEnum.PriorityAreas:
-                    return PriorityAreas;
+                case ProjectUpdateSectionEnum.PriorityLandscapes:
+                    return PriorityLandscapes;
                 case ProjectUpdateSectionEnum.ProjectAttributes:
                     return ProjectAttributes;
                 default:
@@ -161,7 +161,7 @@ namespace ProjectFirma.Web.Models
         Organizations = 12,
         Contacts = 13,
         DNRUplandRegions = 14,
-        PriorityAreas = 15,
+        PriorityLandscapes = 15,
         ProjectAttributes = 16
     }
 
@@ -231,10 +231,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectUpdateSectionDNRUplandRegions Instance = new ProjectUpdateSectionDNRUplandRegions(14, @"DNRUplandRegions", @"DNR Upland Regions", 50, true, 2);
     }
 
-    public partial class ProjectUpdateSectionPriorityAreas : ProjectUpdateSection
+    public partial class ProjectUpdateSectionPriorityLandscapes : ProjectUpdateSection
     {
-        private ProjectUpdateSectionPriorityAreas(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionPriorityAreas Instance = new ProjectUpdateSectionPriorityAreas(15, @"PriorityAreas", @"Priority Areas", 45, true, 2);
+        private ProjectUpdateSectionPriorityLandscapes(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectUpdateSectionPriorityLandscapes Instance = new ProjectUpdateSectionPriorityLandscapes(15, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2);
     }
 
     public partial class ProjectUpdateSectionProjectAttributes : ProjectUpdateSection

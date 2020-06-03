@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
     {
         public readonly string ProjectLocationNotes;
         public readonly ProjectLocationSummaryMapInitJson ProjectLocationSummaryMapInitJson;
-        public readonly List<Models.PriorityArea> PriorityAreas;
+        public readonly List<Models.PriorityLandscape> PriorityLandscapes;
         public readonly List<Models.DNRUplandRegion> DNRUplandRegions;
         public readonly string NoRegionsExplanation;
         public readonly bool HasLocationNotes;
@@ -38,19 +38,19 @@ namespace ProjectFirma.Web.Views.Shared.ProjectLocationControls
 
         public ProjectLocationSummaryViewData(IProject project,
             ProjectLocationSummaryMapInitJson projectLocationSummaryMapInitJson,
-            List<Models.PriorityArea> priorityAreas, List<Models.DNRUplandRegion> dnrUplandRegions, string noRegionsExplanation,
-            string noPriorityAreasExplanation)
+            List<Models.PriorityLandscape> priorityLandscapes, List<Models.DNRUplandRegion> regions, string noRegionsExplanation,
+            string noPriorityLandscapesExplanation)
         {
             ProjectLocationNotes = project.ProjectLocationNotes;
             ProjectLocationSummaryMapInitJson = projectLocationSummaryMapInitJson;
-            PriorityAreas = priorityAreas;
-            DNRUplandRegions = dnrUplandRegions;
+            PriorityLandscapes = priorityLandscapes;
+            DNRUplandRegions = regions;
             NoRegionsExplanation = noRegionsExplanation;
             HasLocationNotes = !string.IsNullOrWhiteSpace(project.ProjectLocationNotes);
             HasLocationInformation = project.ProjectLocationSimpleType != ProjectLocationSimpleType.None;
-            NoPriorityAreasExplanation = noPriorityAreasExplanation;
+            NoPriorityLandscapesExplanation = noPriorityLandscapesExplanation;
         }
 
-        public string NoPriorityAreasExplanation { get; }
+        public string NoPriorityLandscapesExplanation { get; }
     }
 }

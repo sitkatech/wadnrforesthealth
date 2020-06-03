@@ -25,6 +25,7 @@ using System.Linq;
 using System.Web.Mvc;
 using LtInfo.Common.Mvc;
 using ProjectFirma.Web.Common;
+using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
@@ -36,6 +37,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
         public RelationshipTypeSimple PrimaryContactRelationshipTypeSimple { get; }
         public int? DefaultPrimaryContactPersonID { get; }
         public string DefaultPrimaryContactPersonName { get; }
+        public string AddOrganizationUrl { get; }
 
         public EditOrganizationsViewData(IEnumerable<Models.Organization> organizations, List<RelationshipType> allRelationshipTypes, Person defaultPrimaryContactPerson)
         {
@@ -47,7 +49,8 @@ namespace ProjectFirma.Web.Views.Shared.ProjectOrganization
                 : null;
             AllRelationshipTypes = allRelationshipTypes.Except(new[] {primaryContactRelationshipType}).Select(x => new RelationshipTypeSimple(x)).ToList();
             DefaultPrimaryContactPersonID = defaultPrimaryContactPerson?.PersonID;
-            DefaultPrimaryContactPersonName = defaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";            
+            DefaultPrimaryContactPersonName = defaultPrimaryContactPerson?.FullNameFirstLastAndOrgShortName ?? "nobody";
+            AddOrganizationUrl = SitkaRoute<HelpController>.BuildUrlFromExpression(x => x.MissingOrganization());
         }
     }
 }

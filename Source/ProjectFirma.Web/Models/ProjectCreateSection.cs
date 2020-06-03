@@ -96,16 +96,16 @@ namespace ProjectFirma.Web.Models
         }
     }
 
-    public partial class ProjectCreateSectionPriorityAreas
+    public partial class ProjectCreateSectionPriorityLandscapes
     {
         public override bool IsComplete(Project project)
         {
-            return project != null && project.IsProjectPriorityAreaValid();
+            return project != null && project.IsProjectPriorityLandscapeValid();
         }
 
         public override string GetSectionUrl(Project project)
         {
-            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.PriorityAreas(project.ProjectID)) : null;
+            return Basics.IsComplete(project) ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.PriorityLandscapes(project.ProjectID)) : null;
         }
     }
 

@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionOrganizations Organizations = ProjectCreateSectionOrganizations.Instance;
         public static readonly ProjectCreateSectionContacts Contacts = ProjectCreateSectionContacts.Instance;
         public static readonly ProjectCreateSectionDNRUplandRegions DNRUplandRegions = ProjectCreateSectionDNRUplandRegions.Instance;
-        public static readonly ProjectCreateSectionPriorityAreas PriorityAreas = ProjectCreateSectionPriorityAreas.Instance;
+        public static readonly ProjectCreateSectionPriorityLandscapes PriorityLandscapes = ProjectCreateSectionPriorityLandscapes.Instance;
         public static readonly ProjectCreateSectionProjectAttributes ProjectAttributes = ProjectCreateSectionProjectAttributes.Instance;
 
         public static readonly List<ProjectCreateSection> All;
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectCreateSection()
         {
-            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityAreas, ProjectAttributes };
+            All = new List<ProjectCreateSection> { Basics, LocationSimple, LocationDetailed, ExpectedPerformanceMeasures, ReportedPerformanceMeasures, ExpectedFunding, Classifications, Photos, NotesAndDocuments, Organizations, Contacts, DNRUplandRegions, PriorityLandscapes, ProjectAttributes };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectCreateSection>(All.ToDictionary(x => x.ProjectCreateSectionID));
         }
 
@@ -139,8 +139,8 @@ namespace ProjectFirma.Web.Models
                     return Organizations;
                 case ProjectCreateSectionEnum.Photos:
                     return Photos;
-                case ProjectCreateSectionEnum.PriorityAreas:
-                    return PriorityAreas;
+                case ProjectCreateSectionEnum.PriorityLandscapes:
+                    return PriorityLandscapes;
                 case ProjectCreateSectionEnum.ProjectAttributes:
                     return ProjectAttributes;
                 case ProjectCreateSectionEnum.ReportedPerformanceMeasures:
@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Models
         Organizations = 15,
         Contacts = 16,
         DNRUplandRegions = 17,
-        PriorityAreas = 18,
+        PriorityLandscapes = 18,
         ProjectAttributes = 19
     }
 
@@ -241,10 +241,10 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectCreateSectionDNRUplandRegions Instance = new ProjectCreateSectionDNRUplandRegions(17, @"DNRUplandRegions", @"DNR Upland Regions", 50, true, 2);
     }
 
-    public partial class ProjectCreateSectionPriorityAreas : ProjectCreateSection
+    public partial class ProjectCreateSectionPriorityLandscapes : ProjectCreateSection
     {
-        private ProjectCreateSectionPriorityAreas(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectCreateSectionPriorityAreas Instance = new ProjectCreateSectionPriorityAreas(18, @"PriorityAreas", @"Priority Areas", 45, true, 2);
+        private ProjectCreateSectionPriorityLandscapes(int projectCreateSectionID, string projectCreateSectionName, string projectCreateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectCreateSectionID, projectCreateSectionName, projectCreateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
+        public static readonly ProjectCreateSectionPriorityLandscapes Instance = new ProjectCreateSectionPriorityLandscapes(18, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2);
     }
 
     public partial class ProjectCreateSectionProjectAttributes : ProjectCreateSection

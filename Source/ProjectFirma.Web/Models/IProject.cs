@@ -43,7 +43,7 @@ namespace ProjectFirma.Web.Models
         IEnumerable<IProjectLocation> GetProjectLocationDetails();
         DbGeometry GetDefaultBoundingBox();
         IEnumerable<DNRUplandRegion> GetProjectRegions();
-        IEnumerable<PriorityArea> GetProjectPriorityAreas();
+        IEnumerable<PriorityLandscape> GetProjectPriorityLandscapes();
         GeoJSON.Net.Feature.FeatureCollection AllDetailedLocationsToGeoJsonFeatureCollection();
         GeoJSON.Net.Feature.FeatureCollection DetailedLocationsByTypeToGeoJsonFeatureCollection(ProjectLocationType projectLocationType);
         GeoJSON.Net.Feature.FeatureCollection SimpleLocationToGeoJsonFeatureCollection(bool addProjectProperties);        

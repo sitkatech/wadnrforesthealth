@@ -967,12 +967,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PriorityArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityArea">
-        <MappingFragment StoreEntitySet="PriorityArea">
-          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
-          <ScalarProperty Name="PriorityAreaName" ColumnName="PriorityAreaName" />
-          <ScalarProperty Name="PriorityAreaLocation" ColumnName="PriorityAreaLocation" />
+    <EntitySetMapping Name="PriorityLandscape">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.PriorityLandscape">
+        <MappingFragment StoreEntitySet="PriorityLandscape">
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
+          <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1018,9 +1018,9 @@
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
           <ScalarProperty Name="FocusAreaID" ColumnName="FocusAreaID" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
-          <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="FhtProjectNumber" ColumnName="FhtProjectNumber" />
+          <ScalarProperty Name="NoPriorityLandscapesExplanation" ColumnName="NoPriorityLandscapesExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1362,21 +1362,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectPriorityArea">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPriorityArea">
-        <MappingFragment StoreEntitySet="ProjectPriorityArea">
-          <ScalarProperty Name="ProjectPriorityAreaID" ColumnName="ProjectPriorityAreaID" />
+    <EntitySetMapping Name="ProjectPriorityLandscape">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPriorityLandscape">
+        <MappingFragment StoreEntitySet="ProjectPriorityLandscape">
+          <ScalarProperty Name="ProjectPriorityLandscapeID" ColumnName="ProjectPriorityLandscapeID" />
           <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ProjectPriorityAreaUpdate">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPriorityAreaUpdate">
-        <MappingFragment StoreEntitySet="ProjectPriorityAreaUpdate">
-          <ScalarProperty Name="ProjectPriorityAreaUpdateID" ColumnName="ProjectPriorityAreaUpdateID" />
+    <EntitySetMapping Name="ProjectPriorityLandscapeUpdate">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.ProjectPriorityLandscapeUpdate">
+        <MappingFragment StoreEntitySet="ProjectPriorityLandscapeUpdate">
+          <ScalarProperty Name="ProjectPriorityLandscapeUpdateID" ColumnName="ProjectPriorityLandscapeUpdateID" />
           <ScalarProperty Name="ProjectUpdateBatchID" ColumnName="ProjectUpdateBatchID" />
-          <ScalarProperty Name="PriorityAreaID" ColumnName="PriorityAreaID" />
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1488,9 +1488,9 @@
           <ScalarProperty Name="NoExpendituresToReportExplanation" ColumnName="NoExpendituresToReportExplanation" />
           <ScalarProperty Name="ContactsComment" ColumnName="ContactsComment" />
           <ScalarProperty Name="NoRegionsExplanation" ColumnName="NoRegionsExplanation" />
-          <ScalarProperty Name="NoPriorityAreasExplanation" ColumnName="NoPriorityAreasExplanation" />
           <ScalarProperty Name="ProjectAttributesComment" ColumnName="ProjectAttributesComment" />
           <ScalarProperty Name="ProjectAttributesDiffLog" ColumnName="ProjectAttributesDiffLog" />
+          <ScalarProperty Name="NoPriorityLandscapesExplanation" ColumnName="NoPriorityLandscapesExplanation" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1695,6 +1695,17 @@
           <ScalarProperty Name="VendorStatus" ColumnName="VendorStatus" />
           <ScalarProperty Name="TaxpayerIdNumber" ColumnName="TaxpayerIdNumber" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vGeoServerPriorityLandscape">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPriorityLandscape">
+        <MappingFragment StoreEntitySet="vGeoServerPriorityLandscape">
+          <ScalarProperty Name="PriorityLandscapeID" ColumnName="PriorityLandscapeID" />
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="PriorityLandscapeName" ColumnName="PriorityLandscapeName" />
+          <ScalarProperty Name="PriorityLandscapeLocation" ColumnName="PriorityLandscapeLocation" />
+          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

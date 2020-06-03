@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public int? FocusAreaID { get; set; }
         public string NoExpendituresToReportExplanation { get; set; }
         public string NoRegionsExplanation { get; set; }
-        public string NoPriorityAreasExplanation { get; set; }
+        public string NoPriorityLandscapesExplanation { get; set; }
         public DateTime? ExpirationDate { get; set; }
 
         // For use by model binder
@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             FocusAreaID = project.FocusAreaID;
             NoExpendituresToReportExplanation = project.NoExpendituresToReportExplanation;
             NoRegionsExplanation = project.NoRegionsExplanation;
-            NoPriorityAreasExplanation = project.NoPriorityAreasExplanation;
+            NoPriorityLandscapesExplanation = project.NoPriorityLandscapesExplanation;
             ExpirationDate = project.ExpirationDate;
         }
 
