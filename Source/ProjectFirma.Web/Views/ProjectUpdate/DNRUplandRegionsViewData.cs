@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
             EditProjectRegionsViewData editProjectRegionsViewData,
             ProjectLocationSummaryViewData projectLocationSummaryViewData, 
             DNRUplandRegionsValidationResult dnrUplandRegionValidationResult,
-            UpdateStatus updateStatus) : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, dnrUplandRegionValidationResult.GetWarningMessages(), Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName)
+            UpdateStatus updateStatus) : base(currentPerson, projectUpdate.ProjectUpdateBatch, updateStatus, dnrUplandRegionValidationResult.GetWarningMessages(), ProjectUpdateSection.DNRUplandRegions.ProjectUpdateSectionDisplayName)
         {
             EditProjectRegionsViewData = editProjectRegionsViewData;
             ProjectLocationSummaryViewData = projectLocationSummaryViewData;

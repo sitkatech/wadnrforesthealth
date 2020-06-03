@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
         public DNRUplandRegionsViewData(Person currentPerson,
             Models.Project project,
             ProposalSectionsStatus proposalSectionsStatus,
-            EditProjectRegionsViewData editProjectRegionsViewData) : base(currentPerson, project, Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, proposalSectionsStatus)
+            EditProjectRegionsViewData editProjectRegionsViewData) : base(currentPerson, project, ProjectCreateSection.DNRUplandRegions.ProjectCreateSectionDisplayName, proposalSectionsStatus)
         {
             EditProjectRegionsViewData = editProjectRegionsViewData;
         }
