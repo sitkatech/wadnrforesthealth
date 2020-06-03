@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Views.Organization
         {
             RuleFor(x => x.OrganizationName)
                 .NotEmpty()
-                .WithMessage("Organization name is required")
+                .WithMessage($"{Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} name is required")
                 .Length(1, Models.Organization.FieldLengths.OrganizationName)
                 .Must((viewModel, organizationName) => Models.Organization.IsOrganizationNameUnique(Organizations(), organizationName, viewModel.OrganizationID))
                 .WithMessage(FirmaValidationMessages.OrganizationNameUnique);

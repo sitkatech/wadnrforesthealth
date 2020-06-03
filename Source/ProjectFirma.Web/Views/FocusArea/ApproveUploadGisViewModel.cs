@@ -10,7 +10,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 {
     public class ApproveUploadGisViewModel : FormViewModel, IValidatableObject
     {
-        [DisplayName("Focus Area Location"), Required]
+        [DisplayName("DNR LOA Focus Area Location"), Required]
         public string FocusAreaLocationWkt { get; set; }
 
         public void UpdateModel(Models.FocusArea focusArea)
@@ -29,7 +29,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             catch
             {
                 errors.Add(new SitkaValidationResult<ApproveUploadGisViewModel, string>(
-                    "Unable to deserialize Focus Area Location. Make sure the Focus Area Location is valid Well-Known Text (WKT).",
+                    $"Unable to deserialize {Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Location. Make sure the {Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Location is valid Well-Known Text (WKT).",
                     x => x.FocusAreaLocationWkt));
             }
 

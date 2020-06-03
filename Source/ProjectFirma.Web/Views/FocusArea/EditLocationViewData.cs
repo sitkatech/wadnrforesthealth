@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public EditLocationViewData(Person currentPerson, Models.FocusArea focusArea) : base(currentPerson)
         {
-            PageTitle = "Edit Focus Area Location";
+            PageTitle = $"Edit {Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Location";
 
             FocusArea = focusArea;
             EditBoundaryUrl =

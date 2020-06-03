@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
             return geoJsons.Select(x => new FocusAreaLocationStaging(focusArea, x.Key, x.Value)).ToList();
         }
 
-        public string AuditDescriptionString => $"Focus Area location staging {FocusArea?.FocusAreaName ?? "(FocusArea Not Found)"}";
+        public string AuditDescriptionString => $"{FieldDefinition.FocusArea.GetFieldDefinitionLabel()} location staging {FocusArea?.FocusAreaName ?? "(FocusArea Not Found)"}";
 
         public FeatureCollection ToGeoJsonFeatureCollection()
         {

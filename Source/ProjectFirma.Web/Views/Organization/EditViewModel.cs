@@ -136,7 +136,7 @@ namespace ProjectFirma.Web.Views.Organization
             var existingOrganizationsWithSameName = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.OrganizationName == OrganizationName && o.OrganizationID != OrganizationID).ToList();
             if (existingOrganizationsWithSameName.Any())
             {
-                var errorMessage = $"This organization name {OrganizationName} is taken already.";
+                var errorMessage = $"This {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} name {OrganizationName} is taken already.";
                 yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
                     x => x.OrganizationName);
             }
@@ -144,7 +144,7 @@ namespace ProjectFirma.Web.Views.Organization
             var existingOrganizationsWithSameShortName = HttpRequestStorage.DatabaseEntities.Organizations.Where(o => o.OrganizationShortName == OrganizationShortName && o.OrganizationID != OrganizationID).ToList();
             if (existingOrganizationsWithSameShortName.Any())
             {
-                var errorMessage = $"This organization short name {OrganizationShortName} is taken already.";
+                var errorMessage = $"This {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} short name {OrganizationShortName} is taken already.";
                 yield return new SitkaValidationResult<EditViewModel, string>(errorMessage,
                     x => x.OrganizationShortName);
             }

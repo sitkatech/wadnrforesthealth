@@ -23,6 +23,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
 using ProjectFirma.Web.Security.Shared;
 using ProjectFirma.Web.Views.ProgramInfo;
 using ProjectFirma.Web.Views.Shared.SortOrder;
@@ -42,7 +43,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Taxonomy, TaxonomyViewData>(viewData);
         }
 
-        [AnonymousUnclassifiedFeature]
+        [FirmaAdminFeature]
         public ViewResult ClassificationSystem(ClassificationSystemPrimaryKey classificationSystemPrimaryKey)
         {
             var classificationSystem = classificationSystemPrimaryKey.EntityObject;

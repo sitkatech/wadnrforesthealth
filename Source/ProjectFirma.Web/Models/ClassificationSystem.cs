@@ -12,6 +12,9 @@ namespace ProjectFirma.Web.Models
 
         public string ClassificationSystemNamePluralized => FieldDefinition.PluralizationService.Pluralize(ClassificationSystemName);
 
+        public string ClassificationSystemNameForMenu =>
+            $"{FieldDefinition.Project.GetFieldDefinitionLabelPluralized()} by {FieldDefinition.PluralizationService.Singularize(ClassificationSystemName)}";
+
 
         public int FieldDefinitionDataID { get; }
         public string FieldDefinitionLabel => ClassificationSystemName;

@@ -85,7 +85,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(organization, CurrentPerson);
             HttpRequestStorage.DatabaseEntities.Organizations.Add(organization);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Organization {organization.DisplayName} successfully created.");
+            SetMessageForDisplay($"{FieldDefinition.Organization.GetFieldDefinitionLabel()} {organization.DisplayName} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -258,7 +258,7 @@ namespace ProjectFirma.Web.Controllers
         private PartialViewResult ViewDeleteOrganization(Organization organization, ConfirmDialogFormViewModel viewModel)
         {
             var projectGrantAllocationExpenditureTotal = organization.GrantAllocations.Sum(x => x.ProjectGrantAllocationExpenditures.Sum(y => y.ExpenditureAmount)).ToStringCurrency();
-            var confirmMessage = $"Organization \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.GrantAllocations.Count} Grant Allocations that fund a total of {projectGrantAllocationExpenditureTotal} across various projects.<br /><br />Are you sure you want to delete this Organization?";
+            var confirmMessage = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.GrantAllocations.Count} Grant Allocations that fund a total of {projectGrantAllocationExpenditureTotal} across various projects.<br /><br />Are you sure you want to delete this Organization?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
@@ -273,7 +273,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 return ViewDeleteOrganization(organization, viewModel);
             }
-            var message = $"Organization \"{organization.OrganizationName}\" successfully deleted.";
+            var message = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} \"{organization.OrganizationName}\" successfully deleted.";
             organization.DeleteFull(HttpRequestStorage.DatabaseEntities);
             SetMessageForDisplay(message);
 
@@ -399,7 +399,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.OrganizationBoundaryStagings.RemoveRange(organization
                 .OrganizationBoundaryStagings);
 
-            SetMessageForDisplay($"Organization Boundary for {organization.GetDisplayNameAsUrl()} successfully updated.");
+            SetMessageForDisplay($"{FieldDefinition.Organization.GetFieldDefinitionLabel()} Boundary for {organization.GetDisplayNameAsUrl()} successfully updated.");
             return new ContentResult();
         }
         private PartialViewResult ViewApproveUploadGis(ApproveUploadGisViewModel viewModel, Organization organization)

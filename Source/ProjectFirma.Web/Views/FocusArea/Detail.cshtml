@@ -56,7 +56,7 @@
 }
 
 <div>
-    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all Focus Areas</a>
+    <a class="btn backButton" href="@ViewDataTyped.IndexUrl">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-chevron-left") Back to all @FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized()</a>
 </div>
 
 
@@ -68,7 +68,7 @@
                     <div class="col-md-10">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
-                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditFocusAreaUrl, string.Format("Edit {0} - {1}", "Focus Area", ViewDataTyped.FocusArea.FocusAreaName), ViewDataTyped.UserHasFocusAreaManagePermissions) Basics
+                                @ModalDialogFormHelper.MakeEditIconLink(ViewDataTyped.EditFocusAreaUrl, string.Format("Edit {0} - {1}", FieldDefinition.FocusArea.GetFieldDefinitionLabel(), ViewDataTyped.FocusArea.FocusAreaName), ViewDataTyped.UserHasFocusAreaManagePermissions) Basics
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -112,7 +112,7 @@
                     <div class="col-md-12">
                         <div class="panel panelFirma">
                             <div class="panel-heading panelTitle">
-                                Focus Area and @FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()
+                                @FieldDefinition.FocusArea.GetFieldDefinitionLabel() and @FieldDefinition.ProjectLocation.GetFieldDefinitionLabelPluralized()
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -120,7 +120,7 @@
                                         <div class="pull-right">
                                             @if (ViewDataTyped.UserHasFocusAreaManagePermissions)
                                             {
-                                                <a href="@ViewDataTyped.EditLocationUrl" title="Edit Focus Area Location" class="btn btn-firma">
+                                                <a href="@ViewDataTyped.EditLocationUrl" title="Edit @FieldDefinition.FocusArea.GetFieldDefinitionLabel() Location" class="btn btn-firma">
                                                     @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit blue")
                                                     Edit Location
                                                 </a>
@@ -137,7 +137,7 @@
                                             </p>
                                             if (ViewDataTyped.FocusArea.FocusAreaLocation == null)
                                             {
-                                                <p style="font-weight: bold"> The Focus Area, @ViewDataTyped.FocusArea.FocusAreaName, does not have a location set. </p>
+                                                <p style="font-weight: bold"> The @FieldDefinition.FocusArea.GetFieldDefinitionLabel(), @ViewDataTyped.FocusArea.FocusAreaName, does not have a location set. </p>
                                             }
                                         }
 

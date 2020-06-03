@@ -44,8 +44,7 @@ namespace ProjectFirma.Web.Controllers
         [DNRUplandRegionViewFeature]
         public ViewResult Index()
         {
-            var layerGeoJsons = new List<LayerGeoJson>();
-            layerGeoJsons = new List<LayerGeoJson>
+            var layerGeoJsons = new List<LayerGeoJson>
             {
                 DNRUplandRegion.GetRegionWmsLayerGeoJson("#59ACFF", 0.2m, LayerInitialVisibility.Show)
             };

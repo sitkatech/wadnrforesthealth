@@ -2,7 +2,7 @@
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View Focus Area")]
+    [SecurityFeatureDescription("View DNR LOA Focus Area")]
     public class FocusAreaViewFeature : AnonymousUnclassifiedFeature
     {
     }

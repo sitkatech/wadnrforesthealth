@@ -84,7 +84,7 @@ namespace ProjectFirma.Web.Views.FocusArea
             {
                 var results = HttpRequestStorage.DatabaseEntities.FocusAreas.Where(x => x.FocusAreaName == FocusAreaName && x.FocusAreaID != FocusAreaID);
                 if(results.Any())
-                    validationResults.Add(new SitkaValidationResult<EditViewModel, string>("Focus Area Name must be unique. A Focus Area already exists with the name provided.", x => x.FocusAreaName));
+                    validationResults.Add(new SitkaValidationResult<EditViewModel, string>($"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Name must be unique. A {Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} already exists with the name provided.", x => x.FocusAreaName));
             }
 
             return validationResults;
