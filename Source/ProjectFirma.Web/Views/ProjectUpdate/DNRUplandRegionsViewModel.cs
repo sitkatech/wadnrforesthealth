@@ -37,7 +37,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
         }
 
-        public DNRUplandRegionsViewModel(List<int> regionIDs, string noRegionsExplanation) : base(regionIDs, noRegionsExplanation)
+        public DNRUplandRegionsViewModel(List<int> dnrUplandRegionIDs, string noDNRUplandRegionsExplanation) : base(dnrUplandRegionIDs, noDNRUplandRegionsExplanation)
         {
         }
 

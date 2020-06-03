@@ -5,7 +5,7 @@ angular.module("ProjectFirmaApp")
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
 
-            $scope.getRegionName = function (regionId) {
+            $scope.getDNRUplandRegionName = function (regionId) {
                 return $scope.AngularViewData.RegionNameByID[regionId];
             };
 
@@ -94,10 +94,10 @@ angular.module("ProjectFirmaApp")
                     $scope.AngularViewData.RegionNameByID[regionId] = regionName;
                 }
 
-                if (_.includes($scope.AngularModel.RegionIDs, regionId)) {
-                    _.pull($scope.AngularModel.RegionIDs, regionId);
+                if (_.includes($scope.AngularModel.DNRUplandRegionIDs, regionId)) {
+                    _.pull($scope.AngularModel.DNRUplandRegionIDs, regionId);
                 } else {
-                    $scope.AngularModel.RegionIDs.push(regionId);
+                    $scope.AngularModel.DNRUplandRegionIDs.push(regionId);
                 }
 
                 updateSelectedRegionLayer();
@@ -108,8 +108,8 @@ angular.module("ProjectFirmaApp")
             }
 
             function updateSelectedRegionLayer() {
-                if ($scope.AngularModel.RegionIDs == null) {
-                    $scope.AngularModel.RegionIDs = [];
+                if ($scope.AngularModel.DNRUplandRegionIDs == null) {
+                    $scope.AngularModel.DNRUplandRegionIDs = [];
                 }
 
                 if ($scope.firmaMap.selectedRegionLayer) {
@@ -120,7 +120,7 @@ angular.module("ProjectFirmaApp")
                 var wmsParameters = L.Util.extend(
                     {
                         layers: $scope.AngularViewData.RegionMapServiceLayerName,
-                        cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.RegionIDs.join(",") + ")",
+                        cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.DNRUplandRegionIDs.join(",") + ")",
                         styles: "region_yellow"
                     },
                     $scope.firmaMap.wmsParams);
@@ -130,11 +130,11 @@ angular.module("ProjectFirmaApp")
                 $scope.firmaMap.map.addLayer($scope.firmaMap.selectedRegionLayer);
 
                 // Update map extent to selected regions
-                if (_.any($scope.AngularModel.RegionIDs)) {
+                if (_.any($scope.AngularModel.DNRUplandRegionIDs)) {
                     var wfsParameters = L.Util.extend($scope.firmaMap.wfsParams,
                         {
                             typeName: $scope.AngularViewData.RegionMapServiceLayerName,
-                            cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.RegionIDs.join(",") + ")"
+                            cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.DNRUplandRegionIDs.join(",") + ")"
                         });
                     SitkaAjax.ajax({
                             url: $scope.AngularViewData.MapServiceUrl + L.Util.getParamString(wfsParameters),

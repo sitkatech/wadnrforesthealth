@@ -1134,10 +1134,10 @@ namespace ProjectFirma.Web.Controllers
             var allProjectUpdateRegions = HttpRequestStorage.DatabaseEntities.ProjectRegionUpdates.Local;
             viewModel.UpdateModelBatch(projectUpdateBatch, currentProjectUpdateRegions, allProjectUpdateRegions);
 
-            projectUpdateBatch.NoRegionsExplanation = viewModel.NoRegionsExplanation;
+            projectUpdateBatch.NoRegionsExplanation = viewModel.NoDNRUplandRegionsExplanation;
             if (projectUpdateBatch.IsSubmitted)
             {
-                projectUpdateBatch.NoRegionsExplanation = viewModel.NoRegionsExplanation;
+                projectUpdateBatch.NoRegionsExplanation = viewModel.NoDNRUplandRegionsExplanation;
             }
             return TickleLastUpdateDateAndGoToNextSection(viewModel, projectUpdateBatch, ProjectUpdateSection.DNRUplandRegions.ProjectUpdateSectionDisplayName);
         }
@@ -1154,7 +1154,7 @@ namespace ProjectFirma.Web.Controllers
             var regionValidationResult = projectUpdateBatch.ValidateProjectRegion();
             var regions = projectUpdate.GetProjectRegions().ToList();
             var projectLocationSummaryMapInitJson = new ProjectLocationSummaryMapInitJson(projectUpdate, $"project_{project.ProjectID}_EditMap", false);
-            var regionIDs = viewModel.RegionIDs ?? new List<int>();
+            var regionIDs = viewModel.DNRUplandRegionIDs ?? new List<int>();
             var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Regions(project, null));
             var editProjectRegionsFormId = GenerateEditProjectLocationFormID(project);

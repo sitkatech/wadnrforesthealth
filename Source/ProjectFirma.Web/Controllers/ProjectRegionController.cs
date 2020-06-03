@@ -60,7 +60,7 @@ namespace ProjectFirma.Web.Controllers
             var currentProjectRegions = project.ProjectRegions.ToList();
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
             viewModel.UpdateModel(project, currentProjectRegions, allProjectRegions);
-            project.NoRegionsExplanation = !string.IsNullOrWhiteSpace(viewModel.NoRegionsExplanation) ? viewModel.NoRegionsExplanation : null;
+            project.NoRegionsExplanation = !string.IsNullOrWhiteSpace(viewModel.NoDNRUplandRegionsExplanation) ? viewModel.NoDNRUplandRegionsExplanation : null;
             SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Regions were successfully saved.");
 
             return new ModalDialogFormJsonResult();
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Controllers
             var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
             var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
-            var regionIDs = viewModel.RegionIDs ?? new List<int>();
+            var regionIDs = viewModel.DNRUplandRegionIDs ?? new List<int>();
             var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.EditProjectRegions(project, null));
             var editProjectRegionsFormID = GetEditProjectRegionsFormID();

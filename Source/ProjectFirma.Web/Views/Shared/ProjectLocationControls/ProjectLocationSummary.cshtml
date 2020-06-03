@@ -91,7 +91,7 @@ Source code is available upon request via <support@sitkatech.com>.
         <hr />
         <div style="margin-bottom: 5px">
             <label>
-                Regions
+                @FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()
             </label>
             <ul class="noListStyle">
                 @foreach (var region in ViewDataTyped.DNRUplandRegions.OrderBy(x => x.DisplayName))

@@ -878,7 +878,7 @@ namespace ProjectFirma.Web.Controllers
             var layers = MapInitJson.GetRegionMapLayers(LayerInitialVisibility.Show);
             layers.AddRange(MapInitJson.GetProjectLocationSimpleAndDetailedMapLayers(project));
             var mapInitJson = new MapInitJson("projectRegionMap", 0, layers, boundingBox) { AllowFullScreen = false, DisablePopups = true};
-            var regionIDs = viewModel.RegionIDs ?? new List<int>();
+            var regionIDs = viewModel.DNRUplandRegionIDs ?? new List<int>();
             var regionsInViewModel = HttpRequestStorage.DatabaseEntities.DNRUplandRegions.Where(x => regionIDs.Contains(x.DNRUplandRegionID)).ToList();
             var editProjectRegionsPostUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.Regions(project, null));
             var editProjectRegionsFormId = GenerateEditProjectRegionsFormID(project);
@@ -907,9 +907,9 @@ namespace ProjectFirma.Web.Controllers
             var allProjectRegions = HttpRequestStorage.DatabaseEntities.ProjectRegions.Local;
             viewModel.UpdateModel(project, currentProjectRegions, allProjectRegions);
 
-            project.NoRegionsExplanation = viewModel.NoRegionsExplanation;
-            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} Regions successfully saved.");
-            return GoToNextSection(viewModel, project, "Regions");
+            project.NoRegionsExplanation = viewModel.NoDNRUplandRegionsExplanation;
+            SetMessageForDisplay($"{FieldDefinition.Project.GetFieldDefinitionLabel()} {FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized()} successfully saved.");
+            return GoToNextSection(viewModel, project, ProjectCreateSection.DNRUplandRegions.ProjectCreateSectionDisplayName);
         }
 
         [HttpGet]
