@@ -75,7 +75,11 @@ namespace ProjectFirma.Web.Models
 
         public string CaptionOnGallery
         {
-            get { return string.Format("{0}\r\n(Timing: {1}) {2}", Caption, ProjectImageTiming.ProjectImageTimingDisplayName, FileResource.FileResourceDataLengthString); }
+            get
+            {
+                var timingString = ProjectImageTiming != null? $"(Timing: {ProjectImageTiming.ProjectImageTimingDisplayName}) " : string.Empty;
+                return string.Format("{0}\r\n{1}{2}", Caption, timingString, FileResource.FileResourceDataLengthString);
+            }
         }
 
         public string PhotoUrl
@@ -140,11 +144,11 @@ namespace ProjectFirma.Web.Models
                     currentFileResource.FileResourceData,
                     currentFileResource.CreatePerson,
                     currentFileResource.CreateDate);
-                return new ProjectImageUpdate(projectUpdateBatch, pn.ProjectImageTiming, pn.Caption, pn.Credit, pn.IsKeyPhoto, pn.ExcludeFromFactSheet)
+                return new ProjectImageUpdate(projectUpdateBatch,  pn.Caption, pn.Credit, pn.IsKeyPhoto, pn.ExcludeFromFactSheet)
                 {
                     FileResource = newFileResource,
-                    ProjectImageID = pn.ProjectImageID
-                
+                    ProjectImageID = pn.ProjectImageID,
+                    ProjectImageTimingID = pn.ProjectImageTiming?.ProjectImageTimingID
                 };
             }).ToList();
         }

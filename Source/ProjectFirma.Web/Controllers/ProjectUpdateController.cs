@@ -2355,11 +2355,14 @@ namespace ProjectFirma.Web.Controllers
                 {
                     var placeHolderImage = new ProjectImage(updatedImage.FileResource,
                         dummyProject,
-                        updatedImage.ProjectImageTiming,
                         updatedImage.Caption,
                         updatedImage.Credit,
                         updatedImage.IsKeyPhoto,
-                        updatedImage.ExcludeFromFactSheet) {AdditionalCssClasses = new List<string>() {"added-photo"},};
+                        updatedImage.ExcludeFromFactSheet)
+                    {
+                        AdditionalCssClasses = new List<string>() {"added-photo"},
+                        ProjectImageTimingID = updatedImage.ProjectImageTiming?.ProjectImageTimingID
+                    };
                     updatedImage.AdditionalCssClasses = new List<string>() { "added-photo" };
                     originalImages.Add(placeHolderImage);
                 }
@@ -2370,13 +2373,13 @@ namespace ProjectFirma.Web.Controllers
                 var matchingUpdatedImage = updatedImages.SingleOrDefault(x => originalImage.ProjectImageID == x.EntityImageIDAsNullable);
                 if (matchingUpdatedImage == null)
                 {
-                    var placeHolderImage = new ProjectImageUpdate(dummyProjectUpdateBatch,
-                        originalImage.ProjectImageTiming,
+                    var placeHolderImage = new ProjectImageUpdate(dummyProjectUpdateBatch.ProjectUpdateBatchID,
                         originalImage.Caption,
                         originalImage.Credit,
                         originalImage.IsKeyPhoto,
                         originalImage.ExcludeFromFactSheet)
                     {
+                        ProjectImageTimingID = originalImage.ProjectImageTiming?.ProjectImageTimingID,
                         FileResource = originalImage.FileResource,
                         ProjectImageID = originalImage.ProjectImageID,
                         AdditionalCssClasses = new List<string>() { "deleted-photo" }

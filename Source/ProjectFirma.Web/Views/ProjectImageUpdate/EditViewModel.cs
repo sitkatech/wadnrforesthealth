@@ -37,9 +37,8 @@ namespace ProjectFirma.Web.Views.ProjectImageUpdate
         [StringLength(Models.ProjectImageUpdate.FieldLengths.Credit)]
         public string Credit { get; set; }
 
-        [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.PhotoTiming)]
-        public int ProjectImageTimingID { get; set; }
+        public int? ProjectImageTimingID { get; set; }
 
         [Required]
         [FieldDefinitionDisplay(FieldDefinitionEnum.ExcludeFromFactSheet)]

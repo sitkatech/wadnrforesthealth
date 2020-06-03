@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectImage(int projectImageID, int fileResourceID, int projectID, int projectImageTimingID, string caption, string credit, bool isKeyPhoto, bool excludeFromFactSheet) : this()
+        public ProjectImage(int projectImageID, int fileResourceID, int projectID, int? projectImageTimingID, string caption, string credit, bool isKeyPhoto, bool excludeFromFactSheet) : this()
         {
             this.ProjectImageID = projectImageID;
             this.FileResourceID = fileResourceID;
@@ -45,14 +45,13 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
         /// </summary>
-        public ProjectImage(int fileResourceID, int projectID, int projectImageTimingID, string caption, string credit, bool isKeyPhoto, bool excludeFromFactSheet) : this()
+        public ProjectImage(int fileResourceID, int projectID, string caption, string credit, bool isKeyPhoto, bool excludeFromFactSheet) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectImageID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
             
             this.FileResourceID = fileResourceID;
             this.ProjectID = projectID;
-            this.ProjectImageTimingID = projectImageTimingID;
             this.Caption = caption;
             this.Credit = credit;
             this.IsKeyPhoto = isKeyPhoto;
@@ -62,7 +61,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
         /// </summary>
-        public ProjectImage(FileResource fileResource, Project project, ProjectImageTiming projectImageTiming, string caption, string credit, bool isKeyPhoto, bool excludeFromFactSheet) : this()
+        public ProjectImage(FileResource fileResource, Project project, string caption, string credit, bool isKeyPhoto, bool excludeFromFactSheet) : this()
         {
             // Mark this as a new object by setting primary key with special value
             this.ProjectImageID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
@@ -72,7 +71,6 @@ namespace ProjectFirma.Web.Models
             this.ProjectID = project.ProjectID;
             this.Project = project;
             project.ProjectImages.Add(this);
-            this.ProjectImageTimingID = projectImageTiming.ProjectImageTimingID;
             this.Caption = caption;
             this.Credit = credit;
             this.IsKeyPhoto = isKeyPhoto;
@@ -82,9 +80,9 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Creates a "blank" object of this type and populates primitives with defaults
         /// </summary>
-        public static ProjectImage CreateNewBlank(FileResource fileResource, Project project, ProjectImageTiming projectImageTiming)
+        public static ProjectImage CreateNewBlank(FileResource fileResource, Project project)
         {
-            return new ProjectImage(fileResource, project, projectImageTiming, default(string), default(string), default(bool), default(bool));
+            return new ProjectImage(fileResource, project, default(string), default(string), default(bool), default(bool));
         }
 
         /// <summary>
@@ -148,7 +146,7 @@ namespace ProjectFirma.Web.Models
         public int ProjectImageID { get; set; }
         public int FileResourceID { get; set; }
         public int ProjectID { get; set; }
-        public int ProjectImageTimingID { get; set; }
+        public int? ProjectImageTimingID { get; set; }
         public string Caption { get; set; }
         public string Credit { get; set; }
         public bool IsKeyPhoto { get; set; }
@@ -159,7 +157,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<ProjectImageUpdate> ProjectImageUpdates { get; set; }
         public virtual FileResource FileResource { get; set; }
         public virtual Project Project { get; set; }
-        public ProjectImageTiming ProjectImageTiming { get { return ProjectImageTiming.AllLookupDictionary[ProjectImageTimingID]; } }
+        public ProjectImageTiming ProjectImageTiming { get { return ProjectImageTimingID.HasValue ? ProjectImageTiming.AllLookupDictionary[ProjectImageTimingID.Value] : null; } }
 
         public static class FieldLengths
         {

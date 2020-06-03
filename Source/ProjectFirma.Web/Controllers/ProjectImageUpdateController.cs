@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewNew(ProjectUpdateBatch projectUpdateBatch, NewViewModel viewModel)
         {
-            var projectImageTimings = ProjectImageTiming.All.ToSelectListWithEmptyFirstRow(x => x.ProjectImageTimingID.ToString(CultureInfo.InvariantCulture), x => x.ProjectImageTimingDisplayName);
+            var projectImageTimings = ProjectImageTiming.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectImageTimingID.ToString(CultureInfo.InvariantCulture), x => x.ProjectImageTimingDisplayName);
             var viewData = new NewViewData(projectUpdateBatch, projectImageTimings);
             return RazorPartialView<New, NewViewData, NewViewModel>(viewData, viewModel);
         }
@@ -78,7 +78,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewEdit(ProjectImageUpdate projectImageUpdate, EditViewModel viewModel)
         {
-            var projectImageTimings = ProjectImageTiming.All.ToSelectListWithEmptyFirstRow(x => x.ProjectImageTimingID.ToString(CultureInfo.InvariantCulture), x => x.ProjectImageTimingDisplayName);
+            var projectImageTimings = ProjectImageTiming.All.OrderBy(x => x.SortOrder).ToSelectListWithEmptyFirstRow(x => x.ProjectImageTimingID.ToString(CultureInfo.InvariantCulture), x => x.ProjectImageTimingDisplayName);
             var viewData = new EditViewData(projectImageUpdate, projectImageTimings);
             return RazorPartialView<Edit, EditViewData, EditViewModel>(viewData, viewModel);
         }
