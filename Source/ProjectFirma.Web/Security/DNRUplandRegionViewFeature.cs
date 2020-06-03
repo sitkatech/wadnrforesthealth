@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionViewFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionViewFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -23,8 +23,8 @@ using ProjectFirma.Web.Security.Shared;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("View Region")]
-    public class RegionViewFeature : AnonymousUnclassifiedFeature
+    [SecurityFeatureDescription("View DNR Upland Region")]
+    public class DNRUplandRegionViewFeature : AnonymousUnclassifiedFeature
     {
     }
 }

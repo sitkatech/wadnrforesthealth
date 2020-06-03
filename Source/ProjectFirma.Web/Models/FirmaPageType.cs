@@ -190,7 +190,7 @@ namespace ProjectFirma.Web.Models
 
     public partial class FirmaPageTypeRegionsList
     {
-        public override string GetViewUrl() => SitkaRoute<RegionController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(c => c.Index());
     }
 
     public partial class FirmaPageTypeFullAgreementList

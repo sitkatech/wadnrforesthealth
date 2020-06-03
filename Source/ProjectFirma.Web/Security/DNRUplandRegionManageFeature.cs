@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionManageFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionManageFeature.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -22,8 +22,8 @@ Source code is available upon request via <support@sitkatech.com>.
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Manage Region")]
-    public class RegionManageFeature : FirmaAdminFeature
+    [SecurityFeatureDescription("Manage DNR Upland Region")]
+    public class DNRUplandRegionManageFeature : FirmaAdminFeature
     {
     }
 }

@@ -517,10 +517,10 @@ ProjectFirmaMaps.Map.prototype.formatGeospatialAreaResponse = function (json) {
         var linkHtml = "";
         switch (firstFeature.geometry_name) {
         case "RegionLocation":
-            url = "/Region/Detail/" + firstFeature.properties.RegionID;
+            url = "/DNRUplandRegion/Detail/" + firstFeature.properties.RegionID;
             linkText = firstFeature.properties.RegionName;
             linkHtml = "<a title='' href='" + url + "'>" + linkText + "</a>";
-            labelText = "Region";
+            labelText = "DNR Upland Region";
             deferred.resolve({
                 label: labelText,
                 link: linkHtml

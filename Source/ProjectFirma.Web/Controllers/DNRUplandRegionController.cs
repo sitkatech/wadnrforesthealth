@@ -1,5 +1,5 @@
 ﻿/*-----------------------------------------------------------------------
-<copyright file="RegionController.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+<copyright file="DNRUplandRegionController.cs" company="Tahoe Regional Planning Agency and Sitka Technology Group">
 Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
 <author>Sitka Technology Group</author>
 </copyright>
@@ -39,9 +39,9 @@ using IndexViewData = ProjectFirma.Web.Views.DNRUplandRegion.IndexViewData;
 
 namespace ProjectFirma.Web.Controllers
 {
-    public class RegionController : FirmaBaseController
+    public class DNRUplandRegionController : FirmaBaseController
     {
-        [RegionViewFeature]
+        [DNRUplandRegionViewFeature]
         public ViewResult Index()
         {
             var layerGeoJsons = new List<LayerGeoJson>();
@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Controllers
             return RazorView<Index, IndexViewData>(viewData);
         }
 
-        [RegionViewFeature]
+        [DNRUplandRegionViewFeature]
         public GridJsonNetJObjectResult<DNRUplandRegion> IndexGridJsonData()
         {
             var gridSpec = new IndexGridSpec(CurrentPerson);
@@ -65,7 +65,7 @@ namespace ProjectFirma.Web.Controllers
             return gridJsonNetJObjectResult;
         }
 
-        [RegionViewFeature]
+        [DNRUplandRegionViewFeature]
         public ViewResult Detail(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
             var region = dnrUplandRegionPrimaryKey.EntityObject;
@@ -100,7 +100,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
         [HttpGet]
-        [RegionManageFeature]
+        [DNRUplandRegionManageFeature]
         public PartialViewResult DeleteRegion(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
             var region = dnrUplandRegionPrimaryKey.EntityObject;
@@ -112,15 +112,15 @@ namespace ProjectFirma.Web.Controllers
         {
             var canDelete = !dnrUplandRegion.HasDependentObjects();
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete this Region '{dnrUplandRegion.DNRUplandRegionName}'?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"<p>Washington State Department of Natural Resources has&nbsp;six upland region offices&nbsp;that help to&nbsp;provide localized services throughout Washington.</p>", SitkaRoute<RegionController>.BuildLinkFromExpression(x => x.Detail(dnrUplandRegion), "here"));
+                ? $"Are you sure you want to delete this {FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName} '{dnrUplandRegion.DNRUplandRegionName}'?"
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage($"<p>Washington State Department of Natural Resources has&nbsp;six upland region offices&nbsp;that help to&nbsp;provide localized services throughout Washington.</p>", SitkaRoute<DNRUplandRegionController>.BuildLinkFromExpression(x => x.Detail(dnrUplandRegion), "here"));
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
-        [RegionManageFeature]
+        [DNRUplandRegionManageFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
         public ActionResult DeleteRegion(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
@@ -133,7 +133,7 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
-        [RegionViewFeature]
+        [DNRUplandRegionViewFeature]
         public GridJsonNetJObjectResult<Project> ProjectsGridJsonData(DNRUplandRegionPrimaryKey dnrUplandRegionPrimaryKey)
         {
             var gridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false);

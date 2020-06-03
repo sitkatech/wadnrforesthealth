@@ -653,7 +653,7 @@
     <Compile Include="Controllers\PriorityAreaController.cs" />
     <Compile Include="Controllers\ProjectPriorityAreaController.cs" />
     <Compile Include="Controllers\ProjectRegionController.cs" />
-    <Compile Include="Controllers\RegionController.cs" />
+    <Compile Include="Controllers\DNRUplandRegionController.cs" />
     <Compile Include="Controllers\GrantAllocationController.cs" />
     <Compile Include="Common\ICanDeleteFull.cs" />
     <Compile Include="Models\FederalFundCode.cs" />
@@ -751,9 +751,9 @@
     <Compile Include="Security\ProgramIndexViewJsonApiFeature.cs" />
     <Compile Include="Security\ProjectCodeViewJsonApiFeature.cs" />
     <Compile Include="Security\ProjectsViewJsonApiFeature.cs" />
-    <Compile Include="Security\RegionManageFeature.cs" />
+    <Compile Include="Security\DNRUplandRegionManageFeature.cs" />
     <Compile Include="Security\PriorityAreaViewFeature.cs" />
-    <Compile Include="Security\RegionViewFeature.cs" />
+    <Compile Include="Security\DNRUplandRegionViewFeature.cs" />
     <Compile Include="Security\TreatmentActivityManageFeature.cs" />
     <Compile Include="Security\TreatmentActivityViewFeature.cs" />
     <Compile Include="Security\UserEditAsAdminFeature.cs" />

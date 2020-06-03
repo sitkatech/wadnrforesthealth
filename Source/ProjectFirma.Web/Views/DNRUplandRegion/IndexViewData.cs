@@ -38,7 +38,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             MapInitJson = mapInitJson;
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, ObjectNamePlural = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), SaveFiltersInCookie = true};
             GridName = "regionsGrid";
-            GridDataUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
+            GridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.IndexGridJsonData());
         }
 
     }

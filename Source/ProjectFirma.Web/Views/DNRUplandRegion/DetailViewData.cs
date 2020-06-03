@@ -50,8 +50,8 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             ViewGoogleChartViewData = viewGoogleChartViewData;
             PageTitle = dnrUplandRegion.DNRUplandRegionName;
             EntityName = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel();
-            UserHasRegionManagePermissions = new RegionManageFeature().HasPermissionByPerson(currentPerson);
-            IndexUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(x => x.Index());
+            UserHasRegionManagePermissions = new DNRUplandRegionManageFeature().HasPermissionByPerson(currentPerson);
+            IndexUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "regionProjectListGrid";
             BasicProjectInfoGridSpec = new BasicProjectInfoGridSpec(CurrentPerson, false)
@@ -61,7 +61,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
                 SaveFiltersInCookie = true
             };
           
-            BasicProjectInfoGridDataUrl = SitkaRoute<RegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(dnrUplandRegion));
+            BasicProjectInfoGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(dnrUplandRegion));
 
             PerformanceMeasureChartViewDatas = performanceMeasures.Select(x=>dnrUplandRegion.GetPerformanceMeasureChartViewData(x, CurrentPerson)).ToList();
         }

@@ -15,7 +15,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public MapTooltipViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion) : base(currentPerson)
         {
             DNRUplandRegion = dnrUplandRegion;
-            RegionDetailLink = SitkaRoute<RegionController>
+            RegionDetailLink = SitkaRoute<DNRUplandRegionController>
                 .BuildLinkFromExpression(c => c.Detail(DNRUplandRegion), DNRUplandRegion.DNRUplandRegionName).ToHTMLFormattedString();
             DNRUplandRegionLabel = Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName;
         }

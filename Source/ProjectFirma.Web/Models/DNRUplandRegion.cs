@@ -56,7 +56,7 @@ namespace ProjectFirma.Web.Models
 
         public string GetDetailUrl()
         {
-            var urlTemplateString = SitkaRoute<RegionController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int));
+            var urlTemplateString = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(t => t.Detail(UrlTemplate.Parameter1Int));
             return urlTemplateString.Replace(UrlTemplate.Parameter1Int.ToString(), this.DNRUplandRegionID.ToString());
         }
 
