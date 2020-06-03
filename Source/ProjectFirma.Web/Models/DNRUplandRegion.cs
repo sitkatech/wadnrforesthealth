@@ -62,8 +62,8 @@ namespace ProjectFirma.Web.Models
 
         public static LayerGeoJson GetRegionWmsLayerGeoJson(string layerColor, decimal layerOpacity, LayerInitialVisibility layerInitialVisibility)
         {
-            return new LayerGeoJson("All Regions", FirmaWebConfiguration.WebMapServiceUrl,
-                FirmaWebConfiguration.GetRegionWmsLayerName(), layerColor, layerOpacity,
+            return new LayerGeoJson("All DNR Upland Regions", FirmaWebConfiguration.WebMapServiceUrl,
+                FirmaWebConfiguration.GetDNRUplandRegionWmsLayerName(), layerColor, layerOpacity,
                 layerInitialVisibility);
         }
 

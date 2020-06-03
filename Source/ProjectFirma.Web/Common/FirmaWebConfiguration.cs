@@ -67,12 +67,12 @@ namespace ProjectFirma.Web.Common
 
         public static List<string> GetWmsLayerNames()
         {
-            return new List<string> { GetRegionWmsLayerName(), GetPriorityAreaWmsLayerName() };
+            return new List<string> { GetDNRUplandRegionWmsLayerName(), GetPriorityAreaWmsLayerName() };
         }
 
-        public static string GetRegionWmsLayerName()
+        public static string GetDNRUplandRegionWmsLayerName()
         {
-            return "WADNRForestHealth:Region"; //todo: move region layer name to web config
+            return "WADNRForestHealth:DNRUplandRegion"; //todo: move region layer name to web config
         }
 
         public static string GetPriorityAreaWmsLayerName()

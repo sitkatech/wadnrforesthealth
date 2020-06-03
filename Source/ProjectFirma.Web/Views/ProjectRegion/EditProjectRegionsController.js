@@ -25,13 +25,13 @@ angular.module("ProjectFirmaApp")
                                 wildcard: "%QUERY"
                             }
                         }),
-                        display: "RegionName",
+                        display: "DNRUplandRegionName",
                         limit: Number.MAX_VALUE
                     });
 
                 finder.bind("typeahead:select",
                     function (event, suggestion) {
-                        $scope.toggleRegion(suggestion.RegionID, suggestion.RegionName, function() {
+                        $scope.toggleRegion(suggestion.DNRUplandRegionID, suggestion.DNRUplandRegionName, function() {
                             $scope.$apply();
                         });
                     });
@@ -55,17 +55,17 @@ angular.module("ProjectFirmaApp")
             };
 
             function onMapClick(event) {
-                var regionMapSericeLayerName = $scope.AngularViewData.RegionMapServiceLayerName,
+                var regionMapServiceLayerName = $scope.AngularViewData.RegionMapServiceLayerName,
                     mapServiceUrl = $scope.AngularViewData.MapServiceUrl;
 
-                if (!regionMapSericeLayerName || !mapServiceUrl)
+                if (!regionMapServiceLayerName || !mapServiceUrl)
                     return;
 
                 var latlng = event.latlng;
                 var latlngWrapped = latlng.wrap();
                 var parameters = L.Util.extend($scope.firmaMap.wfsParams,
                     {
-                        typeName: regionMapSericeLayerName,
+                        typeName: regionMapServiceLayerName,
                         cql_filter: "intersects(Ogr_Geometry, POINT(" + latlngWrapped.lat + " " + latlngWrapped.lng + "))"
                     });
                 SitkaAjax.ajax({
@@ -79,7 +79,7 @@ angular.module("ProjectFirmaApp")
 
                         var mergedProperties = _.merge.apply(_, _.map(response.features, "properties"));
 
-                        $scope.toggleRegion(mergedProperties.RegionID, mergedProperties.RegionName, function() {
+                        $scope.toggleRegion(mergedProperties.DNRUplandRegionID, mergedProperties.DNRUplandRegionName, function() {
                             $scope.$apply();
                         });
 
@@ -119,14 +119,14 @@ angular.module("ProjectFirmaApp")
                 
                 var wmsParameters = L.Util.extend(
                     {
-                        layers: $scope.AngularViewData.RegionMapSericeLayerName,
-                        cql_filter: "RegionID in (" + $scope.AngularModel.RegionIDs.join(",") + ")",
+                        layers: $scope.AngularViewData.RegionMapServiceLayerName,
+                        cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.RegionIDs.join(",") + ")",
                         styles: "region_yellow"
                     },
                     $scope.firmaMap.wmsParams);
 
                 $scope.firmaMap.selectedRegionLayer = L.tileLayer.wms($scope.AngularViewData.MapServiceUrl, wmsParameters);
-                $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedRegionLayer, "Selected Regions");
+                $scope.firmaMap.layerControl.addOverlay($scope.firmaMap.selectedRegionLayer, "Selected DNR Upland Regions");
                 $scope.firmaMap.map.addLayer($scope.firmaMap.selectedRegionLayer);
 
                 // Update map extent to selected regions
@@ -134,7 +134,7 @@ angular.module("ProjectFirmaApp")
                     var wfsParameters = L.Util.extend($scope.firmaMap.wfsParams,
                         {
                             typeName: $scope.AngularViewData.RegionMapServiceLayerName,
-                            cql_filter: "RegionID in (" + $scope.AngularModel.RegionIDs.join(",") + ")"
+                            cql_filter: "DNRUplandRegionID in (" + $scope.AngularModel.RegionIDs.join(",") + ")"
                         });
                     SitkaAjax.ajax({
                             url: $scope.AngularViewData.MapServiceUrl + L.Util.getParamString(wfsParameters),
@@ -148,7 +148,7 @@ angular.module("ProjectFirmaApp")
                             $scope.firmaMap.map.fitBounds(new L.geoJSON(response).getBounds());
                         },
                         function () {
-                            console.error("There was an error setting map extent to the selected Regions");
+                            console.error("There was an error setting map extent to the selected DNR Upland Regions");
                         });
                 }
             };

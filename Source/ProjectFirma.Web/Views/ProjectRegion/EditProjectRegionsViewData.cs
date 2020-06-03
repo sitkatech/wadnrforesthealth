@@ -66,7 +66,7 @@ namespace ProjectFirma.Web.Views.ProjectRegion
             FindRegionByNameUrl = SitkaRoute<ProjectRegionController>.BuildUrlFromExpression(c => c.FindRegionByName(null));
             TypeAheadInputId = "regionSearch";
             RegionNameByID = dnrUplandRegionsInViewModel.ToDictionary(x => x.DNRUplandRegionID, x => x.DNRUplandRegionName);
-            RegionMapServiceLayerName = FirmaWebConfiguration.GetRegionWmsLayerName();
+            RegionMapServiceLayerName = FirmaWebConfiguration.GetDNRUplandRegionWmsLayerName();
             MapServiceUrl = FirmaWebConfiguration.WebMapServiceUrl;
         }
     }

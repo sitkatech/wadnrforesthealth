@@ -55,17 +55,17 @@ angular.module("ProjectFirmaApp")
             };
 
             function onMapClick(event) {
-                var priorityAreaMapSericeLayerName = $scope.AngularViewData.PriorityAreaMapServiceLayerName,
+                var priorityAreaMapServiceLayerName = $scope.AngularViewData.PriorityAreaMapServiceLayerName,
                     mapServiceUrl = $scope.AngularViewData.MapServiceUrl;
 
-                if (!priorityAreaMapSericeLayerName || !mapServiceUrl)
+                if (!priorityAreaMapServiceLayerName || !mapServiceUrl)
                     return;
 
                 var latlng = event.latlng;
                 var latlngWrapped = latlng.wrap();
                 var parameters = L.Util.extend($scope.firmaMap.wfsParams,
                     {
-                        typeName: priorityAreaMapSericeLayerName,
+                        typeName: priorityAreaMapServiceLayerName,
                         cql_filter: "intersects(Ogr_Geometry, POINT(" + latlngWrapped.lat + " " + latlngWrapped.lng + "))"
                     });
                 SitkaAjax.ajax({
@@ -119,7 +119,7 @@ angular.module("ProjectFirmaApp")
                 
                 var wmsParameters = L.Util.extend(
                     {
-                        layers: $scope.AngularViewData.PriorityAreaMapSericeLayerName,
+                        layers: $scope.AngularViewData.PriorityAreaMapServiceLayerName,
                         cql_filter: "PriorityAreaID in (" + $scope.AngularModel.PriorityAreaIDs.join(",") + ")",
                         styles: "priorityArea_yellow"
                     },

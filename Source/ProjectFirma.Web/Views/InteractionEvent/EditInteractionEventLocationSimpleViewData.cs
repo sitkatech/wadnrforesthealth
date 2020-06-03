@@ -46,7 +46,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
         public MapInitJson MapInitJson { get; }
         public string TypeAheadInputId { get; }
         public string InteractionEventLocationFieldDefinitionLabel { get; }
-        public List<string> GeospatialAreaMapSericeLayerNames { get; }
+        public List<string> GeospatialAreaMapServiceLayerNames { get; }
         public string MapServiceUrl { get; }
         public Feature CurrentFeature { get; }
 
@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Views.InteractionEvent
             MapInitJson = mapInitJson;
             TypeAheadInputId = "interactionEventLocationSearch";
             InteractionEventLocationFieldDefinitionLabel = ProjectFirma.Web.Models.FieldDefinition.InteractionEventLocation.GetFieldDefinitionLabel();
-            GeospatialAreaMapSericeLayerNames = wmsLayerNames;
+            GeospatialAreaMapServiceLayerNames = wmsLayerNames;
             CurrentFeature = currentFeature;
             MapServiceUrl = mapServiceUrl;
         }

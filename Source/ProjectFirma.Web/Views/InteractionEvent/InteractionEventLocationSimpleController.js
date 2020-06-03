@@ -3,9 +3,9 @@
         function ($scope, angularModelAndViewData) {
             $scope.AngularModel = angularModelAndViewData.AngularModel;
             $scope.AngularViewData = angularModelAndViewData.AngularViewData;
-            $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapSericeLayerNames.length > 0;
-            $scope.GeospatialAreaMapSericeLayerNamesCommaSeparated =
-                $scope.AngularViewData.GeospatialAreaMapSericeLayerNames.join(",");
+            $scope.hasGeospatialAreaTypeLayers = $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.length > 0;
+            $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated =
+                $scope.AngularViewData.GeospatialAreaMapServiceLayerNames.join(",");
 
 
             $scope.selectedStyle = {
@@ -66,7 +66,7 @@
                 else {
                     var parameters = L.Util.extend($scope.interactionEventLocationMap.wfsParams,
                         {
-                            typeName: $scope.GeospatialAreaMapSericeLayerNamesCommaSeparated,
+                            typeName: $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated,
                             cql_filter: "intersects(Ogr_Geometry, POINT(" +
                                 latlngWrapped.lat +
                                 " " +
@@ -174,7 +174,7 @@
                                 url: $scope.AngularViewData.MapServiceUrl +
                                     L.Util.getParamString(L.Util.extend($scope.interactionEventLocationMap.wfsParams,
                                         {
-                                            typeName: $scope.GeospatialAreaMapSericeLayerNamesCommaSeparated,
+                                            typeName: $scope.GeospatialAreaMapServiceLayerNamesCommaSeparated,
                                             cql_filter: "intersects(Ogr_Geometry, POINT(" + latlngWrapped.lat + " " + latlngWrapped.lng + "))"
                                         })),
                                 dataType: "json",
