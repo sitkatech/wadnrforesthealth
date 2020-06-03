@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Views.ProgramInfo
 
         public ClassificationSystemViewData(Person currentPerson, Models.ClassificationSystem classificationSystem) : base(currentPerson)
         {
-            PageTitle = classificationSystem.ClassificationSystemNamePluralized;
+            PageTitle = classificationSystem.ClassificationSystemDefinition;
             Classifications = classificationSystem.Classifications.SortByOrderThenName().ToList();
             ClassificationSystem = classificationSystem;
             ShowEditButton = new FirmaPageManageFeature().HasPermission(currentPerson, null).HasPermission;

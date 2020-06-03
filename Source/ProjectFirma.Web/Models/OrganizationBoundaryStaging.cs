@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models
             return geoJsons.Select(x => new OrganizationBoundaryStaging(organization, x.Key, x.Value)).ToList();
         }
         
-        public string AuditDescriptionString => $"Organization boundary staging {Organization?.OrganizationName ?? "(Organization Not Found)"}";
+        public string AuditDescriptionString => $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} boundary staging {Organization?.OrganizationName ?? $"({FieldDefinition.Organization.GetFieldDefinitionLabel()} Not Found)"}";
 
         public FeatureCollection ToGeoJsonFeatureCollection()
         {

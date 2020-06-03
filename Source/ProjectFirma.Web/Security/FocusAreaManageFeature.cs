@@ -24,7 +24,7 @@ using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Security
 {
-    [SecurityFeatureDescription("Manage Focus Area")]
+    [SecurityFeatureDescription("Manage DNR LOA Focus Area")]
     public class FocusAreaManageFeature : FirmaFeature
     {
         public FocusAreaManageFeature() : base(new List<Role> { Role.SitkaAdmin, Role.Admin, Role.ProjectSteward }) { }

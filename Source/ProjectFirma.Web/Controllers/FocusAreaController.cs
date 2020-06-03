@@ -49,8 +49,8 @@ namespace ProjectFirma.Web.Controllers
         {
             var canDelete = !focusArea.HasDependentObjects();
             var confirmMessage = canDelete
-                ? $"Are you sure you want to delete this Focus Area '{focusArea.FocusAreaName}'?"
-                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage("Focus Area", SitkaRoute<FocusAreaController>.BuildLinkFromExpression(x => x.Detail(focusArea), "here"));
+                ? $"Are you sure you want to delete this {Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} '{focusArea.FocusAreaName}'?"
+                : ConfirmDialogFormViewData.GetStandardCannotDeleteMessage(Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), SitkaRoute<FocusAreaController>.BuildLinkFromExpression(x => x.Detail(focusArea), "here"));
 
             var viewData = new ConfirmDialogFormViewData(confirmMessage, canDelete);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
@@ -77,7 +77,7 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(focusArea);
             HttpRequestStorage.DatabaseEntities.FocusAreas.Add(focusArea);
             HttpRequestStorage.DatabaseEntities.SaveChanges();
-            SetMessageForDisplay($"Focus Area {focusArea.GetDisplayNameAsUrl()} successfully created.");
+            SetMessageForDisplay($"{FieldDefinition.FocusArea.GetFieldDefinitionLabel()} {focusArea.GetDisplayNameAsUrl()} successfully created.");
 
             return new ModalDialogFormJsonResult();
         }
@@ -198,7 +198,7 @@ namespace ProjectFirma.Web.Controllers
             HttpRequestStorage.DatabaseEntities.FocusAreaLocationStagings.RemoveRange(focusArea
                 .FocusAreaLocationStagings);
 
-            SetMessageForDisplay($"Focus Area Location for {focusArea.GetDisplayNameAsUrl()} successfully updated.");
+            SetMessageForDisplay($"{FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Location for {focusArea.GetDisplayNameAsUrl()} successfully updated.");
             return new ContentResult();
         }
         private PartialViewResult ViewApproveUploadGis(ApproveUploadGisViewModel viewModel, FocusArea focusArea)
@@ -271,7 +271,7 @@ namespace ProjectFirma.Web.Controllers
             if (focusArea.FocusAreaLocation != null)
             {
                 hasSpatialData = true;
-                layers.Add(new LayerGeoJson("Focus Area Location",
+                layers.Add(new LayerGeoJson($"{FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Location",
                     focusArea.FocusAreaLocationToFeatureCollection(), "blue", 1,
                     LayerInitialVisibility.Show));
             }
@@ -317,7 +317,7 @@ namespace ProjectFirma.Web.Controllers
 
             if (locationFeatures.Any())
             {
-                layers.Add(new LayerGeoJson("Focus Area Location",
+                layers.Add(new LayerGeoJson($"{FieldDefinition.FocusArea.GetFieldDefinitionLabel()} Location",
                     new FeatureCollection(locationFeatures), "blue", 1,
                     LayerInitialVisibility.Show));
             }

@@ -14,7 +14,7 @@ namespace ProjectFirma.Web.Views.Organization
 
         public EditBoundaryViewData(Person currentPerson, Models.Organization organization) : base(currentPerson)
         {
-            PageTitle = "Edit Organization Boundary";
+            PageTitle = $"Edit {Models.FieldDefinition.Organization.GetFieldDefinitionLabel()} Boundary";
 
             Organization = organization;
             EditBoundaryUrl =

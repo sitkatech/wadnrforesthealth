@@ -102,7 +102,7 @@ namespace ProjectFirma.Web.ScheduledJobs
 
             return GetEmailContent(
                 SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.MyProjectsRequiringAnUpdate()),
-                "<em>Organization Primary Contact</em>",
+                $"<em>{FieldDefinition.Organization.GetFieldDefinitionLabel()} Primary Contact</em>",
                 "<p><em>A list of the recipient’s projects that require an update and do not have an update submitted yet will appear here.&nbsp;</em></p>",
                 signature
             );

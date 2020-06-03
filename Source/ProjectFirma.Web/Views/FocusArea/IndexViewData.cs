@@ -36,16 +36,16 @@ namespace ProjectFirma.Web.Views.FocusArea
 
         public IndexViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = "Focus Areas";
+            PageTitle = Models.FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized();
             MapInitJson = mapInitJson;
-            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = "Focus Area", ObjectNamePlural = "Focus Areas", SaveFiltersInCookie = true};
+            GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel(), ObjectNamePlural = Models.FieldDefinition.FocusArea.GetFieldDefinitionLabelPluralized(), SaveFiltersInCookie = true};
             var hasFocusAreaManagePermissions = new FocusAreaManageFeature().HasPermissionByPerson(currentPerson);
 
 
             if (hasFocusAreaManagePermissions)
             {
                 var contentUrl = SitkaRoute<FocusAreaController>.BuildUrlFromExpression(t => t.New());
-                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, "Create a new Focus Area");
+                GridSpec.CreateEntityModalDialogForm = new ModalDialogForm(contentUrl, $"Create a new {Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()}");
             }
 
 

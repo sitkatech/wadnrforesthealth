@@ -135,15 +135,6 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.Store.tmpAgreementContactsImportTemplate" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.Store.TrainingVideo" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Store.Vendor" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="vGeoServerDNRUplandRegion" EntityType="ProjectFirma.Web.Models.Store.vGeoServerDNRUplandRegion" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerDNRUplandRegion">
-      <DefiningQuery>SELECT 
-[vGeoServerDNRUplandRegion].[DNRUplandRegionID] AS [DNRUplandRegionID], 
-[vGeoServerDNRUplandRegion].[PrimaryKey] AS [PrimaryKey], 
-[vGeoServerDNRUplandRegion].[DNRUplandRegionName] AS [DNRUplandRegionName], 
-[vGeoServerDNRUplandRegion].[DNRUplandRegionLocation] AS [DNRUplandRegionLocation], 
-[vGeoServerDNRUplandRegion].[Ogr_Geometry] AS [Ogr_Geometry]
-FROM [dbo].[vGeoServerDNRUplandRegion] AS [vGeoServerDNRUplandRegion]</DefiningQuery>
-    </EntitySet>
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.Store.vGeoServerPriorityLandscape" store:Type="Views" store:Schema="dbo" store:Name="vGeoServerPriorityLandscape">
       <DefiningQuery>SELECT 
 [vGeoServerPriorityLandscape].[PriorityLandscapeID] AS [PriorityLandscapeID], 
@@ -2605,18 +2596,6 @@ warning 6035: The relationship 'FK_PerformanceMeasureActualSubcategoryOption_Per
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerDNRUplandRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->
-  <EntityType Name="vGeoServerDNRUplandRegion">
-    <Key>
-      <PropertyRef Name="DNRUplandRegionID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="DNRUplandRegionName" />
-    </Key>
-    <Property Name="DNRUplandRegionID" Type="int" Nullable="false" />
-    <Property Name="PrimaryKey" Type="int" Nullable="false" />
-    <Property Name="DNRUplandRegionName" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="DNRUplandRegionLocation" Type="geometry" />
-    <Property Name="Ogr_Geometry" Type="geometry" />
-  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'WADNRForestHealthDB.dbo.vGeoServerPriorityLandscape' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
 -->

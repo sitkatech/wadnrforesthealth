@@ -135,7 +135,6 @@
     <EntitySet Name="tmpAgreementContactsImportTemplate" EntityType="ProjectFirma.Web.Models.tmpAgreementContactsImportTemplate" />
     <EntitySet Name="TrainingVideo" EntityType="ProjectFirma.Web.Models.TrainingVideo" />
     <EntitySet Name="Vendor" EntityType="ProjectFirma.Web.Models.Vendor" />
-    <EntitySet Name="vGeoServerDNRUplandRegion" EntityType="ProjectFirma.Web.Models.vGeoServerDNRUplandRegion" />
     <EntitySet Name="vGeoServerPriorityLandscape" EntityType="ProjectFirma.Web.Models.vGeoServerPriorityLandscape" />
     <EntitySet Name="vSocrataDataMartRawJsonImportIndex" EntityType="ProjectFirma.Web.Models.vSocrataDataMartRawJsonImportIndex" />
     <AssociationSet Name="FK_Agreement_AgreementStatus_AgreementStatusID" Association="ProjectFirma.Web.Models.FK_Agreement_AgreementStatus_AgreementStatusID">
@@ -2992,18 +2991,6 @@
     <Property Name="Email" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Organizations" Relationship="ProjectFirma.Web.Models.FK_Organization_Vendor_VendorID" FromRole="Vendor" ToRole="Organizations" />
     <NavigationProperty Name="People" Relationship="ProjectFirma.Web.Models.FK_Person_Vendor_VendorID" FromRole="Vendor" ToRole="People" />
-  </EntityType>
-  <EntityType Name="vGeoServerDNRUplandRegion">
-    <Key>
-      <PropertyRef Name="DNRUplandRegionID" />
-      <PropertyRef Name="PrimaryKey" />
-      <PropertyRef Name="DNRUplandRegionName" />
-    </Key>
-    <Property Name="DNRUplandRegionID" Type="Int32" Nullable="false" />
-    <Property Name="PrimaryKey" Type="Int32" Nullable="false" />
-    <Property Name="DNRUplandRegionName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-    <Property Name="DNRUplandRegionLocation" Type="Geometry" />
-    <Property Name="Ogr_Geometry" Type="Geometry" />
   </EntityType>
   <EntityType Name="vGeoServerPriorityLandscape">
     <Key>

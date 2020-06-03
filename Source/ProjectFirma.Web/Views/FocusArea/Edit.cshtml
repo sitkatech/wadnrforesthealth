@@ -25,7 +25,7 @@
 @inherits ProjectFirma.Web.Views.FocusArea.Edit
 @using (Html.BeginForm())
 {
-    <p>Add or edit a Focus Area by providing a name, status and region. You will be able to define the Focus Area location and assign Projects to a Focus Area after you add the Focus Area using this form.</p>
+    <p>Add or edit a @FieldDefinition.FocusArea.GetFieldDefinitionLabel() by providing a name, status and region. You will be able to define the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() location and assign Projects to a @FieldDefinition.FocusArea.GetFieldDefinitionLabel() after you add the @FieldDefinition.FocusArea.GetFieldDefinitionLabel() using this form.</p>
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-sm-3 control-label">

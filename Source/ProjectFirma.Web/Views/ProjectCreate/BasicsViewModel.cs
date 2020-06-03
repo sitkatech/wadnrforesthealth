@@ -196,7 +196,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             if (!FocusAreaID.HasValue && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
             {
-                var errorMessage = $"Focus Area is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
+                var errorMessage = $"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
                 yield return new SitkaValidationResult<BasicsViewModel, int?>(errorMessage, m => m.FocusAreaID);
             }
         }

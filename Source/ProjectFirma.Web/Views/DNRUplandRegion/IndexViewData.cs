@@ -34,7 +34,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
         public IndexViewData(Person currentPerson, MapInitJson mapInitJson, Models.FirmaPage firmaPage) : base(currentPerson, firmaPage)
         {
-            PageTitle = Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName;
+            PageTitle = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized();
             MapInitJson = mapInitJson;
             GridSpec = new IndexGridSpec(currentPerson) {ObjectNameSingular = Models.FieldDefinition.DNRUplandRegion.FieldDefinitionDisplayName, ObjectNamePlural = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabelPluralized(), SaveFiltersInCookie = true};
             GridName = "regionsGrid";

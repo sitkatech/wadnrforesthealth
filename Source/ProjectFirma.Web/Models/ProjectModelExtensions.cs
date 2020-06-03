@@ -159,7 +159,7 @@ namespace ProjectFirma.Web.Models
             var fundingOrganizations = project.ProjectGrantAllocationExpenditures.Select(x => x.GrantAllocation.BottommostOrganization)
                 .Union(project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation.BottommostOrganization)).Distinct()
                 .Select(x => new ProjectOrganizationRelationship(project, x, relationshipTypeFunder));
-            Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), "Must have Organization set for all Funding Organizations");
+            Check.Ensure(fundingOrganizations.All(fo => fo.Organization != null), $"Must have {FieldDefinition.Organization.GetFieldDefinitionLabel()} set for all Funding {FieldDefinition.Organization.GetFieldDefinitionLabelPluralized()}");
             return fundingOrganizations.ToList();
         }
 

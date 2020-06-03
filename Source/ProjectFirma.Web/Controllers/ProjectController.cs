@@ -393,7 +393,7 @@ namespace ProjectFirma.Web.Controllers
             var grantAllocationRequestAmountGooglePieChartSlices = project.GetRequestAmountGooglePieChartSlices();
             var googleChartDataTable =
                 GetProjectGrantAllocationRequestSheetGoogleChartDataTable(grantAllocationRequestAmountGooglePieChartSlices);
-            var googleChartTitle = $"Funding Request by Organization for: {project.ProjectName}";
+            var googleChartTitle = $"Funding Request by {FieldDefinition.Organization.GetFieldDefinitionLabel()} for: {project.ProjectName}";
             var googleChartType = GoogleChartType.PieChart;
             var googleChartConfiguration = new GooglePieChartConfiguration(googleChartTitle, MeasurementUnitTypeEnum.Dollars,
                 grantAllocationRequestAmountGooglePieChartSlices, googleChartType, googleChartDataTable) {PieSliceText = "value"};
