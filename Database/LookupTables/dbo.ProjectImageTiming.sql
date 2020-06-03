@@ -5,3 +5,4 @@ insert into dbo.ProjectImageTiming(ProjectImageTimingID, ProjectImageTimingName,
 insert into dbo.ProjectImageTiming(ProjectImageTimingID, ProjectImageTimingName, ProjectImageTimingDisplayName, SortOrder) values (2, 'Before', 'Before', 10)
 insert into dbo.ProjectImageTiming(ProjectImageTimingID, ProjectImageTimingName, ProjectImageTimingDisplayName, SortOrder) values (3, 'During', 'During', 20)
 insert into dbo.ProjectImageTiming(ProjectImageTimingID, ProjectImageTimingName, ProjectImageTimingDisplayName, SortOrder) values (4, 'Unknown', 'Unknown', 40)
+insert into dbo.ProjectImageTiming(ProjectImageTimingID, ProjectImageTimingName, ProjectImageTimingDisplayName, SortOrder) values (5, 'DesiredFutureConditions', 'Desired Future Conditions', 35)

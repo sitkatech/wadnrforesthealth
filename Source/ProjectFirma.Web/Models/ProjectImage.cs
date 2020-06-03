@@ -31,11 +31,12 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectImage : IFileResourcePhoto, IAuditableEntity
     {
         public ProjectImage(Project project, bool userHasPermissionToSetKeyPhoto)
-            : this(ModelObjectHelpers.NotYetAssignedID, project.ProjectID, ProjectImageTiming.Unknown.ProjectImageTimingID, string.Empty, string.Empty, false, false)
+            : this(ModelObjectHelpers.NotYetAssignedID, project.ProjectID,  string.Empty, string.Empty, false, false)
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
             Project = project;
-            // ReSharper restore DoNotCallOverridableMethodsInConstructor
+
+            ProjectImageTimingID = ProjectImageTiming.Unknown.ProjectImageTimingID;
 
             // If we are the only picture for this Project so far, it must be the key image -- so long as we have permission to set key photos.
             if (userHasPermissionToSetKeyPhoto && !project.ProjectImages.Any())
@@ -66,9 +67,16 @@ namespace ProjectFirma.Web.Models
             }
         }
 
-        public string CaptionOnGallery =>
-            $"{Caption}\r\n(Timing: {ProjectImageTiming.ProjectImageTimingDisplayName}) {FileResource.FileResourceDataLengthString}";
-
+        public string CaptionOnGallery
+        {
+            get
+            {
+                var timingString = ProjectImageTiming != null ? $"(Timing: {ProjectImageTiming.ProjectImageTimingDisplayName}) " : string.Empty;
+                return $"{Caption}\r\n{timingString}{FileResource.FileResourceDataLengthString}";
+            }
+            
+        }
+        
         public string PhotoUrl => FileResource.FileResourceUrl;
 
         public string PhotoUrlScaledThumbnail => FileResource.FileResourceUrlScaledThumbnail(150);

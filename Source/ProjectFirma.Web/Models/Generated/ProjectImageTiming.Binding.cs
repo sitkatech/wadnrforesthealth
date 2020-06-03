@@ -22,6 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ProjectImageTimingBefore Before = ProjectImageTimingBefore.Instance;
         public static readonly ProjectImageTimingDuring During = ProjectImageTimingDuring.Instance;
         public static readonly ProjectImageTimingUnknown Unknown = ProjectImageTimingUnknown.Instance;
+        public static readonly ProjectImageTimingDesiredFutureConditions DesiredFutureConditions = ProjectImageTimingDesiredFutureConditions.Instance;
 
         public static readonly List<ProjectImageTiming> All;
         public static readonly ReadOnlyDictionary<int, ProjectImageTiming> AllLookupDictionary;
@@ -31,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ProjectImageTiming()
         {
-            All = new List<ProjectImageTiming> { After, Before, During, Unknown };
+            All = new List<ProjectImageTiming> { After, Before, During, Unknown, DesiredFutureConditions };
             AllLookupDictionary = new ReadOnlyDictionary<int, ProjectImageTiming>(All.ToDictionary(x => x.ProjectImageTimingID));
         }
 
@@ -107,6 +108,8 @@ namespace ProjectFirma.Web.Models
                     return After;
                 case ProjectImageTimingEnum.Before:
                     return Before;
+                case ProjectImageTimingEnum.DesiredFutureConditions:
+                    return DesiredFutureConditions;
                 case ProjectImageTimingEnum.During:
                     return During;
                 case ProjectImageTimingEnum.Unknown:
@@ -122,7 +125,8 @@ namespace ProjectFirma.Web.Models
         After = 1,
         Before = 2,
         During = 3,
-        Unknown = 4
+        Unknown = 4,
+        DesiredFutureConditions = 5
     }
 
     public partial class ProjectImageTimingAfter : ProjectImageTiming
@@ -147,5 +151,11 @@ namespace ProjectFirma.Web.Models
     {
         private ProjectImageTimingUnknown(int projectImageTimingID, string projectImageTimingName, string projectImageTimingDisplayName, int sortOrder) : base(projectImageTimingID, projectImageTimingName, projectImageTimingDisplayName, sortOrder) {}
         public static readonly ProjectImageTimingUnknown Instance = new ProjectImageTimingUnknown(4, @"Unknown", @"Unknown", 40);
+    }
+
+    public partial class ProjectImageTimingDesiredFutureConditions : ProjectImageTiming
+    {
+        private ProjectImageTimingDesiredFutureConditions(int projectImageTimingID, string projectImageTimingName, string projectImageTimingDisplayName, int sortOrder) : base(projectImageTimingID, projectImageTimingName, projectImageTimingDisplayName, sortOrder) {}
+        public static readonly ProjectImageTimingDesiredFutureConditions Instance = new ProjectImageTimingDesiredFutureConditions(5, @"DesiredFutureConditions", @"Desired Future Conditions", 35);
     }
 }

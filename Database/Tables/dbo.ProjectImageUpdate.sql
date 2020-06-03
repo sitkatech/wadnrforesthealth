@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[ProjectImageUpdate](
 	[ProjectImageUpdateID] [int] IDENTITY(1,1) NOT NULL,
 	[FileResourceID] [int] NULL,
 	[ProjectUpdateBatchID] [int] NOT NULL,
-	[ProjectImageTimingID] [int] NOT NULL,
+	[ProjectImageTimingID] [int] NULL,
 	[Caption] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[Credit] [varchar](200) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[IsKeyPhoto] [bit] NOT NULL,

@@ -1698,6 +1698,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vGeoServerDNRUplandRegion">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerDNRUplandRegion">
+        <MappingFragment StoreEntitySet="vGeoServerDNRUplandRegion">
+          <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
+          <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+          <ScalarProperty Name="DNRUplandRegionName" ColumnName="DNRUplandRegionName" />
+          <ScalarProperty Name="DNRUplandRegionLocation" ColumnName="DNRUplandRegionLocation" />
+          <ScalarProperty Name="Ogr_Geometry" ColumnName="Ogr_Geometry" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vGeoServerPriorityLandscape">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.vGeoServerPriorityLandscape">
         <MappingFragment StoreEntitySet="vGeoServerPriorityLandscape">
