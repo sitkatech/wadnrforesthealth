@@ -420,6 +420,7 @@ namespace ProjectFirma.Web.Models
         private static string ConvertProjectImageTimingEnumToHumanReadableString(ObjectStateEntry objectStateEntry, AuditLogEventType auditLogEventType)
         {
             string oldName;
+            string newName;
 
             var originalValue = objectStateEntry.OriginalValues[PropertyNameProjectImageTimingID];
             var currentValue = objectStateEntry.CurrentValues[PropertyNameProjectImageTimingID];
@@ -433,7 +434,16 @@ namespace ProjectFirma.Web.Models
                 var oldPrimaryKeyValue = (int) originalValue;
                 oldName = ProjectImageTiming.AllLookupDictionary[oldPrimaryKeyValue].ProjectImageTimingDisplayName;
             }
-            var newName = ProjectImageTiming.AllLookupDictionary[(int) currentValue].ProjectImageTimingDisplayName;
+
+            if (currentValue is DBNull)
+            {
+                newName = "";
+            }
+            else
+            {
+                newName = ProjectImageTiming.AllLookupDictionary[(int) currentValue].ProjectImageTimingDisplayName;
+            }
+            
             return auditLogEventType.GetAuditStringForOperationType("Image Timing", oldName, newName);
         }
 
