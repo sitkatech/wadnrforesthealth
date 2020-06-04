@@ -191,14 +191,6 @@ namespace ProjectFirma.Web.Views.ProjectCreate
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in the Planning / Design stage, the Planning / Design start year must be less than or equal to the current year",
                     m => m.PlannedDate);
             }
-
-            var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
-
-            if (!FocusAreaID.HasValue && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
-            {
-                var errorMessage = $"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(errorMessage, m => m.FocusAreaID);
-            }
         }
     }
 }
