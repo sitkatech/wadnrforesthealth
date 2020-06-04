@@ -166,14 +166,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectControls
                                    $"Please delete the update if you want to change this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}'s stage.";
                 yield return new SitkaValidationResult<EditProjectViewModel, int>(errorMessage, m => m.ProjectStageID);
             }
-
-            var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
-
-            if (!FocusAreaID.HasValue && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID.Value))
-            {
-                var errorMessage = $"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
-                yield return new SitkaValidationResult<EditProjectViewModel, int?>(errorMessage, m => m.FocusAreaID);
-            }
         }
     }
 }

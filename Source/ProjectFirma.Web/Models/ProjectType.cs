@@ -30,18 +30,6 @@ namespace ProjectFirma.Web.Models
 {
     public partial class ProjectType : IAuditableEntity, ITaxonomyTier, IHaveASortOrder
     {
-        public const int ProjectTypeIDForestHealth = 2170;
-        public const int ProjectTypeIDFuelsReduction = 2220;
-
-        public static List<int> GetAllProjectTypeIDsWhereFocusAreaRequired()
-        {
-            List<int> requiredProjectTypeIDs = new List<int>()
-            {
-                ProjectTypeIDFuelsReduction
-            };
-
-            return requiredProjectTypeIDs;
-        }
 
         public List<ProjectCustomAttributeType> GetProjectCustomAttributeTypesForThisProjectType()
         {

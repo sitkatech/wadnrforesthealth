@@ -126,14 +126,6 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                     $"Since the {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} is in Completed or Post-Implementation stage, the Completion Year needs to be less than or equal to the current year",
                     m => m.CompletionDate);
             }
-
-            var projectTypeIDsWhereFocusAreaRequired = Models.ProjectType.GetAllProjectTypeIDsWhereFocusAreaRequired();
-
-            if (!FocusAreaID.HasValue && projectTypeIDsWhereFocusAreaRequired.Contains(ProjectTypeID))
-            {
-                var errorMessage = $"{Models.FieldDefinition.FocusArea.GetFieldDefinitionLabel()} is required for your selected {Models.FieldDefinition.ProjectType.GetFieldDefinitionLabel()}";
-                yield return new SitkaValidationResult<BasicsViewModel, int?>(errorMessage, m => m.FocusAreaID);
-            }
         }
     }
 }
