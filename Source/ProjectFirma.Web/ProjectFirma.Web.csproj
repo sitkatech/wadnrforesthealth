@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -1502,6 +1502,7 @@
     <Content Include="Views\ProjectCustomAttributeType\EditProjectCustomAttributeTypeController.js" />
     <Content Include="Views\Project\GrantAllocationCalendarYearExpenditureTest.CreateFromGrantAllocationsAndCalendarYearsTest.approved.txt" />
     <Content Include="Views\Results\ProjectMapController.js" />
+    <Content Include="Views\Shared\ProjectDocument\ProjectDocumentsController.js" />
     <Content Include="Views\Shared\ProjectLocationControls\ProjectLocationDetailController.js" />
     <Content Include="Views\Shared\ProjectPerson\ProjectPersonController.js" />
     <Content Include="Views\Shared\SortOrder\EditSortOrder.cshtml" />

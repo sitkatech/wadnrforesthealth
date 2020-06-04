@@ -1,39 +1,82 @@
 ﻿@using LtInfo.Common.HtmlHelperExtensions
 @using LtInfo.Common.Mvc
+@using Newtonsoft.Json.Linq
 
 @inherits ProjectFirma.Web.Views.Shared.ProjectDocument.NewProjectDocument
-    
-@using (Html.BeginForm())
-{
-    <div class="form-horizontal">
-        @Html.HiddenFor(m=>m.ParentID)
-        <div class="form-group">
-            <div class="col-xs-12 col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.File)
-            </div>
-            <div class="col-xs-12 col-sm-9">
-                @Html.EditorFor(m => m.File)
-                @Html.ValidationMessageFor(m => m.File)
-                <p class="help-block">Allowed Extensions: @Model.GetFileExtensions(x => x.File)</p>
+
+
+
+<script type="text/javascript" src="@Url.Content("~/Views/Shared/ProjectDocument/ProjectDocumentsController.js")"></script>
+<script type="text/javascript">
+        // <![CDATA[
+        angular.module("ProjectFirmaApp").factory("angularModelAndViewData", function ()
+        {
+            return {
+                AngularModel: @Html.Raw(JObject.FromObject(Model)),
+                AngularViewData: @Html.Raw(JObject.FromObject(ViewDataTyped))
+            };
+        });
+        jQuery(document).ready(function ()
+        {
+
+            angular.bootstrap(jQuery("#AddDocumentsAngularApp"), ["ProjectFirmaApp"]);
+
+            jQuery(".modal").on("hidden.bs.modal",
+                function() {
+                    jQuery(".bootstrap-select.open").removeClass("open");
+                });
+
+        });
+        // ]]>
+</script>
+
+
+
+<div id="AddDocumentsAngularApp" ng-controller="ProjectDocumentsController">
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    @Html.LabelWithSugarFor(m => m.Files)
+                    <input type="file" ng-file-model="files" multiple name="@Html.NameFor(x => x.Files)" />
+                    @Html.ValidationMessageFor(m => m.Files)
+                    <p class="help-block">Allowed Extensions: @Model.GetFileExtensions(x => x.Files)</p>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-12 col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.DisplayName)
+        <div class="form-horizontal" ng-repeat="file in files">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    {{file.name}}
+                </div>
             </div>
-            <div class="col-xs-12 col-sm-9">
-                @Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})
-                @Html.ValidationMessageFor(m => m.DisplayName)
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.DisplayNames)
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    @*@Html.TextBoxFor(m => m.DisplayName, new {@class = "form-control"})*@
+                    <input type="text" class="form-control" name="@Html.NameFor(x => x.DisplayNames[0]).ToString().Replace("0", "{{$index}}")" />
+                    @Html.ValidationMessageFor(m => m.DisplayNames)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-3 control-label">
+                    @Html.LabelWithSugarFor(m => m.Descriptions)
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    @*@Html.TextAreaWithMaxLengthFor(m => m.Description, new TextAreaForExtensions.TextAreaDimensions(null, 4), null, new List<string> {"form-control"})*@
+                    <input type="textarea" class="form-control" name="@Html.NameFor(x => x.Descriptions[0]).ToString().Replace("0", "{{$index}}")" />
+                    @Html.ValidationMessageFor(m => m.Descriptions)
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-12 col-sm-3 control-label">
-                @Html.LabelWithSugarFor(m => m.Description)
-            </div>
-            <div class="col-xs-12 col-sm-9">
-                @Html.TextAreaWithMaxLengthFor(m => m.Description, new TextAreaForExtensions.TextAreaDimensions(null, 4), null, new List<string> {"form-control"})
-                @Html.ValidationMessageFor(m => m.Description)
-            </div>
-        </div>
-    </div>
-}
+        @Html.HiddenFor(m => m.ParentID)
+    }
+</div>
+
+
+
+
+

@@ -30,8 +30,9 @@ namespace ProjectFirma.Web.Controllers
             }
             
             viewModel.UpdateModel(project, CurrentPerson);
-
-            SetMessageForDisplay($"Successfully created new document \"{viewModel.DisplayName}\" for {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.ProjectName}\".");
+            
+            // todo: multi-file upload
+            //SetMessageForDisplay($"Successfully created new document \"{viewModel.DisplayName}\" for {FieldDefinition.Project.GetFieldDefinitionLabel()} \"{project.ProjectName}\".");
 
             return new ModalDialogFormJsonResult();
         }

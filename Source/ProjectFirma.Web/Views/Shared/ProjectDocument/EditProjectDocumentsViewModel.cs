@@ -58,11 +58,12 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
         {
             var validationResults = new List<ValidationResult>();
 
-            if (HttpRequestStorage.DatabaseEntities.ProjectDocuments.Where(x => x.ProjectID == ParentID && x.ProjectDocumentID != DocumentID)
-                .Any(x => x.DisplayName.ToLower() == DisplayName.ToLower()))
-            {
-                validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, string>("The Display Name must be unique for each Document attached to a Project", m => m.DisplayName));
-            }
+            // todo: multi-file upload
+            //if (HttpRequestStorage.DatabaseEntities.ProjectDocuments.Where(x => x.ProjectID == ParentID && x.ProjectDocumentID != DocumentID)
+            //    .Any(x => x.DisplayName.ToLower() == DisplayName.ToLower()))
+            //{
+            //    validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, string>("The Display Name must be unique for each Document attached to a Project", m => m.DisplayName));
+            //}
 
             return validationResults;
         }
