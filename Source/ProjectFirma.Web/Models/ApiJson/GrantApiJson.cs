@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public string GrantStatusTypeName { get; set; }
         public int OrganizationID { get; set; }
         public string OrganizationName { get; set; }
-        public int? GrantFileResourceID { get; set; }
+        public List<int> GrantFileResourceIDs { get; set; }
 
         // For use by model binder
         public GrantApiJson()
@@ -53,7 +53,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             GrantStatusTypeName = grant.GrantStatus.GrantStatusName;
             OrganizationID = grant.OrganizationID;
             OrganizationName = grant.Organization.OrganizationName;
-            GrantFileResourceID = grant.GrantFileResourceID;
+            GrantFileResourceIDs = grant.GrantFileResources?.Select(x => x.FileResourceID).ToList();
         }
 
         public static List<GrantApiJson> MakeGrantApiJsonsFromGrants(List<Grant> grants, bool doAlphaSort = true)
