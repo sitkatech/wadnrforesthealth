@@ -1,0 +1,132 @@
+﻿@*-----------------------------------------------------------------------
+<copyright file="Basics.cshtml" company="Tahoe Regional Planning Agency and Sitka Technology Group">
+Copyright (c) Tahoe Regional Planning Agency and Sitka Technology Group. All rights reserved.
+<author>Sitka Technology Group</author>
+</copyright>
+
+<license>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License <http://www.gnu.org/licenses/> for more details.
+
+Source code is available upon request via <support@sitkatech.com>.
+</license>
+-----------------------------------------------------------------------*@
+@using LtInfo.Common.HtmlHelperExtensions
+@using LtInfo.Common.ModalDialog
+@using LtInfo.Common.Mvc
+@using ProjectFirma.Web.Common
+@using ProjectFirma.Web.Models
+@inherits ProjectFirma.Web.Views.GisProjectBulkUpdate.UploadGisFile
+
+@section JavascriptAndStylesContent
+{
+    <style>
+        .row {
+            margin-top: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        // <![CDATA[
+
+        jQuery(document).ready(function ()
+        {
+
+        });
+        // ]]>
+    </script>
+}
+<p>
+    After you upload your file you will be able to preview and verify the uploaded data. 
+</p>
+<hr />
+
+
+    @*<div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-12">
+                @Html.EditorFor(x => x.FileResourceData)@Html.ValidationMessageFor(x => x.FileResourceData)
+                <span class="smallExplanationText">
+                    Allowed Extensions: @Model.GetFileExtensions(x => x.FileResourceData)
+                </span>
+            </div>
+        </div>
+    </div>*@
+
+
+<form method="POST" id="uploadGisForm" action="@ViewDataTyped.UploadUrl" enctype="multipart/form-data">
+     <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-12">
+                @Html.EditorFor(x => x.FileResourceData)@Html.ValidationMessageFor(x => x.FileResourceData)
+                <span class="smallExplanationText">
+                    Allowed Extensions: @Model.GetFileExtensions(x => x.FileResourceData)
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+    <div id="gisUploadResults" style="min-height:100px"></div>
+
+
+<hr />
+    <div class="pull-right">
+        <button id="uploadNoAdvance" class="btn btn-xs btn-firma" value="false" name="@Html.NameFor(x => x.AutoAdvance)">Upload</button>
+        <button type="submit" id="uploadWithAdvance" class="btn btn-xs btn-firma" value="true" name="@Html.NameFor(x => x.AutoAdvance)">Upload &amp; Continue<span class='glyphicon glyphicon-chevron-right'></span></button>
+    </div>
+
+
+
+    <script type="text/javascript">
+
+    function uploadGisFile() {
+        var form = jQuery("#uploadGisForm");
+        if (form.valid()) {
+            var saveButton = jQuery("#" + "@ModalDialogFormHelper.SaveButtonID");
+            var gisUploadResults = jQuery("#gisUploadResults");
+            form.ajaxForm({
+                url: this.action,
+                type: this.method,
+                beforeSubmit: function ()
+                {
+                    gisUploadResults.html("<div style='padding-top: 50%'><div class='progress'><div class='progress-bar progress-bar-info progress-bar-striped active' role='progressbar' style='width:100%'>Uploading</div></div></div>");
+                },
+                success: function (result, textStatus, jqXhr) {
+                    jQuery(".progress").hide();
+                    // Piggy back off the centralized login required detection in Ajax handling in SitkaAjax
+                    SitkaAjax.handleLoginRedirect(result, textStatus, jqXhr, function () {
+                            gisUploadResults.html(result);
+                            saveButton.prop("disabled", false);
+                        }
+                    );
+                },
+                error: function (xhr, statusText) {
+                    // Piggy back off the centralized error Ajax handling in SitkaAjax
+                    //SitkaAjax.errorHandler(xhr, statusText);
+                    jQuery(".progress").hide();
+                    saveButton.prop("disabled", true);
+                    gisUploadResults.html("<div class='alert alert-danger' style='position: fixed; top: 50%; width:500px'>There was a problem uploading your file geodatabase. Verify it meets the requirements and is not corrupt.</div>");
+                }
+            });
+            form.submit();
+        }
+    }
+
+
+
+    jQuery(document)
+        .ready(function() {
+            // Get the invoice approval status, return true if the comment field is mandatory (when denial happens, comment is mandatory)
+            jQuery("#uploadNoAdvance").click(uploadGisFile);
+
+
+        });
+    </script>

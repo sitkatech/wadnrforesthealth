@@ -79,6 +79,17 @@ namespace LtInfo.Common.GdalOgr
             return processUtilityResult.StdOut;
         }
 
+        public string ImportFileGdbToSql(FileInfo inputGdbFile, bool explodeCollections, string destinationTableName)
+        {
+            Check.Require(inputGdbFile.FullName.ToLower().EndsWith(".gdb.zip"),
+                $"Input filename for GDB input must end with .gdb.zip. Filename passed is {inputGdbFile.FullName}");
+            Check.RequireFileExists(inputGdbFile, "Can't find input File GDB for import with ogr2ogr");
+
+            var commandLineArguments = BuildCommandLineArgumentsForFileGdbToSql(inputGdbFile, _gdalDataPath, _coordinateSystemId, explodeCollections, destinationTableName);
+            var processUtilityResult = ExecuteOgr2OgrCommand(commandLineArguments);
+            return processUtilityResult.StdOut;
+        }
+
         public void ImportGeoJsonToMsSql(string geoJson, string connectionString, string destinationTableName, string sourceColumnName, string destinationColumnName, string extraColumns)
         {
             var databaseConnectionString = $"MSSQL:{connectionString}";
@@ -227,6 +238,34 @@ namespace LtInfo.Common.GdalOgr
                 $"\"{sourceLayerName}\"",
                 "-dim",
                 "2"
+            };
+
+            return commandLineArguments.Where(x => x != null).ToList();
+        }
+
+        /// <summary>
+        /// Produces the command line arguments for ogr2ogr.exe to run the File Geodatabase import.
+        /// <example>"C:\Program Files\GDAL\ogr2ogr.exe" -preserve_fid --config GDAL_DATA "C:\\Program Files\\GDAL\\gdal-data" -t_srs EPSG:4326 -f GeoJSON /dev/stdout "C:\\svn\\sitkatech\\trunk\\Corral\\Source\\ProjectFirma.Web\\Models\\GdalOgr\\SampleFileGeodatabase.gdb.zip" "somelayername"</example>
+        /// </summary>
+        internal static List<string> BuildCommandLineArgumentsForFileGdbToSql(FileInfo inputGdbFile, DirectoryInfo gdalDataDirectoryInfo, int coordinateSystemId, bool explodeCollections, string destinationTableName)
+        {
+            var commandLineArguments = new List<string>
+            {
+                "--config",
+                "GDAL_DATA",
+                gdalDataDirectoryInfo.FullName,
+                "-overwrite",
+                "-lco",
+                "precision=NO",
+                "-t_srs",
+                GetMapProjection(coordinateSystemId),
+                explodeCollections ? "-explodecollections" : null,
+                "-f",
+                "MSSQLSpatial",
+                "MSSQL:server=(local);database=WADNRForestHealthDB;trusted_connection=yes",
+                inputGdbFile.FullName,
+                "-nln",
+                $"\"{destinationTableName}\""
             };
 
             return commandLineArguments.Where(x => x != null).ToList();

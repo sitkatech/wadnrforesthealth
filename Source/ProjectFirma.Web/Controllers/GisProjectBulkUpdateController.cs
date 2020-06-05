@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using LtInfo.Common;
 using LtInfo.Common.MvcResults;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Models;
@@ -62,6 +63,56 @@ namespace ProjectFirma.Web.Controllers
 
                 return RazorView<InstructionsGisImport, InstructionsGisImportViewData>(viewData);
 
+        }
+
+
+
+        [HttpGet]
+        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        public ActionResult UploadGisFile(int gisUploadAttemptID)
+        {
+            var uploadGisFileViewModel = new UploadGisFileViewModel();
+            var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+
+            return ViewUploadGisFile(uploadGisFileViewModel, gisUploadAttempt);
+        }
+
+
+        private ViewResult ViewUploadGisFile(UploadGisFileViewModel viewModel, GisUploadAttempt gisUploadAttempt)
+        {
+            var gisImportSectionStatus = GetGisImportSectionStatus(gisUploadAttempt);
+            var newGisUploadUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.UploadGisFile(gisUploadAttempt.GisUploadAttemptID, null));
+
+            var viewData = new UploadGisFileViewData(CurrentPerson, gisUploadAttempt, gisImportSectionStatus, newGisUploadUrl);
+
+            return RazorView<UploadGisFile, UploadGisFileViewData, UploadGisFileViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [LoggedInAndNotUnassignedRoleUnclassifiedFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult UploadGisFile(int gisUploadAttemptID, UploadGisFileViewModel viewModel)
+        {
+            return UploadGisFilePostImpl(gisUploadAttemptID, viewModel);
+        }
+
+        private ActionResult UploadGisFilePostImpl(int gisUploadAttemptID, UploadGisFileViewModel viewModel)
+        {
+            var gisUploadAttempt = HttpRequestStorage.DatabaseEntities.GisUploadAttempts.GetGisUploadAttempt(gisUploadAttemptID);
+            if (!ModelState.IsValid)
+            {
+                return ViewUploadGisFile(viewModel, gisUploadAttempt);
+            }
+
+            var httpPostedFileBase = viewModel.FileResourceData;
+            var fileEnding = ".gdb.zip";
+            using (var disposableTempFile = DisposableTempFile.MakeDisposableTempFileEndingIn(fileEnding))
+            {
+                var gdbFile = disposableTempFile.FileInfo;
+                httpPostedFileBase.SaveAs(gdbFile.FullName);
+                GisUploadAttemptStaging.ImportIntoSqlTempTable(gdbFile, gisUploadAttempt);
+            }
+            return ViewUploadGisFile(viewModel, gisUploadAttempt);
         }
 
     }

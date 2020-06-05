@@ -151,9 +151,7 @@
     <Compile Include="Models\Generated\GisUploadAttempt.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisUploadAttemptPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisUploadAttemptWorkflowSection.Binding.cs" />
-    <Compile Include="Models\Generated\GisUploadAttemptWorkflowSection.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisUploadAttemptWorkflowSectionGrouping.Binding.cs" />
-    <Compile Include="Models\Generated\GisUploadAttemptWorkflowSectionGrouping.DatabaseContextExtensions.cs" />
     <Compile Include="Models\Generated\GisUploadAttemptWorkflowSectionGroupingPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisUploadAttemptWorkflowSectionPrimaryKey.Binding.cs" />
     <Compile Include="Models\Generated\GisUploadSourceOrganization.Binding.cs" />
@@ -566,6 +564,7 @@
     <Compile Include="Controllers\GrantAllocationAwardLandownerCostShareLineItemController.cs" />
     <Compile Include="Controllers\GrantAllocationAwardController.cs" />
     <Compile Include="Models\GisUploadAttempt.cs" />
+    <Compile Include="Models\GisUploadAttemptStaging.cs" />
     <Compile Include="Models\GisUploadAttemptWorkflowSection.cs" />
     <Compile Include="Models\GisUploadAttemptWorkflowSectionGrouping.cs" />
     <Compile Include="Models\GisUploadAttemptWorkflowSectionSimple.cs" />
@@ -810,6 +809,9 @@
     <Compile Include="Views\Agreement\EditAgreementViewData.cs" />
     <Compile Include="Models\ProjectAgreementByGrantAllocation.cs" />
     <Compile Include="Views\FocusArea\GrantAllocationAwardGridSpec.cs" />
+    <Compile Include="Views\GisProjectBulkUpdate\UploadGisFile.cs" />
+    <Compile Include="Views\GisProjectBulkUpdate\UploadGisFileViewData.cs" />
+    <Compile Include="Views\GisProjectBulkUpdate\UploadGisFileViewModel.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\InstructionsGisImport.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\InstructionsGisImportViewData.cs" />
     <Compile Include="Views\GisProjectBulkUpdate\GisImportViewData.cs" />
@@ -1590,11 +1592,11 @@
     <Content Include="Views\GisProjectBulkUpdate\InstructionsGisImport.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\SiteLayout.cshtml" />
     <Content Include="Views\GisProjectBulkUpdate\_ViewStart.cshtml" />
+    <Content Include="Views\GisProjectBulkUpdate\UploadGisFile.cshtml" />
     <Content Include="Views\Grant\NewGrant.cshtml" />
     <Content Include="Views\Shared\Grant\GrantDetailsFileDetails.cshtml" />
     <Content Include="Views\Grant\NewGrantFile.cshtml" />
-    <Content Include="Views\GrantAllocation\NewGrantAllocationFile.cshtml" />
-    <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
+    <Content Include="Views\GrantAllocation\NewGrantAllocationFile.cshtml" />    <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
     <Compile Include="Models\OrganizationTypeRelationshipType.cs" />

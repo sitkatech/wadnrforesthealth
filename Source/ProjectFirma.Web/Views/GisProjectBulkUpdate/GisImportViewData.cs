@@ -76,7 +76,7 @@ namespace ProjectFirma.Web.Views.GisProjectBulkUpdate
             PageTitle = "GIS Bulk Project Upload";
 
             GeospatialValidationUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(x => x.Detail(gisUploadAttempt.GisUploadAttemptID));
-            InitialUploadUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(gisUploadAttempt.GisUploadAttemptID));
+            InitialUploadUrl = SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.UploadGisFile(gisUploadAttempt.GisUploadAttemptID));
             
             ApproveUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Approve(gisUploadAttempt.GisUploadAttemptID));
             WithdrawUrl = SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.Withdraw(gisUploadAttempt.GisUploadAttemptID));

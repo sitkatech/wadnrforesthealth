@@ -281,28 +281,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GisUploadAttemptWorkflowSection">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSection">
-        <MappingFragment StoreEntitySet="GisUploadAttemptWorkflowSection">
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionID" ColumnName="GisUploadAttemptWorkflowSectionID" />
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionName" ColumnName="GisUploadAttemptWorkflowSectionName" />
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionDisplayName" ColumnName="GisUploadAttemptWorkflowSectionDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="HasCompletionStatus" ColumnName="HasCompletionStatus" />
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingID" ColumnName="GisUploadAttemptWorkflowSectionGroupingID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GisUploadAttemptWorkflowSectionGrouping">
-      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSectionGrouping">
-        <MappingFragment StoreEntitySet="GisUploadAttemptWorkflowSectionGrouping">
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingID" ColumnName="GisUploadAttemptWorkflowSectionGroupingID" />
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingName" ColumnName="GisUploadAttemptWorkflowSectionGroupingName" />
-          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingDisplayName" ColumnName="GisUploadAttemptWorkflowSectionGroupingDisplayName" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GisUploadSourceOrganization">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadSourceOrganization">
         <MappingFragment StoreEntitySet="GisUploadSourceOrganization">

@@ -27,8 +27,6 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.Store.FocusArea" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.Store.FocusAreaLocationStaging" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttempt" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GisUploadAttemptWorkflowSection" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttemptWorkflowSection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GisUploadAttemptWorkflowSectionGrouping" EntityType="ProjectFirma.Web.Models.Store.GisUploadAttemptWorkflowSectionGrouping" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.Store.GisUploadSourceOrganization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Store.Grant" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.Store.GrantAllocation" store:Type="Tables" Schema="dbo" />
@@ -271,10 +269,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <AssociationSet Name="FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID">
       <End Role="GisUploadAttemptCreatePerson" EntitySet="Person" />
       <End Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" EntitySet="GisUploadAttempt" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID" Association="ProjectFirma.Web.Models.Store.FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID">
-      <End Role="GisUploadAttemptWorkflowSectionGrouping" EntitySet="GisUploadAttemptWorkflowSectionGrouping" />
-      <End Role="GisUploadAttemptWorkflowSections" EntitySet="GisUploadAttemptWorkflowSection" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.Store.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -1294,26 +1288,6 @@ FROM [dbo].[vSocrataDataMartRawJsonImportIndex] AS [vSocrataDataMartRawJsonImpor
     <Property Name="GisUploadSourceOrganizationID" Type="int" Nullable="false" />
     <Property Name="GisUploadAttemptCreatePersonID" Type="int" Nullable="false" />
     <Property Name="GisUploadAttemptCreateDate" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GisUploadAttemptWorkflowSection">
-    <Key>
-      <PropertyRef Name="GisUploadAttemptWorkflowSectionID" />
-    </Key>
-    <Property Name="GisUploadAttemptWorkflowSectionID" Type="int" Nullable="false" />
-    <Property Name="GisUploadAttemptWorkflowSectionName" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="GisUploadAttemptWorkflowSectionDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="SortOrder" Type="int" Nullable="false" />
-    <Property Name="HasCompletionStatus" Type="bit" Nullable="false" />
-    <Property Name="GisUploadAttemptWorkflowSectionGroupingID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GisUploadAttemptWorkflowSectionGrouping">
-    <Key>
-      <PropertyRef Name="GisUploadAttemptWorkflowSectionGroupingID" />
-    </Key>
-    <Property Name="GisUploadAttemptWorkflowSectionGroupingID" Type="int" Nullable="false" />
-    <Property Name="GisUploadAttemptWorkflowSectionGroupingName" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="GisUploadAttemptWorkflowSectionGroupingDisplayName" Type="varchar" Nullable="false" MaxLength="50" />
-    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
@@ -3037,18 +3011,6 @@ warning 6002: The table/view 'WADNRForestHealthDB.dbo.vSocrataDataMartRawJsonImp
       </Principal>
       <Dependent Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson">
         <PropertyRef Name="GisUploadAttemptCreatePersonID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID">
-    <End Role="GisUploadAttemptWorkflowSectionGrouping" Type="ProjectFirma.Web.Models.Store.GisUploadAttemptWorkflowSectionGrouping" Multiplicity="1" />
-    <End Role="GisUploadAttemptWorkflowSections" Type="ProjectFirma.Web.Models.Store.GisUploadAttemptWorkflowSection" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GisUploadAttemptWorkflowSectionGrouping">
-        <PropertyRef Name="GisUploadAttemptWorkflowSectionGroupingID" />
-      </Principal>
-      <Dependent Role="GisUploadAttemptWorkflowSections">
-        <PropertyRef Name="GisUploadAttemptWorkflowSectionGroupingID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
