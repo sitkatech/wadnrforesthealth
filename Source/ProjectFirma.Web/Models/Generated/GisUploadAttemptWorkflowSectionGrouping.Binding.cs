@@ -3,10 +3,11 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[GisUploadAttemptWorkflowSectionGrouping]
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
-using System.Data.Entity.Spatial;
+using System.Data;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -15,122 +16,116 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    // Table [dbo].[GisUploadAttemptWorkflowSectionGrouping] is NOT multi-tenant, so is attributed as ICanDeleteFull
-    [Table("[dbo].[GisUploadAttemptWorkflowSectionGrouping]")]
-    public partial class GisUploadAttemptWorkflowSectionGrouping : IHavePrimaryKey, ICanDeleteFull
+    public abstract partial class GisUploadAttemptWorkflowSectionGrouping : IHavePrimaryKey
     {
+        public static readonly GisUploadAttemptWorkflowSectionGroupingGeospatialValidation GeospatialValidation = GisUploadAttemptWorkflowSectionGroupingGeospatialValidation.Instance;
+        public static readonly GisUploadAttemptWorkflowSectionGroupingMetadataMapping MetadataMapping = GisUploadAttemptWorkflowSectionGroupingMetadataMapping.Instance;
+
+        public static readonly List<GisUploadAttemptWorkflowSectionGrouping> All;
+        public static readonly ReadOnlyDictionary<int, GisUploadAttemptWorkflowSectionGrouping> AllLookupDictionary;
+
         /// <summary>
-        /// Default Constructor; only used by EF
+        /// Static type constructor to coordinate static initialization order
         /// </summary>
-        protected GisUploadAttemptWorkflowSectionGrouping()
+        static GisUploadAttemptWorkflowSectionGrouping()
         {
-            this.GisUploadAttemptWorkflowSections = new HashSet<GisUploadAttemptWorkflowSection>();
+            All = new List<GisUploadAttemptWorkflowSectionGrouping> { GeospatialValidation, MetadataMapping };
+            AllLookupDictionary = new ReadOnlyDictionary<int, GisUploadAttemptWorkflowSectionGrouping>(All.ToDictionary(x => x.GisUploadAttemptWorkflowSectionGroupingID));
         }
 
         /// <summary>
-        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
+        /// Protected constructor only for use in instantiating the set of static lookup values that match database
         /// </summary>
-        public GisUploadAttemptWorkflowSectionGrouping(int gisUploadAttemptWorkflowSectionGroupingID, string gisUploadAttemptWorkflowSectionGroupingName, string gisUploadAttemptWorkflowSectionGroupingDisplayName, int sortOrder) : this()
+        protected GisUploadAttemptWorkflowSectionGrouping(int gisUploadAttemptWorkflowSectionGroupingID, string gisUploadAttemptWorkflowSectionGroupingName, string gisUploadAttemptWorkflowSectionGroupingDisplayName, int sortOrder)
         {
-            this.GisUploadAttemptWorkflowSectionGroupingID = gisUploadAttemptWorkflowSectionGroupingID;
-            this.GisUploadAttemptWorkflowSectionGroupingName = gisUploadAttemptWorkflowSectionGroupingName;
-            this.GisUploadAttemptWorkflowSectionGroupingDisplayName = gisUploadAttemptWorkflowSectionGroupingDisplayName;
-            this.SortOrder = sortOrder;
+            GisUploadAttemptWorkflowSectionGroupingID = gisUploadAttemptWorkflowSectionGroupingID;
+            GisUploadAttemptWorkflowSectionGroupingName = gisUploadAttemptWorkflowSectionGroupingName;
+            GisUploadAttemptWorkflowSectionGroupingDisplayName = gisUploadAttemptWorkflowSectionGroupingDisplayName;
+            SortOrder = sortOrder;
         }
-
-        /// <summary>
-        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
-        /// </summary>
-        public GisUploadAttemptWorkflowSectionGrouping(string gisUploadAttemptWorkflowSectionGroupingName, string gisUploadAttemptWorkflowSectionGroupingDisplayName, int sortOrder) : this()
-        {
-            // Mark this as a new object by setting primary key with special value
-            this.GisUploadAttemptWorkflowSectionGroupingID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
-            
-            this.GisUploadAttemptWorkflowSectionGroupingName = gisUploadAttemptWorkflowSectionGroupingName;
-            this.GisUploadAttemptWorkflowSectionGroupingDisplayName = gisUploadAttemptWorkflowSectionGroupingDisplayName;
-            this.SortOrder = sortOrder;
-        }
-
-
-        /// <summary>
-        /// Creates a "blank" object of this type and populates primitives with defaults
-        /// </summary>
-        public static GisUploadAttemptWorkflowSectionGrouping CreateNewBlank()
-        {
-            return new GisUploadAttemptWorkflowSectionGrouping(default(string), default(string), default(int));
-        }
-
-        /// <summary>
-        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
-        /// </summary>
-        /// <returns></returns>
-        public bool HasDependentObjects()
-        {
-            return GisUploadAttemptWorkflowSections.Any();
-        }
-
-        /// <summary>
-        /// Active Dependent type names of this object
-        /// </summary>
-        public List<string> DependentObjectNames() 
-        {
-            var dependentObjects = new List<string>();
-            
-            if(GisUploadAttemptWorkflowSections.Any())
-            {
-                dependentObjects.Add(typeof(GisUploadAttemptWorkflowSection).Name);
-            }
-            return dependentObjects.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttemptWorkflowSectionGrouping).Name, typeof(GisUploadAttemptWorkflowSection).Name};
-
-
-        /// <summary>
-        /// Delete just the entity 
-        /// </summary>
-        public void Delete(DatabaseEntities dbContext)
-        {
-            dbContext.GisUploadAttemptWorkflowSectionGroupings.Remove(this);
-        }
-        
-        /// <summary>
-        /// Delete entity plus all children
-        /// </summary>
-        public void DeleteFull(DatabaseEntities dbContext)
-        {
-            DeleteChildren(dbContext);
-            Delete(dbContext);
-        }
-        /// <summary>
-        /// Dependent type names of this entity
-        /// </summary>
-        public void DeleteChildren(DatabaseEntities dbContext)
-        {
-
-            foreach(var x in GisUploadAttemptWorkflowSections.ToList())
-            {
-                x.DeleteFull(dbContext);
-            }
-        }
-
+        public List<GisUploadAttemptWorkflowSection> GisUploadAttemptWorkflowSections { get { return GisUploadAttemptWorkflowSection.All.Where(x => x.GisUploadAttemptWorkflowSectionGroupingID == GisUploadAttemptWorkflowSectionGroupingID).ToList(); } }
         [Key]
-        public int GisUploadAttemptWorkflowSectionGroupingID { get; set; }
-        public string GisUploadAttemptWorkflowSectionGroupingName { get; set; }
-        public string GisUploadAttemptWorkflowSectionGroupingDisplayName { get; set; }
-        public int SortOrder { get; set; }
+        public int GisUploadAttemptWorkflowSectionGroupingID { get; private set; }
+        public string GisUploadAttemptWorkflowSectionGroupingName { get; private set; }
+        public string GisUploadAttemptWorkflowSectionGroupingDisplayName { get; private set; }
+        public int SortOrder { get; private set; }
         [NotMapped]
-        public int PrimaryKey { get { return GisUploadAttemptWorkflowSectionGroupingID; } set { GisUploadAttemptWorkflowSectionGroupingID = value; } }
+        public int PrimaryKey { get { return GisUploadAttemptWorkflowSectionGroupingID; } }
 
-        public virtual ICollection<GisUploadAttemptWorkflowSection> GisUploadAttemptWorkflowSections { get; set; }
-
-        public static class FieldLengths
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public bool Equals(GisUploadAttemptWorkflowSectionGrouping other)
         {
-            public const int GisUploadAttemptWorkflowSectionGroupingName = 50;
-            public const int GisUploadAttemptWorkflowSectionGroupingDisplayName = 50;
+            if (other == null)
+            {
+                return false;
+            }
+            return other.GisUploadAttemptWorkflowSectionGroupingID == GisUploadAttemptWorkflowSectionGroupingID;
         }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as GisUploadAttemptWorkflowSectionGrouping);
+        }
+
+        /// <summary>
+        /// Enum types are equal by primary key
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return GisUploadAttemptWorkflowSectionGroupingID;
+        }
+
+        public static bool operator ==(GisUploadAttemptWorkflowSectionGrouping left, GisUploadAttemptWorkflowSectionGrouping right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(GisUploadAttemptWorkflowSectionGrouping left, GisUploadAttemptWorkflowSectionGrouping right)
+        {
+            return !Equals(left, right);
+        }
+
+        public GisUploadAttemptWorkflowSectionGroupingEnum ToEnum { get { return (GisUploadAttemptWorkflowSectionGroupingEnum)GetHashCode(); } }
+
+        public static GisUploadAttemptWorkflowSectionGrouping ToType(int enumValue)
+        {
+            return ToType((GisUploadAttemptWorkflowSectionGroupingEnum)enumValue);
+        }
+
+        public static GisUploadAttemptWorkflowSectionGrouping ToType(GisUploadAttemptWorkflowSectionGroupingEnum enumValue)
+        {
+            switch (enumValue)
+            {
+                case GisUploadAttemptWorkflowSectionGroupingEnum.GeospatialValidation:
+                    return GeospatialValidation;
+                case GisUploadAttemptWorkflowSectionGroupingEnum.MetadataMapping:
+                    return MetadataMapping;
+                default:
+                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
+            }
+        }
+    }
+
+    public enum GisUploadAttemptWorkflowSectionGroupingEnum
+    {
+        GeospatialValidation = 1,
+        MetadataMapping = 2
+    }
+
+    public partial class GisUploadAttemptWorkflowSectionGroupingGeospatialValidation : GisUploadAttemptWorkflowSectionGrouping
+    {
+        private GisUploadAttemptWorkflowSectionGroupingGeospatialValidation(int gisUploadAttemptWorkflowSectionGroupingID, string gisUploadAttemptWorkflowSectionGroupingName, string gisUploadAttemptWorkflowSectionGroupingDisplayName, int sortOrder) : base(gisUploadAttemptWorkflowSectionGroupingID, gisUploadAttemptWorkflowSectionGroupingName, gisUploadAttemptWorkflowSectionGroupingDisplayName, sortOrder) {}
+        public static readonly GisUploadAttemptWorkflowSectionGroupingGeospatialValidation Instance = new GisUploadAttemptWorkflowSectionGroupingGeospatialValidation(1, @"GeospatialValidation", @"Geospatial Validation", 10);
+    }
+
+    public partial class GisUploadAttemptWorkflowSectionGroupingMetadataMapping : GisUploadAttemptWorkflowSectionGrouping
+    {
+        private GisUploadAttemptWorkflowSectionGroupingMetadataMapping(int gisUploadAttemptWorkflowSectionGroupingID, string gisUploadAttemptWorkflowSectionGroupingName, string gisUploadAttemptWorkflowSectionGroupingDisplayName, int sortOrder) : base(gisUploadAttemptWorkflowSectionGroupingID, gisUploadAttemptWorkflowSectionGroupingName, gisUploadAttemptWorkflowSectionGroupingDisplayName, sortOrder) {}
+        public static readonly GisUploadAttemptWorkflowSectionGroupingMetadataMapping Instance = new GisUploadAttemptWorkflowSectionGroupingMetadataMapping(2, @"MetadataMapping", @"Metadata Mapping", 20);
     }
 }

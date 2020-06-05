@@ -54,8 +54,6 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GisUploadAttempt> GisUploadAttempts { get; set; }
-        public virtual DbSet<GisUploadAttemptWorkflowSectionGrouping> GisUploadAttemptWorkflowSectionGroupings { get; set; }
-        public virtual DbSet<GisUploadAttemptWorkflowSection> GisUploadAttemptWorkflowSections { get; set; }
         public virtual DbSet<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
         public virtual DbSet<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
@@ -314,10 +312,14 @@ namespace ProjectFirma.Web.Models
                     return GisUploadAttempts.GetGisUploadAttempt(primaryKey);
 
                 case "GisUploadAttemptWorkflowSectionGrouping":
-                    return GisUploadAttemptWorkflowSectionGroupings.GetGisUploadAttemptWorkflowSectionGrouping(primaryKey);
+                    var gisUploadAttemptWorkflowSectionGrouping = GisUploadAttemptWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(gisUploadAttemptWorkflowSectionGrouping, "GisUploadAttemptWorkflowSectionGrouping", primaryKey);
+                    return gisUploadAttemptWorkflowSectionGrouping;
 
                 case "GisUploadAttemptWorkflowSection":
-                    return GisUploadAttemptWorkflowSections.GetGisUploadAttemptWorkflowSection(primaryKey);
+                    var gisUploadAttemptWorkflowSection = GisUploadAttemptWorkflowSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
+                    Check.RequireNotNullThrowNotFound(gisUploadAttemptWorkflowSection, "GisUploadAttemptWorkflowSection", primaryKey);
+                    return gisUploadAttemptWorkflowSection;
 
                 case "GisUploadSourceOrganization":
                     return GisUploadSourceOrganizations.GetGisUploadSourceOrganization(primaryKey);
