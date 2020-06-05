@@ -37,6 +37,8 @@
     @if (ViewDataTyped.DisplayActionButtons)
     {
         @ProjectCreateHelper.AddProjectButton()
+
+         @GisProjectBulkUpdateHelper.GisProjectBulkUploadButton()
         <a class="btn btn-firma" href="@ViewDataTyped.ProjectUpdatesUrl" title="View @FieldDefinition.Project.GetFieldDefinitionLabelPluralized() requiring an update">@BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-edit") Update @FieldDefinition.Project.GetFieldDefinitionLabel()</a>
     }
 }
@@ -48,3 +50,10 @@
 <div style="margin-top: 10px">
     @Html.DhtmlxGrid(ViewDataTyped.GridSpec, ViewDataTyped.GridName, ViewDataTyped.GridDataUrl, null, DhtmlxGridResizeType.VerticalFillHorizontalAutoFit)
 </div>
+<
+<style type="text/css">
+
+    .addSomePadding {
+        margin-left: 3px;
+    }
+</style>

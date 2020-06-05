@@ -38,4 +38,6 @@ values
 (59, 'PriorityLandscapesList', 'Priority Landscapes List', 1),
 (60, 'FullAgreementList', 'Full Agreement List', 1),
 (61, 'FullInvoiceList', 'Full Invoice List', 1),
-(62, 'InteractionEventList', 'Interaction/Event List', 1)
+(62, 'InteractionEventList', 'Interaction/Event List', 1),
+(63, 'GisUploadAttemptInstructions', 'GIS Upload Attempt Instructions', 1)
+

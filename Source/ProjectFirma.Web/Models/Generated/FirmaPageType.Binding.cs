@@ -54,6 +54,7 @@ namespace ProjectFirma.Web.Models
         public static readonly FirmaPageTypeFullAgreementList FullAgreementList = FirmaPageTypeFullAgreementList.Instance;
         public static readonly FirmaPageTypeFullInvoiceList FullInvoiceList = FirmaPageTypeFullInvoiceList.Instance;
         public static readonly FirmaPageTypeInteractionEventList InteractionEventList = FirmaPageTypeInteractionEventList.Instance;
+        public static readonly FirmaPageTypeGisUploadAttemptInstructions GisUploadAttemptInstructions = FirmaPageTypeGisUploadAttemptInstructions.Instance;
 
         public static readonly List<FirmaPageType> All;
         public static readonly ReadOnlyDictionary<int, FirmaPageType> AllLookupDictionary;
@@ -63,7 +64,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static FirmaPageType()
         {
-            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList };
+            All = new List<FirmaPageType> { HomePage, DemoScript, InternalSetupNotes, FullProjectList, PerformanceMeasuresList, ProjectTypeList, TaxonomyBranchList, TaxonomyTrunkList, OrganizationsList, MyProjects, ProjectMap, HomeMapInfo, HomeAdditionalInfo, FeaturedProjectList, FullProjectListSimple, Taxonomy, TagList, Proposals, ManageUpdateNotifications, ProposeProjectInstructions, ProjectStewardOrganizationList, EnterHistoricProjectInstructions, PendingProjects, Training, CustomFooter, ManageProjectCustomAttributeTypeInstructions, ManageProjectCustomAttributeTypesList, FactSheetCustomText, FocusAreasList, FullGrantList, FullGrantAllocationList, RegionsList, PriorityLandscapesList, FullAgreementList, FullInvoiceList, InteractionEventList, GisUploadAttemptInstructions };
             AllLookupDictionary = new ReadOnlyDictionary<int, FirmaPageType>(All.ToDictionary(x => x.FirmaPageTypeID));
         }
 
@@ -159,6 +160,8 @@ namespace ProjectFirma.Web.Models
                     return FullProjectList;
                 case FirmaPageTypeEnum.FullProjectListSimple:
                     return FullProjectListSimple;
+                case FirmaPageTypeEnum.GisUploadAttemptInstructions:
+                    return GisUploadAttemptInstructions;
                 case FirmaPageTypeEnum.HomeAdditionalInfo:
                     return HomeAdditionalInfo;
                 case FirmaPageTypeEnum.HomeMapInfo:
@@ -250,7 +253,8 @@ namespace ProjectFirma.Web.Models
         PriorityLandscapesList = 59,
         FullAgreementList = 60,
         FullInvoiceList = 61,
-        InteractionEventList = 62
+        InteractionEventList = 62,
+        GisUploadAttemptInstructions = 63
     }
 
     public partial class FirmaPageTypeHomePage : FirmaPageType
@@ -467,5 +471,11 @@ namespace ProjectFirma.Web.Models
     {
         private FirmaPageTypeInteractionEventList(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
         public static readonly FirmaPageTypeInteractionEventList Instance = new FirmaPageTypeInteractionEventList(62, @"InteractionEventList", @"Interaction/Event List", 1);
+    }
+
+    public partial class FirmaPageTypeGisUploadAttemptInstructions : FirmaPageType
+    {
+        private FirmaPageTypeGisUploadAttemptInstructions(int firmaPageTypeID, string firmaPageTypeName, string firmaPageTypeDisplayName, int firmaPageRenderTypeID) : base(firmaPageTypeID, firmaPageTypeName, firmaPageTypeDisplayName, firmaPageRenderTypeID) {}
+        public static readonly FirmaPageTypeGisUploadAttemptInstructions Instance = new FirmaPageTypeGisUploadAttemptInstructions(63, @"GisUploadAttemptInstructions", @"GIS Upload Attempt Instructions", 1);
     }
 }

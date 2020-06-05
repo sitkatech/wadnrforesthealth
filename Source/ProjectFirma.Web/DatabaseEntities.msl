@@ -271,6 +271,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisUploadAttempt">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttempt">
+        <MappingFragment StoreEntitySet="GisUploadAttempt">
+          <ScalarProperty Name="GisUploadAttemptID" ColumnName="GisUploadAttemptID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="GisUploadAttemptCreatePersonID" ColumnName="GisUploadAttemptCreatePersonID" />
+          <ScalarProperty Name="GisUploadAttemptCreateDate" ColumnName="GisUploadAttemptCreateDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GisUploadSourceOrganization">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadSourceOrganization">
+        <MappingFragment StoreEntitySet="GisUploadSourceOrganization">
+          <ScalarProperty Name="GisUploadSourceOrganizationID" ColumnName="GisUploadSourceOrganizationID" />
+          <ScalarProperty Name="GisUploadSourceOrganizationName" ColumnName="GisUploadSourceOrganizationName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Grant">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.Grant">
         <MappingFragment StoreEntitySet="Grant">

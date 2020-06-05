@@ -26,6 +26,8 @@
     <EntitySet Name="FirmaPageImage" EntityType="ProjectFirma.Web.Models.FirmaPageImage" />
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
+    <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.GisUploadAttempt" />
+    <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.GisUploadSourceOrganization" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
     <EntitySet Name="GrantAllocationAward" EntityType="ProjectFirma.Web.Models.GrantAllocationAward" />
@@ -320,6 +322,14 @@
     <AssociationSet Name="FK_ProjectUpdate_FocusArea_FocusAreaID" Association="ProjectFirma.Web.Models.FK_ProjectUpdate_FocusArea_FocusAreaID">
       <End Role="FocusArea" EntitySet="FocusArea" />
       <End Role="ProjectUpdates" EntitySet="ProjectUpdate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" Association="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+      <End Role="GisUploadSourceOrganization" EntitySet="GisUploadSourceOrganization" />
+      <End Role="GisUploadAttempts" EntitySet="GisUploadAttempt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" Association="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID">
+      <End Role="GisUploadAttemptCreatePerson" EntitySet="Person" />
+      <End Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" EntitySet="GisUploadAttempt" />
     </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
@@ -1310,6 +1320,25 @@
     <Property Name="GeoJson" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="FocusArea" Relationship="ProjectFirma.Web.Models.FK_FocusAreaLocationStaging_FocusArea_FocusAreaID" FromRole="FocusAreaLocationStagings" ToRole="FocusArea" />
   </EntityType>
+  <EntityType Name="GisUploadAttempt">
+    <Key>
+      <PropertyRef Name="GisUploadAttemptID" />
+    </Key>
+    <Property Name="GisUploadAttemptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="GisUploadAttemptCreatePersonID" Type="Int32" Nullable="false" />
+    <Property Name="GisUploadAttemptCreateDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadAttempts" ToRole="GisUploadSourceOrganization" />
+    <NavigationProperty Name="GisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" ToRole="GisUploadAttemptCreatePerson" />
+  </EntityType>
+  <EntityType Name="GisUploadSourceOrganization">
+    <Key>
+      <PropertyRef Name="GisUploadSourceOrganizationID" />
+    </Key>
+    <Property Name="GisUploadSourceOrganizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GisUploadSourceOrganizationName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="GisUploadAttempts" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadSourceOrganization" ToRole="GisUploadAttempts" />
+  </EntityType>
   <EntityType Name="Grant">
     <Key>
       <PropertyRef Name="GrantID" />
@@ -2081,6 +2110,7 @@
     <NavigationProperty Name="AgreementPeople" Relationship="ProjectFirma.Web.Models.FK_AgreementPerson_Person_PersonID" FromRole="Person" ToRole="AgreementPeople" />
     <NavigationProperty Name="AuditLogs" Relationship="ProjectFirma.Web.Models.FK_AuditLog_Person_PersonID" FromRole="Person" ToRole="AuditLogs" />
     <NavigationProperty Name="FileResourcesWhereYouAreTheCreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="CreatePerson" ToRole="FileResourcesWhereYouAreTheCreatePerson" />
+    <NavigationProperty Name="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptCreatePerson" ToRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" />
     <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantManager" ToRole="GrantAllocationsWhereYouAreTheGrantManager" />
     <NavigationProperty Name="GrantAllocationAwardPersonnelAndBenefitsLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardPersonnelAndBenefitsLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardPersonnelAndBenefitsLineItems" />
     <NavigationProperty Name="GrantAllocationAwardTravelLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardTravelLineItem_Person_PersonID" FromRole="Person" ToRole="GrantAllocationAwardTravelLineItems" />
@@ -3573,6 +3603,30 @@
       </Principal>
       <Dependent Role="ProjectUpdates">
         <PropertyRef Name="FocusAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID">
+    <End Role="GisUploadSourceOrganization" Type="ProjectFirma.Web.Models.GisUploadSourceOrganization" Multiplicity="1" />
+    <End Role="GisUploadAttempts" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadSourceOrganization">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Principal>
+      <Dependent Role="GisUploadAttempts">
+        <PropertyRef Name="GisUploadSourceOrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID">
+    <End Role="GisUploadAttemptCreatePerson" Type="ProjectFirma.Web.Models.Person" Multiplicity="1" />
+    <End Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" Type="ProjectFirma.Web.Models.GisUploadAttempt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadAttemptCreatePerson">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson">
+        <PropertyRef Name="GisUploadAttemptCreatePersonID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
