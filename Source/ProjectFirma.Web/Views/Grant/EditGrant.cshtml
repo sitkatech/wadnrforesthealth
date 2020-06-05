@@ -118,18 +118,6 @@ Source code is available upon request via <support@sitkatech.com>.
                 @Html.ValidationMessageFor(m => m.GrantEndDate)
             </div>
         </div>
-        <div class="form-group form-group-tight">
-            <div class="col-xs-4 control-label">
-                @Html.LabelWithSugarFor(m => m.GrantFileResourceData)
-            </div>
-            <div class="col-xs-7">
-                @Html.EditorFor(m => m.GrantFileResourceData)
-                @*<span class="smallExplanationText">
-                    Allowed Extensions: @Model.GetFileExtensions(x => x.LogoFileResourceData)
-                </span>*@
-                @Html.ValidationMessageFor(m => m.GrantFileResourceData)
-            </div>
-        </div>
     </div>
     @Html.HiddenFor(m => m.GrantID)
 }

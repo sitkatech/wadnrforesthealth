@@ -27,6 +27,8 @@
     <EntitySet Name="FocusArea" EntityType="ProjectFirma.Web.Models.FocusArea" />
     <EntitySet Name="FocusAreaLocationStaging" EntityType="ProjectFirma.Web.Models.FocusAreaLocationStaging" />
     <EntitySet Name="GisUploadAttempt" EntityType="ProjectFirma.Web.Models.GisUploadAttempt" />
+    <EntitySet Name="GisUploadAttemptWorkflowSection" EntityType="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSection" />
+    <EntitySet Name="GisUploadAttemptWorkflowSectionGrouping" EntityType="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSectionGrouping" />
     <EntitySet Name="GisUploadSourceOrganization" EntityType="ProjectFirma.Web.Models.GisUploadSourceOrganization" />
     <EntitySet Name="Grant" EntityType="ProjectFirma.Web.Models.Grant" />
     <EntitySet Name="GrantAllocation" EntityType="ProjectFirma.Web.Models.GrantAllocation" />
@@ -40,10 +42,12 @@
     <EntitySet Name="GrantAllocationChangeLog" EntityType="ProjectFirma.Web.Models.GrantAllocationChangeLog" />
     <EntitySet Name="GrantAllocationExpenditure" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditure" />
     <EntitySet Name="GrantAllocationExpenditureJsonStage" EntityType="ProjectFirma.Web.Models.GrantAllocationExpenditureJsonStage" />
+    <EntitySet Name="GrantAllocationFileResource" EntityType="ProjectFirma.Web.Models.GrantAllocationFileResource" />
     <EntitySet Name="GrantAllocationNote" EntityType="ProjectFirma.Web.Models.GrantAllocationNote" />
     <EntitySet Name="GrantAllocationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantAllocationNoteInternal" />
     <EntitySet Name="GrantAllocationProgramIndexProjectCode" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramIndexProjectCode" />
     <EntitySet Name="GrantAllocationProgramManager" EntityType="ProjectFirma.Web.Models.GrantAllocationProgramManager" />
+    <EntitySet Name="GrantFileResource" EntityType="ProjectFirma.Web.Models.GrantFileResource" />
     <EntitySet Name="GrantModification" EntityType="ProjectFirma.Web.Models.GrantModification" />
     <EntitySet Name="GrantModificationGrantModificationPurpose" EntityType="ProjectFirma.Web.Models.GrantModificationGrantModificationPurpose" />
     <EntitySet Name="GrantModificationNoteInternal" EntityType="ProjectFirma.Web.Models.GrantModificationNoteInternal" />
@@ -255,17 +259,17 @@
       <End Role="FileResource" EntitySet="FileResource" />
       <End Role="FirmaPageImages" EntitySet="FirmaPageImage" />
     </AssociationSet>
-    <AssociationSet Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
-      <End Role="GrantFileResource" EntitySet="FileResource" />
-      <End Role="GrantsWhereYouAreTheGrantFileResource" EntitySet="Grant" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
-      <End Role="GrantAllocationFileResource" EntitySet="FileResource" />
-      <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" EntitySet="GrantAllocation" />
-    </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID">
       <End Role="GrantAllocationAwardContractorInvoiceFileResource" EntitySet="FileResource" />
       <End Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" EntitySet="GrantAllocationAwardContractorInvoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantFileResource_FileResource_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID">
+      <End Role="FileResource" EntitySet="FileResource" />
+      <End Role="GrantFileResources" EntitySet="GrantFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" Association="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID">
       <End Role="GrantModificationFileResource" EntitySet="FileResource" />
@@ -331,6 +335,10 @@
       <End Role="GisUploadAttemptCreatePerson" EntitySet="Person" />
       <End Role="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" EntitySet="GisUploadAttempt" />
     </AssociationSet>
+    <AssociationSet Name="FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID" Association="ProjectFirma.Web.Models.FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID">
+      <End Role="GisUploadAttemptWorkflowSectionGrouping" EntitySet="GisUploadAttemptWorkflowSectionGrouping" />
+      <End Role="GisUploadAttemptWorkflowSections" EntitySet="GisUploadAttemptWorkflowSection" />
+    </AssociationSet>
     <AssociationSet Name="FK_Grant_GrantStatus_GrantStatusID" Association="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID">
       <End Role="GrantStatus" EntitySet="GrantStatus" />
       <End Role="Grants" EntitySet="Grant" />
@@ -346,6 +354,10 @@
     <AssociationSet Name="FK_GrantAllocation_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
       <End Role="GrantAllocations" EntitySet="GrantAllocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantFileResource_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID">
+      <End Role="Grant" EntitySet="Grant" />
+      <End Role="GrantFileResources" EntitySet="GrantFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantModification_Grant_GrantID" Association="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID">
       <End Role="Grant" EntitySet="Grant" />
@@ -382,6 +394,10 @@
     <AssociationSet Name="FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
       <End Role="GrantAllocationExpenditures" EntitySet="GrantAllocationExpenditure" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
+      <End Role="GrantAllocation" EntitySet="GrantAllocation" />
+      <End Role="GrantAllocationFileResources" EntitySet="GrantAllocationFileResource" />
     </AssociationSet>
     <AssociationSet Name="FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" Association="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID">
       <End Role="GrantAllocation" EntitySet="GrantAllocation" />
@@ -1244,9 +1260,9 @@
     <NavigationProperty Name="CreatePerson" Relationship="ProjectFirma.Web.Models.FK_FileResource_Person_CreatePersonID_PersonID" FromRole="FileResourcesWhereYouAreTheCreatePerson" ToRole="CreatePerson" />
     <NavigationProperty Name="FirmaHomePageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaHomePageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaHomePageImages" />
     <NavigationProperty Name="FirmaPageImages" Relationship="ProjectFirma.Web.Models.FK_FirmaPageImage_FileResource_FileResourceID" FromRole="FileResource" ToRole="FirmaPageImages" />
-    <NavigationProperty Name="GrantsWhereYouAreTheGrantFileResource" Relationship="ProjectFirma.Web.Models.FK_Grant_FileResource_GrantFileResourceID_FileResourceID" FromRole="GrantFileResource" ToRole="GrantsWhereYouAreTheGrantFileResource" />
-    <NavigationProperty Name="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" FromRole="GrantAllocationFileResource" ToRole="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" />
     <NavigationProperty Name="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID" FromRole="GrantAllocationAwardContractorInvoiceFileResource" ToRole="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" />
+    <NavigationProperty Name="GrantAllocationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantAllocationFileResources" />
+    <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID" FromRole="FileResource" ToRole="GrantFileResources" />
     <NavigationProperty Name="GrantModificationsWhereYouAreTheGrantModificationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantModification_FileResource_GrantModificationFileResourceID_FileResourceID" FromRole="GrantModificationFileResource" ToRole="GrantModificationsWhereYouAreTheGrantModificationFileResource" />
     <NavigationProperty Name="InvoicesWhereYouAreTheInvoiceFileResource" Relationship="ProjectFirma.Web.Models.FK_Invoice_FileResource_InvoiceFileResourceID_FileResourceID" FromRole="InvoiceFileResource" ToRole="InvoicesWhereYouAreTheInvoiceFileResource" />
     <NavigationProperty Name="OrganizationsWhereYouAreTheLogoFileResource" Relationship="ProjectFirma.Web.Models.FK_Organization_FileResource_LogoFileResourceID_FileResourceID" FromRole="LogoFileResource" ToRole="OrganizationsWhereYouAreTheLogoFileResource" />
@@ -1331,6 +1347,28 @@
     <NavigationProperty Name="GisUploadSourceOrganization" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_GisUploadSourceOrganization_GisUploadSourceOrganizationID" FromRole="GisUploadAttempts" ToRole="GisUploadSourceOrganization" />
     <NavigationProperty Name="GisUploadAttemptCreatePerson" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttempt_Person_GisUploadAttemptCreatePersonID_PersonID" FromRole="GisUploadAttemptsWhereYouAreTheGisUploadAttemptCreatePerson" ToRole="GisUploadAttemptCreatePerson" />
   </EntityType>
+  <EntityType Name="GisUploadAttemptWorkflowSection">
+    <Key>
+      <PropertyRef Name="GisUploadAttemptWorkflowSectionID" />
+    </Key>
+    <Property Name="GisUploadAttemptWorkflowSectionID" Type="Int32" Nullable="false" />
+    <Property Name="GisUploadAttemptWorkflowSectionName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="GisUploadAttemptWorkflowSectionDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <Property Name="HasCompletionStatus" Type="Boolean" Nullable="false" />
+    <Property Name="GisUploadAttemptWorkflowSectionGroupingID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GisUploadAttemptWorkflowSectionGrouping" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID" FromRole="GisUploadAttemptWorkflowSections" ToRole="GisUploadAttemptWorkflowSectionGrouping" />
+  </EntityType>
+  <EntityType Name="GisUploadAttemptWorkflowSectionGrouping">
+    <Key>
+      <PropertyRef Name="GisUploadAttemptWorkflowSectionGroupingID" />
+    </Key>
+    <Property Name="GisUploadAttemptWorkflowSectionGroupingID" Type="Int32" Nullable="false" />
+    <Property Name="GisUploadAttemptWorkflowSectionGroupingName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="GisUploadAttemptWorkflowSectionGroupingDisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GisUploadAttemptWorkflowSections" Relationship="ProjectFirma.Web.Models.FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID" FromRole="GisUploadAttemptWorkflowSectionGrouping" ToRole="GisUploadAttemptWorkflowSections" />
+  </EntityType>
   <EntityType Name="GisUploadSourceOrganization">
     <Key>
       <PropertyRef Name="GisUploadSourceOrganizationID" />
@@ -1356,12 +1394,11 @@
     <Property Name="ShortName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
     <Property Name="GrantStatusID" Type="Int32" Nullable="false" />
     <Property Name="OrganizationID" Type="Int32" Nullable="false" />
-    <Property Name="GrantFileResourceID" Type="Int32" />
-    <NavigationProperty Name="GrantFileResource" Relationship="ProjectFirma.Web.Models.FK_Grant_FileResource_GrantFileResourceID_FileResourceID" FromRole="GrantsWhereYouAreTheGrantFileResource" ToRole="GrantFileResource" />
     <NavigationProperty Name="GrantStatus" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantStatus_GrantStatusID" FromRole="Grants" ToRole="GrantStatus" />
     <NavigationProperty Name="GrantType" Relationship="ProjectFirma.Web.Models.FK_Grant_GrantType_GrantTypeID" FromRole="Grants" ToRole="GrantType" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_Grant_Organization_OrganizationID" FromRole="Grants" ToRole="Organization" />
     <NavigationProperty Name="GrantAllocations" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="Grant" ToRole="GrantAllocations" />
+    <NavigationProperty Name="GrantFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="Grant" ToRole="GrantFileResources" />
     <NavigationProperty Name="GrantModifications" Relationship="ProjectFirma.Web.Models.FK_GrantModification_Grant_GrantID" FromRole="Grant" ToRole="GrantModifications" />
     <NavigationProperty Name="GrantNotes" Relationship="ProjectFirma.Web.Models.FK_GrantNote_Grant_GrantID" FromRole="Grant" ToRole="GrantNotes" />
     <NavigationProperty Name="GrantNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantNoteInternal_Grant_GrantID" FromRole="Grant" ToRole="GrantNoteInternals" />
@@ -1381,11 +1418,9 @@
     <Property Name="DNRUplandRegionID" Type="Int32" />
     <Property Name="DivisionID" Type="Int32" />
     <Property Name="GrantManagerID" Type="Int32" />
-    <Property Name="GrantAllocationFileResourceID" Type="Int32" />
     <NavigationProperty Name="AgreementGrantAllocations" Relationship="ProjectFirma.Web.Models.FK_AgreementGrantAllocation_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="AgreementGrantAllocations" />
     <NavigationProperty Name="DNRUplandRegion" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_DNRUplandRegion_DNRUplandRegionID" FromRole="GrantAllocations" ToRole="DNRUplandRegion" />
     <NavigationProperty Name="FederalFundCode" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FederalFundCode_FederalFundCodeID" FromRole="GrantAllocations" ToRole="FederalFundCode" />
-    <NavigationProperty Name="GrantAllocationFileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID" FromRole="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" ToRole="GrantAllocationFileResource" />
     <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Grant_GrantID" FromRole="GrantAllocations" ToRole="Grant" />
     <NavigationProperty Name="Organization" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Organization_OrganizationID" FromRole="GrantAllocations" ToRole="Organization" />
     <NavigationProperty Name="GrantManager" Relationship="ProjectFirma.Web.Models.FK_GrantAllocation_Person_GrantManagerID_PersonID" FromRole="GrantAllocationsWhereYouAreTheGrantManager" ToRole="GrantManager" />
@@ -1393,6 +1428,7 @@
     <NavigationProperty Name="GrantAllocationBudgetLineItems" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationBudgetLineItem_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationBudgetLineItems" />
     <NavigationProperty Name="GrantAllocationChangeLogs" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationChangeLog_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationChangeLogs" />
     <NavigationProperty Name="GrantAllocationExpenditures" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationExpenditure_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationExpenditures" />
+    <NavigationProperty Name="GrantAllocationFileResources" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationFileResources" />
     <NavigationProperty Name="GrantAllocationNotes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNote_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNotes" />
     <NavigationProperty Name="GrantAllocationNoteInternals" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationNoteInternal_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationNoteInternals" />
     <NavigationProperty Name="GrantAllocationProgramIndexProjectCodes" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramIndexProjectCode_GrantAllocation_GrantAllocationID" FromRole="GrantAllocation" ToRole="GrantAllocationProgramIndexProjectCodes" />
@@ -1608,6 +1644,16 @@
     <Property Name="VendorName" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="ExpendAccrued" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
+  <EntityType Name="GrantAllocationFileResource">
+    <Key>
+      <PropertyRef Name="GrantAllocationFileResourceID" />
+    </Key>
+    <Property Name="GrantAllocationFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantAllocationID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_FileResource_FileResourceID" FromRole="GrantAllocationFileResources" ToRole="FileResource" />
+    <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationFileResources" ToRole="GrantAllocation" />
+  </EntityType>
   <EntityType Name="GrantAllocationNote">
     <Key>
       <PropertyRef Name="GrantAllocationNoteID" />
@@ -1659,6 +1705,16 @@
     <Property Name="PersonID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="GrantAllocation" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_GrantAllocation_GrantAllocationID" FromRole="GrantAllocationProgramManagers" ToRole="GrantAllocation" />
     <NavigationProperty Name="Person" Relationship="ProjectFirma.Web.Models.FK_GrantAllocationProgramManager_Person_PersonID" FromRole="GrantAllocationProgramManagers" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="GrantFileResource">
+    <Key>
+      <PropertyRef Name="GrantFileResourceID" />
+    </Key>
+    <Property Name="GrantFileResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrantID" Type="Int32" Nullable="false" />
+    <Property Name="FileResourceID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FileResource" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_FileResource_FileResourceID" FromRole="GrantFileResources" ToRole="FileResource" />
+    <NavigationProperty Name="Grant" Relationship="ProjectFirma.Web.Models.FK_GrantFileResource_Grant_GrantID" FromRole="GrantFileResources" ToRole="Grant" />
   </EntityType>
   <EntityType Name="GrantModification">
     <Key>
@@ -3402,30 +3458,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Grant_FileResource_GrantFileResourceID_FileResourceID">
-    <End Role="GrantFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
-    <End Role="GrantsWhereYouAreTheGrantFileResource" Type="ProjectFirma.Web.Models.Grant" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantsWhereYouAreTheGrantFileResource">
-        <PropertyRef Name="GrantFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GrantAllocation_FileResource_GrantAllocationFileResourceID_FileResourceID">
-    <End Role="GrantAllocationFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
-    <End Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GrantAllocationFileResource">
-        <PropertyRef Name="FileResourceID" />
-      </Principal>
-      <Dependent Role="GrantAllocationsWhereYouAreTheGrantAllocationFileResource">
-        <PropertyRef Name="GrantAllocationFileResourceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GrantAllocationAwardContractorInvoice_FileResource_GrantAllocationAwardContractorInvoiceFileResourceID_FileResourceID">
     <End Role="GrantAllocationAwardContractorInvoiceFileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="0..1" />
     <End Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource" Type="ProjectFirma.Web.Models.GrantAllocationAwardContractorInvoice" Multiplicity="*" />
@@ -3435,6 +3467,30 @@
       </Principal>
       <Dependent Role="GrantAllocationAwardContractorInvoicesWhereYouAreTheGrantAllocationAwardContractorInvoiceFileResource">
         <PropertyRef Name="GrantAllocationAwardContractorInvoiceFileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1" />
+    <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.GrantAllocationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantAllocationFileResources">
+        <PropertyRef Name="FileResourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantFileResource_FileResource_FileResourceID">
+    <End Role="FileResource" Type="ProjectFirma.Web.Models.FileResource" Multiplicity="1" />
+    <End Role="GrantFileResources" Type="ProjectFirma.Web.Models.GrantFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileResource">
+        <PropertyRef Name="FileResourceID" />
+      </Principal>
+      <Dependent Role="GrantFileResources">
+        <PropertyRef Name="FileResourceID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3630,6 +3686,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GisUploadAttemptWorkflowSection_GisUploadAttemptWorkflowSectionGrouping_GisUploadAttemptWorkflowSectionGroupingID">
+    <End Role="GisUploadAttemptWorkflowSectionGrouping" Type="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSectionGrouping" Multiplicity="1" />
+    <End Role="GisUploadAttemptWorkflowSections" Type="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GisUploadAttemptWorkflowSectionGrouping">
+        <PropertyRef Name="GisUploadAttemptWorkflowSectionGroupingID" />
+      </Principal>
+      <Dependent Role="GisUploadAttemptWorkflowSections">
+        <PropertyRef Name="GisUploadAttemptWorkflowSectionGroupingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Grant_GrantStatus_GrantStatusID">
     <End Role="GrantStatus" Type="ProjectFirma.Web.Models.GrantStatus" Multiplicity="1" />
     <End Role="Grants" Type="ProjectFirma.Web.Models.Grant" Multiplicity="*" />
@@ -3674,6 +3742,18 @@
         <PropertyRef Name="GrantID" />
       </Principal>
       <Dependent Role="GrantAllocations">
+        <PropertyRef Name="GrantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantFileResource_Grant_GrantID">
+    <End Role="Grant" Type="ProjectFirma.Web.Models.Grant" Multiplicity="1" />
+    <End Role="GrantFileResources" Type="ProjectFirma.Web.Models.GrantFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grant">
+        <PropertyRef Name="GrantID" />
+      </Principal>
+      <Dependent Role="GrantFileResources">
         <PropertyRef Name="GrantID" />
       </Dependent>
     </ReferentialConstraint>
@@ -3782,6 +3862,18 @@
         <PropertyRef Name="GrantAllocationID" />
       </Principal>
       <Dependent Role="GrantAllocationExpenditures">
+        <PropertyRef Name="GrantAllocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GrantAllocationFileResource_GrantAllocation_GrantAllocationID">
+    <End Role="GrantAllocation" Type="ProjectFirma.Web.Models.GrantAllocation" Multiplicity="1" />
+    <End Role="GrantAllocationFileResources" Type="ProjectFirma.Web.Models.GrantAllocationFileResource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GrantAllocation">
+        <PropertyRef Name="GrantAllocationID" />
+      </Principal>
+      <Dependent Role="GrantAllocationFileResources">
         <PropertyRef Name="GrantAllocationID" />
       </Dependent>
     </ReferentialConstraint>

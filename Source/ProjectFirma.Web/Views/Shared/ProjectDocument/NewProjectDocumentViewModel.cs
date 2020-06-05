@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
     {
         [RequiredMultiFile]
         [DisplayName("File(s)")]
-        [SitkaMultiFileExtensions("pdf|zip|doc|docx|xls|xlsx")]
+        [SitkaFileExtensions("pdf|zip|doc|docx|xls|xlsx")]
         public List<HttpPostedFileBase> Files { get; set; }
 
         [Required]

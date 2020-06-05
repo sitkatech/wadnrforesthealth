@@ -29,6 +29,7 @@ namespace ProjectFirma.Web.Models
             this.GrantAllocationBudgetLineItems = new HashSet<GrantAllocationBudgetLineItem>();
             this.GrantAllocationChangeLogs = new HashSet<GrantAllocationChangeLog>();
             this.GrantAllocationExpenditures = new HashSet<GrantAllocationExpenditure>();
+            this.GrantAllocationFileResources = new HashSet<GrantAllocationFileResource>();
             this.GrantAllocationNotes = new HashSet<GrantAllocationNote>();
             this.GrantAllocationNoteInternals = new HashSet<GrantAllocationNoteInternal>();
             this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
@@ -43,7 +44,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID, int? grantAllocationFileResourceID) : this()
+        public GrantAllocation(int grantAllocationID, int grantID, string grantAllocationName, DateTime? startDate, DateTime? endDate, decimal? allocationAmount, int? federalFundCodeID, int? organizationID, int? dNRUplandRegionID, int? divisionID, int? grantManagerID) : this()
         {
             this.GrantAllocationID = grantAllocationID;
             this.GrantID = grantID;
@@ -56,7 +57,6 @@ namespace ProjectFirma.Web.Models
             this.DNRUplandRegionID = dNRUplandRegionID;
             this.DivisionID = divisionID;
             this.GrantManagerID = grantManagerID;
-            this.GrantAllocationFileResourceID = grantAllocationFileResourceID;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return AgreementGrantAllocations.Any() || GrantAllocationAwards.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationChangeLogs.Any() || GrantAllocationExpenditures.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
+            return AgreementGrantAllocations.Any() || GrantAllocationAwards.Any() || GrantAllocationBudgetLineItems.Any() || GrantAllocationChangeLogs.Any() || GrantAllocationExpenditures.Any() || GrantAllocationFileResources.Any() || GrantAllocationNotes.Any() || GrantAllocationNoteInternals.Any() || GrantAllocationProgramIndexProjectCodes.Any() || GrantAllocationProgramManagers.Any() || InvoiceLineItems.Any() || ProjectGrantAllocationExpenditures.Any() || ProjectGrantAllocationExpenditureUpdates.Any() || ProjectGrantAllocationRequests.Any() || ProjectGrantAllocationRequestUpdates.Any();
         }
 
         /// <summary>
@@ -129,6 +129,11 @@ namespace ProjectFirma.Web.Models
             if(GrantAllocationExpenditures.Any())
             {
                 dependentObjects.Add(typeof(GrantAllocationExpenditure).Name);
+            }
+
+            if(GrantAllocationFileResources.Any())
+            {
+                dependentObjects.Add(typeof(GrantAllocationFileResource).Name);
             }
 
             if(GrantAllocationNotes.Any())
@@ -181,7 +186,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationAward).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GrantAllocation).Name, typeof(AgreementGrantAllocation).Name, typeof(GrantAllocationAward).Name, typeof(GrantAllocationBudgetLineItem).Name, typeof(GrantAllocationChangeLog).Name, typeof(GrantAllocationExpenditure).Name, typeof(GrantAllocationFileResource).Name, typeof(GrantAllocationNote).Name, typeof(GrantAllocationNoteInternal).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(GrantAllocationProgramManager).Name, typeof(InvoiceLineItem).Name, typeof(ProjectGrantAllocationExpenditure).Name, typeof(ProjectGrantAllocationExpenditureUpdate).Name, typeof(ProjectGrantAllocationRequest).Name, typeof(ProjectGrantAllocationRequestUpdate).Name};
 
 
         /// <summary>
@@ -227,6 +232,11 @@ namespace ProjectFirma.Web.Models
             }
 
             foreach(var x in GrantAllocationExpenditures.ToList())
+            {
+                x.DeleteFull(dbContext);
+            }
+
+            foreach(var x in GrantAllocationFileResources.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -289,7 +299,6 @@ namespace ProjectFirma.Web.Models
         public int? DNRUplandRegionID { get; set; }
         public int? DivisionID { get; set; }
         public int? GrantManagerID { get; set; }
-        public int? GrantAllocationFileResourceID { get; set; }
         [NotMapped]
         public int PrimaryKey { get { return GrantAllocationID; } set { GrantAllocationID = value; } }
 
@@ -298,6 +307,7 @@ namespace ProjectFirma.Web.Models
         public virtual ICollection<GrantAllocationBudgetLineItem> GrantAllocationBudgetLineItems { get; set; }
         public virtual ICollection<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual ICollection<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
+        public virtual ICollection<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
         public virtual ICollection<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual ICollection<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
@@ -313,7 +323,6 @@ namespace ProjectFirma.Web.Models
         public virtual DNRUplandRegion DNRUplandRegion { get; set; }
         public Division Division { get { return DivisionID.HasValue ? Division.AllLookupDictionary[DivisionID.Value] : null; } }
         public virtual Person GrantManager { get; set; }
-        public virtual FileResource GrantAllocationFileResource { get; set; }
 
         public static class FieldLengths
         {

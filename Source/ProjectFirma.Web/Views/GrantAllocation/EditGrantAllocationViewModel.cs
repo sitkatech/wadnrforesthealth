@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
         [DisplayName("Grant Allocation File Upload")]
         [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
-        public HttpPostedFileBase GrantAllocationFileResourceData { get; set; }
+        public List<HttpPostedFileBase> GrantAllocationFileResourceDatas { get; set; }
 
         
 
@@ -224,17 +224,17 @@ namespace ProjectFirma.Web.Views.GrantAllocation
             grantAllocation.GrantAllocationProgramManagers.ToList().ForEach(gapm => gapm.DeleteFull(HttpRequestStorage.DatabaseEntities));
             grantAllocation.GrantAllocationProgramManagers = this.ProgramManagerPersonIDs != null ? this.ProgramManagerPersonIDs.Select(p => new GrantAllocationProgramManager(grantAllocation.GrantAllocationID, p)).ToList() : new List<GrantAllocationProgramManager>();
 
-            if (GrantAllocationFileResourceData != null)
+            // this section is only applicable to when it is a new Grant Allocation being created. We no longer need to delete the old ones on submit 
+            // because editing and deleting the files will happen outside of the BASICS editor for a grant allocation.
+            if (GrantAllocationFileResourceDatas != null)
             {
-                var currentGrantAllocationFileResource = grantAllocation.GrantAllocationFileResource;
-                grantAllocation.GrantAllocationFileResource = null;
-                // Delete old grantAllocation file, if present
-                if (currentGrantAllocationFileResource != null)
+                for (int key = 0; key < GrantAllocationFileResourceDatas.Count; key++)
                 {
-                    HttpRequestStorage.DatabaseEntities.SaveChanges();
-                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentGrantAllocationFileResource);
+                    var fileResource = FileResource.CreateNewFromHttpPostedFile(GrantAllocationFileResourceDatas[key], currentPerson);
+                    HttpRequestStorage.DatabaseEntities.FileResources.Add(fileResource);
+                    var grantAllocationFileResource = new GrantAllocationFileResource(grantAllocation, fileResource);
+                    grantAllocation.GrantAllocationFileResources.Add(grantAllocationFileResource);
                 }
-                grantAllocation.GrantAllocationFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantAllocationFileResourceData, currentPerson);
             }
 
             //delete existing GrantAllocationProgramIndexProjectCode records

@@ -3,11 +3,10 @@
 //  Use the corresponding partial class for customizations.
 //  Source Table: [dbo].[GisUploadAttemptWorkflowSection]
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
+using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web;
 using LtInfo.Common.DesignByContract;
@@ -16,150 +15,128 @@ using ProjectFirma.Web.Common;
 
 namespace ProjectFirma.Web.Models
 {
-    public abstract partial class GisUploadAttemptWorkflowSection : IHavePrimaryKey
+    // Table [dbo].[GisUploadAttemptWorkflowSection] is NOT multi-tenant, so is attributed as ICanDeleteFull
+    [Table("[dbo].[GisUploadAttemptWorkflowSection]")]
+    public partial class GisUploadAttemptWorkflowSection : IHavePrimaryKey, ICanDeleteFull
     {
-        public static readonly GisUploadAttemptWorkflowSectionUploadGisFile UploadGisFile = GisUploadAttemptWorkflowSectionUploadGisFile.Instance;
-        public static readonly GisUploadAttemptWorkflowSectionValidateFeatures ValidateFeatures = GisUploadAttemptWorkflowSectionValidateFeatures.Instance;
-        public static readonly GisUploadAttemptWorkflowSectionValidateMetadata ValidateMetadata = GisUploadAttemptWorkflowSectionValidateMetadata.Instance;
-        public static readonly GisUploadAttemptWorkflowSectionReviewMapping ReviewMapping = GisUploadAttemptWorkflowSectionReviewMapping.Instance;
-        public static readonly GisUploadAttemptWorkflowSectionRviewStagedImport RviewStagedImport = GisUploadAttemptWorkflowSectionRviewStagedImport.Instance;
-
-        public static readonly List<GisUploadAttemptWorkflowSection> All;
-        public static readonly ReadOnlyDictionary<int, GisUploadAttemptWorkflowSection> AllLookupDictionary;
-
         /// <summary>
-        /// Static type constructor to coordinate static initialization order
+        /// Default Constructor; only used by EF
         /// </summary>
-        static GisUploadAttemptWorkflowSection()
+        protected GisUploadAttemptWorkflowSection()
         {
-            All = new List<GisUploadAttemptWorkflowSection> { UploadGisFile, ValidateFeatures, ValidateMetadata, ReviewMapping, RviewStagedImport };
-            AllLookupDictionary = new ReadOnlyDictionary<int, GisUploadAttemptWorkflowSection>(All.ToDictionary(x => x.GisUploadAttemptWorkflowSectionID));
+
         }
 
         /// <summary>
-        /// Protected constructor only for use in instantiating the set of static lookup values that match database
+        /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        protected GisUploadAttemptWorkflowSection(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID)
+        public GisUploadAttemptWorkflowSection(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : this()
         {
-            GisUploadAttemptWorkflowSectionID = gisUploadAttemptWorkflowSectionID;
-            GisUploadAttemptWorkflowSectionName = gisUploadAttemptWorkflowSectionName;
-            GisUploadAttemptWorkflowSectionDisplayName = gisUploadAttemptWorkflowSectionDisplayName;
-            SortOrder = sortOrder;
-            HasCompletionStatus = hasCompletionStatus;
-            GisUploadAttemptWorkflowSectionGroupingID = gisUploadAttemptWorkflowSectionGroupingID;
+            this.GisUploadAttemptWorkflowSectionID = gisUploadAttemptWorkflowSectionID;
+            this.GisUploadAttemptWorkflowSectionName = gisUploadAttemptWorkflowSectionName;
+            this.GisUploadAttemptWorkflowSectionDisplayName = gisUploadAttemptWorkflowSectionDisplayName;
+            this.SortOrder = sortOrder;
+            this.HasCompletionStatus = hasCompletionStatus;
+            this.GisUploadAttemptWorkflowSectionGroupingID = gisUploadAttemptWorkflowSectionGroupingID;
         }
-        public GisUploadAttemptWorkflowSectionGrouping GisUploadAttemptWorkflowSectionGrouping { get { return GisUploadAttemptWorkflowSectionGrouping.AllLookupDictionary[GisUploadAttemptWorkflowSectionGroupingID]; } }
+
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields in preparation for insert into database
+        /// </summary>
+        public GisUploadAttemptWorkflowSection(string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.GisUploadAttemptWorkflowSectionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            
+            this.GisUploadAttemptWorkflowSectionName = gisUploadAttemptWorkflowSectionName;
+            this.GisUploadAttemptWorkflowSectionDisplayName = gisUploadAttemptWorkflowSectionDisplayName;
+            this.SortOrder = sortOrder;
+            this.HasCompletionStatus = hasCompletionStatus;
+            this.GisUploadAttemptWorkflowSectionGroupingID = gisUploadAttemptWorkflowSectionGroupingID;
+        }
+
+        /// <summary>
+        /// Constructor for building a new object with MinimalConstructor required fields, using objects whenever possible
+        /// </summary>
+        public GisUploadAttemptWorkflowSection(string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, GisUploadAttemptWorkflowSectionGrouping gisUploadAttemptWorkflowSectionGrouping) : this()
+        {
+            // Mark this as a new object by setting primary key with special value
+            this.GisUploadAttemptWorkflowSectionID = ModelObjectHelpers.MakeNextUnsavedPrimaryKeyValue();
+            this.GisUploadAttemptWorkflowSectionName = gisUploadAttemptWorkflowSectionName;
+            this.GisUploadAttemptWorkflowSectionDisplayName = gisUploadAttemptWorkflowSectionDisplayName;
+            this.SortOrder = sortOrder;
+            this.HasCompletionStatus = hasCompletionStatus;
+            this.GisUploadAttemptWorkflowSectionGroupingID = gisUploadAttemptWorkflowSectionGrouping.GisUploadAttemptWorkflowSectionGroupingID;
+            this.GisUploadAttemptWorkflowSectionGrouping = gisUploadAttemptWorkflowSectionGrouping;
+            gisUploadAttemptWorkflowSectionGrouping.GisUploadAttemptWorkflowSections.Add(this);
+        }
+
+        /// <summary>
+        /// Creates a "blank" object of this type and populates primitives with defaults
+        /// </summary>
+        public static GisUploadAttemptWorkflowSection CreateNewBlank(GisUploadAttemptWorkflowSectionGrouping gisUploadAttemptWorkflowSectionGrouping)
+        {
+            return new GisUploadAttemptWorkflowSection(default(string), default(string), default(int), default(bool), gisUploadAttemptWorkflowSectionGrouping);
+        }
+
+        /// <summary>
+        /// Does this object have any dependent objects? (If it does have dependent objects, these would need to be deleted before this object could be deleted.)
+        /// </summary>
+        /// <returns></returns>
+        public bool HasDependentObjects()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Active Dependent type names of this object
+        /// </summary>
+        public List<string> DependentObjectNames() 
+        {
+            var dependentObjects = new List<string>();
+            
+            return dependentObjects.Distinct().ToList();
+        }
+
+        /// <summary>
+        /// Dependent type names of this entity
+        /// </summary>
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(GisUploadAttemptWorkflowSection).Name};
+
+
+        /// <summary>
+        /// Delete just the entity 
+        /// </summary>
+        public void Delete(DatabaseEntities dbContext)
+        {
+            dbContext.GisUploadAttemptWorkflowSections.Remove(this);
+        }
+        
+        /// <summary>
+        /// Delete entity plus all children
+        /// </summary>
+        public void DeleteFull(DatabaseEntities dbContext)
+        {
+            
+            Delete(dbContext);
+        }
+
         [Key]
-        public int GisUploadAttemptWorkflowSectionID { get; private set; }
-        public string GisUploadAttemptWorkflowSectionName { get; private set; }
-        public string GisUploadAttemptWorkflowSectionDisplayName { get; private set; }
-        public int SortOrder { get; private set; }
-        public bool HasCompletionStatus { get; private set; }
-        public int GisUploadAttemptWorkflowSectionGroupingID { get; private set; }
+        public int GisUploadAttemptWorkflowSectionID { get; set; }
+        public string GisUploadAttemptWorkflowSectionName { get; set; }
+        public string GisUploadAttemptWorkflowSectionDisplayName { get; set; }
+        public int SortOrder { get; set; }
+        public bool HasCompletionStatus { get; set; }
+        public int GisUploadAttemptWorkflowSectionGroupingID { get; set; }
         [NotMapped]
-        public int PrimaryKey { get { return GisUploadAttemptWorkflowSectionID; } }
+        public int PrimaryKey { get { return GisUploadAttemptWorkflowSectionID; } set { GisUploadAttemptWorkflowSectionID = value; } }
 
-        /// <summary>
-        /// Enum types are equal by primary key
-        /// </summary>
-        public bool Equals(GisUploadAttemptWorkflowSection other)
+        public virtual GisUploadAttemptWorkflowSectionGrouping GisUploadAttemptWorkflowSectionGrouping { get; set; }
+
+        public static class FieldLengths
         {
-            if (other == null)
-            {
-                return false;
-            }
-            return other.GisUploadAttemptWorkflowSectionID == GisUploadAttemptWorkflowSectionID;
+            public const int GisUploadAttemptWorkflowSectionName = 50;
+            public const int GisUploadAttemptWorkflowSectionDisplayName = 50;
         }
-
-        /// <summary>
-        /// Enum types are equal by primary key
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as GisUploadAttemptWorkflowSection);
-        }
-
-        /// <summary>
-        /// Enum types are equal by primary key
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return GisUploadAttemptWorkflowSectionID;
-        }
-
-        public static bool operator ==(GisUploadAttemptWorkflowSection left, GisUploadAttemptWorkflowSection right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(GisUploadAttemptWorkflowSection left, GisUploadAttemptWorkflowSection right)
-        {
-            return !Equals(left, right);
-        }
-
-        public GisUploadAttemptWorkflowSectionEnum ToEnum { get { return (GisUploadAttemptWorkflowSectionEnum)GetHashCode(); } }
-
-        public static GisUploadAttemptWorkflowSection ToType(int enumValue)
-        {
-            return ToType((GisUploadAttemptWorkflowSectionEnum)enumValue);
-        }
-
-        public static GisUploadAttemptWorkflowSection ToType(GisUploadAttemptWorkflowSectionEnum enumValue)
-        {
-            switch (enumValue)
-            {
-                case GisUploadAttemptWorkflowSectionEnum.ReviewMapping:
-                    return ReviewMapping;
-                case GisUploadAttemptWorkflowSectionEnum.RviewStagedImport:
-                    return RviewStagedImport;
-                case GisUploadAttemptWorkflowSectionEnum.UploadGisFile:
-                    return UploadGisFile;
-                case GisUploadAttemptWorkflowSectionEnum.ValidateFeatures:
-                    return ValidateFeatures;
-                case GisUploadAttemptWorkflowSectionEnum.ValidateMetadata:
-                    return ValidateMetadata;
-                default:
-                    throw new ArgumentException(string.Format("Unable to map Enum: {0}", enumValue));
-            }
-        }
-    }
-
-    public enum GisUploadAttemptWorkflowSectionEnum
-    {
-        UploadGisFile = 2,
-        ValidateFeatures = 3,
-        ValidateMetadata = 4,
-        ReviewMapping = 6,
-        RviewStagedImport = 7
-    }
-
-    public partial class GisUploadAttemptWorkflowSectionUploadGisFile : GisUploadAttemptWorkflowSection
-    {
-        private GisUploadAttemptWorkflowSectionUploadGisFile(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : base(gisUploadAttemptWorkflowSectionID, gisUploadAttemptWorkflowSectionName, gisUploadAttemptWorkflowSectionDisplayName, sortOrder, hasCompletionStatus, gisUploadAttemptWorkflowSectionGroupingID) {}
-        public static readonly GisUploadAttemptWorkflowSectionUploadGisFile Instance = new GisUploadAttemptWorkflowSectionUploadGisFile(2, @"UploadGisFile", @"Upload GIS File", 20, true, 1);
-    }
-
-    public partial class GisUploadAttemptWorkflowSectionValidateFeatures : GisUploadAttemptWorkflowSection
-    {
-        private GisUploadAttemptWorkflowSectionValidateFeatures(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : base(gisUploadAttemptWorkflowSectionID, gisUploadAttemptWorkflowSectionName, gisUploadAttemptWorkflowSectionDisplayName, sortOrder, hasCompletionStatus, gisUploadAttemptWorkflowSectionGroupingID) {}
-        public static readonly GisUploadAttemptWorkflowSectionValidateFeatures Instance = new GisUploadAttemptWorkflowSectionValidateFeatures(3, @"ValidateFeatures", @"Validate Features", 30, true, 1);
-    }
-
-    public partial class GisUploadAttemptWorkflowSectionValidateMetadata : GisUploadAttemptWorkflowSection
-    {
-        private GisUploadAttemptWorkflowSectionValidateMetadata(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : base(gisUploadAttemptWorkflowSectionID, gisUploadAttemptWorkflowSectionName, gisUploadAttemptWorkflowSectionDisplayName, sortOrder, hasCompletionStatus, gisUploadAttemptWorkflowSectionGroupingID) {}
-        public static readonly GisUploadAttemptWorkflowSectionValidateMetadata Instance = new GisUploadAttemptWorkflowSectionValidateMetadata(4, @"ValidateMetadata", @"Validate Metadata", 40, true, 2);
-    }
-
-    public partial class GisUploadAttemptWorkflowSectionReviewMapping : GisUploadAttemptWorkflowSection
-    {
-        private GisUploadAttemptWorkflowSectionReviewMapping(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : base(gisUploadAttemptWorkflowSectionID, gisUploadAttemptWorkflowSectionName, gisUploadAttemptWorkflowSectionDisplayName, sortOrder, hasCompletionStatus, gisUploadAttemptWorkflowSectionGroupingID) {}
-        public static readonly GisUploadAttemptWorkflowSectionReviewMapping Instance = new GisUploadAttemptWorkflowSectionReviewMapping(6, @"ReviewMapping", @"Review Mapping", 60, true, 2);
-    }
-
-    public partial class GisUploadAttemptWorkflowSectionRviewStagedImport : GisUploadAttemptWorkflowSection
-    {
-        private GisUploadAttemptWorkflowSectionRviewStagedImport(int gisUploadAttemptWorkflowSectionID, string gisUploadAttemptWorkflowSectionName, string gisUploadAttemptWorkflowSectionDisplayName, int sortOrder, bool hasCompletionStatus, int gisUploadAttemptWorkflowSectionGroupingID) : base(gisUploadAttemptWorkflowSectionID, gisUploadAttemptWorkflowSectionName, gisUploadAttemptWorkflowSectionDisplayName, sortOrder, hasCompletionStatus, gisUploadAttemptWorkflowSectionGroupingID) {}
-        public static readonly GisUploadAttemptWorkflowSectionRviewStagedImport Instance = new GisUploadAttemptWorkflowSectionRviewStagedImport(7, @"RviewStagedImport", @"Review Staged Import", 70, true, 2);
     }
 }

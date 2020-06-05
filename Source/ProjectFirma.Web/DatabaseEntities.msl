@@ -281,6 +281,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GisUploadAttemptWorkflowSection">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSection">
+        <MappingFragment StoreEntitySet="GisUploadAttemptWorkflowSection">
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionID" ColumnName="GisUploadAttemptWorkflowSectionID" />
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionName" ColumnName="GisUploadAttemptWorkflowSectionName" />
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionDisplayName" ColumnName="GisUploadAttemptWorkflowSectionDisplayName" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="HasCompletionStatus" ColumnName="HasCompletionStatus" />
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingID" ColumnName="GisUploadAttemptWorkflowSectionGroupingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GisUploadAttemptWorkflowSectionGrouping">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadAttemptWorkflowSectionGrouping">
+        <MappingFragment StoreEntitySet="GisUploadAttemptWorkflowSectionGrouping">
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingID" ColumnName="GisUploadAttemptWorkflowSectionGroupingID" />
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingName" ColumnName="GisUploadAttemptWorkflowSectionGroupingName" />
+          <ScalarProperty Name="GisUploadAttemptWorkflowSectionGroupingDisplayName" ColumnName="GisUploadAttemptWorkflowSectionGroupingDisplayName" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GisUploadSourceOrganization">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GisUploadSourceOrganization">
         <MappingFragment StoreEntitySet="GisUploadSourceOrganization">
@@ -305,7 +327,6 @@
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="GrantStatusID" ColumnName="GrantStatusID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -323,7 +344,6 @@
           <ScalarProperty Name="DNRUplandRegionID" ColumnName="DNRUplandRegionID" />
           <ScalarProperty Name="DivisionID" ColumnName="DivisionID" />
           <ScalarProperty Name="GrantManagerID" ColumnName="GrantManagerID" />
-          <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -522,6 +542,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GrantAllocationFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationFileResource">
+        <MappingFragment StoreEntitySet="GrantAllocationFileResource">
+          <ScalarProperty Name="GrantAllocationFileResourceID" ColumnName="GrantAllocationFileResourceID" />
+          <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GrantAllocationNote">
       <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantAllocationNote">
         <MappingFragment StoreEntitySet="GrantAllocationNote">
@@ -564,6 +593,15 @@
           <ScalarProperty Name="GrantAllocationProgramManagerID" ColumnName="GrantAllocationProgramManagerID" />
           <ScalarProperty Name="GrantAllocationID" ColumnName="GrantAllocationID" />
           <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GrantFileResource">
+      <EntityTypeMapping TypeName="ProjectFirma.Web.Models.GrantFileResource">
+        <MappingFragment StoreEntitySet="GrantFileResource">
+          <ScalarProperty Name="GrantFileResourceID" ColumnName="GrantFileResourceID" />
+          <ScalarProperty Name="GrantID" ColumnName="GrantID" />
+          <ScalarProperty Name="FileResourceID" ColumnName="FileResourceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -19,11 +19,14 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Collections.Generic;
 using System.Linq;
 using LtInfo.Common;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Shared.Grant;
 using ProjectFirma.Web.Views.Shared.TextControls;
 
 namespace ProjectFirma.Web.Views.Grant
@@ -42,6 +45,7 @@ namespace ProjectFirma.Web.Views.Grant
         public GrantModificationGridSpec GrantModificationGridSpec { get; }
         public string GrantModificationGridName { get; }
         public string GrantModificationGridDataUrl { get; }
+        public GrantDetailsFileDetailsViewData GrantDetailsFileDetailsViewData { get; }
 
         public DetailViewData(Person currentPerson, Models.Grant grant, EntityNotesViewData grantNotesViewData, EntityNotesViewData internalNotesViewData)
             : base(currentPerson, grant)
@@ -52,7 +56,7 @@ namespace ProjectFirma.Web.Views.Grant
             GrantNotesViewData = grantNotesViewData;
             InternalGrantNotesViewData = internalNotesViewData;
             // Used for creating file download link, if file available
-            ShowDownload = grant.GrantFileResource != null;
+            ShowDownload = grant.GrantFileResources.Any();
 
             GrantAllocationGridSpec = new GrantAllocationGridSpec(currentPerson);
             GrantAllocationGridName = "grantAllocationsGridName";
@@ -62,7 +66,13 @@ namespace ProjectFirma.Web.Views.Grant
             GrantModificationGridName = "grantModificationsGridName";
             GrantModificationGridDataUrl = SitkaRoute<GrantController>.BuildUrlFromExpression(tc => tc.GrantModificationGridJsonDataByGrant(grant.PrimaryKey));
 
-
+            GrantDetailsFileDetailsViewData = new GrantDetailsFileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grant.GrantFileResources)),
+                SitkaRoute<GrantController>.BuildUrlFromExpression(x => x.NewGrantFiles(grant.PrimaryKey)),
+                grant.GrantName,
+                new GrantEditAsAdminFeature().HasPermission(currentPerson, grant).HasPermission,
+                Models.FieldDefinition.Grant
+            );
         }
     }
 }

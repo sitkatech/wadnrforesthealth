@@ -1562,7 +1562,7 @@ nav#wizardNav ul li.workflowSection a:hover {
     z-index: 1000;
   }
 }
-#AddDocumentsAngularApp .multiple-file-upload {
+.multiple-file-upload-wrapper .multiple-file-upload {
   width: 100%;
   border: 1px dashed #337ab7;
   border-radius: 5px;
@@ -1573,14 +1573,14 @@ nav#wizardNav ul li.workflowSection a:hover {
   margin: 10px 0;
   background: #f5f8fa;
 }
-#AddDocumentsAngularApp .multiple-file-upload.highlight {
+.multiple-file-upload-wrapper .multiple-file-upload.highlight {
   border: 1px dashed #337ab7;
   box-shadow: inset 0px 0px 4px 1px #337ab7;
 }
-#AddDocumentsAngularApp .multiple-file-upload:hover {
+.multiple-file-upload-wrapper .multiple-file-upload:hover {
   box-shadow: inset 0px 0px 2px 1px #337ab7;
 }
-#AddDocumentsAngularApp .file-inputs {
+.multiple-file-upload-wrapper .file-inputs {
   border-top: 1px solid #00000017;
   padding-bottom: 5px;
 }
