@@ -43,56 +43,11 @@ namespace LtInfo.Common.Mvc
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var file = value as HttpPostedFileBase;
-            if (file != null)
+
+
+            if (value.GetType() == typeof(HttpPostedFileBase))
             {
-                var fileName = file.FileName.ToLower();
-                var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
-                if (!isValidExtension)
-                {
-                    string fileExtension = FileUtility.ExtensionFor(fileName);
-                    string allowedExtensionsString = string.Join(", ", ValidExtensions);
-                    string errorMessage = $"File extension \"{fileExtension}\" is invalid. Allowed extensions: {allowedExtensionsString}";
-                    return new ValidationResult(errorMessage);
-                }
-            }
-            return ValidationResult.Success;
-        }
-
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            if (!metadata.IsRequired)
-                yield break;
-
-            if (string.IsNullOrWhiteSpace(ErrorMessage))
-            {
-                ErrorMessage = "Uploaded file needs to be one of the following extensions: " + string.Join(", ", ValidExtensions);
-            }
-            var rule = new ModelClientFileExtensionValidationRule(ErrorMessage, ValidExtensions);
-            yield return rule;
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
-    public class SitkaMultiFileExtensionsAttribute : ValidationAttribute, IClientValidatable
-    {
-        public List<string> ValidExtensions { get; set; }
-
-        public SitkaMultiFileExtensionsAttribute()
-        {
-        }
-
-        public SitkaMultiFileExtensionsAttribute(string fileExtensions)
-        {
-            ValidExtensions = fileExtensions.ToLower().Split('|').ToList();
-        }
-
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var files = value as List<HttpPostedFileBase>;
-            if (files[0] != null)
-            {
-                foreach (var file in files)
+                if (value is HttpPostedFileBase file)
                 {
                     var fileName = file.FileName.ToLower();
                     var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
@@ -104,7 +59,29 @@ namespace LtInfo.Common.Mvc
                         return new ValidationResult(errorMessage);
                     }
                 }
+
             }
+
+            if (value.GetType() == typeof(List<HttpPostedFileBase>))
+            {
+                if (value is List<HttpPostedFileBase> files && files[0] != null)
+                {
+                    foreach (var file in files)
+                    {
+                        var fileName = file.FileName.ToLower();
+                        var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
+                        if (!isValidExtension)
+                        {
+                            string fileExtension = FileUtility.ExtensionFor(fileName);
+                            string allowedExtensionsString = string.Join(", ", ValidExtensions);
+                            string errorMessage = $"File extension \"{fileExtension}\" is invalid. Allowed extensions: {allowedExtensionsString}";
+                            return new ValidationResult(errorMessage);
+                        }
+                    }
+                }
+
+            }
+
             return ValidationResult.Success;
         }
 
@@ -121,7 +98,7 @@ namespace LtInfo.Common.Mvc
             yield return rule;
         }
     }
-
+    
     public class ModelClientFileExtensionValidationRule : ModelClientValidationRule
     {
         public ModelClientFileExtensionValidationRule(string errorMessage, IEnumerable<string> fileExtensions)
