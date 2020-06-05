@@ -11,37 +11,37 @@
 
 @if (!ViewDataTyped.Documents.Any())
 {
-    <p class="systemText">No files associated with this @FieldDefinition.Grant.GetFieldDefinitionLabel().</p>
+    <p class="systemText">No files associated with this @ViewDataTyped.FieldDefinition.GetFieldDefinitionLabel().</p>
 }
 
-@foreach (var grantFile in ViewDataTyped.Documents)
+@foreach (var file in ViewDataTyped.Documents)
 {
-    <div class="@grantFile.DisplayCssClass">
+    <div class="@file.DisplayCssClass">
         @if (ViewDataTyped.CanEditDocuments)
         {
             <span style="margin-left: 8px; margin-right: 8px;">
-            @ModalDialogFormHelper.MakeDeleteLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash").ToString(), grantFile.DeleteUrl, null, true)
+            @ModalDialogFormHelper.MakeDeleteLink(BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-trash").ToString(), file.DeleteUrl, null, true)
         </span>
         }
 
         @if (ViewDataTyped.ShowDownload)
         {
-        <a href="@grantFile.FileResource.FileResourceUrl">
-            @grantFile.DisplayName
+        <a href="@file.FileResource.FileResourceUrl">
+            @file.DisplayName
             @BootstrapHtmlHelpers.MakeGlyphIcon("glyphicon-download")
         </a>
         }
         else
         {
-            <span>@grantFile.DisplayName</span>
+            <span>@file.DisplayName</span>
         }
 
         <dl class="dl-horizontal">
             <dt>Uploaded On</dt>
-            <dd title="@grantFile.FileResource.CreateDate.ToLongDateString() @grantFile.FileResource.CreateDate.ToLongTimeString()">@grantFile.FileResource.CreateDate.ToShortDateString()</dd>
+            <dd title="@file.FileResource.CreateDate.ToLongDateString() @file.FileResource.CreateDate.ToLongTimeString()">@file.FileResource.CreateDate.ToShortDateString()</dd>
 
             <dt>File Type</dt>
-            <dd>@grantFile.FileResource.FileResourceMimeType.FileResourceMimeTypeDisplayName</dd>
+            <dd>@file.FileResource.FileResourceMimeType.FileResourceMimeTypeDisplayName</dd>
 
         </dl>
     </div>

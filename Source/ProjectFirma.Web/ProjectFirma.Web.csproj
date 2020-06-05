@@ -565,6 +565,7 @@
     <Compile Include="Models\GrantAllocationAwardTravelLineItem.cs" />
     <Compile Include="Models\GrantAllocationAwardTravelLineItemModelExtensions.cs" />
     <Compile Include="Models\GrantAllocationChangeLog.cs" />
+    <Compile Include="Models\GrantAllocationFileResource.cs" />
     <Compile Include="Models\GrantFileResource.cs" />
     <Compile Include="Models\InvoiceLineItemTest.cs" />
     <Compile Include="Models\ApiJson\GrantStatusApiJson.cs" />
@@ -841,6 +842,9 @@
     <Compile Include="Views\GrantAllocation\GrantAllocationViewData.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationBudgetLineItemGridSpec.cs" />
     <Compile Include="Views\GrantAllocation\GrantAllocationExpendituresGridSpec.cs" />
+    <Compile Include="Views\GrantAllocation\NewGrantAllocationFile.cs" />
+    <Compile Include="Views\GrantAllocation\NewGrantAllocationFileViewData.cs" />
+    <Compile Include="Views\GrantAllocation\NewGrantAllocationFileViewModel.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternal.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewData.cs" />
     <Compile Include="Views\GrantModification\EditGrantModificationNoteInternalViewModel.cs" />
@@ -1557,6 +1561,7 @@
     <Content Include="Views\Grant\NewGrant.cshtml" />
     <Content Include="Views\Grant\GrantDetailsFileDetails.cshtml" />
     <Content Include="Views\Grant\NewGrantFile.cshtml" />
+    <Content Include="Views\GrantAllocation\NewGrantAllocationFile.cshtml" />
     <None Include="Views\PerformanceMeasure\EditSubcategoriesAndOptions.cshtml" />
     <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Models\OrganizationType.cs" />
@@ -4093,6 +4098,7 @@
     <Folder Include="Content\themes\base\minified\images\" />
     <Folder Include="Views\Help\" />
     <Folder Include="Views\ProjectGeospatialArea\" />
+    <Folder Include="Views\Shared\Grant\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

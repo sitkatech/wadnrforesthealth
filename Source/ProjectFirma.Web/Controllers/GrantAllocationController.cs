@@ -145,6 +145,91 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+
+
+
+
+        [HttpGet]
+        [GrantAllocationEditAsAdminFeature]
+        public PartialViewResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey)
+        {
+            var viewModel = new NewGrantAllocationFileViewModel(grantAllocationPrimaryKey.EntityObject);
+            return ViewNewGrantAllocationFiles(viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationEditAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult NewGrantAllocationFiles(GrantAllocationPrimaryKey grantAllocationPrimaryKey, NewGrantAllocationFileViewModel viewModel)
+        {
+            var grantAllocation = grantAllocationPrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewNewGrantAllocationFiles(new NewGrantAllocationFileViewModel());
+            }
+
+            viewModel.UpdateModel(grantAllocation, CurrentPerson);
+            SetMessageForDisplay($"Successfully created {viewModel.GrantAllocationFileResourceDatas.Count} new files(s) for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} \"{grantAllocation.GrantAllocationName}\".");
+            return new ModalDialogFormJsonResult();
+        }
+
+        private PartialViewResult ViewNewGrantAllocationFiles(NewGrantAllocationFileViewModel viewModel)
+        {
+            var viewData = new NewGrantAllocationFileViewData();
+            return RazorPartialView<NewGrantAllocationFile, NewGrantAllocationFileViewData, NewGrantAllocationFileViewModel>(viewData, viewModel);
+        }
+
+        [HttpGet]
+        [GrantAllocationDeleteFileAsAdminFeature]
+        public PartialViewResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey)
+        {
+            var viewModel = new ConfirmDialogFormViewModel(grantAllocationFileResourcePrimaryKey.PrimaryKeyValue);
+            return ViewDeleteGrantAllocationFile(grantAllocationFileResourcePrimaryKey.EntityObject, viewModel);
+        }
+
+        private PartialViewResult ViewDeleteGrantAllocationFile(GrantAllocationFileResource grantAllocationFileResource, ConfirmDialogFormViewModel viewModel)
+        {
+            var confirmMessage = $"Are you sure you want to delete this \"{grantAllocationFileResource.DisplayName}\" file created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}'?";
+            var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
+        }
+
+        [HttpPost]
+        [GrantAllocationDeleteFileAsAdminFeature]
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult DeleteGrantAllocationFile(GrantAllocationFileResourcePrimaryKey grantAllocationFileResourcePrimaryKey, ConfirmDialogFormViewModel viewModel)
+        {
+            var grantAllocationFileResource = grantAllocationFileResourcePrimaryKey.EntityObject;
+            if (!ModelState.IsValid)
+            {
+                return ViewDeleteGrantAllocationFile(grantAllocationFileResource, viewModel);
+            }
+
+            var message = $"{FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} file \"{grantAllocationFileResource.DisplayName}\" created on '{grantAllocationFileResource.FileResource.CreateDate}' by '{grantAllocationFileResource.FileResource.CreatePerson.FullNameFirstLast}' successfully deleted.";
+            grantAllocationFileResource.FileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            grantAllocationFileResource.Delete(HttpRequestStorage.DatabaseEntities);
+            SetMessageForDisplay(message);
+            return new ModalDialogFormJsonResult();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet]
         [GrantAllocationsViewFeature]
         public ViewResult GrantAllocationDetail(GrantAllocationPrimaryKey grantAllocationPrimaryKey)

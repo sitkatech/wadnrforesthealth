@@ -26,6 +26,8 @@ using LtInfo.Common.DhtmlWrappers;
 using ProjectFirma.Web.Common;
 using ProjectFirma.Web.Controllers;
 using ProjectFirma.Web.Models;
+using ProjectFirma.Web.Security;
+using ProjectFirma.Web.Views.Grant;
 using ProjectFirma.Web.Views.Shared;
 using ProjectFirma.Web.Views.Shared.GrantAllocationControls;
 using ProjectFirma.Web.Views.Shared.TextControls;
@@ -55,6 +57,7 @@ namespace ProjectFirma.Web.Views.GrantAllocation
         public GrantAllocationExpendituresGridSpec GrantAllocationExpendituresGridSpec { get; }
         public string GrantAllocationExpendituresGridName { get; }
         public string GrantAllocationExpendituresGridDataUrl { get; }
+        public GrantDetailsFileDetailsViewData GrantAllocationDetailsFileDetailsViewData { get; set; }
 
         public DetailViewData(Person currentPerson, Models.GrantAllocation grantAllocation
             , GrantAllocationBasicsViewData grantAllocationBasicsViewData
@@ -99,6 +102,16 @@ namespace ProjectFirma.Web.Views.GrantAllocation
 
             GrantAllocationBudgetLineItemsViewData = new GrantAllocationBudgetLineItemsViewData(currentPerson, grantAllocation);
             GrantAllocationBudgetVsActualsViewData = new GrantAllocationBudgetVsActualsViewData(currentPerson, grantAllocation);
+
+
+            GrantAllocationDetailsFileDetailsViewData = new GrantDetailsFileDetailsViewData(
+                EntityDocument.CreateFromEntityDocument(new List<IEntityDocument>(grantAllocation.GrantAllocationFileResources)),
+                SitkaRoute<GrantAllocationController>.BuildUrlFromExpression(x => x.NewGrantAllocationFiles(grantAllocation.PrimaryKey)),
+                grantAllocation.GrantAllocationName,
+                new GrantAllocationEditAsAdminFeature().HasPermission(currentPerson, grantAllocation).HasPermission,
+                Models.FieldDefinition.GrantAllocation
+            );
+
         }
     }
 }

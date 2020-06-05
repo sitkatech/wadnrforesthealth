@@ -20,19 +20,21 @@ namespace ProjectFirma.Web.Views.Grant
 
             GrantFileEditAsAdminFeature = new GrantEditAsAdminFeature();
         }
-        
+
         public List<EntityDocument> Documents { get; }
         public string AddDocumentUrl { get; }
         public string ProjectName { get; }
         public bool CanEditDocuments { get; }
+        public Models.FieldDefinition FieldDefinition { get; }
 
-        public GrantDetailsFileDetailsViewData(List<EntityDocument> documents, string addDocumentUrl, string projectName, bool canEditDocuments)
+        public GrantDetailsFileDetailsViewData(List<EntityDocument> documents, string addDocumentUrl, string projectName, bool canEditDocuments, Models.FieldDefinition fieldDefinition)
         {
             Documents = documents;
             AddDocumentUrl = addDocumentUrl;
             ProjectName = projectName;
             CanEditDocuments = canEditDocuments;
             ShowDownload = true;
+            FieldDefinition = fieldDefinition;
         }
         
         public bool ShowDownload { get; }
