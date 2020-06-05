@@ -72,10 +72,6 @@ namespace ProjectFirma.Web.Views.Grant
         [FieldDefinitionDisplay(FieldDefinitionEnum.GrantEndDate)]
         public DateTime? GrantEndDate { get; set; }
 
-        [DisplayName("Grant File Upload")]
-        [WADNRFileExtensions(FileResourceMimeTypeEnum.PDF, FileResourceMimeTypeEnum.ExcelXLSX, FileResourceMimeTypeEnum.xExcelXLSX, FileResourceMimeTypeEnum.ExcelXLS, FileResourceMimeTypeEnum.PowerpointPPT, FileResourceMimeTypeEnum.PowerpointPPTX, FileResourceMimeTypeEnum.WordDOC, FileResourceMimeTypeEnum.WordDOCX, FileResourceMimeTypeEnum.TXT, FileResourceMimeTypeEnum.JPEG, FileResourceMimeTypeEnum.PNG)]
-        public HttpPostedFileBase GrantFileResourceData { get; set; }
-
         /// <summary>
         /// Needed by the ModelBinder
         /// </summary>
@@ -111,18 +107,6 @@ namespace ProjectFirma.Web.Views.Grant
             grant.StartDate = GrantStartDate;
             grant.EndDate = GrantEndDate;
 
-            if (GrantFileResourceData != null)
-            {
-                var currentGrantFileResource = grant.GrantFileResource;
-                grant.GrantFileResource = null;
-                // Delete old grantAllocation file, if present
-                if (currentGrantFileResource != null)
-                {
-                    HttpRequestStorage.DatabaseEntities.SaveChanges();
-                    HttpRequestStorage.DatabaseEntities.FileResources.DeleteFileResource(currentGrantFileResource);
-                }
-                grant.GrantFileResource = FileResource.CreateNewFromHttpPostedFileAndSave(GrantFileResourceData, currentPerson);
-            }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
