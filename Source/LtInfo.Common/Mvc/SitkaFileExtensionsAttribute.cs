@@ -44,29 +44,11 @@ namespace LtInfo.Common.Mvc
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
 
-
-            if (value.GetType() == typeof(HttpPostedFileBase))
+            if (value != null)
             {
-                if (value is HttpPostedFileBase file)
+                if (value.GetType() == typeof(HttpPostedFileBase))
                 {
-                    var fileName = file.FileName.ToLower();
-                    var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
-                    if (!isValidExtension)
-                    {
-                        string fileExtension = FileUtility.ExtensionFor(fileName);
-                        string allowedExtensionsString = string.Join(", ", ValidExtensions);
-                        string errorMessage = $"File extension \"{fileExtension}\" is invalid. Allowed extensions: {allowedExtensionsString}";
-                        return new ValidationResult(errorMessage);
-                    }
-                }
-
-            }
-
-            if (value.GetType() == typeof(List<HttpPostedFileBase>))
-            {
-                if (value is List<HttpPostedFileBase> files && files[0] != null)
-                {
-                    foreach (var file in files)
+                    if (value is HttpPostedFileBase file)
                     {
                         var fileName = file.FileName.ToLower();
                         var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
@@ -78,9 +60,31 @@ namespace LtInfo.Common.Mvc
                             return new ValidationResult(errorMessage);
                         }
                     }
+
                 }
 
+                if (value.GetType() == typeof(List<HttpPostedFileBase>))
+                {
+                    if (value is List<HttpPostedFileBase> files && files[0] != null)
+                    {
+                        foreach (var file in files)
+                        {
+                            var fileName = file.FileName.ToLower();
+                            var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
+                            if (!isValidExtension)
+                            {
+                                string fileExtension = FileUtility.ExtensionFor(fileName);
+                                string allowedExtensionsString = string.Join(", ", ValidExtensions);
+                                string errorMessage = $"File extension \"{fileExtension}\" is invalid. Allowed extensions: {allowedExtensionsString}";
+                                return new ValidationResult(errorMessage);
+                            }
+                        }
+                    }
+
+                }
             }
+
+            
 
             return ValidationResult.Success;
         }
