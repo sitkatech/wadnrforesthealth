@@ -28,7 +28,7 @@ namespace ProjectFirma.Web.Models
 
         public override string GetSectionUrl(GisUploadAttempt gisUploadAttempt)
         {
-            return gisUploadAttempt != null ? SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(x => x.EditBasics(gisUploadAttempt.GisUploadAttemptID)) : null;
+            return gisUploadAttempt != null ? SitkaRoute<GisProjectBulkUpdateController>.BuildUrlFromExpression(x => x.UploadGisFile(gisUploadAttempt.GisUploadAttemptID)) : null;
         }
     }
 
