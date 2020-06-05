@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewNew(viewModel);
+                return ViewNew(new NewProjectDocumentUpdateViewModel());
             }
             var projectUpdateBatch = projectUpdateBatchPrimaryKey.EntityObject;
             viewModel.UpdateModel(projectUpdateBatch, CurrentPerson);
