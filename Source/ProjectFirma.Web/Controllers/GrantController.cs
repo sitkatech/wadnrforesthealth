@@ -114,19 +114,19 @@ namespace ProjectFirma.Web.Controllers
         public PartialViewResult New()
         {
             
-            var viewModel = new EditGrantViewModel();
-            return ViewEdit(viewModel,EditGrantType.NewGrant);
+            var viewModel = new NewGrantViewModel();
+            return ViewNew(viewModel,EditGrantType.NewGrant);
         }
 
         [HttpPost]
         [GrantCreateFeature]
         [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
-        public ActionResult New(EditGrantViewModel viewModel)
+        public ActionResult New(NewGrantViewModel viewModel)
         {
             
             if (!ModelState.IsValid)
             {
-                return ViewEdit(viewModel, EditGrantType.NewGrant);
+                return ViewNew(viewModel, EditGrantType.NewGrant);
             }
             var grantStatus = HttpRequestStorage.DatabaseEntities.GrantStatuses.Single(g => g.GrantStatusID == viewModel.GrantStatusID);
             var grantOrganization = HttpRequestStorage.DatabaseEntities.Organizations.Single(g => g.OrganizationID == viewModel.OrganizationID);
@@ -134,7 +134,22 @@ namespace ProjectFirma.Web.Controllers
             viewModel.UpdateModel(grant, CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
-       
+
+        private PartialViewResult ViewNew(NewGrantViewModel viewModel, EditGrantType editGrantType)
+        {
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.GetActiveOrganizations();
+            var grantStatuses = HttpRequestStorage.DatabaseEntities.GrantStatuses;
+            var grantTypes = HttpRequestStorage.DatabaseEntities.GrantTypes;
+
+            var viewData = new NewGrantViewData(editGrantType,
+                organizations,
+                grantStatuses,
+                grantTypes
+            );
+            return RazorPartialView<NewGrant, NewGrantViewData, NewGrantViewModel>(viewData, viewModel);
+        }
+
+
         [GrantsViewFeature]
         public ViewResult GrantDetail(GrantPrimaryKey grantPrimaryKey)
         {
