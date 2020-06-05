@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
     {
         [RequiredMultiFile]
         [DisplayName("File(s)")]
-        [SitkaFileExtensions("pdf|zip|doc|docx|xls|xlsx")]
+        [SitkaMultiFileExtensions("pdf|zip|doc|docx|xls|xlsx")]
         public List<HttpPostedFileBase> Files { get; set; }
 
         [Required]
@@ -108,15 +108,7 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
                     validationResults.Add(new SitkaValidationResult<NewProjectDocumentViewModel, List<string>>($"There is already a document with the Display Name \"{DisplayNames[key]}\" attached to this {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}. Display Name must be unique for each Document attached to a {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}", m => m.DisplayNames));
                 }
             }
-
-            // because we cannot return any files back with the model, we have to clear the model
-            if (validationResults.Any())
-            {
-                DisplayNames = null;
-                Descriptions = null;
-                Files = null;
-            }
-
+            
             return validationResults;
         }
     }

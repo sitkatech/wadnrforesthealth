@@ -26,7 +26,7 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             if (!ModelState.IsValid)
             {
-                return ViewNew(viewModel);
+                return ViewNew(new NewProjectDocumentViewModel());
             }
             
             viewModel.UpdateModel(project, CurrentPerson);

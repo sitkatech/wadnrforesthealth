@@ -73,6 +73,55 @@ namespace LtInfo.Common.Mvc
         }
     }
 
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
+    public class SitkaMultiFileExtensionsAttribute : ValidationAttribute, IClientValidatable
+    {
+        public List<string> ValidExtensions { get; set; }
+
+        public SitkaMultiFileExtensionsAttribute()
+        {
+        }
+
+        public SitkaMultiFileExtensionsAttribute(string fileExtensions)
+        {
+            ValidExtensions = fileExtensions.ToLower().Split('|').ToList();
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var files = value as List<HttpPostedFileBase>;
+            if (files[0] != null)
+            {
+                foreach (var file in files)
+                {
+                    var fileName = file.FileName.ToLower();
+                    var isValidExtension = ValidExtensions.Any(fileName.EndsWith);
+                    if (!isValidExtension)
+                    {
+                        string fileExtension = FileUtility.ExtensionFor(fileName);
+                        string allowedExtensionsString = string.Join(", ", ValidExtensions);
+                        string errorMessage = $"File extension \"{fileExtension}\" is invalid. Allowed extensions: {allowedExtensionsString}";
+                        return new ValidationResult(errorMessage);
+                    }
+                }
+            }
+            return ValidationResult.Success;
+        }
+
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            if (!metadata.IsRequired)
+                yield break;
+
+            if (string.IsNullOrWhiteSpace(ErrorMessage))
+            {
+                ErrorMessage = "Uploaded file needs to be one of the following extensions: " + string.Join(", ", ValidExtensions);
+            }
+            var rule = new ModelClientFileExtensionValidationRule(ErrorMessage, ValidExtensions);
+            yield return rule;
+        }
+    }
+
     public class ModelClientFileExtensionValidationRule : ModelClientValidationRule
     {
         public ModelClientFileExtensionValidationRule(string errorMessage, IEnumerable<string> fileExtensions)

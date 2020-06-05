@@ -64,14 +64,6 @@ namespace ProjectFirma.Web.Views.Shared.ProjectDocument
                 }
             }
 
-            // because we cannot return any files back with the model, we have to clear the model
-            if (validationResults.Any())
-            {
-                DisplayNames = null;
-                Descriptions = null;
-                Files = null;
-            }
-
             return validationResults;
         }
     }
