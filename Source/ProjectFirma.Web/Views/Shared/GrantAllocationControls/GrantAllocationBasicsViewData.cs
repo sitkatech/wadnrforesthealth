@@ -19,6 +19,7 @@ Source code is available upon request via <support@sitkatech.com>.
 </license>
 -----------------------------------------------------------------------*/
 
+using System.Linq;
 using ProjectFirma.Web.Models;
 
 namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
@@ -33,8 +34,8 @@ namespace ProjectFirma.Web.Views.Shared.GrantAllocationControls
         {
             GrantAllocation = grantAllocation;
             UserHasGrantAllocationManagePermissions = userHasGrantAllocationManagePermissions;
-            // Used for creating file download link, if file available
-            ShowDownload = grantAllocation.GrantAllocationFileResource != null;
+            // Used for creating file download links, if files available
+            ShowDownload = grantAllocation.GrantAllocationFileResources.Any();
         }        
     }
 }

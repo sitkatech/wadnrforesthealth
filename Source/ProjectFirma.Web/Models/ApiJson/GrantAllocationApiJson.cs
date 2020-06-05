@@ -30,7 +30,7 @@ namespace ProjectFirma.Web.Models.ApiJson
         public string DivisionName { get; set; }
         public int? GrantManagerID { get; set; }
         public string GrantManagerName { get; set; }
-        public int? GrantAllocationFileResourceID { get; set; }
+        public List<int> GrantAllocationFileResourceIDs { get; set; }
 
         // For use by model binder
         public GrantAllocationApiJson()
@@ -55,7 +55,7 @@ namespace ProjectFirma.Web.Models.ApiJson
             DivisionName = grantAllocation.Division != null ? grantAllocation.Division.DivisionDisplayName : null;
             GrantManagerID = grantAllocation.GrantManagerID;
             GrantManagerName = grantAllocation.GrantManager?.FullNameFirstLastAndOrgShortName;
-            GrantAllocationFileResourceID = grantAllocation.GrantAllocationFileResourceID;
+            GrantAllocationFileResourceIDs = grantAllocation.GrantAllocationFileResources?.Select(x => x.FileResourceID).ToList();
         }
 
         public static List<GrantAllocationApiJson> MakeGrantAllocationApiJsonsFromGrantAllocations(

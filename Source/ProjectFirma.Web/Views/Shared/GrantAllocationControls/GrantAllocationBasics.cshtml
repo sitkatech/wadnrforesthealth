@@ -173,24 +173,4 @@ Source code is available upon request via <support@sitkatech.com>.
             <span>@ViewDataTyped.GrantAllocation.FederalFundCodeDisplay</span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-5 text-right">
-            @Html.LabelWithSugarFor(FieldDefinition.FileResource, "Grant Allocation File")
-        </div>
-        <div class="col-sm-7">
-            <span>
-                @if (ViewDataTyped.ShowDownload)
-                {
-                    <a href="@ViewDataTyped.GrantAllocation.GrantAllocationFileResource.FileResourceUrl">
-                        @ViewDataTyped.GrantAllocation.GrantAllocationFileResource.OriginalCompleteFileName
-                    </a>
-                }
-                else
-                {
-                    <span>No documents uploaded yet.</span>
-                }
-            </span>
-        </div>
-    </div>
 </div>
-

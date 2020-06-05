@@ -21,6 +21,7 @@ Source code is available upon request via <support@sitkatech.com>.
 angular.module("ProjectFirmaApp").controller("EditGrantAllocationController", function($scope,
     angularModelAndViewData) {
 
+    $scope.files = [];
     console.log('start of EditGrantAllocationController');
 
     $scope.addProgramIndexProjectCodePair = function (programIndexID, programIndexName, projectCodeID, projectCodeName) {

@@ -1053,7 +1053,7 @@ namespace ProjectFirma.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ViewNewDocument(viewModel);
+                return ViewNewDocument(new NewProjectDocumentViewModel());
             }
             var project = projectPrimaryKey.EntityObject;
             viewModel.UpdateModel(project, CurrentPerson);

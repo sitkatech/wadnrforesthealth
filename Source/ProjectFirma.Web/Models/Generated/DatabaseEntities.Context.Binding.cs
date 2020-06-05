@@ -54,6 +54,8 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
         public virtual DbSet<GisUploadAttempt> GisUploadAttempts { get; set; }
+        public virtual DbSet<GisUploadAttemptWorkflowSectionGrouping> GisUploadAttemptWorkflowSectionGroupings { get; set; }
+        public virtual DbSet<GisUploadAttemptWorkflowSection> GisUploadAttemptWorkflowSections { get; set; }
         public virtual DbSet<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
         public virtual DbSet<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
@@ -65,11 +67,13 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<GrantAllocationChangeLog> GrantAllocationChangeLogs { get; set; }
         public virtual DbSet<GrantAllocationExpenditureJsonStage> GrantAllocationExpenditureJsonStages { get; set; }
         public virtual DbSet<GrantAllocationExpenditure> GrantAllocationExpenditures { get; set; }
+        public virtual DbSet<GrantAllocationFileResource> GrantAllocationFileResources { get; set; }
         public virtual DbSet<GrantAllocationNoteInternal> GrantAllocationNoteInternals { get; set; }
         public virtual DbSet<GrantAllocationNote> GrantAllocationNotes { get; set; }
         public virtual DbSet<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
         public virtual DbSet<GrantAllocationProgramManager> GrantAllocationProgramManagers { get; set; }
         public virtual DbSet<GrantAllocation> GrantAllocations { get; set; }
+        public virtual DbSet<GrantFileResource> GrantFileResources { get; set; }
         public virtual DbSet<GrantModificationGrantModificationPurpose> GrantModificationGrantModificationPurposes { get; set; }
         public virtual DbSet<GrantModificationNoteInternal> GrantModificationNoteInternals { get; set; }
         public virtual DbSet<GrantModificationPurpose> GrantModificationPurposes { get; set; }
@@ -310,14 +314,10 @@ namespace ProjectFirma.Web.Models
                     return GisUploadAttempts.GetGisUploadAttempt(primaryKey);
 
                 case "GisUploadAttemptWorkflowSectionGrouping":
-                    var gisUploadAttemptWorkflowSectionGrouping = GisUploadAttemptWorkflowSectionGrouping.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(gisUploadAttemptWorkflowSectionGrouping, "GisUploadAttemptWorkflowSectionGrouping", primaryKey);
-                    return gisUploadAttemptWorkflowSectionGrouping;
+                    return GisUploadAttemptWorkflowSectionGroupings.GetGisUploadAttemptWorkflowSectionGrouping(primaryKey);
 
                 case "GisUploadAttemptWorkflowSection":
-                    var gisUploadAttemptWorkflowSection = GisUploadAttemptWorkflowSection.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
-                    Check.RequireNotNullThrowNotFound(gisUploadAttemptWorkflowSection, "GisUploadAttemptWorkflowSection", primaryKey);
-                    return gisUploadAttemptWorkflowSection;
+                    return GisUploadAttemptWorkflowSections.GetGisUploadAttemptWorkflowSection(primaryKey);
 
                 case "GisUploadSourceOrganization":
                     return GisUploadSourceOrganizations.GetGisUploadSourceOrganization(primaryKey);
@@ -367,6 +367,9 @@ namespace ProjectFirma.Web.Models
                 case "GrantAllocationExpenditure":
                     return GrantAllocationExpenditures.GetGrantAllocationExpenditure(primaryKey);
 
+                case "GrantAllocationFileResource":
+                    return GrantAllocationFileResources.GetGrantAllocationFileResource(primaryKey);
+
                 case "GrantAllocationNoteInternal":
                     return GrantAllocationNoteInternals.GetGrantAllocationNoteInternal(primaryKey);
 
@@ -381,6 +384,9 @@ namespace ProjectFirma.Web.Models
 
                 case "GrantAllocation":
                     return GrantAllocations.GetGrantAllocation(primaryKey);
+
+                case "GrantFileResource":
+                    return GrantFileResources.GetGrantFileResource(primaryKey);
 
                 case "GrantModificationGrantModificationPurpose":
                     return GrantModificationGrantModificationPurposes.GetGrantModificationGrantModificationPurpose(primaryKey);

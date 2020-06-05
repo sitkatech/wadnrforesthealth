@@ -27,7 +27,9 @@
 @using ProjectFirma.Web.Models
 @using ProjectFirma.Web.Security
 @using ProjectFirma.Web.Views
+@using ProjectFirma.Web.Views.Grant
 @using ProjectFirma.Web.Views.GrantAllocation
+@using ProjectFirma.Web.Views.Shared.Grant
 @using ProjectFirma.Web.Views.Shared.GrantAllocationControls
 @using ProjectFirma.Web.Views.Shared.TextControls
 
@@ -83,23 +85,40 @@
             </div>
         </div>
         <div class="col-lg-7">
-            <div class="panel panelFirma">
-                <div class="panel-heading panelTitle">
-                    @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by Year
-                </div>
-                <div class="panel-body">
-                    @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
-                    {
-                        <div style="border-radius: 8px; background-color: white; height: 410px; margin-right: auto; margin-left: auto; width: 600px">
-                            @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            <h3>Files</h3>
                         </div>
-                    }
-                    else
-                    {
-                        <p class="systemText">No expenditures to report for this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel().</p>
-                    }
+                        <div class="panel-body">
+                            @{ GrantDetailsFileDetails.RenderPartialView(Html, ViewDataTyped.GrantAllocationDetailsFileDetailsViewData); }
+                        </div>
+                    </div>
                 </div>
+                <div class="col-lg-12">
+                    <div class="panel panelFirma">
+                        <div class="panel-heading panelTitle">
+                            @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() Expenditures by Year
+                        </div>
+                        <div class="panel-body">
+                            @if (ViewDataTyped.ViewGoogleChartViewData.HasData)
+                            {
+                                <div style="border-radius: 8px; background-color: white; height: 410px; margin-right: auto; margin-left: auto; width: 600px">
+                                    @{ ViewGoogleChart.RenderPartialView(Html, ViewDataTyped.ViewGoogleChartViewData); }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="systemText">No expenditures to report for this @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel().</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            
+
         </div>
     </div>
 
