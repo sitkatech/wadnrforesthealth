@@ -207,4 +207,10 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<InteractionEventController>.BuildUrlFromExpression(c => c.Index());
     }
+
+
+    public partial class FirmaPageTypeGisUploadAttemptInstructions
+    {
+        public override string GetViewUrl() => string.Empty;
+    }
 }

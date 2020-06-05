@@ -53,6 +53,10 @@ namespace ProjectFirma.Web.Models
         public virtual DbSet<FirmaPage> FirmaPages { get; set; }
         public virtual DbSet<FocusAreaLocationStaging> FocusAreaLocationStagings { get; set; }
         public virtual DbSet<FocusArea> FocusAreas { get; set; }
+        public virtual DbSet<GisUploadAttempt> GisUploadAttempts { get; set; }
+        public virtual DbSet<GisUploadAttemptWorkflowSectionGrouping> GisUploadAttemptWorkflowSectionGroupings { get; set; }
+        public virtual DbSet<GisUploadAttemptWorkflowSection> GisUploadAttemptWorkflowSections { get; set; }
+        public virtual DbSet<GisUploadSourceOrganization> GisUploadSourceOrganizations { get; set; }
         public virtual DbSet<GrantAllocationAwardContractorInvoice> GrantAllocationAwardContractorInvoices { get; set; }
         public virtual DbSet<GrantAllocationAwardLandownerCostShareLineItem> GrantAllocationAwardLandownerCostShareLineItems { get; set; }
         public virtual DbSet<GrantAllocationAwardPersonnelAndBenefitsLineItem> GrantAllocationAwardPersonnelAndBenefitsLineItems { get; set; }
@@ -305,6 +309,18 @@ namespace ProjectFirma.Web.Models
                     var focusAreaStatus = FocusAreaStatus.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
                     Check.RequireNotNullThrowNotFound(focusAreaStatus, "FocusAreaStatus", primaryKey);
                     return focusAreaStatus;
+
+                case "GisUploadAttempt":
+                    return GisUploadAttempts.GetGisUploadAttempt(primaryKey);
+
+                case "GisUploadAttemptWorkflowSectionGrouping":
+                    return GisUploadAttemptWorkflowSectionGroupings.GetGisUploadAttemptWorkflowSectionGrouping(primaryKey);
+
+                case "GisUploadAttemptWorkflowSection":
+                    return GisUploadAttemptWorkflowSections.GetGisUploadAttemptWorkflowSection(primaryKey);
+
+                case "GisUploadSourceOrganization":
+                    return GisUploadSourceOrganizations.GetGisUploadSourceOrganization(primaryKey);
 
                 case "GoogleChartType":
                     var googleChartType = GoogleChartType.All.SingleOrDefault(x => x.PrimaryKey == primaryKey);
