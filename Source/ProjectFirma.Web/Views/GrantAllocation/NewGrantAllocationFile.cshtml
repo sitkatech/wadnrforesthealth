@@ -56,7 +56,6 @@
             <div class="multiple-file-upload-wrapper">
                 <div class="form-group">
                     <div class="col-sm-12">
-                        @Html.ValidationSummary()
                         @Html.LabelWithSugarFor(m => m.GrantAllocationFileResourceDatas)
                         <input type="file" ng-file-model="files" multiple name="@Html.NameFor(x => x.GrantAllocationFileResourceDatas)" class="multiple-file-upload" id="@Html.IdFor(x => x.GrantAllocationFileResourceDatas)" />
                         <p class="help-block">Drag and drop or click on the box above to upload files. <br />Allowed Extensions: @Model.GetFileExtensions(x => x.GrantAllocationFileResourceDatas)</p>
